@@ -1,0 +1,24 @@
+<menu>
+	<item name="Dashboard" link="a" />
+	<item name="Customer Service"   link="a">
+		<item name="Orders" link="a">
+			<item name="New Order" link="a" />
+			<item name="Find Order" link="a" />
+		</item>
+		<item name="Customers" link="a">
+			<item name="Find Customer" link="a" />
+			<item name="New Customer" link="a" />
+		</item>
+		<item name="CF Ticket" link="a" />
+	</item>
+	<item name="Content Managment"  link="a">
+		<item name="Phones" link="a">
+			<item name="New Phone" link="a" />
+			<item name="Find Phone"  link="a" />
+		</item>
+		<item name="Plans" link="a">
+			<item name="Find Plan" link="a" />
+			<item name="New Plan" link="a" />
+		</item>
+	</item>
+</menu>

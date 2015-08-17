@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<DTSConfiguration>
+  <DTSConfigurationHeading>
+    <DTSConfigurationFileInfo GeneratedBy="BETTER_WAY\rd7151" GeneratedFromPackageName="OrdersToGers" GeneratedFromPackageID="{9C406EB5-282E-44AA-B35D-2FBDB6EB8FB0}" GeneratedDate="12/20/2010 12:54:17 PM"/>
+  </DTSConfigurationHeading>
+  <Configuration ConfiguredType="Property" Path="\Package\Data Flow Task.Properties[Disable]" ValueType="Boolean">
+    <ConfiguredValue>-1</ConfiguredValue>
+  </Configuration>
+  <Configuration ConfiguredType="Property" Path="\Package\Execute SQL Task.Properties[Disable]" ValueType="Boolean">
+    <ConfiguredValue>-1</ConfiguredValue>
+  </Configuration>
+  <Configuration ConfiguredType="Property" Path="\Package\Mark Allocated Quantity Mismatch.Properties[Disable]" ValueType="Boolean">
+    <ConfiguredValue>-1</ConfiguredValue>
+  </Configuration>
+  <Configuration ConfiguredType="Property" Path="\Package\Mark Double Free Accessory Orders.Properties[Disable]" ValueType="Boolean">
+    <ConfiguredValue>-1</ConfiguredValue>
+  </Configuration>
+  <Configuration ConfiguredType="Property" Path="\Package\Mark Missing Allocations.Properties[Disable]" ValueType="Boolean">
+    <ConfiguredValue>-1</ConfiguredValue>
+  </Configuration>
+  <Configuration ConfiguredType="Property" Path="\Package\Mark Payment Errors.Properties[Disable]" ValueType="Boolean">
+    <ConfiguredValue>-1</ConfiguredValue>
+  </Configuration>
+</DTSConfiguration>

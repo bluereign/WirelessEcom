@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Sprint Employee (SPRINT PCS) -->
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://integration.sprint.com/eai/services/QueryNumberPortingService/v1/QueryNumberPortingService.wsdl" xmlns:fault="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wshdr="http://integration.sprint.com/common/header/WSMessageHeader/v2" xmlns:detailport="http://integration.sprint.com/interfaces/queryDetailedPortiInfo/v1/queryPortDetailInfo.xsd" xmlns:err="http://integration.sprint.com/common/ErrorDetailsV2.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:queryport="http://integration.sprint.com/interfaces/queryPortInfo/v1/queryPortInfo.xsd" xmlns:checknport="http://integration.sprint.com/interfaces/checkNumberPortingEligibility/v1/checkNumberPortingEligibility.xsd" xmlns:qryserinfo="http://integration.sprint.com/interfaces/queryServiceProviderPortFieldMapInfo/v1/queryServiceProviderPortFieldMapInfo.xsd" targetNamespace="http://integration.sprint.com/eai/services/QueryNumberPortingService/v1/QueryNumberPortingService.wsdl" version="1.0">
+	<wsdl:types>
+		<xsd:schema xmlns:tns="http://integration.sprint.com/eai/services/QueryNumberPortingService/v1/QueryNumberPortingService.wsdl" targetNamespace="http://integration.sprint.com/eai/services/QueryNumberPortingService/v1/QueryNumberPortingService.wsdl">
+			<xsd:import namespace="http://integration.sprint.com/interfaces/queryDetailedPortiInfo/v1/queryPortDetailInfo.xsd" schemaLocation="queryPortDetailInfo.xsd"/>
+			<xsd:import namespace="http://integration.sprint.com/interfaces/queryPortInfo/v1/queryPortInfo.xsd" schemaLocation="queryPortInfo.xsd"/>
+			<xsd:import namespace="http://integration.sprint.com/interfaces/checkNumberPortingEligibility/v1/checkNumberPortingEligibility.xsd" schemaLocation="checkNumberPortingEligibility.xsd"/>
+			<xsd:import namespace="http://integration.sprint.com/interfaces/queryServiceProviderPortFieldMapInfo/v1/queryServiceProviderPortFieldMapInfo.xsd" schemaLocation="queryServiceProviderPortFieldMapInfo.xsd"/>
+			<xsd:import namespace="http://integration.sprint.com/common/header/WSMessageHeader/v2" schemaLocation="WSMessageHeaderV2.xsd"/>
+			<xsd:import namespace="http://integration.sprint.com/common/ErrorDetailsV2.xsd" schemaLocation="ErrorDetailsV2.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="WsMessageHeader">
+		<wsdl:part name="head" element="wshdr:wsMessageHeader"/>
+	</wsdl:message>
+	<wsdl:message name="queryPortInfo">
+		<wsdl:part name="parameters" element="queryport:queryPortInfo"/>
+	</wsdl:message>
+	<wsdl:message name="queryPortInfoResponse">
+		<wsdl:part name="parameters" element="queryport:queryPortInfoResponse"/>
+	</wsdl:message>
+	<wsdl:message name="checkNumberPortingEligibility">
+		<wsdl:part name="parameters" element="checknport:checkNumberPortingEligibility"/>
+	</wsdl:message>
+	<wsdl:message name="checkNumberPortingEligibilityResponse">
+		<wsdl:part name="parameters" element="checknport:checkNumberPortingEligibilityResponse"/>
+	</wsdl:message>
+	<wsdl:message name="soapFaultv2">
+		<wsdl:part name="fault" element="err:errorDetailItem"/>
+	</wsdl:message>
+	<wsdl:message name="queryPortDetailInfo">
+		<wsdl:part name="parameters" element="detailport:queryPortDetailInfo"/>
+	</wsdl:message>
+	<wsdl:message name="queryPortDetailInfoResponse">
+		<wsdl:part name="parameters" element="detailport:queryPortDetailInfoResponse"/>
+	</wsdl:message>
+	<wsdl:message name="queryServiceProviderPortFieldMapInfo">
+		<wsdl:part name="parameters" element="qryserinfo:queryServiceProviderPortFieldMapInfo"/>
+	</wsdl:message>
+	<wsdl:message name="queryServiceProviderPortFieldMapInfoResponse">
+		<wsdl:part name="parameters" element="qryserinfo:queryServiceProviderPortFieldMapInfoResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="QueryNumberPortingPortType">
+		<wsdl:operation name="QueryPortInfo">
+			<wsdl:input message="tns:queryPortInfo"/>
+			<wsdl:output message="tns:queryPortInfoResponse"/>
+			<wsdl:fault name="fault" message="tns:soapFaultv2"/>
+		</wsdl:operation>
+		<wsdl:operation name="CheckNumberPortingEligibility">
+			<wsdl:input message="tns:checkNumberPortingEligibility"/>
+			<wsdl:output message="tns:checkNumberPortingEligibilityResponse"/>
+			<wsdl:fault name="fault" message="tns:soapFaultv2"/>
+		</wsdl:operation>
+		<wsdl:operation name="QueryPortDetailInfo">
+			<wsdl:input message="tns:queryPortDetailInfo"/>
+			<wsdl:output message="tns:queryPortDetailInfoResponse"/>
+			<wsdl:fault name="fault" message="tns:soapFaultv2"/>
+		</wsdl:operation>
+		<wsdl:operation name="QueryServiceProviderPortFieldMapInfo">
+			<wsdl:input message="tns:queryServiceProviderPortFieldMapInfo"/>
+			<wsdl:output message="tns:queryServiceProviderPortFieldMapInfoResponse"/>
+			<wsdl:fault name="fault" message="tns:soapFaultv2"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="QueryNumberPortingSOAPBinding" type="tns:QueryNumberPortingPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="QueryPortInfo">
+			<soap:operation soapAction="QueryPortInfo"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="CheckNumberPortingEligibility">
+			<soap:operation soapAction="CheckNumberPortingEligibility"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="QueryPortDetailInfo">
+			<soap:operation soapAction="QueryPortDetailInfo"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="QueryServiceProviderPortFieldMapInfo">
+			<soap:operation soapAction="QueryServiceProviderPortFieldMapInfo"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="QueryNumberPortingService">
+		<wsdl:port name="QueryNumberPortingPortType" binding="tns:QueryNumberPortingSOAPBinding">
+			<soap:address location="http://localhost:7080"/>
+		</wsdl:port>
+	</wsdl:service>
+	<!-- Date              Author                   Ver		Change                                Rel                  SR# -->
+	<!-- -10/17/2008    Chandra Ganne      1.0		Initial Version                       R10                  E3308.008 -->
+	<!-- -01/21/2009    Chandra Ganne      1.1        Updated import in types        R10                  E3308.008 -->
+	<!-- 02/05/2010     Priya Logantha	    1.3       Added queryServiceProviderInfo operation GBL10.3 PJ002700 -->
+</wsdl:definitions>

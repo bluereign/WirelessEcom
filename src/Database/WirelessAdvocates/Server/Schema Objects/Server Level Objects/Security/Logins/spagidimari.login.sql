@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [spagidimari]
+    WITH PASSWORD = N'hr.cnsgQjtGp;nooAoatthnfmsFT7_&#$!~<uBXHyedxoh4h', SID = 0x65881146C6EE3144A116889670D410FF, DEFAULT_DATABASE = [master], DEFAULT_LANGUAGE = [us_english], CHECK_EXPIRATION = ON;
+

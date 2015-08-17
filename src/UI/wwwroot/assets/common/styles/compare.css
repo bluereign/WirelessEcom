@@ -1,0 +1,166 @@
+table.compare
+{
+	margin-bottom:4em;
+	background: none;
+}
+
+table.compare td
+{
+	text-align:center;
+	font-size:1.4em;
+	border-right:1px solid #999;
+	border-bottom:1px solid #999;
+	padding:0.3em;
+}
+
+table.compare td.dataPoint
+{
+	border-left:1px solid #999;
+	text-align:right;
+	width:150px;
+}
+
+table.compare td.groupLabel
+{
+	background-color:#bbb;
+	color:#fff;
+	text-align:left;
+	font-size:1.4em;
+	border-right:0px solid #999;
+	border-bottom:1px solid #999;
+	padding:0.3em;
+}
+
+table.compare td.groupLabelRemove
+{
+	background-color:#bbb;
+	color:#fff;
+	text-align:center;
+	font-size:1.4em;
+	border-right:0px solid #999;
+	border-bottom:1px solid #999;
+	padding:0.3em;
+}
+
+table.compare td.groupLabelRemove a
+{
+	text-align:center;
+	color:#fff;
+	padding-left:23px;
+	background:url('../images/ui/close_dyn_bg.gif') left top no-repeat transparent;
+	padding-top:4px;
+}
+
+table.compare th
+{
+	border:1px solid #999;
+	border-left:none;
+	padding:0.3em;
+}
+
+table.compare th.emptyCell
+{
+	border-left:none;
+	border-top:none;
+	padding:0.3em;
+}
+
+table.compare tr.control td
+{
+	background-color:#999;
+}
+
+table.compare tr.control a.remove
+{
+	color:#fff;
+	padding-left:23px;
+	background:url('../images/ui/close.gif') left top no-repeat transparent;
+	padding-top:4px;
+}
+
+table.compare tr.control a:hover
+{
+	text-decoration:underline;
+}
+
+table.compare tr.spacer td
+{
+	height:32px;
+	border-right:1px dashed #999;
+}
+
+table.compare tr.addToCart td.emptyCell
+{
+	border-bottom:none;
+	background-color:Transparent;
+}
+
+table.compare tr.addToCart td
+{
+	background-color:#fff;	
+	font-size:1.0em;
+}
+
+.AddToCart, .AddToCartDisabled
+{
+	padding:0.2em 20px;
+	color:#fff !important;
+	font-size:1.2em;
+}
+
+.icons 
+{
+	clear:left;
+}
+
+.icons .accessories
+{
+	background:url('../images/ui/FreeAccessory_Icon.png') left -30px no-repeat transparent;
+	text-align:left;
+	line-height:32px;
+	padding-left:40px;
+	padding-top:0px;
+	padding-bottom:0px;
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size:1.0em;
+	font-weight:normal;
+	color:#666;
+}
+
+.icons .availableOnline
+{
+	background:url('../images/ui/OnlineOnly_icon.png') left -30px no-repeat transparent;
+	text-align:left;
+	line-height:32px;
+	padding-left:40px;
+	padding-top:0px;
+	padding-bottom:0px;
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size:1.0em;
+	font-weight:normal;
+	color:#666;
+}
+
+.icons .availableWarehouse
+{
+	background:url('../images/ui/InWarehouse_icon.png') left -30px no-repeat transparent;
+	text-align:left;
+	line-height:32px;
+	padding-left:40px;
+	padding-top:0px;
+	padding-bottom:0px;
+	margin-top:0px;
+	margin-bottom:0px;
+	font-size:1.0em;
+	font-weight:normal;
+	color:#666;
+}
+
+.emptyCell
+{
+	border-bottom:1px solid #999;
+	border-top:none;
+	border-left:none;
+}

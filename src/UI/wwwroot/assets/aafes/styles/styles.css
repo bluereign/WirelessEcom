@@ -1,0 +1,421 @@
+@charset "utf-8";
+/* CSS Document */
+
+a
+{
+	text-decoration:none;
+}
+
+a:link
+{}
+
+a:hover
+{
+	text-decoration:underline;
+}
+
+a:visited
+{}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+{}
+
+p
+{}
+
+img
+{
+	border:0px;
+}
+
+html,
+body
+{
+}
+
+.aafes /*Designates the master page style*/
+{
+	background-color:#e9e5cc;
+	font-family:Arial, Helvetica, sans-serif;
+	margin:0;
+	padding:0;
+}
+
+.page
+{
+		background-color:#fff;
+}
+
+	.pageTop
+	{
+		background-image:url(images/repeat-x.png);
+		background-position:0px 0px;
+		background-repeat:repeat-x;
+		height:37px;
+		overflow:hidden;
+		text-align:center;
+	}
+	
+		.topLinks
+		{
+			color:#fff;
+			font-size:12px;
+		}
+		
+			.linksArea
+			{
+				margin: 0px auto;
+				padding-top:10px;
+				width:960px;
+			}
+			
+				.areaLeft
+				{
+					float:left;
+					text-align:left;
+				}
+				
+				.areaLeft a
+				{
+					color:#fff;
+					margin-right:10px;
+				}
+				
+				.areaRight
+				{
+					float:right;
+					text-align:left;
+					
+				}
+			
+				.areaRight a,
+				.areaRight span
+				{
+					color:#fff;
+					margin-left:10px;
+				}
+				
+					.linksCart /* adds the cart icon to the "Your Cart" link */
+					{
+						background-image:url(images/icon_16x16_sprite.png); /* Initially this file is just for position only. Replace it with 16x16 icons. */
+						background-position:0px -0px;
+						background-repeat:no-repeat;
+						display:inline-block;
+						line-height:16px;
+						padding-left:22px;
+					}
+				
+					.yellowblock /* switches the green block to a yellow block for the icon to go with the "Your Cart" link */
+					{
+						background-image:url(images/icon_16x16_sprite.png); /* Initially this file is just for position only. Replace it with 16x16 icons. */
+						background-position:0px -17px;
+						background-repeat:no-repeat;
+						display:inline-block;
+						line-height:16px;
+						padding-left:22px;
+					}
+				
+	.pageHeader
+	{
+		background-color:#fff;
+		margin-top:37px;
+	}
+	
+		.headerContainer
+		{
+			border:1px solid #969696;
+			border-radius:10px 10px 0px 0px;
+			box-shadow:3px 3px 3px #999;
+			height:109px;
+			margin: 0px auto;
+			width:960px;
+		}
+		
+			.containerTop
+			{}
+			
+				.topLeft
+				{
+					float:left;
+				}
+				
+					.leftLogo
+					{
+						margin:9px 0px 10px 15px;
+					}
+						
+						.logoXMobileCenter
+						{
+							width:249px;
+							height:46px;
+							background-image:url(images/XMobileCenter_logo.png);
+							background-position:0px -0px;
+							background-repeat:no-repeat;
+						}
+	
+				.topRight
+				{
+					float:right;
+				}
+				
+					.rightSearch
+					{
+						margin:16px 15px 0px 0px;
+					}
+					
+						.searchLeft
+						{
+							background-image:url(images/SearchBG_left.png);
+							background-position:0px -0px;
+							background-repeat:no-repeat;
+							float:left;
+							height:33px;
+							width:13px;
+						}
+	
+						.searchButton
+						{
+							float:right;
+							height:33px;
+							width:41px;
+						}
+	
+							.searchButton .button
+							{
+								background-image:url(images/SearchButton.png);
+								background-position:0px -0px;
+								background-repeat:no-repeat;
+								display:block;
+								height:33px;
+								width:41px;
+							}
+		
+							.searchButton .button:hover
+							{
+								background-image:url(images/SearchButton.png);
+								background-position:0px -34px;
+								background-repeat:no-repeat;
+								display:block;
+								height:33px;
+								width:41px;
+							}
+		
+						.searchInput
+						{
+							background-image:url(images/repeat-x.png);
+							background-position:0px -206px;
+							background-repeat:repeat-x;
+							float:left;
+							height:33px;
+							width:200px;
+						}
+						
+							.inputText
+							{
+								background:none;
+								border:0px;
+								color:#6c6c6c;
+								font-size:15px;
+								margin-top:7px;
+								width:198px;
+							}
+	
+			.containerBottom
+			{
+				clear:both;
+				padding-top:1px;
+			}
+	
+				.bottomNavigation /* To see the pseudo classes within the associated sub-containers for the navigation look into the navigation.css file */
+				{
+					background-image:url(images/repeat-x.png);
+					background-position:0px -240px;
+					background-repeat:repeat-x;
+					height:43px;
+					padding:0px 1px;
+				}
+	
+	.pageBody
+	{
+		background-color:#fff;
+	}
+
+		.bodyContainer
+		{	
+			margin:37px auto;
+			width:960px;
+		}
+		
+			.containerRow
+			{
+				margin-top:12px;
+				overflow:hidden;
+			}
+			
+				.rowItem
+				{
+					float:left;
+					margin-right:12px;
+					overflow:hidden;
+				}
+				
+				.rowItemLast
+				{
+					float:left;
+					margin-right:0px;
+					overflow:hidden;
+				}
+				
+				.rowLegal
+				{
+					font-size:11px;
+				}
+				
+					.itemBanner_MVM /* FPO images */
+					{
+						background-image:url(images/MVM_banner.png);
+						background-repeat:no-repeat;
+						height:349px;
+						width:717px;
+					}
+					
+					.itemModule_md
+					{
+						border:2px solid #e1e1e1;
+						height:345px;
+						width:227px;
+					}
+					
+					.itemModule_sm
+					{
+						border:2px solid #e1e1e1;
+						height:200px;
+						width:227px;
+					}
+					
+						.moduleHead
+						{
+							background-image:url(images/repeat-x.png);
+							background-position:0px -284px;
+							background-repeat:repeat-x;
+							height:32px;
+							overflow:hidden;
+						}
+						
+							.headTitle
+							{
+								color:#444444;
+								font-size:16px;
+								font-weight:bold;
+								line-height:32px;
+								text-align:center;
+							}
+						
+						.moduleBody
+						{
+							color:#CCC;
+							height:168px;
+							overflow:hidden;
+							width:227px;
+							
+						}
+						
+							.bodyInformation_sm
+							{
+								padding:10px;
+								height:168px;
+								width:227px;
+							}
+
+							.bodySupport_sm
+							{
+								background-image:url(images/HelpAndSupport.png);
+								height:168px;
+							}
+		
+							.bodyInformation_md
+							{
+								padding:10px;
+								height:313px;
+							}
+
+	.pageFooter
+	{
+		height:167px;
+		background-image:url(images/repeat-x.png);
+		background-position:0px -38px;
+		background-repeat:repeat-x;
+	}
+	
+		.footerContainer
+		{
+				margin: 0px auto;
+				padding-top:40px;
+				width:960px;
+		}
+		
+			.pageFooter .containerLeft
+			{
+				float:left;
+			}
+			
+				.pageFooter .leftTrustwave
+				{}
+			
+				.pageFooter .leftText
+				{
+					font-size:11px;
+				}
+			
+				.pageFooter .leftMVM
+				{}
+			
+			.pageFooter .containerRight
+			{
+				float:right;
+				text-align:right;
+			}
+			
+				.pageFooter .rightWALogo
+				{}
+			
+			.pageFooter .containerCenter
+			{	
+				float:none;
+				font-size:10px;
+				text-align:center;
+			}
+			
+				.pageFooter .centerText
+				{}
+				
+				.pageFooter .centerText a
+				{
+					color:#000;
+					text-decoration:underline;
+				}
+				
+				.pageFooter .centerText a:hover
+				{
+					color:#000;
+					text-decoration:none;
+				}
+				
+					.pageFooter .textLink
+					{
+						margin-right:10px;
+					}
+				
+					.pageFooter .textLinkLast
+					{
+						margin-right:0px;
+					}
+				
+				.pageFooter .centerCopyright
+				{}
+			

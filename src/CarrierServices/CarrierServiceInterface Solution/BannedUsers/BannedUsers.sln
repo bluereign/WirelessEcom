@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BannedUsers", "BannedUsers\BannedUsers.csproj", "{D6C845F3-FEAE-468F-905F-C9AE8590F969}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BannedUsersSetup", "BannedUsersSetup\BannedUsersSetup.vdproj", "{3406CDC1-79E0-4F46-9F6E-4FCC7C11DB25}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6C845F3-FEAE-468F-905F-C9AE8590F969}.Debug|x86.ActiveCfg = Debug|x86
+		{D6C845F3-FEAE-468F-905F-C9AE8590F969}.Debug|x86.Build.0 = Debug|x86
+		{D6C845F3-FEAE-468F-905F-C9AE8590F969}.Release|x86.ActiveCfg = Release|x86
+		{D6C845F3-FEAE-468F-905F-C9AE8590F969}.Release|x86.Build.0 = Release|x86
+		{3406CDC1-79E0-4F46-9F6E-4FCC7C11DB25}.Debug|x86.ActiveCfg = Debug
+		{3406CDC1-79E0-4F46-9F6E-4FCC7C11DB25}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

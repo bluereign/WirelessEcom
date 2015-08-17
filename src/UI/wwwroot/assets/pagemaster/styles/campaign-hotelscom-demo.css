@@ -1,0 +1,42 @@
+#top-nav-bar {
+	background-color: #000;
+}
+
+#top-nav-bar a, #top-nav-bara:active, #top-nav-bara:hover, #top-nav-bar a:focus{
+	color: #efefef;
+}
+
+#campaign-header {
+	background-color: #9b3333;
+}
+
+#campaign-header h1 {
+	color: #efefef;
+}
+
+#pagemaster-menu-nav li > a:hover {
+	color: #333;
+	background-color: #ccc;
+}
+
+#product-listing-grid li .product-title-container h1 {
+	color: #0060a9;
+}
+
+#product-listing-grid li .product-title-container a:hover {
+	color: #0060a9;
+}
+
+#product-listing-grid .btn-select {
+    background-color: #9b3333;
+    color: #fff;
+}
+
+#product-listing-grid .btn-select:hover, #product-listing-grid .btn-select:focus {
+	background-color: #ad4848;
+}
+
+#footer-nav-bar {
+	background-color: #efefef; /* Campaign override */
+	color: #333; /* Campaign override */
+}

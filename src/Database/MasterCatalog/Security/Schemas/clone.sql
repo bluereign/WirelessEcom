@@ -1,0 +1,3 @@
+CREATE SCHEMA [clone]
+AUTHORIZATION [dbo]
+GO

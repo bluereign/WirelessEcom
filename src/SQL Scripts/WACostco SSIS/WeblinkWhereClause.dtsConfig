@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<DTSConfiguration>
+	<DTSConfigurationHeading>
+		<DTSConfigurationFileInfo GeneratedBy="BETTER_WAY\rd7151" GeneratedFromPackageName="OrdersToGers" GeneratedFromPackageID="{4334CCB1-9D35-41DB-AA8D-2F42CB1138D5}" GeneratedDate="4/6/2011 12:53:49 PM"/>
+	</DTSConfigurationHeading>
+	<Configuration ConfiguredType="Property" Path="\Package.Variables[User::WhereClause].Properties[Value]" ValueType="String">
+		<ConfiguredValue>WHERE O.OrderId = 36597</ConfiguredValue>
+	</Configuration>
+</DTSConfiguration>

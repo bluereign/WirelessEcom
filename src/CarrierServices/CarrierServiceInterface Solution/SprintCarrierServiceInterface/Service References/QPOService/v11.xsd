@@ -1,0 +1,2928 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/validatePlansAndOptions/v2/validatePlansAndOptionsV2.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/validatePlansAndOptions/v2/validatePlansAndOptionsV2.xsd" version="1.8" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="validatePlansAndOptionsV2" type="tns:ValidatePlansAndOptionsV2RequestType" />
+  <xs:element name="validatePlansAndOptionsV2Response" type="tns:ValidatePlansAndOptionsV2ResponseType" />
+  <xs:complexType name="ValidatePlansAndOptionsV2RequestType">
+    <xs:sequence>
+      <xs:element name="serviceAgreementInfo" type="tns:ServiceAgreementInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing detail info of validation request.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ValidatePlansAndOptionsV2ResponseType">
+    <xs:sequence>
+      <xs:element name="validationSucceededInd" type="tns:ValidationSuccessFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates validation succeeded or failed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="familySubscribersPricePlanChangeRequiredInd" type="tns:LinesToShareChangeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that subscribers that have the sharing plan of the subscriber sent in the Request must have their price plan changed also</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="secBundleSubPricePlanChangeRequiredList" type="tns:SecondaryBundleSubPricePlanChangeRequiredListType">
+        <xs:annotation>
+          <xs:documentation>Indicates List of Secondary subscribers that must change price plan to align with the requested removal of the primary plan sent in the Request</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ltsRemainingSubscribers" type="tns:NumberOfSubscriptionsType">
+        <xs:annotation>
+          <xs:documentation>Indicates how many additional subs are able to be added to the family/sharing plan that was selected in the request.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pricePlanInfo" type="tns:PricePlanInfoType">
+        <xs:annotation>
+          <xs:documentation>Provides primary plan information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addOnSocList" type="tns:AddOnSocListResponseType">
+        <xs:annotation>
+          <xs:documentation>Provides add on soc information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expiredPricePlanInfo" type="tns:PricePlanInfoType">
+        <xs:annotation>
+          <xs:documentation>Provides primary plan information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expiredAddOnSocList" type="tns:AddOnSocListResponseType">
+        <xs:annotation>
+          <xs:documentation>Provides add on soc information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expiredResourceList" type="tns:ResourceListType">
+        <xs:annotation>
+          <xs:documentation>Provides internal information only for OVM.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="changedSocList" type="tns:ChangedSocListType">
+        <xs:annotation>
+          <xs:documentation>Provides changed Socs information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="legacyPlanList" type="tns:LegacyPlanListType">
+        <xs:annotation>
+          <xs:documentation>Provides legacy plan names.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="resourceList" type="tns:ResourceListType">
+        <xs:annotation>
+          <xs:documentation>Provides internal information only for OVM.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="suggestionGroupList" type="tns:SuggestionGroupListType">
+        <xs:annotation>
+          <xs:documentation>Provides the set of available suggestions for the existing or requested plan/soc in conflict to the subscriber in reference to the specific error message.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dataSocInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates whether the subscriber will have data soc by the end of the transaction as sent in the Service Validation Request. Values: True, False</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messagingSocInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates whether the subscriber will have messaging soc by the end of the transaction as sent in the Service Validation Request. Values: True, False</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="validationErrorInfo" type="tns:ValidationErrorInfoType">
+        <xs:annotation>
+          <xs:documentation>Includes OVM service validation error information for error type = 4.  Additional information may be provided in response.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="voiceControlValidInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates whether the new device/subscriber supports Voice Control or not.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="billSummaryInfo" type="tns:BillSummaryInfoType">
+        <xs:annotation>
+          <xs:documentation>Includes estimated fee information. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActionInfoType">
+    <xs:sequence>
+      <xs:element name="type" type="tns:PlanActionCodeType">
+        <xs:annotation>
+          <xs:documentation>Action type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pricePlanList" type="tns:PricePlanListResponseType">
+        <xs:annotation>
+          <xs:documentation>price plan list</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socList" type="tns:SocListType">
+        <xs:annotation>
+          <xs:documentation>soc list</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActionListType">
+    <xs:sequence>
+      <xs:element maxOccurs="100" name="actionInfo" type="tns:ActionInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing action info to resolve conflicts.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountTypeInfoType">
+    <xs:sequence>
+      <xs:element name="accountType" type="tns:BillingAccountTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>The type of account to be used to determine which plans to return.
+If accountSubType sent, accountType should be sent.
+I, B, C, G</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="accountSubType" type="tns:BillingAccountSubTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Subscription type to be used to determine which plans to return.
+If accountType sent, accountSubType should be sent.
+I, B, H, N, G, 4</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestedActionInfoType">
+    <xs:sequence>
+      <xs:element name="actionType" type="tns:TransactionTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Type of transaction for validation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceSwapInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Device Swap Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="planChangeInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Plan Change Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="serviceAddInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates service to be added</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="marketSwapInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates market swap (CSA swap) 
+N/A if action-type = CREATE and optional if action-type = UPDATE.  Required if the order involves a CSA/Sub-Market swap</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addLtsServiceInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates adding family plan.
+ N/A if action-type = CREATE and optional if action-type = UPDATE.  Required if the order involves adding an LTS service to an existing LTS group</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="swapLtsGroupInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates performing a swap within family plan.
+N/A if action-type = CREATE and optional if action-type = UPDATE, Required if the order involves swapping an LTS service for all subscribers in an LTS Group.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="validateSubInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates duplicating subscriber’s existing services.
+N/A if action-type = CREATE and optional if action-type = UPDATE.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="duplicateSubInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Required for duplicating subscriber’s existing services.
+N/A if action-type = CREATE, required if action-type = UPDATE and mdn is not populated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="subscriberId" type="tns:SubscriberIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Subscriber id.
+N/A if action-type = CREATE and optional if action-type = UPDATE.  Required for validating subscriber’s existing services against new BAN.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="targetSub" type="tns:SubscriberIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Target subscription.
+N/A if action-type = CREATE, optional if action-type = UPDATE and duplicate-sub is set to true</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addSubCount" type="tns:NumberOfSubscriptionsType">
+        <xs:annotation>
+          <xs:documentation>N/A if action-type = CREATE, optional if action-type = UPDATE and duplicate-sub is set to true </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="targetBan" type="tns:BillingAccountNumberEnsType">
+        <xs:annotation>
+          <xs:documentation>Target ban.
+N/A if action-type = CREATE, required if action-type = UPDATE and subscriber-id is not populated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="mdn" type="tns:MobileDirectoryNumberStringType">
+        <xs:annotation>
+          <xs:documentation>mdn
+N/A if action-type = CREATE and optional if action-type = UPDATE.  Required if add-lts-service is true or swap-lts-group is true
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="existingServiceId" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>N/A if action-type = CREATE and optional if action-type = UPDATE.  Required if add-lts-service is true or swap-lts-group is true</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="modifyFuturePlanInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>This field indicates whether plan is futured dated or not. This is optional field and was created to match OVM Request.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="removeBarringSocInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates if barring SOC is being removed or not.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="removeBlocklistSocInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates if blocklist SOC is being removed or not.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BundleSubActionInfoType">
+    <xs:sequence>
+      <xs:element name="actionType" type="tns:TransactionTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Type of transaction for validation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceSwapInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Device Swap Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="planChangeInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Plan Change Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="serviceAddInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates service to be added</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="marketSwapInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates market swap (CSA swap) 
+N/A if action-type = CREATE and optional if action-type = UPDATE.  Required if the order involves a CSA/Sub-Market swap</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addLtsServiceInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates adding family plan.
+ N/A if action-type = CREATE and optional if action-type = UPDATE.  Required if the order involves adding an LTS service to an existing LTS group</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="swapLtsGroupInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates performing a swap within family plan.
+N/A if action-type = CREATE and optional if action-type = UPDATE, Required if the order involves swapping an LTS service for all subscribers in an LTS Group.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="validateSubInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates duplicating subscriber’s existing services.
+N/A if action-type = CREATE and optional if action-type = UPDATE.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="duplicateSubInd" type="tns:TransactionTypeFlagType">
+        <xs:annotation>
+          <xs:documentation>Required for duplicating subscriber’s existing services.
+N/A if action-type = CREATE, required if action-type = UPDATE and mdn is not populated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="subscriberId" type="tns:SubscriberIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Subscriber id.
+N/A if action-type = CREATE and optional if action-type = UPDATE.  Required for validating subscriber’s existing services against new BAN.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="targetSub" type="tns:SubscriberIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Target subscription.
+N/A if action-type = CREATE, optional if action-type = UPDATE and duplicate-sub is set to true</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addSubCount" type="tns:NumberOfSubscriptionsType">
+        <xs:annotation>
+          <xs:documentation>N/A if action-type = CREATE, optional if action-type = UPDATE and duplicate-sub is set to true </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="targetBan" type="tns:BillingAccountNumberEnsType">
+        <xs:annotation>
+          <xs:documentation>Target ban.
+N/A if action-type = CREATE, required if action-type = UPDATE and subscriber-id is not populated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="mdn" type="tns:MobileDirectoryNumberStringType">
+        <xs:annotation>
+          <xs:documentation>mdn
+N/A if action-type = CREATE and optional if action-type = UPDATE.  Required if add-lts-service is true or swap-lts-group is true
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="existingServiceId" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>N/A if action-type = CREATE and optional if action-type = UPDATE.  Required if add-lts-service is true or swap-lts-group is true</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="modifyFuturePlanInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>This field indicates whether plan is futured dated or not. This is optional field and was created to match OVM Request.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddOnSocInfoResponseType">
+    <xs:sequence>
+      <xs:element name="soc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Feature code that was passed in the input.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="existingSocInd" type="tns:FeatureExistsFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated option id is a feature that already exists on the subscriber associated to the request.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socSequenceNumber" type="tns:SequenceNumberType">
+        <xs:annotation>
+          <xs:documentation>OVM internal use only.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="effectiveDateTime" type="tns:EffectiveFromDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Date soc was effective.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expirationDateTime" type="tns:ExpirationDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Date soc was expired.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socDesc" type="tns:ServiceOrderDescriptionType" />
+      <xs:element minOccurs="0" name="banLevelInd" type="tns:BillingAccountLevelSocRequiredFlagType">
+        <xs:annotation>
+          <xs:documentation>True indicates that associated feature is an account level feature.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="relatedOptionId" type="tns:ProductIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Related option soc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="autoUpdateInd" type="tns:AutoUpdateFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates OVM automatically added this option.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cellularSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated feature requires a phone number resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="dispatchSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated feature requires a push-to-talk resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="packetDataSupportInd" type="tns:PacketDataSupportTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated feature requires a data access resource.
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cdmaPacketDataSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated feature requires a CDMA IP resource.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="serviceType" type="tns:ServiceTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>OVM internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="autoAddInd" type="tns:AutoUpdateFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates OVM has automatically added this option</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productTypeList" type="tns:ProductTypeListType">
+        <xs:annotation>
+          <xs:documentation>Structure with product definition details.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="featureList" type="tns:FeatureListType" />
+      <xs:element minOccurs="0" name="modifySocFeaturesInd" type="tns:AutoUpdateFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that features for this Soc must be modified.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddOnSocListResponseType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="addOnSocInfo" type="tns:AddOnSocInfoResponseType">
+        <xs:annotation>
+          <xs:documentation>Structure providing detail add on soc information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddOnSocInfoType">
+    <xs:sequence>
+      <xs:element name="soc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Soc</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="effectiveDateTime" type="tns:EffectiveFromDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Effective date and time</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expirationDateTime" type="tns:ExpirationDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Expiration date and time</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ltsRank" type="tns:LinesToShareRankType">
+        <xs:annotation>
+          <xs:documentation>Family plan rank</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="specialRatedMdnList" type="tns:SpecialRatedMdnListType">
+        <xs:annotation>
+          <xs:documentation>Structure specifying phone number  and ranges which qualify for special rating.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddOnSocListType">
+    <xs:sequence>
+      <xs:element maxOccurs="30" name="addOnSocInfo" type="tns:AddOnSocInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing add on soc detail.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AffinityAttributeInfoType">
+    <xs:sequence>
+      <xs:element name="name" type="tns:AffinityAttributeNameType">
+        <xs:annotation>
+          <xs:documentation>Affinity Attribute name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="code" type="tns:AttributeKeyType">
+        <xs:annotation>
+          <xs:documentation>Affinity Attribute code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="type" type="tns:AffinityAttributeTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>C = Character, one char only.
+N = Integer.
+T = Date, with format MM/dd/yyyy
+D = Date and Time with format MM/dd/yyyy HH:mm:ss
+M = Decimal, meaning has exactly 2 digits after the decimal digit (3.25, 1.99, 19999.33 etc.)
+S = String</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="length" type="tns:AffinityAttributeSizeQuantityType">
+        <xs:annotation>
+          <xs:documentation>Length of affinity attribute</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="requiredInd" type="tns:AffinityAttributeRequiredFlagType">
+        <xs:annotation>
+          <xs:documentation>Valid values are: Y (Required) and N (Optional)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="mask" type="tns:AffinityAttributeMaskType">
+        <xs:annotation>
+          <xs:documentation>The mask of the affinity attribute</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pattern" type="tns:AffinityAttributePatternTextType">
+        <xs:annotation>
+          <xs:documentation>Valid values are:  Number = #### Decimal(2) = ##,###.##
+String = !!!
+String = ^^^^ 
+String = ###
+String = aaaa
+String = XXXXXX
+Char = All String formats
+Date = mm/dd/yyyy
+Datetime = mm/dd/yyyy HH:mm:ss </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="value" type="tns:AffinityAttributeValueTextType">
+        <xs:annotation>
+          <xs:documentation>Contains the default value for the attribute that may or may not be editable based on the editable tag.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="editableInd" type="tns:AffinityAttributeEditableFlagType">
+        <xs:annotation>
+          <xs:documentation>Valid values are: true (Editable) and false (Not Editable)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AffinityAttributeListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="affinityAttributeInfo" type="tns:AffinityAttributeInfoType">
+        <xs:annotation>
+          <xs:documentation>Affinity AttributeInfo</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AffinityInfoType">
+    <xs:sequence>
+      <xs:element name="affinityRegistrationSoc" type="tns:AffinityRegistrationServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Affinity plan</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="affinityName" type="tns:AffinityNameType">
+        <xs:annotation>
+          <xs:documentation>Name of the affinity </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="affinityAttributeList" type="tns:AffinityAttributeListType">
+        <xs:annotation>
+          <xs:documentation>Affinity Attribute Structure</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AirraveInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="airaveInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates order involves an airave device</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BanInfoDetailsType">
+    <xs:choice>
+      <xs:element name="ban" type="tns:BillingAccountNumberEnsType">
+        <xs:annotation>
+          <xs:documentation>Customer's billing account number.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="accountTypeInfo" type="tns:AccountTypeInfoType">
+        <xs:annotation>
+          <xs:documentation>Details identifying the account type and account sub type of the customer.
+New apps being on-boarded should send either ban (for existing accounts) for accountTypeInfo (for new accounts)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="customerTypeDescription">
+        <xs:annotation>
+          <xs:documentation>Specifies customer type if account type and sub type are not provided.
+Valid values:
+INDIVIDUAL
+BUSINESS
+CORPORATE_INDIVIDUAL
+CORPORATE_BUSINESS
+GOVERNMENT_INDIVIDUAL
+GOVERNMENT_BUSINESS</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:CustomerTypeCodeType">
+            <xs:enumeration value="INDIVIDUAL" />
+            <xs:enumeration value="BUSINESS" />
+            <xs:enumeration value="CORPORATE_INDIVIDUAL" />
+            <xs:enumeration value="CORPORATE_BUSINESS" />
+            <xs:enumeration value="GOVERNMENT_INDIVIDUAL" />
+            <xs:enumeration value="GOVERNMENT_BUSINESS" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="BillSummaryInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="totalAdditionalLineFee">
+        <xs:annotation>
+          <xs:documentation>Total additional line fee.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:FeeAmountType">
+            <xs:fractionDigits value="2" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="totalAdditionalOptionsFee">
+        <xs:annotation>
+          <xs:documentation>Total additional options fee.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:FeeAmountType">
+            <xs:fractionDigits value="2" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="firstMonthsBill">
+        <xs:annotation>
+          <xs:documentation>Estimates first month’s bill.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:BillAmountType">
+            <xs:fractionDigits value="2" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BanInfoType">
+    <xs:sequence>
+      <xs:element name="banInfoDetails" type="tns:BanInfoDetailsType">
+        <xs:annotation>
+          <xs:documentation>Details identifying the account , AT/ST or customerType</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="creditClass" type="tns:CreditClassCodeType">
+        <xs:annotation>
+          <xs:documentation>Credit class of the subscriber</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="corpId" type="tns:CorporationIdentifierType">
+        <xs:annotation>
+          <xs:documentation>The corporate id and government id of the associated subscriber.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BundleSubValidationInfoType">
+    <xs:sequence>
+      <xs:element name="pendingPlanOrSocInfoList" type="tns:PendingPlanOrSocListType">
+        <xs:annotation>
+          <xs:documentation>List of Pendling Plan Or SOC info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangedSocInfoType">
+    <xs:sequence>
+      <xs:element name="soc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Feature code that was passed in the input.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="existingSocInd" type="tns:FeatureExistsFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated soc is a feature that already exists on the subscriber associated to the request.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socSequenceNumber" type="tns:SequenceNumberType">
+        <xs:annotation>
+          <xs:documentation>OVM internal use only.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="effectiveDateTime" type="tns:EffectiveFromDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Date and time soc was effective.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expirationDateTime" type="tns:ExpirationDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Date and time </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socDesc" type="tns:ServiceOrderDescriptionType" />
+      <xs:element minOccurs="0" name="banLevelInd" type="tns:BillingAccountLevelSocRequiredFlagType">
+        <xs:annotation>
+          <xs:documentation>True indicates that associated feature is an account level feature.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="relatedSoc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Related soc</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="autoUpdateInd" type="tns:AutoUpdateFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates OVM added the soc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cellularSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated feature requires a phone number resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="dispatchSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated feature requires a push-to-talk resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="packetDataSupportInd" type="tns:PacketDataSupportTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated feature requires a data access resource.
+
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cdmaPacketDataSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated feature requires a CDMA IP resource.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="serviceType" type="tns:ServiceTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>OVM internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="autoAddInd" type="tns:AutoUpdateFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates OVM has automatically added this option</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productTypeList" type="tns:ProductTypeListType">
+        <xs:annotation>
+          <xs:documentation>Structure with product definition details.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="featureList" type="tns:FeatureListType">
+        <xs:annotation>
+          <xs:documentation>Structure providing feature detail info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="modifySocFeaturesInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>Indicates that features for this Soc must be modified.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangedSocListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="changedSocInfo" type="tns:ChangedSocInfoType">
+        <xs:annotation>
+          <xs:documentation>Changed SOC info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConflictDescInfoType">
+    <xs:sequence>
+      <xs:element name="conflictingDesc" type="tns:FeatureDescriptionType">
+        <xs:annotation>
+          <xs:documentation>conflicting soc description</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConflictDescListType">
+    <xs:sequence>
+      <xs:element maxOccurs="100" name="conflictingDescInfo" type="tns:ConflictDescInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing conflicting soc info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConflictingSocInfoType">
+    <xs:sequence>
+      <xs:element name="soc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>soc</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConflictingSocListType">
+    <xs:sequence>
+      <xs:element maxOccurs="20" name="conflictingSocInfo" type="tns:ConflictingSocInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing conflicting soc info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DetailPlanInfoType">
+    <xs:sequence>
+      <xs:element name="totalMinutes" type="tns:MinutesIncludedQuantityType">
+        <xs:annotation>
+          <xs:documentation>Indicates the total number of minutes the associated price plan includes </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="anytimeMinutes" type="tns:MinutesIncludedQuantityType">
+        <xs:annotation>
+          <xs:documentation>Indicates the total number of anytime minutes the associated price plan includes </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="nightWeekendMinutes" type="tns:MinutesIncludedTextType">
+        <xs:annotation>
+          <xs:documentation>Indicates the total number of night and weekend minutes the associated price plan includes </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="extraAnytimeMinutesCharge" type="tns:OtherChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>The per-minute overage charge that is assessed when anytime minutes have been exhausted in a single billing period</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="longDistanceCharge" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>The per-minute long distance charge.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="unitSmsCharge" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>Charge for SMS messaging if not included in plan or optional feature</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="callForwardingChargeRate" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>Charge to setup call forwarding with cell phone number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="etf" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>The early termination fee associated with this price plan</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="m2mMinutes" type="tns:MinutesIncludedQuantityType">
+        <xs:annotation>
+          <xs:documentation>Included mobile-to-mobile minutes</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="intlChargePerMinute" type="tns:OtherChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>The per-minute international charge</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="roamingCharge" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>The per-minute roaming charge</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="averageCharge" type="tns:ChargeAmountType" />
+      <xs:element name="nationalRoamingCharge" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>The per minute national roaming charge</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="longDistanceMinutes" type="tns:MinutesIncludedQuantityType">
+        <xs:annotation>
+          <xs:documentation>Number of long distance minutes included</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="intlRoamingCharge" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>The per-minute international roaming charge</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="billingIncrement" type="tns:RecurringChargeIncrementType">
+        <xs:annotation>
+          <xs:documentation>Indicates the increment the recurring charge occurs</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="wirelessInternetChargeRate" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>Data charge rate</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="familyMinutes" type="tns:MinutesIncludedQuantityType">
+        <xs:annotation>
+          <xs:documentation>Number of sharing minutes included</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="walkieTalkieMinutes" type="tns:MinutesIncludedQuantityType">
+        <xs:annotation>
+          <xs:documentation>Number of Direct Connect minutes included</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="walkieTalkieOverageChargeRate" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>Overage charge rate for Direct Connect usage</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceInfoType">
+    <xs:choice>
+      <xs:element name="itemId" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>Item id, or model id of the subscriber’s device.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="meid" type="tns:MobileEquipmentIdentifierType">
+        <xs:annotation>
+          <xs:documentation>MEID of the subscriber’s device.
+Required if hsn is not provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="macId" type="tns:MediumAccessControlAddressType">
+        <xs:annotation>
+          <xs:documentation>Medium Access Control Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="FeatureInfoType">
+    <xs:sequence>
+      <xs:element name="featureCode" type="tns:FeatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Component of the feature (option-id) , For internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="featureDesc" type="tns:FeatureDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Description of the feature component, For internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="allowedNumberRanges" type="tns:NumberRangeQuantityType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum number of phone ranges if associated feature is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="numberRangeSize" type="tns:NumberRangeSizeType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum size of the phone range if associated feature is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="msisdnInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>For internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productTypeList" type="tns:ProductTypeListType">
+        <xs:annotation>
+          <xs:documentation>Structure with product definition details.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FeatureInfoResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="featureId" type="tns:FeatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Component of the feature (option-id), For internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="featureCode" type="tns:FeatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Component of the feature (option-id) , For internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="featureName" type="tns:FeatureCodeType">
+        <xs:annotation>
+          <xs:documentation>Component of the feature (option-id) , For internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="featureDesc" type="tns:FeatureDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Description of the feature component, For internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="allowedNumberRanges" type="tns:NumberRangeQuantityType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum number of phone ranges if associated feature is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="numberRangeSize" type="tns:NumberRangeSizeType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum size of the phone range if associated feature is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="msisdnInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>For internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="effectiveDateTime" type="tns:EffectiveFromDateTimeType">
+        <xs:annotation>
+          <xs:documentation>No longer used</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expirationDateTime" type="tns:ExpirationDateTimeType">
+        <xs:annotation>
+          <xs:documentation>No longer used</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productTypeList" type="tns:ProductTypeListType">
+        <xs:annotation>
+          <xs:documentation>Structure with product definition details.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FeatureListType">
+    <xs:sequence>
+      <xs:element maxOccurs="20" name="featureInfo" type="tns:FeatureInfoResponseType">
+        <xs:annotation>
+          <xs:documentation>Structure providing feature detail info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FeatureListResponseType">
+    <xs:sequence>
+      <xs:element maxOccurs="20" name="featureInfo" type="tns:FeatureInfoResponseType">
+        <xs:annotation>
+          <xs:documentation>Structure providing detail feature information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LegacyPlanInfoType">
+    <xs:sequence>
+      <xs:element name="pricePlanSoc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Price Plan SOC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LegacyPlanListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="legacyPlanInfo" type="tns:LegacyPlanInfoType">
+        <xs:annotation>
+          <xs:documentation>List of legacy plan ids</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtsRecurringChargeInfoType">
+    <xs:sequence>
+      <xs:element name="rank" type="tns:LinesToShareRankType">
+        <xs:annotation>
+          <xs:documentation>Rank of subscriber within family plan.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="recurringCharge" type="tns:MonthlyRecurringChargeType">
+        <xs:annotation>
+          <xs:documentation>Recurring charge of associated family plan ranked subscriber</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtsRecurringChargeListType">
+    <xs:sequence>
+      <xs:element name="maxSubscribersAllowed" type="tns:NumberOfSubscriptionsType">
+        <xs:annotation>
+          <xs:documentation>Indicates the maximum number of subscribers that can share the associated sharing price plan</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" name="ltsRecurringChargeInfo" type="tns:LtsRecurringChargeInfoType">
+        <xs:annotation>
+          <xs:documentation>Family plan recurring charge info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrderInfoType">
+    <xs:sequence>
+      <xs:element name="orderDate" type="tns:OrderDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Order Date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="salesChannel" type="tns:SalesChannelIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Sales Channel</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PendingPlanOrSocInfoType">
+    <xs:sequence>
+      <xs:element name="orderLineId" type="tns:OrderLineItemNumberType">
+        <xs:annotation>
+          <xs:documentation>Unique value for each order line</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bundleSubRequestedActionInfo" type="tns:BundleSubActionInfoType">
+        <xs:annotation>
+          <xs:documentation>action structure</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pricePlanOrSocInfo" type="tns:PricePlanOrSocInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing plan and soc information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PendingPlanOrSocListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="pendingPlanOrSocInfo" type="tns:PendingPlanOrSocInfoType">
+        <xs:annotation>
+          <xs:documentation>Each order line is represented in a unique  structure</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PhoneNumberOrRangeType">
+    <xs:choice>
+      <xs:element name="phoneNumber" type="tns:PhoneNumberType">
+        <xs:annotation>
+          <xs:documentation>Phone Number holds the concatenation of the NPA Number, NXX Number and Line NUmber into a single string.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="phoneNumberRange" type="tns:PhoneNumberRangeType">
+        <xs:annotation>
+          <xs:documentation>Phone Number Range is the difference between the highest and the lowest phone number in a set of numbers where the range of number is inclusive of the lowest and highest number.
+Should be specified in following format.
+9133820000-9133821111</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="PlanTypeInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nationalPlanInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>true indicates the price plan is a national plan</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addOnPlanInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>true indicates the price plan is an add-on sharing plan</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="familyPlanInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>true indicates the price plan is a sharing plan.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="regionalPlanInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>true indicates the price plan is a regional plan.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="promotionalPlanInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>true indicates the price plan is a promotional plan</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PricePlanInfoResponseType">
+    <xs:sequence>
+      <xs:element name="pricePlanSoc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Plan code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="socDesc" type="tns:ServiceOrderDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Plan Name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="socLongDesc" type="tns:ServiceOrderLongDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Plan description</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="planCategory" type="tns:ServiceCategoryNameType">
+        <xs:annotation>
+          <xs:documentation>Plan category</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="banLevelInd" type="tns:BillingAccountLevelSocRequiredFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates associated plan id is an account level price plan, for internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cellularSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>True indicates that associated feature is an account level feature.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="dispatchSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated feature requires a phone number resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="packetDataSupportInd" type="tns:PacketDataSupportTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated feature requires a push-to-talk resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cdmaPacketDataSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated feature requires a CDMA IP resource.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="recurringCharge" type="tns:MonthlyRecurringChargeType">
+        <xs:annotation>
+          <xs:documentation>price plan recurring charge</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ltsRecurringChargeList" type="tns:LtsRecurringChargeListType">
+        <xs:annotation>
+          <xs:documentation>List of recurring charges</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="oneTimeCharge" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>Indicates the amount of an applicable one time charge in order to select the associated price plan</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="planPriority" type="tns:PlanPriorityType">
+        <xs:annotation>
+          <xs:documentation>Can be optionally used to determine sorting order of the price plans returned</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dataAllowance" type="tns:DataAllowanceDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Data allowance</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socSequenceNumber" type="tns:SequenceNumberType">
+        <xs:annotation>
+          <xs:documentation>For OVM Internal Use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="planTypeInfo" type="tns:PlanTypeInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing plan type info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="contractMonths" type="tns:NumberOfContractMonthsType">
+        <xs:annotation>
+          <xs:documentation>Indicates if the associated price plan requires a 0, 12, or 24 month service agreement if selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="allowedNumberRanges" type="tns:NumberRangeQuantityType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum number of phone ranges if associated price plan is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="numberRangeSize" type="tns:NumberRangeSizeType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum size of the phone range if associated price plan is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="taxExclusionCode" type="tns:TaxExemptionClassCodeType">
+        <xs:annotation>
+          <xs:documentation>For OVM internal use only.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productTypeList" type="tns:ProductTypeListType">
+        <xs:annotation>
+          <xs:documentation>Structure providing product definition information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="corpRequiredInd" type="tns:BillingAccountLevelSocRequiredFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates if the associated price plan is required to be chosen because of the corp gov id provided in the Plans Request.  Valid values include Y and N</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="planEquivalentInd" type="tns:PlanEquivalentFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates if associated price plan is the technology equivalent (based on brand-type) of the subscriber’s existing plan.  Valid values include Y and N</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="affinityInfo" type="tns:AffinityInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing affinity detail information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="detailPlanInfo" type="tns:DetailPlanInfoType" />
+      <xs:element minOccurs="0" name="featureList" type="tns:FeatureListType">
+        <xs:annotation>
+          <xs:documentation>Structure providing detail plan information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="relatedSocList" type="tns:RelatedSocListResponseType">
+        <xs:annotation>
+          <xs:documentation>is it related or add on?</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PricePlanInfoType">
+    <xs:sequence>
+      <xs:element name="pricePlanSoc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Plan code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="effectiveDateTime" type="tns:EffectiveFromDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Plan effective date.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expirationDateTime" type="tns:ExpirationDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Plan expiration date.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socDesc" type="tns:ServiceOrderDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Plan Name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="banLevelInd" type="tns:BillingAccountLevelSocRequiredFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates associated plan id is an account level price plan, for internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="autoUpdateInd" type="tns:AutoUpdateFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates OVM has automatically added the plan.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cellularSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated soc requires a phone number resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="dispatchSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated soc requires a push-to-talk resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="packetDataSupportInd" type="tns:PacketDataSupportTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated soc requires a data access resource.
+
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cdmaPacketDataSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated soc requires a CDMA IP resource.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="serviceType" type="tns:ServiceTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>OVM internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productTypeList" type="tns:ProductTypeListType">
+        <xs:annotation>
+          <xs:documentation>Structure with product definition details.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="featureList" type="tns:FeatureListResponseType">
+        <xs:annotation>
+          <xs:documentation>Structure providing feature detail info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="relatedSocList" type="tns:RelatedSocListType">
+        <xs:annotation>
+          <xs:documentation>Structure providing other option detail info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="naiInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated price plan requires a CDMA resource.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="modifySocFeaturesInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>Indicates that features for this Soc must be modified.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PricePlanListResponseType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="pricePlanInfo" type="tns:PricePlanInfoResponseType">
+        <xs:annotation>
+          <xs:documentation>Price plan info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PricePlanOrSocInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pricePlanSoc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Price Plan Soc</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="effectiveDateTime" type="tns:EffectiveFromDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Effective date and time</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ltsRank" type="tns:LinesToShareRankType">
+        <xs:annotation>
+          <xs:documentation>family plan rank</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="contractMonths" type="tns:NumberOfContractMonthsType">
+        <xs:annotation>
+          <xs:documentation>Number of months in contract</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="specialRatedMdnList" type="tns:SpecialRatedMdnListType">
+        <xs:annotation>
+          <xs:documentation>Structure specifying phone number  and ranges which qualify for special rating.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addOnSocList" type="tns:AddOnSocListType">
+        <xs:annotation>
+          <xs:documentation>Structure providing list of add on Socs</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PrimarySubscriberInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="primarySubscriberId" type="tns:SubscriberIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Subscriber id
+Required when a subscriber is attempting to add to an existing family plan and a primary-plan-id is not provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="primarySoc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Primary family plan soc.
+Required when a subscriber is attempting to add to an existing family plan and a primary-subscriber-id is not provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductTypeInfoType">
+    <xs:sequence>
+      <xs:element name="productId" type="tns:ProductCategoryCodeType">
+        <xs:annotation>
+          <xs:documentation>Price Plan Product Indicator
+Valid values are: 
+LTS (lines to share) 
+M2H (mobile to home)
+M2O (mobile to office)
+AFR (affinity registration)
+AFB (affinity benefit)
+AIR (airave)
+HPP (NDC provisioning feature)
+HPR (NDC rating feature)
+HPB (NDC rating and provisioning feature)
+HPC (NDC call forwarding feature)
+WEL (Welcome Verify)
+VBS (Discounted MRC Feature)
+ACV (Discounted MRC Feature)
+HP1 (NDC feature)
+HP2 (NDC Feature)
+WMX (WiMAX feature)
+SBD (Secondary Bundle)
+PBD (Primary Bundle)
+ATA (Airave Service with ATA)
+4GC (4G Clearwire)
+BSF (Barring SOC Feature)
+VCF (Voice Control Feature)
+ATA (Airave Service with ATA)
+4GC (4G Clearwire)
+UNI (Universal)
+INS (Insurance)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductTypeListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="productTypeInfo" type="tns:ProductTypeInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure with product type information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RelatedSocInfoResponseType">
+    <xs:sequence>
+      <xs:element name="soc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Soc code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="socDesc" type="tns:ServiceOrderDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Soc name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="socLongDesc" type="tns:ServiceOrderLongDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Plan Description</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="allowedNumberRanges" type="tns:NumberRangeQuantityType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum number of phone ranges if associated price plan is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="allowedNumberRangeSize" type="tns:NumberRangeSizeType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum size of the phone range if associated price plan is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productTypeList" type="tns:ProductTypeListType">
+        <xs:annotation>
+          <xs:documentation>Structure with product definition details.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RelatedSocInfoType">
+    <xs:sequence>
+      <xs:element name="soc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Soc code of the option.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="existingSocInd" type="tns:FeatureExistsFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated option id is a feature that already exists on the subscriber associated to the request.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="sequenceNumber" type="tns:SequenceNumberType">
+        <xs:annotation>
+          <xs:documentation>OVM internal use only.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="effectiveDateTime" type="tns:EffectiveFromDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Date option was effective.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expirationDateTime" type="tns:ExpirationDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Date option expires.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="optionName" type="tns:OptionNameType">
+        <xs:annotation>
+          <xs:documentation>Name of option</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="banLevelIOptionInd" type="tns:BillingAccountLevelSocRequiredFlagType">
+        <xs:annotation>
+          <xs:documentation>True indicates that associated soc is an account level feature.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="relatedOptionId" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Related option soc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="autoUpdateInd" type="tns:AutoUpdateFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates OVM automatically added this option.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cellularSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated soc requires a phone number resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="dispatchSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated soc requires a push-to-talk resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="packetDataSupportInd" type="tns:PacketDataSupportTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated soc requires a data access resource.
+
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cdmaPacketDataSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated soc requires a CDMA IP resource.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="serviceType" type="tns:ServiceTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>OVM internal use only</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="autoAddInd" type="tns:AutoUpdateFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates OVM automatically added this option.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productTypeList" type="tns:ProductTypeListType">
+        <xs:annotation>
+          <xs:documentation>Structure with product definition details.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="featureList" type="tns:FeatureListResponseType">
+        <xs:annotation>
+          <xs:documentation>List of structure providing detail feature information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="modifySocFeaturesInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>Indicates that features for this Soc must be modified.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RelatedSocListResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="relatedSocInfo" type="tns:RelatedSocInfoResponseType">
+        <xs:annotation>
+          <xs:documentation>Provides detail related soc info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RelatedSocListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="relatedSocInfo" type="tns:RelatedSocInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure for related soc info detail</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResourceInfoType">
+    <xs:sequence>
+      <xs:element name="resourceType" type="tns:NetworkResourceTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Valid values are:
+P (PTN or MDN)
+U (UFMI)
+H (NDC or HPPTT)
+I (iDEN IP)
+N (NAI)
+S (CDMA IP)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ipType" type="tns:InternetProtocolAddressTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates the type of IP Address to request to be provisioned</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="action" type="tns:ResourceActivityCodeType">
+        <xs:annotation>
+          <xs:documentation>Valid values are:
+ADD
+RES
+DEL</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResourceListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="resourceInfo" type="tns:ResourceInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing detail resource info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SecondaryBundleSubPricePlanChangeRequiredInfoType">
+    <xs:sequence>
+      <xs:element name="primaryBundleSoc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Identifies the primary bundled SOC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="secondaryBundleSoc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Identifies the secondary bundled SOC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="removeSecondarySubscriberCount" type="tns:BundleServiceOrderCodeCountType">
+        <xs:annotation>
+          <xs:documentation>The number of secondary SOCs that must be removed (may be less than the number secondary subscribers that exist on the account)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="secSubscriberList" type="tns:SecondarySubscriberListType">
+        <xs:annotation>
+          <xs:documentation>List of Secondary Subscribers</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SecondaryBundleSubPricePlanChangeRequiredListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="secBundleSubPricePlanChangeRequiredInfo" type="tns:SecondaryBundleSubPricePlanChangeRequiredInfoType">
+        <xs:annotation>
+          <xs:documentation>Indicates List of Secondary subscribers that must change price plan to align with the requested removal of the primary plan sent in the Request</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SecondarySubscriberListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="secSubscriberInfo" type="tns:SecondarySubscriberInfoType">
+        <xs:annotation>
+          <xs:documentation>List of secondary subscribers</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SecondarySubscriberInfoType">
+    <xs:sequence>
+      <xs:element name="subscriberId">
+        <xs:annotation>
+          <xs:documentation>Secondary subscriber that must change price plan to align with the requested removal of the primary plan sent in the Request.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:SubscriberIdentifierType">
+            <xs:minLength value="8" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="mdn" type="tns:MobileDirectoryNumberStringType">
+        <xs:annotation>
+          <xs:documentation>MDN of the subscriber</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceAgreementInfoType">
+    <xs:sequence>
+      <xs:element name="requestedActionInfo" type="tns:RequestedActionInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure identifying transaction type for validation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="banInfo" type="tns:BanInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure identifying ban information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="primarySubscriberInfo" type="tns:PrimarySubscriberInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure identifying subscriber information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderInfo" type="tns:OrderInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure identifying order information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="serviceAreaInfo" type="tns:ServiceAreaInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure identifying service area information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceInfo" type="tns:DeviceInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing device information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pricePlanOrSocInfo" type="tns:PricePlanOrSocInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing plan and soc information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="airaveInfo" type="tns:AirraveInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing airave info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="bundleSubValidationInfo" type="tns:BundleSubValidationInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure identifying pending “shopping cart” order lines to be used in cross-sub rule validation </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceAreaInfoType">
+    <xs:choice>
+      <xs:element name="serviceAreaZip" type="tns:ServiceAreaZipType">
+        <xs:annotation>
+          <xs:documentation>Stucture to indicate the zip code for which associated plans should be returned.
+This is required if the CSA, submarket is not provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="subMarket" type="tns:SubMarketCodeType">
+        <xs:annotation>
+          <xs:documentation>Sub market.
+This is required if the service zip code, or CSA is not provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="csa" type="tns:CommunicationServiceAreaType">
+        <xs:annotation>
+          <xs:documentation>Coverage Service Area</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="ServiceAreaZipType">
+    <xs:sequence>
+      <xs:element name="zipCode" type="tns:UspsPostalCodeType">
+        <xs:annotation>
+          <xs:documentation>Zip code of service area.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="zip4Code" type="tns:UspsPostalCodeExtensionType">
+        <xs:annotation>
+          <xs:documentation>Zip extension code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SocInfoType">
+    <xs:sequence>
+      <xs:element name="soc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Soc code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socDesc" type="tns:ServiceOrderDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Soc name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socLongDesc" type="tns:ServiceOrderLongDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Plan Description</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="banLevelOptionInd" type="tns:BillingAccountLevelSocRequiredFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated price plan is an account level price plan</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cellularSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that associated soc requires a phone number resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="dispatchSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated soc requires a push-to-talk resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="packetDataSupportInd" type="tns:PacketDataSupportTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated soc requires a data access resource.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cdmaPacketDataSupportInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates that the associated soc requires a CDMA IP resource.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="recurringCharge" type="tns:MonthlyRecurringChargeType">
+        <xs:annotation>
+          <xs:documentation>price plan recurring charge</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ltsRecurringChargeList" type="tns:LtsRecurringChargeListType">
+        <xs:annotation>
+          <xs:documentation>List of recurring charges</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="oneTimeCharge" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>Indicates the amount of an applicable one time charge in order to select the associated price plan</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="mutuallyExclusiveInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates is mutually exclusive</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="contractMonths" type="tns:NumberOfContractMonthsType">
+        <xs:annotation>
+          <xs:documentation>Indicates if the associated price plan requires a 0, 12, or 24 month service agreement if selected</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="allowedNumberRanges" type="tns:NumberRangeQuantityType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum number of phone ranges if associated price plan is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="numberRangeSize" type="tns:NumberRangeSizeType">
+        <xs:annotation>
+          <xs:documentation>Indicates maximum size of the phone range if associated price plan is a mobile to office type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productTypeList" type="tns:ProductTypeListType">
+        <xs:annotation>
+          <xs:documentation>Structure providing product definition information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="corpRequiredInd" type="tns:BillingAccountLevelSocRequiredFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates if the associated price plan is required to be chosen because of the corp gov id provided in the Plans Request</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socEquivalentInd" type="tns:PlanEquivalentFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates if associated price plan is the technology equivalent (based on brand-type) of the subscriber’s existing plan.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="sourceSoc" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>source Soc</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="affinityInfo" type="tns:AffinityInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing affinity detail information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="socCategory" type="tns:ServiceCategoryNameType">
+        <xs:annotation>
+          <xs:documentation>Soc category</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="featureList" type="tns:FeatureListType">
+        <xs:annotation>
+          <xs:documentation>Structure providing feature detail info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SocListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="socInfo" type="tns:SocInfoType">
+        <xs:annotation>
+          <xs:documentation>SOC Info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SpecialRatedMdnListType">
+    <xs:sequence>
+      <xs:element maxOccurs="3" name="specialRatedMdnInfo" type="tns:PhoneNumberOrRangeType">
+        <xs:annotation>
+          <xs:documentation>Special Rated MDN info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SuggestionGroupInfoType">
+    <xs:sequence>
+      <xs:element name="suggestionGroupId" type="tns:SuggestionGroupIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Indicates the specific suggestion group number of the price plan soc conflict.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="conflictingSocList" type="tns:ConflictingSocListType">
+        <xs:annotation>
+          <xs:documentation>Structure providing conflicting SOC info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="conflictingDescList" type="tns:ConflictDescListType">
+        <xs:annotation>
+          <xs:documentation>Description of the error message associated with the plan or Soc conflict.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="suggestionList" type="tns:SuggestionListType">
+        <xs:annotation>
+          <xs:documentation>Provides detail info for suggested actions to resolve the conflict</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SuggestionGroupListType">
+    <xs:sequence>
+      <xs:element maxOccurs="100" name="suggestionGroupInfo" type="tns:SuggestionGroupInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing suggestion group info.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SuggestionInfoType">
+    <xs:sequence>
+      <xs:element name="suggestionId" type="tns:SuggestiondentifierType">
+        <xs:annotation>
+          <xs:documentation>Indicates the suggestion number of the available suggestion for the PP/SOC conflict in the Service Validation Response</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="actionList" type="tns:ActionListType">
+        <xs:annotation>
+          <xs:documentation>List of proposed actions to resolve conflicts</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SuggestionListType">
+    <xs:sequence>
+      <xs:element maxOccurs="100" name="suggestionInfo" type="tns:SuggestionInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure providing conflict resolutin suggestions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ValidationErrorInfoType">
+    <xs:sequence>
+      <xs:element name="errorType" type="tns:ErrorTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Identifies the OVM error type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="errorCode" type="tns:ErrorMessageIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Identifies the OVM error code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="errorSubName" type="tns:ErrorSubMessageType">
+        <xs:annotation>
+          <xs:documentation>Identifies the OVM error sub name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="errorDescription" type="tns:ErrorMessageTextType">
+        <xs:annotation>
+          <xs:documentation>Description of the OVM error</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ActivationOrderIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Activation Order Identifier uniquely identifies an Activation Order.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24" />
+      <xs:minLength value="1" />
+      <xs:enumeration value="SUCCESS" />
+      <xs:enumeration value="FAILED" />
+      <xs:enumeration value="CANCELLED" />
+      <xs:enumeration value="NOT_VALIDATED" />
+      <xs:enumeration value="VALID" />
+      <xs:enumeration value="INVALID_IMEI" />
+      <xs:enumeration value="INVALID_SIM" />
+      <xs:enumeration value="ACTIVE_IMEI" />
+      <xs:enumeration value="ACTIVE_SIM" />
+      <xs:enumeration value="NEGATIVE_IMEI" />
+      <xs:enumeration value="NEGATIVE_SIM" />
+      <xs:enumeration value="INVALID_EQUIP" />
+      <xs:enumeration value="RATE_CENTER_MISMATCH" />
+      <xs:enumeration value="INVALID_ESN" />
+      <xs:enumeration value="NEGATIVE_ESN" />
+      <xs:enumeration value="ACTIVE_ESN" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AffinityAttributeEditableFlagType">
+    <xs:annotation>
+      <xs:documentation>Affinity Attribute Editable Flag is a boolean indicator of whether the associate affinity attribute value is editable.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="AffinityAttributeMaskType">
+    <xs:annotation>
+      <xs:documentation>Affinity Attribute Mask is text that is used as a mask affinity values, usually for search or filter purposes.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64" />
+      <xs:minLength value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AffinityAttributeNameType">
+    <xs:annotation>
+      <xs:documentation>Affinity Attribute Name designates a specific attribute associated to an affinity program.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AffinityAttributePatternTextType">
+    <xs:annotation>
+      <xs:documentation>Affinity Attribute Pattern Text is a series of characters used to designate the a pattern of characters to match to the attribute value.  Ex:  XXX-XXXXXX</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+      <xs:minLength value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AffinityAttributeRequiredFlagType">
+    <xs:annotation>
+      <xs:documentation>Affinity Attribute Required Flag is a boolean indicator of whether the associate affinity attribute is or was required.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="AffinityAttributeSizeQuantityType">
+    <xs:annotation>
+      <xs:documentation>Affinity Attribute Size Quantity holds the size or length of the attribute value.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AffinityAttributeTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Affinity Attribute Type Code designates the type of data in the attribute value.
+Example values:
+C = Character, one char only.
+N = Integer.
+T = Date, with format MM/dd/yyyy
+D = Date and Time with format MM/dd/yyyy HH:mm:ss
+M = Decimal, meaning has exactly 2 digits after the decimal digit (3.25, 1.99, 19999.33 etc.)
+S = String.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="C" />
+      <xs:enumeration value="N" />
+      <xs:enumeration value="T" />
+      <xs:enumeration value="D" />
+      <xs:enumeration value="M" />
+      <xs:enumeration value="S" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AffinityAttributeValueTextType">
+    <xs:annotation>
+      <xs:documentation>Affinity Attribute Value Text is used to provide the ability to view/update the current affinity attribute values via all front ends (CSM, RMS+, FDT, TOES, sVIEW, EAI, WINS).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="200" />
+      <xs:minLength value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AffinityNameType">
+    <xs:annotation>
+      <xs:documentation>Affinity Name is the common name of the associated Affinity program.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AffinityRegistrationServiceOrderCodeType">
+    <xs:annotation>
+      <xs:documentation>Affinity Registiration Service Order Code is used if the associated price plan is an affinity benefit type.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AssociateIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Associate Identifier is the Retail Store Associate Identifier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AttributeKeyType">
+    <xs:annotation>
+      <xs:documentation>Attribue Key is the identifier of an Attribute Value when sent as a pair.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AutoUpdateFlagType">
+    <xs:annotation>
+      <xs:documentation>Auto Update Flag is a boolean indicator of whether the record was automatically updated by the system.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountLevelSocRequiredFlagType">
+    <xs:annotation>
+      <xs:documentation>Billing Account Level Soc Required Flag indicates whether this SOC is required at the BAN level, if the BAN is added to the Corporation.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountNumberEnsType">
+    <xs:annotation>
+      <xs:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:totalDigits value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountSubTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Billing Account SubType Code further categorizes the Billing Account within the context of the assigned Billing Account Type Code used primarily for Customer segmentation in General Ledger reporting and collection treatment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Billing Account Type Code identifies the account typeof the BILLING_QACCOUNT. It is used mainly for segregation of the G/L reporting and Collection treatment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BillAmountType">
+    <xs:annotation>
+      <xs:documentation>Bill Amount is the total amount on the bill. Total net amount due for the bill cycle. (currentCharges + previousBalance) – paymentsMade – adjustment)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="11" />
+      <xs:fractionDigits value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BinaryExpressionType">
+    <xs:annotation>
+      <xs:documentation>Binary Expression is a type of an expression with two possible states,"true"and"false".</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="BrandCodeType">
+    <xs:annotation>
+      <xs:documentation>Brand Code designates a specifc brand that the company uses.  i.e. S - Sprint, N - Nextel</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="S" />
+      <xs:enumeration value="N" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BundleServiceOrderCodeCountType">
+    <xs:annotation>
+      <xs:documentation>Bundle Service Order Code Count is the number of Service Order Codes (SOCs) in the bundle.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer" />
+  </xs:simpleType>
+  <xs:simpleType name="ChargeAmountType">
+    <xs:annotation>
+      <xs:documentation>Charge Amount is the dollar amount charged for goods or services.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CommunicationServiceAreaType">
+    <xs:annotation>
+      <xs:documentation>Communication Service Area (CSA) represents  a geographic area served by a communication service provider, which can be broken down into regional, metropolitan, district and smaller sections called ''leaves.'' A CSA could represent locations such as metropolitan service area (MSA), system identification number/billing identification number (SID/BID), etc. Sprint PCS has chosen to use geographical divisions so that customers can be segregated into logical units, and pricing plans may be assigned at area and district levels.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CorporationIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Corporation Identifer uniquely identifies a corporate entity.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CreditClassCodeType">
+    <xs:annotation>
+      <xs:documentation>Credit Class Code identifies the Customer's level of financial responsibility.   
+
+For example, the Credit Class Code assignment determines what Products the Customer can purchase, how many Subscriptions they can be liable for, whether there is a required depsoit and the amount of the deposit, etc..</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CustomerTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Customer Type Code provides a mechanism for categorizing Customers within the context of various functionalities.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DataAllowanceDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Data Allowance Description is a description of the allowance for data on a plan.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>Device Serial Number is a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xs:documentation>
+      <xs:documentation>Device Serial Number a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="10" />
+      <xs:pattern value="[a-zA-Z0-9]{8}|[a-zA-Z0-9]{10}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EffectiveFromDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Effective From Date holds the first calendar month, day, year, hour, minute, second and fraction of a second a Role, Preference, Assignment, etc. was in effect.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="ErrorMessageIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Unique error message id number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer" />
+  </xs:simpleType>
+  <xs:simpleType name="ErrorMessageTextType">
+    <xs:annotation>
+      <xs:documentation>Textual description of the error message.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ErrorSubMessageType">
+    <xs:annotation>
+      <xs:documentation>Error Sub Message containse additional error message text when there are multiple error descriptions per error code.  The reason for this is to bucket similar errors together but provide more specific descriptions for the individual scenarios.</xs:documentation>
+      <xs:documentation>The Transaction Error Message contains textual detail of why a particular transaction failed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ErrorTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>The Error Type Code identifies the type of error transaction being processed.
+.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:unsignedInt" />
+  </xs:simpleType>
+  <xs:simpleType name="ExpirationDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Expiration Date Time holds the last calendar Date and Time of day an object, relationship, privilege, etc. is valid or in force.  After this date the object is no longervalid or in force.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="FeeAmountType">
+    <xs:annotation>
+      <xs:documentation>Fee Amount is the dollar amount of a fee charge.  It may be a recurring or one-time amount.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal" />
+  </xs:simpleType>
+  <xs:simpleType name="FeatureCodeType">
+    <xs:annotation>
+      <xs:documentation>The code of the feature being granted in this service feature</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FeatureDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Feature Description is a free text field describing the feature.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FeatureExistsFlagType">
+    <xs:annotation>
+      <xs:documentation>Feature Exsists Flag indicates whether or not the feature already exists.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="FeatureSupportedFlagType">
+    <xs:annotation>
+      <xs:documentation>Flag indicating whether or not the feature is supported.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="FieldNameType">
+    <xs:annotation>
+      <xs:documentation>Field Name Type holds the name of a data element in an interface Logical Unit Of Work.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="4" />
+      <xs:enumeration value="CODE" />
+      <xs:enumeration value="NAME" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InternetProtocolAddressTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Internet Protocol Address type code designates a type for an internet protocol adderss (usually to distinguish IPv4 from IPv6 addresses).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LinesToShareChangeFlagType">
+    <xs:annotation>
+      <xs:documentation>Lines To Share Change Flage indicates that subscribers that have the sharing plan of the subscriber sent in the Request must have their price plan changed also.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="LinesToShareRankType">
+    <xs:annotation>
+      <xs:documentation>Lines To Share Rank is the Current rank of associated subscriber within the family plan they are in.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:totalDigits value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MediumAccessControlAddressType">
+    <xs:annotation>
+      <xs:documentation>Medium Access Control Address (MAC Address) contains a 12 byte hexadecimal value used to identify a device used in the IEEE sublayer of a network which controls access to the shared medium by network-attached devices. 
+
+In the context of the OSI reference model, the Medium Access Control (MAC) layer extends above to the Data Link Layer and below to the Physical Layer.</xs:documentation>
+      <xs:documentation>alias: MAC ID</xs:documentation>
+      <xs:documentation>alias: Media Access Control Identifcation</xs:documentation>
+      <xs:documentation>Medium Access Control Address (MAC Address) contains a 12 byte hexadecimal value used to identify a device used in the IEEE sublayer of a network which controls access to the shared medium by network-attached devices. 
+
+In the context of the OSI reference model, the Medium Access Control (MAC) layer extends above to the Data Link Layer and below to the Physical Layer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MinutesIncludedQuantityType">
+    <xs:annotation>
+      <xs:documentation>Minutes Included Quantity is used to quantify the number of  minutes included in the associated plan or plan category.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer" />
+  </xs:simpleType>
+  <xs:simpleType name="MinutesIncludedTextType">
+    <xs:annotation>
+      <xs:documentation>Minutes Included Text is a text representation of the number of  minutes included in the associated plan or plan category.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberStringType">
+    <xs:annotation>
+      <xs:documentation>The method of identifying telephone trunks in the public network of North America, called World Numbering Zone 1 by the ITU-T. the Plan has 3 ways of identifying phone numbers in North America -- a 3-digit area code, a 3-digit exchange or central office code, and 4-digit subscriber code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileEquipmentIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Network Device Identifier is an identifier used by the device to communicate (broadcast) its identity to the wireless mobile network.  
+
+Network Device Identifier is one of the following: 
+Electronic Serial Number (ESN); 
+Mobile Equipment IDentifier (MEID);
+International Mobile Equipment Identfier (IMEI);
+Subscriber Identify Module (SIM).</xs:documentation>
+      <xs:documentation>A Mobile Equipment IDentifier (MEID) is a globally unique number for a physical piece of mobile station equipment. Equipment identifiers are 'burned' into a CDMA device, and should be resistant to modification.  The ESN will migrate to the MEID with assignments anticipated to begin in the 2004 to 2005 timeframe.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="18" />
+      <xs:pattern value="[a-zA-Z0-9]{1,18}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNumberType">
+    <xs:annotation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MonthlyRecurringChargeType">
+    <xs:annotation>
+      <xs:documentation>Monthly Recurring Charge holds the base dollar amount billed to the Customer every month for a service.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2" />
+      <xs:totalDigits value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NetworkResourceTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Network Resource Type Code identifies the Network Resource type that is allocated to the subscriber. 
+
+Valid Values are:
+
+'B' - Public IP
+'C' - Corporate IP
+'H' - HPPTT NAI
+'I' - IMSI
+'M' - UFMI
+'N' - NAI
+'P' - PTN
+'R' - Private IP
+'T' - Talk Group
+'U' - Urban + Fleet</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="H" />
+      <xs:enumeration value="I" />
+      <xs:enumeration value="N" />
+      <xs:enumeration value="P" />
+      <xs:enumeration value="U" />
+      <xs:enumeration value="S" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumberOfContractMonthsType">
+    <xs:annotation>
+      <xs:documentation>Number Of Contract Months is the number of months the Customer must commit to to receive Rate plans, Rebates, Discount, etc. under a contract.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumberOfSubscriptionsType">
+    <xs:annotation>
+      <xs:documentation>Total number of subscribers (including reserved, active, suspended, and cancelled) associated with the account.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger" />
+  </xs:simpleType>
+  <xs:simpleType name="NumberRangeQuantityType">
+    <xs:annotation>
+      <xs:documentation>Number Range Quantity is the number of phone ranges if associated price plan is mobile to office type.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumberRangeSizeType">
+    <xs:annotation>
+      <xs:documentation>Number Range Size is the quantity of numbers in a specific number range.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:unsignedInt">
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="10000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OptionNameType">
+    <xs:annotation>
+      <xs:documentation>Option Name is a common name for an option on a plan.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrderDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Order Date Time is the combination of calendar date and time of day on which the order was actually placed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="OrderLineItemNumberType">
+    <xs:annotation>
+      <xs:documentation>Order Line Item Number uniquely identifies an instance of ORDER ITEM within the scope of an ORDER.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:unsignedLong" />
+  </xs:simpleType>
+  <xs:simpleType name="OrderValidationModuleOrderTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Order Validation Module Order Type Code identifies the type of order ORDER in the OVM system
+Values: 
+NEW
+ADD_ON
+UPGRADE
+REPLACE
+BOOST
+FAC</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16" />
+      <xs:enumeration value="NEW" />
+      <xs:enumeration value="ADD_ON" />
+      <xs:enumeration value="UPGRADE" />
+      <xs:enumeration value="REPLACE" />
+      <xs:enumeration value="SERVICE_ONLY" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OtherChargeAmountType">
+    <xs:annotation>
+      <xs:documentation>Other Charge Amount contains the total charges associated with miscellaneous items. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="13" />
+      <xs:fractionDigits value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PacketDataSupportTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Packet Data Support Type Code Designates a level of packet data support for the associated feature that may require a data access resource.
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PersonalIdentificationNumberType">
+    <xs:annotation>
+      <xs:documentation>Personal Identification Number (PIN) is a secret numeric password shared between a user and a system that can be used to authenticate the user to the system. Typically, the user is required to provide a non-confidential user identifier or token (such as a banking card) and a confidential PIN to gain access to the system. Upon receiving the User ID and PIN, the system looks up the PIN based upon the User ID and compares the looked-up PIN with the received PIN. The user is granted access only when the number entered matches with the number stored in the system.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PhoneNumberRangeType">
+    <xs:annotation>
+      <xs:documentation>Phone Number Range is the difference between the highest and the lowest phone number in a set of numbers where the range of number is inclusive of the lowest and highest number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="21" />
+      <xs:pattern value="\d{10}-\d{10}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PhoneNumberType">
+    <xs:annotation>
+      <xs:documentation>Phone Number holds the concatenation of the NPA Number, NXX Number and Line NUmber into a single string.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PlanActionCodeType">
+    <xs:annotation>
+      <xs:documentation>Plan Action Code designates a specific action preformed on a plan.  ex.  Add, Expire</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+      <xs:enumeration value="ADD" />
+      <xs:enumeration value="EXPIRE" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PlanEquivalentFlagType">
+    <xs:annotation>
+      <xs:documentation>Plan Equivalent Flag indicates if associated price plan is the technology equivalent (based on brand-type) of the subscriber’s existing plan.  Valid values:  true, false</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="PlanPriorityType">
+    <xs:annotation>
+      <xs:documentation>Plan Priority is a number that represents the priority value of the plan(for sorting order).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger" />
+  </xs:simpleType>
+  <xs:simpleType name="PlanShareTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Plan Share Type code designates the share type for plans that support a primary / add-on sharing model.
+P - Primary 
+A - Add-on</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="3" />
+      <xs:enumeration value="fam" />
+      <xs:enumeration value="ind" />
+      <xs:enumeration value="all" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProductIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Product Identifier is a code that uniquely idenfies and instance or group of items offered for sale to the Customer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProductCategoryCodeType">
+    <xs:annotation>
+      <xs:documentation>Product Category Code is used for the categorization of products allowing grouping, selection, and pricing flexiblity.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="3" />
+      <xs:enumeration value="LTS" />
+      <xs:enumeration value="M2H" />
+      <xs:enumeration value="M2O" />
+      <xs:enumeration value="AFR" />
+      <xs:enumeration value="AFB" />
+      <xs:enumeration value="AIR" />
+      <xs:enumeration value="HPP" />
+      <xs:enumeration value="HPR" />
+      <xs:enumeration value="HPB" />
+      <xs:enumeration value="HPC" />
+      <xs:enumeration value="WEL" />
+      <xs:enumeration value="VBS" />
+      <xs:enumeration value="ACV" />
+      <xs:enumeration value="HP1" />
+      <xs:enumeration value="HP2" />
+      <xs:enumeration value="WMX" />
+      <xs:enumeration value="PBD" />
+      <xs:enumeration value="SBD" />
+      <xs:enumeration value="ATA" />
+      <xs:enumeration value="4GC" />
+      <xs:enumeration value="UNI" />
+      <xs:enumeration value="VCF" />
+      <xs:enumeration value="BSF" />
+      <xs:enumeration value="INS" />
+      <xs:enumeration value="TEP" />
+      <xs:enumeration value="ESR" />
+      <xs:enumeration value="EIP" />
+      <xs:enumeration value="AAP" />
+      <xs:enumeration value="ADI" />
+      <xs:enumeration value="ADS" />
+      <xs:enumeration value="MBB" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RecurringChargeIncrementType">
+    <xs:annotation>
+      <xs:documentation>Recurring Charge Increment indicates the increment at which the recurring charge occurs</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ResourceActivityCodeType">
+    <xs:annotation>
+      <xs:documentation>Resource Activity Reason Code designates the activity preformed by a resource.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3" />
+      <xs:enumeration value="ADD" />
+      <xs:enumeration value="RES" />
+      <xs:enumeration value="DEL" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RetailStoreIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Retail Store Identifer is the store ID passed from the retailer to inComm.  These are 4 to 6 characters in length sometimes padded with zeros.  Leading 0s should not be stripped off.
+(Examples: 001859, 1165, 0649)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SalesChannelIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Sales Channel Identifier uniquely identifies a PARTY, internal to Sprint or external, that sells Sprint equipment and services.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SequenceNumberType">
+    <xs:annotation>
+      <xs:documentation>Sequence Number is a unique positive integer assigned to an item in a list of items.  It is used to determine order in a list of items or to identify a specific item.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long" />
+  </xs:simpleType>
+  <xs:simpleType name="ServiceCategoryNameType">
+    <xs:annotation>
+      <xs:documentation>Service Cateogory Name is the common name corresponding to the Usage Category Code.
+C - Cellular Voice
+S - SMS
+D - Dispatch
+V - Vision Data
+P - 2G Data</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ServiceOrderCodeType">
+    <xs:annotation>
+      <xs:documentation>Service Order Code</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="9" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ServiceOrderDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Service Order Description.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ServiceOrderLongDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Service Order Long Description is additional descriptive text related to a specific service order(SOC).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="1000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ServiceTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Service Type Code indicates the type of service being offered. 
+Example Values are:
+C - Cellular 
+D - Dispatch Private
+G - Dispatch Group, 
+S - SMS, 
+P - Packet Data, 
+M - M2M, 
+T - Toll </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubMarketCodeType">
+    <xs:annotation>
+      <xs:documentation>Sub Market Code designates a Market Segment which represents a distinct subset or segment of a market that behave in the same way or have similar needs.  Because each segment is fairly homogeneous in their needs and attitudes, they are likely to respond similarly to a given marketing strategy. That is, they are likely to have similar feelings and ideas about a marketing mix comprised of a given product or service, sold at a given price, distributed in a certain way and promoted in a certain way.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriberIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Subscriber Identifier is a string that uniquely identifies a subscriber.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SuggestiondentifierType">
+    <xs:annotation>
+      <xs:documentation>Suggestion Identifier indicates the suggestion number of the available suggestion for the Price Plan SOC conflict.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger" />
+  </xs:simpleType>
+  <xs:simpleType name="SuggestionGroupIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Suggestion Group Identifier indicates the specific suggestion group number of the Price Plan SOC conflict.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:totalDigits value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxExemptionClassCodeType">
+    <xs:annotation>
+      <xs:documentation>Tax exemption class code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:simpleType name="TransactionTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Transaction Type Code designates a specific type of transaction.  ex. CREATE, UPDATE</xs:documentation>
+      <xs:documentation>Transaction Type Code identifies the Create, Read, Update or Delete (CRUD) functionality of the transaction.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+      <xs:enumeration value="CREATE" />
+      <xs:enumeration value="UPDATE" />
+      <xs:enumeration value="CANCEL" />
+      <xs:enumeration value="CHECK" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TransactionTypeFlagType">
+    <xs:annotation>
+      <xs:documentation>Transaction Type flag is a boolean indicator of whether the associated transaction type is being applied.</xs:documentation>
+      <xs:documentation>Transaction Type Code identifies the Create, Read, Update or Delete (CRUD) functionality of the transaction.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCodeExtensionType">
+    <xs:annotation>
+      <xs:documentation>USPS Posta Code Extension contains the last 4 characters of the nine digit USPS Postal Code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCodeType">
+    <xs:annotation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>alias: Ensemble: ADDR_DATA.ADR_ZIP</xs:documentation>
+      <xs:documentation>Ensemble: ADDR_DATA.ADR_ZIP
+
+The first 5 characters or digits of the address zip code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ValidationSuccessFlagType">
+    <xs:annotation>
+      <xs:documentation>Validation Success Flag is a boolean indicator of whether validation succeeded or failed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="VendorCodeType">
+    <xs:annotation>
+      <xs:documentation>Vendor Code in combination with the PIN uniquely differentiates the system
+(channel) calling Order Verification Management (Best Buy, Walmart, RMS, 
+boostmobile, SOTS, OAR’s, BSPs, Telespree, etc). Each partner has its own 
+unique vendor code and pin combination.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

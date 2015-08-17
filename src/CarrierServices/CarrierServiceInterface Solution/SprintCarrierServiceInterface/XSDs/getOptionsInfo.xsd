@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="OptionsRequest">
+		<xs:choice>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element name="service-zip" type="ZipCode"/>
+					<xs:element name="submarket" type="RequiredStringMax3"/>
+					<xs:element name="csa" type="RequiredStringMax10"/>
+				</xs:choice>
+				<xs:choice>
+					<xs:element name="model-id" type="RequiredStringMax30" minOccurs="0"/>
+					<xs:element name="meid" type="MEID" minOccurs="0"/>
+					<xs:element name="hsn" type="HSN" minOccurs="0"/>
+					<xs:element name="mac-id" type="MACID" minOccurs="0"/>
+				</xs:choice>
+				<xs:element name="num-subscribers" type="xs:positiveInteger"/>
+				<xs:element name="plan-id" type="xs:string" minOccurs="0"/>
+				<xs:element name="lts-rank" type="xs:positiveInteger" minOccurs="0">
+					<!--Rank for lines to share plan.-->
+				</xs:element>
+				<xs:element name="order-type" type="OrderType"/>
+				<xs:element name="reference-ptn" type="PhoneNumber" minOccurs="0"/>
+				<xs:choice>
+					<xs:element name="customer-type" type="CustomerType"/>
+					<xs:group ref="AtStType"/>
+				</xs:choice>
+				<xs:element name="account-number" type="AccountNumber" minOccurs="0"/>
+				<xs:element name="credit-class" type="RequiredStringMax15" minOccurs="0"/>
+				<xs:element name="corp-gov-id" type="RequiredStringMax20" minOccurs="0">
+					<!--Corporate or government ID for CORPORATE_BUSINESS and CORPORATE_INDIVIDUAL customer types.-->
+				</xs:element>
+				<xs:element name="sales-channel" type="RequiredStringMax10" minOccurs="0"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="search" type="SearchType" maxOccurs="10"/>
+			</xs:sequence>
+		</xs:choice>
+		<!--Options request message.-->
+	</xs:complexType>
+	<xs:element name="getOptionsInfo" type="OptionsRequest"/>
+	<xs:complexType name="OptionsResponse">
+		<xs:sequence>
+			<xs:element name="request-info" type="OptionsRequestInfo"/>
+			<xs:element name="plan-options" type="PricePlanOptionsType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getOptionsInfoResponse" type="OptionsResponse"/>
+</xs:schema>

@@ -1,0 +1,32 @@
+CREATE TABLE [dbo].[Load_Coverage ]
+(
+[zip_code] [bigint] NULL,
+[city] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[county] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[state] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[region] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[area] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[iden_map_id] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[cdma_map_id] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[iden_coverage_yn] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[cdma_coverage_yn] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[evdo_coverage_yn] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[coverage_yn_4g] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[iden_submarket] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[cdma_submarket] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[local_sac_market] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[third_digit_agent] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[fifth_digit_agent] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[sixth_digit_agent] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[smart_territory] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[smart_market] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[sub_area] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[cdma_affiliate] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[iden_sale_ind] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[dcs_sale_ind] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[ps_sale_ind] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[district_code] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[sale_ind_4g] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[MARKET_Id] [numeric] (20, 0) NULL
+) ON [PRIMARY]
+GO

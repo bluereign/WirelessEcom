@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: http://aafesmobile.com/sitemap.xml

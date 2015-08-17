@@ -1,0 +1,33 @@
+#header
+{
+	padding:5px 10px 35px !important;	
+}
+.Nav
+{
+	margin-top: -5px;
+	padding-left: 0px !important;
+}
+#header .Nav li {
+	border-left: none !important;
+	padding-left: 0px;
+	margin-left: 0px;
+}
+#header .Nav li a 
+{
+	margin-left: 0px;
+}
+
+.orderComplete
+{
+	margin-left: 10px;	
+}
+.orderComplete li
+{
+	margin-bottom: 10px;
+}
+
+#paymentOptions label
+{
+	line-height:33px;
+	width:150px;
+}

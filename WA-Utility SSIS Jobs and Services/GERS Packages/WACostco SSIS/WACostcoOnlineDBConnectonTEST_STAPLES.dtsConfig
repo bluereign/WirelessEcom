@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<DTSConfiguration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA Costco Online DB OLEDB Connection].Properties[ServerName]" ValueType="String">
+		<ConfiguredValue>10.7.0.21,1500</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA Costco Online DB OLEDB Connection].Properties[InitialCatalog]" ValueType="String">
+		<ConfiguredValue>TEST.STAPLES</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA Costco Online DB OLEDB Connection].Properties[UserName]" ValueType="String">
+		<ConfiguredValue>rdsql</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA Costco Online DB OLEDB Connection].Properties[Password]" ValueType="String">
+		<ConfiguredValue>foobar42</ConfiguredValue>
+	</Configuration>
+</DTSConfiguration>

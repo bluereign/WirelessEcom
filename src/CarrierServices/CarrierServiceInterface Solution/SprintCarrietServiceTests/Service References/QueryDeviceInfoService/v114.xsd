@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:tns="http://integration.sprint.com/interfaces/queryDeviceHistoryByResource/v1/queryDeviceHistoryByResource.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryDeviceHistoryByResource/v1/queryDeviceHistoryByResource.xsd" version="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="queryDeviceHistoryByResource" type="tns:QueryDeviceHistoryByResource" />
+  <xsd:element name="queryDeviceHistoryByResourceResponse" type="tns:QueryDeviceHistoryByResourceResponse" />
+  <xsd:complexType name="QueryDeviceHistoryByResource">
+    <xsd:sequence>
+      <xsd:element name="resourceInfo" type="tns:ResourceInfo">
+        <xsd:annotation>
+          <xsd:documentation>Resource Information</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="QueryDeviceHistoryByResourceResponse">
+    <xsd:sequence>
+      <xsd:element name="subscriberList" type="tns:SubscriberList">
+        <xsd:annotation>
+          <xsd:documentation>Contains 1 to 50 subscriberInfo structures.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResourceInfo">
+    <xsd:sequence>
+      <xsd:element name="resourceNumber" type="tns:ResourceDeviceSerialNumber">
+        <xsd:annotation>
+          <xsd:documentation>Resource Number (device serial number)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="deviceType" type="tns:ResourceDeviceTypeCode">
+        <xsd:annotation>
+          <xsd:documentation>Device Type
+Values:
+E – ESN
+M – MSN
+I – IMEI
+A - Airave (macId)
+If deviceType is not sent, all the devices of type E, I, M or A for the resource will be searched.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SubscriberInfo">
+    <xsd:sequence>
+      <xsd:element name="ban" type="tns:BillingAccountNumberEns">
+        <xsd:annotation>
+          <xsd:documentation>Billing Account Number</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="subscriberId" type="tns:SubscriptionIdentifier">
+        <xsd:annotation>
+          <xsd:documentation>Subscriber Identifier</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="imsi" type="tns:InternationalMobileSubscriberIdentityString">
+        <xsd:annotation>
+          <xsd:documentation>International Mobile Subscriber Identity</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="additionalImsi" type="tns:InternationalMobileSubscriberIdentityString">
+        <xsd:annotation>
+          <xsd:documentation>Additional IMSI</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="resourceEffectiveDate" type="tns:EffectiveFromDate">
+        <xsd:annotation>
+          <xsd:documentation>Resource Effective Date</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="resourceExpirationDate" type="tns:EffectiveThruDate">
+        <xsd:annotation>
+          <xsd:documentation>Resource Expiration Date</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="deviceList" type="tns:DeviceList">
+        <xsd:annotation>
+          <xsd:documentation>Contains 0 to 50 deviceInfo Structures</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SubscriberList">
+    <xsd:sequence>
+      <xsd:element maxOccurs="50" name="subscriberInfo" type="tns:SubscriberInfo" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DeviceInfo">
+    <xsd:sequence>
+      <xsd:element name="deviceType" type="tns:ResourceDeviceTypeCode">
+        <xsd:annotation>
+          <xsd:documentation>Device Type
+Values:
+E – ESN
+M – MSN
+I – IMEI
+A – Airave (macId)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="serialNumber" type="tns:SubscriberDeviceSerialNumber">
+        <xsd:annotation>
+          <xsd:documentation>Serial Number</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="esnHex" type="tns:ElectronicSerialNumberHex">
+        <xsd:annotation>
+          <xsd:documentation>Electronic Serial Number is a unique number that is embedded electronically by the manufacturer into a CDMA wireless communication device that identifies that individual unit. It can be represented in 11-digit decimal or 8-digit hexadecimal (HEX) format. Once ESNs are exhausted, MEIDs are embedded in devices to uniquely identify the device. This is the 8 digit hexidecimal representation.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="deviceEffectiveDate" type="tns:EffectiveFromDate">
+        <xsd:annotation>
+          <xsd:documentation>Device Effective Date</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="deviceExpirationDate" type="tns:EffectiveThruDate">
+        <xsd:annotation>
+          <xsd:documentation>Device Expiration Date</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="associationEffectiveDate" type="tns:EffectiveFromDate">
+        <xsd:annotation>
+          <xsd:documentation>Association Effective Date </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="associationExpirationDate" type="tns:EffectiveThruDate">
+        <xsd:annotation>
+          <xsd:documentation>Association Expiration Date</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DeviceList">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" maxOccurs="50" name="deviceInfo" type="tns:DeviceInfo" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="AccountNumberInt">
+    <xsd:annotation>
+      <xsd:documentation>Account Number uniquely identifies an Account.  The Account may be a Financial Account, a Customer Account, Billing Account, etc.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int" />
+  </xsd:simpleType>
+  <xsd:simpleType name="BillingAccountNumberEns">
+    <xsd:annotation>
+      <xsd:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="tns:AccountNumberInt">
+      <xsd:totalDigits value="9" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DeviceSerialNbr">
+    <xsd:annotation>
+      <xsd:documentation>Device Serial Number is a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xsd:documentation>
+      <xsd:documentation>Device Serial Number a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="8" />
+      <xsd:maxLength value="20" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EffectiveFromDate">
+    <xsd:annotation>
+      <xsd:documentation>Effective From Date Type holds the first calendar day  a Role, preference, assignment, etc. the PARTY's preference went into effect.
+
+Elements declared to be of type date must follow this form:  
+CCYY-MM-DD
+range for CC is: 00-99
+range for YY is: 00-99
+range for MM is: 01-12
+range for DD is: 
+01-28 if month is 2
+01-29 if month is 2 and the gYear is a leap gYear
+01-30 if month is 4, 6, 9, or 11
+01-31 if month is 1, 3, 5, 7, 8, 10, or 12
+
+Example: 1999-05-31 represents May 31, 1999</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:date" />
+  </xsd:simpleType>
+  <xsd:simpleType name="EffectiveThruDate">
+    <xsd:annotation>
+      <xsd:documentation>Effective Thru Date holds the last calendar day Role, Preference, Assignment, etc. was in effect.
+
+Elements declared to be of type date must follow this form:  
+CCYY-MM-DD
+range for CC is: 00-99
+range for YY is: 00-99
+range for MM is: 01-12
+range for DD is: 
+01-28 if month is 2
+01-29 if month is 2 and the gYear is a leap gYear
+01-30 if month is 4, 6, 9, or 11
+01-31 if month is 1, 3, 5, 7, 8, 10, or 12
+
+Example: 1999-05-31 represents May 31, 1999</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:date" />
+  </xsd:simpleType>
+  <xsd:simpleType name="ElectronicSerialNumberHex">
+    <xsd:annotation>
+      <xsd:documentation>Electronic Serial Number is a unique number that is embedded electronically by the manufacturer into a CDMA wireless communication device that identifies that individual unit. It can be represented in 11-digit decimal or 8-digit hexadecimal (HEX) format. Once ESNs are exhausted, MEIDs are embedded in devices to uniquely identify the device. This is the 8 digit hexidecimal representation.</xsd:documentation>
+      <xsd:documentation>Electronic Serial Number is a unique number that is embedded electronically by the manufacturer into a CDMA wireless communication device that identifies that individual unit. It can be represented in 11-digit decimal or 8-digit hexadecimal (HEX) format. Once ESNs are exhausted, MEIDs are embedded in devices to uniquely identify the device. This is the 8 digit hexidecimal representation.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="8" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="InternationalMobileSubscriberIdentityString">
+    <xsd:annotation>
+      <xsd:documentation>International Mobile Subscriber Identity holds a unique identifier allocated to each mobile subscriber in a GSM and UMTS network. It consists of a MCC (Mobile Country Code), a MNC (Mobile Network Code) and a MSIN (Mobile Station Identification Number).</xsd:documentation>
+      <xsd:documentation>International Mobile Subscriber Identity holds a unique identifier allocated to each mobile subscriber in a GSM and UMTS network. It consists of a MCC (Mobile Country Code), a MNC (Mobile Network Code) and a MSIN (Mobile Station Identification Number).</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="16" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ResourceDeviceTypeCode">
+    <xsd:annotation>
+      <xsd:documentation>Resource Device Type Code designates a specific type of serial number for the type of device.
+Values:
+E - ESN
+M - MSN
+I - IMEI
+A - Airrave (MAC Id)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="1" />
+      <xsd:enumeration value="E">
+        <xsd:annotation>
+          <xsd:documentation>ESN</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="M">
+        <xsd:annotation>
+          <xsd:documentation>MSN</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="I">
+        <xsd:annotation>
+          <xsd:documentation>IMEI</xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="A" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ResourceDeviceSerialNumber">
+    <xsd:annotation>
+      <xsd:documentation>Resource Device Serial Number is the serial number from the resource. Resource can be PTN/MDN, IP, UFMI or NAI</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="64" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SubscriberDeviceSerialNumber">
+    <xsd:annotation>
+      <xsd:documentation>Subscriber Device Serial Number is the Equipment Id – IMEI or Simcard Id or MSN or ESN of any subscriber under the BAN.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="tns:DeviceSerialNbr" />
+  </xsd:simpleType>
+  <xsd:simpleType name="SubscriptionIdentifier">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="20" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SubscriptionIdentifierEns">
+    <xsd:restriction base="tns:SubscriptionIdentifier" />
+  </xsd:simpleType>
+</xsd:schema>

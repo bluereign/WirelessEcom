@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProductVersion>10.50.2500.0</ProductVersion>
+  <SchemaVersion>9.0.1.0</SchemaVersion>
+  <State>$base64$PFNvdXJjZUNvbnRyb2xJbmZvIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zOmRkbDI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDAzL2VuZ2luZS8yIiB4bWxuczpkZGwyXzI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDAzL2VuZ2luZS8yLzIiIHhtbG5zOmRkbDEwMF8xMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDA4L2VuZ2luZS8xMDAvMTAwIiB4bWxuczpkZGwyMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEwL2VuZ2luZS8yMDAiIHhtbG5zOmRkbDIwMF8yMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEwL2VuZ2luZS8yMDAvMjAwIiB4bWxuczpkd2Q9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vRGF0YVdhcmVob3VzZS9EZXNpZ25lci8xLjAiPg0KICA8RW5hYmxlZD50cnVlPC9FbmFibGVkPg0KICA8UHJvamVjdE5hbWU+U0FLPC9Qcm9qZWN0TmFtZT4NCiAgPEF1eFBhdGg+U0FLPC9BdXhQYXRoPg0KICA8TG9jYWxQYXRoPlNBSzwvTG9jYWxQYXRoPg0KICA8UHJvdmlkZXI+U0FLPC9Qcm92aWRlcj4NCjwvU291cmNlQ29udHJvbEluZm8+</State>
+  <Database>
+    <Name>WACostco SSIS.database</Name>
+    <FullPath>WACostco SSIS.database</FullPath>
+  </Database>
+  <Cubes />
+  <Dimensions />
+  <DataSources />
+  <DataSourceViews />
+  <MiningModels />
+  <Roles />
+  <Miscellaneous>
+    <ProjectItem>
+      <Name>CreateTableGers.KioskStaff.sql</Name>
+      <FullPath>CreateTableGers.KioskStaff.sql</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>LoadPhoneTagsFromSharepoint_Costco.dtsConfig</Name>
+      <FullPath>LoadPhoneTagsFromSharepoint_Costco.dtsConfig</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>LoadPhoneTagsFromSharepoint_Staples.dtsConfig</Name>
+      <FullPath>LoadPhoneTagsFromSharepoint_Staples.dtsConfig</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>WACostcoOnlineDBConnectonTEST.dtsConfig</Name>
+      <FullPath>WACostcoOnlineDBConnectonTEST.dtsConfig</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>WACostcoOnlineDBConnectonTEST_STAPLES.dtsConfig</Name>
+      <FullPath>WACostcoOnlineDBConnectonTEST_STAPLES.dtsConfig</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>WACostcoOnlineDBConnectonPROD_STAPLES.dtsConfig</Name>
+      <FullPath>WACostcoOnlineDBConnectonPROD_STAPLES.dtsConfig</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>GetWeblinkResultsFromTable_Staples.dtsConfig</Name>
+      <FullPath>GetWeblinkResultsFromTable_Staples.dtsConfig</FullPath>
+    </ProjectItem>
+  </Miscellaneous>
+  <Configurations>
+    <Configuration>
+      <Name>Development</Name>
+      <Options>
+        <OutputPath>bin</OutputPath>
+        <ConnectionMappings />
+        <ConnectionProviderMappings />
+        <ConnectionSecurityMappings />
+        <DatabaseStorageLocations />
+      </Options>
+    </Configuration>
+  </Configurations>
+  <DTSPackages>
+    <DtsPackage FormatVersion="3">
+      <Name>OrdersToGers.dtsx</Name>
+      <FullPath>OrdersToGers.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>LoadTestData.dtsx</Name>
+      <FullPath>LoadTestData.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>OutletStockFeed.dtsx</Name>
+      <FullPath>OutletStockFeed.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>LoadPricingFromGers.dtsx</Name>
+      <FullPath>LoadPricingFromGers.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>LoadFreeAccessories.dtsx</Name>
+      <FullPath>LoadFreeAccessories.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>LoadGersStock.dtsx</Name>
+      <FullPath>LoadGersStock.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>LoadGersItm.dtsx</Name>
+      <FullPath>LoadGersItm.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>ProcessWeblinkOutputFiles.dtsx</Name>
+      <FullPath>ProcessWeblinkOutputFiles.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>GetShipTrackFromGERS.dtsx</Name>
+      <FullPath>GetShipTrackFromGERS.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>LoadPhoneTagsFromSharepoint.dtsx</Name>
+      <FullPath>LoadPhoneTagsFromSharepoint.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>ConnectionTest.dtsx</Name>
+      <FullPath>ConnectionTest.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>UpdateKioskStaff.dtsx</Name>
+      <FullPath>UpdateKioskStaff.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>DevicePropertiesFromSharepoint.dtsx</Name>
+      <FullPath>DevicePropertiesFromSharepoint.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>LoadPhoneTagsFromSharepoint_Staples.dtsx</Name>
+      <FullPath>LoadPhoneTagsFromSharepoint_Staples.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>GetWeblinkResultsFromTable.dtsx</Name>
+      <FullPath>GetWeblinkResultsFromTable.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>GetITM2ITM_WARR.dtsx</Name>
+      <FullPath>GetITM2ITM_WARR.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+    <DtsPackage FormatVersion="3">
+      <Name>LoadGersOrderStatus.dtsx</Name>
+      <FullPath>LoadGersOrderStatus.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+  </DTSPackages>
+</Project>

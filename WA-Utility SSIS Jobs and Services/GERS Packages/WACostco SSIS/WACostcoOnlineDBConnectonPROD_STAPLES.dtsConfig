@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<DTSConfiguration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA Costco Online DB OLEDB Connection].Properties[ConnectionString]" ValueType="String">
+		<ConfiguredValue>Data Source=S609685SC8SQL01.SDB.SAVVIS.NET,20701;User ID=S609685SC8SQL01.Admin;Initial Catalog=S609685_WASTAPLES;Provider=SQLNCLI10.1;Persist Security Info=True;Auto Translate=False;Password=D@t@m@$t3r!;</ConfiguredValue>
+	</Configuration>
+</DTSConfiguration>

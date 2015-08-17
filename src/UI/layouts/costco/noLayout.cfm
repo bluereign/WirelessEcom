@@ -1,0 +1,1 @@
+<cfoutput>#request.bodycontent#</cfoutput>

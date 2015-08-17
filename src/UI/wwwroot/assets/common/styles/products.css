@@ -1,0 +1,632 @@
+/*-----------------------------------------*/ 
+
+.sidebar
+{
+	width:140px;
+	padding:1em 10px 5em 0;
+	border-right:1px dashed #cfcfcf;
+}
+
+.filters ul,
+.filters li
+{ 
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.filters li li
+{
+	margin-left:1em;
+}
+
+.filters li li
+{
+	padding-left:24px;
+}
+
+.filters li li input
+{
+	margin-right:0.5em;
+	margin-left:-24px;
+	padding:0;
+}
+
+.filters li li label
+{
+	margin:0;
+}
+
+.filters h3 {
+	font-family: Georgia,Arial,Tahoma,Sans-Serif;
+	color: #0060A9;
+	font-size: 14px;
+}
+
+.filters h4 {
+	font-family: Georgia,Arial,Tahoma,Sans-Serif;
+	color: #0060A9;
+	font-size: 12px;
+}
+
+.left
+{
+	float:left;
+}
+
+.accordian
+{
+	overflow:hidden;
+	height:3em;
+}
+
+.btnExpand
+{
+	background-position:left top;
+}
+
+.btnCollapse
+{
+	background-position:left -16px;
+}
+
+
+/*-----------------------------------------*/
+
+.main
+{
+	padding:0 2em 2em 2em;
+}
+
+.sortBar
+{
+	margin-bottom: 5px;
+	padding: 7px 15px;
+	border: 1px #dbdbdb solid;
+	width: 725px;
+	background: #eee;
+}
+
+.sortBar span
+{
+	font-family: Georgia,Arial,Tahoma,Sans-Serif;
+	color: #333;
+    font-size: 14px;
+	display: inline;
+}
+
+#upgrade-eligibility-btn-container {
+	border: 0px solid blue;
+    float: right;
+    height: 50px;
+    padding: 0 0 5px 0;
+    width: 287px;
+	text-align: center;
+}
+
+a.UpgradeCheckerButton {
+	display: block;
+	width: 287px;
+	height: 41px;
+	background: url('../../costco/images/skin/skin-large-btn-sprite-dark-blue.png') no-repeat 0 0px;
+	line-height: 41px;
+	text-decoration: none;
+}
+
+a.UpgradeCheckerButton:hover {
+	background-position: 0 -41px;
+}
+
+a.UpgradeCheckerButton span {
+	font-size: 16px;
+	color: #fff;
+	text-shadow: 1px 1px #444;
+	font-weight: bold;
+}
+
+h1.product-list {
+	font-family: Georgia,Arial,Tahoma,Sans-Serif;
+	color: #0060A9;
+	font-size: 24px;
+}
+
+.prodList h2
+{
+	font-size:1.6em;
+	padding:0;
+	margin:0.4em 0;
+}
+
+.prodList h2 a
+{
+	text-decoration:none;
+}
+
+.prodList h2 a:hover
+{
+	text-decoration:underline;
+}
+
+.prodList,
+.prodList li.prodItem
+{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+.prodList
+{
+	margin-left:-20px;
+}
+
+.prodList li.prodItem
+{
+	clear:left;
+	float:left;		
+	width:755px;
+	padding-left:20px;
+	padding-top:10px;
+	border-bottom:1px dashed #cfcfcf
+}
+
+.prodList div.toolbar
+{	
+	border-top: 0px;
+	background:#fff;
+	padding:0.6em 0;
+	position:absolute;
+	left:0;
+	bottom:0;
+	width:100%;
+	height:20px;
+}
+
+.compare
+{
+	background:url('../images/ui/compare.gif') 0 0 no-repeat transparent;
+}
+
+.prodImg
+{
+	width:140px;
+}
+
+.prodImg,
+.prodDetail,
+.prodPrice
+{
+	float:left;
+	border-top:1px solid #cfcfcf;
+	position:relative;
+	height: 165px;
+	padding-top:5px;
+}
+
+.plans .prodImg,
+.plans .prodDetail,
+.plans .prodPrice
+{
+	height: 245px;
+}
+
+.prodDetail
+{
+	width: 370px;
+	padding-right:10px;
+}
+
+.accessory .prodDetail
+{
+	width: 410px;
+	padding-right:10px;
+}
+
+.prodDetail .prodBrand
+{
+	float:right;
+	font-size:1.25em;
+	padding-top:8px;
+}
+
+.prodDetail .prodDesc 
+{
+	font-size: 12px;
+}
+
+.prodDesc p
+{
+	font-size: 1em !important;	
+	margin-top: 0px;
+	line-height:1.2em !important;
+}
+
+.prodDetail h2 a
+{
+	text-decoration:none;
+	font-size:inherit;
+}
+
+
+.prodDetail ul
+{
+	margin-left:2em;
+	padding:0;
+}
+.prodDetail li
+{
+	border-top:none;
+	float:none;
+	clear:none;
+	position:inherit;
+	list-style-type:disc;
+	padding-bottom:0.2em;
+	margin-left:0.5em;
+	padding-right:20px;
+}
+
+
+.prodList .prodImg .toolbar input
+{
+	margin-left:0.8em;
+}
+
+.prodList .prodDetail .toolbar
+{
+	padding:0 20px 5px;
+	width: 345px;
+	height: 32px;
+}
+
+.prodList .prodDetail .toolbar a
+{
+	float:left;
+	margin-top:2px;
+	cursor:default;
+}
+
+.prodDetail .toolbar img
+{
+	display:none;
+	border:none;
+}
+
+
+.prodList .prodDetail .toolbar a.medButton_accent
+{
+	float:right;
+	margin-top:7px;
+	cursor:pointer;
+	margin-right:10px;
+}
+.prodList .prodDetail .toolbar a.medButton_accent:hover
+{
+	background-position:left top;
+}
+
+.prodDetail .notInStores,
+.prodDetail .inStores,
+.prodDetail .freeAccessory,
+.prodDetail .notFreeAccessory,
+.prodDetail .availOnline
+{
+	height:28px;
+	width:36px;
+	margin-right:0.7em;
+}
+
+
+.prodDetail .inStores,
+.prodDetail .notInStores
+{
+	background:url('../images/ui/InWarehouse_icon.png') left -29px no-repeat transparent;
+}
+.prodDetail .notInStores
+{
+	background-position:left top;
+}
+
+
+.prodDetail .notFreeAccessory
+{
+	background-position:left top;	
+}
+
+.prodDetail .tooltip
+{
+	background:url('../images/ui/tooltip_right.gif') right top no-repeat transparent;
+	padding-right:4px;
+	white-space:nowrap;
+	color:#fff;
+	position:absolute;
+	top:0;
+	left:0;
+}
+.tooltip span
+{
+	display:block;
+	background:url('../images/ui/tooltip_left.gif') left top no-repeat transparent;
+	padding:1px 0.5em 10px 1em;
+}
+
+.prodPrice .addToCart .quantity
+{
+	width:1em;
+}
+
+.prodPrice div.total,
+.prodPrice div.totalNoMinutes
+{
+	font-size:2.5em;
+	text-align:right;
+	border:none;
+	margin:0;
+	padding:0 0 45px 0 !important;
+	vertical-align:top;
+	text-align:center;
+}
+
+.prodPrice div.total span sup,
+.prodPrice div.totalNoMinutes span sup
+{
+	margin: 0px;
+	font-size:0.425em;
+}
+
+
+/*---------------------------------------*/
+/* Page Specifics						*/
+/*---------------------------------------*/
+
+.phones .prodImg,
+.phones .prodDetail,
+.phones .prodPrice
+{
+	height: 230px;
+}
+
+.phones .prodImg
+{
+	width: 190px;
+}
+
+.tablets .prodImg,
+.tablets .prodDetail,
+.tablets .prodPrice
+{
+	height: 230px;
+}
+
+.tablets .prodImg
+{
+	width: 190px;
+}
+
+.plans .prodDetail
+{
+	padding-left:10px;
+	width:370px;
+}
+
+.plans .prodPrice
+{
+	width:205px;
+}
+
+.plans .prodPrice .total,
+.plans .prodPrice .totalNoMinutes
+{
+	margin:30px 0 0 40px;
+}
+
+.plans .prodPrice .total span,
+.plans .prodPrice .totalNoMinutes span
+{
+	display:block;
+	float:left;
+	text-align:center;
+	margin:0.3em;
+}
+
+.plans .prodPrice .total span sup,
+.plans .prodPrice .totalNoMinutes span sup
+{
+	margin: 0px;
+	font-size:0.425em;
+}
+
+.plans .prodPrice .totalNoMinutes span.prodPriceMinutes
+{
+	color:#ffffff;
+}
+
+.plans .prodPrice .total label,
+.plans .prodPrice .totalNoMinutes label
+{
+	display:block;
+	font-size:0.65em;
+	color:#b3b3b3;
+}
+
+.plans .prodPrice .totalNoMinutes span.prodPriceMinutes label
+{
+	color:#ffffff;
+}
+
+/*
+
+.accessories .prodList .prodPrice
+{
+	width:225px;
+}
+*/
+.plans .prodList .prodPrice .toolbar,
+.accessories .prodList .prodPrice .toolbar
+{
+	padding-top:15px;
+	border-top:none;
+	height:23px;
+}
+
+
+.accessories .prodPrice
+{
+	width:190px;
+}
+
+.accessories .prodPrice div.total,
+.accessories .prodPrice div.totalNoMinutes
+{
+	padding-top:30px !important;
+}
+
+.toolbarAvailability
+{
+	position: absolute;
+	height: 32px;
+	padding-top: 2px;
+	padding-left: 8px;
+}
+
+.toolbarAvailabilityValue
+{
+	color:#000000;
+}
+
+#banner-container
+{
+	width: 755px;
+	height: 80px;
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+
+#banner-container img
+{
+	border: 0;
+}
+
+#resultsDiv {
+	width: 755px;
+}
+
+#resultsDiv > div {
+	padding-top: 35px;
+}
+
+.AddToCart
+{
+	background:url('../../costco/images/AddToCart_bg.gif') left top no-repeat transparent;
+	border:none;
+	color:#fff;
+	font-size:1.3em;
+	height:25px;
+	width:120px;
+	cursor:pointer;
+}
+
+.dropdownbox {
+	margin-left: 5px;
+	padding:3px;
+	border-radius:2px;
+    background: #fff;
+    color: #6B6B6B;
+    border: 1px solid #CFCFCF;
+}
+
+.priceblock-container {
+	border: 0;
+	width: 180px;
+}
+
+.logo-container {
+	border: 1px #cfcfcf solid;
+	text-align: center;
+	padding-bottom: 5px;
+	min-height: 45px;
+}
+
+.logo-att {
+	background: center 8px no-repeat url('../images/carrierLogos/att_logo.png');
+}
+
+.logo-tmo {
+	background: center 8px no-repeat url('../images/carrierLogos/tmo_logo.png');
+}
+
+.logo-verizon {
+	background: center 8px no-repeat url('../images/carrierLogos/verizon_logo.png');
+}
+
+.logo-sprint {
+	background: center 8px no-repeat url('../images/carrierLogos/sprint_logo.png');	
+}
+
+.activation-container {
+	text-align: center;
+	margin-top: 50px;
+	padding-bottom: 5px;
+}
+
+.price-container {
+	border: 1px #cfcfcf solid;
+	border-top: 0px;
+	border-bottom: 0px;
+	padding: 5px;
+}
+
+.button-container {
+	height: 20px;
+	text-align: center;
+	padding-top: 10px;
+}
+
+.summary-container {
+	border: 1px #cfcfcf solid;
+	padding: 5px;
+	font-size: 11px;
+}
+
+.map-price-container {
+	text-align: center;
+	width: auto;
+	height: 30px;
+	font-size: 13px;
+	font-weight: bold;
+	padding-top: 10px;
+}
+
+.final-price-container {
+	text-align: right;
+	color: #E1393D;
+	font-size: 25px;
+	font-weight: bold;
+	width: 100%;
+	margin-bottom: 2px;
+}
+
+.quantity-container {
+	text-align: right;
+	border: 1px #cfcfcf solid;
+	padding: 12px 15px;
+	font-size: 11px;
+	border-top: 0px;
+}
+
+.price-table, .price-table td {
+	border: 0;
+	width: 100%;
+	font-size: 11px;
+}
+
+.price-table span.savings {
+	color: #E1393D;
+}
+
+.price-table td.price-col {
+	text-align: right;
+}
+
+.strike {
+	text-decoration: line-through;
+}

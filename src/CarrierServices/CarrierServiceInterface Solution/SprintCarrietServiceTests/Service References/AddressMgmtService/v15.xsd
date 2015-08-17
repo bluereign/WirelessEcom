@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryReverseNameAddress/v1/queryReverseNameAddress.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryReverseNameAddress/v1/queryReverseNameAddress.xsd" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryReverseNameAddress" type="tns:QueryReverseNameAddressRequestType" />
+  <xs:element name="queryReverseNameAddressResponse" type="tns:QueryReverseNameAddressResponseType" />
+  <xs:complexType name="QueryReverseNameAddressRequestType">
+    <xs:sequence>
+      <xs:element name="transactionId" type="tns:TransactionIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Transaction Identifier sent in the request will be returned in the response.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="phoneNumber" type="tns:PhoneNumberType">
+        <xs:annotation>
+          <xs:documentation>The phone number that the reverse lookup is being requested for.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryReverseNameAddressResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="transactionId" type="tns:TransactionIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Transaction identifier sent in the request is returned in the response.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="usAddressInfo" type="tns:UsAddressInfoType">
+        <xs:annotation>
+          <xs:documentation>US formatted address structure.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="nameInfo" type="tns:NameInfoType">
+        <xs:annotation>
+          <xs:documentation>Contains either business name or consumer name.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BusinessNameInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="businessName" type="tns:BusinessNameType">
+        <xs:annotation>
+          <xs:documentation>The name of the business.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="businessSuffix" type="tns:NameSuffixType">
+        <xs:annotation>
+          <xs:documentation>The business name suffix.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IndividualNameInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="lastName" type="tns:LastNameType">
+        <xs:annotation>
+          <xs:documentation>The consumer’s last name.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="firstName" type="tns:FirstNameType">
+        <xs:annotation>
+          <xs:documentation>The consumer’s first name.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="middleNameInitial" type="tns:MiddleInitialType">
+        <xs:annotation>
+          <xs:documentation>The initial of the consumer’s middle name.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NameInfoType">
+    <xs:choice>
+      <xs:element name="businessNameInfo" type="tns:BusinessNameInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure containing business name and business name suffix.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="individualNameInfo" type="tns:IndividualNameInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure containing the consumer’s first name, last name and initial of the middle name.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="UsAddressInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="addressLine1" type="tns:PrimaryAddressLineType">
+        <xs:annotation>
+          <xs:documentation>Includes the primary address number, street pre-direction, street name, street type, and street name post-direction. PO Box is also returned in this element, if applicable.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addressLine2" type="tns:SecondaryAddressLineType">
+        <xs:annotation>
+          <xs:documentation>Includes the secondary address type (such as APT) and the secondary address number.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="city" type="tns:CityNameType">
+        <xs:annotation>
+          <xs:documentation>Name of the city.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="state" type="tns:UspsStateAbbreviationType">
+        <xs:annotation>
+          <xs:documentation>Two character state code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="zipCode" type="tns:UspsPostalCodeType">
+        <xs:annotation>
+          <xs:documentation>Zip code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="zip4Code" type="tns:UspsPostalCodeExtensionType">
+        <xs:annotation>
+          <xs:documentation>Zip 4 code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="BusinessNameType">
+    <xs:annotation>
+      <xs:documentation>Business is a type of PARTY NAME representing the name of an business.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="52" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CityNameType">
+    <xs:annotation>
+      <xs:documentation>City Name holds the textual string identifying a City.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FirstNameType">
+    <xs:annotation>
+      <xs:documentation>First Name or "Given Name" is a name which specifies and differentiates between members of a group of individuals, especially a family, all of whose members usually share the same family name.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LastNameType">
+    <xs:annotation>
+      <xs:documentation>Last Name represents the family name or surname is the part of an INDIVIDUAL PARTY's name that identifies what family the individual belongs to.</xs:documentation>
+      <xs:documentation>alias: Surname</xs:documentation>
+      <xs:documentation>alias: Family Name</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MiddleInitialType">
+    <xs:annotation>
+      <xs:documentation>Middle Name is effectively a second given name.  Many INDIVIDUAL PARTY's names include one or more Middle Names, placed between the first given name and the surname.   In the United States there is usually only one middle name, abbreviated by its possessor.</xs:documentation>
+      <xs:documentation>Middle Initial is effectively the first letter of the second given name.  Many INDIVIDUAL PARTY's names include one or more Middle Names, placed between the first given name and the surname.   In the United States there is usually only one middle name, abbreviated by its possessor.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NameSuffixType">
+    <xs:annotation>
+      <xs:documentation>Name Suffix holds any affix that may occurr at the end of the name of an INDIVIDUAL designating a dignity, honor, distinction, or preeminence attached to the INDIVIDUAL by virtue of rank, office, precedent, privilege, attainment, or lands.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PhoneNumberType">
+    <xs:annotation>
+      <xs:documentation>Phone Number holds the concatenation of the NPA Number, NXX Number and Line Number into a single string.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PrimaryAddressLineType">
+    <xs:annotation>
+      <xs:documentation>The content of Primary Address Line is dependent upon the type of street.  
+
+For a street address, Primary Address Line holds the concatenation of the street components of the address.
+For a Post Office Box address, Primary Address Line holds the P.O. Box information.
+For a Rural address, Primary Address Line holds the Rural number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SecondaryAddressLineType">
+    <xs:annotation>
+      <xs:documentation>Secondary Address Line holds free text describing additional address information. Usually used for business customers.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TransactionIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Transaction Identifier is a unique string that identifies a Request attempt. 
+The TransactionID provides a recovery mechanism for time-outs known as idempotency. If you receive a time-out  in response to a Request, the Request can be resent with the same TransactionID.  If the service had successfully processed a previous Request (with the same TransactionID), the previous Response will be returned.  
+If the server has not seen this TransactionID before, it will process the Request and return the Response.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int" />
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCodeType">
+    <xs:annotation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>alias: Ensemble: ADDR_DATA.ADR_ZIP</xs:documentation>
+      <xs:documentation>Ensemble: ADDR_DATA.ADR_ZIP
+
+The first 5 characters or digits of the address zip code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCodeExtensionType">
+    <xs:annotation>
+      <xs:documentation>USPS Posta Code Extension contains the last 4 characters of the nine digit USPS Postal Code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsStateAbbreviationType">
+    <xs:annotation>
+      <xs:documentation>United States Postal Service (USPS) State Abbreviation Code is the set of characters that are selected from a State or Protectorate name and specified by the USPS to represent the name of a State or US Protectorate for the purpose of mail delivery.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

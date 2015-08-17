@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns0="http://integration.sprint.com/eai/services/QueryPlansAndOptionsService/v1/QueryPlansAndOptionsService.wsdl" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://integration.sprint.com/eai/services/QueryPlansAndOptionsService/v1/QueryPlansAndOptionsService.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:schema>
+      <xsd:import schemaLocation="v1.xsd2.xsd" namespace="http://integration.sprint.com/common/ErrorDetailsV2.xsd" />
+      <xsd:import schemaLocation="v1.xsd3.xsd" namespace="http://integration.sprint.com/common/header/WSMessageHeader/v2" />
+      <xsd:import schemaLocation="v1.xsd4.xsd" namespace="http://integration.sprint.com/interfaces/queryAvailableEquipmentServices/v1/queryAvailableEquipmentServices.xsd" />
+      <xsd:import schemaLocation="v1.xsd5.xsd" namespace="http://integration.sprint.com/interfaces/queryAvailableOptions/v1/queryAvailableOptions.xsd" />
+      <xsd:import schemaLocation="v1.xsd6.xsd" namespace="http://integration.sprint.com/interfaces/queryAvailablePlans/v1/queryAvailablePlans.xsd" />
+      <xsd:import schemaLocation="v1.xsd7.xsd" namespace="http://integration.sprint.com/interfaces/querySubscriberAdditionalServicesInfo/v1/querySubscriberAdditionalServicesInfo.xsd" />
+      <xsd:import schemaLocation="v1.xsd8.xsd" namespace="http://integration.sprint.com/interfaces/validatePlansAndOptions/v1/validatePlansAndOptions.xsd" />
+      <xsd:import schemaLocation="v1.xsd9.xsd" namespace="http://integration.sprint.com/interfaces/validatePlansAndOptions/v2/validatePlansAndOptionsV2.xsd" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="faultmessage">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/common/ErrorDetailsV2.xsd" name="fault" element="xsns:errorDetailItem" />
+  </wsdl:message>
+  <wsdl:message name="queryAvailableEquipmentServicesRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryAvailableEquipmentServices/v1/queryAvailableEquipmentServices.xsd" name="parameters" element="xsns:queryAvailableEquipmentServices" />
+  </wsdl:message>
+  <wsdl:message name="queryAvailableEquipmentServicesResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryAvailableEquipmentServices/v1/queryAvailableEquipmentServices.xsd" name="parameters" element="xsns:queryAvailableEquipmentServicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryAvailableOptionsRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryAvailableOptions/v1/queryAvailableOptions.xsd" name="parameters" element="xsns:queryAvailableOptions" />
+  </wsdl:message>
+  <wsdl:message name="queryAvailableOptionsResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryAvailableOptions/v1/queryAvailableOptions.xsd" name="parameters" element="xsns:queryAvailableOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryAvailablePlansRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryAvailablePlans/v1/queryAvailablePlans.xsd" name="parameters" element="xsns:queryAvailablePlans" />
+  </wsdl:message>
+  <wsdl:message name="queryAvailablePlansResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryAvailablePlans/v1/queryAvailablePlans.xsd" name="parameters" element="xsns:queryAvailablePlansResponse" />
+  </wsdl:message>
+  <wsdl:message name="querySubscriberAdditionalServicesInfoRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/querySubscriberAdditionalServicesInfo/v1/querySubscriberAdditionalServicesInfo.xsd" name="parameters" element="xsns:querySubscriberAdditionalServicesInfo" />
+  </wsdl:message>
+  <wsdl:message name="querySubscriberAdditionalServicesInfoResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/querySubscriberAdditionalServicesInfo/v1/querySubscriberAdditionalServicesInfo.xsd" name="parameters" element="xsns:querySubscriberAdditionalServicesInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="validatePlansAndOptionsRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validatePlansAndOptions/v1/validatePlansAndOptions.xsd" name="parameters" element="xsns:validatePlansAndOptions" />
+  </wsdl:message>
+  <wsdl:message name="validatePlansAndOptionsResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validatePlansAndOptions/v1/validatePlansAndOptions.xsd" name="parameters" element="xsns:validatePlansAndOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="validatePlansAndOptionsV2Request">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validatePlansAndOptions/v2/validatePlansAndOptionsV2.xsd" name="parameters" element="xsns:validatePlansAndOptionsV2" />
+  </wsdl:message>
+  <wsdl:message name="validatePlansAndOptionsV2Response">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validatePlansAndOptions/v2/validatePlansAndOptionsV2.xsd" name="parameters" element="xsns:validatePlansAndOptionsV2Response" />
+  </wsdl:message>
+  <wsdl:message name="WsMessageHeader">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/common/header/WSMessageHeader/v2" name="head" element="xsns:wsMessageHeader" />
+  </wsdl:message>
+  <wsdl:portType name="QueryPlansAndOptionsPortType">
+    <wsdl:operation name="QueryAvailableEquipmentServices">
+      <wsdl:input name="QueryAvailableEquipmentServicesRequest" message="ns0:queryAvailableEquipmentServicesRequest" />
+      <wsdl:output name="QueryAvailableEquipmentServicesResponse" message="ns0:queryAvailableEquipmentServicesResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryAvailableOptions">
+      <wsdl:input name="QueryAvailableOptionsRequest" message="ns0:queryAvailableOptionsRequest" />
+      <wsdl:output name="QueryAvailableOptionsResponse" message="ns0:queryAvailableOptionsResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryAvailablePlans">
+      <wsdl:input name="QueryAvailablePlansRequest" message="ns0:queryAvailablePlansRequest" />
+      <wsdl:output name="QueryAvailablePlansResponse" message="ns0:queryAvailablePlansResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QuerySubscriberAdditionalServicesInfo">
+      <wsdl:input name="QuerySubscriberAdditionalServicesInfoRequest" message="ns0:querySubscriberAdditionalServicesInfoRequest" />
+      <wsdl:output name="QuerySubscriberAdditionalServicesInfoResponse" message="ns0:querySubscriberAdditionalServicesInfoResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePlansAndOptions">
+      <wsdl:input name="ValidatePlansAndOptionsRequest" message="ns0:validatePlansAndOptionsRequest" />
+      <wsdl:output name="ValidatePlansAndOptionsResponse" message="ns0:validatePlansAndOptionsResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePlansAndOptionsV2">
+      <wsdl:input name="ValidatePlansAndOptionsV2Request" message="ns0:validatePlansAndOptionsV2Request" />
+      <wsdl:output name="ValidatePlansAndOptionsV2Response" message="ns0:validatePlansAndOptionsV2Response" />
+      <wsdl:fault name="fault" message="ns0:faultmessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="QueryPlansAndOptionsBinding" type="ns0:QueryPlansAndOptionsPortType">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryAvailableEquipmentServices">
+      <soap11:operation soapAction="queryAvailableEquipmentServices" style="document" />
+      <wsdl:input name="QueryAvailableEquipmentServicesRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryAvailableEquipmentServicesResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryAvailableOptions">
+      <soap11:operation soapAction="queryAvailableOptions" style="document" />
+      <wsdl:input name="QueryAvailableOptionsRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryAvailableOptionsResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryAvailablePlans">
+      <soap11:operation soapAction="queryAvailablePlans" style="document" />
+      <wsdl:input name="QueryAvailablePlansRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryAvailablePlansResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySubscriberAdditionalServicesInfo">
+      <soap11:operation soapAction="querySubscriberAdditionalServicesInfo" style="document" />
+      <wsdl:input name="QuerySubscriberAdditionalServicesInfoRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QuerySubscriberAdditionalServicesInfoResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePlansAndOptions">
+      <soap11:operation soapAction="validatePlansAndOptions" style="document" />
+      <wsdl:input name="ValidatePlansAndOptionsRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ValidatePlansAndOptionsResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePlansAndOptionsV2">
+      <soap11:operation soapAction="validatePlansAndOptionsV2" style="document" />
+      <wsdl:input name="ValidatePlansAndOptionsV2Request">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ValidatePlansAndOptionsV2Response">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:WsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QueryPlansAndOptionsService">
+    <wsdl:port name="QueryPlansAndOptionsPortType" binding="ns0:QueryPlansAndOptionsBinding">
+      <soap11:address location="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

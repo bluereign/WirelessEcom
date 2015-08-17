@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Permissions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dns="urn:Microsoft.VisualStudio.Data.Schema.Permissions" Version="1.0" xmlns="urn:Microsoft.VisualStudio.Data.Schema.Permissions">
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>dbo</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>cfdbo</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>weblink</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>UPSWorldShip</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>DELETE</Permission>
+    <Grantee>web_carrierservice</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>EXECUTE</Permission>
+    <Grantee>web_carrierservice</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>INSERT</Permission>
+    <Grantee>web_carrierservice</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>web_carrierservice</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>UPDATE</Permission>
+    <Grantee>web_carrierservice</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>WebService_ATT</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>WebService_TMO</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>WebService_VZW</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+	<PermissionStatement Action="GRANT">
+    <Permission>DELETE</Permission>
+    <Grantee>web_ecomsite</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>EXECUTE</Permission>
+    <Grantee>web_ecomsite</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>INSERT</Permission>
+    <Grantee>web_ecomsite</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>web_ecomsite</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>UPDATE</Permission>
+    <Grantee>web_ecomsite</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>DELETE</Permission>
+    <Grantee>web_ordermanagement</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>EXECUTE</Permission>
+    <Grantee>web_ordermanagement</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>INSERT</Permission>
+    <Grantee>web_ordermanagement</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>web_ordermanagement</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>UPDATE</Permission>
+    <Grantee>web_ordermanagement</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>prodadmin</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>ECOM\sqlservice</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>synccatalog</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>reports</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>jprior</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>nbritton</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>WALLC\113109</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>Palani</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>EXECUTE</Permission>
+    <Grantee>public</Grantee>
+    <Object Name="dt_verstamp007" Schema="dbo" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>   
+  <PermissionStatement Action="GRANT">
+    <Permission>EXECUTE</Permission>
+    <Grantee>public</Grantee>
+    <Object Name="dt_verstamp006" Schema="dbo" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>    
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>weblink</Grantee>
+    <Object Name="Orders" Schema="dbo" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>UPSWorldShip</Grantee>
+    <Object Name="vUPSKeyedImport" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement> 
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Shipment" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="RebateToFilter" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Image" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="rebate_good" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Market" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="RateplanDevice" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="producttag2" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="OrderToRebates" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="WirelessAccount_Secure" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="GersPriceGroup" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="GersPrice" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="ServiceMasterGroup" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Activity" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="GersItm" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Service" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="ServiceMaster" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="PaymentMethod" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="ShipMethod" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="SessionStockReservation" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Payment" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="GersStock" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="WirelessAccount" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="ShipMethodPromos" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Address" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Device" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="DeviceServiceMasterGroupOptional" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>EXECUTE</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="udf_StripHTML" Schema="util" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="ProductTag" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Rateplan" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="OrderDetail" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Company" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Rebate" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="OrderStatus" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="ProductType" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="RebateToProduct" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="PropertyMasterGroup" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="PropertyMaster" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="LineService" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="DeviceFreeAccessory" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="ProductGuid" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="WirelessLine" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Product" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="callNotes" Schema="admin" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="FilterGroup" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="PropertyMasterAlias" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="callNoteSubjects" Schema="admin" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="FilterOption" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="AccessoryForDevice" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Bundle" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="ZipCodeMarket" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Property" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="RateplanService" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="RateplanMarket" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="DeviceService" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>EXECUTE</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="HaveStock" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Order" Schema="salesorder" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="RateplanException" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="Accessory" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="ServiceExclusion" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>SELECT</Permission>
+    <Grantee>reports</Grantee>
+    <Object Name="AccessoryForDevice2" Schema="catalog" Type="OBJECT" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>VIEW DEFINITION</Permission>
+    <Grantee>web_carrierservice</Grantee>
+    <Object Name="WAKey" Type="SYMMETRIC KEY" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>VIEW DEFINITION</Permission>
+    <Grantee>web_ordermanagement</Grantee>
+    <Object Name="WAKey" Type="SYMMETRIC KEY" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONTROL</Permission>
+    <Grantee>web_carrierservice</Grantee>
+    <Object Name="WACert" Type="CERTIFICATE" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONTROL</Permission>
+    <Grantee>web_ordermanagement</Grantee>
+    <Object Name="WACert" Type="CERTIFICATE" />
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+</Permissions>

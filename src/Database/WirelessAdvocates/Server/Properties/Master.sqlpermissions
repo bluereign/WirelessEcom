@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Permissions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dns="urn:Microsoft.VisualStudio.Data.Schema.Permissions" Version="1.0" xmlns="urn:Microsoft.VisualStudio.Data.Schema.Permissions">
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>sa</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>VIEW ANY DATABASE</Permission>
+    <Grantee>public</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>NT AUTHORITY\SYSTEM</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>NT SERVICE\MSSQL$WACOSTCO</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>BUILTIN\Administrators</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>NT SERVICE\SQLAgent$WACOSTCO</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>cfdbo</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>rdsql</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>jshin</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>ECOM\rptsvc_test</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_ATT_TEST</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_TMO_TEST</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_VZW_TEST</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_ATT_STAGE</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_TMO_STAGE</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_VZW_STAGE</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>rdelzer</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>bhogan</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>rlinmark</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>amety</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>jrowles</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_ATT_PROD</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_TMO_PROD</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_VZW_PROD</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_ATT_DEV</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_TMO_DEV</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WebService_VZW_DEV</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>QA1</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>Stage1</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>synccatalog</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>gmontague</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>reports</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>BETTER_WAY\gmontague</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>ECOM\bhogan</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>spagidimari</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>jprior</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WALLC\jprior</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>noah</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>sekar</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WALLC\smuniyandi</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>Palani</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT SQL</Permission>
+    <Grantee>WALLC\113227</Grantee>
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>public</Grantee>
+    <Object Name="TSQL Local Machine" Type="ENDPOINT" />
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>public</Grantee>
+    <Object Name="TSQL Named Pipes" Type="ENDPOINT" />
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>public</Grantee>
+    <Object Name="TSQL Default TCP" Type="ENDPOINT" />
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>public</Grantee>
+    <Object Name="TSQL Default VIA" Type="ENDPOINT" />
+    <Grantor>sa</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>dbo</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>guest</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>ECOM\rptsvc_test</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+  <PermissionStatement Action="GRANT">
+    <Permission>CONNECT</Permission>
+    <Grantee>noah</Grantee>
+    <Grantor>dbo</Grantor>
+  </PermissionStatement>
+</Permissions>

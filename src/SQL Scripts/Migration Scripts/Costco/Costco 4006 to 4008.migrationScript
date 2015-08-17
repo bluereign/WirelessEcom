@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!---->
+<MigrationScript version="2" type="MigrationScript">
+  <Name>Costco 4006 to 4008</Name>
+  <FromVersion version="1" type="VersionInfoRaw">
+    <Version>4006</Version>
+    <ScriptFolderLocation>&lt;?xml version="1.0" encoding="utf-16" standalone="yes"?&gt;
+&lt;!----&gt;
+&lt;ISOCCompareLocation version="1" type="TfsLocation"&gt;
+  &lt;ServerUrl&gt;http://tfserver.cartoys.corp:8080/tfs/defaultcollection&lt;/ServerUrl&gt;
+  &lt;SourceControlFolder&gt;$/WA_Costco/src/Database/Costco&lt;/SourceControlFolder&gt;
+&lt;/ISOCCompareLocation&gt;</ScriptFolderLocation>
+  </FromVersion>
+  <ToVersion version="1" type="VersionInfoRaw">
+    <Version>4008</Version>
+    <ScriptFolderLocation>&lt;?xml version="1.0" encoding="utf-16" standalone="yes"?&gt;
+&lt;!----&gt;
+&lt;ISOCCompareLocation version="1" type="TfsLocation"&gt;
+  &lt;ServerUrl&gt;http://tfserver.cartoys.corp:8080/tfs/defaultcollection&lt;/ServerUrl&gt;
+  &lt;SourceControlFolder&gt;$/WA_Costco/src/Database/Costco&lt;/SourceControlFolder&gt;
+&lt;/ISOCCompareLocation&gt;</ScriptFolderLocation>
+  </ToVersion>
+  <ObjectIdentifiers type="ObjectIdentifiers" version="2">
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[BETTER_WAY\gmontague]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[noah]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[WALLC\113227]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[jprior]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[ECOM\bhogan]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[ReleaseUser]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[apple]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[amety]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[bhogan]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[jrowles]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[WALLC\mmiller]</FullyQualifiedName>
+      <Type>User</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[db_datareader]</FullyQualifiedName>
+      <Type>Role</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[db_ddladmin]</FullyQualifiedName>
+      <Type>Role</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[db_datawriter]</FullyQualifiedName>
+      <Type>Role</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[db_owner]</FullyQualifiedName>
+      <Type>Role</Type>
+    </value>
+  </ObjectIdentifiers>
+  <Description>Dropping unused logins</Description>
+</MigrationScript>

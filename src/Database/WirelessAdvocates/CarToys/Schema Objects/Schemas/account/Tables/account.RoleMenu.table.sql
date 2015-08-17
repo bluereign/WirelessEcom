@@ -1,0 +1,5 @@
+﻿CREATE TABLE [account].[RoleMenu] (
+    [RoleGuid] UNIQUEIDENTIFIER NOT NULL,
+    [MenuGuid] UNIQUEIDENTIFIER NOT NULL
+);
+

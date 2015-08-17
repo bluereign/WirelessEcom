@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "TrafficSum", "TrafficSum.rptproj", "{5E157C59-0D9E-4E7F-9027-2190B573FCAE}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver.cartoys.corp:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = TrafficSum.rptproj
+		SccLocalPath1 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E157C59-0D9E-4E7F-9027-2190B573FCAE}.Debug|Default.ActiveCfg = Debug
+		{5E157C59-0D9E-4E7F-9027-2190B573FCAE}.Debug|Default.Build.0 = DebugLocal
+		{5E157C59-0D9E-4E7F-9027-2190B573FCAE}.Debug|Default.Deploy.0 = DebugLocal
+		{5E157C59-0D9E-4E7F-9027-2190B573FCAE}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{5E157C59-0D9E-4E7F-9027-2190B573FCAE}.DebugLocal|Default.Build.0 = DebugLocal
+		{5E157C59-0D9E-4E7F-9027-2190B573FCAE}.Release|Default.ActiveCfg = Release
+		{5E157C59-0D9E-4E7F-9027-2190B573FCAE}.Release|Default.Build.0 = Release
+		{5E157C59-0D9E-4E7F-9027-2190B573FCAE}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

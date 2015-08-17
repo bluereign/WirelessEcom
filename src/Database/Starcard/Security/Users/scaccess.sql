@@ -1,0 +1,3 @@
+CREATE USER [scaccess] WITHOUT LOGIN
+GO
+GRANT EXECUTE TO [scaccess]

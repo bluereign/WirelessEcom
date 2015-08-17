@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="SecurityQuestionRequest">
+		<xs:sequence>
+			<xs:element name="security-info-ind" type="xs:boolean"/>
+			<xs:element name="customer-type" type="CustomerType" minOccurs="0"/>
+			<xs:element name="corp-gov-id" type="RequiredStringMax20" minOccurs="0">
+				<!--Corporate or government ID for CORPORATE_BUSINESS and CORPORATE_INDIVIDUAL customer types.-->
+			</xs:element>
+		</xs:sequence>
+		<!--Security Question request message.-->
+	</xs:complexType>
+	<xs:element name="getSecurityQuestion" type="SecurityQuestionRequest"/>
+	<xs:complexType name="SecurityQuestionResponse">
+		<xs:sequence>
+			<xs:element name="security-questions" type="SecurityQuestion"/>
+		</xs:sequence>
+		<!--Parse response message.-->
+	</xs:complexType>
+	<xs:element name="getSecurityQuestionResponse" type="SecurityQuestionResponse"/>
+</xs:schema>

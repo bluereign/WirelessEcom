@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2012 rel. 2 sp1 (x64) (http://www.altova.com) by Sprint Employee (SPRINT) -->
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="PreAuthorizationRequest">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="deposit-payment" type="CreditCard">
+					<!--SIM number.-->
+				</xs:element>
+				<xs:element name="cash-deposit" type="xs:boolean"/>
+			</xs:choice>
+			<xs:element name="handset-count" type="UnsignedByteMax99" minOccurs="0"/>
+		</xs:sequence>
+		<!--Deposit payment pre-auth request message.-->
+	</xs:complexType>
+	<xs:element name="doPreAuthorization" type="PreAuthorizationRequest"/>
+	<xs:complexType name="PreAuthorizationResponse">
+		<xs:sequence>
+			<xs:element name="success" type="xs:boolean">
+				<!--Whether pre-auth was successful.-->
+			</xs:element>
+			<xs:element name="pre-authorization-code" type="RequiredString" minOccurs="0">
+				<!--Payment Tech preauthorization number.-->
+			</xs:element>
+			<xs:element name="details" type="RequiredString" minOccurs="0">
+				<!--Description if an error occurs.-->
+			</xs:element>
+			<xs:element name="total-deposit" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--Total deposit-->
+			</xs:element>
+		</xs:sequence>
+		<!--Deposit pre-auth response message.-->
+	</xs:complexType>
+	<xs:element name="doPreAuthorizationResponse" type="PreAuthorizationResponse"/>
+</xs:schema>

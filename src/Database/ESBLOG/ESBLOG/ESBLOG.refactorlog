@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="d8631ea7-e388-4ae1-a2f9-5742079a06db" ChangeDateTime="07/01/2014 18:05:40">
+    <Property Name="ElementName" Value="[dbo].[CarrierInterfaceLog].[Header]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CarrierInterfaceLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MessageHeader" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cf0dd809-b30b-4e90-8c89-943dc346acc9" ChangeDateTime="07/01/2014 20:41:32">
+    <Property Name="ElementName" Value="[dbo].[CarrierInterfaceLog].[MessageHeader]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CarrierInterfaceLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Header" />
+  </Operation>
+</Operations>

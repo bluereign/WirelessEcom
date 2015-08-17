@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [sekar]
+    WITH PASSWORD = N'hrcnOs_gtp^n9oootthnfguymsFT7_&#$!~<eeu{fZxohh%m', SID = 0xA6CD844CB3779644881A26E8588FFA9B, DEFAULT_DATABASE = [CARTOYS], DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+

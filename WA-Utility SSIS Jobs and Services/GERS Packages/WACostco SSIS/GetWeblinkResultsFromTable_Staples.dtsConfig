@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<DTSConfiguration>
+	<Configuration ConfiguredType="Property" Path="\Package.Variables[User::OriginCd].Properties[Value]" ValueType="String">
+		<ConfiguredValue>OSST</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Variables[User::TrnIdPrefix].Properties[Value]" ValueType="String">
+		<ConfiguredValue>OS</ConfiguredValue>
+	</Configuration>
+</DTSConfiguration>

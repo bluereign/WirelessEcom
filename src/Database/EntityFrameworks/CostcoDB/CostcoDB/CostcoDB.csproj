@@ -1,0 +1,928 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FC83A3D1-D798-48C2-B205-B74C13010438}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CostcoDB</RootNamespace>
+    <AssemblyName>CostcoDB</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\..\..\..\WA_Misc\VFD\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\..\..\..\..\WA_Misc\VFD\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accessory.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccessoryForDevice.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Action.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActionCapture.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivationsWaiting.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Activity.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Activity1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AddFile.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Address.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminComponent.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminMenu.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Applied.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BannedUser.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bundle.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="callNote.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="callNoteSubject.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CancelFile.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CancelledOrderInventory_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CapturesWaiting.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Carrier.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CarrierImage.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CarrierInterfaceLog.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cart.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CartType.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogAudit.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogLoad.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="catalogload_device.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="catalogload_devicerateplan.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="catalogload_deviceservice.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="catalogload_products.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="catalogload_property.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="catalogload_rateplan.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="catalogload_rateplanservice.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="catalogload_service.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Category.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Category1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Category11.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckoutSessionState.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CommandLog.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CommissionSKU.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Company.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Condition.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Content.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Costco.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Costco.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Costco.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Costco.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Costco.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="CostcoAnalytic.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Coupon.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Coupon1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CurrentInventory.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerLookUpPlan.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerLookUpService.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerServiceActivation.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DashboardData.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DashboardData1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataGroup.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datum.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DD_ExecSummaryStatus_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DD_ExecSummary_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DD_TotalVisits_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Device.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Device1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceFreeAccessory.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceService.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceServiceMasterGroupOptional.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DiscountType.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dn_Accessories.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dn_AllPlans.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dn_Phones.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dn_Phones_all.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dn_Plans.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dn_PrePaids.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dtproperty.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dt_getpropertiesbyid_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dt_getpropertiesbyid_u_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailTemplate.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailTemplate1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Environment.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FilterGroup.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FilterOption.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FindUnUsedTables_usp_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FreeAccessory.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Functionality.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GersItm.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GersPrice.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GersPriceGroup.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GersStock.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetHolidays_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReleaseContent_ByTemplate.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReleaseDetail.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReleaseInstances_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReleaseStates_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReleases_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReleaseUsers_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetShipMethodForOrder_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetWirelessAccountById_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetWirelessAccountByOrderId_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetWirelessAccountByWirelessAccountId_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetZoneListForZipCode_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetZonesForZipCode_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Get_CATS_OrderDetails.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HandsetPriceHistory.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HolidayCalendar.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Image.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Image1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IncomingGersPrice.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IncomingGersPriceGroup.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IncomingGersStock.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvalidCart.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvalidCartType.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryCap.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LineService.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LiveUpdateAdd.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LiveUpdateCancel.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Market.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MilitaryBase.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MilitaryBranch.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Multimedia.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OldProdToNewProd.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Operator.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="order.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Order1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderDetail.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderDetailDump.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderDump.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderNote.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderNoteSubject.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderQueue.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderQueue_History.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderStatus1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderToRebate.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Payment.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Payment1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentGatewayListener.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentGatewayLog.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentGatewayType.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentMethod.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductGuid.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductTag.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductType.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionCode.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionCodes1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionProduct.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyMaster.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyMasterAlia.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyMasterGroup.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Rateplan.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RateplanDevice.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RateplanException.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RateplanMarket.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RateplanService.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Rateplan_InsertProcess.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Rebate.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Rebate1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RebateSKU.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RebateToFilter.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RebateToProduct.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Recommendation.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Release.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Release1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleaseInstance.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleaseState.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleaseTask.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleaseTemplate.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleaseTemplateCarrier.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleaseUser.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RemainingQuantity.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReservedStock.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleFunctionality.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleMenu.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesAccessory_View.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sales_View.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SecurityQuestion.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service1.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceDataFeature.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceExclusion.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceMaster.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceMasterGroup.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceType.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Session.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SessionStockReservation.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Shipment.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShipMethod.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShipMethodPromo.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SiteGroup.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SiteTemplate.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SpecificAddFile.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SpecificCancelFile.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="split_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetAllOrders_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetAPIErrorDetails_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetCancelledOrders_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetCarrierData_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetCarrierResponseRefs_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetDetails_Accessories_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetDetails_Locations_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetDetails_OrderDetails_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetDetails_SKU_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetEmailTemplates_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetIMEIDetails_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetItemsNotAllocated_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetItemsWithFakeInventory_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetManualOrders_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetNotProcessed_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetOrderAccessories_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetOrderCarrier_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetOrderDetailItems_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetOrderPhone_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetOutletDetails_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetPhoneAccessories_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetProcessed_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetProductDetails_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetProductPricing_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetReleaseDetails_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetReleaseTemplateContent_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetReleaseTemplateImage_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetReleaseTemplates_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetSiteURL_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetSKUsWithInventory_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetStaticSiteURL_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetTemplateChildren_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetTemplateData_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_LookupIMEIOutlet_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="State.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tag.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TemplateReleaseContent.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="test.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransitTime.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Type.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="udf_List2GuidList_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="udf_List2Table_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="udf_ListToIntegerTable_Result.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpgradeEligibility.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserPromotion.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VerizonCreditCheckKeyInfo.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vGetAllProduct.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Video.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vMissingKit.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vPaymentDiff.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vProductRebate.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vProductRebateTotal.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vRateplanDeviceService.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vRateplanDeviceServiceATT.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vRateplanDeviceServiceSPT.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vRateplanDeviceServiceTMO.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vRateplanDeviceServiceVZW.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vUPSKeyedImport.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_GetUncommittedTax.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_MercentProductFeed.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WACalendar.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="warranty.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WeblinkAddCommissionSkuUnion.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WeblinkAdditionalCommissionSku.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WirelessAccount.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WirelessAccount_Secure.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WirelessLine.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZipCodeMarket.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneCodes980.cs">
+      <DependentUpon>Costco.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Costco.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Costco.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Costco.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Costco.edmx</DependentUpon>
+      <LastGenOutput>Costco.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Costco.edmx.diagram">
+      <DependentUpon>Costco.edmx</DependentUpon>
+    </None>
+    <None Include="Costco.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Costco.edmx</DependentUpon>
+      <LastGenOutput>Costco.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

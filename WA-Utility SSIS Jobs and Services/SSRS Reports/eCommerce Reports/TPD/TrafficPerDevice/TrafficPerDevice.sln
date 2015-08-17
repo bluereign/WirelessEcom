@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "TrafficPerDevice", "TrafficPerDevice.rptproj", "{DF0D26D3-6631-4DC2-8C6D-C19DAF0F43D8}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver.cartoys.corp:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = TrafficPerDevice.rptproj
+		SccLocalPath1 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF0D26D3-6631-4DC2-8C6D-C19DAF0F43D8}.Debug|Default.ActiveCfg = Debug
+		{DF0D26D3-6631-4DC2-8C6D-C19DAF0F43D8}.Debug|Default.Build.0 = DebugLocal
+		{DF0D26D3-6631-4DC2-8C6D-C19DAF0F43D8}.Debug|Default.Deploy.0 = DebugLocal
+		{DF0D26D3-6631-4DC2-8C6D-C19DAF0F43D8}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{DF0D26D3-6631-4DC2-8C6D-C19DAF0F43D8}.DebugLocal|Default.Build.0 = DebugLocal
+		{DF0D26D3-6631-4DC2-8C6D-C19DAF0F43D8}.Release|Default.ActiveCfg = Release
+		{DF0D26D3-6631-4DC2-8C6D-C19DAF0F43D8}.Release|Default.Build.0 = Release
+		{DF0D26D3-6631-4DC2-8C6D-C19DAF0F43D8}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

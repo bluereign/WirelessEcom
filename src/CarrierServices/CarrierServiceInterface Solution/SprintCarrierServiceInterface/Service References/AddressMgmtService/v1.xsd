@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryCityState/v1/queryCityState.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryCityState/v1/queryCityState.xsd" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryCityState" type="tns:QueryCityStateRequest" />
+  <xs:element name="queryCityStateResponse" type="tns:QueryCityStateResponse" />
+  <xs:complexType name="QueryCityStateRequest">
+    <xs:sequence>
+      <xs:element name="zipCode" type="tns:UspsPostalCd">
+        <xs:annotation>
+          <xs:documentation>'USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="zip4Code" type="tns:UspsPostalCodeExtension">
+        <xs:annotation>
+          <xs:documentation>'USPS Posta Code Extension contains the last 4 characters of the nine digit USPS Postal Code.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="maximiumResults" type="tns:RowCountNumber">
+        <xs:annotation>
+          <xs:documentation>The maximiumResults is the number of city, state combinations returned.  Default is 10.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryCityStateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="999" name="cityStateList" type="tns:CityState" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CityState">
+    <xs:sequence>
+      <xs:element name="city" type="tns:CityName">
+        <xs:annotation>
+          <xs:documentation>City Name holds the textual string identifying a City.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="state" type="tns:UspsStateAbbreviation">
+        <xs:annotation>
+          <xs:documentation>'A United States Postal Service (USPS) State Abbreviation Code is the set of characters that are selected from a State or Protectorate name and specified by the USPS to represent the name of a State or US Protectorate for the purpose of mail delivery.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CityName">
+    <xs:annotation>
+      <xs:documentation>City Name holds the textual string identifying a City.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="98" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RowCountNumber">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="3" />
+      <xs:fractionDigits value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCd">
+    <xs:annotation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>alias: Ensemble: ADDR_DATA.ADR_ZIP</xs:documentation>
+      <xs:documentation>Ensemble: ADDR_DATA.ADR_ZIP
+
+The first 5 characters or digits of the address zip code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCodeExtension">
+    <xs:annotation>
+      <xs:documentation>USPS Posta Code Extension contains the last 4 characters of the nine digit USPS Postal Code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsStateAbbreviation">
+    <xs:annotation>
+      <xs:documentation>A United States Postal Service (USPS) State Abbreviation Code is the set of characters that are selected from a State or Protectorate name and specified by the USPS to represent the name of a State or US Protectorate for the purpose of mail delivery.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

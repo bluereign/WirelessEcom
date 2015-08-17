@@ -1,0 +1,985 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://WirelessAdvocates.TMobileCarrierServiceInterface/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://retail.tmobile.com/sdo" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://WirelessAdvocates.TMobileCarrierServiceInterface/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://WirelessAdvocates.TMobileCarrierServiceInterface/">
+      <s:import namespace="http://retail.tmobile.com/sdo" />
+      <s:element name="TestValidateAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestValidateAddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestValidateAddressResult" type="tns:AddressValidationResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AddressValidationResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ValidAddress" type="tns:ExtendedAddress" />
+              <s:element minOccurs="0" maxOccurs="1" name="PossibleAddressMatch" type="tns:ArrayOfExtendedAddress" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CarrierResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Result" />
+          <s:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ServiceResponseSubCode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryErrorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ExtendedAddress">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Address">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="AddressType" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HouseNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DirectionalPrefix" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetType" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DirectionalSuffix" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AptDesignator" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AptNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountyName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DeliveryPointBarCode" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Address">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExtendedZipCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="tns:Name" />
+          <s:element minOccurs="0" maxOccurs="1" name="Contact" type="tns:Contact" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Name">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleInitial" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Prefix" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Suffix" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Contact">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="WorkPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EveningPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CellPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkPhoneExt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfExtendedAddress">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ExtendedAddress" nillable="true" type="tns:ExtendedAddress" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DownloadCatalog">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DownloadCatalogResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DownloadCatalogResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="addressToValidate" type="tns:Address" />
+            <s:element minOccurs="1" maxOccurs="1" name="addressType" type="tns:AddressType" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="AddressType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Shipping" />
+          <s:enumeration value="Billing" />
+          <s:enumeration value="PPU" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ValidateAddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateAddressResult" type="tns:AddressValidationResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateRSATokenForKioskPit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateRSATokenForKioskPitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenerateRSATokenForKioskPitResult" type="s1:GenerateRsaOneTimeTokenResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateRSATokenForKiosk">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateRSATokenForKioskResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenerateRSATokenForKioskResult" type="s1:GenerateRsaOneTimeTokenResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestGenerateRSATokenForKiosk">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestGenerateRSATokenForKioskResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestGenerateRSATokenForKioskResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckCredit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="billingName" type="tns:Name" />
+            <s:element minOccurs="0" maxOccurs="1" name="serviceZipCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contactInfo" type="tns:Contact" />
+            <s:element minOccurs="0" maxOccurs="1" name="billingContactCredentials" type="tns:PersonalCredentials" />
+            <s:element minOccurs="1" maxOccurs="1" name="numberOfLines" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PersonalCredentials">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SSN" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdExpiration" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdType" type="tns:IdentificationType" />
+          <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DOB" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="IdentificationType">
+        <s:restriction base="s:string">
+          <s:enumeration value="DL" />
+          <s:enumeration value="MILI" />
+          <s:enumeration value="PASS" />
+          <s:enumeration value="TRIB" />
+          <s:enumeration value="ALIE" />
+          <s:enumeration value="DISA" />
+          <s:enumeration value="ID" />
+          <s:enumeration value="OTHER" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CheckCreditResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckCreditResult" type="tns:CreditCheckResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CreditCheckResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="NumberOfLines" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreditApplicationNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreditCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreditStatus" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CustomerAccountNumber" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="TestAValidatePortIn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReferenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestAValidatePortInResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ValidatePortIn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MDNList" type="tns:ArrayOfMDNSet" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReferenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMDNSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MDNSet" nillable="true" type="tns:MDNSet" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MDNSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MDN" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ServiceZipCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsPortable" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ValidatePortInResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidatePortInResult" type="tns:ValidatePortInResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ValidatePortInResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="MDNSet" type="tns:ArrayOfMDNSet" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="UpgradeRatePlan">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="OrderNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpgradeRatePlanResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpgradeRatePlanResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAutomaticallyUpgrade">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAutomaticallyUpgradeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CanAutomaticallyUpgradeResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfLineActivationResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="LineActivationResponse" nillable="true" type="tns:LineActivationResponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LineActivationResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="MDN" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="IMEI" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EquipmentUpgradeResponse" type="tns:EquipmentUpgradeResponse" />
+              <s:element minOccurs="0" maxOccurs="1" name="ServicesActivationResponse" type="tns:ServicesActivationResponse" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EquipmentUpgradeResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ServicesActivationResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SubmitOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitOrderResult" type="tns:OrderActivationResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="OrderActivationResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="LineActivationResponses" type="tns:ArrayOfLineActivationResponse" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="NpaLookupByZip">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="zipCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="NpaInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Npa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NpaNxx" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ngp" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MarketCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfNpaInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="NpaInfo" nillable="true" type="tns:NpaInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="NpaLookupByZipResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NpaLookupByZipResult" type="tns:NpaResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="NpaResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="NpaSet" type="tns:ArrayOfNpaInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CustomerLookupByMsiSdn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="msiSdn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CustomerInquiryLine">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsPrimaryLine" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mdn" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ShippingAddress" type="tns:Address" />
+          <s:element minOccurs="0" maxOccurs="1" name="BillingAddress" type="tns:Address" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContractStartSpecified" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ContractStart" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpgradeAvailableSpecified" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="EquipmentUpgradeAvailable" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AccountStatus" type="tns:AccountStatusCode" />
+          <s:element minOccurs="0" maxOccurs="1" name="CarrierAccountId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExistingLineMonthlyCharges" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="WirelessLineType" type="tns:WirelessLineType" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="AccountStatusCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="CLOSED" />
+          <s:enumeration value="CANCELLED" />
+          <s:enumeration value="OPERATIONAL" />
+          <s:enumeration value="TENTATIVE" />
+          <s:enumeration value="SUSPENDED" />
+          <s:enumeration value="UNKNOWN" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="WirelessLineType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Undefined" />
+          <s:enumeration value="Line" />
+          <s:enumeration value="Data" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfCustomerInquiryLine">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomerInquiryLine" nillable="true" type="tns:CustomerInquiryLine" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CustomerLookupByMsiSdnResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CustomerLookupByMsiSdnResult" type="tns:CustomerInquiryResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CustomerInquiryResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="LinesApproved" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LinesActive" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LinesAvailable" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WirelessAccountType" type="tns:WirelessAccountType" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExistingAccountMonthlyCharges" type="s:decimal" />
+              <s:element minOccurs="0" maxOccurs="1" name="CustomerInquiryLines" type="tns:ArrayOfCustomerInquiryLine" />
+              <s:element minOccurs="0" maxOccurs="1" name="CustomerAccountNumber" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="WirelessAccountType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Undefined" />
+          <s:enumeration value="Individual" />
+          <s:enumeration value="MultiLine" />
+          <s:enumeration value="Family" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CheckElig">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="msiSdn" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckEligResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckEligResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://retail.tmobile.com/sdo">
+      <s:complexType name="ServiceStatus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="serviceStatusCode" type="s1:ServiceStatusEnum" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="serviceStatusItem" type="s1:StatusItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ServiceStatusEnum">
+        <s:restriction base="s:string">
+          <s:enumeration value="100" />
+          <s:enumeration value="101" />
+          <s:enumeration value="102" />
+          <s:enumeration value="103" />
+          <s:enumeration value="104" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="StatusItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="statusCode" type="s:token" />
+          <s:element minOccurs="0" maxOccurs="1" name="statusDescription" type="s:normalizedString" />
+          <s:element minOccurs="0" maxOccurs="1" name="explanation" type="s:normalizedString" />
+          <s:element minOccurs="0" maxOccurs="1" name="referenceId" type="s:token" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RspRequest" abstract="true">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="header" type="s1:Header" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Header">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="partnerId" type="s:token" />
+          <s:element minOccurs="0" maxOccurs="1" name="partnerTransactionId" type="s:normalizedString" />
+          <s:element minOccurs="1" maxOccurs="1" name="partnerTimestamp" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="application" type="s:token" />
+          <s:element minOccurs="0" maxOccurs="1" name="applicationUserId" type="s:token" />
+          <s:element minOccurs="0" maxOccurs="1" name="channel" type="s:token" />
+          <s:element minOccurs="0" maxOccurs="1" name="targetSystemUserId" type="s:token" />
+          <s:element minOccurs="0" maxOccurs="1" default="9999" name="storeId" type="s:token" />
+          <s:element minOccurs="0" maxOccurs="1" name="dealerCode" type="s:token" />
+          <s:element minOccurs="0" maxOccurs="1" name="rspTransactionId" type="s:token" />
+          <s:element minOccurs="0" maxOccurs="1" name="authenticatedId" type="s:token" />
+        </s:sequence>
+        <s:attribute default="1.1.0" name="rspServiceVersion" type="s:token" />
+      </s:complexType>
+      <s:complexType name="RspResponse" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:RspRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="serviceStatus" type="s1:ServiceStatus" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GenerateRsaOneTimeTokenResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:RspResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="pseudoUserId" type="s:token" />
+              <s:element minOccurs="0" maxOccurs="1" name="tokenPasscode" type="s:token" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="TestValidateAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:TestValidateAddress" />
+  </wsdl:message>
+  <wsdl:message name="TestValidateAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:TestValidateAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="DownloadCatalogSoapIn">
+    <wsdl:part name="parameters" element="tns:DownloadCatalog" />
+  </wsdl:message>
+  <wsdl:message name="DownloadCatalogSoapOut">
+    <wsdl:part name="parameters" element="tns:DownloadCatalogResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateAddress" />
+  </wsdl:message>
+  <wsdl:message name="ValidateAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenerateRSATokenForKioskPitSoapIn">
+    <wsdl:part name="parameters" element="tns:GenerateRSATokenForKioskPit" />
+  </wsdl:message>
+  <wsdl:message name="GenerateRSATokenForKioskPitSoapOut">
+    <wsdl:part name="parameters" element="tns:GenerateRSATokenForKioskPitResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenerateRSATokenForKioskSoapIn">
+    <wsdl:part name="parameters" element="tns:GenerateRSATokenForKiosk" />
+  </wsdl:message>
+  <wsdl:message name="GenerateRSATokenForKioskSoapOut">
+    <wsdl:part name="parameters" element="tns:GenerateRSATokenForKioskResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestGenerateRSATokenForKioskSoapIn">
+    <wsdl:part name="parameters" element="tns:TestGenerateRSATokenForKiosk" />
+  </wsdl:message>
+  <wsdl:message name="TestGenerateRSATokenForKioskSoapOut">
+    <wsdl:part name="parameters" element="tns:TestGenerateRSATokenForKioskResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckCreditSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckCredit" />
+  </wsdl:message>
+  <wsdl:message name="CheckCreditSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckCreditResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestAValidatePortInSoapIn">
+    <wsdl:part name="parameters" element="tns:TestAValidatePortIn" />
+  </wsdl:message>
+  <wsdl:message name="TestAValidatePortInSoapOut">
+    <wsdl:part name="parameters" element="tns:TestAValidatePortInResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidatePortInSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidatePortIn" />
+  </wsdl:message>
+  <wsdl:message name="ValidatePortInSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidatePortInResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpgradeRatePlanSoapIn">
+    <wsdl:part name="parameters" element="tns:UpgradeRatePlan" />
+  </wsdl:message>
+  <wsdl:message name="UpgradeRatePlanSoapOut">
+    <wsdl:part name="parameters" element="tns:UpgradeRatePlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="CanAutomaticallyUpgradeSoapIn">
+    <wsdl:part name="parameters" element="tns:CanAutomaticallyUpgrade" />
+  </wsdl:message>
+  <wsdl:message name="CanAutomaticallyUpgradeSoapOut">
+    <wsdl:part name="parameters" element="tns:CanAutomaticallyUpgradeResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitOrder" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="NpaLookupByZipSoapIn">
+    <wsdl:part name="parameters" element="tns:NpaLookupByZip" />
+  </wsdl:message>
+  <wsdl:message name="NpaLookupByZipSoapOut">
+    <wsdl:part name="parameters" element="tns:NpaLookupByZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomerLookupByMsiSdnSoapIn">
+    <wsdl:part name="parameters" element="tns:CustomerLookupByMsiSdn" />
+  </wsdl:message>
+  <wsdl:message name="CustomerLookupByMsiSdnSoapOut">
+    <wsdl:part name="parameters" element="tns:CustomerLookupByMsiSdnResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckEligSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckElig" />
+  </wsdl:message>
+  <wsdl:message name="CheckEligSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckEligResponse" />
+  </wsdl:message>
+  <wsdl:portType name="TMobileServiceSoap">
+    <wsdl:operation name="TestValidateAddress">
+      <wsdl:input message="tns:TestValidateAddressSoapIn" />
+      <wsdl:output message="tns:TestValidateAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadCatalog">
+      <wsdl:input message="tns:DownloadCatalogSoapIn" />
+      <wsdl:output message="tns:DownloadCatalogSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAddress">
+      <wsdl:input message="tns:ValidateAddressSoapIn" />
+      <wsdl:output message="tns:ValidateAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateRSATokenForKioskPit">
+      <wsdl:input message="tns:GenerateRSATokenForKioskPitSoapIn" />
+      <wsdl:output message="tns:GenerateRSATokenForKioskPitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateRSATokenForKiosk">
+      <wsdl:input message="tns:GenerateRSATokenForKioskSoapIn" />
+      <wsdl:output message="tns:GenerateRSATokenForKioskSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TestGenerateRSATokenForKiosk">
+      <wsdl:input message="tns:TestGenerateRSATokenForKioskSoapIn" />
+      <wsdl:output message="tns:TestGenerateRSATokenForKioskSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckCredit">
+      <wsdl:input message="tns:CheckCreditSoapIn" />
+      <wsdl:output message="tns:CheckCreditSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TestAValidatePortIn">
+      <wsdl:input message="tns:TestAValidatePortInSoapIn" />
+      <wsdl:output message="tns:TestAValidatePortInSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePortIn">
+      <wsdl:input message="tns:ValidatePortInSoapIn" />
+      <wsdl:output message="tns:ValidatePortInSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeRatePlan">
+      <wsdl:input message="tns:UpgradeRatePlanSoapIn" />
+      <wsdl:output message="tns:UpgradeRatePlanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAutomaticallyUpgrade">
+      <wsdl:input message="tns:CanAutomaticallyUpgradeSoapIn" />
+      <wsdl:output message="tns:CanAutomaticallyUpgradeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <wsdl:input message="tns:SubmitOrderSoapIn" />
+      <wsdl:output message="tns:SubmitOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NpaLookupByZip">
+      <wsdl:input message="tns:NpaLookupByZipSoapIn" />
+      <wsdl:output message="tns:NpaLookupByZipSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomerLookupByMsiSdn">
+      <wsdl:input message="tns:CustomerLookupByMsiSdnSoapIn" />
+      <wsdl:output message="tns:CustomerLookupByMsiSdnSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckElig">
+      <wsdl:input message="tns:CheckEligSoapIn" />
+      <wsdl:output message="tns:CheckEligSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TMobileServiceSoap" type="tns:TMobileServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestValidateAddress">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/TestValidateAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadCatalog">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/DownloadCatalog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAddress">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/ValidateAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateRSATokenForKioskPit">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/GenerateRSATokenForKioskPit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateRSATokenForKiosk">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/GenerateRSATokenForKiosk" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestGenerateRSATokenForKiosk">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/TestGenerateRSATokenForKiosk" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckCredit">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/CheckCredit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestAValidatePortIn">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/TestAValidatePortIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePortIn">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/ValidatePortIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeRatePlan">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/UpgradeRatePlan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAutomaticallyUpgrade">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/CanAutomaticallyUpgrade" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/SubmitOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NpaLookupByZip">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/NpaLookupByZip" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomerLookupByMsiSdn">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/CustomerLookupByMsiSdn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckElig">
+      <soap:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/CheckElig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TMobileServiceSoap12" type="tns:TMobileServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestValidateAddress">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/TestValidateAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadCatalog">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/DownloadCatalog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAddress">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/ValidateAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateRSATokenForKioskPit">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/GenerateRSATokenForKioskPit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateRSATokenForKiosk">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/GenerateRSATokenForKiosk" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestGenerateRSATokenForKiosk">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/TestGenerateRSATokenForKiosk" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckCredit">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/CheckCredit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestAValidatePortIn">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/TestAValidatePortIn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePortIn">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/ValidatePortIn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeRatePlan">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/UpgradeRatePlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAutomaticallyUpgrade">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/CanAutomaticallyUpgrade" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/SubmitOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NpaLookupByZip">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/NpaLookupByZip" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomerLookupByMsiSdn">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/CustomerLookupByMsiSdn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckElig">
+      <soap12:operation soapAction="http://WirelessAdvocates.TMobileCarrierServiceInterface/CheckElig" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TMobileService">
+    <wsdl:port name="TMobileServiceSoap" binding="tns:TMobileServiceSoap">
+      <soap:address location="http://10.7.0.92/TMobileService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TMobileServiceSoap12" binding="tns:TMobileServiceSoap12">
+      <soap12:address location="http://10.7.0.92/TMobileService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

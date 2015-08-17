@@ -1,0 +1,1013 @@
+.x-dlg-dlg-body
+{
+	font-size:1.2em;
+}
+
+div#cartDialog
+{
+	/*width: 730px;*/
+	height: 445px;
+	overflow: auto;
+	margin-top: 0px;
+	position:inherit;
+}
+
+div#dialog_addToCart_body
+{
+	overflow:hidden !important;
+}
+
+.cartHeader
+{
+	background:url('../images/ui/cartdialog/2/cart_logo_header.png') left top no-repeat #f5f2f2 !important;
+	height: 42px;
+	position: relative;
+	z-index: 999;
+
+}
+
+.zipHeader
+{
+	position:absolute;
+	bottom:12px;
+	right:32px;
+	font-size:1.2em;
+}
+
+.cartHeader .zipHeader
+{
+	padding:10px 20px 0px 0px;
+}
+
+.cartBody
+{
+	padding:0px 5px 10px 5px;
+}
+
+.messages-modal
+{
+	
+	padding: 1em 1em;
+	position: absolute;
+	width: 720px;
+	height: 545px;
+	z-index: 3000;
+	margin: -70px 0 0 -5px;
+	background-color: #CCC;
+	filter:alpha(opacity=60);
+	opacity: 0.6;
+	-moz-opacity:0.6;
+}
+.control-line
+{
+	margin-top: 20px;	
+}
+.modal-lineinputs
+{
+	margin-top: 20px;	
+}
+
+.messages-box
+{
+	background-color: #fff;
+	padding: 30px;
+	width: 300px;
+	margin-left: 170px; 
+    margin-right: 100px;
+	margin-top: 60px;
+	display: block;
+	border: solid 1px #666;
+	z-index: 3002;
+	/* position: absolute; */
+	
+	filter:alpha(opacity=100) !important;
+	opacity: 1 !important;
+	-moz-opacity:1 !important;
+
+	
+}
+	.large-modal
+		{
+			width: 505px;
+			margin-left: 60px;
+			margin-top:	25px;
+			padding-top: 5px;
+			padding-bottom: 10px;
+		}
+
+.solid
+{
+	background-color: #fff;
+	opacity: 1;
+	-moz-opacity:1;
+}
+
+.messages h3
+{
+	text-align:center;
+	margin-bottom:0.3em;
+	display:inline;
+	font-size:1.4em;
+}
+
+.messages div.formControl
+{
+	display:inline;
+	padding-left:1em;
+	font-size:0.9em;
+	padding-top: 20px;
+}
+
+.formControl-modal
+{
+	float: right;
+}
+
+.messages div.formControl span
+{
+	padding-left:0.5em;
+}
+
+.messages .error
+{
+	background-color:#faa;
+}
+
+.messagesError
+{
+	background-color:#ffffff;
+	border-top:1px dashed #d0c77e;
+	border-bottom:1px dashed #d0c77e;
+	padding:1em 1em;
+	text-align:center;
+	margin-bottom:1.5em;
+}
+
+.messagesError h3
+{
+	text-align:center;
+	margin-bottom:0.3em;
+	display:inline;
+	font-size:1.4em;
+}
+
+.messagesError .error
+{
+	/*background-color:#faa;*/ /****** Not sure why this was commented out but the dev using the wrong comment tags *****/
+}
+
+.prodDesc ul li
+{
+	list-style:disc outside none;
+}
+
+ul, 
+li
+{
+	padding:0px;
+	margin:0px;
+	list-style:none;
+}
+
+#dialogContent.margin
+{
+	margin-top: 20px;	
+}
+
+ul#cartLines > li
+{
+	position:relative;
+}
+
+ul#cartLines > li.active
+{
+	background:#fff;
+}
+
+.aliasControl
+{
+	/*margin-top:0.5em;*/
+}
+
+.aliasLine a
+{
+	padding-left:0.5em;
+}
+
+ul.lineSelections
+{
+	margin-left:1em;
+	margin-top:0.5em;
+}
+
+ul.lineSelections > li
+{
+	border-top:1px dashed #ccc;
+	padding:0.5em;
+}
+
+ul#cartLines h5,
+.lineActionLabel
+{
+	padding:0.2em 1em 0.5em 0;
+	line-height:1.2em;
+	font-size:1.1em;
+	display:inline;
+	zoom:1;
+}
+
+ul#cartLines h5
+{
+	text-decoration:underline;
+	cursor:pointer;
+}
+
+ul.lineSelections h6
+{
+	
+	font-weight:normal;
+	font-size:1em;
+	display:inline;
+	text-align:right;
+	padding-right:1.5em;			
+}
+
+.cartBody .features,
+.cartBody .accessories
+.cartBody .warranty
+{
+	/*padding-right:100px !important;*/
+}
+
+.cartBody .features h6,
+.cartBody .accessories h6
+{
+}
+
+.cartBody .features ul,
+.cartBody .accessories ul
+{
+	/*display:inline;*/
+}
+		
+.cartBody .features li,
+.cartBody .accessories li,
+.cartBody .bundled li,
+.cartBody .warranty li
+{
+	/*display:inline;*/
+	padding:0.2em 10px 0.2em 1em;/*to make room for remove links*/
+}
+
+
+ul.featureNames,
+ul.accessoryNames
+{
+	margin-left:2em;
+}
+
+li.edit ul.featureNames li:hover,
+li.edit ul.accessoryNames li:hover
+{
+	background-color:#fff;
+}
+
+li.edit ul.featureNames li.action:hover,
+li.edit ul.accessoryNames li.action:hover
+{
+	background:inherit;
+}
+.accordianBody
+{
+	overflow:hidden;
+	/*position:relative;*/
+}
+
+.accordianTrigger
+{
+	position:absolute;
+	left:-20px;
+	background:url('../images/ui/accordian_indicator.gif') left top no-repeat transparent;
+	width:20px;
+	height:20px;
+	font-size:0em;
+	color:#fff !important;
+}
+
+.accordianTrigger_down
+{
+	background-position: left -22px;
+}
+/*
+li.addDevice:hover,
+li.addPlan:hover,
+li.addAccessory:hover,
+li.addFeature:hover
+{
+	background-color:#def;
+}
+*/
+li.edit li:hover
+{
+	background-color:#eee;
+}
+
+
+
+li#addNewLine
+{
+	cursor:pointer;			
+}
+/*
+li#addNewLine:hover
+{
+	background-color:#9fa;
+}
+*/
+/*derived from checkout.css .lineHeader td a*/
+.deleteLine
+{
+	display:none;
+	color:#6b6b6b !important;
+	padding-right:23px;
+	background:url('../images/ui/close_dyn_bg.gif') right top no-repeat transparent;
+	position:absolute;
+
+	right:10px;
+	height:20px;
+	line-height:20px;
+	font-size:1.2em;
+}
+
+.deleteLine:hover
+{
+	background-position:right -23px;
+}
+/*
+.addButton
+{
+	display:none;
+	position:absolute;
+	right:10px;
+	top:2px;
+	font-size:1.2em;
+	text-decoration:none;
+	background:url('../images/ui/white_button_bg_02.gif') right top no-repeat transparent;	padding-right:5px;		
+}
+
+.addButton span
+{
+	text-align:center;
+	height:25px;
+	line-height:25px;
+	background:url('../images/ui/white_button_bg_01.gif') left top no-repeat transparent;
+	display:block;
+	padding:0 5px 0 10px;	
+	cursor:pointer;	
+}
+
+span.actionButtonLow
+{	
+	background:url('../images/ui/white_button_bg_02.gif') right top no-repeat transparent;	
+	padding-right:5px;
+	height:24px;
+	cursor:pointer;
+	display:inline-block;
+}
+
+span.actionButtonLow a
+{
+	background:url('../images/ui/white_button_bg_01.gif') left top no-repeat transparent;
+	height:21px;
+	line-height:24px;
+	display:inline-block;
+	text-align:left;
+	color:#555;
+	text-decoration:none;
+	font-size:1.6em;
+	padding:0 0.5em;
+	border:none;
+	cursor:pointer;
+}
+*/
+
+span.actionButtonCancel
+{	
+//	background:url('../images/ui/button_bg_r.gif') right top no-repeat transparent;	
+	padding-right:5px;
+	height:24px;
+	cursor:pointer;
+	display:inline-block;
+	margin:0 0.5em;
+	font-size:1.1em;
+}
+
+span.actionButtonCancel a
+{
+//	background:url('../images/ui/button_bg_L.gif') left top no-repeat transparent;
+	height:21px;
+	line-height:24px;
+	display:inline-block;
+	text-align:left;
+	color:#555;
+	text-decoration:underline;
+	font-size:1.4em;
+	padding:0 0.5em;
+	border:none;
+	cursor:pointer;
+	font-size:1.1em;
+}
+
+span.actionButtonCancel a:hover
+{
+	text-decoration:underline;
+	font-size:1.1em;
+}
+
+span.actionButtonCancel
+{
+//	background:url('../images/ui/white_button_bg_02.gif') right top no-repeat transparent;
+	font-size:1.1em;
+}
+
+span.actionButtonCancel a
+{
+//	background:url('../images/ui/white_button_bg_01.gif') left top no-repeat transparent;
+	padding-bottom:3px;
+	font-size:1.1em;
+}
+
+.addButton:hover
+{
+	text-decoration:underline;
+}
+
+
+.edit .deleteLine
+{
+	display:inline;
+}
+
+.addDevice li:hover .addButton,
+.addPlan li:hover .addButton,
+.addFeature li:hover .addButton,
+.addAccessory li:hover .addButton
+{
+	/*display:inline;*/
+}
+
+a.removeItem,
+a.editItem
+{
+	display:none;
+}
+
+.edit a.removeItem,
+.edit a.editItem
+{
+	display:inline;
+}
+
+
+.edit a.removeItem span,
+.edit a.editItem span
+{
+	display:none;
+}
+
+.edit ul.lineSelections li:hover a.removeItem span,
+.edit ul.lineSelections li:hover a.editItem span
+{
+	display:inline;
+}
+
+.edit a.removeItem,
+.edit a.editItem
+{			
+	color:#6b6b6b !important;
+	padding-right:17px;
+	background:url('../images/ui/close_dyn_sm_bg.gif') right top no-repeat transparent;
+	position:absolute;
+
+	right:12px;
+	height:18px;
+	line-height:18px;
+	font-size:1em;
+}
+
+.edit a.editItem
+{
+	background:url('../images/ui/cart_pos.gif') right top no-repeat transparent;
+}
+
+.edit a.removeItem:hover
+{
+	color:#6b6b6b !important;
+	background-position:right -18px;
+}
+
+.edit a.editItem:hover
+{
+	background:url('../../costco/images/cart_pos.gif') right top no-repeat transparent;
+}
+
+.cartToolbar
+{
+	border-top:1px solid #6b6b6b;
+	background: #FFF;
+	width: 710px;
+	height:40px;
+	text-align:right;
+	padding: 10px;
+	padding-top: 8px;
+	z-index: 999;
+	
+}
+#btnCartReview
+{
+	margin-right: 15px;
+}
+
+
+.addInput
+{
+	padding-right:17px;
+	position:absolute;
+	right:12px;
+}
+
+.edit .addInput
+{
+	display:none;
+}
+
+.cart-tabs
+{
+	list-style: none;
+	width: 508px;
+	height: 68px;
+	display: block;
+	margin-top: 7px;
+	/*background-color: #FFF;*/
+	margin-left: 0px;
+	padding-left: 0px;
+	text-align: left;
+	position: absolute;
+}
+.cart-tabs li
+{
+	display:inline-block;
+	width: 59px;
+	height: 59px;
+	/*background-color: #009;*/
+	margin-left: 5px;
+	background: url('../images/ui/cartdialog/tab-back-off.gif');
+	background-repeat: none;
+}
+.cart-tabs li.on
+{
+	background: url('../images/ui/cartdialog/tab-back-on.gif');
+}
+.cart-tabs li div
+{
+	margin: 2px;
+	margin-top: 5px;
+	position: absolute;
+	width: 55px;
+	height: 55px;
+	overflow: hidden;
+}
+
+.cart-tabs li .add-a-line
+{
+	text-align: center;
+}
+
+
+.cart-tabs li .line
+{
+	padding-left: 6px;
+	padding-top: 2px;
+	cursor: pointer; cursor: hand;
+}
+.protoblue a
+{
+	color: #FFF !important;	
+}
+
+span.actionButton
+{
+	top: -30px;	
+}
+
+
+.prototip
+{
+	z-index: 9003;
+}
+
+
+
+
+
+
+
+
+.actionRadio {
+	vertical-align: baseline;
+}
+.actionlink
+{
+	font-size: .9em;
+}
+.radioText
+{
+	font-size: .9em;!important;
+}
+.red 
+{
+	color: #F00 !important;
+}
+.strong
+{
+	font-weight: bold;	
+}
+.off
+{
+	color: #999;	
+}
+.clear
+{
+	clear: both;
+}
+div.line .title
+{
+	font-weight: bold;	
+}
+div.line .top
+{
+	background:url('../images/ui/cartdialog/line-bg-top.gif');
+	height: 15px;
+	width: 666px;
+}
+div.line .bottom
+{
+	background:url('../images/ui/cartdialog/line-bg-bottom.gif');
+	height: 15px;
+	width: 666px;
+	margin-bottom: 10px;
+}
+div.line .bottom-accessory
+{
+	background:url('../images/ui/cartdialog/line-bg-bottom-acc-top.gif');
+	height: 17px;
+	width: 666px;
+}
+div.line .bottom-accessory-content
+{
+	background:url('../images/ui/cartdialog/line-bg-bottom-acc-back.gif');
+	width: 666px;
+}
+div.line .bottom-accessory-bottom
+{
+	background:url('../images/ui/cartdialog/line-bg-bottom-acc-bottom.gif');
+	width: 666px;
+	height: 14px;
+	margin-bottom: 10px;
+}
+div.line .accessories-content
+{
+	padding-left: 20px;
+	width: 630px;	
+	clear: both;
+}
+.lineTitle
+{
+	color: #36C;
+}
+
+div.line .content-bg
+{
+	background:url('../images/ui/cartdialog/line-bg-back.gif');
+	width: 666px;
+	clear: both;
+	
+}
+div.line .content
+{
+	padding-left: 20px;
+	width: 630px;	
+	clear: both;
+	
+}
+
+div.line td
+{
+	vertical-align:top;
+}
+
+div.line .deviceimage
+{
+	float: left;
+	display: inline;
+}
+
+div.line .content .removeaction
+{
+	display: block;
+	float:right;
+}
+div.line .content .linedetails
+{
+	margin-top: 10px;	
+}
+
+div.line .linedetails .plan
+{
+	margin-left: 10px;
+	
+}
+div.line .devicetitle, div.line .plantitle
+div.line .bundledaccesories, div.line .planservices
+{
+	font-size: 1.3em;	
+}
+
+
+
+
+
+
+
+
+#dialogContent .actionlink
+{
+	font-size: .9em;
+	color: #0A94D6;
+}
+.requiredlink
+{
+	color: #900 !important;
+}
+
+
+#dialogContent .content-bg
+{
+	
+}
+#dialogContent li
+{
+	padding-left: 0px;
+	margin-right: 0px;
+}
+#dialogContent .device, #dialogContent .plan, #dialogContent .services, #dialogContent .warranty, #dialogContent .accessories
+{
+	padding-left: 50px;
+}
+#dialogContent .device
+{
+	
+}
+#dialogContent .linefooter
+{
+	text-align: right;
+	padding-right: 20px;
+		
+}
+#dialogContent .done
+{
+	background-image: url('../images/ui/cartdialog/2/step-done.gif');
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+#dialogContent .next
+{
+	background-image: url('../images/ui/cartdialog/2/step-next.png');
+	background-color: #f5f2f2;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	border: solid 1px #4d9904;
+	border-radius: 2px;
+}
+#dialogContent .decline
+{
+	background-image: url('../images/ui/cartdialog/2/step-decline.gif');
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+#dialogContent .next .actionlink
+{
+	color: #4d9904 !important;
+}
+
+#dialogContent .removeaction
+{
+	display: block;
+	float:right;
+}
+#dialogContent .devicetitle, #dialogContent .plantitle, #dialogContent .servicestitle, #dialogContent .warrantytitle, #dialogContent .accessorytitle
+{
+	font-size: 1.0em;	
+	font-weight: bold;
+	display: block;
+	
+}
+#dialogContent .bundledaccesories
+{
+	margin-top: 20px;	
+}
+#dialogContent .bundledaccesories .title
+{
+	font-weight: bold;	
+}
+#dialogContent .devicetitle span, #dialogContent .plantitle span, #dialogContent .servicestitle span 
+{
+	display: block;	
+}
+
+#dialogContent .deviceimage
+{
+	float: right;
+	padding-left: 4px;
+}
+#dialogContent .plan, #dialogContent .services, #dialogContent .warranty, #dialogContent .accessories
+{
+	margin-top: 20px;	
+
+}
+#dialogContent .plan
+{
+	margin-top: 10px;	
+}
+
+#dialogContent .plan ul
+{
+	
+	
+}
+
+#dialogContent .phoneAction, #dialogContent .planAction, #dialogContent .serviceAction
+{
+	color: #093;
+	font-weight: bold;
+}
+ .hidden
+{
+	display: none;	
+}
+#dialogContent .progressbar
+{
+	position: absolute;
+	margin-left: -3px;
+	margin-top: 26px;
+}
+#dialogContent .tabLabel
+{
+	position: absolute;
+	margin-left: -3px;
+	margin-top: 4px;
+}
+#dialog_addToCart_body
+{
+	background-color: #f5f2f2;	
+}
+
+#mt-tAdd span
+{
+	width: 50px;	
+}
+.scrollarea
+{
+	width: 525px;
+	height: 400px;
+	overflow: auto;
+	margin-bottom: 4px;
+}
+#mt-tab999 .tabLabelAccessories
+{
+	padding-left: 10px;
+}
+#mt-tab999 .tabAccessoriesCount
+{
+	padding-left: 10px;
+}
+#otherAccessories li
+{
+	padding-bottom: 10px !important;
+	margin-bottom: 15px;
+}
+#otherAccessories li span
+{
+	display: block;	
+}
+
+.upgrade-disclaimer 
+{
+	margin-top: 10px;
+}
+.upgrade-disclaimer li
+{
+	padding-bottom: 10px;
+}
+
+#nextBtn
+{
+	float:right;	
+	width:100px;
+	margin-right:50px;
+}
+
+.glow
+{
+	background-color:#0f70b9;
+	color:white;
+}
+
+.zipcode-container {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    opacity: 1 !important;
+    padding: 10px 25px 10px 25px;
+    position: absolute;
+    z-index: 3002;
+	margin: 10px 5px 10px 5px;
+	width: 652px;
+	border-radius: 4px;
+	height: 495px;
+	font-size: 11px;
+}
+
+#activation-container {
+	border: #ccc 1px solid;
+	border-left: 0;
+	border-right: 0;					
+	width: 450px;
+	min-height: 125px;
+	margin: 15px 0 15px 0;
+	padding: 5px 0 15px 0;
+	clear: both;
+}
+
+.device-image {
+	float: left;
+	padding-right: 5px;
+}
+
+/* message boxes */
+
+.cart-msg-box-informational,
+.cart-msg-box-success,
+.cart-msg-box-warning,
+.cart-msg-box-error,
+.cbox_messagebox_error,
+.cbox_messagebox_info
+{
+	font-size: 14px;
+	border: 1px solid;
+	border-radius: 2px;
+	margin: 10px 10px;
+	padding: 15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
+.cart-msg-box-informational {
+	color: #00529B;
+	background-color: #BDE5F8;
+	padding: 4px;
+	text-align: center;
+}
+
+.cart-msg-box-success,
+.cbox_messagebox_info
+{
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	padding: 4px;
+	text-align: center;
+}
+
+.cart-msg-box-warning {
+	color: #9F6000;
+	background-color: #FEEFB3;
+	padding:4px;
+	text-align:center;
+}
+
+.cart-msg-box-error,
+.cbox_messagebox_error
+{
+	color: #D8000C;
+	background-color: #FFBABA;
+	padding:4px;
+	text-align:center;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+.lightboxOverlay { overflow: scroll; }
+.lightboxOverlay::-webkit-scrollbar { width: 0px; height: 0px; }
+}
+

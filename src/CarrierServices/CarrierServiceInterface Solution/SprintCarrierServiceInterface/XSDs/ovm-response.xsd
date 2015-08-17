@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Sprint Employee (SPRINT) -->
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Ramesh C Sepehrrad (Nextel Communications) -->
+<!--OVM response schema.  Author: Joel Seeger  Version: OVM11.3-->
+<!--OVM response schema.  Author: Saurabh Rai  Version: OVM13.1 OVM14.1-->
+<!--OVM response schema.  Author: Raj S Version: OVM15.1 -->
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:include schemaLocation="doAccountValidation.xsd"/>
+	<xs:include schemaLocation="doActivation.xsd"/>
+	<xs:include schemaLocation="performAuthenticationResendPin.xsd"/>
+	<xs:include schemaLocation="doCoverageCheck.xsd"/>
+	<xs:include schemaLocation="doCreditCancel.xsd"/>
+	<xs:include schemaLocation="doCreditCheck.xsd"/>
+	<xs:include schemaLocation="doDeactivation.xsd"/>
+	<xs:include schemaLocation="doInventoryCheck.xsd"/>
+	<xs:include schemaLocation="doPreAuthorization.xsd"/>
+	<xs:include schemaLocation="performServiceValidation.xsd"/>
+	<xs:include schemaLocation="doValidation.xsd"/>
+	<xs:include schemaLocation="getBillSummary.xsd"/>
+	<xs:include schemaLocation="getCorporateDiscount.xsd"/>
+	<xs:include schemaLocation="getNpaNxx.xsd"/>
+	<xs:include schemaLocation="getOptionsInfo.xsd"/>
+	<xs:include schemaLocation="getPortInInfo.xsd"/>
+	<xs:include schemaLocation="getSecurityQuestion.xsd"/>
+	<xs:include schemaLocation="queryPlansDetailInfo.xsd"/>
+	<xs:include schemaLocation="doActivateReservedDevice.xsd"/>
+	<xs:include schemaLocation="getDeviceInfo.xsd"/>
+	<xs:include schemaLocation="doActivateNow.xsd"/>
+	<xs:include schemaLocation="checkOrderStatus.xsd"/>
+	<xs:complexType name="OvmResponseType">
+		<xs:choice>
+			<xs:element name="credit-response" type="CreditResponse"/>
+			<xs:element name="activation-response" type="ActivationResponse"/>
+			<xs:element name="deactivation-response" type="DeactivationResponse"/>
+			<xs:element name="parse-response" type="ParseResponse"/>
+			<xs:element name="cancel-response" type="CancelResponse"/>
+			<xs:element name="status-response" type="StatusResponse"/>
+			<xs:element name="port-response" type="PortResponse"/>
+			<xs:element name="validation-response" type="ValidationResponse"/>
+			<xs:element name="port-status-response" type="PortStatusResponse"/>
+			<xs:element name="npa-nxx-response" type="NpaNxxResponse"/>
+			<xs:element name="account-validation-response" type="AccountValidationResponse"/>
+			<xs:element name="pre-authorization-response" type="PreAuthorizationResponse"/>
+			<xs:element name="credit-cancel-response" type="CreditCancelResponse"/>
+			<xs:element name="plans-response" type="PlansResponse"/>
+			<xs:element name="options-response" type="OptionsResponse"/>
+			<xs:element name="bill-summary-response" type="BillSummaryResponse"/>
+			<xs:element name="service-validation-response" type="ServiceValidationResponse"/>
+			<xs:element name="security-question-response" type="SecurityQuestionResponse"/>
+			<xs:element name="inventory-check-response" type="InventoryCheckResponse"/>
+			<xs:element name="authenticate-resend-pin-response" type="AuthenticationResendPinResponse"/>
+			<xs:element name="coverage-check-response" type="CoverageCheckResponse"/>
+			<xs:element name="corporate-discount-response" type="CorporateDiscountResponse"/>
+			<xs:element name="activate-reserved-device-response" type="ActivateReservedDeviceResponse"/>
+			<xs:element name="device-info-response" type="DeviceInfoResponse"/>
+			<xs:element name="activate-now-response" type="ActivateNowResponse"/>
+			<xs:element name="order-status-response" type="OrderStatusResponse"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="ovmResponse" type="OVMResponse"/>
+	<xs:complexType name="OVMResponse">
+		<xs:sequence>
+			<xs:element name="ovmErrorInfo" type="ErrorInfo" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ovmResponseType" type="OvmResponseType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ovm">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ovm-header" type="ResponseMessageHeader"/>
+				<xs:element name="ovm-error-info" type="ErrorInfo" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="ovm-response" type="OvmResponseType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

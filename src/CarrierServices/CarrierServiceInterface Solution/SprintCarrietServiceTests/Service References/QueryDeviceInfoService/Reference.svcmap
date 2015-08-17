@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f5d864b3-fb3a-4fbb-b6d7-1cf6b14758cc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="v1.xsd" MetadataType="Schema" ID="c684ea19-7fbe-4a40-b89e-6c5f200a1f19" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd2.xsd" />
+    <MetadataFile FileName="v11.xsd" MetadataType="Schema" ID="407f5693-2f19-4896-a799-cf946065da4f" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd9.xsd" />
+    <MetadataFile FileName="v12.xsd" MetadataType="Schema" ID="ad207735-4426-4b2a-8ab2-1d0830f7a48d" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd6.xsd" />
+    <MetadataFile FileName="v13.xsd" MetadataType="Schema" ID="b6f302a8-f7bc-4b7f-8cbf-dd3c9975c482" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd11.xsd" />
+    <MetadataFile FileName="v14.xsd" MetadataType="Schema" ID="9a83a362-8273-4e66-9368-b851349fe55c" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd12.xsd" />
+    <MetadataFile FileName="v15.xsd" MetadataType="Schema" ID="6e95310a-eaeb-4c03-babc-da4961e7d78c" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd7.xsd" />
+    <MetadataFile FileName="v16.xsd" MetadataType="Schema" ID="79567e18-68a0-4659-b470-2670ffbc6343" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd3.xsd" />
+    <MetadataFile FileName="v17.xsd" MetadataType="Schema" ID="5d91c4f7-be8a-4b7d-bfcc-fa29b5e6579e" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd10.xsd" />
+    <MetadataFile FileName="v18.xsd" MetadataType="Schema" ID="c257b972-8d8e-4ef6-ab75-94e49cb7285a" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd13.xsd" />
+    <MetadataFile FileName="v19.xsd" MetadataType="Schema" ID="f239fa96-06dc-47e9-8bee-e781af939f7e" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd5.xsd" />
+    <MetadataFile FileName="v110.xsd" MetadataType="Schema" ID="4c65dc4d-368f-477c-afaa-47f440848860" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd17.xsd" />
+    <MetadataFile FileName="v111.xsd" MetadataType="Schema" ID="880972c9-69e4-487e-b0e1-c97fd6502ca7" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd4.xsd" />
+    <MetadataFile FileName="v112.xsd" MetadataType="Schema" ID="06456a36-2648-4d9e-b2c4-a5eea4f2cab5" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd15.xsd" />
+    <MetadataFile FileName="v113.xsd" MetadataType="Schema" ID="be7d4c63-d437-45ca-8e4a-5ca94ab1243e" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd16.xsd" />
+    <MetadataFile FileName="v114.xsd" MetadataType="Schema" ID="f83d67f9-6412-407a-81f7-e2962dcd7a19" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd8.xsd" />
+    <MetadataFile FileName="v1.wsdl" MetadataType="Wsdl" ID="9e1ef0a8-acc4-4024-96db-262c307d6c75" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1?wsdl" />
+    <MetadataFile FileName="v115.xsd" MetadataType="Schema" ID="7f739ade-4ade-4a79-8487-5c1060edf7a0" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1.xsd14.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

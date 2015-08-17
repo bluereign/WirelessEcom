@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="AuthenticationResendPinRequest">
+		<xs:sequence>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="authenticate-customer" type="xs:boolean"/>
+					<xs:element name="sec-pin" type="RequiredStringSecPin" minOccurs="0"/>
+					<xs:element name="sec-answer" type="AnswerType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element name="resend-pin" type="xs:boolean"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="reference-ptn" type="PhoneNumber"/>
+				<xs:element name="account-number" type="AccountNumber"/>
+			</xs:choice>
+		</xs:sequence>
+		<!--Authenticate Resend Pin request message.-->
+	</xs:complexType>
+	<xs:element name="performAuthenticationResendPin" type="AuthenticationResendPinRequest"/>
+	<xs:complexType name="AuthenticationResendPinResponse">
+		<xs:sequence>
+			<xs:element name="auth-response" type="YesNoType" minOccurs="0"/>
+			<xs:element name="resend-response" type="YesNoType" minOccurs="0"/>
+			<xs:element name="notification" type="Notification" minOccurs="0" maxOccurs="2"/>
+		</xs:sequence>
+		<!--authenticate customer/resend pin response message.-->
+	</xs:complexType>
+	<xs:element name="performAuthenticationResendPinResponse" type="AuthenticationResendPinResponse"/>
+</xs:schema>

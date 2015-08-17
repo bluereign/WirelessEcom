@@ -1,0 +1,2 @@
+CREATE USER [ssrsreports] WITHOUT LOGIN
+GO

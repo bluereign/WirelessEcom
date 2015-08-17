@@ -1,0 +1,63 @@
+div#landingPageCarrierBanner
+{
+	border: 0px solid #000;
+	width: 729px;
+	height: 80px;
+	background-image: url('/Marketing/landingPage/images/Carrier_logos_banner_header_2.png');
+	background-repeat: no-repeat;
+	padding-bottom:7px;
+	position: relative;
+}
+
+
+div#landingPage_ATT
+{
+	border: 0px solid #000;
+	position: absolute;
+	width: 110px;
+	height: 52px;
+	top: 27px;
+	left: 25px;
+	font-size: 14px;
+	color: #000000;
+
+}
+
+
+div#landingPage_Verizon
+{
+	border: 0px solid #000;
+	position: absolute;
+	width: 170px;
+	height: 52px;
+	top: 27px;
+	left: 175px;
+	font-size: 14px;
+	color: #000000;
+}
+
+
+div#landingPage_TMobile
+{
+	border: 0px solid #000;
+	position: absolute;
+	width: 145px;
+	height: 52px;
+	top: 27px;
+	left: 395px;
+	font-size: 14px;
+	color: #000000;
+}
+
+
+div#landingPage_Sprint
+{
+	border: 0px solid #000;
+	position: absolute;
+	width: 125px;
+	height: 52px;
+	top: 27px;
+	left: 580px;
+	font-size: 14px;
+	color: #000000;
+}

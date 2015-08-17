@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryCdmaDeviceInfo/v2/queryCdmaDeviceInfoV2.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryCdmaDeviceInfo/v2/queryCdmaDeviceInfoV2.xsd" version="1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryCdmaDeviceInfoV2" type="tns:QueryCdmaDeviceInfoV2" />
+  <xs:element name="queryCdmaDeviceInfoV2Response" type="tns:QueryCdmaDeviceInfoV2Response" />
+  <xs:complexType name="QueryCdmaDeviceInfoV2">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="userId" type="tns:DeviceUserIdentifier">
+        <xs:annotation>
+          <xs:documentation>Alphanumeric User ID.   Valid characters are 0 - 9 and A - Z.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="serialNumber" type="tns:SerialNumber" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryCdmaDeviceInfoV2Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="msid" type="tns:InternationalMobileEquipmentIdDec" />
+      <xs:element name="deviceInfo" type="tns:DeviceInfo" />
+      <xs:element name="esnMeidStatus" type="tns:DeviceActivationStatusCode">
+        <xs:annotation>
+          <xs:documentation>Derived by NMS using the Activation_Status and Disposition_Code of the ESN or MEID
+
+Valid Values:
+E – ESN/MEID Enabled (active)
+D – ESN/MEID Disabled (not active)
+L – Lost/Stolen
+F – Fraudulent
+P – Pre-Paid Unprovisionable
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceInfo">
+    <xs:sequence>
+      <xs:element name="deviceSerialNumberDecimal" type="tns:DeviceSerialNumberDec">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in decimal format</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="uniqueEdfCode" type="tns:EquipmentDataFileCode">
+        <xs:annotation>
+          <xs:documentation>The sequential number of the file from which the ESN/MEID was extracted</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="mdn" type="tns:MobileDirectoryNumberString">
+        <xs:annotation>
+          <xs:documentation>The mobile identification number with which the ESN/MEID was associated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="revisionKey" type="tns:RevisionKeyString">
+        <xs:annotation>
+          <xs:documentation>The revision key must contain 6 zeros.  It is not currently used by SPCS.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceSerialNumberHex" type="tns:DeviceSerialNumberHex">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in hexidecimal format</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="phoneLockCode" type="tns:PhoneLockCode">
+        <xs:annotation>
+          <xs:documentation>Not for use at the present by SPCS</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="softwareVersion" type="tns:SoftwareVersion">
+        <xs:annotation>
+          <xs:documentation>This is part of the EDF load process.  The field will be populated with 5 characters of string data at present.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceStatus" type="tns:StatusCode">
+        <xs:annotation>
+          <xs:documentation>This attribute indicates whether the ESN is active</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="frequencyMode" type="tns:FrequencyModeCode">
+        <xs:annotation>
+          <xs:documentation>This column is populated during the EDF load process via the MODEL_NUMBER reference table.  The value is determined when the model number is looked up.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dispositionCode" type="tns:HandsetConditionCode">
+        <xs:annotation>
+          <xs:documentation>Set to NULL when loaded from EDF.  This column contains a value indicating the condition of the phone.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="phoneType" type="tns:HandsetTypeCode">
+        <xs:annotation>
+          <xs:documentation>Indicates whether the handset (phone/pager) is new or refurbished.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="inventoryInd" type="tns:InventoryFlag">
+        <xs:annotation>
+          <xs:documentation>Set to Y when data is loaded from EDF.  The value in this column indicates whether the phone is in inventory and available to be sold.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="stolenDate" type="tns:StolenDateTime">
+        <xs:annotation>
+          <xs:documentation>The date the ESN was reported as stolen, or fraudulent.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="prlName" type="tns:PreferredRoamingListName">
+        <xs:annotation>
+          <xs:documentation>Set to NULL when data is loaded from EDF.  This column contains the name of the last Preferred Roaming List name that was downloaded to this ESN/MEID.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="lastPrlUpdateDate" type="tns:LastUpdateDateTime">
+        <xs:annotation>
+          <xs:documentation>Set to NULL when data is loaded from EDF.  This column contains the date/time that the last Preferred Roaming List update was downloaded to this ESN/MEID.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="prlUpdateMethod" type="tns:PreferredRoamingListUpdateMethod">
+        <xs:annotation>
+          <xs:documentation>Set to NULL when data is loaded from EDF.  This column contains a value indicating the method by which the Preferred Roaming List was updated.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="prlUpdateUser" type="tns:PreferredRoamingListUpdateUser">
+        <xs:annotation>
+          <xs:documentation>Set to NULL when data is loaded from EDF.  This column contains the user who last set the auto_prl_update_needed flag.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="phoneOwner" type="tns:DeviceOwnerCode">
+        <xs:annotation>
+          <xs:documentation>The owner of the handset.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="subscriptionId" type="tns:SubscriptionId">
+        <xs:annotation>
+          <xs:documentation>The subscription ID with which the ESN/MEID was associated.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="manufacturerName" type="tns:DeviceManufacturerName">
+        <xs:annotation>
+          <xs:documentation>The equipment manufacturer name.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="manufacturerLocation" type="tns:DeviceManufacturerLocationIdentifier">
+        <xs:annotation>
+          <xs:documentation>The ID of the manufacturer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelName" type="tns:DeviceModelName">
+        <xs:annotation>
+          <xs:documentation>The Equipment Model Name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelNumber" type="tns:ModelNumber">
+        <xs:annotation>
+          <xs:documentation>A unique value to identify the type of equipment being shipped by the manufacturer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceType" type="tns:WirelessNetworkDeviceTypeCd">
+        <xs:annotation>
+          <xs:documentation>A Unique value to identify the type of equipment being shipped by the manufacturer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="authenticationKey" type="tns:AuthenticationKey">
+        <xs:annotation>
+          <xs:documentation>The Authentication key is used to authenticate the handset during Over-The-Air (OTA) activation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="masterSubsidyLock" type="tns:MasterSubsidyLockCode">
+        <xs:annotation>
+          <xs:documentation>Used as part 1 of a 2-part authentication.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="oneTimeKeyPadSubsidyLock" type="tns:OneTimeKeypadSubisidyLockCode">
+        <xs:annotation>
+          <xs:documentation>Used as part 2 of a 2-part authentication.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="lastTransactionDate" type="tns:LastUpdateDateTime">
+        <xs:annotation>
+          <xs:documentation>The last transaction date.  This field is changed whenever the last_trx_code field is changed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceFrequencyTypeCode" type="tns:FrequencyTypeCode">
+        <xs:annotation>
+          <xs:documentation>This column is populated during the edf load process via the MODEL_NUMBER reference table.  The value is determined when the model number is looked up.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="autoPrlUpdateNeededInd" type="tns:PreferredRoamingListUpdateNeededFlag">
+        <xs:annotation>
+          <xs:documentation>Indication of whether the Preferred Roaming List needs to be updated.  It is set to N when loaded from EDF</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceActivationDate" type="tns:EffectiveFromDateTime">
+        <xs:annotation>
+          <xs:documentation>The date the ESN/MEID was activated.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceDeactivationDate" type="tns:EffectiveThruDateTime">
+        <xs:annotation>
+          <xs:documentation>The date the ESN/MEID was deactivated.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="lastTransactionCode" type="tns:LastTransactionCode">
+        <xs:annotation>
+          <xs:documentation>This attribute represents the code of the last transaction with the ESN/MEID.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pseudoEsnHex" type="tns:ElectronicSerialNumberHex">
+        <xs:annotation>
+          <xs:documentation>Pseudo ESN is populated when ESNMEIDDcmlID contains MEID. (Length &gt; 11)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SerialNumber">
+    <xs:choice>
+      <xs:element name="deviceSerialNumberDecimal" type="tns:DeviceSerialNumberDec">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in decimal format
+Required if ESNMEIDHexID is not provided, ignored otherwise.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceSerialNumberHex" type="tns:DeviceSerialNumberHex">
+        <xs:annotation>
+          <xs:documentation>
+ESN/Mobile Equipment Identifier(MEID) in hex format
+Required if ESNMEIDDcmlID is  not provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:simpleType name="AuthenticationKey">
+    <xs:annotation>
+      <xs:documentation>The Authentication Key (A-Key) for over the air activation. A 26 character key used to authenticate a handset.                              
+The first twenty decimal digits are used for the A-key as converted from the 64 bit A-key.  If the A-key is less than 20 decimal digits, it shall be padded with zero's.  The A-key checksum shall be 6 decimal digits as converted from the 18 bit checksum.  If the checksum is less than 6 decimal digits it shall be padded with zeros.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="26" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceActivationStatusCode">
+    <xs:annotation>
+      <xs:documentation>Device Activation Status Code is derived by NMS using the Activation_Status and Disposition_Code of the ESN or MEID
+
+Valid Values:
+E – ESN/MEID Enabled (active)
+D – ESN/MEID Disabled (not active)
+L – Lost/Stolen
+F – Fraudulent
+P – Pre-Paid Unprovisionable</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceManufacturerLocationIdentifier">
+    <xs:annotation>
+      <xs:documentation>The Device Manufacturer Location Identifier designates the location of the manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceManufacturerName">
+    <xs:annotation>
+      <xs:documentation>A Device Manufacturer Name is the name of the manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceModelName">
+    <xs:annotation>
+      <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+      <xs:documentation>Model Name holds the device Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceOwnerCode">
+    <xs:annotation>
+      <xs:documentation>The Device Owner Code is a 4 byte code that designates the owner of the handset. 
+Possible values include:  
+SPCS – Sprint PCS
+PLBL – Private Label Resellers
+AFFL – Affiliates
+FACT – Sprint PCS Factory Direct Shipments
+FDRS – Factory Direct Shipments for Radio Shack
+SPHI – Sprint PCS Hawaii Shipments
+PROM – Promotional Phone Giveaways
+OMNI – Qualcomm OmniExpress Units</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberDec">
+    <xs:annotation>
+      <xs:documentation>A Device Serial Number Decimal is the value of a electronic serial number OR Mobile Equipment Identifier(MEID) in decimal format.  This type should be used when it is not known what type the serial number is.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="11" />
+      <xs:maxLength value="18" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberHex">
+    <xs:annotation>
+      <xs:documentation>A Device Serial Number Hex is the value of a electronic serial number OR Mobile Equipment Identifier(MEID) in hexidecimal format.  This type should be used when it is not known what type the serial number is.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="14" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceUserIdentifier">
+    <xs:annotation>
+      <xs:documentation>The device user identifier is the alphanumeric User ID assocated to device activity.   
+Valid characters are 0 - 9 and A - Z.  
+The User ID may be a system ID in the case of PRL updates.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+      <xs:pattern value="[a-z A-Z 0-9]+" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EffectiveFromDateTime">
+    <xs:annotation>
+      <xs:documentation>Effective From Date holds the first calendar month, day, year, hour, minute, second and fraction of a second a Role, Preference, Assignment, etc. was in effect.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="EffectiveThruDateTime">
+    <xs:annotation>
+      <xs:documentation>Effective Thru Date Time holds the last calendar day and time the Role, Preference, Assignment, etc. was in effect.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="ElectronicSerialNumberHex">
+    <xs:annotation>
+      <xs:documentation>Electronic Serial Number is a unique number that is embedded electronically by the manufacturer into a CDMA wireless communication device that identifies that individual unit. It can be represented in 11-digit decimal or 8-digit hexadecimal (HEX) format. Once ESNs are exhausted, MEIDs are embedded in devices to uniquely identify the device. This is the 8 digit hexidecimal representation.</xs:documentation>
+      <xs:documentation>Electronic Serial Number is a unique number that is embedded electronically by the manufacturer into a CDMA wireless communication device that identifies that individual unit. It can be represented in 11-digit decimal or 8-digit hexadecimal (HEX) format. Once ESNs are exhausted, MEIDs are embedded in devices to uniquely identify the device. This is the 8 digit hexidecimal representation.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentDataFileCode">
+    <xs:annotation>
+      <xs:documentation>alias: EDF</xs:documentation>
+      <xs:documentation>Equipment Data File</xs:documentation>
+      <xs:documentation>The Equipment Data File Code is used to facilitate the transmission, receipt and redistribution of handset and pager equipment data.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FrequencyModeCode">
+    <xs:annotation>
+      <xs:documentation>Frequency Mode Code
+
+Possible Values:
+'A'  =&gt; AMPS
+'C' =&gt; CDMA
+'D' =&gt; CDMA and AMPS
+'S' =&gt; ACCESSORY
+'T' =&gt; TDMA</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FrequencyTypeCode">
+    <xs:annotation>
+      <xs:documentation>Frequency Type Code
+Possible Values:
+'C'  =&gt; CELLULAR
+'D' =&gt; PCS and CELLULAR
+'K' =&gt; PCS WITH EVRC
+'L' =&gt; PCS and CELLULAR WITH EVRC
+'M' =&gt; HYBRID
+'P' =&gt; PCS
+'S' =&gt; ACCESSORY</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="HandsetConditionCode">
+    <xs:annotation>
+      <xs:documentation>Handset Condition Code is a value indicating the condition of the phone.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="HandsetTypeCode">
+    <xs:annotation>
+      <xs:documentation>Handset Type Code is used to indicate whether a handset (phone/pager) is new or refurbished.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InternationalMobileEquipmentIdDec">
+    <xs:annotation>
+      <xs:documentation>International Mobile Equipment Identfier is a wireless telecommunications term. An equipment identification number, similar to a serial numberi, used to identify a wireless network access device.</xs:documentation>
+      <xs:documentation>International Mobile Equipment Identfier is a wireless telecommunications term. An equipment identification number, similar to a serial numberi, used to identify a wireless network access device.
+
+Length 15 characters.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InventoryFlag">
+    <xs:annotation>
+      <xs:documentation>The inventory flag indicates whether the phone is in inventory and available to be sold.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LastTransactionCode">
+    <xs:annotation>
+      <xs:documentation>The Last Transaction Code represents the code of the last transaction with the ESN/MEID.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LastUpdateDateTime">
+    <xs:annotation>
+      <xs:documentation>Last Update Date is the date and time of the last update to an object.  Last Update Date Time is used in conjunction with the Last Update Numeric Stamp to uniquely identify a specific update iteration.  Typically Last Update Date Time and Last Update Numeric Stamp would be used in a psuedo-conversational approach to updates.  A record is read into local storage and the lock on the source record is released.  When the updated record is written back to the database where the source Record ID equals the Update Record ID, Source Last Update Date Time equals the original Update Last Update Date Time and Source Last Update Numeric Stamp equals the original Update Last Update Numeric Stamp.Both Last UPdate Date Time and Last Update Numeric Stamp are incremented in the update.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="MasterSubsidyLockCode">
+    <xs:annotation>
+      <xs:documentation>Master Subsidy Lock (MSL) is used for programming the handset when the one-time subsidy lock code fails due to error, or when the phone needs to be reprogrammed for any reason.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberString">
+    <xs:annotation>
+      <xs:documentation>Mobile Directory Number (MDN) is the actual phone number one would dial to reach a specific mobile phone.
+
+
+
+Prior to Wireless Number Portability, MDN was the same number as the Mobile Identification Number (MIN) for many mobile phones. But now that MDNs can be ported (moved) to other carriers, MDN and MIN will be different for ported numbers.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNumber">
+    <xs:annotation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OneTimeKeypadSubisidyLockCode">
+    <xs:annotation>
+      <xs:documentation>One Time Keypad Subsidy Lock (OTKSL)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PhoneLockCode">
+    <xs:annotation>
+      <xs:documentation>Phone Lock Code is used in conjunction with the phone lock feature. When activated, the phone will lock after you switch your phone off and back on. Each time the phone is turned on, it will prompt you to enter a lock code before it will allow a call to be placed, or to access most of the phone's memory and menu features. Calls, such as emergency or other numbers programmed as unlocked phone numbers may be placed without entering a lock code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PreferredRoamingListName">
+    <xs:annotation>
+      <xs:documentation>The Preferred Roaming List Name is the name of a file which resides in a handset's memory and contains a list of Sprint PCS and cellular network information. The PRL can assist the handset with acquisition of the Sprint PCS network and when a customer is roaming, the file directs the handset to acquire a signal from one of our roaming partners.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PreferredRoamingListUpdateMethod">
+    <xs:annotation>
+      <xs:documentation>The Preferred Roaming List Update method is the method last used to download an AutoPRL.
+Possible Values:
+automatic
+manual
+OTAPA</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PreferredRoamingListUpdateNeededFlag">
+    <xs:annotation>
+      <xs:documentation>The Preferred Roaming List Update Needed flag is a 1 byte Y/N flag indicating whether the Preferred Roaming List needs to be updated.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PreferredRoamingListUpdateUser">
+    <xs:annotation>
+      <xs:documentation>The Preferred Roaming List Update User is the user or the system that made the update.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RevisionKeyString">
+    <xs:annotation>
+      <xs:documentation>The Revision Key String is associated to the equipment type.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SoftwareVersion">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StatusCode">
+    <xs:annotation>
+      <xs:documentation>Status Code</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StolenDateTime">
+    <xs:annotation>
+      <xs:documentation>Stolen Date Time is the Date and Time that the owner reported the handset stolen.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="SubscriptionId">
+    <xs:annotation>
+      <xs:documentation>Subscription Identifier uniquely identifies an instance of SUBSCRIPTION</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="WirelessNetworkDeviceTypeCd">
+    <xs:annotation>
+      <xs:documentation>Wireless Network Device Type Code specifies which type of serialization is used to identify an instance of the product.</xs:documentation>
+      <xs:documentation>Wireless Network Device Type Code specifies which type of serialization is used to identify an instance of the product.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

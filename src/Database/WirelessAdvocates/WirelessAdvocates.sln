@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "Server", "Server\Server.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
+EndProject
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "CarToys", "CarToys\CarToys.dbproj", "{82223430-D345-41BC-A304-F6BA1D57C41B}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Server\\Server.dbproj
+		SccProjectName1 = Server
+		SccLocalPath1 = Server
+		SccProjectUniqueName2 = CarToys\\CarToys.dbproj
+		SccProjectName2 = CarToys
+		SccLocalPath2 = CarToys
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{82223430-D345-41BC-A304-F6BA1D57C41B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82223430-D345-41BC-A304-F6BA1D57C41B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82223430-D345-41BC-A304-F6BA1D57C41B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{82223430-D345-41BC-A304-F6BA1D57C41B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82223430-D345-41BC-A304-F6BA1D57C41B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82223430-D345-41BC-A304-F6BA1D57C41B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

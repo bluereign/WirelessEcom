@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Sprint Employee (SPRINT) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="DeviceInfoRequest">
+		<xs:sequence>
+			<xs:element name="account-info">
+				<xs:complexType>
+					<xs:choice>
+						<xs:choice>
+							<xs:element name="account-number" type="AccountNumber">
+								<xs:annotation>
+									<xs:documentation>Sprint customer billing account number</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="reference-ptn" type="PhoneNumber">
+								<xs:annotation>
+									<xs:documentation>Sprint subscriber phone number</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="subscriber-id" type="RequiredStringMax20">
+								<xs:annotation>
+									<xs:documentation>Internal Sprint subscriber number</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+						<xs:choice>
+							<xs:group ref="AtStType"/>
+							<xs:sequence>
+								<xs:element name="customer-type" type="CustomerType">
+									<xs:annotation>
+										<xs:documentation>External vendor friendly new customer type</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="corp-gov-id" type="RequiredStringMax20" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Required only if customer type provided is Corp or Govt</xs:documentation>
+									</xs:annotation>
+									<!--Corporate or government ID for CORPORATE_BUSINESS and CORPORATE_INDIVIDUAL customer types.-->
+								</xs:element>
+							</xs:sequence>
+						</xs:choice>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="device-info">
+				<xs:complexType>
+					<xs:choice maxOccurs="5">
+						<xs:element name="model-id" type="RequiredStringMax30">
+							<xs:annotation>
+								<xs:documentation>Device SKU</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="hsn" type="HSN">
+							<xs:annotation>
+								<xs:documentation>iDEN device serial number</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="meid" type="MEID">
+							<xs:annotation>
+								<xs:documentation>CDMA device serial number</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="sales-channel" type="RequiredStringMax10" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Sales channel code or vendor agent code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pricing-info" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice>
+							<xs:sequence>
+								<xs:element name="new-activation" type="xs:boolean">
+									<xs:annotation>
+										<xs:documentation>Any account identifier in account-info can be used to retrieve new activation pricing</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="service-area">
+									<xs:complexType>
+										<xs:choice>
+											<xs:element name="service-zip" type="ZipCode">
+												<xs:annotation>
+													<xs:documentation>Customer local service zip code</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="submarket" type="RequiredStringMax3">
+												<xs:annotation>
+													<xs:documentation>iDEN service area identifier</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="csa" type="RequiredStringMax10">
+												<xs:annotation>
+													<xs:documentation>CDMA service area identifier</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:choice>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+							<xs:element name="device-swap" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>If set to true then either reference-ptn or subscriber-id must be provided to determine upgrade pricing eligibility</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+						<xs:element name="contract-term" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>0, 12, or 24 is provided to return device pricing specific to that contract length</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:unsignedByte">
+									<xs:maxInclusive value="96"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="flat-pricing" type="xs:boolean" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Set to true if only flat rate pricing is required to be returned</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="device-attributes" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Set to true in order to return device characteristics for each device provided in request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<!--Device info request message.-->
+	</xs:complexType>
+	<xs:element name="getDeviceInfo" type="DeviceInfoRequest"/>
+	<xs:complexType name="DeviceInfoResponse">
+		<xs:sequence>
+			<xs:element name="device-info" maxOccurs="5">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="model-id" type="RequiredStringMax30"/>
+						<xs:choice minOccurs="0">
+							<xs:element name="hsn" type="HSN"/>
+							<xs:element name="meid" type="MEID"/>
+						</xs:choice>
+						<xs:element name="device-name" type="RequiredStringMax200" minOccurs="0"/>
+						<xs:element name="device-pricing" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="model-price">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="model-price-code" type="RequiredStringMax15"/>
+									<xs:element name="contract-term">
+										<xs:simpleType>
+											<xs:restriction base="xs:unsignedByte">
+												<xs:maxInclusive value="96"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="device-attributes" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="manufacturer" type="RequiredStringMax200" minOccurs="0"/>
+									<xs:element name="upc-number" type="RequiredStringMax20" minOccurs="0"/>
+									<xs:element name="technology" type="RequiredStringMax128" minOccurs="0"/>
+									<xs:element name="device-category" type="RequiredStringMax50" minOccurs="0"/>
+									<xs:element name="phone-capability" type="RequiredStringMax3" minOccurs="0"/>
+									<xs:element name="mms-capable" type="YesNoType" minOccurs="0"/>
+									<xs:element name="network" type="RequiredStringMax10" minOccurs="0"/>
+									<xs:element name="device-desc" type="RequiredStringMax2000" minOccurs="0"/>
+									<xs:element name="color" type="RequiredStringMax30" minOccurs="0"/>
+									<xs:element name="dimensions" type="RequiredStringMax30" minOccurs="0"/>
+									<xs:element name="screen-size" type="RequiredStringMax30" minOccurs="0"/>
+									<xs:element name="weight" minOccurs="0">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="battery-type" type="RequiredStringMax100" minOccurs="0"/>
+									<xs:element name="battery-strength" type="RequiredStringMax100" minOccurs="0"/>
+									<xs:element name="talk-time" type="RequiredStringMax15" minOccurs="0"/>
+									<xs:element name="standby-time" type="RequiredStringMax15" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="upgrade-eligibility" type="UpgradeData" minOccurs="0"/>
+		</xs:sequence>
+		<!--Device info response message.-->
+	</xs:complexType>
+	<xs:element name="getDeviceInfoResponse" type="DeviceInfoResponse"/>
+</xs:schema>

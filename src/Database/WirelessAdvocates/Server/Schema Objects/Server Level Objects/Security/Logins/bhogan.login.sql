@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [bhogan]
+    WITH PASSWORD = N'lgriyd|br|@mwbnlyMvczlnjmsFT7_&#$!~<yxub.|YegOm%', SID = 0x12FEF9A8DC4496479B5084FCC9030C36, DEFAULT_DATABASE = [CARTOYS], DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+

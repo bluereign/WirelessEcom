@@ -1,0 +1,1166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryDeviceInfo/v1/queryDeviceInfo.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryDeviceInfo/v1/queryDeviceInfo.xsd" version="2.6" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryDeviceInfo" type="tns:QueryDeviceInfoType" />
+  <xs:element name="queryDeviceInfoResponse" type="tns:QueryDeviceInfoResponseType" />
+  <xs:complexType name="QueryDeviceInfoType">
+    <xs:sequence>
+      <xs:element name="info" type="tns:InfoType">
+        <xs:annotation>
+          <xs:documentation>Information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" default="false" name="equipmentEligibilityInfo" type="tns:FetchInformationFlagType">
+        <xs:annotation>
+          <xs:documentation>Equipment Eligibility Information
+If present and set to true, Equipment Eligibility Information will be included in the response.
+This check is for CDMA devices ONLY.  If set on a request for an iDEN device or no eligibility information is found, the equipmentEligibilityInfoList element will NOT be returned.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" default="false" name="activationCreditFeeInfo" type="tns:FetchInformationFlagType">
+        <xs:annotation>
+          <xs:documentation>Activation Credit and Reactivation Fee Information
+If present and set to true, Activation Credit and Fee Information will be included in the response if data exists.
+If no activation credit or fee information is found, the activationCreditFeeInfo element will NOT be returned.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" default="false" name="activationHistoryInfo" type="tns:FetchInformationFlagType">
+        <xs:annotation>
+          <xs:documentation>If set to true and last activation date, last deactivation date or both exist, activationHistoryInfo structure will appear in response.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryDeviceInfoResponseType">
+    <xs:sequence>
+      <xs:element name="equipmentInfo" type="tns:EquipmentInfoType">
+        <xs:annotation>
+          <xs:documentation>Equipment Information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActivationCreditFeeInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="subBrand" type="tns:SubBrandCodeType">
+        <xs:annotation>
+          <xs:documentation>It will be returned only for IDEN devices.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="activationCredit" type="tns:CreditedAmountType">
+        <xs:annotation>
+          <xs:documentation>The amount to credit the customer if the activation meets the requirements for eligibility in a whole dollar amount; no cents. This element will only be returned for CDMA devices</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="reactivationFee" type="tns:ChargeAmountType">
+        <xs:annotation>
+          <xs:documentation>The amount to charge the customer if the activation meets the requirements for eligibility in a whole dollar amount; no cents. For iDEN, reactivation fee is applied based on sub brand. 
+For CDMA there is only one reactivation fee.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActivationCreditFeeListType">
+    <xs:sequence>
+      <xs:element maxOccurs="2" name="activationCreditFeeInfo" type="tns:ActivationCreditFeeInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure containing activation credit and fee information.
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActivationHistoryInfo">
+    <xs:annotation>
+      <xs:documentation>contain most recent activation date and most recent deactivation date if exist.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="lastActivationDate" type="tns:ActivationDateType">
+        <xs:annotation>
+          <xs:documentation>The most recent activation date if exists</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="lastDeactivationDate" type="tns:DeactivationDateType">
+        <xs:annotation>
+          <xs:documentation>The most recent deactivation date if exists</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EquipmentEligibilityInfoListType">
+    <xs:sequence>
+      <xs:element maxOccurs="15" name="equipmentEligibilityInfo" type="tns:EquipmentEligibilityInfoType">
+        <xs:annotation>
+          <xs:documentation>1 to 15 occurrences based on the data retrieval.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EquipmentEligibilityInfoType">
+    <xs:sequence>
+      <xs:element name="subBrand" type="tns:SubBrandCodeType">
+        <xs:annotation>
+          <xs:documentation>Represents which subBrand the status elements apply to.
+Possible values may include (but not limited to) the following:
+MBP
+PYG
+iDEN and CDMA Monthly Unlimited and PAYGO subBrands are mapped to the same values of MBP and PYG respectively.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="freeMonthEligibilityStatus" type="tns:EligibilityStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Free Month Eligibility Status
+Values:
+Y – Eligible
+N – Not Eligible</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="activationEligibilityStatus" type="tns:EligibilityStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Activation Eligibility Status
+Values:
+Y – Eligible
+N – Not Eligible</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EquipmentInfoType">
+    <xs:sequence>
+      <xs:element name="equipmentId" type="tns:DeviceSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Equipment Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemId" type="tns:EquipmentItemIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Item Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="serialType" type="tns:EquipmentSerialNumberTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Serial Type – Indicates the type of the Equipment ID.
+Values:
+A – MAC ID
+E – ESN
+I – IMEI
+M - MSN
+S – SIM
+U – Removable LTE UICC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="imei" type="tns:SubscriberDeviceSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>International Mobile Equipment Identity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="msn" type="tns:ManufacturerSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Manufacturer Serial Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="simId" type="tns:SubscriberIdentityModuleIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Subscriber Identity Module Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="esn" type="tns:SubscriberDeviceSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Equipment Serial Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="esnHex" type="tns:SubscriberDeviceSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Equipment Serial Number Hex</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="macId" type="tns:MediumAccessControlAddressType">
+        <xs:annotation>
+          <xs:documentation>Unique Media Access Control Address identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="description" type="tns:EquipmentItemDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Equipment Description</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pool" type="tns:EquipmentPoolCodeType">
+        <xs:annotation>
+          <xs:documentation>Equipment Pool Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="locationId" type="tns:DeviceManufacturerLocationIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Device Manufacturer Location Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="manufacturer" type="tns:ManufacturerPartyIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Manufacturer</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="modelNumber" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>Model Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="phoneModel" type="tns:DeviceModelNameType">
+        <xs:annotation>
+          <xs:documentation>Phone Model</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="softwareVer" type="tns:SoftwareVersionType">
+        <xs:annotation>
+          <xs:documentation>Software Version</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="lastActivityCode" type="tns:EquipmentActivityReasonCodeType">
+        <xs:annotation>
+          <xs:documentation>Last Activity Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="lastActivityDate" type="tns:ActivityDateType">
+        <xs:annotation>
+          <xs:documentation>Last Activity Date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ownership" type="tns:EquipmentOwnershipCodeType">
+        <xs:annotation>
+          <xs:documentation>Equipment Ownership Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="possession" type="tns:EquipmentPosessionCodeType">
+        <xs:annotation>
+          <xs:documentation>Equipment Possession Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="negativeInd" type="tns:NegativeSuspendFlagType">
+        <xs:annotation>
+          <xs:documentation>Negative Indicator
+Indicates whether this item is listed in the negative file</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="negativeReasonCode" type="tns:NegativeReasonCodeType">
+        <xs:annotation>
+          <xs:documentation>Negative Reason Code
+Designates a specific reason for a negative file entry</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="negativeReasonCodeDesc" type="tns:NegativeReasonDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Negative Reason Code Description
+Text describing the reason for a negative file entry</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="negativeDate" type="tns:LastUpdatedDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Negative Date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="missingInd" type="tns:EquipmentActivityFlagType">
+        <xs:annotation>
+          <xs:documentation>Missing Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="inRepairInd" type="tns:EquipmentActivityFlagType">
+        <xs:annotation>
+          <xs:documentation>In Repair Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="inTransitInd" type="tns:EquipmentActivityFlagType">
+        <xs:annotation>
+          <xs:documentation>In Transit Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="committedToOrderInd" type="tns:EquipmentActivityFlagType">
+        <xs:annotation>
+          <xs:documentation>Committed To Order Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="banId" type="tns:BillingAccountNumberType">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="banLastName" type="tns:LastNameType">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number Last Name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="banFirstName" type="tns:FirstNameType">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number First Name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="subsId" type="tns:SubscriptionIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Subscriber Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="subsAlias" type="tns:SubscriberNameStringType">
+        <xs:annotation>
+          <xs:documentation>Subscriber Alias</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="authKi" type="tns:AuthenticationKeyType">
+        <xs:annotation>
+          <xs:documentation>Authentication Key</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="crossFleetInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Cross Fleet Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="dcInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>DC Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cellInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Cell Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pdsInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>PDS Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="mmsInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>MMS Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="sdgcInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>SDGC Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="gprsInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>GPRS Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ext800Ind" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Extension 800 Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="restrictedSIMInd" type="tns:RestrictedSimFlagType">
+        <xs:annotation>
+          <xs:documentation>Restricted SIM Indicator
+Indicates whether it is a restricted SIM for prepaid services</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pttInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Push To Talk Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="networkInd" type="tns:NetworkIndicatorCodeType">
+        <xs:annotation>
+          <xs:documentation>C for CDMA platform, I for iDEN platform and B for both. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pamInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>PAM Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="dualPhoneInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Dual Phone Indicator
+Power Source (CDMA/iDEN)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="usedNew" type="tns:EquipmentPoolCodeType">
+        <xs:annotation>
+          <xs:documentation>Used New</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="hppttInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>High Performance Push To Talk Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="evdoInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>EVDO Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="evdoRev" type="tns:EvdoRevisionCodeType">
+        <xs:annotation>
+          <xs:documentation>EVDO Revision
+Values:
+REV0
+REVA</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="abGlmsInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>AB GLMS Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="hybridSimInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>Hybrid SIM Indicator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="previouslyActivated" type="tns:PreviouslyActivatedStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Previously Activated
+Values:
+Y – Activated
+N – Not Activated
+U – Undetermined (Always on an iDEN request; set on a CDMA request if there is an error trying to determine)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="equipmentEligibilityInfoList" type="tns:EquipmentEligibilityInfoListType">
+        <xs:annotation>
+          <xs:documentation>Contains the list of eligibility information for each subBrand.
+This will NOT be returned if the request is for an iDEN device or no eligibility information is found for a CDMA device.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="hppttDeviceVersion" type="tns:HighPerformancePushToTalkDeviceVersionTextType">
+        <xs:annotation>
+          <xs:documentation>High Performance Push To Talk Device Version</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="equipmentStatus" type="tns:DeviceActivationStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Equipment Status
+Values:
+E – Enabled (In-use / Not available for access)
+D – Disabled (Available for access)
+L – Lost/Stolen
+F – Fraudulent
+P – Unprovisionable (for prepaid brand codes, ‘P’ will be returned in the response if the device is locked)
+5 – Invalid ownership code . for prepaid brand codes, ‘5’ will be returned in the response if the device is not available for the brandCode sent in the request) 
+7 - in use with another MVNO (Valid only for 4G SM cat2 devices).
+8 - Lost in CLWR (Valid only for 4G SM cat2 devices).
+9 - Stolen in CLWR (Valid only for 4G SM cat2 devices).
+10 - Broken in CLWR (Valid only for 4G SM cat2 devices).
+11 - Blacklisted in CLWR (Valid only for 4G SM cat2 devices).
+99  – Not available for access  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="activationCreditFeeList" type="tns:ActivationCreditFeeListType">
+        <xs:annotation>
+          <xs:documentation>Structure containing list of activation credit and fee information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="inputSerialType" type="tns:EquipmentSerialNumberTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Serial Type – Indicates the type of equipmentId on the request based on its syntax/format
+Values:
+A – MAC ID
+E – ESN
+I – IMEI
+M - MSN
+S – SIM
+U – removable UICC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="prepaidSimCode" type="tns:PrepayTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicate if a SIM ID is a prepaid SIM: "B" Boost Sim</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="macIdType" type="tns:MediumAccessControlAddressTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>The macId type
+FEM_ARV: Airave Phase 1 FEMTO
+FEMARV2: Airave Phase 2 FEMTO
+ATA_ARV: Airave Phase 2 FEMTO with ATA (Will be returned if the device is not assigned to a subscriber)
+4G_CAT1: 4G SM Category 1
+4G_CAT2: 4G SM Category 2
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="activationHistoryInfo" type="tns:ActivationHistoryInfo">
+        <xs:annotation>
+          <xs:documentation>contain most recent activation date and most recent deactivation date if exist.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="wiMaxInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>Returned ‘true’ for:
+ Dual-mode (3G/4G WiMax) and
+Tri-mode (3G/4G LTE/4G WiMax) capable devices</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="lteInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>Returned ‘true’ for all LTE-capable devices:
+Dual-mode (3G/4G LTE) and
+Tri-mode (3G/4G LTE/4G WiMax) capable devices</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="lteUiccType" type="tns:UniversalIntegratedCircuitCardTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Only returned for LTE-capable device (lteInd= ‘true’).
+lteUiccType =’U’ when the LTE device has a removable UICC
+Not returned when the LTE device has an embedded UICC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="iccId" type="tns:UniversalIntegratedCircuitCardIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Integrated Circuit Card Identifier.
+Returned for removable UICC devices only (lteUiccInd=’true’)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="uiccStatus" type="tns:UniversalIntegratedCircuitCardStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Removable UICC Status
+E – Enabled (In-use/Not available for access)
+D – Disabled (Available for access)
+L – Lost/Stolen
+F – Fraudulent
+99 – Not available for access</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="isBroadband2GoInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>Indicates if the device is a broadband device or not</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="isBlackberryDeviceInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>Indicates if the device is a blackberry device or not</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="isDeviceInsuranceEligibleInd" type="tns:EligibilityStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates if  insurance is offered on the device
+Possible values:
+Y – Yes
+N- No
+U – Undetermined (If call to NMS fails)
+Note: Returned for Prepaid subscribers when brandCode is provided in the request</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="isAppleInsuranceApplicableInd" type="tns:EligibilityStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicate if  insurance can offered on the device. The device qualifies for AppleCare if it is an Apple device that has not been activated before.
+Possible values:
+Y – Yes
+N- No
+U – Undetermined (If call to NMS fails)
+Note: Returned for Prepaid subscribers when brandCode is provided in the request</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="isDeviceMRCDiscountEligibleInd" type="tns:DiscountEligibilityFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates if the device is eligible for MRC Discounts.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="mrcDiscountAmount" type="tns:DiscountAmountType">
+        <xs:annotation>
+          <xs:documentation>Device and RPV based discount given on the customer’s MRC. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="itemIdType" type="tns:DeviceCategoryNameType">
+        <xs:annotation>
+          <xs:documentation>Equipment type –
+SMRTPH – Smart Phone
+FTRPH – Feature Phone
+TABLET –Tablet
+MBB – Mobile Broadband devices
+
+Returned if the value is populated in the table. Older devices might not have the itemIdType available
+Source: ITEM_DEFINITION.ITEM_ID_TYPE</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="marketingName" type="tns:ModelNameType">
+        <xs:annotation>
+          <xs:documentation>The device common, friendly or marketing name as known to the subscribers.
+For example
+Sprint itemId: ‘APX325CKT’ has a marketingName of ‘HTC EVO 4G LTE’
+
+Returned if the value is populated in the table. Older devices might not have the itemIdType available
+Source:
+NOR DEVICE_INFO.MODEL_ID DEVICE_INFO.MODEL_ID replicated from a RISE (21L) batch feed</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InfoType">
+    <xs:sequence>
+      <xs:element name="equipmentId" type="tns:DeviceSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Equipment ID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="serialType" type="tns:EquipmentSerialNumberTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Serial Type – Indicates the type of the Equipment ID.
+Values:
+A – MAC ID
+E – ESN
+I – IMEI
+M - MSN
+S – SIM
+U – Removable LTE UICC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="checkPreviouslyActivated" type="tns:FetchInformationFlagType">
+        <xs:annotation>
+          <xs:documentation>Check Previously Activated
+If present and set to true,  the previouslyActivated field will be included in the equipmentInfo structure in the response.
+This check is for CDMA devices ONLY.  If set on a request for an iDEN device, the response will always be set to (U)ndetermined.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="brandCode" type="tns:BrandCodeType">
+        <xs:annotation>
+          <xs:documentation>A 3 byte code denoting which brand the prepaid subscriber belongs to.
+‘BST’ - Boost 
+‘VMU’ – Virgin Mobile
+‘ASW’ – Assurance Wireless
+‘SPP’ – Sprint Prepaid
+This field must be populated by prepaid brands, ignored otherwise.
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ActivationDateType">
+    <xs:annotation>
+      <xs:documentation>Deactivation Date holds the calendar month, day and year Network access is denied to a MDN, NAI or piece of equipment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date" />
+  </xs:simpleType>
+  <xs:simpleType name="ActivityDateType">
+    <xs:annotation>
+      <xs:documentation>Activity Date is the calendar day the activity completed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date" />
+  </xs:simpleType>
+  <xs:simpleType name="AuthenticationKeyType">
+    <xs:annotation>
+      <xs:documentation>Authentication Key (Ki) is a value used in authenticating the SIMs on the mobile network. Each SIM holds a unique Ki assigned to it by the operator during the personalization process. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountNumberType">
+    <xs:annotation>
+      <xs:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:totalDigits value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BinaryExpressionType">
+    <xs:annotation>
+      <xs:documentation>Binary Expression is a type of an expression with two possible states,"true"and"false".</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="BrandCodeType">
+    <xs:annotation>
+      <xs:documentation>Brand Code indicates which brand the subscriber belongs to. Possible brands represented include;  Sprint, Nextel, Boost, Virgin Mobile, and Clearwire</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ChargeAmountType">
+    <xs:annotation>
+      <xs:documentation>Charge Amount is the dollar amount charged for goods or services.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer" />
+  </xs:simpleType>
+  <xs:simpleType name="CreditedAmountType">
+    <xs:annotation>
+      <xs:documentation>Credited amount is the sum of sum adjustment activity amount + sum adjustment tax city amount + sum adjustment tax county amount + sum adjustment tax state amount + sum adjustment tax federal amount + sum adjustment tax mis1 amount + sum adjustment tax mis2 amount  + sum adjustment tax roaming amount. This is not applicable for billed calls.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer" />
+  </xs:simpleType>
+  <xs:simpleType name="DeactivationDateType">
+    <xs:annotation>
+      <xs:documentation>Activation Date holds the calendar month, day and year Network access is provided to a MDN, NAI or piece of equipment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date" />
+  </xs:simpleType>
+  <xs:simpleType name="DeviceActivationStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Device Activation Status Code designates the status of the device.
+For iDEN device statuses returned (E, D, L).
+For CDMA device statuses returned (E,D,L,F,P)
+Values:
+E – Enabled
+D – Disabled
+L – Lost/Stolen
+F – Fraudulent
+P - Unprovisionable</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceCategoryNameType">
+    <xs:annotation>
+      <xs:documentation>Device Category Name is a common name for the category of the deivce.
+Valid Values Include:
+handset,
+netbook,
+data card,
+tablet,
+mifi/overdrive...</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceManufacturerLocationIdentifierType">
+    <xs:annotation>
+      <xs:documentation>The Device Manufacturer Location Identifier designates the location of the manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceModelNameType">
+    <xs:annotation>
+      <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+      <xs:documentation>Model Name holds the device Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>Device Serial Number a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DiscountAmountType">
+    <xs:annotation>
+      <xs:documentation>Discount Amount holds the monetary amount by which the the price charged for a GOOD or SERVICE is decreased.  A percent decrease in the price charged may only be applicable to specific Account Types, Promotions, Products, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="11" />
+      <xs:fractionDigits value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DiscountEligibilityFlagType">
+    <xs:annotation>
+      <xs:documentation>Discount Eligibility Flag is a boolean indicator of whether the device, customer or plan is eligible for the associated discount.
+Valid Values:
+true - the device, customer or plan is eligible for the discount,
+false - the device, customer or plan is NOT eligible for the discount </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="EligibilityStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Eligibility status code indicates if eligibilty reqirements are met.
+Values:
+Y - Eligible
+N - Not eligible
+U - Undetermined</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentActivityFlagType">
+    <xs:annotation>
+      <xs:documentation>Equipment Activity Flag indicates that its associated activity element is valid.
+true - the associated activity is valid for the equimpent
+false - the associated activity is not valid for the equipment</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentActivityReasonCodeType">
+    <xs:annotation>
+      <xs:documentation>Equipment Activity ReasonCode
+
+Possible Reasons:
+Trade In, 
+Repair In, 
+Repair Out, 
+Report As Missing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentItemDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Equipment Item Description is text describing an item of equipment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentItemIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Equipment Item Identiifer is the item identifier of the equipment to be ordered should be authorized according to the dealer’s sales channel.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentOwnershipCodeType">
+    <xs:annotation>
+      <xs:documentation>Equipment Ownership Code designates a type of owner of the equipment, e.g., C – company, S – customer, A – agent, D – deleted, N – Company no track, BLANK.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentPoolCodeType">
+    <xs:annotation>
+      <xs:documentation>Equipment Pool Code indicates whether a piece of equipment is new or used.
+Values:
+N - New
+U - Used</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentPosessionCodeType">
+    <xs:annotation>
+      <xs:documentation>Equipment Posession Code designates the current possession of the equimpment.  E.g., A – Available, N – Not available, I – sold from inventory, F – sold from agent, R  – rental, S – lease, D – demo, L – Loan, E – Employee, P – Private, C – Inventory checked out.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentSerialNumberTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Equipment Serial Number Type Code is a value that classifies a device serial number as being an ESN, MEID, MSN, IMEI, or SIM.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="A" />
+      <xs:enumeration value="E" />
+      <xs:enumeration value="I" />
+      <xs:enumeration value="M" />
+      <xs:enumeration value="S" />
+      <xs:enumeration value="U" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EvdoRevisionCodeType">
+    <xs:annotation>
+      <xs:documentation>Evdo Revision Code indicates which EVDO revision the device supports.
+Values:
+REV0
+REVA</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="4" />
+      <xs:enumeration value="REV0" />
+      <xs:enumeration value="REVA" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FeatureSupportedFlagType">
+    <xs:annotation>
+      <xs:documentation>Feature Supported Flag is a boolean indicator of whether the related feature is supported. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="FetchInformationFlagType">
+    <xs:annotation>
+      <xs:documentation>Fetch Information Flag is a boolean flag that indicates whether for the api to request the information associated to the request structure.
+true - the API will perform request for the associated information
+false - the API will request the assoociated information</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="FirstNameType">
+    <xs:annotation>
+      <xs:documentation>First Name or "Given Name" is a name which specifies and differentiates between members of a group of individuals, especially a family, all of whose members usually share the same family name.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="GenerationType">
+    <xs:annotation>
+      <xs:documentation>Generation is the iteration of the name within a family affixed to the end of the name (e.g.: I,II,III or Jr.)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="HighPerformancePushToTalkDeviceVersionTextType">
+    <xs:annotation>
+      <xs:documentation>High Performance Push To Talk Device Version Text is version information for an HPPTT device.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="256" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LastNameType">
+    <xs:annotation>
+      <xs:documentation>Last Name represents the family name or surname is the part of an INDIVIDUAL PARTY's name that identifies what family the individual belongs to.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LastUpdatedDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Last Updated Date Time is the date and time that an update was most recently made on a particular item.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="ManufacturerPartyIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Manufacturer Party Identifier colds a value that uniquely identifies the Manufacturere of the specified PRODUCT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ManufacturerSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>Manufacturer Serial Number is the manufacturer's electronic identifier for IDEN phones. Manufacturer Serial Number is a non-numeric string of alphabetic characters and decimal mumbers.
+
+Length 10 character string.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MediumAccessControlAddressType">
+    <xs:annotation>
+      <xs:documentation>Medium Access Control Address (MAC Address) contains a 12 byte hexadecimal value used to identify a device used in the IEEE sublayer of a network which controls access to the shared medium by network-attached devices. 
+
+In the context of the OSI reference model, the Medium Access Control (MAC) layer extends above to the Data Link Layer and below to the Physical Layer.</xs:documentation>
+      <xs:documentation>alias: MAC ID</xs:documentation>
+      <xs:documentation>alias: Media Access Control Identifcation</xs:documentation>
+      <xs:documentation>Medium Access Control Address (MAC Address) contains a 12 byte hexadecimal value used to identify a device used in the IEEE sublayer of a network which controls access to the shared medium by network-attached devices. 
+
+In the context of the OSI reference model, the Medium Access Control (MAC) layer extends above to the Data Link Layer and below to the Physical Layer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MediumAccessControlAddressTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Medium Access Control Address Type Code designates which type of device a MAC addres is assigned to.
+Values:
+FEM_ARV - Airave Phase 1 FEMTO
+FEMARV2 - Airave Phase 2 FEMTO
+ATA_ARV - Airave Phase 2 FEMTO
+4G_CAT1 - 4G SM Category 1
+4G_CAT2 - 4G SM Category 2
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNameType">
+    <xs:annotation>
+      <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNumberType">
+    <xs:annotation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NegativeReasonCodeType">
+    <xs:annotation>
+      <xs:documentation>Negative Reason Code designates a specific reason for a negative file entry.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NegativeReasonDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Negative Reason Description is the text describing the reason for the negative file listing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NegativeSuspendFlagType">
+    <xs:annotation>
+      <xs:documentation>Negative Suspend Flag indicates whether the item is listed in the negative file.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="NetworkIndicatorCodeType">
+    <xs:annotation>
+      <xs:documentation>Network Indicator Code specifies the network being used.
+Values:
+I - iDEN
+C - CDMA
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="I">
+        <xs:annotation>
+          <xs:documentation>iDEN</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="C">
+        <xs:annotation>
+          <xs:documentation>CDMA</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PrepayTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Prepay Type Code designates a specific prepay type.
+Values:
+REGLR - regular
+BOOST - Boost
+SIMPR - SIM Prepaid</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PreviouslyActivatedStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Previously Activated Flag indicates the previous activation of a device if known.
+Values:
+Y – Activated
+N – Not Activated
+U – Undetermined</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="Y">
+        <xs:annotation>
+          <xs:documentation>Activated</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="N">
+        <xs:annotation>
+          <xs:documentation>Not Activated</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="U">
+        <xs:annotation>
+          <xs:documentation>Undetermined</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RestrictedSimFlagType">
+    <xs:annotation>
+      <xs:documentation>Restricted SIM Flag indicates if the SIM is a restricted SIM for pre-paid services.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="SoftwareVersionType">
+    <xs:annotation>
+      <xs:documentation>Software Version designates a specific build of software.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubBrandCodeType">
+    <xs:annotation>
+      <xs:documentation>The SubBrand Code is a 3 byte code denoting which subBrand the prepaid subscriber belongs to based on the network indicator and premium indicator of the price plan
+Possible values; not exhaustive:
+PYG - Pay as you go
+PRM - iDEN Boost Premium Plan
+MBP - Monthly Bucket Plan
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriberDeviceSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>Subscriber Device Serial Number is the Equipment Id – IMEI or Simcard Id or MSN or ESN of any subscriber under the BAN.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="18" />
+      <xs:minLength value="8" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriberIdentityModuleIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Subscriber Identify Module (SIM) Identifier identifies the ''smart'' card installed or inserted into a IDEN mobile telephone containing all subscriber-related data. This facilitates a telephone call from any valid mobile telephone since the subscriber data is used to complete the call rather than the telephone internal serial number.
+
+Length 15 characters.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriberNameStringType">
+    <xs:annotation>
+      <xs:documentation>Subscriber Name String is the name of A person or company who has telephone service provided by a phone company. (In other words, a customer.)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriptionIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Subscription Identifier uniquely identifies an instance of SUBSCRIPTION</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+      <xs:minLength value="8" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TitleType">
+    <xs:annotation>
+      <xs:documentation>Title is an honorific bestowed to an Individual.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniversalIntegratedCircuitCardIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Universal Integrated Circuit Card Identifier is a unique identifier embedded in the smart card used in mobile terminals in CDMA, GSM and UMTS networks.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniversalIntegratedCircuitCardStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Universal Integrated Circuit Card(UICC) Status Code designates the status of the  UICC.
+Valid Values
+E – Enabled (In-use/Not available for access)
+D – Disabled (Available for access)
+L – Lost/Stolen
+F – Fraudulent
+99 – Not available for access</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniversalIntegratedCircuitCardTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Universal Integrated Circuit Card Type Code designates a type of Universal Integrated Circuit Card (SmartCard).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="U" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,955 @@
+<?xml version="1.0"?><DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts" DTS:ExecutableType="SSIS.Package.2">
+<DTS:Property DTS:Name="PackageFormatVersion">3</DTS:Property>
+<DTS:Property DTS:Name="VersionComments"></DTS:Property>
+<DTS:Property DTS:Name="CreatorName">BETTER_WAY\rd7151</DTS:Property>
+<DTS:Property DTS:Name="CreatorComputerName">CT1065</DTS:Property>
+<DTS:Property DTS:Name="CreationDate" DTS:DataType="7">8/26/2010 4:06:52 PM</DTS:Property>
+<DTS:Property DTS:Name="PackageType">5</DTS:Property>
+<DTS:Property DTS:Name="ProtectionLevel">0</DTS:Property>
+<DTS:Property DTS:Name="MaxConcurrentExecutables">-1</DTS:Property>
+<DTS:Property DTS:Name="PackagePriorityClass">0</DTS:Property>
+<DTS:Property DTS:Name="VersionMajor">1</DTS:Property>
+<DTS:Property DTS:Name="VersionMinor">0</DTS:Property>
+<DTS:Property DTS:Name="VersionBuild">29</DTS:Property>
+<DTS:Property DTS:Name="VersionGUID">{E7BA34DE-9B06-428B-8D29-5E9837FF5800}</DTS:Property>
+<DTS:Property DTS:Name="EnableConfig">-1</DTS:Property>
+<DTS:Property DTS:Name="CheckpointFileName"></DTS:Property>
+<DTS:Property DTS:Name="SaveCheckpoints">0</DTS:Property>
+<DTS:Property DTS:Name="CheckpointUsage">0</DTS:Property>
+<DTS:Property DTS:Name="SuppressConfigurationWarnings">0</DTS:Property>
+<DTS:ConnectionManager>
+<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">WA Costco Online DB OLEDB Connection</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{A3A39841-E6BD-48A4-A32F-13C5C9DB89F7}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName">OLEDB</DTS:Property><DTS:ObjectData><DTS:ConnectionManager>
+<DTS:Property DTS:Name="Retain">-1</DTS:Property><DTS:Password DTS:Name="Password" Sensitive="1"></DTS:Password>
+<DTS:Property DTS:Name="ConnectionString">Data Source=10.7.0.21,1500;User ID=rdsql;Initial Catalog=CARTOYS;Provider=SQLNCLI10.1;Persist Security Info=True;Auto Translate=False;Application Name=SSIS-LoadPhoneTagsFromSharepoint-{A3A39841-E6BD-48A4-A32F-13C5C9DB89F7}test-db1.ecom.corp\wacostco.CARTOYS.rdsql;</DTS:Property></DTS:ConnectionManager></DTS:ObjectData></DTS:ConnectionManager>
+<DTS:Configuration>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">C:\Users\rd7151\Documents\Visual Studio 2008\Projects\WACostco SSIS\WACostcoOnlineDBConnectonTEST.dtsConfig</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationVariable"></DTS:Property>
+<DTS:Property DTS:Name="ObjectName">Configuration 1</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{89060C49-7CA1-4D73-9973-D950D772A8DD}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
+<DTS:Property DTS:Name="LastModifiedProductVersion">10.0.2531.0</DTS:Property>
+<DTS:Property DTS:Name="ForceExecValue">0</DTS:Property>
+<DTS:Property DTS:Name="ExecValue" DTS:DataType="3">0</DTS:Property>
+<DTS:Property DTS:Name="ForceExecutionResult">-1</DTS:Property>
+<DTS:Property DTS:Name="Disabled">0</DTS:Property>
+<DTS:Property DTS:Name="FailPackageOnFailure">0</DTS:Property>
+<DTS:Property DTS:Name="FailParentOnFailure">0</DTS:Property>
+<DTS:Property DTS:Name="MaxErrorCount">1</DTS:Property>
+<DTS:Property DTS:Name="ISOLevel">1048576</DTS:Property>
+<DTS:Property DTS:Name="LocaleID">1033</DTS:Property>
+<DTS:Property DTS:Name="TransactionOption">1</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:LoggingOptions>
+<DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
+<DTS:Property DTS:Name="FilterKind">1</DTS:Property>
+<DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions>
+<DTS:Executable DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" DTS:ThreadHint="0">
+<DTS:Property DTS:Name="ExecutionLocation">0</DTS:Property>
+<DTS:Property DTS:Name="ExecutionAddress"></DTS:Property>
+<DTS:Property DTS:Name="TaskContact">Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1</DTS:Property>
+<DTS:Property DTS:Name="ForceExecValue">0</DTS:Property>
+<DTS:Property DTS:Name="ExecValue" DTS:DataType="3">0</DTS:Property>
+<DTS:Property DTS:Name="ForceExecutionResult">-1</DTS:Property>
+<DTS:Property DTS:Name="Disabled">0</DTS:Property>
+<DTS:Property DTS:Name="FailPackageOnFailure">0</DTS:Property>
+<DTS:Property DTS:Name="FailParentOnFailure">0</DTS:Property>
+<DTS:Property DTS:Name="MaxErrorCount">1</DTS:Property>
+<DTS:Property DTS:Name="ISOLevel">1048576</DTS:Property>
+<DTS:Property DTS:Name="LocaleID">-1</DTS:Property>
+<DTS:Property DTS:Name="TransactionOption">1</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:LoggingOptions>
+<DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
+<DTS:Property DTS:Name="FilterKind">1</DTS:Property>
+<DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions>
+<DTS:Property DTS:Name="ObjectName">Create Incoming Temp Table</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{44EAA6A5-28AA-417F-982F-D9C3617EF79B}</DTS:Property>
+<DTS:Property DTS:Name="Description">Execute SQL Task</DTS:Property>
+<DTS:Property DTS:Name="CreationName">Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</DTS:Property>
+<DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property><DTS:ObjectData><SQLTask:SqlTaskData SQLTask:Connection="{A3A39841-E6BD-48A4-A32F-13C5C9DB89F7}" SQLTask:TimeOut="0" SQLTask:IsStoredProc="False" SQLTask:BypassPrepare="True" SQLTask:SqlStmtSourceType="DirectInput" SQLTask:SqlStatementSource="CREATE TABLE ##IncomingProductTags(&#xA;	ProductGuid uniqueidentifier NOT NULL,&#xA;	Tag nvarchar(100) NOT NULL,&#xA;	SetTag bit,&#xA;	&#xA;	CONSTRAINT [PK_ProductTag] PRIMARY KEY CLUSTERED &#xA;	(&#xA;		ProductGuid ASC,&#xA;		Tag ASC&#xA;	)&#xA;) ON [PRIMARY];" SQLTask:CodePage="1252" SQLTask:ResultType="ResultSetType_None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask"/></DTS:ObjectData></DTS:Executable>
+<DTS:Executable DTS:ExecutableType="SSIS.Pipeline.2">
+<DTS:Property DTS:Name="ExecutionLocation">0</DTS:Property>
+<DTS:Property DTS:Name="ExecutionAddress"></DTS:Property>
+<DTS:Property DTS:Name="TaskContact">Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1</DTS:Property>
+<DTS:Property DTS:Name="ForceExecValue">0</DTS:Property>
+<DTS:Property DTS:Name="ExecValue" DTS:DataType="3">0</DTS:Property>
+<DTS:Property DTS:Name="ForceExecutionResult">-1</DTS:Property>
+<DTS:Property DTS:Name="Disabled">0</DTS:Property>
+<DTS:Property DTS:Name="FailPackageOnFailure">0</DTS:Property>
+<DTS:Property DTS:Name="FailParentOnFailure">0</DTS:Property>
+<DTS:Property DTS:Name="MaxErrorCount">1</DTS:Property>
+<DTS:Property DTS:Name="ISOLevel">1048576</DTS:Property>
+<DTS:Property DTS:Name="LocaleID">-1</DTS:Property>
+<DTS:Property DTS:Name="TransactionOption">1</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">-1</DTS:Property>
+<DTS:LoggingOptions>
+<DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
+<DTS:Property DTS:Name="FilterKind">1</DTS:Property>
+<DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions>
+<DTS:Property DTS:Name="ObjectName">Copy Data From Sharepoint List to Staging Table</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{744EE9F4-63E7-4C05-8915-08DE9051D273}</DTS:Property>
+<DTS:Property DTS:Name="Description">Data Flow Task</DTS:Property>
+<DTS:Property DTS:Name="CreationName">SSIS.Pipeline.2</DTS:Property>
+<DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property><DTS:ObjectData><pipeline id="0" name="pipelineXml" description="pipelineXml" defaultBufferMaxRows="10000" engineThreads="10" defaultBufferSize="10485760" BLOBTempStoragePath="" bufferTempStoragePath="" runInOptimizedMode="true">
+<components>
+<component id="1" name="SharePoint List Source" componentClassID="{2E42D45B-F83C-400F-8D77-61DDE6A7DF29}" description="Extract data from SharePoint lists" localeId="-1" usesDispositions="false" validateExternalMetadata="True" version="0" pipelineVersion="0" contactInfo="">
+<properties>
+<property id="2" name="UserComponentTypeName" dataType="System.String" state="default" isArray="false" description="" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Microsoft.Samples.SqlServer.SSIS.SharePointListAdapters.SharePointListSource, SharePointListAdapters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=933a2c7edf82ac1f</property>
+<property id="3" name="SiteUrl" dataType="System.String" state="default" isArray="false" description="Path to SharePoint site / subsite that contains the list." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">http://iroc2/apps/wacontent</property>
+<property id="4" name="SiteListName" dataType="System.String" state="default" isArray="false" description="Name of the SharePoint list to load data from." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Phone Tags</property>
+<property id="5" name="SiteListViewName" dataType="System.Null" state="default" isArray="false" description="Name of the view within SharePoint list to load data from." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify"/>
+<property id="6" name="SharePointCulture" dataType="System.String" state="default" isArray="false" description="Culture to use when communicating with remote SharePoint Server (en-US)." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">en-US</property>
+<property id="7" name="CamlQuery" dataType="System.String" state="default" isArray="false" description="CAML Query to use to more specifically pull back the rows you are interested in from SharePoint (Look up syntax of using this XML Element: &lt;Query /&gt;)" typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">&lt;Query /&gt;</property>
+<property id="8" name="BatchSize" dataType="System.Int16" state="default" isArray="false" description="# of elements to pull from the Webservice at a time." typeConverter="System.Int16, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UITypeEditor="" containsID="false" expressionType="None">1000</property>
+<property id="9" name="IsRecursive" dataType="System.Int32" state="default" isArray="false" description="When loading items, should subfolders within the list also be loaded. Set to 'true' to load child folders." typeConverter="Microsoft.Samples.SqlServer.SSIS.SharePointListAdapters.Enums.TrueFalseValue, SharePointListAdapters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=933a2c7edf82ac1f" UITypeEditor="" containsID="false" expressionType="None">0</property>
+<property id="10" name="IncludeFolders" dataType="System.Int32" state="default" isArray="false" description="Whether to return folders with the list content" typeConverter="Microsoft.Samples.SqlServer.SSIS.SharePointListAdapters.Enums.TrueFalseValue, SharePointListAdapters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=933a2c7edf82ac1f" UITypeEditor="" containsID="false" expressionType="None">0</property></properties>
+<outputs>
+<output id="11" name="Public List Output" description="Phone Tags" exclusionGroup="0" synchronousInputId="0" deleteOutputOnPathDetached="false" hasSideEffects="false" dangling="false" isErrorOut="false" isSorted="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><outputColumns>
+<outputColumn id="2059" name="ID" description="ID" lineageId="2059" precision="0" scale="0" length="0" dataType="i4" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2057" mappedColumnId="0"><properties>
+<property id="2060" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">ID</property></properties></outputColumn>
+<outputColumn id="2063" name="LinkTitle" description="GersSku" lineageId="2063" precision="0" scale="0" length="4000" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2061" mappedColumnId="0"><properties>
+<property id="2064" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">LinkTitle</property></properties></outputColumn>
+<outputColumn id="2067" name="hide" description="hide" lineageId="2067" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2065" mappedColumnId="0"><properties>
+<property id="2068" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">hide</property></properties></outputColumn>
+<outputColumn id="2071" name="phone" description="phone" lineageId="2071" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2069" mappedColumnId="0"><properties>
+<property id="2072" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">phone</property></properties></outputColumn>
+<outputColumn id="2075" name="prepaid" description="prepaid" lineageId="2075" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2073" mappedColumnId="0"><properties>
+<property id="2076" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">prepaid</property></properties></outputColumn>
+<outputColumn id="2079" name="online" description="online" lineageId="2079" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2077" mappedColumnId="0"><properties>
+<property id="2080" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">online</property></properties></outputColumn>
+<outputColumn id="2083" name="warehouse" description="warehouse" lineageId="2083" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2081" mappedColumnId="0"><properties>
+<property id="2084" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">warehouse</property></properties></outputColumn>
+<outputColumn id="2087" name="Android" description="Android" lineageId="2087" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2085" mappedColumnId="0"><properties>
+<property id="2088" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Android</property></properties></outputColumn>
+<outputColumn id="2091" name="Billcredit" description="Bill credit" lineageId="2091" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2089" mappedColumnId="0"><properties>
+<property id="2092" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Bill_x0020_credit</property></properties></outputColumn>
+<outputColumn id="2095" name="Bluetooth_x2122_" description="Bluetooth™" lineageId="2095" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2093" mappedColumnId="0"><properties>
+<property id="2096" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Bluetooth_x2122_</property></properties></outputColumn>
+<outputColumn id="2099" name="Camera2_x0023_1MPa" description="Camera 2#1MP and up" lineageId="2099" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2097" mappedColumnId="0"><properties>
+<property id="2100" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Camera_x0020_2_x0023_1MP_x0020_a</property></properties></outputColumn>
+<outputColumn id="2103" name="CameraVGAto" description="Camera VGA to 2#0MP" lineageId="2103" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2101" mappedColumnId="0"><properties>
+<property id="2104" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Camera_x0020_VGA_x0020_to_x0020_</property></properties></outputColumn>
+<outputColumn id="2107" name="datadevice" description="datadevice" lineageId="2107" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2105" mappedColumnId="0"><properties>
+<property id="2108" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">datadevice</property></properties></outputColumn>
+<outputColumn id="2111" name="easytouse" description="easy to use" lineageId="2111" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2109" mappedColumnId="0"><properties>
+<property id="2112" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">easy_x0020_to_x0020_use</property></properties></outputColumn>
+<outputColumn id="2115" name="GPSEnabled" description="GPS Enabled" lineageId="2115" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2113" mappedColumnId="0"><properties>
+<property id="2116" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">GPS_x0020_Enabled</property></properties></outputColumn>
+<outputColumn id="2119" name="HeavyTexter" description="Heavy Texter" lineageId="2119" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2117" mappedColumnId="0"><properties>
+<property id="2120" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Heavy_x0020_Texter</property></properties></outputColumn>
+<outputColumn id="2123" name="LaptopConnectCard" description="Laptop Connect Card" lineageId="2123" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2121" mappedColumnId="0"><properties>
+<property id="2124" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Laptop_x0020_Connect_x0020_Card</property></properties></outputColumn>
+<outputColumn id="2127" name="Mapaal" description="Mapaal" lineageId="2127" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2125" mappedColumnId="0"><properties>
+<property id="2128" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Mapaal</property></properties></outputColumn>
+<outputColumn id="2131" name="Mapnew" description="Mapnew" lineageId="2131" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2129" mappedColumnId="0"><properties>
+<property id="2132" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Mapnew</property></properties></outputColumn>
+<outputColumn id="2135" name="MobileHotSpot" description="Mobile Hot Spot" lineageId="2135" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2133" mappedColumnId="0"><properties>
+<property id="2136" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Mobile_x0020_Hot_x0020_Spot</property></properties></outputColumn>
+<outputColumn id="2139" name="MusicLover" description="Music Lover" lineageId="2139" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2137" mappedColumnId="0"><properties>
+<property id="2140" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Music_x0020_Lover</property></properties></outputColumn>
+<outputColumn id="2143" name="Photo_x002f_VideoTaker" description="Photo/Video Taker" lineageId="2143" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2141" mappedColumnId="0"><properties>
+<property id="2144" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Photo_x002f_Video_x0020_Taker</property></properties></outputColumn>
+<outputColumn id="2147" name="Productivity" description="Productivity" lineageId="2147" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2145" mappedColumnId="0"><properties>
+<property id="2148" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Productivity</property></properties></outputColumn>
+<outputColumn id="2151" name="QwertyKeyboard" description="Qwerty Keyboard" lineageId="2151" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2149" mappedColumnId="0"><properties>
+<property id="2152" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Qwerty_x0020_Keyboard</property></properties></outputColumn>
+<outputColumn id="2155" name="Sale" description="Sale" lineageId="2155" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2153" mappedColumnId="0"><properties>
+<property id="2156" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Sale</property></properties></outputColumn>
+<outputColumn id="2159" name="smartphone" description="smartphone" lineageId="2159" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2157" mappedColumnId="0"><properties>
+<property id="2160" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">smartphone</property></properties></outputColumn>
+<outputColumn id="2163" name="socialnetworking" description="social networking" lineageId="2163" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2161" mappedColumnId="0"><properties>
+<property id="2164" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">social_x0020_networking</property></properties></outputColumn>
+<outputColumn id="2167" name="TouchScreen" description="Touch Screen" lineageId="2167" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2165" mappedColumnId="0"><properties>
+<property id="2168" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Touch_x0020_Screen</property></properties></outputColumn>
+<outputColumn id="2171" name="Weeklyadspecials" description="Weekly ad specials" lineageId="2171" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2169" mappedColumnId="0"><properties>
+<property id="2172" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Weekly_x0020_ad_x0020_specials</property></properties></outputColumn>
+<outputColumn id="2175" name="WiFi" description="WiFi" lineageId="2175" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2173" mappedColumnId="0"><properties>
+<property id="2176" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">WiFi</property></properties></outputColumn>
+<outputColumn id="2179" name="newarrival" description="newarrival" lineageId="2179" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2177" mappedColumnId="0"><properties>
+<property id="2180" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">newarrival</property></properties></outputColumn>
+<outputColumn id="2183" name="BlackFriday" description="Black Friday" lineageId="2183" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2181" mappedColumnId="0"><properties>
+<property id="2184" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Black_x0020_Friday</property></properties></outputColumn>
+<outputColumn id="2187" name="CyberMonday" description="Cyber Monday" lineageId="2187" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2185" mappedColumnId="0"><properties>
+<property id="2188" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Cyber_x0020_Monday</property></properties></outputColumn>
+<outputColumn id="2191" name="Windows" description="Windows" lineageId="2191" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2189" mappedColumnId="0"><properties>
+<property id="2192" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Windows</property></properties></outputColumn>
+<outputColumn id="2195" name="HolidaySales" description="Holiday Sales" lineageId="2195" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2193" mappedColumnId="0"><properties>
+<property id="2196" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Holiday_x0020_Sales</property></properties></outputColumn>
+<outputColumn id="2199" name="MAPUPGRADE" description="MAPUPGRADE" lineageId="2199" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2197" mappedColumnId="0"><properties>
+<property id="2200" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">MAPUPGRADE</property></properties></outputColumn>
+<outputColumn id="2203" name="Title" description="GersSku" lineageId="2203" precision="0" scale="0" length="255" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2201" mappedColumnId="0"><properties>
+<property id="2204" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Title</property></properties></outputColumn>
+<outputColumn id="2207" name="LinkTitleNoMenu" description="GersSku" lineageId="2207" precision="0" scale="0" length="4000" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2205" mappedColumnId="0"><properties>
+<property id="2208" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">LinkTitleNoMenu</property></properties></outputColumn>
+<outputColumn id="2211" name="ContentType" description="Content Type" lineageId="2211" precision="0" scale="0" length="255" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2209" mappedColumnId="0"><properties>
+<property id="2212" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">ContentType</property></properties></outputColumn>
+<outputColumn id="2215" name="Modified" description="Modified" lineageId="2215" precision="0" scale="0" length="0" dataType="dbTimeStamp" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2213" mappedColumnId="0"><properties>
+<property id="2216" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Modified</property></properties></outputColumn>
+<outputColumn id="2219" name="Created" description="Created" lineageId="2219" precision="0" scale="0" length="0" dataType="dbTimeStamp" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2217" mappedColumnId="0"><properties>
+<property id="2220" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Created</property></properties></outputColumn>
+<outputColumn id="2223" name="Author" description="Created By" lineageId="2223" precision="0" scale="0" length="100" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2221" mappedColumnId="0"><properties>
+<property id="2224" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Author</property></properties></outputColumn>
+<outputColumn id="2227" name="Editor" description="Modified By" lineageId="2227" precision="0" scale="0" length="100" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2225" mappedColumnId="0"><properties>
+<property id="2228" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Editor</property></properties></outputColumn>
+<outputColumn id="2231" name="_UIVersionString" description="Version" lineageId="2231" precision="0" scale="0" length="255" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2229" mappedColumnId="0"><properties>
+<property id="2232" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">_UIVersionString</property></properties></outputColumn>
+<outputColumn id="2235" name="Attachments" description="Attachments" lineageId="2235" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2233" mappedColumnId="0"><properties>
+<property id="2236" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Attachments</property></properties></outputColumn>
+<outputColumn id="2239" name="Edit" description="Edit" lineageId="2239" precision="0" scale="0" length="4000" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2237" mappedColumnId="0"><properties>
+<property id="2240" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Edit</property></properties></outputColumn>
+<outputColumn id="2243" name="DocIcon" description="Type" lineageId="2243" precision="0" scale="0" length="4000" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="2241" mappedColumnId="0"><properties>
+<property id="2244" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">DocIcon</property></properties></outputColumn></outputColumns><externalMetadataColumns isUsed="True">
+<externalMetadataColumn id="2057" name="ID" description="ID" precision="0" scale="0" length="0" dataType="i4" codePage="0" mappedColumnId="0"><properties>
+<property id="2058" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">ID</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2061" name="LinkTitle" description="GersSku" precision="0" scale="0" length="4000" dataType="wstr" codePage="0" mappedColumnId="0"><properties>
+<property id="2062" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">LinkTitle</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2065" name="hide" description="hide" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2066" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">hide</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2069" name="phone" description="phone" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2070" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">phone</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2073" name="prepaid" description="prepaid" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2074" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">prepaid</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2077" name="online" description="online" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2078" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">online</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2081" name="warehouse" description="warehouse" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2082" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">warehouse</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2085" name="Android" description="Android" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2086" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Android</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2089" name="Billcredit" description="Bill credit" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2090" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Bill_x0020_credit</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2093" name="Bluetooth_x2122_" description="Bluetooth™" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2094" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Bluetooth_x2122_</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2097" name="Camera2_x0023_1MPa" description="Camera 2#1MP and up" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2098" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Camera_x0020_2_x0023_1MP_x0020_a</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2101" name="CameraVGAto" description="Camera VGA to 2#0MP" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2102" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Camera_x0020_VGA_x0020_to_x0020_</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2105" name="datadevice" description="datadevice" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2106" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">datadevice</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2109" name="easytouse" description="easy to use" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2110" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">easy_x0020_to_x0020_use</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2113" name="GPSEnabled" description="GPS Enabled" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2114" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">GPS_x0020_Enabled</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2117" name="HeavyTexter" description="Heavy Texter" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2118" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Heavy_x0020_Texter</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2121" name="LaptopConnectCard" description="Laptop Connect Card" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2122" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Laptop_x0020_Connect_x0020_Card</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2125" name="Mapaal" description="Mapaal" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2126" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Mapaal</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2129" name="Mapnew" description="Mapnew" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2130" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Mapnew</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2133" name="MobileHotSpot" description="Mobile Hot Spot" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2134" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Mobile_x0020_Hot_x0020_Spot</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2137" name="MusicLover" description="Music Lover" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2138" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Music_x0020_Lover</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2141" name="Photo_x002f_VideoTaker" description="Photo/Video Taker" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2142" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Photo_x002f_Video_x0020_Taker</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2145" name="Productivity" description="Productivity" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2146" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Productivity</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2149" name="QwertyKeyboard" description="Qwerty Keyboard" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2150" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Qwerty_x0020_Keyboard</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2153" name="Sale" description="Sale" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2154" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Sale</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2157" name="smartphone" description="smartphone" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2158" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">smartphone</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2161" name="socialnetworking" description="social networking" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2162" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">social_x0020_networking</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2165" name="TouchScreen" description="Touch Screen" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2166" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Touch_x0020_Screen</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2169" name="Weeklyadspecials" description="Weekly ad specials" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2170" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Weekly_x0020_ad_x0020_specials</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2173" name="WiFi" description="WiFi" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2174" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">WiFi</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2177" name="newarrival" description="newarrival" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2178" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">newarrival</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2181" name="BlackFriday" description="Black Friday" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2182" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Black_x0020_Friday</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2185" name="CyberMonday" description="Cyber Monday" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2186" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Cyber_x0020_Monday</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2189" name="Windows" description="Windows" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2190" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Windows</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2193" name="HolidaySales" description="Holiday Sales" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2194" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Holiday_x0020_Sales</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2197" name="MAPUPGRADE" description="MAPUPGRADE" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2198" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">MAPUPGRADE</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2201" name="Title" description="GersSku" precision="0" scale="0" length="255" dataType="wstr" codePage="0" mappedColumnId="0"><properties>
+<property id="2202" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Title</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2205" name="LinkTitleNoMenu" description="GersSku" precision="0" scale="0" length="4000" dataType="wstr" codePage="0" mappedColumnId="0"><properties>
+<property id="2206" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">LinkTitleNoMenu</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2209" name="ContentType" description="Content Type" precision="0" scale="0" length="255" dataType="wstr" codePage="0" mappedColumnId="0"><properties>
+<property id="2210" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">ContentType</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2213" name="Modified" description="Modified" precision="0" scale="0" length="0" dataType="dbTimeStamp" codePage="0" mappedColumnId="0"><properties>
+<property id="2214" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Modified</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2217" name="Created" description="Created" precision="0" scale="0" length="0" dataType="dbTimeStamp" codePage="0" mappedColumnId="0"><properties>
+<property id="2218" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Created</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2221" name="Author" description="Created By" precision="0" scale="0" length="100" dataType="wstr" codePage="0" mappedColumnId="0"><properties>
+<property id="2222" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Author</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2225" name="Editor" description="Modified By" precision="0" scale="0" length="100" dataType="wstr" codePage="0" mappedColumnId="0"><properties>
+<property id="2226" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Editor</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2229" name="_UIVersionString" description="Version" precision="0" scale="0" length="255" dataType="wstr" codePage="0" mappedColumnId="0"><properties>
+<property id="2230" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">_UIVersionString</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2233" name="Attachments" description="Attachments" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"><properties>
+<property id="2234" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Attachments</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2237" name="Edit" description="Edit" precision="0" scale="0" length="4000" dataType="wstr" codePage="0" mappedColumnId="0"><properties>
+<property id="2238" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">Edit</property></properties></externalMetadataColumn>
+<externalMetadataColumn id="2241" name="DocIcon" description="Type" precision="0" scale="0" length="4000" dataType="wstr" codePage="0" mappedColumnId="0"><properties>
+<property id="2242" name="Id" dataType="System.String" state="default" isArray="false" description="SharePoint ID" typeConverter="" UITypeEditor="" containsID="false" expressionType="None">DocIcon</property></properties></externalMetadataColumn></externalMetadataColumns></output>
+</outputs>
+</component>
+<component id="216" name="Unpivot" componentClassID="{8F25687E-2ACA-4EF3-88A3-53099FDAAF43}" description="Creates a more normalized representation of a dataset." localeId="-1" usesDispositions="false" validateExternalMetadata="True" version="0" pipelineVersion="0" contactInfo="Unpivot;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0">
+<inputs>
+<input id="217" name="Unpivot Input" description="" hasSideEffects="true" dangling="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><inputColumns>
+<inputColumn id="224" name="" description="" lineageId="814" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="225" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">227</property>
+<property id="226" name="PivotKeyValue" dataType="System.Null" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify"/></properties></inputColumn>
+<inputColumn id="229" name="" description="" lineageId="2067" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="230" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="231" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">hide</property></properties></inputColumn>
+<inputColumn id="234" name="" description="" lineageId="2071" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="235" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="236" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">phone</property></properties></inputColumn>
+<inputColumn id="237" name="" description="" lineageId="2075" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="238" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="239" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">prepaid</property></properties></inputColumn>
+<inputColumn id="240" name="" description="" lineageId="2079" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="241" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="242" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">online</property></properties></inputColumn>
+<inputColumn id="243" name="" description="" lineageId="2083" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="244" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="245" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">warehouse</property></properties></inputColumn>
+<inputColumn id="246" name="" description="" lineageId="2107" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="247" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="248" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">datadevice</property></properties></inputColumn>
+<inputColumn id="249" name="" description="" lineageId="2155" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="250" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="251" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Sale</property></properties></inputColumn>
+<inputColumn id="252" name="" description="" lineageId="2131" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="253" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="254" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">MAPNEW</property></properties></inputColumn>
+<inputColumn id="255" name="" description="" lineageId="2127" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="256" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="257" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">MAPAAL</property></properties></inputColumn>
+<inputColumn id="258" name="" description="" lineageId="2171" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="259" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="260" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Weekly ad specials</property></properties></inputColumn>
+<inputColumn id="261" name="" description="" lineageId="2115" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="262" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="263" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">GPSEnabled</property></properties></inputColumn>
+<inputColumn id="264" name="" description="" lineageId="2163" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="265" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="266" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">social networking</property></properties></inputColumn>
+<inputColumn id="267" name="" description="" lineageId="2091" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="268" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="269" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Bill credit</property></properties></inputColumn>
+<inputColumn id="270" name="" description="" lineageId="2167" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="271" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="272" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Touch Screen</property></properties></inputColumn>
+<inputColumn id="273" name="" description="" lineageId="2175" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="274" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="275" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">WiFi</property></properties></inputColumn>
+<inputColumn id="276" name="" description="" lineageId="2139" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="277" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="278" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Music Lover</property></properties></inputColumn>
+<inputColumn id="282" name="" description="" lineageId="2159" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="283" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="284" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">smartphone</property></properties></inputColumn>
+<inputColumn id="288" name="" description="" lineageId="2123" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="289" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="290" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Laptop Connect Card</property></properties></inputColumn>
+<inputColumn id="291" name="" description="" lineageId="2103" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="292" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="293" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Camera VGA to 2.0MP</property></properties></inputColumn>
+<inputColumn id="294" name="" description="" lineageId="2099" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="295" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="296" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Camera 2.1MP and up</property></properties></inputColumn>
+<inputColumn id="297" name="" description="" lineageId="2095" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="298" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="299" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Bluetooth™</property></properties></inputColumn>
+<inputColumn id="300" name="" description="" lineageId="2147" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="301" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="302" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Productivity</property></properties></inputColumn>
+<inputColumn id="303" name="" description="" lineageId="2111" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="304" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="305" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">easy to use</property></properties></inputColumn>
+<inputColumn id="306" name="" description="" lineageId="2135" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="307" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="308" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Mobile Hot Spot</property></properties></inputColumn>
+<inputColumn id="309" name="" description="" lineageId="2087" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="310" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="311" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Android</property></properties></inputColumn>
+<inputColumn id="312" name="" description="" lineageId="2143" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="313" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="314" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Photo/Video Taker</property></properties></inputColumn>
+<inputColumn id="315" name="" description="" lineageId="2151" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="316" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="317" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Qwerty Keyboard</property></properties></inputColumn>
+<inputColumn id="318" name="" description="" lineageId="2119" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="319" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="320" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Heavy Texter</property></properties></inputColumn>
+<inputColumn id="1492" name="" description="" lineageId="2179" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="1493" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="1494" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">newarrival</property></properties></inputColumn>
+<inputColumn id="1677" name="" description="" lineageId="2183" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="1678" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="1679" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">BlackFriday</property></properties></inputColumn>
+<inputColumn id="1680" name="" description="" lineageId="2187" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="1681" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="1682" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">CyberMonday</property></properties></inputColumn>
+<inputColumn id="1683" name="" description="" lineageId="2191" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="1684" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="1685" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Windows</property></properties></inputColumn>
+<inputColumn id="1870" name="" description="" lineageId="2195" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="1871" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="1872" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">Holiday Sales</property></properties></inputColumn>
+<inputColumn id="2245" name="" description="" lineageId="2199" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="2246" name="DestinationColumn" dataType="System.Int32" state="default" isArray="false" description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column’s value is not used in output rows." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">624</property>
+<property id="2247" name="PivotKeyValue" dataType="System.String" state="default" isArray="false" description="Specifies the value written to the PivotKey column in the output row." typeConverter="" UITypeEditor="" containsID="false" expressionType="Notify">MAPUPGRADE</property></properties></inputColumn>
+</inputColumns><externalMetadataColumns isUsed="False"/></input>
+</inputs>
+<outputs>
+<output id="218" name="Unpivot Output" description="" exclusionGroup="0" synchronousInputId="0" deleteOutputOnPathDetached="false" hasSideEffects="false" dangling="false" isErrorOut="false" isSorted="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><outputColumns>
+<outputColumn id="222" name="Tag" description="" lineageId="222" precision="0" scale="0" length="255" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="223" name="PivotKey" dataType="System.Boolean" state="default" isArray="false" description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">true</property></properties></outputColumn>
+<outputColumn id="227" name="ProductGuid" description="" lineageId="227" precision="0" scale="0" length="0" dataType="guid" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="228" name="PivotKey" dataType="System.Boolean" state="default" isArray="false" description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">false</property></properties></outputColumn>
+<outputColumn id="624" name="SetTag" description="" lineageId="624" precision="0" scale="0" length="0" dataType="bool" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="625" name="PivotKey" dataType="System.Boolean" state="default" isArray="false" description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">false</property></properties></outputColumn></outputColumns><externalMetadataColumns isUsed="False"/></output>
+</outputs>
+</component>
+<component id="376" name="Data Conversion" componentClassID="{BD06A22E-BC69-4AF7-A69B-C44C2EF684BB}" description="Data Conversion" localeId="-1" usesDispositions="true" validateExternalMetadata="True" version="0" pipelineVersion="0" contactInfo="Data Conversion;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0">
+<inputs>
+<input id="377" name="Data Conversion Input" description="" hasSideEffects="false" dangling="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><inputColumns>
+<inputColumn id="392" name="" description="" lineageId="227" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"/>
+<inputColumn id="393" name="" description="" lineageId="222" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"/>
+</inputColumns><externalMetadataColumns isUsed="False"/></input>
+</inputs>
+<outputs>
+<output id="378" name="Data Conversion Output" description="" exclusionGroup="1" synchronousInputId="377" deleteOutputOnPathDetached="false" hasSideEffects="false" dangling="false" isErrorOut="false" isSorted="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><outputColumns>
+<outputColumn id="383" name="ProductGuid" description="" lineageId="383" precision="0" scale="0" length="0" dataType="guid" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="Conversion" errorRowDisposition="FailComponent" truncationRowDisposition="FailComponent" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="384" name="SourceInputColumnLineageID" dataType="System.Int32" state="default" isArray="false" description="Specifies the input column used as the source of data for the conversion." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">227</property>
+<property id="385" name="FastParse" dataType="System.Boolean" state="default" isArray="false" description="Indicates whether the column uses the faster, locale-neutral parsing routines." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">false</property></properties></outputColumn>
+<outputColumn id="386" name="Tag" description="" lineageId="386" precision="0" scale="0" length="100" dataType="wstr" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="Conversion" errorRowDisposition="FailComponent" truncationRowDisposition="FailComponent" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="387" name="SourceInputColumnLineageID" dataType="System.Int32" state="default" isArray="false" description="Specifies the input column used as the source of data for the conversion." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">222</property>
+<property id="388" name="FastParse" dataType="System.Boolean" state="default" isArray="false" description="Indicates whether the column uses the faster, locale-neutral parsing routines." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">false</property></properties></outputColumn></outputColumns><externalMetadataColumns isUsed="False"/></output>
+<output id="379" name="Data Conversion Error Output" description="" exclusionGroup="1" synchronousInputId="377" deleteOutputOnPathDetached="false" hasSideEffects="false" dangling="false" isErrorOut="true" isSorted="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><outputColumns>
+<outputColumn id="380" name="ErrorCode" description="" lineageId="380" precision="0" scale="0" length="0" dataType="i4" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="1" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"/>
+<outputColumn id="381" name="ErrorColumn" description="" lineageId="381" precision="0" scale="0" length="0" dataType="i4" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="2" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"/></outputColumns><externalMetadataColumns isUsed="False"/></output>
+</outputs>
+</component>
+<component id="404" name="OLE DB Destination" componentClassID="{5A0B62E8-D91D-49F5-94A5-7BE58DE508F0}" description="OLE DB Destination" localeId="-1" usesDispositions="true" validateExternalMetadata="True" version="4" pipelineVersion="0" contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4">
+<properties>
+<property id="405" name="CommandTimeout" dataType="System.Int32" state="default" isArray="false" description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">0</property>
+<property id="406" name="OpenRowset" dataType="System.String" state="default" isArray="false" description="Specifies the name of the database object used to open a rowset." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">##IncomingProductTags</property>
+<property id="407" name="OpenRowsetVariable" dataType="System.String" state="default" isArray="false" description="Specifies the variable that contains the name of the database object used to open a rowset." typeConverter="" UITypeEditor="" containsID="false" expressionType="None"></property>
+<property id="408" name="SqlCommand" dataType="System.String" state="default" isArray="false" description="The SQL command to be executed." typeConverter="" UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" containsID="false" expressionType="None"></property>
+<property id="409" name="DefaultCodePage" dataType="System.Int32" state="default" isArray="false" description="Specifies the column code page to use when code page information is unavailable from the data source." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">1252</property>
+<property id="410" name="AlwaysUseDefaultCodePage" dataType="System.Boolean" state="default" isArray="false" description="Forces the use of the DefaultCodePage property value when describing character data." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">false</property>
+<property id="411" name="AccessMode" dataType="System.Int32" state="default" isArray="false" description="Specifies the mode used to access the database." typeConverter="AccessMode" UITypeEditor="" containsID="false" expressionType="None">0</property>
+<property id="413" name="FastLoadKeepIdentity" dataType="System.Boolean" state="default" isArray="false" description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">false</property>
+<property id="414" name="FastLoadKeepNulls" dataType="System.Boolean" state="default" isArray="false" description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">false</property>
+<property id="415" name="FastLoadOptions" dataType="System.String" state="default" isArray="false" description="Specifies options to be used with fast load.  Applies only if fast load is turned on." typeConverter="" UITypeEditor="" containsID="false" expressionType="None"></property>
+<property id="416" name="FastLoadMaxInsertCommitSize" dataType="System.Int32" state="default" isArray="false" description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">2147483647</property></properties>
+<connections>
+<connection id="412" name="OleDbConnection" description="The OLE DB runtime connection used to access the database." connectionManagerID="{A3A39841-E6BD-48A4-A32F-13C5C9DB89F7}"/></connections>
+<inputs>
+<input id="417" name="OLE DB Destination Input" description="" hasSideEffects="true" dangling="false" errorOrTruncationOperation="Insert" errorRowDisposition="FailComponent" truncationRowDisposition="NotUsed"><inputColumns>
+<inputColumn id="426" name="" description="" lineageId="383" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="422" mappedColumnId="0"/>
+<inputColumn id="427" name="" description="" lineageId="386" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="423" mappedColumnId="0"/>
+<inputColumn id="1496" name="" description="" lineageId="624" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="1495" mappedColumnId="0"/>
+</inputColumns><externalMetadataColumns isUsed="True">
+<externalMetadataColumn id="422" name="ProductGuid" description="" precision="0" scale="0" length="0" dataType="guid" codePage="0" mappedColumnId="0"/>
+<externalMetadataColumn id="423" name="Tag" description="" precision="0" scale="0" length="100" dataType="wstr" codePage="0" mappedColumnId="0"/>
+<externalMetadataColumn id="1495" name="SetTag" description="" precision="0" scale="0" length="0" dataType="bool" codePage="0" mappedColumnId="0"/></externalMetadataColumns></input>
+</inputs>
+<outputs>
+<output id="418" name="OLE DB Destination Error Output" description="" exclusionGroup="1" synchronousInputId="417" deleteOutputOnPathDetached="false" hasSideEffects="false" dangling="false" isErrorOut="true" isSorted="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><outputColumns>
+<outputColumn id="419" name="ErrorCode" description="" lineageId="419" precision="0" scale="0" length="0" dataType="i4" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="1" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"/>
+<outputColumn id="420" name="ErrorColumn" description="" lineageId="420" precision="0" scale="0" length="0" dataType="i4" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="2" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"/></outputColumns><externalMetadataColumns isUsed="False"/></output>
+</outputs>
+</component>
+<component id="790" name="Lookup" componentClassID="{27648839-180F-45E6-838D-AFF53DF682D2}" description="Looks up values in a reference dataset by using exact matching." localeId="-1" usesDispositions="true" validateExternalMetadata="True" version="5" pipelineVersion="0" contactInfo="Lookup;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;5">
+<properties>
+<property id="793" name="SqlCommand" dataType="System.String" state="default" isArray="false" description="Specifies the SQL statement that generates the lookup table." typeConverter="" UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" containsID="false" expressionType="Notify">select * from [catalog].[Product]</property>
+<property id="794" name="SqlCommandParam" dataType="System.String" state="default" isArray="false" description="Specifies a SQL statement that uses parameters to generate the lookup table." typeConverter="" UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" containsID="false" expressionType="Notify">select * from (select * from [catalog].[Product]) [refTable]
+where [refTable].[GersSku] = ?</property>
+<property id="795" name="ConnectionType" dataType="System.Int32" state="default" isArray="false" description="Specifies the type of connection used to access the reference dataset." typeConverter="LookupConnectionType" UITypeEditor="" containsID="false" expressionType="None">0</property>
+<property id="797" name="CacheType" dataType="System.Int32" state="default" isArray="false" description="Specifies the cache type of the lookup table." typeConverter="CacheType" UITypeEditor="" containsID="false" expressionType="None">2</property>
+<property id="798" name="NoMatchBehavior" dataType="System.Int32" state="default" isArray="false" description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set." typeConverter="LookupNoMatchBehavior" UITypeEditor="" containsID="false" expressionType="None">1</property>
+<property id="799" name="NoMatchCachePercentage" dataType="System.Int32" state="default" isArray="false" description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">0</property>
+<property id="800" name="MaxMemoryUsage" dataType="System.Int32" state="default" isArray="false" description="Maximum Memory Usage for Reference Cache on a 32 bit platform." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">25</property>
+<property id="801" name="MaxMemoryUsage64" dataType="System.Int64" state="default" isArray="false" description="Maximum Memory Usage for Reference Cache on a 64 bit platform." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">25</property>
+<property id="802" name="ReferenceMetadataXml" dataType="System.String" state="default" isArray="false" description="Indicates whether to reference metadata in an XML format." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ProductId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ProductGuid" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="GersSku" dataType="DT_WSTR" length="9" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Active" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+<property id="803" name="ParameterMap" dataType="System.String" state="default" isArray="false" description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons." typeConverter="" UITypeEditor="" containsID="true" expressionType="None">#2203;</property>
+<property id="804" name="DefaultCodePage" dataType="System.Int32" state="default" isArray="false" description="Specifies the column code page to use when code page information is unavailable from the data source." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">1252</property></properties>
+<connections>
+<connection id="796" name="OleDbConnection" description="Connection manager used to access lookup data." connectionManagerID="{A3A39841-E6BD-48A4-A32F-13C5C9DB89F7}"/></connections>
+<inputs>
+<input id="791" name="Lookup Input" description="" hasSideEffects="false" dangling="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><inputColumns>
+<inputColumn id="811" name="" description="" lineageId="2203" usageType="readOnly" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="812" name="JoinToReferenceColumn" dataType="System.String" state="default" isArray="false" description="Specifies the column in the reference table that a column joins." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">GersSku</property>
+<property id="813" name="CopyFromReferenceColumn" dataType="System.Null" state="default" isArray="false" description="Specifies the column in the reference table from which a column is copied." typeConverter="" UITypeEditor="" containsID="false" expressionType="None"/></properties></inputColumn>
+</inputColumns><externalMetadataColumns isUsed="False"/></input>
+</inputs>
+<outputs>
+<output id="792" name="Lookup Match Output" description="" exclusionGroup="1" synchronousInputId="791" deleteOutputOnPathDetached="false" hasSideEffects="false" dangling="false" isErrorOut="false" isSorted="false" errorOrTruncationOperation="Lookup" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><outputColumns>
+<outputColumn id="814" name="ProductGuid" description="" lineageId="814" precision="0" scale="0" length="0" dataType="guid" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="0" errorOrTruncationOperation="Copy Column" errorRowDisposition="NotUsed" truncationRowDisposition="FailComponent" externalMetadataColumnId="0" mappedColumnId="0"><properties>
+<property id="815" name="CopyFromReferenceColumn" dataType="System.String" state="default" isArray="false" description="Specifies the column in the reference table from which a column is copied." typeConverter="" UITypeEditor="" containsID="false" expressionType="None">ProductGuid</property></properties></outputColumn></outputColumns><externalMetadataColumns isUsed="False"/></output>
+<output id="805" name="Lookup No Match Output" description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;" exclusionGroup="1" synchronousInputId="791" deleteOutputOnPathDetached="false" hasSideEffects="false" dangling="false" isErrorOut="false" isSorted="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><externalMetadataColumns isUsed="False"/></output>
+<output id="806" name="Lookup Error Output" description="" exclusionGroup="1" synchronousInputId="791" deleteOutputOnPathDetached="false" hasSideEffects="false" dangling="false" isErrorOut="true" isSorted="false" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed"><outputColumns>
+<outputColumn id="807" name="ErrorCode" description="" lineageId="807" precision="0" scale="0" length="0" dataType="i4" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="1" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"/>
+<outputColumn id="808" name="ErrorColumn" description="" lineageId="808" precision="0" scale="0" length="0" dataType="i4" codePage="0" sortKeyPosition="0" comparisonFlags="0" specialFlags="2" errorOrTruncationOperation="" errorRowDisposition="NotUsed" truncationRowDisposition="NotUsed" externalMetadataColumnId="0" mappedColumnId="0"/></outputColumns><externalMetadataColumns isUsed="False"/></output>
+</outputs>
+</component>
+</components>
+<paths>
+<path id="382" name="Unpivot Output" description="" startId="218" endId="377"/>
+<path id="421" name="Data Conversion Output" description="" startId="378" endId="417"/>
+<path id="809" name="Public List Output" description="" startId="11" endId="791"/>
+<path id="810" name="Lookup Match Output" description="" startId="792" endId="217"/>
+</paths></pipeline></DTS:ObjectData></DTS:Executable>
+<DTS:Executable DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" DTS:ThreadHint="0">
+<DTS:Property DTS:Name="ExecutionLocation">0</DTS:Property>
+<DTS:Property DTS:Name="ExecutionAddress"></DTS:Property>
+<DTS:Property DTS:Name="TaskContact">Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1</DTS:Property>
+<DTS:Property DTS:Name="ForceExecValue">0</DTS:Property>
+<DTS:Property DTS:Name="ExecValue" DTS:DataType="3">0</DTS:Property>
+<DTS:Property DTS:Name="ForceExecutionResult">-1</DTS:Property>
+<DTS:Property DTS:Name="Disabled">0</DTS:Property>
+<DTS:Property DTS:Name="FailPackageOnFailure">0</DTS:Property>
+<DTS:Property DTS:Name="FailParentOnFailure">0</DTS:Property>
+<DTS:Property DTS:Name="MaxErrorCount">1</DTS:Property>
+<DTS:Property DTS:Name="ISOLevel">1048576</DTS:Property>
+<DTS:Property DTS:Name="LocaleID">-1</DTS:Property>
+<DTS:Property DTS:Name="TransactionOption">1</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:LoggingOptions>
+<DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
+<DTS:Property DTS:Name="FilterKind">1</DTS:Property>
+<DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions>
+<DTS:Property DTS:Name="ObjectName">Merge Staging Table into PhoneTag Table</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{933E3AD0-5C44-4528-9ED9-B896BE98270E}</DTS:Property>
+<DTS:Property DTS:Name="Description">Execute SQL Task</DTS:Property>
+<DTS:Property DTS:Name="CreationName">Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</DTS:Property>
+<DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property><DTS:ObjectData><SQLTask:SqlTaskData SQLTask:Connection="{A3A39841-E6BD-48A4-A32F-13C5C9DB89F7}" SQLTask:TimeOut="0" SQLTask:IsStoredProc="False" SQLTask:BypassPrepare="True" SQLTask:SqlStmtSourceType="DirectInput" SQLTask:SqlStatementSource="MERGE catalog.ProductTag trg&#xA;USING ##IncomingProductTags src&#xA;	ON trg.ProductGuid = src.ProductGuid&#xA;		AND trg.Tag = src.Tag&#xA;WHEN MATCHED AND src.SetTag = 0&#xA;	THEN DELETE&#xA;WHEN NOT MATCHED BY TARGET AND src.SetTag = 1&#xA;	THEN INSERT (ProductGuid, Tag)&#xA;		VALUES (src.ProductGuid, src.Tag)&#xA;;" SQLTask:CodePage="1252" SQLTask:ResultType="ResultSetType_None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask"/></DTS:ObjectData></DTS:Executable>
+<DTS:PrecedenceConstraint>
+<DTS:Property DTS:Name="Value">0</DTS:Property>
+<DTS:Property DTS:Name="EvalOp">2</DTS:Property>
+<DTS:Property DTS:Name="LogicalAnd">-1</DTS:Property>
+<DTS:Property DTS:Name="Expression"></DTS:Property><DTS:Executable IDREF="{44EAA6A5-28AA-417F-982F-D9C3617EF79B}" DTS:IsFrom="-1"/><DTS:Executable IDREF="{744EE9F4-63E7-4C05-8915-08DE9051D273}" DTS:IsFrom="0"/>
+<DTS:Property DTS:Name="ObjectName">Constraint</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{09210D96-0EFD-4C87-9192-DDD9179D2517}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PrecedenceConstraint>
+<DTS:PrecedenceConstraint>
+<DTS:Property DTS:Name="Value">0</DTS:Property>
+<DTS:Property DTS:Name="EvalOp">2</DTS:Property>
+<DTS:Property DTS:Name="LogicalAnd">-1</DTS:Property>
+<DTS:Property DTS:Name="Expression"></DTS:Property><DTS:Executable IDREF="{744EE9F4-63E7-4C05-8915-08DE9051D273}" DTS:IsFrom="-1"/><DTS:Executable IDREF="{933E3AD0-5C44-4528-9ED9-B896BE98270E}" DTS:IsFrom="0"/>
+<DTS:Property DTS:Name="ObjectName">Constraint 1</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{6F7A58CD-A87F-47D6-865E-F6D19BF535DB}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PrecedenceConstraint>
+<DTS:Property DTS:Name="ObjectName">LoadPhoneTagsFromSharepoint</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{799F85FA-0723-491F-9CA2-C4FC4335A218}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName">SSIS.Package.2</DTS:Property>
+<DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property>
+<DTS:PackageVariable>
+<DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+<DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">{09210D96-0EFD-4C87-9192-DDD9179D2517}</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{33AA82E3-0C32-409B-9ED7-18EFA29E860D}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
+<DTS:PackageVariable>
+<DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+<DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">{6F7A58CD-A87F-47D6-865E-F6D19BF535DB}</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{6108CC4E-3F1D-4E08-B000-79B860BE9D26}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
+<DTS:PackageVariable>
+<DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;TaskHost xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsDataFlowDiagram&gt;&lt;dwd:BoundingLeft&gt;1000&lt;/dwd:BoundingLeft&gt;&lt;dwd:BoundingTop&gt;1816&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;
+  &lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout100" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout100" version="7" nextobject="25" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="816" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="25135" y="14579" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="0" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;
+    &lt;font&gt;
+      &lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;
+    &lt;/font&gt;
+    &lt;mouseicon&gt;
+      &lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;
+    &lt;/mouseicon&gt;
+  &lt;/diagram&gt;
+  &lt;layoutmanager&gt;
+    &lt;ddsxmlobj /&gt;
+  &lt;/layoutmanager&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Extract data from SharePoint lists" left="2209" top="3003" logicalid="11" controlid="1" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}/components/1" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Creates a more normalized representation of a dataset." left="2421" top="6628" logicalid="12" controlid="2" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}/components/216" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Conversion" left="2447" top="8692" logicalid="13" controlid="3" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}/components/376" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="MSDDS.Polyline" left="3821" top="7393" logicalid="14" controlid="4" masterid="0" hint1="0" hint2="0" width="825" height="1799" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}/paths/382" vartype="8" /&gt;
+        &lt;property name="Virtual" value="0" vartype="11" /&gt;
+        &lt;property name="VisibleAP" value="0" vartype="3" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout100" sourceid="2" destid="3" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;
+      &lt;point x="4220" y="7792" /&gt;
+      &lt;point x="4220" y="8242" /&gt;
+      &lt;point x="4246" y="8242" /&gt;
+      &lt;point x="4246" y="8692" /&gt;
+    &lt;/connector&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Destination" left="2447" top="10466" logicalid="15" controlid="5" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}/components/404" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="MSDDS.Polyline" left="3847" top="9457" logicalid="16" controlid="6" masterid="0" hint1="0" hint2="0" width="799" height="1509" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}/paths/421" vartype="8" /&gt;
+        &lt;property name="Virtual" value="0" vartype="11" /&gt;
+        &lt;property name="VisibleAP" value="0" vartype="3" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout100" sourceid="3" destid="5" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;
+      &lt;point x="4246" y="9856" /&gt;
+      &lt;point x="4246" y="10466" /&gt;
+    &lt;/connector&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Looks up values in a reference dataset by using exact matching." left="2223" top="4759" logicalid="17" controlid="7" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}/components/790" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="MSDDS.Polyline" left="3609" top="3768" logicalid="18" controlid="8" masterid="0" hint1="0" hint2="0" width="813" height="1491" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}/paths/809" vartype="8" /&gt;
+        &lt;property name="Virtual" value="0" vartype="11" /&gt;
+        &lt;property name="VisibleAP" value="0" vartype="3" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout100" sourceid="1" destid="7" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;
+      &lt;point x="4008" y="4167" /&gt;
+      &lt;point x="4008" y="4463" /&gt;
+      &lt;point x="4022" y="4463" /&gt;
+      &lt;point x="4022" y="4759" /&gt;
+    &lt;/connector&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="MSDDS.Polyline" left="3623" top="5524" logicalid="19" controlid="9" masterid="0" hint1="0" hint2="0" width="997" height="1604" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1"&gt;
+          &lt;adornment percentpos="60.9080841638981" controlid="11" width="2970" height="344" side="0" behavior="2" himetric="550" distfromline="175" startobj="0" x="1075" y="6450" visible="1" allowoverlap="1" usepercent="1" /&gt;
+        &lt;/polyline&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}/paths/810" vartype="8" /&gt;
+        &lt;property name="Virtual" value="0" vartype="11" /&gt;
+        &lt;property name="VisibleAP" value="0" vartype="3" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout100" sourceid="7" destid="2" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;
+      &lt;point x="4022" y="5923" /&gt;
+      &lt;point x="4022" y="6275" /&gt;
+      &lt;point x="4220" y="6275" /&gt;
+      &lt;point x="4220" y="6628" /&gt;
+    &lt;/connector&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="MSDDS.Text" left="1075" top="6450" logicalid="21" controlid="11" masterid="9" hint1="0" hint2="0" width="2970" height="344" noresize="1" nomove="0" nodefaultattachpoints="1" autodrag="1" usedefaultiddshape="1" selectable="0" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="1" groupcollapsed="0" tabstop="0" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="000200009a0b000058010000030000000000050000800800008001000000350001000000900144420100065461686f6d6113004c006f006f006b007500700020004d00610074006300680020004f007500740070007500740000000000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="AnnotationAdornment" value="-1" vartype="11" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;dwd:PersistedViewPortTop&gt;816&lt;/dwd:PersistedViewPortTop&gt;&lt;/dwd:DtsDataFlowDiagram&gt;&lt;dwd:DtsComponentDesignerPropertiesList&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;790	UsedTableName&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;[catalog].[Product]&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;790	OverwriteParamsSQLProp&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:boolean"&gt;false&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;790	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;404	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;Table&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;404	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;790	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:int"&gt;0&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;/dwd:DtsComponentDesignerPropertiesList&gt;&lt;/TaskHost&gt;</DTS:Property>
+<DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">{744EE9F4-63E7-4C05-8915-08DE9051D273}</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{C7DDF00D-E089-438F-B13B-80982D9A3B74}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
+<DTS:PackageVariable>
+<DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;PipelinePath xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:SourceName&gt;Unpivot Output&lt;/dwd:SourceName&gt;&lt;dwd:DestinationName&gt;Data Conversion Input&lt;/dwd:DestinationName&gt;&lt;/PipelinePath&gt;</DTS:Property>
+<DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">{744EE9F4-63E7-4C05-8915-08DE9051D273}-382</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{6268779D-8BB7-4AB2-9632-093D6693254F}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
+<DTS:PackageVariable>
+<DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;PipelinePath xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:SourceName&gt;Data Conversion Output&lt;/dwd:SourceName&gt;&lt;dwd:DestinationName&gt;OLE DB Destination Input&lt;/dwd:DestinationName&gt;&lt;/PipelinePath&gt;</DTS:Property>
+<DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">{744EE9F4-63E7-4C05-8915-08DE9051D273}-421</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{2D9CD159-FE7F-4372-AB6C-694C4FFA27ED}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
+<DTS:PackageVariable>
+<DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;PipelinePath xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:SourceName&gt;Public List Output&lt;/dwd:SourceName&gt;&lt;dwd:DestinationName&gt;Lookup Input&lt;/dwd:DestinationName&gt;&lt;/PipelinePath&gt;</DTS:Property>
+<DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">{744EE9F4-63E7-4C05-8915-08DE9051D273}-809</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{095217ED-C3FE-49AA-B7A6-BEAD1D2FD97C}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
+<DTS:PackageVariable>
+<DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;PipelinePath xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:SourceName&gt;Lookup Match Output&lt;/dwd:SourceName&gt;&lt;dwd:DestinationName&gt;Unpivot Input&lt;/dwd:DestinationName&gt;&lt;/PipelinePath&gt;</DTS:Property>
+<DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">{744EE9F4-63E7-4C05-8915-08DE9051D273}-810</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{3BD1D290-687C-4FA5-B3CD-62AD2119C486}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
+<DTS:PackageVariable>
+<DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingLeft&gt;1&lt;/dwd:BoundingLeft&gt;&lt;dwd:Layout&gt;&lt;dds&gt;
+  &lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout100" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout100" version="7" nextobject="14" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="-1000" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="25135" y="15505" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;
+    &lt;font&gt;
+      &lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;
+    &lt;/font&gt;
+    &lt;mouseicon&gt;
+      &lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;
+    &lt;/mouseicon&gt;
+  &lt;/diagram&gt;
+  &lt;layoutmanager&gt;
+    &lt;ddsxmlobj /&gt;
+  &lt;/layoutmanager&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="1" top="2164" logicalid="6" controlid="1" masterid="0" hint1="0" hint2="0" width="7699" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="00080000131e00008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="1615" top="0" logicalid="7" controlid="2" masterid="0" hint1="0" hint2="0" width="4471" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="00080000771100008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{44EAA6A5-28AA-417F-982F-D9C3617EF79B}" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="MSDDS.Polyline" left="3451" top="765" logicalid="8" controlid="3" masterid="0" hint1="0" hint2="0" width="799" height="1899" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{09210D96-0EFD-4C87-9192-DDD9179D2517}" vartype="8" /&gt;
+        &lt;property name="Virtual" value="0" vartype="11" /&gt;
+        &lt;property name="VisibleAP" value="0" vartype="3" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout100" sourceid="2" destid="1" sourceattachpoint="7" destattachpoint="12" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;
+      &lt;point x="3850" y="1164" /&gt;
+      &lt;point x="3850" y="2164" /&gt;
+    &lt;/connector&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="186" top="4328" logicalid="9" controlid="4" masterid="0" hint1="0" hint2="0" width="7329" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="00080000a11c00008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{933E3AD0-5C44-4528-9ED9-B896BE98270E}" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="MSDDS.Polyline" left="3451" top="2929" logicalid="10" controlid="5" masterid="0" hint1="0" hint2="0" width="799" height="1899" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{6F7A58CD-A87F-47D6-865E-F6D19BF535DB}" vartype="8" /&gt;
+        &lt;property name="Virtual" value="0" vartype="11" /&gt;
+        &lt;property name="VisibleAP" value="0" vartype="3" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout100" sourceid="1" destid="4" sourceattachpoint="13" destattachpoint="12" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;
+      &lt;point x="3850" y="3328" /&gt;
+      &lt;point x="3850" y="4328" /&gt;
+    &lt;/connector&gt;
+  &lt;/ddscontrol&gt;
+&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;dwd:PersistedViewPortTop&gt;-1000&lt;/dwd:PersistedViewPortTop&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
+<DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">{799F85FA-0723-491F-9CA2-C4FC4335A218}</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{E3435190-A208-4980-BAE0-18C42E768BAB}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
+<DTS:PackageVariable>
+<DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingLeft&gt;1&lt;/dwd:BoundingLeft&gt;&lt;dwd:Layout&gt;&lt;dds&gt;
+  &lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout100" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout100" version="7" nextobject="14" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="-1000" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="25135" y="15505" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;
+    &lt;font&gt;
+      &lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;
+    &lt;/font&gt;
+    &lt;mouseicon&gt;
+      &lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;
+    &lt;/mouseicon&gt;
+  &lt;/diagram&gt;
+  &lt;layoutmanager&gt;
+    &lt;ddsxmlobj /&gt;
+  &lt;/layoutmanager&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="1" top="2164" logicalid="6" controlid="1" masterid="0" hint1="0" hint2="0" width="7699" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="00080000131e00008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{744EE9F4-63E7-4C05-8915-08DE9051D273}" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="1615" top="0" logicalid="7" controlid="2" masterid="0" hint1="0" hint2="0" width="4471" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="00080000771100008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{44EAA6A5-28AA-417F-982F-D9C3617EF79B}" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="MSDDS.Polyline" left="3451" top="765" logicalid="8" controlid="3" masterid="0" hint1="0" hint2="0" width="799" height="1899" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{09210D96-0EFD-4C87-9192-DDD9179D2517}" vartype="8" /&gt;
+        &lt;property name="Virtual" value="0" vartype="11" /&gt;
+        &lt;property name="VisibleAP" value="0" vartype="3" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout100" sourceid="2" destid="1" sourceattachpoint="7" destattachpoint="12" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;
+      &lt;point x="3850" y="1164" /&gt;
+      &lt;point x="3850" y="2164" /&gt;
+    &lt;/connector&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="186" top="4328" logicalid="9" controlid="4" masterid="0" hint1="0" hint2="0" width="7329" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobjectstreaminitwrapper binary="00080000a11c00008c040000" /&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{933E3AD0-5C44-4528-9ED9-B896BE98270E}" vartype="8" /&gt;
+        &lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;shape groupshapeid="0" groupnode="0" /&gt;
+  &lt;/ddscontrol&gt;
+  &lt;ddscontrol controlprogid="MSDDS.Polyline" left="3451" top="2929" logicalid="10" controlid="5" masterid="0" hint1="0" hint2="0" width="799" height="1899" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+    &lt;control&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/control&gt;
+    &lt;layoutobject&gt;
+      &lt;ddsxmlobj&gt;
+        &lt;property name="LogicalObject" value="{6F7A58CD-A87F-47D6-865E-F6D19BF535DB}" vartype="8" /&gt;
+        &lt;property name="Virtual" value="0" vartype="11" /&gt;
+        &lt;property name="VisibleAP" value="0" vartype="3" /&gt;
+      &lt;/ddsxmlobj&gt;
+    &lt;/layoutobject&gt;
+    &lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout100" sourceid="1" destid="4" sourceattachpoint="13" destattachpoint="12" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;
+      &lt;point x="3850" y="3328" /&gt;
+      &lt;point x="3850" y="4328" /&gt;
+    &lt;/connector&gt;
+  &lt;/ddscontrol&gt;
+&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;dwd:PersistedViewPortTop&gt;-1000&lt;/dwd:PersistedViewPortTop&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
+<DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">package-diagram</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{95B2EECB-E874-4FCF-9815-CB4A99633A0B}</DTS:Property>
+<DTS:Property DTS:Name="Description"></DTS:Property>
+<DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable></DTS:Executable>

@@ -1,0 +1,98 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllPagesCostco", "Costco\Dashboard - All Pages\AllPagesCostco\AllPagesCostco\AllPagesCostco.csproj", "{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Campaign", "Costco\Dashboard - Campaign\AllPagesCostco\Campaign.csproj", "{CA477DF1-DA78-4A06-AD20-1AEFD1BE7E8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "Costco\Dashboard - Events\AllPagesCostco\Events.csproj", "{B13CB198-56FF-4B5B-B3E6-A99E5049AFD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserOSGen", "Costco\Dashboard - General Browser and OS\SearchTerms\AllPagesCostco\BrowserOSGen.csproj", "{A3BADDF1-9CDF-4E6F-BA11-9B787BDEB9E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuBehavior", "Costco\Dashboard - Menu Behavior\SearchTerms\AllPagesCostco\MenuBehavior.csproj", "{2A7C9B90-E9AA-4257-A34E-81F675BD72A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTerms", "Costco\Dashboard - Search Terms\SearchTerms\AllPagesCostco\SearchTerms.csproj", "{5271FC45-5477-4D88-98C3-90908B25F6A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard", "Costco\Dashboard - TodayTraffic\Dashboard.csproj", "{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccProjectUniqueName0 = Costco\\Dashboard\u0020-\u0020All\u0020Pages\\AllPagesCostco\\AllPagesCostco\\AllPagesCostco.csproj
+		SccProjectName0 = Costco/Dashboard\u0020-\u0020All\u0020Pages/AllPagesCostco/AllPagesCostco
+		SccAuxPath0 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath0 = Costco\\Dashboard\u0020-\u0020All\u0020Pages\\AllPagesCostco\\AllPagesCostco
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = Costco\\Dashboard\u0020-\u0020Campaign\\AllPagesCostco\\Campaign.csproj
+		SccProjectName1 = Costco/Dashboard\u0020-\u0020Campaign/AllPagesCostco
+		SccAuxPath1 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath1 = Costco\\Dashboard\u0020-\u0020Campaign\\AllPagesCostco
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = Costco\\Dashboard\u0020-\u0020Events\\AllPagesCostco\\Events.csproj
+		SccProjectName2 = Costco/Dashboard\u0020-\u0020Events/AllPagesCostco
+		SccAuxPath2 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath2 = Costco\\Dashboard\u0020-\u0020Events\\AllPagesCostco
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = Costco\\Dashboard\u0020-\u0020General\u0020Browser\u0020and\u0020OS\\SearchTerms\\AllPagesCostco\\BrowserOSGen.csproj
+		SccProjectName3 = Costco/Dashboard\u0020-\u0020General\u0020Browser\u0020and\u0020OS/SearchTerms/AllPagesCostco
+		SccAuxPath3 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath3 = Costco\\Dashboard\u0020-\u0020General\u0020Browser\u0020and\u0020OS\\SearchTerms\\AllPagesCostco
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName4 = Costco\\Dashboard\u0020-\u0020Menu\u0020Behavior\\SearchTerms\\AllPagesCostco\\MenuBehavior.csproj
+		SccProjectName4 = Costco/Dashboard\u0020-\u0020Menu\u0020Behavior/SearchTerms/AllPagesCostco
+		SccAuxPath4 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath4 = Costco\\Dashboard\u0020-\u0020Menu\u0020Behavior\\SearchTerms\\AllPagesCostco
+		SccProvider4 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName5 = Costco\\Dashboard\u0020-\u0020Search\u0020Terms\\SearchTerms\\AllPagesCostco\\SearchTerms.csproj
+		SccProjectName5 = Costco/Dashboard\u0020-\u0020Search\u0020Terms/SearchTerms/AllPagesCostco
+		SccAuxPath5 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath5 = Costco\\Dashboard\u0020-\u0020Search\u0020Terms\\SearchTerms\\AllPagesCostco
+		SccProvider5 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName6 = Costco\\Dashboard\u0020-\u0020TodayTraffic\\Dashboard.csproj
+		SccProjectName6 = Costco/Dashboard\u0020-\u0020TodayTraffic
+		SccAuxPath6 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath6 = Costco\\Dashboard\u0020-\u0020TodayTraffic
+		SccProvider6 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}.Debug|x86.ActiveCfg = Debug|x86
+		{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}.Debug|x86.Build.0 = Debug|x86
+		{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}.Release|x86.ActiveCfg = Release|x86
+		{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}.Release|x86.Build.0 = Release|x86
+		{CA477DF1-DA78-4A06-AD20-1AEFD1BE7E8F}.Debug|x86.ActiveCfg = Debug|x86
+		{CA477DF1-DA78-4A06-AD20-1AEFD1BE7E8F}.Debug|x86.Build.0 = Debug|x86
+		{CA477DF1-DA78-4A06-AD20-1AEFD1BE7E8F}.Release|x86.ActiveCfg = Release|x86
+		{CA477DF1-DA78-4A06-AD20-1AEFD1BE7E8F}.Release|x86.Build.0 = Release|x86
+		{B13CB198-56FF-4B5B-B3E6-A99E5049AFD6}.Debug|x86.ActiveCfg = Debug|x86
+		{B13CB198-56FF-4B5B-B3E6-A99E5049AFD6}.Debug|x86.Build.0 = Debug|x86
+		{B13CB198-56FF-4B5B-B3E6-A99E5049AFD6}.Release|x86.ActiveCfg = Release|x86
+		{B13CB198-56FF-4B5B-B3E6-A99E5049AFD6}.Release|x86.Build.0 = Release|x86
+		{A3BADDF1-9CDF-4E6F-BA11-9B787BDEB9E3}.Debug|x86.ActiveCfg = Debug|x86
+		{A3BADDF1-9CDF-4E6F-BA11-9B787BDEB9E3}.Debug|x86.Build.0 = Debug|x86
+		{A3BADDF1-9CDF-4E6F-BA11-9B787BDEB9E3}.Release|x86.ActiveCfg = Release|x86
+		{A3BADDF1-9CDF-4E6F-BA11-9B787BDEB9E3}.Release|x86.Build.0 = Release|x86
+		{2A7C9B90-E9AA-4257-A34E-81F675BD72A4}.Debug|x86.ActiveCfg = Debug|x86
+		{2A7C9B90-E9AA-4257-A34E-81F675BD72A4}.Debug|x86.Build.0 = Debug|x86
+		{2A7C9B90-E9AA-4257-A34E-81F675BD72A4}.Release|x86.ActiveCfg = Release|x86
+		{2A7C9B90-E9AA-4257-A34E-81F675BD72A4}.Release|x86.Build.0 = Release|x86
+		{5271FC45-5477-4D88-98C3-90908B25F6A1}.Debug|x86.ActiveCfg = Debug|x86
+		{5271FC45-5477-4D88-98C3-90908B25F6A1}.Debug|x86.Build.0 = Debug|x86
+		{5271FC45-5477-4D88-98C3-90908B25F6A1}.Release|x86.ActiveCfg = Release|x86
+		{5271FC45-5477-4D88-98C3-90908B25F6A1}.Release|x86.Build.0 = Release|x86
+		{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}.Debug|x86.ActiveCfg = Debug|x86
+		{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}.Debug|x86.Build.0 = Debug|x86
+		{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}.Release|x86.ActiveCfg = Release|x86
+		{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,3 @@
+<cfoutput>
+	#productHTML#
+</cfoutput>

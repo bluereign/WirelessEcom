@@ -1,0 +1,2 @@
+CREATE USER [weblink] WITHOUT LOGIN
+GO

@@ -1,0 +1,469 @@
+/* CSS Document Created at Neologix, 11 March 2010*/
+.x-dlg-dlg-body
+{
+	font-size:1.2em;
+}
+
+div#cartDialog
+{
+	width:684px;
+	height:358px;
+	overflow:auto;
+//	position:inherit;
+}
+
+div#dialog_addToCart_body
+{
+	overflow:hidden !important;
+}
+
+.cartHeader
+{
+	background:url('../images/cart_dlg_header.gif') left top no-repeat #fff !important;
+	height:52px;
+	position:relative;
+	z-index: 999;
+}
+
+.zipHeader
+{
+	position:absolute;
+	bottom:12px;
+	right:10px;
+	font-size:1.4em;
+}
+
+.cartBody
+{
+	padding:1em 1em 10px 1em;
+}
+
+.messages
+{
+	background-color:#fff6c3;
+	border-top:1px dashed #d0c77e;
+	border-bottom:1px dashed #d0c77e;
+	padding:1em 1em;
+	text-align:center;
+	margin-bottom:0.5em;
+}
+
+.messages h3
+{
+	text-align:center;
+	margin-bottom:0.3em;
+	display:inline;
+	font-size:1.4em;
+}
+
+.messages div.formControl
+{
+	display:inline;
+	padding-left:1em;
+	font-size:0.9em;
+}
+
+.messages div.formControl span
+{
+	padding-left:0.5em;
+}
+
+.messages .error
+{
+	background-color:#faa;
+}
+
+.messagesError
+{
+	background-color:#ffffff;
+	border-top:1px dashed #d0c77e;
+	border-bottom:1px dashed #d0c77e;
+	padding:1em 1em;
+	text-align:center;
+	margin-bottom:1.5em;
+}
+
+.messagesError h3
+{
+	text-align:center;
+	margin-bottom:0.3em;
+	display:inline;
+	font-size:1.4em;
+}
+
+.messagesError .error
+{
+//	background-color:#faa;
+}
+
+
+
+
+ul, 
+li
+{
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+
+ul#cartLines > li
+{
+	border-top:1px solid #aaa;
+	padding:0.5em 0 0.5em 1em;
+	margin-left:25px;
+	position:relative;
+	background:#eee;
+}
+
+ul#cartLines > li.active
+{
+	background:#fff;
+}
+
+.aliasControl
+{
+	margin-top:0.5em;
+}
+
+.aliasLine a
+{
+	padding-left:0.5em;
+}
+
+ul.lineSelections
+{
+	margin-left:1em;
+	margin-top:0.5em;
+}
+
+ul.lineSelections > li
+{
+	border-top:1px dashed #ccc;
+	padding:0.5em;
+}
+
+ul#cartLines h5,
+.lineActionLabel
+{
+	padding:0.2em 1em 0.5em 0;
+	line-height:1.2em;
+	font-size:1.1em;
+	display:inline;
+	zoom:1;
+}
+
+ul#cartLines h5
+{
+	text-decoration:underline;
+	cursor:pointer;
+}
+
+ul.lineSelections h6
+{
+	
+	font-weight:normal;
+	font-size:1em;
+	display:inline;
+	text-align:right;
+	padding-right:1.5em;			
+}
+
+.cartBody .features,
+.cartBody .accessories
+{
+	/*padding-right:100px !important;*/
+}
+
+.cartBody .features h6,
+.cartBody .accessories h6
+{
+}
+
+.cartBody .features ul,
+.cartBody .accessories ul
+{
+	/*display:inline;*/
+}
+		
+.cartBody .features li,
+.cartBody .accessories li,
+.cartBody .bundled li
+{
+	/*display:inline;*/
+	padding:0.2em 100px 0.2em 1em;/*to make room for remove links*/
+}
+
+ul.featureNames,
+ul.accessoryNames
+{
+	margin-left:2em;
+}
+
+li.edit ul.featureNames li:hover,
+li.edit ul.accessoryNames li:hover
+{
+	background-color:#fff;
+}
+
+li.edit ul.featureNames li.action:hover,
+li.edit ul.accessoryNames li.action:hover
+{
+	background:inherit;
+}
+.accordianBody
+{
+	overflow:hidden;
+	/*position:relative;*/
+}
+
+.accordianTrigger
+{
+	position:absolute;
+	left:-20px;
+	background:url('../images/ui/accordian_indicator.gif') left top no-repeat transparent;
+	width:20px;
+	height:20px;
+	font-size:0em;
+	color:#fff !important;
+}
+
+.accordianTrigger_down
+{
+	background-position: left -22px;
+}
+/*
+li.addDevice:hover,
+li.addPlan:hover,
+li.addAccessory:hover,
+li.addFeature:hover
+{
+	background-color:#def;
+}
+*/
+li.edit li:hover
+{
+	background-color:#eee;
+}
+
+
+
+li#addNewLine
+{
+	cursor:pointer;			
+}
+/*
+li#addNewLine:hover
+{
+	background-color:#9fa;
+}
+*/
+/*derived from checkout.css .lineHeader td a*/
+.deleteLine
+{
+	display:none;
+	color:#6b6b6b !important;
+	padding-right:23px;
+	background:url('../images/ui/close_dyn_bg.gif') right top no-repeat transparent;
+	position:absolute;
+
+	right:10px;
+	height:20px;
+	line-height:20px;
+	font-size:1.2em;
+}
+
+.deleteLine:hover
+{
+	background-position:right -23px;
+}
+/*
+.addButton
+{
+	display:none;
+	position:absolute;
+	right:10px;
+	top:2px;
+	font-size:1.2em;
+	text-decoration:none;
+	background:url('../images/ui/white_button_bg_02.gif') right top no-repeat transparent;	padding-right:5px;		
+}
+
+.addButton span
+{
+	text-align:center;
+	height:25px;
+	line-height:25px;
+	background:url('../images/ui/white_button_bg_01.gif') left top no-repeat transparent;
+	display:block;
+	padding:0 5px 0 10px;	
+	cursor:pointer;	
+}
+
+span.actionButtonLow
+{	
+	background:url('../images/ui/white_button_bg_02.gif') right top no-repeat transparent;	
+	padding-right:5px;
+	height:24px;
+	cursor:pointer;
+	display:inline-block;
+}
+
+span.actionButtonLow a
+{
+	background:url('../images/ui/white_button_bg_01.gif') left top no-repeat transparent;
+	height:21px;
+	line-height:24px;
+	display:inline-block;
+	text-align:left;
+	color:#555;
+	text-decoration:none;
+	font-size:1.6em;
+	padding:0 0.5em;
+	border:none;
+	cursor:pointer;
+}
+*/
+
+span.actionButtonCancel
+{	
+//	background:url('../images/ui/button_bg_r.gif') right top no-repeat transparent;	
+	padding-right:5px;
+	height:24px;
+	cursor:pointer;
+	display:inline-block;
+	margin:0 0.5em;
+	font-size:1.1em;
+}
+
+span.actionButtonCancel a
+{
+//	background:url('../images/ui/button_bg_L.gif') left top no-repeat transparent;
+	height:21px;
+	line-height:24px;
+	display:inline-block;
+	text-align:left;
+	color:#555;
+	text-decoration:underline;
+	font-size:1.4em;
+	padding:0 0.5em;
+	border:none;
+	cursor:pointer;
+	font-size:1.1em;
+}
+
+span.actionButtonCancel a:hover
+{
+	text-decoration:underline;
+	font-size:1.1em;
+}
+
+span.actionButtonCancel
+{
+//	background:url('../images/ui/white_button_bg_02.gif') right top no-repeat transparent;
+	font-size:1.1em;
+}
+
+span.actionButtonCancel a
+{
+//	background:url('../images/ui/white_button_bg_01.gif') left top no-repeat transparent;
+	padding-bottom:3px;
+	font-size:1.1em;
+}
+
+.addButton:hover
+{
+	text-decoration:underline;
+}
+
+
+.edit .deleteLine
+{
+	display:inline;
+}
+
+.addDevice li:hover .addButton,
+.addPlan li:hover .addButton,
+.addFeature li:hover .addButton,
+.addAccessory li:hover .addButton
+{
+	/*display:inline;*/
+}
+
+a.removeItem,
+a.editItem
+{
+	display:none;
+}
+
+.edit a.removeItem,
+.edit a.editItem
+{
+	display:inline;
+}
+
+
+.edit a.removeItem span,
+.edit a.editItem span
+{
+	display:none;
+}
+
+.edit ul.lineSelections li:hover a.removeItem span,
+.edit ul.lineSelections li:hover a.editItem span
+{
+	display:inline;
+}
+
+.edit a.removeItem,
+.edit a.editItem
+{			
+	color:#6b6b6b !important;
+	padding-right:17px;
+	background:url('../images/ui/close_dyn_sm_bg.gif') right top no-repeat transparent;
+	position:absolute;
+
+	right:12px;
+	height:18px;
+	line-height:18px;
+	font-size:1em;
+}
+
+.edit a.editItem
+{
+	background:url('../images/ui/cart_pos.gif') right top no-repeat transparent;
+}
+
+.edit a.removeItem:hover
+{
+	color:#6b6b6b !important;
+	background-position:right -18px;
+}
+
+.edit a.editItem:hover
+{
+	background:url('../images/cart_pos.gif') right top no-repeat transparent;
+}
+
+.cartToolbar
+{
+	border-top:1px dashed #6b6b6b;
+	background:#eee;
+	width:664px;
+	height:40px;
+	text-align:right;
+	padding:10px;
+	z-index: 999;
+}
+
+.addInput
+{
+	padding-right:17px;
+	position:absolute;
+	right:12px;
+}
+
+.edit .addInput
+{
+	display:none;
+}

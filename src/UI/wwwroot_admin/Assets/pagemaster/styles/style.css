@@ -1,0 +1,10 @@
+@import url('/admin/assets/common/styles/style.css');
+
+body {
+	background-image: url('../images/bg-body.png');
+}
+
+div#top h1 {
+	background-image: url('../images/PageMasterLogo.png');
+	width:240px;
+}

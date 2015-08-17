@@ -1,0 +1,308 @@
+/*Css created on 10 March 2010 by Neologix used for printing pages*/
+.error
+{
+	color:red;	
+}
+
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active
+{
+	/*color:#0f70b7;*/
+	color:#0a94d6;
+}
+
+h3
+{
+	color:#0060a9;
+}
+
+h4
+{
+	color:#e1393d;
+}
+
+/*------------------------------*/
+
+#header
+{
+	display:none;
+}
+
+#lnkMyCart
+{
+	background-image:url('../images/cart_pos.gif');
+}
+
+#header .Nav a,
+#header .Nav a:link,
+#header .Nav a:visited,
+#header .Nav a:hover,
+#header .Nav a:active
+{
+	color:#fff;
+}
+
+#header .Nav li
+{	
+	border-left: 1px dashed #fff;
+}
+
+#header .Nav li.active
+{
+	background:url('../images/Nav_tab_bg_02.gif') right top no-repeat transparent;
+	padding-right:8px;
+	border:none;
+}
+
+#header .Nav li.active + li
+{
+	border:none;
+}
+
+#header .Nav li.active a
+{
+	color:#0060a9;
+	font-weight:bold;
+	background:url('../images/Nav_tab_bg_01.gif') left top no-repeat transparent;
+	margin:0;
+	padding-right:0.6em;
+	display:block;
+}
+
+#header .Nav li li
+{
+	border:none;
+	margin:0;
+}
+
+#header .Nav li.active li a,
+#header .Nav li li a
+{
+	font-weight:bold;
+	background-image:none;
+	background-color:Transparent;
+	border:none;
+}
+
+
+
+.new .new a.priceTab,
+.upgrade .upgrade a.priceTab,
+.addaline .addaline a.priceTab
+{
+	color: #0a94d6;
+}
+
+
+/*------------------------------*/
+
+#footer
+{
+	display:none;
+}
+
+#footer .Nav a,
+#footer .Nav a:link,
+#footer .Nav a:visited,
+#footer .Nav a:hover,
+#footer .Nav a:active
+{
+	color:#fff;
+}
+
+#footer .Nav li li a
+{	
+	color:#ddd !important;
+}
+
+/*------------------------------*/
+/*	for checkout				*/
+/*------------------------------*/
+
+.checkoutFooter #footer .shortBar
+{	
+	background:url('../images/footer_bg.gif') left top repeat-x #fff;
+}
+
+/*------------------------------*/
+
+.sidebar
+{
+	border-right:1px dashed #cfcfcf;
+}
+
+/*------------------------------*/
+
+.sortBar
+{
+	border-bottom:1px dashed #cfcfcf;
+}
+
+.sortBar a,
+.sortBar a:link,
+.sortBar a:visited,
+.sortBar a:hover,
+.sortBar a:active
+{
+	color:#0060a9;
+}
+
+.sortBar a.asc
+{
+//	background:url('../images/AddToCart_bg.gif') left top no-repeat transparent;
+	background:url('../../common/images/ui/sort_indicator.gif') left 5px no-repeat transparent;
+	font-weight:bold;
+}
+
+.prodList h2,
+.prodList h2 a
+{
+	color:#e1393d;
+}
+
+
+.prodList .prodImg,
+.prodList .prodDetail,
+.prodList .prodPrice
+{
+	border-top:none;
+	
+}
+
+.prodImg img
+{
+	margin-bottom: 5px;	
+}
+.prodList .highlights li
+{
+	border:none;
+}
+
+
+.prodPrice li
+{
+	border:none;
+}
+
+.prodPrice td
+{
+	border-bottom:1px dashed #cfcfcf; 
+}
+
+.prodPrice tr.addToCart td
+{
+	border-bottom:none;
+}
+
+.prodPrice .total td,
+.prodPrice .totalNoMinutes td,
+.prodPrice div.total,
+.prodPrice div.totalNoMinutes
+{
+	border:none;
+	color:#e1393d;
+}
+
+.AddToCart
+{
+	display:none;
+}
+
+.AddToCartDisabled
+{
+	background:url('../images/AddToCart_disabled_bg.gif') left top no-repeat transparent;
+	border:none;
+	color:#fff;
+	font-size:1.3em;
+	height:25px;
+	width:120px;
+	cursor:pointer;
+}
+
+.prodSpecs .tabContent td
+{	
+	border-bottom:1px dashed #eee; 
+}
+
+
+/*-------------------------*/
+
+span.actionButton
+{	
+	background-image:url('../images/button_bg_r.gif');
+}
+
+span.actionButton a
+{
+	background-image:url('../images/button_bg_L.gif');
+	color:#fff !important;
+	padding:0 0.5em 3px 24px;
+}
+
+span.actionButtonDisabled
+{	
+	background-image:url('../images/button_disabled_bg_r.gif');
+}
+
+span.actionButtonDisabled a
+{
+	background-image:url('../images/button_disabled_bg_L.gif');
+	color:#fff !important;
+	padding:0 0.5em 3px 24px;
+}
+
+/*-------------------------*/
+
+.workflowControllerItem
+{
+	border-bottom:1px dashed #888;
+}
+
+.workflowControllerItemPrice
+{	
+	color:#e1393d;
+}
+
+.login
+{
+	border-right:1px dashed #cfcfcf;
+}
+
+.billingInformation,
+.shippingInformation
+{
+	border-left:1px dashed #cfcfcf;
+}
+
+UL.titleBox
+{ 
+	margin: 0px;
+	padding: 0px 10px 10px 0px;
+}
+
+LI.titleBox_title
+{
+	background:url('../images/titlebox_bg.gif') left top repeat blue !important;
+	margin: 0px;
+	padding: 10px;
+	list-style: none;
+	height: 14px;
+	line-height: 14px;
+	font-size: 14px;
+	font-family:Arial, Tahoma, Sans-Serif;
+	color: white;
+}
+
+LI.titleBox_body
+{
+	font-size: 12px;
+	padding: 10px;
+	border-top: 0px;
+	border-left: 1px solid #0263AB; 
+	border-right: 1px solid #0263AB; 
+	border-bottom: 1px solid #0263AB; 
+}

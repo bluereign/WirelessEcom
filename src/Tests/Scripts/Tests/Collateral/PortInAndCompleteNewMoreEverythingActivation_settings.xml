@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<TestCase name="vzwPortInAndCompleteNewMoreEverythingActivation" browser="ie" baseUrl="http://10.7.0.144/index.cfm/go/shop/do/browsePhones" timeoutHalfSeconds="20">
+  <CustomerInfo last4Ssn="2725" accountPassword="jcardon1">
+    <Name firstName="Test" lastName="Script" />
+    <Home streetAddress="134 Pine St." city="Abilene" state="Texas" zipCode="79601" />
+    <Contact mobileNumber="603-431-6836" email="jcardon@wirelessadvocates.com" retainNumber="212-210-1234" />
+    <CreditCard cardNumber="5472063333333330" expireMonth="12" expireYear="15" cvv="123" />
+  </CustomerInfo>
+  <Device id="24183" name="samsung-galaxy-s-4-mini" />
+  <Carrier zipCode="19977" password="HELLO" />
+</TestCase>

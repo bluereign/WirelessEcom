@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [amety]
+    WITH PASSWORD = N'!+lwPgriyd|br|m+b0owlywdmsFT7_&#$!~<dvcqzlnIjyxu', SID = 0xF904D97EF9076045B74965858A27FEEB, DEFAULT_DATABASE = [CARTOYS], DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+

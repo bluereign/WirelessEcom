@@ -1,0 +1,147 @@
+/* account login page */
+
+.login
+{
+	float:left;
+	margin:30px;
+	border-right:1px solid #999;
+	padding-right:30px;
+}
+
+label
+{
+	font-size:1.2em;
+	width:5.5em;
+	text-align:right;
+	display:-moz-inline-box;
+	display:inline-block;
+	padding-bottom:0.4em;
+}
+
+.signUp label
+{
+	width:10em;
+}
+
+.editAccount label,
+.billingInformation label,
+.shippingInformation label
+{
+	width:6.5em;
+}
+
+input
+{
+	width:150px;
+	margin-bottom:0.4em;
+}
+
+.signUp
+{
+	float:left;
+	margin:20px;
+}
+
+/*.forgotPassword
+{
+	width:240px;
+} -- commented at neologix as per spec
+*/
+.forgotPassword
+{
+	width:350px;
+}
+.editAccount,
+.billingInformation,
+.shippingInformation
+{
+	float:left;
+	padding:17px;
+}
+
+.editAccount
+{
+	padding-left:0;
+}
+.shippingInformation
+{
+	padding-right:0;
+}
+
+.editAccount label
+{
+	width:9em;
+}
+
+
+.billingInformation,
+.shippingInformation
+{
+	border-left:1px solid #888;
+}
+
+/* Begin: Neologix 03 March 2010 */
+.createAccountText{
+	width:275px;
+	font-size:1.2em;
+}
+
+.loginText{
+	width:7.1em;
+}
+
+/* Begin: leftMenu */
+.leftMenu{
+	width: 200px;
+}
+.leftMenu a{
+	font-size:1.5em;
+}
+.leftMenu strong{
+	font-size:1.5em;
+	font-weight:bold;
+}
+/* End: leftMenu */
+
+/* Begin: Account Summary */
+.accSummary td strong{
+	font-size:1.6em;
+	font-weight:bold;
+}
+/* End: Account Summary */
+
+/* Begin: Order History */
+.orderHistory td span{
+	font-size:14px;
+	font-weight:bold;
+}
+/* End: Order History  */
+
+/* Begin: Billing or shipping add */
+.manageAddress td label
+{
+	font-size:1.2em;
+	width:7.8em;
+	text-align:left;
+	display:-moz-inline-box;
+	display:inline-block;
+	padding-bottom:0.4em;
+}
+/*New styles added at Neologix 15 March 2010*/
+.manageAddress #txtMiddle
+{
+	width:50px;
+}
+.manageAddress #txtShipMiddle
+{
+	width:50px;
+}
+.textAlignTop
+{
+	vertical-align:top
+}
+/*End New styles added at Neologix 15 March 2010*/
+
+/* End: Billing or shipping add */
+
+/* End: Neologix 03 March 2010 */

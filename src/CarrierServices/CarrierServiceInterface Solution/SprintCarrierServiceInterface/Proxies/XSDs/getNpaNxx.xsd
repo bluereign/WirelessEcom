@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="NpaNxxRequest">
+		<xs:sequence>
+			<xs:element name="activation-zip-code" type="ZipCode"/>
+		</xs:sequence>
+		<!-- 
+	TODO: The request type definition goes here, the one that needs to be
+		  moved from ovm-common.xsd
+	-->
+		<!--Get NPA-NXX request message.-->
+	</xs:complexType>
+	<xs:element name="getNpaNxx" type="NpaNxxRequest"/>
+	<xs:complexType name="NpaNxxResponse">
+		<xs:sequence>
+			<xs:element name="npa-nxx-count" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:unsignedByte">
+						<xs:maxInclusive value="199"/>
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!-- Count of the npa-nxx returned in the response.-->
+			</xs:element>
+			<xs:element name="npa-nxx-info" type="NpaNxxInfo" minOccurs="0" maxOccurs="200">
+				<!--Npa-nxx for a  given activation-zip-code.-->
+			</xs:element>
+		</xs:sequence>
+		<!-- 
+	TODO: The response type definition goes here, the one that needs to be
+		  moved from ovm-common.xsd
+	-->
+	</xs:complexType>
+	<xs:element name="getNpaNxxResponse" type="NpaNxxResponse"/>
+</xs:schema>

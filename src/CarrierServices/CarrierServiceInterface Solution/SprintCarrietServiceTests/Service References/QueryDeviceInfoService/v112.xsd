@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/validateDevice/v6/validateDeviceV6.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/validateDevice/v6/validateDeviceV6.xsd" version="6.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="validateDeviceV6" type="tns:ValidateDeviceV6RequestType" />
+  <xs:element name="validateDeviceV6Response" type="tns:ValidateDeviceV6ResponseType" />
+  <xs:complexType name="ValidateDeviceV6RequestType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="userId" type="tns:DeviceUserIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Alphanumeric User ID.   Valid characters are 0 - 9 and A - Z.
+The User ID may be a system ID in the case of PRL updates.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceInfo" type="tns:DeviceInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure containing choice of esnMeidHex, esnMeidDec or macId </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="accountId" type="tns:AccountIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Account Number
+Required if validation request is for a Reseller ESN/MEID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ValidateDeviceV6ResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="availabilityTypeCode" type="tns:SerialNumberAvailabilityStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates availability of ESN/MEID/MACID for use.
+Note:  If an ESN/MEID/MACID is marked as Stolen or fraudulent, this takes priority over access assignment.
+Note:  for actionCode=ICC, NMS will return a value of 1, regardless of the activation status, as long as all other validation checks are successful.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="notAvailableReasonCode" type="tns:SerialNumberNotAvailableReasonCodeType">
+        <xs:annotation>
+          <xs:documentation>Code to identify reason ESN/MEID/MACID is not available. 
+If AvailTypCd=1 then:
+   field populated with 0 = Available  
+If AvailTypCd = 0 then:
+   field populated with codes 1-11
+
+4 = Not in DB. This will not be returned as a valid value. It will be translated into an exception/SOAP Fault)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="validationMessage" type="tns:SerialNumberNotAvailableReasonDescriptionType">
+        <xs:annotation>
+          <xs:documentation>Text to identify the reason the ESN/MEID is not available for use</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="manufacturerName" type="tns:DeviceManufacturerNameType">
+        <xs:annotation>
+          <xs:documentation>Manufacturer name of ESN/MEID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelName" type="tns:DeviceModelNameType">
+        <xs:annotation>
+          <xs:documentation>Model name of ESN/MEID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="freqMode" type="tns:FrequencyModeCodeType">
+        <xs:annotation>
+          <xs:documentation>Frequency mode
+C (CDMA), 
+D (CDMA or AMPS), 
+A (AMPS), 
+T (TDMA),
+S (ACCESSORIES),
+W (WIMAX)
+ </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="equipmentFreqTypeCode" type="tns:FrequencyTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Equipment Frequency Type Code
+"A-Z" single alphabetical value</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelNumber" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>Equipment Model Number.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceSerialNumber" type="tns:DeviceSerialNumberHexType">
+        <xs:annotation>
+          <xs:documentation>ESN/MEID that was validated in Hex format or MacId </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceType" type="tns:DeviceSerialNumberTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Required if the input is MACID. Valid Value is A – MACID, E- CDMA ESN/MEID or dual mode.U - Removable transceiver/USIM transceiver</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="macId" type="tns:MediumAccessControlAddressType">
+        <xs:annotation>
+          <xs:documentation>The dual-mode (WiMax/CDMA) and tri-mode (CDMA/WIMAX/LTE) devices’ macId associated with the specified ESN/MEID. 
+Note: Not the Airave device’s macId.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="iccId" type="tns:UniversalIntegratedCircuitCardIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Returned for dual-mode CDMA/LTE or tri-mode CDMA/WIMAX/LTE devices.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="imsi" type="tns:InternationalMobileSubscriberIdentityStringType">
+        <xs:annotation>
+          <xs:documentation>Returned for dual-mode CDMA/LTE or tri-mode CDMA/WIMAX/LTE devices.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="uiccSku" type="tns:StockKeepingUnitType">
+        <xs:annotation>
+          <xs:documentation>Returned for LTE capable devices</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="uiccAvailabilityCode" type="tns:SerialNumberAvailabilityStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Required when deviceType=U. Valid values: 
+0 = Not available
+1 = Available for access
+Note: for actionCode=ESN, NMS will return a value of 1, regardless of the activation status, as long as all other validation checks are successful.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="uiccNotAvailableReasonCode" type="tns:DeviceActivationStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Required when deviceType=U. Valid values: 
+0 = Available
+1 = Stolen
+2 = In use
+3 = Fraudulent
+4 = Not in DB (This status will not be returned as a valid value. It will be translated into an exception/SOAP Fault)
+5 = Account ID is not correct (returned if no PLS account ID is sent in and Phone Owner = PLBL or account ID is sent in and Phone Owner = ‘SPCS’)
+6 = Pre-paid unprovisionable
+99 = Not available for activation
+Note: Code to identify reason ICCID is not available.
+Populated with 0 if uiccAvailabilityCode value is 1.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="uiccCompatibility" type="tns:YesNoIndicatorType">
+        <xs:annotation>
+          <xs:documentation>Required when both esnMeidHex/esnMeidDec and iccId are populated in the request. Valid Values: 
+Y = both transceiver and UICC are compatible together
+N = the transceiver and UICC are not compatible together
+Note: default to empty if compatibility validation cannot be completed</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="deviceDetailInfo" type="tns:DeviceDetailInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure containing choice of (esnMeidHex, esnMeidDec or macId)  and conditional fields deviceType and iccId</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceType" type="tns:DeviceSerialNumberTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Required if the input is MACID. Valid Value is A – MAC ID, E- CDMA ESN/MEID or dual mode.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="iccId" type="tns:UniversalIntegratedCircuitCardIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Integrated Circuit Card ID.
+Required for removable UICC and compatibility checks. Otherwise, API will perform a reverse lookup and provide the ICCID if the ESN/MEID is a removable transceiver and a related ICCID is found.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="actionCode" type="tns:RemovableTransceiverSwapTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Required for removable transceiver (ESN/MEID) or ICCID swap validations. If empty, all normal device validations will apply. 
+Valid values are: 
+ESN = Transceiver swap (ICCID will be active but ESN/MEID will be inactive)
+ICC = ICCID swap (ESN/MEID will be active but ICCID will be inactive)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceDetailInfoType">
+    <xs:choice>
+      <xs:element name="esnMeidHex" type="tns:DeviceSerialNumberHexType">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in hex format
+Required if esnMeidDec or macId are  not provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="esnMeidDec" type="tns:DeviceSerialNumberDecType">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in decimal format
+Required if esnMeidHex or macId are not provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="macId" type="tns:MediumAccessControlAddressType">
+        <xs:annotation>
+          <xs:documentation>Media Access Control Identifier 
+Required if esnMeidHex or  esnMeidDec are not provide</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:simpleType name="AccountIdentifierType">
+    <xs:annotation>
+      <xs:documentation>The Account Identifier is a string that uniquely identifies an account.
+
+Required for activating a reseller ESN/MEID to verify the ESN/MEID and the account are both reseller specific.
+Required for Ensemble accounts
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceActivationStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Device Activation Status Code is derived by NMS using the Activation_Status and Disposition_Code of the serial number.
+Valid Values
+0 = Available
+1 = Stolen
+2 = In use
+3 = Fraudulent
+4 = Not in DB
+5 = Account ID is not correct
+6 = Pre-paid unprovisionable
+99 = Not available for activation
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="2" />
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+      <xs:enumeration value="2" />
+      <xs:enumeration value="3" />
+      <xs:enumeration value="4" />
+      <xs:enumeration value="5" />
+      <xs:enumeration value="6" />
+      <xs:enumeration value="99" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceManufacturerNameType">
+    <xs:annotation>
+      <xs:documentation>A Device Manufacturer Name is the name of the manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceModelNameType">
+    <xs:annotation>
+      <xs:documentation>Model Name holds the device Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberDecType">
+    <xs:annotation>
+      <xs:documentation>A Device Serial Number Decimal is the value of a electronic serial number OR Mobile Equipment Identifier(MEID) in decimal format.  This type should be used when it is not known what type the serial number is.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="11" />
+      <xs:maxLength value="18" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberHexType">
+    <xs:annotation>
+      <xs:documentation>A Device Serial Number Hex is the value of a electronic serial number OR Mobile Equipment Identifier(MEID) in hexidecimal format.  This type should be used when it is not known what type the serial number is.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="14" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Device Serial Number Type Code designates a device type: MAC ID (A) or ESN (E) for CDMA platform.
+Valid values:
+E - ESN
+A - MAC ID</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="E" />
+      <xs:enumeration value="A" />
+      <xs:enumeration value="U" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceUserIdentifierType">
+    <xs:annotation>
+      <xs:documentation>The device user identifier is the alphanumeric User ID assocated to device activity.   
+Valid characters are 0 - 9 and A - Z.  
+The User ID may be a system ID in the case of PRL updates.
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+      <xs:pattern value="[a-z A-Z 0-9]+" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FrequencyModeCodeType">
+    <xs:annotation>
+      <xs:documentation>Frequency Mode Code
+
+Possible Values:
+'A'  =&gt; AMPS
+'C' =&gt; CDMA
+'D' =&gt; CDMA and AMPS
+'S' =&gt; ACCESSORY
+'T' =&gt; TDMA
+'W'=&gt; WIMAX</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FrequencyTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Frequency Type Code "A-Z" single alphabetical value
+Sample Values:
+C - CELLULAR
+D - PCS and CELLULAR
+K - PCS WITH EVRC
+L - PCS and CELLULAR WITH EVRC
+M -  HYBRID
+P -  PCS
+S - ACCESSORY
+Y - EVDO HANDSET ACCESSORIES
+Z - EVDO DATA CARD
+W - EVDO HANDSET WITH ERI 2006
+E - PCS and CELLULAR  EVRC - ERI 2006</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:pattern value="[A-Z]" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InternationalMobileSubscriberIdentityStringType">
+    <xs:annotation>
+      <xs:documentation>International Mobile Subscriber Identity (IMSI) is a unique number associated with all GSM and Universal Mobile Telecommunications System (UMTS) network mobile phone users. It is stored in the Subscriber Identity Module (SIM) inside the phone and is sent by the phone to the network. It is also used to acquire other details of the mobile in the Home Location Register (HLR) or as locally copied in the Visitor Location Register. In order to avoid the subscriber being identified and tracked by eavesdroppers on the radio interface, the IMSI is sent as rarely as possible and a randomly generated TMSI is sent instead.
+
+The IMSI is used in any mobile network that interconnects with other networks, in particular CDMA and EVDO networks as well as GSM nets. This number is provisioned in the phone directly or in the R-UIM card (a CDMA analogue equivalent to a SIM card in GSM)
+
+An IMSI is usually 15 digits long, but can be shorter (for example MTN South Africa's IMSIs are 14 digits). The first 3 digits are the Mobile Country Code (MCC), and is followed by the Mobile Network Code (MNC), either 2 digits (European standard) or 3 digits (North American standard). The remaining digits are the Mobile Subscriber Identification Number (MSIN) within the network's customer base.
+
+The IMSI conforms to the International Telecommunication Union (ITU) E.212 numbering standard.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MediumAccessControlAddressType">
+    <xs:annotation>
+      <xs:documentation>Medium Access Control Address (MAC Address) contains a 12 byte hexadecimal value used to identify a device used in the IEEE sublayer of a network which controls access to the shared medium by network-attached devices. 
+
+In the context of the OSI reference model, the Medium Access Control (MAC) layer extends above to the Data Link Layer and below to the Physical Layer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNumberType">
+    <xs:annotation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SerialNumberAvailabilityStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Serial Number Availability Status Code indicates whether a serial number (ESN, MEID, MSN, etc) is available for use.  For example, if the serial number has been reported as 'stolen' then the status of the serial number is 0 or not available.
+
+0 - Not available for use
+1 - Available for use</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SerialNumberNotAvailableReasonCodeType">
+    <xs:annotation>
+      <xs:documentation>Serial Number Not Available Reason Code is a code to identify reason ESN/MEID is not available. 
+1 = Stolen 
+2 = In use 
+3 = Fraudulent 
+4 = Not in DB
+5 = Account ID is not correct(returned if no PLS account ID is sent in and Phone Owner = ‘PLBL’ or account ID is sent in and Phone Owner =‘SPCS’
+6 = Pre-paid unprovisionable
+7 = in use with another MVNO (Valid only for 4G SM cat2 devices)
+8 =Lost in CLWR (Valid only for 4G SM cat2 devices)
+9 =Stolen in CLWR (Valid only for 4G SM cat2 devices)
+10 =Broken in CLWR (Valid only for 4G SM cat2 devices)
+11 =Blacklisted in CLWR (Valid only for 4G SM cat2 devices)
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SerialNumberNotAvailableReasonDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Serial Number Not Available Reason Description is text to identify the reason the ESN/MEID is not available for use.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="80" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StockKeepingUnitType">
+    <xs:annotation>
+      <xs:documentation>Stock Keeping Unit represents the Sprint Inventory Stock Keeping Unit (SKU).  Stock Keeping Unit identifies a group of PRODUCT instances.  It could identify a handset Model and Model Number, a Kit or an accessory. Previously length = 18.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniversalIntegratedCircuitCardIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Universal Integrated Circuit Card Identifier is a uniqe identifier embedded in the smart card used in mobile terminals in CDMA, GSM and UMTS networks.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="YesNoIndicatorType">
+    <xs:annotation>
+      <xs:documentation>DEPRECATE (Use Binary Expression) Yes No Indicator binary expression where Y represents the True state and N represents the False state.  
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RemovableTransceiverSwapTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Removable Transceiver Swap Type Code indicates the type of swap being preformed on an removable transceiver.
+Valid Values:
+ESN - Transceiver swap (ICCID will be active but ESN/MEID will be inactive)
+ICC - ICCID swap (ESN/MEID will be active but ICCID will be inactive)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="3" />
+      <xs:enumeration value="ESN" />
+      <xs:enumeration value="ICC" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

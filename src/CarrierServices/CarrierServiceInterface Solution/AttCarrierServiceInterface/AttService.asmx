@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="AttService.asmx.cs" Class="AttCarrierServiceInterface.ATTService" %>

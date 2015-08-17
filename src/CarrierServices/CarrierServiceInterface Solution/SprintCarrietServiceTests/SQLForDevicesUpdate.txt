@@ -1,0 +1,117 @@
+﻿DECLARE @OrderId int = 21758;
+
+UPDATE salesorder.[Order]
+SET OrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.[WirelessAccount]
+SET CarrierOrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.WirelessLine
+SET IMEI = '268435459607485899', CurrentMDN ='5122947489'
+WHERE OrderDetailId = (
+  SELECT OrderDetailId
+  FROM salesorder.[OrderDetail]
+  WHERE orderid = @OrderId AND OrderDetailType = 'd'
+)
+
+go
+
+DECLARE @OrderId int = 21759;
+
+UPDATE salesorder.[Order]
+SET OrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.[WirelessAccount]
+SET CarrierOrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.WirelessLine
+SET IMEI = '268435459607485907', CurrentMDN ='5122947491'
+WHERE OrderDetailId = (
+  SELECT OrderDetailId
+  FROM salesorder.[OrderDetail]
+  WHERE orderid = @OrderId AND OrderDetailType = 'd'
+)
+
+go
+
+DECLARE @OrderId int = 21760;
+
+UPDATE salesorder.[Order]
+SET OrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.[WirelessAccount]
+SET CarrierOrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.WirelessLine
+SET IMEI = '268435459607485908', CurrentMDN ='5122947493'
+WHERE OrderDetailId = (
+  SELECT OrderDetailId
+  FROM salesorder.[OrderDetail]
+  WHERE orderid = @OrderId AND OrderDetailType = 'd'
+)
+
+go
+
+DECLARE @OrderId int = 21761;
+
+UPDATE salesorder.[Order]
+SET OrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.[WirelessAccount]
+SET CarrierOrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.WirelessLine
+SET IMEI = '256691417602172485', SIM ='89011200000005826150', CurrentMDN ='5122947495'
+WHERE OrderDetailId = (
+  SELECT OrderDetailId
+  FROM salesorder.[OrderDetail]
+  WHERE orderid = @OrderId AND OrderDetailType = 'd'
+)
+
+go
+
+DECLARE @OrderId int = 21763;
+
+UPDATE salesorder.[Order]
+SET OrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.[WirelessAccount]
+SET CarrierOrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.WirelessLine
+SET IMEI = '256691417607763236', SIM ='89011200000005826168', CurrentMDN ='5122947497'
+WHERE OrderDetailId = (
+  SELECT OrderDetailId
+  FROM salesorder.[OrderDetail]
+  WHERE orderid = @OrderId AND OrderDetailType = 'd'
+)
+
+go
+
+DECLARE @OrderId int = 21764;
+
+UPDATE salesorder.[Order]
+SET OrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.[WirelessAccount]
+SET CarrierOrderDate = GETDATE()
+WHERE orderid = @OrderId 
+
+UPDATE salesorder.WirelessLine
+SET IMEI = '256691417609799312', SIM ='89011200000005826176', CurrentMDN ='5122947499'
+WHERE OrderDetailId = (
+  SELECT OrderDetailId
+  FROM salesorder.[OrderDetail]
+  WHERE orderid = @OrderId AND OrderDetailType = 'd'
+)

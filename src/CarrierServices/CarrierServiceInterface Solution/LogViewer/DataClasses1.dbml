@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TEST.WIRELESSADVOCATES.COM" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=10.7.0.21,1500;Initial Catalog=TEST.WIRELESSADVOCATES.COM;Persist Security Info=True;User ID=cfdbo" SettingsObjectName="LogViewer.Properties.Settings" SettingsPropertyName="TEST_WIRELESSADVOCATES_COMConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="salesorder.[Order]" Member="Orders">
+    <Type Name="Order">
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ShipAddressGuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="BillAddressGuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="EmailAddress" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ShipMethodId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ActivationType" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="IPaddress" Type="System.String" DbType="VarChar(39)" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GERSStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GERSRefNum" Type="System.String" DbType="VarChar(14)" CanBeNull="true" />
+      <Column Name="TimeSentToGERS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ShipCost" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="CarrierId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CheckoutReferenceNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SalesTaxTransactionId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsSalesTaxTransactionCommited" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SalesTaxRefundTransactionId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SortCode" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="ParentOrderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DiscountTotal" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="DiscountCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OrderAssistanceUsed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsCreditCheckPending" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CreditApplicationNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CreditCheckStatusCode" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ServiceZipCode" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="KioskEmployeeNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ShipmentDeliveryDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="PcrDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="service.CarrierInterfaceLog" Member="CarrierInterfaceLogs">
+    <Type Name="CarrierInterfaceLog">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LoggedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ReferenceNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Carrier" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="RequestType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Data" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+    </Type>
+  </Table>
+</Database>

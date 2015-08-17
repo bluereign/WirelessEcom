@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="CreditCancelRequest">
+		<xs:sequence>
+			<xs:element name="name" type="Name"/>
+		</xs:sequence>
+		<!--Credit cancellation request message.-->
+	</xs:complexType>
+	<xs:element name="doCreditCancel" type="CreditCancelRequest"/>
+	<xs:complexType name="CreditCancelResponse">
+		<xs:sequence>
+			<xs:element name="cancelled" type="xs:boolean">
+				<!--Whether the order has been cancelled.-->
+			</xs:element>
+		</xs:sequence>
+		<!--Credit cancel response message.-->
+	</xs:complexType>
+	<xs:element name="doCreditCancelResponse" type="CreditCancelResponse"/>
+</xs:schema>

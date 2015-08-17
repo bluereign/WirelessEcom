@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns0="http://integration.sprint.com/eai/services/AddressManagementService/v1/AddressManagementService.wsdl" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://integration.sprint.com/eai/services/AddressManagementService/v1/AddressManagementService.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:schema>
+      <xsd:import schemaLocation="v1.xsd2.xsd" namespace="http://integration.sprint.com/common/ErrorDetailsV2.xsd" />
+      <xsd:import schemaLocation="v1.xsd3.xsd" namespace="http://integration.sprint.com/common/header/WSMessageHeader/v2" />
+      <xsd:import schemaLocation="v1.xsd4.xsd" namespace="http://integration.sprint.com/interfaces/queryCityState/v1/queryCityState.xsd" />
+      <xsd:import schemaLocation="v1.xsd5.xsd" namespace="http://integration.sprint.com/interfaces/queryReverseNameAddress/v1/queryReverseNameAddress.xsd" />
+      <xsd:import schemaLocation="v1.xsd6.xsd" namespace="http://integration.sprint.com/interfaces/validateAddress/v1/validateAddress.xsd" />
+      <xsd:import schemaLocation="v1.xsd7.xsd" namespace="http://integration.sprint.com/interfaces/validateCoverageDetails/v1/validateCoverageDetails.xsd" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="queryCityStateRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryCityState/v1/queryCityState.xsd" name="queryCityState" element="xsns:queryCityState" />
+  </wsdl:message>
+  <wsdl:message name="queryCityStateResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryCityState/v1/queryCityState.xsd" name="queryCityStateResponse" element="xsns:queryCityStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryReverseNameAddressRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryReverseNameAddress/v1/queryReverseNameAddress.xsd" name="queryReverseNameAddress" element="xsns:queryReverseNameAddress" />
+  </wsdl:message>
+  <wsdl:message name="queryReverseNameAddressResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryReverseNameAddress/v1/queryReverseNameAddress.xsd" name="queryReverseNameAddressResponse" element="xsns:queryReverseNameAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="soapFault">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/common/ErrorDetailsV2.xsd" name="fault" element="xsns:errorDetailItem" />
+  </wsdl:message>
+  <wsdl:message name="validateAddressRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateAddress/v1/validateAddress.xsd" name="validateAddress" element="xsns:validateAddress" />
+  </wsdl:message>
+  <wsdl:message name="validateAddressResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateAddress/v1/validateAddress.xsd" name="validateAddressResponse" element="xsns:validateAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="validateCoverageDetailsRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateCoverageDetails/v1/validateCoverageDetails.xsd" name="validateCoverageDetails" element="xsns:validateCoverageDetails" />
+  </wsdl:message>
+  <wsdl:message name="validateCoverageDetailsResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateCoverageDetails/v1/validateCoverageDetails.xsd" name="validateCoverageDetailsResponse" element="xsns:validateCoverageDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="wsMessageHeader">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/common/header/WSMessageHeader/v2" name="head" element="xsns:wsMessageHeader" />
+  </wsdl:message>
+  <wsdl:portType name="AddressManagementServicePortType">
+    <wsdl:operation name="QueryCityState">
+      <wsdl:input name="QueryCityStateRequest" message="ns0:queryCityStateRequest" />
+      <wsdl:output name="QueryCityStateResponse" message="ns0:queryCityStateResponse" />
+      <wsdl:fault name="fault" message="ns0:soapFault" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryReverseNameAddress">
+      <wsdl:input name="QueryReverseNameAddressRequest" message="ns0:queryReverseNameAddressRequest" />
+      <wsdl:output name="QueryReverseNameAddressResponse" message="ns0:queryReverseNameAddressResponse" />
+      <wsdl:fault name="fault" message="ns0:soapFault" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAddress">
+      <wsdl:input name="ValidateAddressRequest" message="ns0:validateAddressRequest" />
+      <wsdl:output name="ValidateAddressResponse" message="ns0:validateAddressResponse" />
+      <wsdl:fault name="fault" message="ns0:soapFault" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateCoverageDetails">
+      <wsdl:input name="ValidateCoverageDetailsRequest" message="ns0:validateCoverageDetailsRequest" />
+      <wsdl:output name="ValidateCoverageDetailsResponse" message="ns0:validateCoverageDetailsResponse" />
+      <wsdl:fault name="fault" message="ns0:soapFault" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AddressManagementServiceSOAPBinding" type="ns0:AddressManagementServicePortType">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryCityState">
+      <soap11:operation soapAction="QueryCityState" style="document" />
+      <wsdl:input name="QueryCityStateRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryCityStateResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryReverseNameAddress">
+      <soap11:operation soapAction="QueryReverseNameAddress" style="document" />
+      <wsdl:input name="QueryReverseNameAddressRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryReverseNameAddressResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAddress">
+      <soap11:operation soapAction="ValidateAddress" style="document" />
+      <wsdl:input name="ValidateAddressRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ValidateAddressResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateCoverageDetails">
+      <soap11:operation soapAction="ValidateCoverageDetails" style="document" />
+      <wsdl:input name="ValidateCoverageDetailsRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ValidateCoverageDetailsResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AddressManagementService">
+    <wsdl:port name="AddressManagementServicePortType" binding="ns0:AddressManagementServiceSOAPBinding">
+      <soap11:address location="https://webservicesgateway.sprint.com:444/services/wireless/account/AddressManagementService/v1" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

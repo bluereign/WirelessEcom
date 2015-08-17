@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Dashboard Ranged Reporting2", "Report Project1\Dashboard Ranged Reporting2.rptproj", "{AC367462-204E-409E-ACD9-3CED037B650C}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 1
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver.cartoys.corp:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC367462-204E-409E-ACD9-3CED037B650C}.Debug|Default.ActiveCfg = Debug
+		{AC367462-204E-409E-ACD9-3CED037B650C}.Debug|Default.Build.0 = DebugLocal
+		{AC367462-204E-409E-ACD9-3CED037B650C}.Debug|Default.Deploy.0 = DebugLocal
+		{AC367462-204E-409E-ACD9-3CED037B650C}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{AC367462-204E-409E-ACD9-3CED037B650C}.DebugLocal|Default.Build.0 = DebugLocal
+		{AC367462-204E-409E-ACD9-3CED037B650C}.Release|Default.ActiveCfg = Release
+		{AC367462-204E-409E-ACD9-3CED037B650C}.Release|Default.Build.0 = Release
+		{AC367462-204E-409E-ACD9-3CED037B650C}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

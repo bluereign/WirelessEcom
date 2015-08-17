@@ -1,0 +1,27 @@
+table 
+{
+
+	border-left:none;
+	border-bottom:none;
+
+}
+td
+{
+	font-size:1.0em;
+	border-top:none;
+	border-right:none;
+	padding:0em;
+	background-color:#FFF;
+	text-align:left;
+}
+.lineHeader td
+{
+
+	font-size:1.0em;
+	color:#6B6B6B;
+
+}
+.sectionHeader td
+{
+	font-size:1.0em;
+}

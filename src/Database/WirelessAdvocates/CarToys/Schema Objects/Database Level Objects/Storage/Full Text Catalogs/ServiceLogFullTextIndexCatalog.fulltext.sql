@@ -1,0 +1,4 @@
+﻿CREATE FULLTEXT CATALOG [ServiceLogFullTextIndexCatalog]
+    WITH ACCENT_SENSITIVITY = ON
+    AUTHORIZATION [dbo];
+

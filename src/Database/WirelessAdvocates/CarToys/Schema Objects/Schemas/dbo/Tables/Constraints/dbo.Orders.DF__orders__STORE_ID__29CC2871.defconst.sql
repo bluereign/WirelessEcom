@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Orders]
+    ADD CONSTRAINT [DF__orders__STORE_ID__29CC2871] DEFAULT ('') FOR [STORE_ID];
+

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<TestCase name="vzwNewMoreEverythingActivation" browser="ie" baseUrl="http://10.7.0.144/index.cfm/go/shop/do/browsePhones" timeoutHalfSeconds="15">
+  <CustomerInfo last4Ssn="7365" accountPassword="jcardon1">
+    <Name firstName="Test" lastName="Script" />
+    <Home streetAddress="134 Pine St." city="Abilene" state="Texas" zipCode="79601" />
+    <Contact mobileNumber="6023901157" email="jcardon@wirelessadvocates.com" />
+    <CreditCard cardNumber="5472063333333330" expireMonth="12" expireYear="15" cvv="123" />
+  </CustomerInfo>
+  <Device id="45351" name="samsung-galaxy-note-4-black" />
+  <Carrier zipCode="85302" password="HELLO" />
+</TestCase>

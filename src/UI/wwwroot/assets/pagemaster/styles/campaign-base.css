@@ -1,0 +1,346 @@
+
+/************************/
+/* Campaign Layout      */
+/************************/
+
+#top-nav-bar {
+	width: 100%;
+	text-align: center;
+	background-color: #ccc; /* Campaign override */
+	font-size: 11px;
+	color: #333; /* Campaign override */
+}
+
+#top-nav-bar-container {
+	width: 960px;
+	margin: 0 auto;
+	padding: 5px 10px 5px;
+}
+
+#top-nav-bar-container ul {
+	list-style-type: none;
+}
+
+#top-nav-bar-container ul li {
+	display: inline-block;
+	list-style-type: none;
+	border: 1px #efefef solid;
+	border-width: 0 1px 0 0;
+	padding-right: 10px;
+}
+
+#top-nav-bar-container ul li.last {
+	border-width: 0;
+}
+
+#top-nav-links-left {
+	float: left;
+	margin-left: 10px;
+}
+
+#top-nav-links-right {
+	float: right;
+	margin-right: 10px;
+}
+
+#campaign-header {
+	margin: 20px auto 0;
+	width: 960px;
+	overflow-x: hidden;
+}
+
+#campaign-header img {
+	margin: 0;
+}
+
+#menu-nav-container {
+	background-color: rgba(255,255,255,.5);
+	margin: 0 auto;
+	width:960px;
+}
+
+#pagemaster-menu-nav {
+	margin: 0 auto;
+	width: 960px;
+}
+
+#pagemaster-menu-nav li {
+	display: inline-block;
+	list-style-type: none;
+	border: 1px solid #ccc;
+	height: 40px;
+	width: 316px;
+	color: #fff;
+	text-align: center;
+	background-color: #efefef;
+	list-style-position: inside;
+	font-size: 14px;
+}
+
+#pagemaster-menu-nav li > a {
+	color: #333;
+	display: block;
+	text-align: center;
+	vertical-align: middle;
+	padding: 12px 5px;
+}
+
+#pagemaster-menu-nav li > a:hover, #pagemaster-menu-nav li > a.pagemaster-menu-nav-active {
+	color: #333; /* Campaign override */
+	display: block;
+	background-color: #ccc; /* Campaign override */
+	text-decoration: none;
+}
+
+/**************************/
+/* Upgrade Checker Button */
+/**************************/
+
+#upgrade-nav-container {
+	margin: 0 auto;
+	margin-top: 10px;
+	width:960px;
+	text-align: center;
+}
+
+#pagemaster-upgrade-checker {
+	margin: 0 auto;
+	width: 960px;
+}
+
+#pagemaster-upgrade-checker li {
+	display: inline-block;
+	list-style-type: none;
+	border: 1px solid #ccc;
+	height: 40px;
+	width: 316px;
+	color: #fff;
+	text-align: center;
+	background-color: #4d9904;
+	list-style-position: inside;
+	font-size: 14px;
+}
+
+#pagemaster-upgrade-checker li > a {
+	color: #fff;
+	display: block;
+	text-align: center;
+	vertical-align: middle;
+	padding: 12px 5px;
+}
+
+#pagemaster-upgrade-checker li > a:hover {
+	color: #fff; /* Campaign override */
+	display: block;
+	background-color: #00ff00; /* Campaign override */
+	text-decoration: none;
+}
+
+/************************/
+/* Product listing grid */
+/************************/
+
+#product-listing-container {
+	background-color:rgba(255,255,255,.0);
+	margin: 0 auto;
+	padding:20px 0px;
+	width: 960px;
+}
+
+#product-listing-grid {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+	width: 960px;
+}
+
+#product-listing-grid li {
+	margin-right: 2px;
+	padding: 0;
+	display: inline-block;
+	vertical-align: top;
+	list-style-type: none;
+	height: 190px;
+	width: 234px;
+	color: #fff;
+	background-color:#fff;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	margin-bottom: 5px;
+}
+
+#product-listing-grid li.last {
+	margin-right: 0;
+	width:235px;
+}
+
+/*
+#product-listing-grid li:hover {
+	background: #efefef;
+}
+*/
+
+#product-listing-grid li .product-image-container {
+	float: left;
+	height: 120px;
+	width: 120px;
+}		
+
+#product-listing-grid li .product-content-container {
+	float: right;
+	height: 140px;
+	width: 112px;
+}
+
+#product-listing-grid li .product-title-container {
+	padding: 5px 5px 0 5px;
+	height: 50px;
+	overflow: hidden;			
+}
+
+#product-listing-grid li .product-title-container h1 {
+	font-size: 14px;
+	line-height: 1.2;
+	margin: 0;
+	font-weight: bold;
+	color: #0060a9;  /* Campaign override */
+}
+
+#product-listing-grid li .product-title-container a:hover {
+	color: #0060a9;  /* Campaign override */
+}		
+
+#product-listing-grid li .product-logo-container {
+	height: 45px;
+	width: 110px;
+}
+
+#product-listing-grid .logo-att { background: url("/assets/common/images/carrierLogos/att_logo_25.png") no-repeat center 8px; }
+#product-listing-grid .logo-sprint { background: url("/assets/common/images/carrierLogos/sprint_logo_25.png") no-repeat center 8px; }
+#product-listing-grid .logo-tmo { background: url("/assets/common/images/carrierLogos/tmo_logo_25.png") no-repeat center 8px; }
+#product-listing-grid .logo-verizon { background: url("/assets/common/images/carrierLogos/verizon_logo_25.png") no-repeat center 8px; }
+
+
+#product-listing-grid li .product-price-container {
+	text-align: left;
+    color: #e1393d;
+    font-size: 24px;
+    font-weight: bold;
+	padding-left: 10px;
+	border: 0;
+	margin-top: 10px;
+}
+
+#product-listing-grid li .product-btn-container {
+	margin-top: 10px;
+	text-align: center;
+}
+
+#product-listing-grid .btn-select {
+	width: 72px;
+    background-color: #efefef; /* Campaign override */
+    color: #333; /* Campaign override */
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#product-listing-grid .btn-select:hover, #product-listing-grid .btn-select:focus {
+    text-decoration: none;
+	background-color: #ccc; /* Campaign override */
+}
+
+/************************/
+/* Bottom banner        */
+/************************/
+
+#campaign-bottom-banner-container {
+	width: 960px;
+	overflow-x: hidden;
+}
+
+/************************/
+/* Disclaimer           */
+/************************/
+
+#disclaimer-container {
+	width: 960px;
+	color: #333; /* Campaign override */
+	margin: 15px auto 0;
+	font-size: 10px;
+}
+
+#disclaimer-container p {
+	font-size: 10px;
+}
+
+/************************/
+/* Footer               */
+/************************/
+
+#footer-nav-bar {
+	width: 100%;
+	text-align: center;
+	background-color: #ccc; /* Campaign override */
+	font-size: 10px;
+	color: #333; /* Campaign override */
+	margin-top: 30px;
+	clear: both;
+}
+
+#footer-nav-bar-container {
+	width: 960px;
+	margin: 0 auto;
+	padding: 10px 0px 0px 0px;
+}
+
+#footer-nav-bar-container .footer-logo-container {
+	width: 25%;
+	float: left;
+}
+
+.footerTrustWaveLogo
+{
+	margin-top:15px;
+}
+
+#footer-nav-bar-container .footer-link-container {
+	width: 50%;
+	float: left;
+}
+
+#foot-links {
+	display: block;
+	padding: 0px 5px 10px;
+}
+
+#foot-links li {
+	display: inline-block;
+	margin-right: 12px;
+}
+
+#foot-links a, #foot-links a:link, #foot-links a:visited, #foot-links a:hover, #foot-links a:active {
+	font-size: 11px;
+	color: #333;
+	line-height: 16px;
+}
+
+/************************/
+/* General overrides    */
+/************************/
+
+#dialog_addToCart_body .cartHeader {
+    background: url('/assets/pagemaster/images/campaigns/Expedia-Demo-logo-35.png') no-repeat scroll 15px 5px #f5f2f2 !important; /* Campaign override */
+}
+ 

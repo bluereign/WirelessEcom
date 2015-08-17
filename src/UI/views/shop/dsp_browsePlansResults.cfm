@@ -1,0 +1,3 @@
+<cfoutput>
+	#trim(planHTML)#
+</cfoutput>

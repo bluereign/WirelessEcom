@@ -1,0 +1,168 @@
+.workflow ul.lineCount_1 li a
+{
+	height:65px;
+	line-height:65px;
+	font-size:1.5em;
+}
+
+.workflow ul.lineCount_2 li a
+{
+	height:32px;
+	line-height:32px;
+	font-size:1.3em;
+}
+
+.workflow ul.lineCount_3 li a
+{
+	height:21px;
+	line-height:21px;
+	font-size:1.3em;
+}
+
+.workflow ul.lineCount_4 li a
+{
+	height:16px;
+	line-height:16px;
+	font-size:1.1em;
+}
+
+.workflow ul.lineCount_5 li a
+{
+	height:13px;
+	line-height:13px;
+	font-size:1em;
+}
+
+.workflow .lines a
+{
+	display:block;
+	color:#555;
+	height:36px;
+	margin:0px;
+	text-decoration:underline;
+}
+
+.workflow .lines a:hover
+{
+	text-decoration:underline;
+}
+
+.workflow .lines .activeLine a
+{
+	/*background-color:#91C851;*/
+	background-color:#fff;
+	color:#0a94d6 !important;
+	text-decoration:none;
+}
+.workflow .lines li
+{
+	margin-left:2px;
+	margin-right:10px;
+}
+
+.workflow .lines
+{
+	padding-top:2px;
+}
+
+
+.workflowItemDetailDialog #itemDialogTab
+{
+	background:url('../images/ui/workflow_dlg_1.png') top left no-repeat transparent;
+	height:21px;
+	width:128px;
+	display:block;
+	margin-top:-35px;
+	padding-right:30px;
+	padding-top:10px;
+	color:#e1393d;
+	font-size:1.2em;
+	font-weight:bold;
+	text-decoration:none;
+	text-align:right;
+	overflow:visible;
+}
+
+
+.workflowItemDetailDialog #itemDialogTab span
+{
+	position:relative; /*for z index*/
+}
+
+.workflowItemDetailDialog_left
+{
+	text-align:right;
+}
+
+.workflowItemDetailDialog_left #itemDialogTab
+{
+	background:url('../images/ui/workflow_dlg_left_1.png') top right no-repeat transparent;
+	margin-right:3px;
+	padding-left: 262px;
+}
+.workflowItemDetailDialog #itemDialogHeader
+{
+	background:url('../images/ui/workflow_dlg_3.png') top left no-repeat transparent;
+	height:23px;
+	width:420px;
+}
+.workflowItemDetailDialog_left #itemDialogHeader
+{
+	background:url('../images/ui/workflow_dlg_left_3.png') top left no-repeat transparent;
+}
+.workflowItemDetailDialog #itemDialogFooter
+{
+	background:url('../images/ui/workflow_dlg_6.png') top left repeat-y transparent;
+	height:23px;
+	width:420px;
+}
+.workflowItemDetailDialog #dialogShim
+{
+	padding-right:25px;
+	height:100px;
+	background:url('../images/ui/workflow_dlg_4.png') top left repeat-y transparent;
+}
+.workflowItemDetailDialog #itemDialogContent
+{	
+	height:100%;
+	padding:0 1em 0 25px;
+	overflow:auto;
+	position:relative;
+	z-index:1000;
+}
+.workflowItemDetailDialog
+{
+	width:420px;
+	position:absolute;
+	z-index:1000;
+}
+
+.workflowItemDetailDialog .loading
+{
+	text-align:center;
+}
+
+.workflowControllerItem
+{
+	padding-bottom:1.5em;
+	margin-bottom:1.5em;
+	border-bottom:1px solid #888;
+}
+.workflowControllerItemImage
+{
+	margin-right:10px;
+}
+.workflowControllerItemDescription
+{
+	margin-bottom:1.5em;
+	font-size:1.2em;
+}
+
+.workflowControllerItemDescription p
+{
+}
+
+.workflowControllerItemPrice
+{
+	font-size:2.5em;
+}

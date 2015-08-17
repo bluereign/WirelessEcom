@@ -1,0 +1,96 @@
+
+/** TODO: Incorperate with main Style.css **/
+/** TODO: Place under customer service class **/
+
+
+fieldset div {
+	position: relative;
+	width: 100%;
+	padding: 0.4em 0;
+	clear: both;
+}
+
+label {
+	float: left;
+	clear: left;
+	width: 12em;
+}
+
+input {
+	width: 20em;
+	font-size: inherit;
+}
+
+/* Head Content*/
+
+div.clear {
+		clear: both;
+	
+}
+
+.headerContent div.head {
+	font-size: 2em;
+}
+
+.headerContent div.body {
+	width: 100%;
+	padding: 0.4em 0;
+	position: relative;
+}
+
+.headerContent div.body div.left {
+    float: left;
+    width: 265px;
+}
+
+.headerContent div.body div.right {
+    float: right;
+    width: 195px;
+	padding: 0px 5px 0px 5px;
+}
+
+.headerContent div.body div.middle {
+	float: left;
+	padding: 0px 10px 0px 10px;
+	width: 195px;
+	margin: 0px;
+}
+
+/* Tab Display */
+
+.customer-service {padding:5px; color:#3a4043}
+.customer-service p {margin:10px 0;}
+.customer-service h3 {color:#1d8895; font-weight:bold; font-size:13.5pt; margin:15px 0;}
+
+
+em.error { font-weight:bold; color:red; padding-left:5px; }
+.customer-service .flag { font-weight:bold; color:red; }
+
+.field-display div {
+	position: relative;
+	width: 100%;
+	height: 25px;
+	clear: both;
+}
+
+.field-display div strong {
+	font-weight: normal;
+	float: left;
+	clear: left;
+	width: 12em;
+}
+
+/* Order details */
+
+.order-detail {}
+.order-detail .section { border: 1px solid #aaaaaa; margin: 15px 0; }
+.order-detail .section .section-title { background: #F3F3F3 none repeat; padding: 5px 8px; font-weight:bold;}
+.order-detail .section .section-body { clear:both; }
+.order-detail .section .section-body div { padding: 2px 8px; }
+.order-detail .section .section-body div.item { padding-left: 35px; }
+.order-detail .section .section-body div.item .item-name { font-weight:bold; }
+.order-detail .section .section-body  div.item div.subitem { padding-left: 40px; font-weight: normal; }
+.order-detail .section .section-body div.price { text-align:right; }
+.order-detail .section .section-body div.price span { display:inline-block; width:85px; }
+
+.ui-progressbar-value { background-image: url(../images/progress-bar.gif); }

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTSConfiguration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA GERS OLEDB Connection].Properties[ServerName]" ValueType="String">
+		<ConfiguredValue>gers.wirelessadvocates.llc/live</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA GERS OLEDB Connection].Properties[UserName]" ValueType="String">
+		<ConfiguredValue>sqllive</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA GERS OLEDB Connection].Properties[Password]" ValueType="String">
+		<ConfiguredValue>live01</ConfiguredValue>
+	</Configuration>
+</DTSConfiguration>

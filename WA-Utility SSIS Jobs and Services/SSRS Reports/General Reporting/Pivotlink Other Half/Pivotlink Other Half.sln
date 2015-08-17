@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Pivotlink Other Half", "Pivotlink Other Half\Pivotlink Other Half.rptproj", "{8B7969C5-6BD3-4247-B737-EA8D0AB6859C}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver.cartoys.corp:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Pivotlink\u0020Other\u0020Half\\Pivotlink\u0020Other\u0020Half.rptproj
+		SccProjectName1 = Pivotlink\u0020Other\u0020Half
+		SccLocalPath1 = Pivotlink\u0020Other\u0020Half
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B7969C5-6BD3-4247-B737-EA8D0AB6859C}.Debug|Default.ActiveCfg = Debug
+		{8B7969C5-6BD3-4247-B737-EA8D0AB6859C}.Debug|Default.Build.0 = DebugLocal
+		{8B7969C5-6BD3-4247-B737-EA8D0AB6859C}.Debug|Default.Deploy.0 = DebugLocal
+		{8B7969C5-6BD3-4247-B737-EA8D0AB6859C}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{8B7969C5-6BD3-4247-B737-EA8D0AB6859C}.DebugLocal|Default.Build.0 = DebugLocal
+		{8B7969C5-6BD3-4247-B737-EA8D0AB6859C}.Release|Default.ActiveCfg = Release
+		{8B7969C5-6BD3-4247-B737-EA8D0AB6859C}.Release|Default.Build.0 = Release
+		{8B7969C5-6BD3-4247-B737-EA8D0AB6859C}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

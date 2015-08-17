@@ -1,0 +1,8 @@
+
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+CREATE VIEW AAFES.AccessoryForDevice AS 
+    SELECT DISTINCT DeviceGuid,AccessoryGuid,Ordinal FROM [AAFES].[AccessoryForDeviceStage] WHERE AccessoryGuid IS NOT NULL AND DeviceGuid IS NOT NULL
+GO

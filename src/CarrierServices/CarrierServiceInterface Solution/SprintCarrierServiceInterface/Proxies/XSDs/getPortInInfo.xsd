@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="PortRequest">
+		<xs:sequence>
+			<xs:element name="port-in-number" type="PhoneNumber" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!--Port-in request message.-->
+	</xs:complexType>
+	<xs:element name="getPortInInfo" type="PortRequest"/>
+	<xs:complexType name="PortResponse">
+		<xs:sequence>
+			<xs:element name="port-response-info" type="PortResponseInfo" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!--Parse response message.-->
+	</xs:complexType>
+	<xs:element name="getPortInInfoResponse" type="PortResponse"/>
+	<xs:complexType name="PortResponseInfo">
+		<xs:sequence>
+			<xs:element name="port-in-number" type="PhoneNumber" minOccurs="0"/>
+			<xs:element name="port-eligibility" type="xs:boolean">
+				<!--Whether the number can be ported into Nextel.-->
+			</xs:element>
+			<xs:element name="port-eligibility-details" type="RequiredString" minOccurs="0">
+				<!--Additional information regarding the eligibility of the port request.-->
+			</xs:element>
+			<xs:element name="carrier" type="RequiredString" minOccurs="0">
+				<!--The carrier the number currently belongs with.-->
+			</xs:element>
+			<xs:element name="estimated-due-date" type="xs:dateTime" minOccurs="0">
+				<!-- Port in estimated due date -->
+			</xs:element>
+		</xs:sequence>
+		<!--Parse response message-->
+	</xs:complexType>
+	<xs:complexType name="PortStatusRequest">
+		<xs:sequence>
+			<xs:element name="port-in-number" type="PhoneNumber"/>
+		</xs:sequence>
+		<!--Port-status request message.-->
+	</xs:complexType>
+	<xs:element name="getPortInStatus" type="PortStatusRequest"/>
+	<xs:complexType name="PortStatusResponse">
+		<xs:sequence>
+			<xs:element name="port-in-number" type="PhoneNumber"/>
+			<xs:element name="port-status-message" type="RequiredString" minOccurs="0">
+				<!--Additional information regarding the status of the port request.-->
+			</xs:element>
+		</xs:sequence>
+		<!--Parse response message.-->
+	</xs:complexType>
+	<xs:element name="getPortInStatusResponse" type="PortStatusResponse"/>
+</xs:schema>

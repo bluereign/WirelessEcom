@@ -1,0 +1,2 @@
+ALTER TABLE salesorder.[Order]
+ADD SmsOptIn BIT NOT NULL DEFAULT(0)

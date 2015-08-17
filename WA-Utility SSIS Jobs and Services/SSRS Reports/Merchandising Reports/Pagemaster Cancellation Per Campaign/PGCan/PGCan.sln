@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "PGCan", "PGCan\PGCan.rptproj", "{C82D7B65-5AE4-4361-9A52-E7386DB69E7F}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = PGCan\\PGCan.rptproj
+		SccProjectName1 = PGCan
+		SccLocalPath1 = PGCan
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C82D7B65-5AE4-4361-9A52-E7386DB69E7F}.Debug|Default.ActiveCfg = Debug
+		{C82D7B65-5AE4-4361-9A52-E7386DB69E7F}.Debug|Default.Build.0 = Debug
+		{C82D7B65-5AE4-4361-9A52-E7386DB69E7F}.Debug|Default.Deploy.0 = Debug
+		{C82D7B65-5AE4-4361-9A52-E7386DB69E7F}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{C82D7B65-5AE4-4361-9A52-E7386DB69E7F}.DebugLocal|Default.Build.0 = DebugLocal
+		{C82D7B65-5AE4-4361-9A52-E7386DB69E7F}.Release|Default.ActiveCfg = Release
+		{C82D7B65-5AE4-4361-9A52-E7386DB69E7F}.Release|Default.Build.0 = Release
+		{C82D7B65-5AE4-4361-9A52-E7386DB69E7F}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

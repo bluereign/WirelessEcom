@@ -1,0 +1,687 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Costco</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{e73f2d9c-524e-47a0-b18a-838155a39a3d}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Costco</RootNamespace>
+    <AssemblyName>Costco</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- Default to the v10.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="websecurity\" />
+    <Folder Include="websecurity\Tables\" />
+    <Folder Include="ups\" />
+    <Folder Include="ups\Tables\" />
+    <Folder Include="squaretrade\" />
+    <Folder Include="squaretrade\Tables\" />
+    <Folder Include="service\" />
+    <Folder Include="service\Tables\" />
+    <Folder Include="salesorder\" />
+    <Folder Include="salesorder\Tables\" />
+    <Folder Include="releases\" />
+    <Folder Include="releases\Tables\" />
+    <Folder Include="PROMOTION\" />
+    <Folder Include="PROMOTION\Tables\" />
+    <Folder Include="orders\" />
+    <Folder Include="orders\Tables\" />
+    <Folder Include="notification\" />
+    <Folder Include="notification\Tables\" />
+    <Folder Include="merchtool\" />
+    <Folder Include="merchtool\Tables\" />
+    <Folder Include="logging\" />
+    <Folder Include="logging\Tables\" />
+    <Folder Include="content\" />
+    <Folder Include="content\Tables\" />
+    <Folder Include="cms\" />
+    <Folder Include="cms\Tables\" />
+    <Folder Include="cjtmo\" />
+    <Folder Include="cjtmo\Tables\" />
+    <Folder Include="catalog\" />
+    <Folder Include="catalog\Tables\" />
+    <Folder Include="cart\" />
+    <Folder Include="cart\Tables\" />
+    <Folder Include="campaign\" />
+    <Folder Include="campaign\Tables\" />
+    <Folder Include="ALLOCATION\" />
+    <Folder Include="ALLOCATION\Tables\" />
+    <Folder Include="admin\" />
+    <Folder Include="admin\Tables\" />
+    <Folder Include="account\" />
+    <Folder Include="account\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="test\" />
+    <Folder Include="test\Views\" />
+    <Folder Include="squaretrade\Views\" />
+    <Folder Include="service\Views\" />
+    <Folder Include="salesorder\Views\" />
+    <Folder Include="report\" />
+    <Folder Include="report\Views\" />
+    <Folder Include="orders\Views\" />
+    <Folder Include="logging\Views\" />
+    <Folder Include="inventory\" />
+    <Folder Include="inventory\Views\" />
+    <Folder Include="cms\Views\" />
+    <Folder Include="catalog\Views\" />
+    <Folder Include="Storage\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="util\" />
+    <Folder Include="util\Functions\" />
+    <Folder Include="ups\Functions\" />
+    <Folder Include="service\Functions\" />
+    <Folder Include="salesorder\Functions\" />
+    <Folder Include="catalog\Functions\" />
+    <Folder Include="ALLOCATION\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="websecurity\Stored Procedures\" />
+    <Folder Include="service\Stored Procedures\" />
+    <Folder Include="salesorder\Stored Procedures\" />
+    <Folder Include="releases\Stored Procedures\" />
+    <Folder Include="orders\Stored Procedures\" />
+    <Folder Include="maintenance\" />
+    <Folder Include="maintenance\Stored Procedures\" />
+    <Folder Include="logging\Stored Procedures\" />
+    <Folder Include="inventory\Stored Procedures\" />
+    <Folder Include="cms\Stored Procedures\" />
+    <Folder Include="cjtmo\Stored Procedures\" />
+    <Folder Include="catalog\Stored Procedures\" />
+    <Folder Include="ALLOCATION\Stored Procedures\" />
+    <Folder Include="dbo\User Defined Types\" />
+    <Folder Include="Security\" />
+    <Folder Include="_SchemaCompareSets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\Tables\UserPromotion.sql" />
+    <Build Include="dbo\Tables\TargetInstance.sql" />
+    <Build Include="dbo\Tables\States.sql" />
+    <Build Include="dbo\Tables\Session.sql" />
+    <Build Include="dbo\Tables\Rateplan_InsertProcess.sql" />
+    <Build Include="dbo\Tables\PromotionCodes.sql" />
+    <Build Include="dbo\Tables\OldProdToNewProd.sql" />
+    <Build Include="dbo\Tables\Exactor.sql" />
+    <Build Include="dbo\Tables\DashboardData.sql" />
+    <Build Include="dbo\Tables\Coupon.sql" />
+    <Build Include="dbo\Tables\Countries.sql" />
+    <Build Include="dbo\Tables\AdminMenu.sql" />
+    <Build Include="dbo\Tables\AdminComponent.sql" />
+    <Build Include="websecurity\Tables\BannedUsers.sql" />
+    <Build Include="ups\Tables\HolidayCalendar.sql" />
+    <Build Include="ups\Tables\ServiceType.sql" />
+    <Build Include="ups\Tables\TransitTime.sql" />
+    <Build Include="ups\Tables\ZoneCodes980.sql" />
+    <Build Include="ups\Tables\MilitaryBase.sql" />
+    <Build Include="ups\Tables\NearbyBase.sql" />
+    <Build Include="ups\Tables\MilitaryBranch.sql" />
+    <Build Include="squaretrade\Tables\CancelFileLog.sql" />
+    <Build Include="squaretrade\Tables\AddFileLog.sql" />
+    <Build Include="service\Tables\PaymentGatewayLog.sql" />
+    <Build Include="service\Tables\IncomingGersPrice.sql" />
+    <Build Include="service\Tables\PaymentGatewayType.sql" />
+    <Build Include="service\Tables\CatalogLoad.sql" />
+    <Build Include="service\Tables\VerizonCreditCheckKeyInfo.sql" />
+    <Build Include="service\Tables\TestSIMS.sql" />
+    <Build Include="service\Tables\CustomerLookUpService.sql" />
+    <Build Include="service\Tables\CustomerLookUpPlan.sql" />
+    <Build Include="service\Tables\CheckoutSessionState.sql" />
+    <Build Include="service\Tables\OrderDetailLog.sql" />
+    <Build Include="service\Tables\IncomingGersOrderStatus.sql" />
+    <Build Include="service\Tables\IncomingGersPriceGroup.sql" />
+    <Build Include="service\Tables\PromotionLog.sql" />
+    <Build Include="service\Tables\CarrierInterfaceLog.sql" />
+    <Build Include="service\Tables\EmailTemplate.sql" />
+    <Build Include="service\Tables\SecurityQuestion.sql" />
+    <Build Include="service\Tables\VerizonCatsOrderStatus.sql" />
+    <Build Include="service\Tables\VerizonCatsCreditStatus.sql" />
+    <Build Include="service\Tables\IncomingGersStock.sql" />
+    <Build Include="service\Tables\WeblinkAdditionalCommissionSkus.sql" />
+    <Build Include="service\Tables\PaymentGatewayListener.sql" />
+    <Build Include="salesorder\Tables\Order.sql" />
+    <Build Include="salesorder\Tables\LineService.sql" />
+    <Build Include="salesorder\Tables\OrderStatus.sql" />
+    <Build Include="salesorder\Tables\WirelessLine.sql" />
+    <Build Include="salesorder\Tables\GersOrderStatus.sql" />
+    <Build Include="salesorder\Tables\OrderDetail.sql" />
+    <Build Include="salesorder\Tables\Address.sql" />
+    <Build Include="salesorder\Tables\ShipMethodPromos.sql" />
+    <Build Include="salesorder\Tables\WirelessAccount.sql" />
+    <Build Include="salesorder\Tables\Payment.sql" />
+    <Build Include="salesorder\Tables\ShipMethod.sql" />
+    <Build Include="salesorder\Tables\PaymentMethod.sql" />
+    <Build Include="salesorder\Tables\Activity.sql" />
+    <Build Include="salesorder\Tables\WirelessAccount_Secure.sql" />
+    <Build Include="salesorder\Tables\OrderToRebates.sql" />
+    <Build Include="salesorder\Tables\Shipment.sql" />
+    <Build Include="releases\Tables\ReleaseUsers.sql" />
+    <Build Include="releases\Tables\ReleaseTasks.sql" />
+    <Build Include="releases\Tables\ReleaseState.sql" />
+    <Build Include="releases\Tables\ReleaseInstances.sql" />
+    <Build Include="releases\Tables\Release.sql" />
+    <Build Include="PROMOTION\Tables\Category.sql" />
+    <Build Include="PROMOTION\Tables\Condition.sql" />
+    <Build Include="PROMOTION\Tables\Applied.sql" />
+    <Build Include="PROMOTION\Tables\RemainingQuantity.sql" />
+    <Build Include="PROMOTION\Tables\Operator.sql" />
+    <Build Include="PROMOTION\Tables\DiscountType.sql" />
+    <Build Include="orders\Tables\EmailTemplates.sql" />
+    <Build Include="orders\Tables\OrderQueue_History.sql" />
+    <Build Include="orders\Tables\OrderQueue.sql" />
+    <Build Include="orders\Tables\InventoryCap.sql" />
+    <Build Include="notification\Tables\UpgradeEligibility.sql" />
+    <Build Include="notification\Tables\MarketingCampaign.sql" />
+    <Build Include="notification\Tables\CustomerMarketingCampaign.sql" />
+    <Build Include="notification\Tables\Customer.sql" />
+    <Build Include="notification\Tables\PresaleAlert.sql" />
+    <Build Include="merchtool\Tables\User.sql" />
+    <Build Include="merchtool\Tables\Session.sql" />
+    <Build Include="logging\Tables\InvalidCart.sql" />
+    <Build Include="logging\Tables\InvalidCartType.sql" />
+    <Build Include="logging\Tables\CatalogAudit.sql" />
+    <Build Include="logging\Tables\gersaudit.sql" />
+    <Build Include="logging\Tables\CommandLog.sql" />
+    <Build Include="logging\Tables\Activity.sql" />
+    <Build Include="logging\Tables\Payment.sql" />
+    <Build Include="logging\Tables\Cart.sql" />
+    <Build Include="logging\Tables\ReservedStock.sql" />
+    <Build Include="logging\Tables\EditorsChoice.sql" />
+    <Build Include="logging\Tables\orderdetail.sql" />
+    <Build Include="logging\Tables\orders.sql" />
+    <Build Include="content\Tables\Video.sql" />
+    <Build Include="content\Tables\Multimedia.sql" />
+    <Build Include="cms\Tables\ReleaseTemplates.sql" />
+    <Build Include="cms\Tables\Releases.sql" />
+    <Build Include="cms\Tables\Data.sql" />
+    <Build Include="cms\Tables\SiteTemplates.sql" />
+    <Build Include="cms\Tables\DataGroups.sql" />
+    <Build Include="cms\Tables\Sites.sql" />
+    <Build Include="cms\Tables\Images.sql" />
+    <Build Include="cms\Tables\Locations.sql" />
+    <Build Include="cms\Tables\Tags.sql" />
+    <Build Include="cms\Tables\TemplateReleaseContent.sql" />
+    <Build Include="cms\Tables\Templates.sql" />
+    <Build Include="cms\Tables\Environments.sql" />
+    <Build Include="cms\Tables\Categories.sql" />
+    <Build Include="cms\Tables\CarrierImages.sql" />
+    <Build Include="cms\Tables\Rebates.sql" />
+    <Build Include="cms\Tables\Carriers.sql" />
+    <Build Include="cms\Tables\Content.sql" />
+    <Build Include="cms\Tables\Types.sql" />
+    <Build Include="cms\Tables\SiteGroups.sql" />
+    <Build Include="cms\Tables\ReleaseTemplateCarriers.sql" />
+    <Build Include="cms\Tables\RebateSKUs.sql" />
+    <Build Include="cjtmo\Tables\Property.sql" />
+    <Build Include="cjtmo\Tables\Product.sql" />
+    <Build Include="cjtmo\Tables\ProductGuid.sql" />
+    <Build Include="cjtmo\Tables\ProductTag.sql" />
+    <Build Include="cjtmo\Tables\GersPrice.sql" />
+    <Build Include="cjtmo\Tables\Device.sql" />
+    <Build Include="catalog\Tables\ServiceExclusion.sql" />
+    <Build Include="catalog\Tables\Accessory.sql" />
+    <Build Include="catalog\Tables\RateplanException.sql" />
+    <Build Include="catalog\Tables\Tablet.sql" />
+    <Build Include="catalog\Tables\DevicePrice.sql" />
+    <Build Include="catalog\Tables\ServiceDataFeature.sql" />
+    <Build Include="catalog\Tables\DeviceService.sql" />
+    <Build Include="catalog\Tables\DeviceDetail.sql" />
+    <Build Include="catalog\Tables\RateplanMarket.sql" />
+    <Build Include="catalog\Tables\RateplanService.sql" />
+    <Build Include="catalog\Tables\Property.sql" />
+    <Build Include="catalog\Tables\ZipCodeMarket.sql" />
+    <Build Include="catalog\Tables\Bundle.sql" />
+    <Build Include="catalog\Tables\AccessoryForDevice.sql" />
+    <Build Include="catalog\Tables\FilterOption.sql" />
+    <Build Include="catalog\Tables\PropertyMasterAlias.sql" />
+    <Build Include="catalog\Tables\FilterGroup.sql" />
+    <Build Include="catalog\Tables\Product.sql" />
+    <Build Include="catalog\Tables\ProductGuid.sql" />
+    <Build Include="catalog\Tables\DeviceFreeAccessory.sql" />
+    <Build Include="catalog\Tables\PropertyMaster.sql" />
+    <Build Include="catalog\Tables\PropertyMasterGroup.sql" />
+    <Build Include="catalog\Tables\RebateToProduct.sql" />
+    <Build Include="catalog\Tables\ProductType.sql" />
+    <Build Include="catalog\Tables\Rebate.sql" />
+    <Build Include="catalog\Tables\Company.sql" />
+    <Build Include="catalog\Tables\CommissionSKU.sql" />
+    <Build Include="catalog\Tables\GersItmToWarranty.sql" />
+    <Build Include="catalog\Tables\Rateplan.sql" />
+    <Build Include="catalog\Tables\ProductTag.sql" />
+    <Build Include="catalog\Tables\warranty.sql" />
+    <Build Include="catalog\Tables\DeviceServiceMasterGroupOptional.sql" />
+    <Build Include="catalog\Tables\SKU.sql" />
+    <Build Include="catalog\Tables\Device.sql" />
+    <Build Include="catalog\Tables\PromotionProducts.sql" />
+    <Build Include="catalog\Tables\GersStock.sql" />
+    <Build Include="catalog\Tables\SessionStockReservation.sql" />
+    <Build Include="catalog\Tables\Coupon.sql" />
+    <Build Include="catalog\Tables\ServiceMaster.sql" />
+    <Build Include="catalog\Tables\Service.sql" />
+    <Build Include="catalog\Tables\GersItm.sql" />
+    <Build Include="catalog\Tables\ServiceMasterGroup.sql" />
+    <Build Include="catalog\Tables\GersPrice.sql" />
+    <Build Include="catalog\Tables\PromotionCode.sql" />
+    <Build Include="catalog\Tables\GersPriceGroup.sql" />
+    <Build Include="catalog\Tables\Channel.sql" />
+    <Build Include="catalog\Tables\RateplanDevice.sql" />
+    <Build Include="catalog\Tables\Market.sql" />
+    <Build Include="catalog\Tables\Promotion.sql" />
+    <Build Include="catalog\Tables\Image.sql" />
+    <Build Include="catalog\Tables\RebateToFilter.sql" />
+    <Build Include="cart\Tables\ServiceMasterGroupCartType.sql" />
+    <Build Include="cart\Tables\CartType.sql" />
+    <Build Include="cart\Tables\Recommendation.sql" />
+    <Build Include="campaign\Tables\SmsReachList.sql" />
+    <Build Include="campaign\Tables\SmsMessage.sql" />
+    <Build Include="campaign\Tables\CssProperty.sql" />
+    <Build Include="campaign\Tables\Campaign.sql" />
+    <Build Include="ALLOCATION\Tables\MessageGroup.sql" />
+    <Build Include="ALLOCATION\Tables\VirtualInventory.sql" />
+    <Build Include="ALLOCATION\Tables\MessageTemplates.sql" />
+    <Build Include="ALLOCATION\Tables\VirtualOrders.sql" />
+    <Build Include="ALLOCATION\Tables\BlockVirtualInventory.sql" />
+    <Build Include="ALLOCATION\Tables\Block.sql" />
+    <Build Include="ALLOCATION\Tables\VirtualInventoryType.sql" />
+    <Build Include="ALLOCATION\Tables\MessageDestination.sql" />
+    <Build Include="admin\Tables\OrderNote.sql" />
+    <Build Include="admin\Tables\OrderNoteSubject.sql" />
+    <Build Include="admin\Tables\callNoteSubjects.sql" />
+    <Build Include="admin\Tables\WACalendar.sql" />
+    <Build Include="admin\Tables\callNotes.sql" />
+    <Build Include="admin\Tables\Actions.sql" />
+    <Build Include="admin\Tables\ActionCaptures.sql" />
+    <Build Include="admin\Tables\Category.sql" />
+    <Build Include="account\Tables\RoleMenu.sql" />
+    <Build Include="account\Tables\UserRole.sql" />
+    <Build Include="account\Tables\Role.sql" />
+    <Build Include="account\Tables\Functionality.sql" />
+    <Build Include="account\Tables\RoleFunctionality.sql" />
+    <Build Include="dbo\Views\vGetAllProducts.sql" />
+    <Build Include="dbo\Views\SevendaysSalesAccessory_View.sql" />
+    <Build Include="dbo\Views\SevendaysSales_View.sql" />
+    <Build Include="dbo\Views\SalesAccessory_View.sql" />
+    <Build Include="dbo\Views\Sales_View.sql" />
+    <Build Include="dbo\Views\OnedaySalesAccessory_View.sql" />
+    <Build Include="dbo\Views\OnedaySales_View.sql" />
+    <Build Include="dbo\Views\FourteendaysSalesAccessory_View.sql" />
+    <Build Include="dbo\Views\FourteendaysSales_View.sql" />
+    <Build Include="test\Views\FreeAccessories.sql" />
+    <Build Include="squaretrade\Views\CancelFile.sql" />
+    <Build Include="squaretrade\Views\AddFile.sql" />
+    <Build Include="squaretrade\Views\LiveUpdateCancel.sql" />
+    <Build Include="squaretrade\Views\LiveUpdateAdd.sql" />
+    <Build Include="squaretrade\Views\SpecificAddFile.sql" />
+    <Build Include="squaretrade\Views\SpecificCancelFile.sql" />
+    <Build Include="service\Views\WeblinkAddCommissionSkuUnion.sql" />
+    <Build Include="service\Views\Get_CATS_OrderDetails.sql" />
+    <Build Include="salesorder\Views\vPaymentDiffs.sql" />
+    <Build Include="salesorder\Views\vUPSKeyedImport.sql" />
+    <Build Include="salesorder\Views\ActivationsWaiting.sql" />
+    <Build Include="salesorder\Views\CapturesWaiting.sql" />
+    <Build Include="salesorder\Views\CurrentInventory.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="salesorder\Views\vMissingKits.sql" />
+    <Build Include="report\Views\OrderDump.sql" />
+    <Build Include="report\Views\OrderDetailDump.sql" />
+    <Build Include="report\Views\HandsetPriceHistory.sql" />
+    <Build Include="report\Views\OrderStatus.sql" />
+    <Build Include="report\Views\CustomerServiceActivations.sql" />
+    <Build Include="orders\Views\dn_AllPlans.sql" />
+    <Build Include="orders\Views\vw_GetUncommittedTax.sql" />
+    <Build Include="logging\Views\catalogload_service.sql" />
+    <Build Include="logging\Views\catalogload_rateplanservice.sql" />
+    <Build Include="logging\Views\catalogload_rateplan.sql" />
+    <Build Include="logging\Views\catalogload_property.sql" />
+    <Build Include="logging\Views\catalogload_products.sql" />
+    <Build Include="logging\Views\catalogload_deviceservice.sql" />
+    <Build Include="logging\Views\catalogload_devicerateplan.sql" />
+    <Build Include="logging\Views\catalogload_device.sql" />
+    <Build Include="inventory\Views\Devices.sql" />
+    <Build Include="inventory\Views\Accessories.sql" />
+    <Build Include="cms\Views\GetReleaseContent_ByLocation.sql" />
+    <Build Include="cms\Views\GetReleaseContent_ByTemplate.sql" />
+    <Build Include="cms\Views\GetReleaseDetails.sql" />
+    <Build Include="cms\Views\GetReleaseContent.sql" />
+    <Build Include="cms\Views\test.sql" />
+    <Build Include="catalog\Views\vRateplanDeviceServiceATT.sql" />
+    <Build Include="catalog\Views\dn_AllProducts.sql" />
+    <Build Include="catalog\Views\dn_Tablets_NEW.sql" />
+    <Build Include="catalog\Views\dn_Tablets.sql" />
+    <Build Include="catalog\Views\dn_Phones_all_NEW.sql" />
+    <Build Include="catalog\Views\dn_Phones.sql" />
+    <Build Include="catalog\Views\vw_MercentProductFeed.sql" />
+    <Build Include="catalog\Views\dn_Phones_all.sql" />
+    <Build Include="catalog\Views\Inventory.sql" />
+    <Build Include="catalog\Views\vProductRebates.sql" />
+    <Build Include="catalog\Views\vProductRebateTotal.sql" />
+    <Build Include="catalog\Views\dn_Accessories.sql" />
+    <Build Include="catalog\Views\dn_Warranty.sql" />
+    <Build Include="catalog\Views\dn_Plans.sql" />
+    <Build Include="catalog\Views\vRateplanDeviceServiceVZW.sql" />
+    <Build Include="catalog\Views\SortRanks.sql" />
+    <Build Include="catalog\Views\dn_PrePaids.sql" />
+    <Build Include="catalog\Views\vRateplanDeviceServiceTMO.sql" />
+    <Build Include="catalog\Views\vRateplanDeviceService.sql" />
+    <Build Include="catalog\Views\vRateplanDeviceServiceSPT.sql" />
+    <Build Include="Storage\ServiceLogFullTextIndexCatalog.sql" />
+    <Build Include="Storage\ProductsTableFullTextIndexCatalog.sql" />
+    <Build Include="FullTextIndexes.sql" />
+    <Build Include="Storage\ftfg_ProductsTableFullTextIndexCatalog.sql" />
+    <Build Include="dbo\Functions\WordCount.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\regexObj.sql" />
+    <Build Include="dbo\Functions\regexFind.sql" />
+    <Build Include="dbo\Functions\GetUpgradeGersSkuUsingXmlData.sql" />
+    <Build Include="dbo\Functions\GetServiceZipFromXML.sql" />
+    <Build Include="dbo\Functions\GetPlanCodeFromXML.sql" />
+    <Build Include="dbo\Functions\GetPINFromXML.sql" />
+    <Build Include="dbo\Functions\GetMDNFromXML.sql" />
+    <Build Include="dbo\Functions\getBusinessDays.sql" />
+    <Build Include="dbo\Functions\CapFirst.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="util\Functions\ReplaceHTML.sql" />
+    <Build Include="util\Functions\RemoveNonAlphaCharacters.sql" />
+    <Build Include="util\Functions\udf_StripHTML.sql" />
+    <Build Include="util\Functions\udf_ParseLog.sql" />
+    <Build Include="ups\Functions\udf_GetMilitaryBaseCode.sql" />
+    <Build Include="ups\Functions\GetDeliveryDateFromTransitDays.sql" />
+    <Build Include="ups\Functions\udf_GetNearbyBase.sql" />
+    <Build Include="service\Functions\IsWeekend.sql" />
+    <Build Include="salesorder\Functions\GetDeliveryDate.sql" />
+    <Build Include="salesorder\Functions\GetDeliveryDateFromOrderDate.sql" />
+    <Build Include="salesorder\Functions\GetOrderSLA.sql" />
+    <Build Include="catalog\Functions\GetRateplanMonthlyFee2.sql" />
+    <Build Include="catalog\Functions\HaveStock.sql" />
+    <Build Include="catalog\Functions\GetDepositGersSku.sql" />
+    <Build Include="catalog\Functions\GetRateplanGersSku.sql" />
+    <Build Include="catalog\Functions\GetKeepRateplanSku.sql" />
+    <Build Include="catalog\Functions\GetWirelessLineCarrierPlanId.sql" />
+    <Build Include="catalog\Functions\CheckGersSku.sql" />
+    <Build Include="catalog\Functions\GetRateplanMonthlyFee.sql" />
+    <Build Include="catalog\Functions\ufd_GetCouponDiscount.sql" />
+    <Build Include="catalog\Functions\ufd_GetCouponId.sql" />
+    <Build Include="catalog\Functions\GetNoActivationRateplanSku.sql" />
+    <Build Include="catalog\Functions\GetPrepaidRateplanSku.sql" />
+    <Build Include="catalog\Functions\GetRateplanActivationFee.sql" />
+    <Build Include="ALLOCATION\Functions\udf_CheckforMessageGroup.sql" />
+    <Build Include="dbo\Functions\udf_ListToIntegerTable.sql" />
+    <Build Include="dbo\Functions\udf_List2Table.sql" />
+    <Build Include="dbo\Functions\udf_List2GuidList.sql" />
+    <Build Include="dbo\Functions\split.sql" />
+    <Build Include="ups\Functions\GetHolidays.sql" />
+    <Build Include="ups\Functions\GetZoneListForZipCode.sql" />
+    <Build Include="ups\Functions\GetZonesForZipCode.sql" />
+    <Build Include="salesorder\Functions\GetShipMethodForOrder.sql" />
+    <Build Include="dbo\Stored Procedures\usp_KioskECOMCommissions_new.sql" />
+    <Build Include="dbo\Stored Procedures\usp_KioskECOMCommissions.sql" />
+    <Build Include="dbo\Stored Procedures\TruncateObjectsSprintCataLogLoadProcess_usp.sql" />
+    <Build Include="dbo\Stored Procedures\spSaveXMLVariableToFile.sql" />
+    <Build Include="dbo\Stored Procedures\sp_TruncateDBLog.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\sp_readTextFile.sql" />
+    <Build Include="dbo\Stored Procedures\sp_FTPDownload.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ftp_GetDir.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\sp_DeleteBackupsFromDBDirectory.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\sp_CreateUser.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\sp_CreateManualOrder.sql" />
+    <Build Include="dbo\Stored Procedures\ScriptforSprintLoadProcess_ups.sql" />
+    <Build Include="dbo\Stored Procedures\SaveTableAsHTML.sql" />
+    <Build Include="dbo\Stored Procedures\s_ftp_PutFile.sql" />
+    <Build Include="dbo\Stored Procedures\MercentFeed.sql" />
+    <Build Include="dbo\Stored Procedures\CreateObjectSprintCatalogLoadProcess_usp.sql" />
+    <Build Include="dbo\Stored Procedures\CommandExecute.sql" />
+    <Build Include="websecurity\Stored Procedures\spAddBannedUsers.sql" />
+    <Build Include="service\Stored Procedures\MergeIncomingGersPriceData.sql" />
+    <Build Include="service\Stored Procedures\UpdateGersOrderStatus.sql" />
+    <Build Include="service\Stored Procedures\MergeIncomingGersStock.sql" />
+    <Build Include="service\Stored Procedures\WeblinkErrorCheck.sql" />
+    <Build Include="service\Stored Procedures\MarkOrdersForFulfillment.sql" />
+    <Build Include="service\Stored Procedures\Update_CATS_OrderDetails.sql" />
+    <Build Include="salesorder\Stored Procedures\AddSingleUpsTrackingNumberToOrder.sql" />
+    <Build Include="salesorder\Stored Procedures\AddShipmentInfo.sql" />
+    <Build Include="salesorder\Stored Procedures\CreateAccessory.sql" />
+    <Build Include="salesorder\Stored Procedures\AddMissingKits.sql" />
+    <Build Include="salesorder\Stored Procedures\AddItemOrderDetail.sql" />
+    <Build Include="salesorder\Stored Procedures\UpdateWirelessAccount.sql" />
+    <Build Include="salesorder\Stored Procedures\InsertWirelessAccount.sql" />
+    <Build Include="salesorder\Stored Procedures\GetWirelessAccountByWirelessAccountId.sql" />
+    <Build Include="salesorder\Stored Procedures\GetWirelessAccountByOrderId.sql" />
+    <Build Include="salesorder\Stored Procedures\CancelOrder.sql" />
+    <Build Include="salesorder\Stored Procedures\RemoveOrderDetailLine.sql" />
+    <Build Include="salesorder\Stored Procedures\AllocateStockToOrderDetailResetoOrderStatus.sql" />
+    <Build Include="salesorder\Stored Procedures\AssignIMEIToWirelessLine.sql" />
+    <Build Include="salesorder\Stored Procedures\AllocateStockToOrderDetail.sql" />
+    <Build Include="salesorder\Stored Procedures\GetWirelessAccountById.sql" />
+    <Build Include="salesorder\Stored Procedures\ReserveStock.sql" />
+    <Build Include="salesorder\Stored Procedures\ReleaseStock.sql" />
+    <Build Include="salesorder\Stored Procedures\PendingDevices.sql" />
+    <Build Include="salesorder\Stored Procedures\AddDeviceToOrder.sql" />
+    <Build Include="releases\Stored Procedures\UpdateReleaseUser.sql" />
+    <Build Include="releases\Stored Procedures\UpdateReleaseState.sql" />
+    <Build Include="releases\Stored Procedures\UpdateRelease.sql" />
+    <Build Include="releases\Stored Procedures\GetReleaseUsers.sql" />
+    <Build Include="releases\Stored Procedures\GetReleaseStates.sql" />
+    <Build Include="releases\Stored Procedures\GetReleases.sql" />
+    <Build Include="releases\Stored Procedures\GetReleaseInstances.sql" />
+    <Build Include="releases\Stored Procedures\DeleteRelease.sql" />
+    <Build Include="orders\Stored Procedures\sp_CheckGersStatusChange.sql" />
+    <Build Include="orders\Stored Procedures\sp_RemoveQueueItem.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateTemplate.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetItemsNotAllocated.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetFakeInventoryCountAssigned.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetProductDetails.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateGersStockWirelessFake.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetAvailableOutlets.sql" />
+    <Build Include="orders\Stored Procedures\sp_RemoveItemOrderDetail.sql" />
+    <Build Include="orders\Stored Procedures\sp_ProcessData.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetOrderDetailItems.sql" />
+    <Build Include="orders\Stored Procedures\sp_DeleteTemplate.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateGersStatus.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetCarrierData.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetCancelledOrders.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetCarrierResponseRefs.sql" />
+    <Build Include="orders\Stored Procedures\sp_CheckDeviceUsed.sql" />
+    <Build Include="orders\Stored Procedures\sp_ReinstateOrder.sql" />
+    <Build Include="orders\Stored Procedures\FixShippingMethod.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetDetails_OrderDetails.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetRealAvailableOutlet.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateOrderSKU.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetOutletDetails.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetOrderPhone.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetAPIErrorDetails.sql" />
+    <Build Include="orders\Stored Procedures\sp_RemoveItemOrderDetailItem.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateOrderPrice.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateGersStockWireless.sql" />
+    <Build Include="orders\Stored Procedures\sp_SetOrderPlaced.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetOrderCarrier.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetOrderSKUs.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateGersStock.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetIMEIDetails.sql" />
+    <Build Include="orders\Stored Procedures\AddItemOrderDetail.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetRealInventoryCountAssigned.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateActivationStatus.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetManualOrders.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetProductPricing.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetEmailTemplates.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetPhoneAccessories.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetAllOrders.sql" />
+    <Build Include="orders\Stored Procedures\sp_RemoveStock.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateOrderStatus.sql" />
+    <Build Include="orders\Stored Procedures\sp_CheckGUID.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdatePaymentMethod.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetSprintCarrierDetails.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateOrderQueue.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetProcessed.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetItemsWithFakeInventory.sql" />
+    <Build Include="orders\Stored Procedures\sp_AddHistory.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetNotProcessed.sql" />
+    <Build Include="orders\Stored Procedures\sp_QueueStuckOrders.sql" />
+    <Build Include="orders\Stored Procedures\sp_LookupIMEIOutlet.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetOrderAccessories.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetOrderDevice.sql" />
+    <Build Include="orders\Stored Procedures\sp_AllocateStock.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetAccessoryDevice.sql" />
+    <Build Include="orders\Stored Procedures\sp_ReleaseStock.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetAvailableOutlet.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetFakeInventoryCount.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetSKUsWithInventory.sql" />
+    <Build Include="orders\Stored Procedures\sp_AddOrderToQueue.sql" />
+    <Build Include="orders\Stored Procedures\sp_FixMissingProperty.sql" />
+    <Build Include="orders\Stored Procedures\sp_UpdateOrderAmount.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetRealInventoryCount.sql" />
+    <Build Include="orders\Stored Procedures\sp_MissingorDoublePayment.sql" />
+    <Build Include="orders\Stored Procedures\sp_ForcePennyPayment.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetDetails_Locations.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetDetails_Accessories.sql" />
+    <Build Include="orders\Stored Procedures\sp_GetDetails_SKU.sql" />
+    <Build Include="maintenance\Stored Procedures\FindUnUsedTables_usp.sql" />
+    <Build Include="maintenance\Stored Procedures\DatabaseIntegrityCheck.sql" />
+    <Build Include="maintenance\Stored Procedures\IndexOptimize.sql" />
+    <Build Include="logging\Stored Procedures\DD_ExecSummary.sql" />
+    <Build Include="logging\Stored Procedures\DD_TotalVisits.sql" />
+    <Build Include="logging\Stored Procedures\DD_ExecSummaryStatus.sql" />
+    <Build Include="inventory\Stored Procedures\AddFakeInventory.sql" />
+    <Build Include="cms\Stored Procedures\sp_CopyReleaseTemplate.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetActiveRebate.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetStaticSiteURL.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetActiveRebate_Test.sql" />
+    <Build Include="cms\Stored Procedures\sp_CopyRelease.sql" />
+    <Build Include="cms\Stored Procedures\sp_DeleteRelease.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetReleaseDetails.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetReleaseTemplates.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetReleaseVisible.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetTemplateData.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetTemplateTags.sql" />
+    <Build Include="cms\Stored Procedures\sp_CheckSiteCache.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetSiteURL.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetReleaseTemplateImage.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetReleaseTemplateContent.sql" />
+    <Build Include="cms\Stored Procedures\sp_GetTemplateChildren.sql" />
+    <Build Include="cjtmo\Stored Procedures\ImportFullCatalog.sql" />
+    <Build Include="catalog\Stored Procedures\CreateFreeAccessory.sql" />
+    <Build Include="catalog\Stored Procedures\UpdateDevicePrice.sql" />
+    <Build Include="catalog\Stored Procedures\MercentProductFeed_XML.sql" />
+    <Build Include="catalog\Stored Procedures\UpdateDeviceDetail.sql" />
+    <Build Include="catalog\Stored Procedures\spInputEOLDates.sql" />
+    <Build Include="catalog\Stored Procedures\AutoHideTag.sql" />
+    <Build Include="catalog\Stored Procedures\spInputLaunchDates.sql" />
+    <Build Include="catalog\Stored Procedures\spInputEditorsChoice.sql" />
+    <Build Include="catalog\Stored Procedures\CloneDeviceFeatures.sql" />
+    <Build Include="catalog\Stored Procedures\SetHoldBackQty.sql" />
+    <Build Include="catalog\Stored Procedures\IsEligibleForRebate.sql" />
+    <Build Include="ALLOCATION\Stored Procedures\ProcessVirtualInventoryRequests.sql" />
+    <Build Include="dbo\User Defined Types\GuidList.sql" />
+    <Build Include="Security\websecurity.sql" />
+    <Build Include="Security\util.sql" />
+    <Build Include="Security\ups.sql" />
+    <Build Include="Security\tmobile.sql" />
+    <Build Include="Security\test.sql" />
+    <Build Include="Security\squaretrade.sql" />
+    <Build Include="Security\service.sql" />
+    <Build Include="Security\salesorder.sql" />
+    <Build Include="Security\report.sql" />
+    <Build Include="Security\releases.sql" />
+    <Build Include="Security\PROMOTION.sql" />
+    <Build Include="Security\orders.sql" />
+    <Build Include="Security\notification.sql" />
+    <Build Include="Security\merchtool.sql" />
+    <Build Include="Security\maintenance.sql" />
+    <Build Include="Security\logging.sql" />
+    <Build Include="Security\inventory.sql" />
+    <Build Include="Security\gers.sql" />
+    <Build Include="Security\deprecated.sql" />
+    <Build Include="Security\customer.sql" />
+    <Build Include="Security\content.sql" />
+    <Build Include="Security\cms.sql" />
+    <Build Include="Security\cjtmo.sql" />
+    <Build Include="Security\catalog.sql" />
+    <Build Include="Security\cart.sql" />
+    <Build Include="Security\campaign.sql" />
+    <Build Include="Security\ALLOCATION.sql" />
+    <Build Include="Security\admin.sql" />
+    <Build Include="Security\account.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_SchemaCompareSets\COSTCO_PRODtoSOLUTION.scmp" />
+    <None Include="_SchemaCompareSets\COSTCO_SOLUTIONtoTEST.scmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\100\SqlSchemas\master.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\100\SqlSchemas\master.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
+    </ArtifactReference>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\100\SqlSchemas\msdb.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\100\SqlSchemas\msdb.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseVariableLiteralValue>msdb</DatabaseVariableLiteralValue>
+    </ArtifactReference>
+  </ItemGroup>
+</Project>

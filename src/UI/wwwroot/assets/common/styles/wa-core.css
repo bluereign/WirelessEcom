@@ -1,0 +1,71 @@
+.applecare-noplan-capsule {
+	border: 1px solid #ccc;
+	padding: 15px;
+	background-color: #efefef
+}
+
+.applecare-noplan-capsule > h2 {
+	font-size: 18px !important;
+}	
+
+.applecare-noplan-capsule-top {
+	border-radius: 8px 8px 0 0;
+	margin-top: 30px;
+}
+
+.applecare-noplan-capsule-top > h2 > span {
+	text-align: right;
+	font-size: 24px;
+}
+
+.applecare-noplan-capsule-bottom {
+	border-radius: 0 0 8px 8px;
+	margin-top: 2px;
+	margin-bottom: 20px;
+}
+
+.applecare-noplan-capsule-bottom > ul > li {
+	list-style: none inside;
+}
+
+#applecare-disclaimer {
+	margin-left: 0;
+}
+
+#applecare-disclaimer > li {
+	list-style: none outside none;
+}
+
+#applecare-disclaimer sup {
+	font-weight: bold;
+	font-size: 10px;
+}
+
+ul.dot-leaders {
+    max-width: 46em;
+    padding: 0 0 0 20px;
+    overflow-x: hidden;
+    list-style: none
+}
+
+ul.dot-leaders li:before {
+    float: left;
+    width: 0;
+    white-space: nowrap;
+    content:
+ ". . . . . . . . . . . . . . . . . . . . "
+ ". . . . . . . . . . . . . . . . . . . . "
+ ". . . . . . . . . . . . . . . . . . . . "
+ ". . . . . . . . . . . . . . . . . . . . "
+}
+
+ul.dot-leaders span:first-child {
+    padding-right: 0.33em;
+    background: #efefef;
+}
+
+ul.dot-leaders span + span {
+    float: right;
+    padding-left: 0.33em;
+    background: #efefef;
+}

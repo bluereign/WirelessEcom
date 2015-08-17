@@ -1,0 +1,123 @@
+uniqueId,country,carrierId,shortName,longName,aka
+1,ar,3201,cti-ar,CTI AR,
+2,ar,3202,movistar-ar,Movistar AR,
+3,ar,3246,movistarcdma- ar,Movistar (CDMA) AR,
+4,ar,3235,nextel-ar,Nextel AR,
+5,ar,3203,personal-ar,Personal,
+6,ar,3204,personal1-ar,Personal-1,
+7,ar,3205,personal2-ar,Personal-2,
+8,au,3600,h3g-au,Hutchison 3G AU,
+9,au,3685,optus-au,Optus,
+10,au,3630,telstra-au,Telstra,
+11,au,3670,vodafone-au,,
+12,ca,12412,bell-ca,Bell Mobility,"Subsidiary brands include: Aliant, NorthernTel, Northwestel, Solo & Télébec"
+13,ca,12453,fido-ca,Fido,(part of Rogers Wireless)
+14,ca,12405,mobilicity-ca,Mobilicity,
+15,ca,12426,mts-ca,MTS Mobility,
+16,ca,12402,rogers-ca,Rogers Wireless,
+17,ca,12436,sasktel-ca,SaskTel Mobility,
+18,ca,12493,telus-ca,Telus Mobility,Subsidiary brand Koodo
+19,ca,12403,videotron-ca,Vidéotron,
+20,ca,12487,virgin-ca,Virgin Mobile Canada,
+21,ca,12404,wind-ca,Wind Mobile,
+22,cl,15201,claro-cl,Claro,
+23,cl,15246,entel-cl,Entel CL,
+24,cl,15266,globaltel-cl,Globaltel CL,
+25,cl,15239,movistar-cl,Movistar CL,
+26,co,17001,comcel-co,ComCel CO,
+27,co,17002,movistar-co,Movistar CO,
+28,co,0,tigo-co,Tigo,
+29,co,0,uff-co,UFF,
+30,co,17099,unknown-co,Unknown  Colombian,
+31,fr,25041,bouygues-fr,Bouygues FR,
+32,fr,25058,orange-fr,Orange FR,
+33,fr,25072,sfr-fr,SFR,
+34,mx,48405,iusacell-mx,Iusacell MX,
+35,mx,48401,movistar-mx,Movistar MX,
+36,mx,48404,nextel-mx,Nextel MX,
+37,mx,48402,telcel-mx,Telcel,
+38,uk,82609,dolphin-uk,Dolphin Telecommunications,
+39,uk,82610,guernsey-uk,Guernsey Telecom,
+40,uk,82601,h3g-uk,Hutchison 3G UK,
+41,uk,82611,jersey-uk,Jersey Telecom,
+42,uk,82612,manx-uk,Manx Telecom,
+43,uk,82608,mercury-uk,Mercury One,
+44,uk,82602,o2-uk,O2 UK,
+45,uk,82607,one2one-uk,One2one UK,
+46,uk,82603,orange-uk,Orange UK,
+47,uk,82604,tmobile-uk,T-Mobile UK,
+48,uk,99902,unknown-uk,Unknown United Kingdom,
+49,uk,82605,virgin-uk,Virgin Mobile UK,
+50,uk,82606,vodafone-uk,Vodafone UK,
+51,us,84039,acs,ACS Wireless,Alaska  Communications Systems Inc.
+52,us,84003,alltel,Alltel,part of Verizon
+53,us,84078,alltelawcc,Alltel AWCC,
+54,us,84020,allwest,All West Communications,
+55,us,84074,appalachian,Appalachian  Wireless,East Kentucky Networks
+56,us,84001,attws,AT&T Blue,
+57,us,84000,bluegrass,Bluegrass Cellular,
+58,us,84004,boost,Boost,
+59,us,84031,boostunl,Boost Unlimited,
+60,us,84021,breakaway,Breakaway Wireless,
+61,us,84075,cablevision,CableVision,
+62,us,84025,carolinawest,Carolina West Wireless,
+63,us,84023,cellcom,Cellcom,
+64,us,84098,celloneeci,Cellular One of East Central Illinois,ECIT
+65,us,84026,cellonemontana,Cellular One of Montana,"MTPCS, formerly Chinook Wireless"
+66,us,84014,cellonenepa,Cellular One of NEPA,South Canaan Cellular Communications Co. LP
+67,us,84068,cellsouth,C Spire Wireless,Cellular South
+68,us,84024,centennial,Centennial Wireless,
+69,us,84076,chariton,Chariton Valley Cellular,
+70,us,84028,chat,Chat Mobility,Hawkeye Chat Mobility
+71,us,84002,cingular,AT&T Orange,Cingular
+72,us,84042,cox,Cox Wireless,"Cox Communications, Cox TMI Wireless"
+73,us,84005,cricket,Cricket  Communications,Leap Wireless
+74,us,84029,ctc,CTC,
+75,us,84016,cvgbell,Cincinnati Bell,
+76,us,84006,dobson,Dobson,
+77,us,84087,duet,Duet Wireless US,
+78,us,84059,element,Element Mobile,"Wisconsin RSA #7 Limited, Partnership dba Element Mobile"
+79,us,84055,epic,Epic Touch,
+80,us,84033,farmersmutual,Farmers Mutual Telephone Co,
+81,us,84073,gci,GCI  Communications,Alaska DigiTel
+82,us,84013,golden,Golden State Cellular,"Sierra Cellular, Alpine RSA 3"
+83,us,84052,ilvalley,Illinois Valley Cellular,IVC
+84,us,84051,immix,Immix Wireless,PC Management
+85,us,84056,inland,Inland Cellular,Washington RSA No. 8 Limited Partnership
+86,us,84060,iwireless,iWireless,Iowa Wireless Services
+87,us,84083,metropcs,MetroPCS,
+88,us,84061,mobipcs,Mobi PCS,
+89,us,84053,mosaic,Mosaic Telecom,
+90,us,84058,nextech,Nex-Tech Wireless,
+91,us,84007,nextel,Nextel,(part of Sprint)
+92,us,84030,ntelos,nTelos Wireless,
+93,us,84036,nuclanaturita,Nucla-Naturita  Telephone Co3,NNTC Wireless
+94,us,84035,nwmissouricell,Northwest Missouri Cellular,Hawkeye Northwest Missouri Cellular
+95,us,84037,panhandle,Panhandle Telecommunications,PTCI Communications and Broadband
+96,us,84062,peoples,Peoples Wireless,
+97,us,84040,pioneer,Pioneer Cellular,
+98,us,84063,plateau,Plateau Wireless,Plateau  Communications
+99,us,84043,pocket,(part of Cricket Communications),Pocket  Communications
+100,us,84097,revol,Revol Wireless,
+101,us,84044,silverstar,Silver Star PCS,
+102,us,84045,simmetry,Simmetry Wireless,
+103,us,84046,snakeriver,Snake River PCS,Eagle Telephone System
+104,us,84047,southcentral,South Central Communications,
+105,us,84008,sprint,Sprint,
+106,us,84048,sprocket,Sprocket Wireless,Cross Wireless
+107,us,84049,strata,Strata Networks,UBET Wireless
+108,us,84009,suncom,SunCom Wireless,(part of T-Mobile)
+109,us,84050,syringa,Syringa Wireless,
+110,us,84086,thumb,Thumb Cellular,
+111,us,84010,tmobile,T-Mobile,
+112,us,84038,unicel,unicel,(part of Verizon)
+113,us,84054,union,Union Wireless,
+114,us,84077,united,United Wireless,
+115,us,84099,unknown-us,Unknown Unitied States,
+116,us,84011,uscellular,US Cellular,
+117,us,84012,verizon,Verizon Wireless,
+118,us,84015,viaero,Viaero Wireless,NE Colorado Inc
+119,us,84022,virgin,Virgin Mobile USA,Includes brands Assurance Wireless and Common Cents
+120,us,84066,westcentral,West Central Wireless,
+121,us,84065,tracfone,Tracfone,
+122,zz,99999,devnull,Special Carrier for testing,

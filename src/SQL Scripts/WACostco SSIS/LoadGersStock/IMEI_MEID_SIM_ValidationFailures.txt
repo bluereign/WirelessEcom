@@ -1,0 +1,1 @@
+ID_CD       LOC_CD  ITM_CD     Carrier   IMEI             SIM                   ErrorMessage

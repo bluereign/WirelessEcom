@@ -1,0 +1,34 @@
+/* body 
+{
+	font-size:100%;
+
+}
+*/
+
+.logo-container{
+	min-height:50px;
+}
+
+/*
+div#tab-bar div.mt-tab{
+	height: 52px;
+}
+
+
+
+div.my_tab {
+width: 540px;
+height: 440px;
+}
+
+
+
+label {
+margin-left: 5px;
+font-weight: 100;
+}
+*/
+
+.bootstrap #accessoryTable a{
+	font-size: 14px;
+}

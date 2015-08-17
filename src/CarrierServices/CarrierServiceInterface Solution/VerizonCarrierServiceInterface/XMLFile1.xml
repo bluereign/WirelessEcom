@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<retailOrder xmlns="http://www.verizonwireless.com/oas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.verizonwireless.com/oas  http://oas-prod.odc.vzwcorp.com:8080/schema/webagents.xsd">
+	<messageHeader>
+		<versionNumber>001</versionNumber>
+		<vendorId>WA-Costco</vendorId>
+		<channelId>B2C</channelId>
+		<channelType>INDIRECT</channelType>
+		<requestType>ORDER</requestType>
+		<orderType>SNPSLND</orderType>
+		<referenceNumber>WAC0022</referenceNumber>
+		<returnURL>https://membershipwireless.com:9443/asynclistner/verizonasynclistner.cfm</returnURL>
+		<resend>3</resend>
+	</messageHeader>
+	<order>
+		<orderTimeStamp>02/09/2010 07:34:17</orderTimeStamp>
+		<dealerCode>12345</dealerCode>
+		<newCustomer>Y</newCustomer>
+		<addToExistingAccount>N</addToExistingAccount>
+		<corporateInfo/>
+		<creditCard>
+			<creditCardNumber>0000000000000000</creditCardNumber>
+			<creditCardAmount>0.00</creditCardAmount>
+			<expirationDate>122010</expirationDate>
+			<creditCardType>VISA</creditCardType>
+			<creditCardName>
+				<firstName>Mac</firstName>
+				<middleInitial>T</middleInitial>
+				<lastName>McClain</lastName>
+				<suffix>Jr</suffix>
+				<prefix>Mr</prefix>
+			</creditCardName>
+			<creditCardAddress>
+				<addressType>SD</addressType>
+				<houseNum>1</houseNum>
+				<directionalPrefix> </directionalPrefix>
+				<streetName>VERIZON</streetName>
+				<streetType>PL</streetType>
+				<directionalSuffix> </directionalSuffix>
+				<aptDesignator> </aptDesignator>
+				<aptNumber> </aptNumber>
+				<ruralRoute> </ruralRoute>
+				<ruralBoxNum> </ruralBoxNum>
+				<poBox> </poBox>
+				<zipCode>30004</zipCode>
+				<deliveryPointBarCode>01</deliveryPointBarCode>
+				<city>ALPHARETTA</city>
+				<state>GA</state>
+				<countyName>FULTON</countyName>
+				<addressLine1>1 VERIZON PL</addressLine1>
+				<addressLine2> </addressLine2>
+				<zip10>30004-8510</zip10>
+			</creditCardAddress>
+		</creditCard>
+		<billingName>
+			<firstName>Mac</firstName>
+			<middleInitial>T</middleInitial>
+			<lastName>McClain</lastName>
+			<suffix>Jr</suffix>
+			<prefix>Mr</prefix>
+		</billingName>
+		<contact>
+			<homeNumber>4044044040</homeNumber>
+			<workNumber>7701234567</workNumber>
+			<workExtension>1233</workExtension>
+			<email>espeir@mobilnet.gte.com</email>
+		</contact>
+		<billingAddress>
+			<addressType>SD</addressType>
+			<houseNum>1</houseNum>
+			<directionalPrefix> </directionalPrefix>
+			<streetName>VERIZON</streetName>
+			<streetType>PL</streetType>
+			<directionalSuffix> </directionalSuffix>
+			<aptDesignator> </aptDesignator>
+			<aptNumber> </aptNumber>
+			<ruralRoute> </ruralRoute>
+			<ruralBoxNum> </ruralBoxNum>
+			<poBox> </poBox>
+			<zipCode>30004</zipCode>
+			<deliveryPointBarCode>01</deliveryPointBarCode>
+			<city>ALPHARETTA</city>
+			<state>GA</state>
+			<countyName>FULTON</countyName>
+			<addressLine1>1 VERIZON PL</addressLine1>
+			<addressLine2> </addressLine2>
+			<zip10>30004-8510</zip10>
+		</billingAddress>
+		<revenueInfo>
+			<orderAmount>0.00</orderAmount>
+			<depositAmount>0.00</depositAmount>
+			<taxAmount>0.00</taxAmount>
+			<shCharges>0.00</shCharges>
+			<paymentType>CREDITCARD</paymentType>
+			<depositAccepted>Y</depositAccepted>
+		</revenueInfo>
+		<subOrder>
+			<retailServiceOnlyPortIn>
+				<subReferenceNumber>WAC0022-0</subReferenceNumber>
+				<systemData>
+					<serviceZipCode>07306</serviceZipCode>
+				</systemData>
+				<mdn>2068506295</mdn>
+				<esn>03212550341</esn>
+				<activationFee>35.00</activationFee>
+				<activationFeeDiscountCd />
+				<activationFeeDiscountCdDesc />
+				<pinValue />
+				<contractLength>24</contractLength>
+				<ratePlanBrochureCode>BAPROMO101408</ratePlanBrochureCode>
+				<customerAgreementCode>10105</customerAgreementCode>
+				<lnp>
+					<ospAccountNo>334436661</ospAccountNo>
+					<lnpAuthorizedSignerName>Mac Jacobs</lnpAuthorizedSignerName>
+					<ssn>203265468</ssn>
+					<lnpAddress>
+						<addressType>HighRise</addressType>
+						<houseNum>1027</houseNum>
+						<directionalPrefix> </directionalPrefix>
+						<streetName>BELLEVUE</streetName>
+						<streetType>CT</streetType>
+						<directionalSuffix>E</directionalSuffix>
+						<aptDesignator>APT</aptDesignator>
+						<aptNumber>406</aptNumber>
+						<ruralRoute> </ruralRoute>
+						<ruralBoxNum> </ruralBoxNum>
+						<poBox> </poBox>
+						<zipCode>98102</zipCode>
+						<deliveryPointBarCode>06</deliveryPointBarCode>
+						<city>SEATTLE</city>
+						<state>WA</state>
+						<countyName>KING</countyName>
+						<addressLine1>1027 BELLEVUE CT E</addressLine1>
+						<addressLine2>#406</addressLine2>
+						<zip10>98102-4460</zip10>
+						<country/>
+						<firstName>Mac</firstName>
+						<middleInitial/>
+						<lastName>Jacobs</lastName>
+						<suffix/>
+						<prefix/>
+					</lnpAddress>
+					<directFulfillmentIndicator>Y</directFulfillmentIndicator>
+
+				</lnp>
+				<equipment>
+					<name>Verizon Wireless USB727 Modem</name>
+					<make>Verizon Wireless</make>
+					<model>USB727 Modem</model>
+					<productType>PHONE</productType>
+					<amount>0.00</amount>
+					<retailPrice>0.00</retailPrice>
+					<listPrice>0.00</listPrice>
+					<quantity>1</quantity>
+					<productCode>USB727</productCode>
+					<discountCode />
+					<discountCodeDescription />
+					<discountAmount>0.00</discountAmount>
+				</equipment>
+				<feature>
+					<name>BASIC VOICE MAIL - 0</name>
+					<description />
+					<featureCode>68877</featureCode>
+					<featureType />
+					<serviceTypeCode>0</serviceTypeCode>
+					<monthlyCharge>0</monthlyCharge>
+					<includedWithPlan>B</includedWithPlan>
+					<subscribe>A</subscribe>
+					<discountCode />
+					<discountCodeDescription />
+					<discountAmount>0</discountAmount>
+				</feature>
+				<feature>
+					<name>Auto Feature 1</name>
+					<description />
+					<featureCode>65616</featureCode>
+					<serviceTypeCode>0</serviceTypeCode>
+					<monthlyCharge>0</monthlyCharge>
+					<includedWithPlan>B</includedWithPlan>
+					<subscribe>A</subscribe>
+					<discountCode />
+					<discountCodeDescription />
+					<discountAmount>0</discountAmount>
+				</feature>
+				<plan>
+					<name>BroadbandAccess Promotion 5 GB</name>
+					<description />
+					<monthlyCharge>59.99</monthlyCharge>
+					<planCode>73437</planCode>
+					<retailCharge>59.99</retailCharge>
+					<miscellaneous>
+						<preferredNpaNxx />
+					</miscellaneous>
+				</plan>
+			</retailServiceOnlyPortIn>
+		</subOrder>
+	</order>
+</retailOrder>
+
+
+
+<?xml version="1.0"?>
+<oasOrderResponse xmlns="http://www.verizonwireless.com/oas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.verizonwireless.com/oas http://oas-prod.odc.vzwcorp.com:8080/schema/oasResponse.xsd">
+	<messageHeader>
+		<versionNumber>001</versionNumber>
+		<vendorId>WA-Costco</vendorId>
+		<channelId>B2C</channelId>
+		<channelType>INTERNET</channelType>
+		<requestType>ORDERSTATUS</requestType>
+		<orderType>SNPSLND</orderType>
+		<referenceNumber>WAC0022</referenceNumber>
+		<returnURL>https://etmprod.verizonwireless.com/servlet/AsyncResponse</returnURL>
+		<resend>0</resend>
+	</messageHeader>
+	<asyncOrderResponse>
+		<errorCode>00</errorCode>
+		<errorMessage>Successfully processed the order</errorMessage>
+		<orderTimeStamp>02/09/2010 07:34:17</orderTimeStamp>
+		<locationCode>0475101</locationCode>
+		<billingSystemOrderNumber>000500847</billingSystemOrderNumber>
+		<lines>
+			<line>
+				<subReferenceNumber>WAC0022-0</subReferenceNumber>
+				<mdn>2068506295</mdn>
+			</line>
+		</lines>
+	</asyncOrderResponse>
+</oasOrderResponse>

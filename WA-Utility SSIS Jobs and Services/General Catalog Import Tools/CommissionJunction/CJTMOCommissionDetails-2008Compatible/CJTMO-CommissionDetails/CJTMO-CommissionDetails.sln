@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{D183A3D8-5FD8-494B-B014-37F57B35E655}") = "CJTMO-CommissionDetails", "CJTMO-CommissionDetails\CJTMO-CommissionDetails.dtproj", "{DF946510-1C80-4C5B-B424-10A898C6E678}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver.cartoys.corp:8080/tfs
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CJTMO-CommissionDetails\\CJTMO-CommissionDetails.dtproj
+		SccProjectName1 = CJTMO-CommissionDetails
+		SccLocalPath1 = CJTMO-CommissionDetails
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF946510-1C80-4C5B-B424-10A898C6E678}.Development|Default.ActiveCfg = Development
+		{DF946510-1C80-4C5B-B424-10A898C6E678}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

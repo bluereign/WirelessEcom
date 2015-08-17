@@ -1,0 +1,10 @@
+@import url('/admin/assets/common/styles/style.css');
+
+body {
+	background-image: url('../images/bg-body.gif');
+}
+
+div#top h1 {
+	background-image: url('../images/X_mobile_center_logo.png');
+	width:240px;
+}

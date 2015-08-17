@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintOrdersTests", "RepositoryTests\SprintOrdersTests.csproj", "{168B58A7-E041-4D2C-9FB3-3F92413E2AC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintOrdersData", "Repository\SprintOrdersData.csproj", "{93494245-69FA-4DAD-A4DD-650D0BED5970}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C41A0D3A-A608-45AD-A172-176B02A21347}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintOrders", "Entity\SprintOrders.csproj", "{42474D5E-47D9-48F4-BFE5-4A9282B1E28B}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccProjectUniqueName0 = RepositoryTests\\SprintOrdersTests.csproj
+		SccProjectName0 = RepositoryTests
+		SccLocalPath0 = RepositoryTests
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = Repository\\SprintOrdersData.csproj
+		SccProjectName2 = Repository
+		SccLocalPath2 = Repository
+		SccProjectUniqueName3 = Entity\\SprintOrders.csproj
+		SccProjectName3 = Entity
+		SccLocalPath3 = Entity
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{168B58A7-E041-4D2C-9FB3-3F92413E2AC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{168B58A7-E041-4D2C-9FB3-3F92413E2AC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{168B58A7-E041-4D2C-9FB3-3F92413E2AC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{168B58A7-E041-4D2C-9FB3-3F92413E2AC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93494245-69FA-4DAD-A4DD-650D0BED5970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93494245-69FA-4DAD-A4DD-650D0BED5970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93494245-69FA-4DAD-A4DD-650D0BED5970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93494245-69FA-4DAD-A4DD-650D0BED5970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42474D5E-47D9-48F4-BFE5-4A9282B1E28B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42474D5E-47D9-48F4-BFE5-4A9282B1E28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42474D5E-47D9-48F4-BFE5-4A9282B1E28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42474D5E-47D9-48F4-BFE5-4A9282B1E28B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

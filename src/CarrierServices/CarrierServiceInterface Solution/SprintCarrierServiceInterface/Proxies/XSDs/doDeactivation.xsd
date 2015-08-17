@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="DeactivationRequest">
+		<xs:sequence>
+			<xs:element name="reference-nextel-order-id" type="NextelOrderKey">
+				<!--Nextel order ID for the original activation.-->
+			</xs:element>
+			<xs:element name="equip-returned" type="xs:boolean">
+				<!--Whether the equipment has been returned to the warehouse.-->
+			</xs:element>
+			<xs:element name="activation-date" type="xs:dateTime">
+				<!--When the phone was activated.  Format is "CCYY-MM-DDThh:mm:ss"  (T is the date/time separator).-->
+			</xs:element>
+			<xs:element name="return-date" type="xs:dateTime">
+				<!--When the phone was returned.  Format is "CCYY-MM-DDThh:mm:ss"  (T is the date/time separator).-->
+			</xs:element>
+			<xs:element name="name" type="Name"/>
+			<xs:element name="home-phone" type="PhoneNumber" minOccurs="0"/>
+			<xs:element name="work-phone" type="PhoneExtType" minOccurs="0"/>
+			<xs:element name="phone" type="Phone">
+				<!--Only one phone can be deactivated at a time.-->
+			</xs:element>
+		</xs:sequence>
+		<!--Deactivation request message.-->
+	</xs:complexType>
+	<xs:element name="doDeactivation" type="DeactivationRequest"/>
+	<xs:complexType name="DeactivationResponse">
+		<xs:sequence>
+			<xs:element name="nextel-order-id" type="NextelOrderKey" minOccurs="0"/>
+			<xs:element name="result" type="DeactivationResult"/>
+			<xs:element name="bill-cycle-day" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:unsignedInt">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="31"/>
+					</xs:restriction>
+					<!--Day of the month billing occurs.-->
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="termination-fee-required" type="xs:boolean">
+				<!--Whether an early termination fee will be required.-->
+			</xs:element>
+		</xs:sequence>
+		<!--Deactivation response message.-->
+	</xs:complexType>
+	<xs:complexType name="DeactivationServiceResponse">
+		<xs:choice>
+			<xs:element name="deactivationResponse" type="DeactivationResponse"/>
+			<xs:element name="ackNackResponse" type="ParseResponse"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="doDeactivationResponse" type="DeactivationServiceResponse"/>
+</xs:schema>

@@ -1,0 +1,739 @@
+    	.zipHeader
+    	{
+    		position:static;/*override dialog version*/
+    		margin-bottom:1em;
+    		text-align:right;
+			
+    	}
+    	/*
+    	table 
+    	{
+    		width:100%;
+			
+    		border-left:1px solid #999;
+    		border-bottom:1px solid #999;
+			
+    		
+    	}
+
+    	td
+    	{
+    		font-size:1.4em;
+    		border-top:1px solid #999;
+    		border-right:1px solid #999;
+    		padding:0.3em;
+    		background-color:#eee;
+			text-align:center;
+			
+    		vertical-align:top;
+    		
+    	}
+		*/
+		.lineHeader td
+		{
+    		font-size:1.4em;
+    		color:#fff;
+    		background-color:#999;
+    		text-align:left;
+			position: relative;
+		}
+		.lineHeader td a
+		{
+			color:#fff;
+			padding-right:23px;
+			background:url('../images/ui/close.gif') right top no-repeat transparent;
+			padding-top:4px;
+			position:absolute;
+			right:10px;
+			height:20px;
+		}
+		.sectionHeader td
+		{
+			font-size:1.4em;
+			text-align:center;
+			vertical-align:middle;
+			width:100px;
+			background-color:#fff;
+			position:relative;
+		}
+		.sectionHeader td.item
+		{
+			text-transform:uppercase;
+			text-align:left;
+			width:630px;
+			height:auto;
+		}
+		
+		.workflowHeader
+		{
+			font-size:0.8em;
+		}
+				
+		.workflowHeader .workflow
+		{
+			margin:10px auto;
+			float:none;
+			width:816px;
+			height:35px;
+		}
+		
+		.workflowHeader .lines
+		{
+			display:none;
+		}
+		
+		.workflowHeader .steps
+		{
+			margin:0;
+			padding:0;
+		}
+		
+		.workflowHeader .steps li
+		{
+			height:25px;
+			margin:0;
+//			padding:0.5em 3px 0.5em 45px;
+			padding:9px 3px 0.5em 42px;
+			width:156px;
+			text-align:left;
+		}
+		.workflowHeader .step_1
+		{
+			background-image:url('../images/ui/workflow_sm_1.gif') !important;
+			padding-left:30px !important;
+			width:171px !important;
+		}
+		.workflowHeader .step_2
+		{
+			background-image:url('../images/ui/workflow_sm_2.gif') !important;
+		}
+		.workflowHeader .step_3
+		{
+			background-image:url('../images/ui/workflow_sm_3.gif') !important;
+		}
+		.workflowHeader .step_4
+		{
+			background-image:url('../images/ui/workflow_sm_4.gif') !important;
+		} 
+		.workflowHeader .cart
+		{
+			background-image:url('../images/ui/workflow_sm_5.gif') !important;
+			width:29px !important;
+			display:none;
+		}
+		
+		/*turn off cart image-push from core.css*/
+		.workflow li.complete + .cart
+		{
+			background-position: left top !important;
+		}
+				
+		.workflow li.complete + li.complete,
+		.workflow li.complete,
+		.workflow li.complete + li.complete + li.complete + li.complete + .cart
+		{
+			background-position: 0px 0px !important;
+		}
+		
+		.workflow li.notComplete + li.notComplete,
+		.workflow li.notComplete
+		{
+			background-position: 0px -36px !important;
+		}
+		
+		.workflow li.notComplete + li.complete
+		{
+			background-position: 0px -72px !important;
+		}
+		
+		.workflow li.complete + li.notComplete
+		{
+			background-position: 0px -108px !important;
+		}
+
+		.workflow li.complete + li.disabled
+		{
+			background-position: 0px -144px !important;
+		}
+		
+		.workflow li.notComplete + li.disabled
+		{
+			background-position: 0px -180px !important;
+		}
+		
+		.workflow li.disabled + li.disabled
+		{
+			background-position: 0px -216px !important;
+		}
+
+		.workflow li.disabled + li.complete
+		{
+			background-position: 0px -144px !important;
+		}
+
+		.workflow li.disabled + li.notComplete
+		{
+			background-position: 0px -180px !important;
+		}
+		
+		.workflowHeader li a
+		{
+			display:none !important;
+		}
+		
+		td.item
+		{
+			background-color:#fff;
+			/* height:180px; */
+		}
+		.fee td
+		{
+			border-top:1px dashed #aaa;
+		}
+		.fee td.item
+		{
+			height:auto;
+			text-align:left;
+			padding:0.5em 3em;
+			color:#0a94d6;
+		}
+		
+		td.item table
+		{
+			border:none;
+			width:auto;
+			margin:1em 0 0 0;
+		}
+		td.item td
+		{
+			font-size:1em;
+			border:none;
+			background:transparent;
+			/*color:#0a94d6;*/
+			text-align:right;
+			
+		}
+		td.item td.label
+		{
+			color:#6b6b6b;
+			text-align:left;
+			padding-right:1em;
+		}
+		
+		td.item img
+		{
+			float:left;
+		}
+		
+		.editLinks
+		{
+			float:right;
+		}
+		.editLinks a
+		{
+			padding:0.5em;
+		}
+		.totalRow td
+		{
+			height:2.5em;
+			text-align:right;
+			vertical-align:middle;
+		}
+		
+/*-----------------------------------*/
+/* coppied from products.css.  TODO: consolodate*/
+.sidebar
+{
+	width: 220px;
+	padding: 0 0 0 10px;
+    border-left: 1px dashed #CFCFCF;
+	border-right: none !important;
+	font-size: 1.2em;
+}
+
+.sidebar h2
+{
+	font-size:2.0em;
+	font-family:Arial,Tahoma,Sans-Serif;
+	font-weight:normal;
+	margin-top: 0px;
+	padding-top: 0px;
+	padding-left: 0px;
+	margin-left: 0px;
+	color:#CCC;
+}
+
+.left
+{
+	float:left;
+}
+
+.main
+{
+	padding:0 2em 2em 2em;
+	width: 660px;
+}
+
+#header-checkout {
+    height: 56px;
+}
+
+/*----------------------------------*/
+
+/*we'll reduce the width of .main to increase readability*/
+
+h2
+{
+	font-size:2.3em;
+}
+
+h2.activationFeeWindow
+{
+	padding: 0px;
+	padding-bottom: 20px;
+	margin: 0px;
+}
+
+ul.checkoutSteps
+{
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+
+ul.checkoutSteps li
+{
+	padding:0.2em 0;
+	padding-left: 20px;
+}
+
+ul.checkoutSteps li.complete
+{
+	background:url('../images/ui/checkmark.png') left 3px no-repeat transparent;
+	
+}
+ul.checkoutSteps li.active
+{
+
+	background:url('../images/ui/activearrow.gif') left 3px no-repeat transparent;
+	font-weight: bold;
+}
+
+.req
+{
+	color:#d00;
+	margin-left:0.3em;
+	font-size:1.2em;
+}
+/*
+.main p
+{
+	font-size:1.4em;
+}
+*/
+/*modified footer*/
+
+.checkoutFooter #footer 
+{
+	background-image:none !important;
+}
+
+.checkoutFooter #footer .shortBar
+{	
+	height:60px;
+	margin-bottom:30px;
+	background:url('../../costco/images/skin/skin-footer-bg.gif') left top repeat-x #fff;
+}
+
+/* Begin Mac's CSS block */
+/* TODO: revise and cleanup to fit structure */
+
+form.cmxform fieldset {
+  margin-bottom: 30px;
+  /*font-size:1.4em;*/
+  font-size:inherit;
+  border: none;
+  background:url('../images/ui/form-bg.gif') repeat-x ;
+	padding-top: 10px;
+}
+	
+	form.cmxform ul
+	{
+		font-size: 1.2em;
+		margin-bottom: 20px;
+	}
+	form.cmxform ul li
+	{
+		margin-bottom: 5px;	
+	}
+
+	form.cmxform fieldset.nobg
+	{
+		background:none !important;
+	}
+
+	form.cmxform fieldset.optional li.or
+	{
+		font-weight: bold;
+		text-align:center;
+		width: 265px;
+		font-size: 1.2em;
+	}
+
+	form.cmxform span.title
+	{
+		font-weight: bold;
+		margin-bottom: 10px;
+		display:block;
+		padding-left: 5px;
+		font-size:1.4em;
+	}
+	
+	
+
+	form.cmxform fieldset label
+	{
+		font-size:1.2em;
+	}
+
+	form.cmxform label {
+	  display: inline-block;
+	  line-height: 1.8;	  
+	  vertical-align: top;
+	}
+	form.cmxform fieldset ol {
+	  margin: 0;
+	  padding: 0;
+	}
+	form.cmxform fieldset li {
+	  list-style: none;
+	  padding: 5px;
+	  margin: 0;
+	}
+	form.cmxform fieldset fieldset {
+	  border: none;
+	  margin: 3px 0 0;
+	}
+	form.cmxform fieldset fieldset legend {
+	  padding: 0 0 5px;
+	  font-weight: normal;
+	
+	}
+	form.cmxform fieldset fieldset label {
+	  display: block;
+	  width: auto;
+	}
+	form.cmxform em {
+	  font-weight: bold;
+	  font-style: normal;
+	  color: #f00;
+	}
+	form.cmxform label {
+	  width: 120px; /* Width of labels */
+	}
+	form.cmxform label.long {
+	  width: 165px; /* Width of labels */
+	}	
+	form.cmxform fieldset fieldset label {
+	  margin-left: 123px; /* Width plus 3 (html space) */
+	  
+	}
+	form.cmxform li.full label
+	{
+		width: auto;	
+	}
+	form.cmxform ol li ol
+	{
+		margin-left: 20px;	
+	}
+	form.cmxform input.areacode, form.cmxform input.lnp
+	{
+		width: 30px;	
+	}
+	form.cmxform input.lastfour
+	{
+		width:60px;	
+	}
+	form.cmxform input.pin
+	{
+		width: 85px;
+	}
+
+
+form.cmxform .inline-error
+{
+	margin-top: 20px;
+	margin-bottom: 5px;
+	color: #FFF;
+	display:inline;
+	padding-top: 20px;
+}
+form.cmxform .inline-error span
+{
+	background:url('../images/ui/form-inlineerror-bg.gif') repeat-x ;
+	padding: 8px;
+	padding-top: 14px;	
+	padding-left: 15px;
+	font-size:1.2em;
+	color: #cf0b0b;
+}
+
+#processWirelessAccountForm label.long {
+	width:210px;
+	line-height:1.4em;
+	margin-top:5px;
+}
+
+#processWirelessAccountForm li {
+	margin-bottom:5px;
+}
+
+.form-errorsummary
+{
+	background-color: #FFF;
+	border: solid 1px #cf0b0b;
+	color:#cf0b0b;
+	margin: 2px;
+	font-size: 1.2em;
+	margin-bottom: 15px;
+}
+
+.form-errorsummary ul
+{
+	padding: 10px;
+	margin-bottom: 0px !important;
+}
+
+.form-errorsummary li
+{
+	margin-bottom: 6px;	
+	
+}
+
+.form-errorsummary span
+{
+	padding: 10px;
+	display: block;
+	font-weight: bold;
+	padding-bottom: 0px;
+	
+}
+
+#txtPin
+{
+	width: 50px;	
+}
+
+.resultCode
+{
+	float:right;
+	margin-bottom: 10px;
+}
+
+.bold
+{
+	font-weight: bold;	
+}
+
+.pdfterms
+{
+	margin-bottom: 20px;	
+}
+
+
+/*the basics, and works for FF*/
+#LoadingDiva{
+	margin:0px 0px 0px 0px;
+	position:fixed;
+	height: 100%;
+	z-index:9999;
+	padding-top:200px;
+	padding-left:50px;
+	width:100%;
+	clear:none;
+	
+	background:url('../images/ui/transbg.png');
+	/*background-color:#666666;
+	border:1px solid #000000;*/
+	}
+#LoadingDiva div.bg{
+	height: 100px;
+	width: 400px;
+	text-align: center;
+	background-color: #fff;
+	margin-left: auto; margin-right: auto;
+	
+}
+#LoadingDiva div.bg span
+{
+	font-size: 1.5em;
+	display: block;
+	margin-top: 30px;
+	padding-top: 20px;
+	margin-bottom: 8px;
+}
+
+
+/*IE will need an 'adjustment'*/
+* html #LoadingDiv{
+     position: absolute;
+     height: expression(document.body.scrollHeight; document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
+	}
+
+/* END Mac's CSS block */
+
+.infoTip
+{
+	background-image: url('../images/ui/1285180071_information.png');
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	height: 17px; width: 17px;
+	display: inline-block;
+}
+
+#tooltip {
+	position: absolute;
+	z-index: 3000;
+	background-color: #eee;
+	padding: 5px;
+	width: 300px;
+
+
+}
+.fancy{
+	
+	
+}
+#tooltip h3, #tooltip div { 
+	margin: 0; 
+	color: #000 !important;
+	font-size: 1.2em;
+	}
+
+.notify
+{
+	padding: 10px;
+	background-color: #FF9;
+	font-size: 1.2em;
+	margin-bottom: 10px;
+}
+
+a.activationFeeExplanation,
+a.activationFeeExplanation:link,
+a.activationFeeExplanation:visited,
+a.activationFeeExplanation:hover,
+a.activationFeeExplanation:active,
+.activationFeeExplanation
+{
+	color: #f00;
+}
+
+div.cartReviewMessage
+{
+	font-size: 1.4em;
+	color: #91C951;
+	font-weight: bold;
+}
+
+/* message boxes */
+
+.checkout-msg-box-informational,
+.checkout-msg-box-success,
+.checkout-msg-box-warning,
+.checkout-msg-box-error
+{
+	font-size: 14px;
+	border: 1px solid;
+	border-radius: 2px;
+	margin: 10px 20px;
+	padding: 15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
+.checkout-msg-box-informational {
+	color: #00529B;
+	background-color: #BDE5F8;
+	padding: 4px;
+	text-align: center;
+}
+
+.checkout-msg-box-success {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	padding: 4px;
+	text-align: center;
+}
+
+.checkout-msg-box-warning {
+	color: #9F6000;
+	background-color: #FEEFB3;
+	padding:4px;
+	text-align:center;
+}
+
+.checkout-msg-box-error {
+	color: #D8000C;
+	background-color: #FFBABA;
+	padding:4px;
+	text-align:center;
+}
+
+#reviewOrder td {
+	vertical-align:baseline;
+}
+
+
+/* BEGIN || Checkout Q1 2014 */
+
+
+/* Select2 overrides */
+.select2-container .select2-choice {
+	height:38px !important;
+	line-height:38px !important;
+	background-color:transparent !important;
+	background-image:none !important;
+}
+.select2-container .select2-choice .select2-arrow b {
+	background-position: 0px 7px !important;
+}
+.select2-container .select2-choice .select2-chosen {
+	margin-left:5px !important;
+}
+.select2-container .select2-choice abbr,
+.select2-container .select2-choice .select2-arrow {
+	background-color:transparent !important;
+	background-image:none !important;
+	border:0 !important;
+}
+.select2-container .select2-choice .select2-arrow b {
+	background:url('../images/select2-blue.png') no-repeat 0 18px !important;
+}
+.select2-dropdown-open .select2-choice .select2-arrow b {
+	background-position:-18px 18px !important;
+}
+textarea:focus, 
+input[type="text"]:focus, 
+input[type="password"]:focus, 
+input[type="datetime"]:focus, 
+input[type="datetime-local"]:focus, 
+input[type="date"]:focus, 
+input[type="month"]:focus, 
+input[type="time"]:focus, 
+input[type="week"]:focus, 
+input[type="number"]:focus, 
+input[type="email"]:focus, 
+input[type="url"]:focus, 
+input[type="search"]:focus, 
+input[type="tel"]:focus, 
+input[type="color"]:focus, 
+.uneditable-input:focus,
+.select2-container-active {
+	border-color: #66afe9;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+	outline: 0 none;
+}
+
+
+/* END || Checkout Q1 2014 */

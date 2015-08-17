@@ -1,0 +1,77 @@
+﻿.dialog
+{
+	font-size:1.2em;
+}
+
+.getzipcode
+{
+	text-align:center;
+	padding-top:4em;
+}
+
+.whichline
+{
+	padding:0.5em;
+	background-color:#ffc;
+	border-bottom: 1px dashed #b6b6b6;
+	font-size:1.2em;
+}
+
+.zipHeader
+{
+	font-size:1.2em;
+	padding:0.5em;
+	background-color:#eee;
+	border-bottom: 1px solid #b6b6b6;
+	text-align:right;
+	margin-bottom: 15px;
+}
+.lineFooter
+{
+	margin-top: 15px;	
+}
+
+.zipHeader .zipcode
+{
+	float:left;
+}
+
+div.line
+{
+	border-bottom:1px solid #b6b6b6;
+	font-size:1.2em;
+	padding-top:0.5em;
+}
+
+div.line .lineName
+{
+	font-weight:bold;
+}
+
+div.line input[type=button]
+{
+	float:right;
+}
+
+ul.line,
+ul.line li
+{
+	list-style:none;
+	padding:0.5em;
+	margin:0;
+}
+
+ul.line li
+{
+	border-top:1px dashed #ddd;	
+}
+
+ul.line li span
+{
+	width:100px;
+}
+
+.x-dlg .xdlg-hd
+{
+	
+}

@@ -1,0 +1,1155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="COSTCO.TESTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceGuid" />
+          </Key>
+          <Property Name="DeviceGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CarrierGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ManufacturerGuid" Type="uniqueidentifier" />
+          <Property Name="UPC" Type="nvarchar" MaxLength="20" />
+          <Property Name="Name" Type="nvarchar" MaxLength="67" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceGuid" />
+          </Key>
+          <Property Name="ServiceGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CarrierGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CarrierServiceId" Type="nvarchar" MaxLength="12" />
+          <Property Name="CarrierBillCode" Type="nvarchar" MaxLength="12" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="MonthlyFee" Type="money" />
+          <Property Name="CartTypeId" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressGuid" />
+          </Key>
+          <Property Name="AddressGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Company" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address3" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DaytimePhone" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="EveningPhone" Type="nvarchar" MaxLength="10" />
+          <Property Name="MilitaryBase" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="LineService">
+          <Key>
+            <PropertyRef Name="LineServiceId" />
+          </Key>
+          <Property Name="LineServiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDetailId" Type="int" Nullable="false" />
+          <Property Name="ServiceType" Type="nchar" MaxLength="10" />
+          <Property Name="ServiceId" Type="int" />
+          <Property Name="CarrierServiceId" Type="nchar" MaxLength="10" />
+          <Property Name="MonthlyFee" Type="money" />
+          <Property Name="Mandatory" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="ShipAddressGuid" Type="uniqueidentifier" />
+          <Property Name="BillAddressGuid" Type="uniqueidentifier" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="ShipMethodId" Type="int" />
+          <Property Name="ActivationType" Type="varchar" MaxLength="1" />
+          <Property Name="Message" Type="nvarchar" MaxLength="254" />
+          <Property Name="IPaddress" Type="varchar" MaxLength="39" />
+          <Property Name="Status" Type="int" />
+          <Property Name="GERSStatus" Type="int" />
+          <Property Name="GERSRefNum" Type="varchar" MaxLength="14" />
+          <Property Name="TimeSentToGERS" Type="datetime" />
+          <Property Name="ShipCost" Type="money" />
+          <Property Name="CarrierId" Type="int" />
+          <Property Name="CheckoutReferenceNumber" Type="varchar" MaxLength="50" />
+          <Property Name="SalesTaxTransactionId" Type="varchar" MaxLength="50" />
+          <Property Name="IsSalesTaxTransactionCommited" Type="bit" Nullable="false" />
+          <Property Name="SalesTaxRefundTransactionId" Type="varchar" MaxLength="50" />
+          <Property Name="SortCode" Type="varchar" MaxLength="3" />
+          <Property Name="ParentOrderId" Type="int" />
+          <Property Name="DiscountTotal" Type="money" />
+          <Property Name="DiscountCode" Type="int" />
+          <Property Name="OrderAssistanceUsed" Type="bit" Nullable="false" />
+          <Property Name="IsCreditCheckPending" Type="bit" />
+          <Property Name="CreditApplicationNumber" Type="varchar" MaxLength="50" />
+          <Property Name="CreditCheckStatusCode" Type="varchar" MaxLength="10" />
+          <Property Name="ServiceZipCode" Type="varchar" MaxLength="10" />
+          <Property Name="KioskEmployeeNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShipmentDeliveryDate" Type="date" />
+          <Property Name="PcrDate" Type="datetime" />
+          <Property Name="LockDateTime" Type="datetime" />
+          <Property Name="LockedById" Type="int" />
+          <Property Name="PaymentCapturedById" Type="int" />
+          <Property Name="ActivatedById" Type="int" />
+          <Property Name="CreditCheckKeyInfoId" Type="int" />
+          <Property Name="PaymentGatewayId" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDetailType" Type="varchar" MaxLength="1" />
+          <Property Name="OrderId" Type="int" />
+          <Property Name="GroupNumber" Type="int" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="GersSku" Type="varchar" MaxLength="9" />
+          <Property Name="ProductTitle" Type="varchar" MaxLength="500" />
+          <Property Name="PartNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="COGS" Type="money" />
+          <Property Name="RetailPrice" Type="money" />
+          <Property Name="NetPrice" Type="money" />
+          <Property Name="Weight" Type="float" />
+          <Property Name="TotalWeight" Type="int" />
+          <Property Name="Taxable" Type="bit" />
+          <Property Name="Taxes" Type="money" />
+          <Property Name="Message" Type="nvarchar" MaxLength="255" />
+          <Property Name="ShipmentId" Type="int" />
+          <Property Name="RMANumber" Type="varchar" MaxLength="50" />
+          <Property Name="RMAStatus" Type="int" />
+          <Property Name="RMAReason" Type="varchar" MaxLength="50" />
+          <Property Name="Rebate" Type="money" />
+          <Property Name="DiscountTotal" Type="money" />
+        </EntityType>
+        <EntityType Name="WirelessAccount">
+          <Key>
+            <PropertyRef Name="WirelessAccountId" />
+          </Key>
+          <Property Name="WirelessAccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="FamilyPlan" Type="smallint" />
+          <Property Name="CarrierOrderDate" Type="datetime" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="DrvLicState" Type="varchar" MaxLength="2" />
+          <Property Name="DrvLicExpiry" Type="datetime" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Initial" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CarrierOrderId" Type="varchar" MaxLength="30" />
+          <Property Name="CurrentAcctNumber" Type="varchar" MaxLength="20" />
+          <Property Name="CurrentAcctPIN" Type="varchar" MaxLength="10" />
+          <Property Name="CurrentTotalLines" Type="int" />
+          <Property Name="CurrentPlanType" Type="varchar" MaxLength="10" />
+          <Property Name="CreditCode" Type="varchar" MaxLength="10" />
+          <Property Name="MaxLinesAllowed" Type="int" />
+          <Property Name="DepositReq" Type="bit" />
+          <Property Name="DepositAccept" Type="bit" />
+          <Property Name="DepositTypeId" Type="int" />
+          <Property Name="DepositId" Type="varchar" MaxLength="10" />
+          <Property Name="DepositAmount" Type="money" />
+          <Property Name="ActivationAmount" Type="money" />
+          <Property Name="PrePayId" Type="varchar" MaxLength="10" />
+          <Property Name="PrePayAmount" Type="money" />
+          <Property Name="NewAccountNo" Type="varchar" MaxLength="10" />
+          <Property Name="NewAccountType" Type="varchar" MaxLength="50" />
+          <Property Name="BillCycleDate" Type="datetime" />
+          <Property Name="CarrierStatus" Type="varchar" MaxLength="20" />
+          <Property Name="CarrierStatusDate" Type="datetime" />
+          <Property Name="CarrierId" Type="int" />
+          <Property Name="ActivationStatus" Type="int" />
+          <Property Name="CarrierTermsTimeStamp" Type="datetime" />
+          <Property Name="EncryptedSSN" Type="varbinary" MaxLength="128" />
+          <Property Name="EncryptedDrvLicNumber" Type="varbinary" MaxLength="128" />
+          <Property Name="ActivationDate" Type="datetime" />
+          <Property Name="AccountPassword" Type="varchar" MaxLength="15" />
+          <Property Name="AccountZipCode" Type="varchar" MaxLength="10" />
+          <Property Name="ActivatedById" Type="int" />
+          <Property Name="SelectedSecurityQuestionId" Type="int" />
+          <Property Name="SecurityQuestionAnswer" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="WirelessLine">
+          <Key>
+            <PropertyRef Name="WirelessLineId" />
+          </Key>
+          <Property Name="WirelessLineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDetailId" Type="int" Nullable="false" />
+          <Property Name="PlanId" Type="int" />
+          <Property Name="CarrierPlanId" Type="nvarchar" MaxLength="15" />
+          <Property Name="PlanType" Type="nvarchar" MaxLength="10" />
+          <Property Name="CarrierPlanType" Type="nvarchar" MaxLength="15" />
+          <Property Name="NewMDN" Type="nchar" MaxLength="10" />
+          <Property Name="ESN" Type="nvarchar" MaxLength="50" />
+          <Property Name="IMEI" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrentMDN" Type="nvarchar" MaxLength="10" />
+          <Property Name="CurrentCarrier" Type="int" />
+          <Property Name="IsMDNPort" Type="bit" />
+          <Property Name="PortRequestId" Type="nvarchar" MaxLength="10" />
+          <Property Name="PortResponse" Type="nvarchar" MaxLength="10" />
+          <Property Name="PortStatus" Type="nvarchar" MaxLength="10" />
+          <Property Name="IsNPArequested" Type="bit" />
+          <Property Name="UpgradeEligible" Type="bit" />
+          <Property Name="RequestedActivationDate" Type="datetime" />
+          <Property Name="CarrierReferenceId1" Type="nvarchar" MaxLength="50" />
+          <Property Name="CarrierReferenceId2" Type="nvarchar" MaxLength="50" />
+          <Property Name="CarrierReferenceId3" Type="nvarchar" MaxLength="50" />
+          <Property Name="PortInDueDate" Type="datetime" />
+          <Property Name="ContractLength" Type="int" />
+          <Property Name="MonthlyFee" Type="money" />
+          <Property Name="MarketCode" Type="nvarchar" MaxLength="30" />
+          <Property Name="NPARequested" Type="varchar" MaxLength="6" />
+          <Property Name="SIM" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActivationStatus" Type="int" />
+          <Property Name="ActivationFee" Type="money" />
+          <Property Name="PortInCurrentCarrier" Type="varchar" MaxLength="25" />
+          <Property Name="PortInCurrentCarrierPin" Type="varchar" MaxLength="6" />
+          <Property Name="PortInCurrentCarrierAccountNumber" Type="varchar" MaxLength="30" />
+          <Property Name="PrepaidAccountNumber" Type="varchar" MaxLength="30" />
+          <Property Name="IsPrepaid" Type="bit" Nullable="false" />
+          <Property Name="CurrentIMEI" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrentSIM" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CarrierInterfaceLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoggedDateTime" Type="datetime" />
+          <Property Name="ReferenceNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Carrier" Type="varchar" MaxLength="50" />
+          <Property Name="Type" Type="varchar" MaxLength="50" />
+          <Property Name="RequestType" Type="varchar" MaxLength="50" />
+          <Property Name="Data" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Compiled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CheckoutSessionState">
+          <Key>
+            <PropertyRef Name="CheckoutSessionStateGUID" />
+          </Key>
+          <Property Name="CheckoutSessionStateGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="varchar" MaxLength="50" />
+          <Property Name="SubReferenceNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ServiceCall" Type="varchar" MaxLength="50" />
+          <Property Name="Value" Type="text" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_LineService_OrderDetail">
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="1" />
+          <End Role="LineService" Type="Self.LineService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetail">
+              <PropertyRef Name="OrderDetailId" />
+            </Principal>
+            <Dependent Role="LineService">
+              <PropertyRef Name="OrderDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WirelessAccount_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="WirelessAccount" Type="Self.WirelessAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="WirelessAccount">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WirelessLine_OrderDetail">
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="1" />
+          <End Role="WirelessLine" Type="Self.WirelessLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetail">
+              <PropertyRef Name="OrderDetailId" />
+            </Principal>
+            <Dependent Role="WirelessLine">
+              <PropertyRef Name="OrderDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetWirelessAccountByOrderId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="salesorder">
+          <Parameter Name="OrderId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetWirelessAccountByWirelessAccountId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="salesorder">
+          <Parameter Name="WirelessAccountId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateWirelessAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="salesorder">
+          <Parameter Name="WirelessAccountId" Type="int" Mode="In" />
+          <Parameter Name="OrderId" Type="int" Mode="In" />
+          <Parameter Name="FamilyPlan" Type="smallint" Mode="In" />
+          <Parameter Name="CarrierOrderDate" Type="datetime" Mode="In" />
+          <Parameter Name="SSN" Type="varchar" Mode="In" />
+          <Parameter Name="DOB" Type="datetime" Mode="In" />
+          <Parameter Name="DrvLicNumber" Type="varchar" Mode="In" />
+          <Parameter Name="DrvLicState" Type="varchar" Mode="In" />
+          <Parameter Name="DrvLicExpiry" Type="datetime" Mode="In" />
+          <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Initial" Type="nvarchar" Mode="In" />
+          <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="CarrierOrderId" Type="varchar" Mode="In" />
+          <Parameter Name="CurrentAcctNumber" Type="varchar" Mode="In" />
+          <Parameter Name="CurrentAcctPIN" Type="varchar" Mode="In" />
+          <Parameter Name="CurrentTotalLines" Type="int" Mode="In" />
+          <Parameter Name="CurrentPlanType" Type="varchar" Mode="In" />
+          <Parameter Name="CreditCode" Type="varchar" Mode="In" />
+          <Parameter Name="MaxLinesAllowed" Type="int" Mode="In" />
+          <Parameter Name="DepositReq" Type="bit" Mode="In" />
+          <Parameter Name="DepositAccept" Type="bit" Mode="In" />
+          <Parameter Name="DepositTypeId" Type="int" Mode="In" />
+          <Parameter Name="DepositId" Type="varchar" Mode="In" />
+          <Parameter Name="DepositAmount" Type="money" Mode="In" />
+          <Parameter Name="ActivationAmount" Type="money" Mode="In" />
+          <Parameter Name="PrePayId" Type="varchar" Mode="In" />
+          <Parameter Name="PrePayAmount" Type="money" Mode="In" />
+          <Parameter Name="NewAccountNo" Type="varchar" Mode="In" />
+          <Parameter Name="NewAccountType" Type="varchar" Mode="In" />
+          <Parameter Name="BillCycleDate" Type="datetime" Mode="In" />
+          <Parameter Name="CarrierStatus" Type="varchar" Mode="In" />
+          <Parameter Name="CarrierStatusDate" Type="datetime" Mode="In" />
+          <Parameter Name="CarrierId" Type="int" Mode="In" />
+          <Parameter Name="ActivationStatus" Type="int" Mode="In" />
+          <Parameter Name="ActivationDate" Type="datetime" Mode="In" />
+          <Parameter Name="CarrierTermsTimeStamp" Type="datetime" Mode="In" />
+          <Parameter Name="AccountPassword" Type="varchar" Mode="In" />
+          <Parameter Name="AccountZipCode" Type="varchar" Mode="In" />
+          <Parameter Name="ActivatedById" Type="int" Mode="In" />
+          <Parameter Name="SelectedSecurityQuestionId" Type="int" Mode="In" />
+          <Parameter Name="SecurityQuestionAnswer" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="COSTCOTESTModelStoreContainer">
+          <EntitySet Name="Device" EntityType="Self.Device" Schema="catalog" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="catalog" store:Type="Tables" />
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="salesorder" store:Type="Tables" />
+          <EntitySet Name="LineService" EntityType="Self.LineService" Schema="salesorder" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="salesorder" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="salesorder" store:Type="Tables" />
+          <EntitySet Name="WirelessAccount" EntityType="Self.WirelessAccount" Schema="salesorder" store:Type="Tables" />
+          <EntitySet Name="WirelessLine" EntityType="Self.WirelessLine" Schema="salesorder" store:Type="Tables" />
+          <EntitySet Name="CarrierInterfaceLog" EntityType="Self.CarrierInterfaceLog" Schema="service" store:Type="Tables" />
+          <EntitySet Name="CheckoutSessionState" EntityType="Self.CheckoutSessionState" Schema="service" store:Type="Tables" />
+          <AssociationSet Name="FK_LineService_OrderDetail" Association="Self.FK_LineService_OrderDetail">
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+            <End Role="LineService" EntitySet="LineService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WirelessAccount_Order" Association="Self.FK_WirelessAccount_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="WirelessAccount" EntitySet="WirelessAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WirelessLine_OrderDetail" Association="Self.FK_WirelessLine_OrderDetail">
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+            <End Role="WirelessLine" EntitySet="WirelessLine" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="COSTCO.TESTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressGuid" />
+          </Key>
+          <Property Name="AddressGuid" Type="Guid" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DaytimePhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EveningPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MilitaryBase" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LineService">
+          <Key>
+            <PropertyRef Name="LineServiceId" />
+          </Key>
+          <Property Name="LineServiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ServiceId" Type="Int32" />
+          <Property Name="CarrierServiceId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MonthlyFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Mandatory" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="OrderDetail" Relationship="Self.FK_LineService_OrderDetail" FromRole="LineService" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ShipAddressGuid" Type="Guid" />
+          <Property Name="BillAddressGuid" Type="Guid" />
+          <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ShipMethodId" Type="Int32" />
+          <Property Name="ActivationType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="IPaddress" Type="String" MaxLength="39" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="GERSStatus" Type="Int32" />
+          <Property Name="GERSRefNum" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="TimeSentToGERS" Type="DateTime" Precision="3" />
+          <Property Name="ShipCost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CarrierId" Type="Int32" />
+          <Property Name="CheckoutReferenceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SalesTaxTransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsSalesTaxTransactionCommited" Type="Boolean" Nullable="false" />
+          <Property Name="SalesTaxRefundTransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SortCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ParentOrderId" Type="Int32" />
+          <Property Name="DiscountTotal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DiscountCode" Type="Int32" />
+          <Property Name="OrderAssistanceUsed" Type="Boolean" Nullable="false" />
+          <Property Name="IsCreditCheckPending" Type="Boolean" />
+          <Property Name="CreditApplicationNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreditCheckStatusCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="KioskEmployeeNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShipmentDeliveryDate" Type="DateTime" Precision="0" />
+          <Property Name="PcrDate" Type="DateTime" Precision="3" />
+          <Property Name="LockDateTime" Type="DateTime" Precision="3" />
+          <Property Name="LockedById" Type="Int32" />
+          <Property Name="PaymentCapturedById" Type="Int32" />
+          <Property Name="ActivatedById" Type="Int32" />
+          <Property Name="CreditCheckKeyInfoId" Type="Int32" />
+          <Property Name="PaymentGatewayId" Type="Int32" />
+          <NavigationProperty Name="WirelessAccounts" Relationship="Self.FK_WirelessAccount_Order" FromRole="Order" ToRole="WirelessAccount" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDetailType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="GroupNumber" Type="Int32" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="GersSku" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="ProductTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PartNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="COGS" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RetailPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="NetPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="TotalWeight" Type="Int32" />
+          <Property Name="Taxable" Type="Boolean" />
+          <Property Name="Taxes" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ShipmentId" Type="Int32" />
+          <Property Name="RMANumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RMAStatus" Type="Int32" />
+          <Property Name="RMAReason" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rebate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DiscountTotal" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="LineServices" Relationship="Self.FK_LineService_OrderDetail" FromRole="OrderDetail" ToRole="LineService" />
+          <NavigationProperty Name="WirelessLines" Relationship="Self.FK_WirelessLine_OrderDetail" FromRole="OrderDetail" ToRole="WirelessLine" />
+        </EntityType>
+        <EntityType Name="WirelessAccount">
+          <Key>
+            <PropertyRef Name="WirelessAccountId" />
+          </Key>
+          <Property Name="WirelessAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="FamilyPlan" Type="Int16" />
+          <Property Name="CarrierOrderDate" Type="DateTime" Precision="3" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="DrvLicState" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DrvLicExpiry" Type="DateTime" Precision="3" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Initial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CarrierOrderId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentAcctNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentAcctPIN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentTotalLines" Type="Int32" />
+          <Property Name="CurrentPlanType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreditCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MaxLinesAllowed" Type="Int32" />
+          <Property Name="DepositReq" Type="Boolean" />
+          <Property Name="DepositAccept" Type="Boolean" />
+          <Property Name="DepositTypeId" Type="Int32" />
+          <Property Name="DepositId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DepositAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ActivationAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PrePayId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PrePayAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="NewAccountNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NewAccountType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BillCycleDate" Type="DateTime" Precision="3" />
+          <Property Name="CarrierStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CarrierStatusDate" Type="DateTime" Precision="3" />
+          <Property Name="CarrierId" Type="Int32" />
+          <Property Name="ActivationStatus" Type="Int32" />
+          <Property Name="CarrierTermsTimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="EncryptedSSN" Type="Binary" MaxLength="128" FixedLength="false" />
+          <Property Name="EncryptedDrvLicNumber" Type="Binary" MaxLength="128" FixedLength="false" />
+          <Property Name="ActivationDate" Type="DateTime" Precision="3" />
+          <Property Name="AccountPassword" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AccountZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ActivatedById" Type="Int32" />
+          <Property Name="SelectedSecurityQuestionId" Type="Int32" />
+          <Property Name="SecurityQuestionAnswer" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_WirelessAccount_Order" FromRole="WirelessAccount" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="WirelessLine">
+          <Key>
+            <PropertyRef Name="WirelessLineId" />
+          </Key>
+          <Property Name="WirelessLineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" />
+          <Property Name="PlanId" Type="Int32" />
+          <Property Name="CarrierPlanId" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="PlanType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CarrierPlanType" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="NewMDN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ESN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IMEI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentMDN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentCarrier" Type="Int32" />
+          <Property Name="IsMDNPort" Type="Boolean" />
+          <Property Name="PortRequestId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PortResponse" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PortStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IsNPArequested" Type="Boolean" />
+          <Property Name="UpgradeEligible" Type="Boolean" />
+          <Property Name="RequestedActivationDate" Type="DateTime" Precision="3" />
+          <Property Name="CarrierReferenceId1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CarrierReferenceId2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CarrierReferenceId3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PortInDueDate" Type="DateTime" Precision="3" />
+          <Property Name="ContractLength" Type="Int32" />
+          <Property Name="MonthlyFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MarketCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="NPARequested" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="SIM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActivationStatus" Type="Int32" />
+          <Property Name="ActivationFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PortInCurrentCarrier" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PortInCurrentCarrierPin" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="PortInCurrentCarrierAccountNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PrepaidAccountNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IsPrepaid" Type="Boolean" Nullable="false" />
+          <Property Name="CurrentIMEI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentSIM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderDetail" Relationship="Self.FK_WirelessLine_OrderDetail" FromRole="WirelessLine" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="CarrierInterfaceLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoggedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ReferenceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Carrier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RequestType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Compiled" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CheckoutSessionState">
+          <Key>
+            <PropertyRef Name="CheckoutSessionStateGUID" />
+          </Key>
+          <Property Name="CheckoutSessionStateGUID" Type="Guid" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubReferenceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceCall" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_LineService_OrderDetail">
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="1" />
+          <End Role="LineService" Type="Self.LineService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetail">
+              <PropertyRef Name="OrderDetailId" />
+            </Principal>
+            <Dependent Role="LineService">
+              <PropertyRef Name="OrderDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WirelessAccount_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="WirelessAccount" Type="Self.WirelessAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="WirelessAccount">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WirelessLine_OrderDetail">
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="1" />
+          <End Role="WirelessLine" Type="Self.WirelessLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetail">
+              <PropertyRef Name="OrderDetailId" />
+            </Principal>
+            <Dependent Role="WirelessLine">
+              <PropertyRef Name="OrderDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SprintOrders" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="LineServices" EntityType="Self.LineService" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="WirelessAccounts" EntityType="Self.WirelessAccount" />
+          <EntitySet Name="WirelessLines" EntityType="Self.WirelessLine" />
+          <EntitySet Name="CarrierInterfaceLogs" EntityType="Self.CarrierInterfaceLog" />
+          <EntitySet Name="CheckoutSessionStates" EntityType="Self.CheckoutSessionState" />
+          <AssociationSet Name="FK_LineService_OrderDetail" Association="Self.FK_LineService_OrderDetail">
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+            <End Role="LineService" EntitySet="LineServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WirelessAccount_Order" Association="Self.FK_WirelessAccount_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="WirelessAccount" EntitySet="WirelessAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WirelessLine_OrderDetail" Association="Self.FK_WirelessLine_OrderDetail">
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+            <End Role="WirelessLine" EntitySet="WirelessLines" />
+          </AssociationSet>
+          <FunctionImport Name="GetWirelessAccountByOrderId" ReturnType="Collection(COSTCO.TESTModel.GetWirelessAccountByOrderId_Result)">
+          <Parameter Name="OrderId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetWirelessAccountByWirelessAccountId" ReturnType="Collection(COSTCO.TESTModel.GetWirelessAccountByWirelessAccountId_Result)">
+          <Parameter Name="WirelessAccountId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateWirelessAccount">
+            <Parameter Name="WirelessAccountId" Mode="In" Type="Int32" />
+            <Parameter Name="OrderId" Mode="In" Type="Int32" />
+            <Parameter Name="FamilyPlan" Mode="In" Type="Int16" />
+            <Parameter Name="CarrierOrderDate" Mode="In" Type="DateTime" />
+            <Parameter Name="SSN" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="DrvLicNumber" Mode="In" Type="String" />
+            <Parameter Name="DrvLicState" Mode="In" Type="String" />
+            <Parameter Name="DrvLicExpiry" Mode="In" Type="DateTime" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="Initial" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="CarrierOrderId" Mode="In" Type="String" />
+            <Parameter Name="CurrentAcctNumber" Mode="In" Type="String" />
+            <Parameter Name="CurrentAcctPIN" Mode="In" Type="String" />
+            <Parameter Name="CurrentTotalLines" Mode="In" Type="Int32" />
+            <Parameter Name="CurrentPlanType" Mode="In" Type="String" />
+            <Parameter Name="CreditCode" Mode="In" Type="String" />
+            <Parameter Name="MaxLinesAllowed" Mode="In" Type="Int32" />
+            <Parameter Name="DepositReq" Mode="In" Type="Boolean" />
+            <Parameter Name="DepositAccept" Mode="In" Type="Boolean" />
+            <Parameter Name="DepositTypeId" Mode="In" Type="Int32" />
+            <Parameter Name="DepositId" Mode="In" Type="String" />
+            <Parameter Name="DepositAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="ActivationAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="PrePayId" Mode="In" Type="String" />
+            <Parameter Name="PrePayAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="NewAccountNo" Mode="In" Type="String" />
+            <Parameter Name="NewAccountType" Mode="In" Type="String" />
+            <Parameter Name="BillCycleDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CarrierStatus" Mode="In" Type="String" />
+            <Parameter Name="CarrierStatusDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CarrierId" Mode="In" Type="Int32" />
+            <Parameter Name="ActivationStatus" Mode="In" Type="Int32" />
+            <Parameter Name="ActivationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CarrierTermsTimeStamp" Mode="In" Type="DateTime" />
+            <Parameter Name="AccountPassword" Mode="In" Type="String" />
+            <Parameter Name="AccountZipCode" Mode="In" Type="String" />
+            <Parameter Name="ActivatedById" Mode="In" Type="Int32" />
+            <Parameter Name="SelectedSecurityQuestionId" Mode="In" Type="Int32" />
+            <Parameter Name="SecurityQuestionAnswer" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Devices" EntityType="COSTCO.TESTModel.Device" />
+          <EntitySet Name="Services" EntityType="COSTCO.TESTModel.Service" />
+        </EntityContainer>
+        <ComplexType Name="GetWirelessAccountByOrderId_Result">
+          <Property Type="Int32" Name="WirelessAccountId" Nullable="false" />
+          <Property Type="Int32" Name="OrderId" Nullable="false" />
+          <Property Type="Int16" Name="FamilyPlan" Nullable="true" />
+          <Property Type="DateTime" Name="CarrierOrderDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DOB" Nullable="true" Precision="23" />
+          <Property Type="String" Name="DrvLicState" Nullable="true" MaxLength="2" />
+          <Property Type="DateTime" Name="DrvLicExpiry" Nullable="true" Precision="23" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Initial" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CarrierOrderId" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="CurrentAcctNumber" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CurrentAcctPIN" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="CurrentTotalLines" Nullable="true" />
+          <Property Type="String" Name="CurrentPlanType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CreditCode" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="MaxLinesAllowed" Nullable="true" />
+          <Property Type="Boolean" Name="DepositReq" Nullable="true" />
+          <Property Type="Boolean" Name="DepositAccept" Nullable="true" />
+          <Property Type="Int32" Name="DepositTypeId" Nullable="true" />
+          <Property Type="String" Name="DepositId" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="DepositAmount" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="ActivationAmount" Nullable="true" Precision="19" />
+          <Property Type="String" Name="PrePayId" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="PrePayAmount" Nullable="true" Precision="19" />
+          <Property Type="String" Name="NewAccountNo" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="NewAccountType" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="BillCycleDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CarrierStatus" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="CarrierStatusDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CarrierId" Nullable="true" />
+          <Property Type="Int32" Name="ActivationStatus" Nullable="true" />
+          <Property Type="DateTime" Name="CarrierTermsTimeStamp" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="CarrierTermsTimeStamp1" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AccountPassword" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="AccountZipCode" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="SSN" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="DrvLicNumber" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="GetWirelessAccountByWirelessAccountId_Result">
+          <Property Type="Int32" Name="WirelessAccountId" Nullable="false" />
+          <Property Type="Int32" Name="OrderId" Nullable="false" />
+          <Property Type="Int16" Name="FamilyPlan" Nullable="true" />
+          <Property Type="DateTime" Name="CarrierOrderDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DOB" Nullable="true" Precision="23" />
+          <Property Type="String" Name="DrvLicState" Nullable="true" MaxLength="2" />
+          <Property Type="DateTime" Name="DrvLicExpiry" Nullable="true" Precision="23" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Initial" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CarrierOrderId" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="CurrentAcctNumber" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CurrentAcctPIN" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="CurrentTotalLines" Nullable="true" />
+          <Property Type="String" Name="CurrentPlanType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CreditCode" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="MaxLinesAllowed" Nullable="true" />
+          <Property Type="Boolean" Name="DepositReq" Nullable="true" />
+          <Property Type="Boolean" Name="DepositAccept" Nullable="true" />
+          <Property Type="Int32" Name="DepositTypeId" Nullable="true" />
+          <Property Type="String" Name="DepositId" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="DepositAmount" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="ActivationAmount" Nullable="true" Precision="19" />
+          <Property Type="String" Name="PrePayId" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="PrePayAmount" Nullable="true" Precision="19" />
+          <Property Type="String" Name="NewAccountNo" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="NewAccountType" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="BillCycleDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CarrierStatus" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="CarrierStatusDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CarrierId" Nullable="true" />
+          <Property Type="Int32" Name="ActivationStatus" Nullable="true" />
+          <Property Type="DateTime" Name="ActivationDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="CarrierTermsTimeStamp" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AccountPassword" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="AccountZipCode" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="ActivatedById" Nullable="true" />
+          <Property Type="Int32" Name="SelectedSecurityQuestionId" Nullable="true" />
+          <Property Type="String" Name="SecurityQuestionAnswer" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="SSN" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="DrvLicNumber" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceGuid" />
+          </Key>
+          <Property Name="DeviceGuid" Type="Guid" Nullable="false" />
+          <Property Name="CarrierGuid" Type="Guid" Nullable="false" />
+          <Property Name="ManufacturerGuid" Type="Guid" />
+          <Property Name="UPC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="67" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceGuid" />
+          </Key>
+          <Property Name="ServiceGuid" Type="Guid" Nullable="false" />
+          <Property Name="CarrierGuid" Type="Guid" Nullable="false" />
+          <Property Name="CarrierServiceId" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="CarrierBillCode" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MonthlyFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CartTypeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="COSTCOTESTModelStoreContainer" CdmEntityContainer="SprintOrders">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressGuid" ColumnName="AddressGuid" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address3" ColumnName="Address3" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="DaytimePhone" ColumnName="DaytimePhone" />
+                <ScalarProperty Name="EveningPhone" ColumnName="EveningPhone" />
+                <ScalarProperty Name="MilitaryBase" ColumnName="MilitaryBase" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LineServices">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.LineService">
+              <MappingFragment StoreEntitySet="LineService">
+                <ScalarProperty Name="LineServiceId" ColumnName="LineServiceId" />
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="CarrierServiceId" ColumnName="CarrierServiceId" />
+                <ScalarProperty Name="MonthlyFee" ColumnName="MonthlyFee" />
+                <ScalarProperty Name="Mandatory" ColumnName="Mandatory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ShipAddressGuid" ColumnName="ShipAddressGuid" />
+                <ScalarProperty Name="BillAddressGuid" ColumnName="BillAddressGuid" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="ShipMethodId" ColumnName="ShipMethodId" />
+                <ScalarProperty Name="ActivationType" ColumnName="ActivationType" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="IPaddress" ColumnName="IPaddress" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="GERSStatus" ColumnName="GERSStatus" />
+                <ScalarProperty Name="GERSRefNum" ColumnName="GERSRefNum" />
+                <ScalarProperty Name="TimeSentToGERS" ColumnName="TimeSentToGERS" />
+                <ScalarProperty Name="ShipCost" ColumnName="ShipCost" />
+                <ScalarProperty Name="CarrierId" ColumnName="CarrierId" />
+                <ScalarProperty Name="CheckoutReferenceNumber" ColumnName="CheckoutReferenceNumber" />
+                <ScalarProperty Name="SalesTaxTransactionId" ColumnName="SalesTaxTransactionId" />
+                <ScalarProperty Name="IsSalesTaxTransactionCommited" ColumnName="IsSalesTaxTransactionCommited" />
+                <ScalarProperty Name="SalesTaxRefundTransactionId" ColumnName="SalesTaxRefundTransactionId" />
+                <ScalarProperty Name="SortCode" ColumnName="SortCode" />
+                <ScalarProperty Name="ParentOrderId" ColumnName="ParentOrderId" />
+                <ScalarProperty Name="DiscountTotal" ColumnName="DiscountTotal" />
+                <ScalarProperty Name="DiscountCode" ColumnName="DiscountCode" />
+                <ScalarProperty Name="OrderAssistanceUsed" ColumnName="OrderAssistanceUsed" />
+                <ScalarProperty Name="IsCreditCheckPending" ColumnName="IsCreditCheckPending" />
+                <ScalarProperty Name="CreditApplicationNumber" ColumnName="CreditApplicationNumber" />
+                <ScalarProperty Name="CreditCheckStatusCode" ColumnName="CreditCheckStatusCode" />
+                <ScalarProperty Name="ServiceZipCode" ColumnName="ServiceZipCode" />
+                <ScalarProperty Name="KioskEmployeeNumber" ColumnName="KioskEmployeeNumber" />
+                <ScalarProperty Name="ShipmentDeliveryDate" ColumnName="ShipmentDeliveryDate" />
+                <ScalarProperty Name="PcrDate" ColumnName="PcrDate" />
+                <ScalarProperty Name="LockDateTime" ColumnName="LockDateTime" />
+                <ScalarProperty Name="LockedById" ColumnName="LockedById" />
+                <ScalarProperty Name="PaymentCapturedById" ColumnName="PaymentCapturedById" />
+                <ScalarProperty Name="ActivatedById" ColumnName="ActivatedById" />
+                <ScalarProperty Name="CreditCheckKeyInfoId" ColumnName="CreditCheckKeyInfoId" />
+                <ScalarProperty Name="PaymentGatewayId" ColumnName="PaymentGatewayId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+                <ScalarProperty Name="OrderDetailType" ColumnName="OrderDetailType" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="GersSku" ColumnName="GersSku" />
+                <ScalarProperty Name="ProductTitle" ColumnName="ProductTitle" />
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="COGS" ColumnName="COGS" />
+                <ScalarProperty Name="RetailPrice" ColumnName="RetailPrice" />
+                <ScalarProperty Name="NetPrice" ColumnName="NetPrice" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="TotalWeight" ColumnName="TotalWeight" />
+                <ScalarProperty Name="Taxable" ColumnName="Taxable" />
+                <ScalarProperty Name="Taxes" ColumnName="Taxes" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="ShipmentId" ColumnName="ShipmentId" />
+                <ScalarProperty Name="RMANumber" ColumnName="RMANumber" />
+                <ScalarProperty Name="RMAStatus" ColumnName="RMAStatus" />
+                <ScalarProperty Name="RMAReason" ColumnName="RMAReason" />
+                <ScalarProperty Name="Rebate" ColumnName="Rebate" />
+                <ScalarProperty Name="DiscountTotal" ColumnName="DiscountTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WirelessAccounts">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.WirelessAccount">
+              <MappingFragment StoreEntitySet="WirelessAccount">
+                <ScalarProperty Name="WirelessAccountId" ColumnName="WirelessAccountId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="FamilyPlan" ColumnName="FamilyPlan" />
+                <ScalarProperty Name="CarrierOrderDate" ColumnName="CarrierOrderDate" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="DrvLicState" ColumnName="DrvLicState" />
+                <ScalarProperty Name="DrvLicExpiry" ColumnName="DrvLicExpiry" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Initial" ColumnName="Initial" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CarrierOrderId" ColumnName="CarrierOrderId" />
+                <ScalarProperty Name="CurrentAcctNumber" ColumnName="CurrentAcctNumber" />
+                <ScalarProperty Name="CurrentAcctPIN" ColumnName="CurrentAcctPIN" />
+                <ScalarProperty Name="CurrentTotalLines" ColumnName="CurrentTotalLines" />
+                <ScalarProperty Name="CurrentPlanType" ColumnName="CurrentPlanType" />
+                <ScalarProperty Name="CreditCode" ColumnName="CreditCode" />
+                <ScalarProperty Name="MaxLinesAllowed" ColumnName="MaxLinesAllowed" />
+                <ScalarProperty Name="DepositReq" ColumnName="DepositReq" />
+                <ScalarProperty Name="DepositAccept" ColumnName="DepositAccept" />
+                <ScalarProperty Name="DepositTypeId" ColumnName="DepositTypeId" />
+                <ScalarProperty Name="DepositId" ColumnName="DepositId" />
+                <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
+                <ScalarProperty Name="ActivationAmount" ColumnName="ActivationAmount" />
+                <ScalarProperty Name="PrePayId" ColumnName="PrePayId" />
+                <ScalarProperty Name="PrePayAmount" ColumnName="PrePayAmount" />
+                <ScalarProperty Name="NewAccountNo" ColumnName="NewAccountNo" />
+                <ScalarProperty Name="NewAccountType" ColumnName="NewAccountType" />
+                <ScalarProperty Name="BillCycleDate" ColumnName="BillCycleDate" />
+                <ScalarProperty Name="CarrierStatus" ColumnName="CarrierStatus" />
+                <ScalarProperty Name="CarrierStatusDate" ColumnName="CarrierStatusDate" />
+                <ScalarProperty Name="CarrierId" ColumnName="CarrierId" />
+                <ScalarProperty Name="ActivationStatus" ColumnName="ActivationStatus" />
+                <ScalarProperty Name="CarrierTermsTimeStamp" ColumnName="CarrierTermsTimeStamp" />
+                <ScalarProperty Name="EncryptedSSN" ColumnName="EncryptedSSN" />
+                <ScalarProperty Name="EncryptedDrvLicNumber" ColumnName="EncryptedDrvLicNumber" />
+                <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
+                <ScalarProperty Name="AccountPassword" ColumnName="AccountPassword" />
+                <ScalarProperty Name="AccountZipCode" ColumnName="AccountZipCode" />
+                <ScalarProperty Name="ActivatedById" ColumnName="ActivatedById" />
+                <ScalarProperty Name="SelectedSecurityQuestionId" ColumnName="SelectedSecurityQuestionId" />
+                <ScalarProperty Name="SecurityQuestionAnswer" ColumnName="SecurityQuestionAnswer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WirelessLines">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.WirelessLine">
+              <MappingFragment StoreEntitySet="WirelessLine">
+                <ScalarProperty Name="WirelessLineId" ColumnName="WirelessLineId" />
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+                <ScalarProperty Name="CarrierPlanId" ColumnName="CarrierPlanId" />
+                <ScalarProperty Name="PlanType" ColumnName="PlanType" />
+                <ScalarProperty Name="CarrierPlanType" ColumnName="CarrierPlanType" />
+                <ScalarProperty Name="NewMDN" ColumnName="NewMDN" />
+                <ScalarProperty Name="ESN" ColumnName="ESN" />
+                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+                <ScalarProperty Name="CurrentMDN" ColumnName="CurrentMDN" />
+                <ScalarProperty Name="CurrentCarrier" ColumnName="CurrentCarrier" />
+                <ScalarProperty Name="IsMDNPort" ColumnName="IsMDNPort" />
+                <ScalarProperty Name="PortRequestId" ColumnName="PortRequestId" />
+                <ScalarProperty Name="PortResponse" ColumnName="PortResponse" />
+                <ScalarProperty Name="PortStatus" ColumnName="PortStatus" />
+                <ScalarProperty Name="IsNPArequested" ColumnName="IsNPArequested" />
+                <ScalarProperty Name="UpgradeEligible" ColumnName="UpgradeEligible" />
+                <ScalarProperty Name="RequestedActivationDate" ColumnName="RequestedActivationDate" />
+                <ScalarProperty Name="CarrierReferenceId1" ColumnName="CarrierReferenceId1" />
+                <ScalarProperty Name="CarrierReferenceId2" ColumnName="CarrierReferenceId2" />
+                <ScalarProperty Name="CarrierReferenceId3" ColumnName="CarrierReferenceId3" />
+                <ScalarProperty Name="PortInDueDate" ColumnName="PortInDueDate" />
+                <ScalarProperty Name="ContractLength" ColumnName="ContractLength" />
+                <ScalarProperty Name="MonthlyFee" ColumnName="MonthlyFee" />
+                <ScalarProperty Name="MarketCode" ColumnName="MarketCode" />
+                <ScalarProperty Name="NPARequested" ColumnName="NPARequested" />
+                <ScalarProperty Name="SIM" ColumnName="SIM" />
+                <ScalarProperty Name="ActivationStatus" ColumnName="ActivationStatus" />
+                <ScalarProperty Name="ActivationFee" ColumnName="ActivationFee" />
+                <ScalarProperty Name="PortInCurrentCarrier" ColumnName="PortInCurrentCarrier" />
+                <ScalarProperty Name="PortInCurrentCarrierPin" ColumnName="PortInCurrentCarrierPin" />
+                <ScalarProperty Name="PortInCurrentCarrierAccountNumber" ColumnName="PortInCurrentCarrierAccountNumber" />
+                <ScalarProperty Name="PrepaidAccountNumber" ColumnName="PrepaidAccountNumber" />
+                <ScalarProperty Name="IsPrepaid" ColumnName="IsPrepaid" />
+                <ScalarProperty Name="CurrentIMEI" ColumnName="CurrentIMEI" />
+                <ScalarProperty Name="CurrentSIM" ColumnName="CurrentSIM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarrierInterfaceLogs">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.CarrierInterfaceLog">
+              <MappingFragment StoreEntitySet="CarrierInterfaceLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LoggedDateTime" ColumnName="LoggedDateTime" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="Carrier" ColumnName="Carrier" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="RequestType" ColumnName="RequestType" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Compiled" ColumnName="Compiled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckoutSessionStates">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.CheckoutSessionState">
+              <MappingFragment StoreEntitySet="CheckoutSessionState">
+                <ScalarProperty Name="CheckoutSessionStateGUID" ColumnName="CheckoutSessionStateGUID" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="SubReferenceNumber" ColumnName="SubReferenceNumber" />
+                <ScalarProperty Name="ServiceCall" ColumnName="ServiceCall" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetWirelessAccountByOrderId" FunctionName="COSTCO.TESTModel.Store.GetWirelessAccountByOrderId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="COSTCO.TESTModel.GetWirelessAccountByOrderId_Result">
+                <ScalarProperty Name="WirelessAccountId" ColumnName="WirelessAccountId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="FamilyPlan" ColumnName="FamilyPlan" />
+                <ScalarProperty Name="CarrierOrderDate" ColumnName="CarrierOrderDate" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="DrvLicState" ColumnName="DrvLicState" />
+                <ScalarProperty Name="DrvLicExpiry" ColumnName="DrvLicExpiry" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Initial" ColumnName="Initial" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CarrierOrderId" ColumnName="CarrierOrderId" />
+                <ScalarProperty Name="CurrentAcctNumber" ColumnName="CurrentAcctNumber" />
+                <ScalarProperty Name="CurrentAcctPIN" ColumnName="CurrentAcctPIN" />
+                <ScalarProperty Name="CurrentTotalLines" ColumnName="CurrentTotalLines" />
+                <ScalarProperty Name="CurrentPlanType" ColumnName="CurrentPlanType" />
+                <ScalarProperty Name="CreditCode" ColumnName="CreditCode" />
+                <ScalarProperty Name="MaxLinesAllowed" ColumnName="MaxLinesAllowed" />
+                <ScalarProperty Name="DepositReq" ColumnName="DepositReq" />
+                <ScalarProperty Name="DepositAccept" ColumnName="DepositAccept" />
+                <ScalarProperty Name="DepositTypeId" ColumnName="DepositTypeId" />
+                <ScalarProperty Name="DepositId" ColumnName="DepositId" />
+                <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
+                <ScalarProperty Name="ActivationAmount" ColumnName="ActivationAmount" />
+                <ScalarProperty Name="PrePayId" ColumnName="PrePayId" />
+                <ScalarProperty Name="PrePayAmount" ColumnName="PrePayAmount" />
+                <ScalarProperty Name="NewAccountNo" ColumnName="NewAccountNo" />
+                <ScalarProperty Name="NewAccountType" ColumnName="NewAccountType" />
+                <ScalarProperty Name="BillCycleDate" ColumnName="BillCycleDate" />
+                <ScalarProperty Name="CarrierStatus" ColumnName="CarrierStatus" />
+                <ScalarProperty Name="CarrierStatusDate" ColumnName="CarrierStatusDate" />
+                <ScalarProperty Name="CarrierId" ColumnName="CarrierId" />
+                <ScalarProperty Name="ActivationStatus" ColumnName="ActivationStatus" />
+                <ScalarProperty Name="CarrierTermsTimeStamp" ColumnName="CarrierTermsTimeStamp" />
+                <ScalarProperty Name="CarrierTermsTimeStamp1" ColumnName="CarrierTermsTimeStamp1" />
+                <ScalarProperty Name="AccountPassword" ColumnName="AccountPassword" />
+                <ScalarProperty Name="AccountZipCode" ColumnName="AccountZipCode" />
+                <ScalarProperty Name="SSN" ColumnName="SSN" />
+                <ScalarProperty Name="DrvLicNumber" ColumnName="DrvLicNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetWirelessAccountByWirelessAccountId" FunctionName="COSTCO.TESTModel.Store.GetWirelessAccountByWirelessAccountId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="COSTCO.TESTModel.GetWirelessAccountByWirelessAccountId_Result">
+                <ScalarProperty Name="WirelessAccountId" ColumnName="WirelessAccountId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="FamilyPlan" ColumnName="FamilyPlan" />
+                <ScalarProperty Name="CarrierOrderDate" ColumnName="CarrierOrderDate" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="DrvLicState" ColumnName="DrvLicState" />
+                <ScalarProperty Name="DrvLicExpiry" ColumnName="DrvLicExpiry" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Initial" ColumnName="Initial" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CarrierOrderId" ColumnName="CarrierOrderId" />
+                <ScalarProperty Name="CurrentAcctNumber" ColumnName="CurrentAcctNumber" />
+                <ScalarProperty Name="CurrentAcctPIN" ColumnName="CurrentAcctPIN" />
+                <ScalarProperty Name="CurrentTotalLines" ColumnName="CurrentTotalLines" />
+                <ScalarProperty Name="CurrentPlanType" ColumnName="CurrentPlanType" />
+                <ScalarProperty Name="CreditCode" ColumnName="CreditCode" />
+                <ScalarProperty Name="MaxLinesAllowed" ColumnName="MaxLinesAllowed" />
+                <ScalarProperty Name="DepositReq" ColumnName="DepositReq" />
+                <ScalarProperty Name="DepositAccept" ColumnName="DepositAccept" />
+                <ScalarProperty Name="DepositTypeId" ColumnName="DepositTypeId" />
+                <ScalarProperty Name="DepositId" ColumnName="DepositId" />
+                <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
+                <ScalarProperty Name="ActivationAmount" ColumnName="ActivationAmount" />
+                <ScalarProperty Name="PrePayId" ColumnName="PrePayId" />
+                <ScalarProperty Name="PrePayAmount" ColumnName="PrePayAmount" />
+                <ScalarProperty Name="NewAccountNo" ColumnName="NewAccountNo" />
+                <ScalarProperty Name="NewAccountType" ColumnName="NewAccountType" />
+                <ScalarProperty Name="BillCycleDate" ColumnName="BillCycleDate" />
+                <ScalarProperty Name="CarrierStatus" ColumnName="CarrierStatus" />
+                <ScalarProperty Name="CarrierStatusDate" ColumnName="CarrierStatusDate" />
+                <ScalarProperty Name="CarrierId" ColumnName="CarrierId" />
+                <ScalarProperty Name="ActivationStatus" ColumnName="ActivationStatus" />
+                <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
+                <ScalarProperty Name="CarrierTermsTimeStamp" ColumnName="CarrierTermsTimeStamp" />
+                <ScalarProperty Name="AccountPassword" ColumnName="AccountPassword" />
+                <ScalarProperty Name="AccountZipCode" ColumnName="AccountZipCode" />
+                <ScalarProperty Name="ActivatedById" ColumnName="ActivatedById" />
+                <ScalarProperty Name="SelectedSecurityQuestionId" ColumnName="SelectedSecurityQuestionId" />
+                <ScalarProperty Name="SecurityQuestionAnswer" ColumnName="SecurityQuestionAnswer" />
+                <ScalarProperty Name="SSN" ColumnName="SSN" />
+                <ScalarProperty Name="DrvLicNumber" ColumnName="DrvLicNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateWirelessAccount" FunctionName="COSTCO.TESTModel.Store.UpdateWirelessAccount" />
+          <EntitySetMapping Name="Devices">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.Device">
+              <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UPC" ColumnName="UPC" />
+                <ScalarProperty Name="ManufacturerGuid" ColumnName="ManufacturerGuid" />
+                <ScalarProperty Name="CarrierGuid" ColumnName="CarrierGuid" />
+                <ScalarProperty Name="DeviceGuid" ColumnName="DeviceGuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="COSTCO.TESTModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="CartTypeId" ColumnName="CartTypeId" />
+                <ScalarProperty Name="MonthlyFee" ColumnName="MonthlyFee" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="CarrierBillCode" ColumnName="CarrierBillCode" />
+                <ScalarProperty Name="CarrierServiceId" ColumnName="CarrierServiceId" />
+                <ScalarProperty Name="CarrierGuid" ColumnName="CarrierGuid" />
+                <ScalarProperty Name="ServiceGuid" ColumnName="ServiceGuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

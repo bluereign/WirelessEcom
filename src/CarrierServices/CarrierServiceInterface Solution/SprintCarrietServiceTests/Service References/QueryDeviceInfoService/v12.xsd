@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryDeviceCapabilities/v2/queryDeviceCapabilitiesV2.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryDeviceCapabilities/v2/queryDeviceCapabilitiesV2.xsd" version="2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryDeviceCapabilitiesV2" type="tns:QueryDeviceCapabilitiesV2Type" />
+  <xs:element name="queryDeviceCapabilitiesV2Response" type="tns:QueryDeviceCapabilitiesV2ResponseType" />
+  <xs:complexType name="QueryDeviceCapabilitiesV2Type">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="userId" type="tns:UserIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Alphanumeric User ID.   Valid characters are 0 - 9 and A - Z. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cutOffDate" type="tns:EffectiveThruDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Returns all rows that are effective and not expired at supplied date and time.  
+If capability id is supplied, this value is ignored.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="pageNumber" type="tns:PageNumberType">
+        <xs:annotation>
+          <xs:documentation>The request page number of data to retrieve, starting with page 1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="capabilityId" type="tns:ProductCharacteristicIdentifierType">
+        <xs:annotation>
+          <xs:documentation>To retrieve a single row using this ID.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productId" type="tns:ProductIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Retrieve row based on productId.  If capabilityId is supplied, this value is ignored.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="capabilityTypeId" type="tns:CapabilityTypeIdentifierType">
+        <xs:annotation>
+          <xs:documentation>If capability id is supplied, this value is ignored.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceInfo" type="tns:DeviceInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure containing the Device Information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="devicetype" type="tns:DeviceSerialNumberCodeType">
+        <xs:annotation>
+          <xs:documentation>Required if the input is Airave MACID. Valid Value is A – Airave, E- CDMA ESN/MEID or dual mode.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryDeviceCapabilitiesV2ResponseType">
+    <xs:sequence minOccurs="0">
+      <xs:element name="areMore" type="tns:MoreRecordsAvailableFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicator telling whether more records are available to be returned.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rowCount" type="tns:RowCountNumberType">
+        <xs:annotation>
+          <xs:documentation>Number of records returned</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceCharacteristicsList" type="tns:DeviceCharacteristicsListType">
+        <xs:annotation>
+          <xs:documentation>Structure of Device Characteristics
+Max of 250 records</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceInfoType">
+    <xs:choice>
+      <xs:element name="esnMeidDec" type="tns:DeviceSerialNumberDecType">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in decimal format
+Required if esnMeidHex or macId are not provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="esnMeidHex" type="tns:DeviceSerialNumberHexType">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in hex format
+Required if esnMeidDec or macId are  not provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="macId" type="tns:MediumAccessControlAddressType">
+        <xs:annotation>
+          <xs:documentation>Media Access Control Identifier (Airave)
+Required if esnMeidHex or  esnMeidDec are not provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceCharacteristics" type="tns:DeviceCharacteristicsType">
+        <xs:annotation>
+          <xs:documentation>Structure containing the Device Characteristics</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="DeviceCharacteristicsType">
+    <xs:sequence>
+      <xs:element name="manufacturerShortName" type="tns:ModelNameType">
+        <xs:annotation>
+          <xs:documentation>Manufacturer Name of the product.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelNumber" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>Model Nbr of the product. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceCharacteristicsListType">
+    <xs:sequence>
+      <xs:element maxOccurs="250" name="deviceCharacteristicsInfo" type="tns:DeviceCharacteristicsInfoType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceCharacteristicsInfoType">
+    <xs:sequence>
+      <xs:element name="capabilityId" type="tns:ProductCharacteristicIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Unique identifier for the relation of a capability type to a product.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="productId" type="tns:ProductIdentifierType">
+        <xs:annotation>
+          <xs:documentation>A unique identifier for a telecommunications service, commodity, piece of Equipment or special service that may be marketed for revenue-generating purposes.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="capabilityTypeId" type="tns:CapabilityTypeIdentifierType">
+        <xs:annotation>
+          <xs:documentation>The unique identifier assigned to a Product Capability Type.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="capabilityEffectiveDate" type="tns:EffectiveFromDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Date and time the capability is valid and available for use</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="capabilityExpirationDate" type="tns:ExpirationDateTimeType">
+        <xs:annotation>
+          <xs:documentation>Date and time the capability is no longer valid</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="capabilityValue" type="tns:ProductCharacteristicValueTextType">
+        <xs:annotation>
+          <xs:documentation>The value associated with a Product's Capabilities.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="productName" type="tns:ProductNameType">
+        <xs:annotation>
+          <xs:documentation>The name given to a Product.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="productTypeName" type="tns:ProductCategoryDescriptionType">
+        <xs:annotation>
+          <xs:documentation>The description of the product type name.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="capabilityTypeName" type="tns:CapabilityTypeNameType">
+        <xs:annotation>
+          <xs:documentation>The name assigned to a Capability type.
+This value can be used to present to a front end.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="capabilityTypeDesc" type="tns:CapabilityTypeDescriptionType">
+        <xs:annotation>
+          <xs:documentation>The description assigned to a Capability Type.   This value can be used to present to a front end.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="unitOfMeasureTypeId" type="tns:UnitOfMeasureCodeType">
+        <xs:annotation>
+          <xs:documentation>A unique identifier for a type of unit of measure.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="unitOfMeasureTypeName" type="tns:UnitOfMeasureNameType">
+        <xs:annotation>
+          <xs:documentation>Text name for a unit of measure type.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="unitOfMeasureDataType" type="tns:DataTypeNameType">
+        <xs:annotation>
+          <xs:documentation>The data type in which the unit of measure is represented.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="manufacturerShortName" type="tns:ModelNameType">
+        <xs:annotation>
+          <xs:documentation>Manufacturer Name of the product.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelNumber" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>Model Number of the product.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="userId" type="tns:UserIdentifierType">
+        <xs:annotation>
+          <xs:documentation>User name of the session that created the record.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="recordCreationDate" type="tns:CreationDateTimeType">
+        <xs:annotation>
+          <xs:documentation>date and time stamp of the record's creation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="recordUpdateDate" type="tns:LastUpdateDateTimeType">
+        <xs:annotation>
+          <xs:documentation>the date and time stamp of the last update applied to the record. No check for actual change in the data occurs.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CapabilityTypeDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Capabillity Type Descrption is decrptive text about a specific capability type for a device.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="256" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CapabilityTypeIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Capabillity Type Identifier designates a specific capability type for a device.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CapabilityTypeNameType">
+    <xs:annotation>
+      <xs:documentation>Capabillity Type Name is a common name for a specific capability type for a device.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CreationDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Creation Date Time represents a calendar Month, Day,Year, Hour, Minute, Second and Fraction Of A Second an event was created.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="DataTypeNameType">
+    <xs:annotation>
+      <xs:documentation>Data Type Name is a common name for a datatype. (ex. string, numeric, character, decimal)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="64" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberCodeType">
+    <xs:annotation>
+      <xs:documentation>Device Serial Number Code is a value that classifies a device serial number.
+
+Possible values for deviceSerialType are:
+E = CDMA Handset (ESN/MEID)
+D = Handset Kit for Dual Mode
+K = IDEN Handset Kit (model #)
+S = Stand-Alone SIM
+M = Stand-Alone Handset (only for handsets which need SIM but dont have as part of this SKU)
+I = IMEI Handset (no need for SIM)
+N = Serialized Accessory (other than SIMs)
+A = Airave MacId</xs:documentation>
+      <xs:documentation>Device Serial Number Code is a value that classifies a device serial number as being an ESN, MEID, MSN, IMEI, or SIM.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="A" />
+      <xs:enumeration value="E" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberDecType">
+    <xs:annotation>
+      <xs:documentation>A Device Serial Number Decimal is the value of a electronic serial number OR Mobile Equipment Identifier(MEID) in decimal format.  This type should be used when it is not known what type the serial number is.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="11" />
+      <xs:maxLength value="18" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberHexType">
+    <xs:annotation>
+      <xs:documentation>A Device Serial Number Hex is the value of a electronic serial number OR Mobile Equipment Identifier(MEID) in hexidecimal format.  This type should be used when it is not known what type the serial number is.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="14" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EffectiveFromDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Effective From Date holds the first calendar month, day, year, hour, minute, second and fraction of a second a Role, Preference, Assignment, etc. was in effect.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="EffectiveThruDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Effective Thru Date Time holds the last calendar day and time the Role, Preference, Assignment, etc. was in effect.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="ExpirationDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Expiration Date Time holds the last calendar Date and Time of day an object, relationship, privilege, etc. is valid or in force.  After this date the object is no longervalid or in force.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="LastUpdateDateTimeType">
+    <xs:annotation>
+      <xs:documentation>Last Update Date is the date and time of the last update to an object.  Last Update Date Time is used in conjunction with the Last Update Numeric Stamp to uniquely identify a specific update iteration.  Typically Last Update Date Time and Last Update Numeric Stamp would be used in a psuedo-conversational approach to updates.  A record is read into local storage and the lock on the source record is released.  When the updated record is written back to the database where the source Record ID equals the Update Record ID, Source Last Update Date Time equals the original Update Last Update Date Time and Source Last Update Numeric Stamp equals the original Update Last Update Numeric Stamp.Both Last UPdate Date Time and Last Update Numeric Stamp are incremented in the update.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="MediumAccessControlAddressType">
+    <xs:annotation>
+      <xs:documentation>Medium Access Control Address (MAC Address) contains a 12 byte hexadecimal value used to identify a device used in the IEEE sublayer of a network which controls access to the shared medium by network-attached devices. 
+
+In the context of the OSI reference model, the Medium Access Control (MAC) layer extends above to the Data Link Layer and below to the Physical Layer.</xs:documentation>
+      <xs:documentation>alias: MAC ID</xs:documentation>
+      <xs:documentation>alias: Media Access Control Identifcation</xs:documentation>
+      <xs:documentation>Medium Access Control Address (MAC Address) contains a 12 byte hexadecimal value used to identify a device used in the IEEE sublayer of a network which controls access to the shared medium by network-attached devices. 
+
+In the context of the OSI reference model, the Medium Access Control (MAC) layer extends above to the Data Link Layer and below to the Physical Layer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNameType">
+    <xs:annotation>
+      <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+      <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNumberType">
+    <xs:annotation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MoreRecordsAvailableFlagType">
+    <xs:annotation>
+      <xs:documentation>More Records Available Flag indicates that there are more records available for retrieval.  
+
+Values:
+TRUE = 1 (there are more records available for retrieval) 
+FALSE = 0 (there are no more records available for retrieval)</xs:documentation>
+      <xs:documentation>More Records Available Flag indicates that there are more records available for retrieval.  
+
+Values:
+TRUE = 1 (there are more records available for retrieval) 
+FALSE = 0 (there are no more records available for retrieval)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="PageNumberType">
+    <xs:annotation>
+      <xs:documentation>Page Number of the records being displayed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProductCategoryDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Product Category Description is text which decribes the categorization of products allowing grouping, selection, and pricing flexiblity.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProductCharacteristicIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Product Characteristic Identifier:  A unique identifier for a Product Characteristic to differentiate one characteristic from the other.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProductCharacteristicValueTextType">
+    <xs:annotation>
+      <xs:documentation>Product Characteristic Value Text:  The value associated with a product's characteristics.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="256" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProductIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Product Identifier is a code that uniquely idenfies and instance or group of items offered for sale to the Customer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProductNameType">
+    <xs:annotation>
+      <xs:documentation>Product Name is the common name for a product.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RowCountNumberType">
+    <xs:annotation>
+      <xs:documentation>Row Count Number is the total number of rows returned or transmitted.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="3" />
+      <xs:fractionDigits value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UnitOfMeasureCodeType">
+    <xs:annotation>
+      <xs:documentation>Unit Of Measurement Code represents the set of characters that represents a kind of unit (as of length, surface, volume, dry measure, liquid measure, money, weight, time, etc.), used as a standard of comparison for others of the same kind, in assigning to them numerical values, as 1 foot, 1 yard, 1 mile, 1 square foot, 1 square yard, 1 cubic foot, 1 peck, 1 bushel, 1 gallon, 1 cent, 1 ounce, 1 pound, 1 hour, and the like.</xs:documentation>
+      <xs:documentation>Unit Of Measurement Code represents the set of characters that represents a kind of unit (as of length, surface, volume, dry measure, liquid measure, money, weight, time, etc.), used as a standard of comparison for others of the same kind, in assigning to them numerical values, as 1 foot, 1 yard, 1 mile, 1 square foot, 1 square yard, 1 cubic foot, 1 peck, 1 bushel, 1 gallon, 1 cent, 1 ounce, 1 pound, 1 hour, and the like.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UnitOfMeasureNameType">
+    <xs:annotation>
+      <xs:documentation>A Unit of Measure Name is the word or words by which a kind of unit (as of length, surface, volume, dry measure, liquid measure, money, weight, time, etc.), is used as a standard of comparison for others of the same kind.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="256" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UserIdentifierType">
+    <xs:annotation>
+      <xs:documentation>User Identifier represents an identifier of a PARTY used in logging into a computerized system.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

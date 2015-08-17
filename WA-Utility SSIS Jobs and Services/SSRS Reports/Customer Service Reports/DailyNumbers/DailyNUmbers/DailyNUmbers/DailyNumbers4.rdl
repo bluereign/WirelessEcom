@@ -1,0 +1,862 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Textbox Name="Textbox1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Order Management Report for:</Value>
+                <Style>
+                  <FontSize>14pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox1</rd:DefaultName>
+        <Top>0.255in</Top>
+        <Left>0.375in</Left>
+        <Height>0.35833in</Height>
+        <Width>3.11889in</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="YesterDay">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!YesterDay.Value, "DataSet1")</Value>
+                <Style>
+                  <FontSize>14pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>YesterDay</rd:DefaultName>
+        <Top>0.255in</Top>
+        <Left>3.49389in</Left>
+        <Height>0.35833in</Height>
+        <Width>1.50278in</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox5">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>CS processed</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox5</rd:DefaultName>
+        <Top>1.52166in</Top>
+        <Left>0.41666in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Total_Activated">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!Total_Activated.Value, "DataSet1")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value> activations on </Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=First(Fields!YesterDay.Value, "DataSet1")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>.</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Total_Activated</rd:DefaultName>
+        <Top>1.52166in</Top>
+        <Left>1.41666in</Left>
+        <Height>0.25in</Height>
+        <Width>3.58001in</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="In_the_Hopper">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!Orders_Waiting_to_Process.Value, "DataSet1")</Value>
+                <Style />
+              </TextRun>
+              <TextRun>
+                <Value> total orders waiting to be processed.</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <ListStyle>Bulleted</ListStyle>
+            <ListLevel>1</ListLevel>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>In_the_Hopper</rd:DefaultName>
+        <Top>2.00222in</Top>
+        <Left>0.375in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Awaiting_Response">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>May result in </Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Sum(Fields!Possible_Total_Activations.Value, "DataSet1")</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value> possible activations.</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <ListStyle>Bulleted</ListStyle>
+            <ListLevel>2</ListLevel>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Awaiting_Response</rd:DefaultName>
+        <Top>2.26611in</Top>
+        <Left>0.375in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>5</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Cancel_Rate">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!Cancel_Rate.Value, "DataSet1")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>% order cancellation rate for this month.</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Cancel_Rate</rd:DefaultName>
+        <Top>3.71389in</Top>
+        <Left>0.37167in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>6</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Cancel_Rate2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>What We Received:</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Cancel_Rate</rd:DefaultName>
+        <Top>0.61333in</Top>
+        <Left>0.375in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>7</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Cancel_Rate3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!Total_Received.Value, "DataSet1")</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value> orders received on </Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=First(Fields!YesterDay.Value, "DataSet1")</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>.</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <ListStyle>Bulleted</ListStyle>
+            <ListLevel>1</ListLevel>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Cancel_Rate</rd:DefaultName>
+        <Top>0.86333in</Top>
+        <Left>0.375in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>8</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Cancel_Rate4">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>May result in </Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Sum(Fields!Possible_Activations.Value, "DataSet1")</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value> possible activations.</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <ListStyle>Bulleted</ListStyle>
+            <ListLevel>2</ListLevel>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Cancel_Rate</rd:DefaultName>
+        <Top>1.155in</Top>
+        <Left>0.375in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>9</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Cancel_Rate5">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>* CS processes orders within 48 hours of receiving.</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Cancel_Rate</rd:DefaultName>
+        <Top>4.03333in</Top>
+        <Left>0.375in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>10</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!Awaiting_Response.Value, "DataSet1")</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value> orders awaiting response from customer care to activate.</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>2.53in</Top>
+        <Left>0.375in</Left>
+        <Height>0.36444in</Height>
+        <Width>4.625in</Width>
+        <ZIndex>11</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Cancel_Rate6">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Out of </Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Sum(Fields!Possible_Activations.Value, "DataSet1")</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value> devices, </Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Sum(Fields!WarrantyAdd.Value, "DataSet2")</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value> warranties were ordered for an attachment rate of </Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Sum(Fields!AttachRate.Value, "DataSet2")</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>%.</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Cancel_Rate</rd:DefaultName>
+        <Top>3.07916in</Top>
+        <Left>0.37167in</Left>
+        <Height>0.4in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>12</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Upgrades">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!Upgrades.Value, "DataSet1")</Value>
+                <Style />
+              </TextRun>
+              <TextRun>
+                <Value> upgrades have been ordered this month.</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Upgrades</rd:DefaultName>
+        <Top>4.41542in</Top>
+        <Left>0.37167in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>13</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="New">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!New.Value, "DataSet1")</Value>
+                <Style />
+              </TextRun>
+              <TextRun>
+                <Value> new activations have been ordered this month.</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>New</rd:DefaultName>
+        <Top>4.73486in</Top>
+        <Left>0.37167in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>14</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Addaline">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!Addaline.Value, "DataSet1")</Value>
+                <Style />
+              </TextRun>
+              <TextRun>
+                <Value> add-a-line activations have been ordered this month.</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Addaline</rd:DefaultName>
+        <Top>5.05431in</Top>
+        <Left>0.37167in</Left>
+        <Height>0.25in</Height>
+        <Width>4.62167in</Width>
+        <ZIndex>15</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+    </ReportItems>
+    <Height>5.43625in</Height>
+    <Style />
+  </Body>
+  <Width>5.725in</Width>
+  <Page>
+    <LeftMargin>1in</LeftMargin>
+    <RightMargin>1in</RightMargin>
+    <TopMargin>1in</TopMargin>
+    <BottomMargin>1in</BottomMargin>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=10.7.0.62,1500;Initial Catalog=CARTOYS</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:DataSourceID>e72778be-9a31-454e-b908-e4dd17360e87</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>DECLARE @TotalActivated int
+
+WITH OrdertoDetailId (OrderId, OrderDetailId) AS
+(SELECT OrderId, OrderDetailId FROM salesorder.orderdetail)
+
+
+SELECT @TotalActivated = COUNT(swl.wirelesslineid)
+FROM OrdertoDetailId ODI
+INNER JOIN salesorder.wirelessaccount swa ON swa.OrderId = ODI.OrderId
+INNER JOIN salesorder.wirelessline swl ON swl.OrderDetailId = ODI.OrderDetailId
+WHERE CONVERT(VARCHAR(10),swa.ActivationDate,101) = CONVERT(VARCHAR(10), DATEADD(day, -1, GETDATE()), 101)
+
+DECLARE @ActivationsWaiting int
+SELECT @ActivationsWaiting = COUNT(*) FROM salesOrder.ActivationsWaiting
+
+DECLARE @CapturesPending int
+SELECT @CapturesPending = COUNT(*) FROM salesOrder.CapturesWaiting
+
+DECLARE @TotalHoppers int
+SELECT @TotalHoppers = SUM(@ActivationsWaiting+@CapturesPending)
+
+
+DECLARE @TotalCancelled int
+SELECT @TotalCancelled = COUNT(sod.orderdetailid) FROM salesorder.[Order] so
+INNER JOIN salesorder.[OrderDetail] sod on sod.OrderId = so.OrderId AND sod.OrderDetailType = 'd'
+WHERE
+OrderDate BETWEEN CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101) AND GETDATE()
+AND Status = '4'
+
+DECLARE @TotalOrders int
+SELECT @TotalOrders = COUNT(sod.OrderDetailId) FROM salesorder.[Order] so
+INNER JOIN salesorder.[OrderDetail] sod on sod.OrderId = so.OrderId AND sod.OrderDetailType = 'd'
+WHERE
+OrderDate BETWEEN CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101) AND GETDATE()
+AND Status &gt; '0'
+
+DECLARE @TotalUpgrades int
+SELECT @TotalUpgrades = COUNT(sod.OrderDetailId) FROM salesorder.[Order] so
+INNER JOIN salesorder.[OrderDetail] sod on sod.OrderId = so.OrderId AND sod.OrderDetailType = 'd'
+WHERE
+OrderDate BETWEEN CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101) AND GETDATE()
+AND Status &gt; '0' AND so.ActivationType = 'U'
+
+DECLARE @TotalNew int
+SELECT @TotalNew = COUNT(sod.OrderDetailId) FROM salesorder.[Order] so
+INNER JOIN salesorder.[OrderDetail] sod on sod.OrderId = so.OrderId AND sod.OrderDetailType = 'd'
+WHERE
+OrderDate BETWEEN CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101) AND GETDATE()
+AND Status &gt; '0' AND so.ActivationType = 'N'
+
+DECLARE @TotalAddaline int
+SELECT @TotalAddaline = COUNT(sod.OrderDetailId) FROM salesorder.[Order] so
+INNER JOIN salesorder.[OrderDetail] sod on sod.OrderId = so.OrderId AND sod.OrderDetailType = 'd'
+WHERE
+OrderDate BETWEEN CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101) AND GETDATE()
+AND Status &gt; '0' AND so.ActivationType = 'A'
+
+
+DECLARE @CancellationRate int
+SELECT @CancellationRate = (@TotalCancelled*100)/NULLIF(@TotalOrders,0)
+
+DECLARE @TotalReceived int
+SELECT @TotalReceived = COUNT(*) FROM salesorder.[Order] WHERE CONVERT(VARCHAR(10),OrderDate,101) = CONVERT(VARCHAR(10), DATEADD(day, -1, GETDATE()), 101) AND Status &gt; '0'
+
+DECLARE @PossibleActivations int
+SELECT @PossibleActivations = COUNT(*) FROM salesorder.[OrderDetail] WHERE OrderDetailtype = 'd' AND OrderId IN (SELECT OrderId FROM salesorder.[order] WHERE CONVERT(VARCHAR(10),OrderDate,101) = CONVERT(VARCHAR(10), DATEADD(day, -1, GETDATE()), 101) AND Status &gt; '0')
+
+DECLARE @DevicesPendingActivation int
+SELECT @DevicesPendingActivation = COUNT(OrderDetailId) from salesorder.OrderDetail where OrderId in (
+select orderid from salesorder.ActivationsWaiting
+union
+select orderid from salesorder.capturesWaiting)
+and OrderDetailType = 'd'
+
+SELECT CONVERT(VARCHAR(10), DATEADD(day, -1, GETDATE()), 101) AS 'YesterDay',
+@TotalReceived AS 'Total Received',
+@PossibleActivations AS 'Possible Activations',
+@TotalActivated AS 'Total Activated',
+@TotalHoppers AS 'Orders Waiting to Process',
+@DevicesPendingActivation AS 'Possible Total Activations',
+ISNULL(@CancellationRate,'0') AS 'Cancel Rate',
+--@TotalOrders,
+@ActivationsWaiting AS 'Awaiting Response',
+@TotalUpgrades AS 'Upgrades',
+@TotalNew AS 'New',
+@TotalAddaline AS 'Addaline'</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="YesterDay">
+          <DataField>YesterDay</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Total_Activated">
+          <DataField>Total Activated</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Total_Received">
+          <DataField>Total Received</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Possible_Activations">
+          <DataField>Possible Activations</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Cancel_Rate">
+          <DataField>Cancel Rate</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Orders_Waiting_to_Process">
+          <DataField>Orders Waiting to Process</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Possible_Total_Activations">
+          <DataField>Possible Total Activations</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Awaiting_Response">
+          <DataField>Awaiting Response</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Upgrades">
+          <DataField>Upgrades</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="New">
+          <DataField>New</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Addaline">
+          <DataField>Addaline</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DataSet2">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>DECLARE @SquareTradeAddCount int
+DECLARE @DeviceCount int
+
+SELECT @SquareTradeAddCount = COUNT(*) FROM salesorder.[OrderDetail] sod
+WHERE sod.OrderDetailType = 'w'
+AND sod.OrderId IN (SELECT OrderId FROM salesorder.[order]
+WHERE Status &gt; '0' AND cast(ORderDate as date) = cast(getdate()-1 as date))
+
+SELECT @DeviceCount = COUNT(*) FROM salesorder.[OrderDetail] sod
+WHERE sod.OrderDetailType = 'd'
+AND sod.OrderId IN (SELECT OrderId FROM salesorder.[order]
+WHERE Status &gt; '0' AND cast(ORderDate as date) = cast(getdate()-1 as date))
+
+DECLARE @AttachRate decimal (9,2)
+SELECT @AttachRate = CONVERT(decimal (9,4),@SquareTradeAddCount)/NULLIF(CONVERT(decimal (9,4),@DeviceCount),'0')*100
+
+SELECT @SquareTradeAddCount AS 'WarrantyAdd', @AttachRate AS 'AttachRate'
+</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="WarrantyAdd">
+          <DataField>WarrantyAdd</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="AttachRate">
+          <DataField>AttachRate</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <Language>en-US</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>db86f68d-267d-45ba-b463-205c274368af</rd:ReportID>
+</Report>

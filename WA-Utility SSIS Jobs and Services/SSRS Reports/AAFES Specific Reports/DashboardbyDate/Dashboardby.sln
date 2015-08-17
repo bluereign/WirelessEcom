@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Dashboardby", "Dashboardby.rptproj", "{B062DFED-9B39-4A10-B472-488CA83D872D}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver.cartoys.corp:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Dashboardby.rptproj
+		SccLocalPath1 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B062DFED-9B39-4A10-B472-488CA83D872D}.Debug|Default.ActiveCfg = Debug
+		{B062DFED-9B39-4A10-B472-488CA83D872D}.Debug|Default.Build.0 = DebugLocal
+		{B062DFED-9B39-4A10-B472-488CA83D872D}.Debug|Default.Deploy.0 = DebugLocal
+		{B062DFED-9B39-4A10-B472-488CA83D872D}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{B062DFED-9B39-4A10-B472-488CA83D872D}.DebugLocal|Default.Build.0 = DebugLocal
+		{B062DFED-9B39-4A10-B472-488CA83D872D}.Release|Default.ActiveCfg = Release
+		{B062DFED-9B39-4A10-B472-488CA83D872D}.Release|Default.Build.0 = Release
+		{B062DFED-9B39-4A10-B472-488CA83D872D}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

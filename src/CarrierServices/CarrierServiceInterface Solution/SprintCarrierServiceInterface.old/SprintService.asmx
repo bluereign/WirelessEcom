@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="SprintService.asmx.cs" Class="SprintCarrierServiceInterface.SprintService" %>

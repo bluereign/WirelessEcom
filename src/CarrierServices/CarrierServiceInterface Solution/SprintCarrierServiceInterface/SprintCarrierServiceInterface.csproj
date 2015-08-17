@@ -1,0 +1,1000 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{92AAD83E-6D84-422D-9FA3-992EC1C93F41}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SprintCSI</RootNamespace>
+    <AssemblyName>SprintCSI</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
+    <UseIISExpress>true</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Brisebois.WindowsAzure">
+      <HintPath>..\packages\Brisebois.WindowsAzure.1.0.1.9\lib\net45\Brisebois.WindowsAzure.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.1\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.1\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.WindowsAzure.TransientFaultHandling">
+      <HintPath>..\packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.1.1212.0\lib\NET4\Microsoft.Practices.EnterpriseLibrary.WindowsAzure.TransientFaultHandling.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.TransientFaultHandling.Core">
+      <HintPath>..\packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4\Microsoft.Practices.TransientFaultHandling.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Services3.3.0.0.0\lib\net20\Microsoft.Web.Services3.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.2.0.6.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\packages\Quartz.2.1.2\lib\net40\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="SprintOrders, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Database\EntityFrameworks\SprintOrders\Repository\bin\Debug\SprintOrders.dll</HintPath>
+    </Reference>
+    <Reference Include="SprintOrdersData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Database\EntityFrameworks\SprintOrders\Repository\bin\Debug\SprintOrdersData.dll</HintPath>
+    </Reference>
+    <Reference Include="SWGData">
+      <HintPath>..\..\..\Database\EntityFrameworks\SWGErrorHandle\Repository\bin\Debug\SWGData.dll</HintPath>
+    </Reference>
+    <Reference Include="SWGErrorHandle">
+      <HintPath>..\..\..\Database\EntityFrameworks\SWGErrorHandle\Repository\bin\Debug\SWGErrorHandle.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.2.2\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.2.2\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.2.2\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.2\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Spatial, Version=5.6.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.6.1\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\sprint-mso.cer" />
+    <Content Include="App_Data\wirelessadvocates-01.pfx" />
+    <None Include="Properties\PublishProfiles\SCSDevPageMaster.pubxml" />
+    <None Include="Properties\PublishProfiles\SCSProdPageMaster.pubxml" />
+    <None Include="Properties\PublishProfiles\SCSTestPageMaster.pubxml" />
+    <None Include="Service References\AddressMgmtService\configuration91.svcinfo" />
+    <None Include="Service References\AddressMgmtService\configuration.svcinfo" />
+    <None Include="Service References\AddressMgmtService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\QPOService\configuration91.svcinfo" />
+    <None Include="Service References\QPOService\configuration.svcinfo" />
+    <None Include="Service References\QPOService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Data\Password.txt" />
+    <Content Include="Service References\QPOService\SprintCSI.QPOService.BillSummaryInfoType.datasource" />
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.DeviceCapabilityInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.DeviceCharacteristicsInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.DeviceFrequencyInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.DeviceInfo1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.DeviceInfo3.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.DeviceInfoType1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.DeviceInfoType3.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.DeviceList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.DeviceOrderHistoryInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.EquipmentInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.MdnInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.NaiInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.PropertyInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QueryAccountDeviceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QueryCdmaDeviceInfoV2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QueryDeviceCapabilitiesV2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QueryDeviceCatalogInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QueryDeviceHistoryByResourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QueryDeviceInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QueryDeviceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QueryDeviceOrderHistoryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QueryDeviceResourceInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.QuerySubscriberDeviceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.SubscriberInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.ValidateBuybackDeviceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.ValidateDeviceV6Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.ValidateDeviceV6ResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.ValidateDeviceV7Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.ValidateDeviceV7ResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.ValidateDeviceV8Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.ValidateDeviceV8ResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\SprintCSI.QueryDeviceInfoService.WsMessageHeaderType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.AddOnSocInfoResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.AddOnSocInfoResponseType1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.AffinityDetailInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ChangedSocInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ChangedSocInfoType1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.EquipmentProtectionInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ErrorInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ExistingEquipmentProtectionInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.HppttlInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.LegacyPlanInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.LegacyPlanInfoType1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.MobileToHomeOrOfficeInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.PricePlanInfoResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.PricePlanInfoType1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.PricePlanInfoType3.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.PricePlanInfoType4.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.PromoCodeInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.QueryAvailableEquipmentServicesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.QueryAvailableOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.QueryAvailablePlansResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.QuerySubscriberAdditionalServicesInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ResourceInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ResourceInfoType1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.SecondaryBundleSubPricePlanChangeRequiredInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.SecondaryBundleSubPricePlanChangeRequiredInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.SsitInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.StaticIpNgpInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.SuggestionGroupInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.SuggestionGroupInfoType1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ValidatePlansAndOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ValidatePlansAndOptionsV2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ValidationErrorInfoType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.ValidationErrorInfoType1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\SprintCSI.QPOService.WsMessageHeaderType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QPOService\v1.wsdl" />
+    <None Include="Service References\QPOService\v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QPOService\v11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QPOService\v12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QPOService\v13.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QPOService\v14.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QPOService\v15.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QPOService\v16.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QPOService\v17.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v1.wsdl" />
+    <None Include="Service References\QueryDeviceInfoService\v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v110.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v111.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v112.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v113.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v114.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v115.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v13.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v14.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v15.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v16.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v17.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v18.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\v19.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\QueryDeviceInfoService\configuration91.svcinfo" />
+    <None Include="Service References\QueryDeviceInfoService\configuration.svcinfo" />
+    <None Include="Service References\QueryDeviceInfoService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\QuerySystemStatusService\configuration91.svcinfo" />
+    <None Include="Service References\QuerySystemStatusService\configuration.svcinfo" />
+    <None Include="Service References\QuerySystemStatusService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="SprintService.asmx" />
+    <None Include="Service References\QuerySystemStatusService\SprintCSI.QuerySystemStatusService.pingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\QuerySystemStatusService\v1.wsdl" />
+    <None Include="Service References\QuerySystemStatusService\v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SQL Dependencies\GetDatabaseSizeRecommendation.sql" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <None Include="Web.DevPageMaster.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Mock.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.ProdPageMaster.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.StgPageMaster.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.TestPageMaster.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\SprintCSI.Request.Xsd2CodeParameters.png" />
+    <None Include="XSDs\SprintCSI.Response.Xsd2CodeParameters.png" />
+    <None Include="XSDs\Util\XSDObjectGen.exe" />
+    <None Include="XSDs\Util\XSDObjectGen.pdb" />
+    <None Include="XSDs\Util\XSDObjectGen.vshost.exe" />
+    <None Include="XSDs\Util\XSDObjectGenLib.dll" />
+    <None Include="XSDs\Util\XSDObjectGenLib.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Proxies\ovm-request.cs">
+      <SubType>code</SubType>
+    </Compile>
+    <Compile Include="Proxies\ovm-response.cs">
+      <SubType>code</SubType>
+    </Compile>
+    <Compile Include="Service References\AddressMgmtService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\QPOService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\QueryDeviceInfoService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\QuerySystemStatusService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceAccessLayer\IWirelessOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceAccessLayer\WirelessOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceImplementation\ActivateReservedDevice.cs" />
+    <Compile Include="ServiceImplementation\DTO\QuerySystemStatusRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\QuerySystemStatusResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\SoapBaseResponse.cs" />
+    <Compile Include="ServiceImplementation\ISprintSoapInfo .cs" />
+    <Compile Include="ServiceImplementation\OvmXmlBase.cs" />
+    <Compile Include="ServiceImplementation\DTO\ActivationReplaceRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\ActivateReservedDeviceRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\ActivateNowRequest.cs" />
+    <Compile Include="ServiceImplementation\ActivationMappers\BaseActivationRequestMapper.cs" />
+    <Compile Include="ServiceImplementation\ActivationMappers\AddOnActivationRequestMapper.cs" />
+    <Compile Include="ServiceImplementation\ActivationMappers\ReplaceActivationRequestMapper.cs" />
+    <Compile Include="ServiceImplementation\ActivationMappers\UpgradeActivationRequestMapper.cs" />
+    <Compile Include="ServiceImplementation\ActivationUpgrade.cs" />
+    <Compile Include="ServiceImplementation\ActivateNow.cs" />
+    <Compile Include="ServiceImplementation\DTO\ActivationUpgradeRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\ActivationReplaceResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\ActivationUpgradeResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintAddressValidationResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintPlansAndOptionsValidationResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintDeviceValidationResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintCreditCheckResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintActivateReservedDeviceResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintCustomerInquiryResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintNpaResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintValidatePortInResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\ValidatePlansAndOptionsRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\ValidateDeviceRequest.cs" />
+    <Compile Include="ServiceImplementation\ISprintErrorInfo.cs" />
+    <Compile Include="ServiceImplementation\DTO\DTOAuthenticationResponse.cs" />
+    <Compile Include="ServiceImplementation\AuthenticationResend.cs" />
+    <Compile Include="ServiceImplementation\CheckCreditExistingAccount.cs" />
+    <Compile Include="ServiceImplementation\CheckCredit.cs" />
+    <Compile Include="ServiceImplementation\OvmBase.cs" />
+    <Compile Include="ServiceImplementation\Activation.cs" />
+    <Compile Include="ServiceImplementation\ActivationMappers\NewActivationRequestMapper.cs" />
+    <Compile Include="ServiceImplementation\DTO\CheckCreditExistingAccountRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintCheckCreditExistingAccountResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\CheckCreditRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\CustomerInquiryRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\PortEligibilityRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\NpaRequest.cs" />
+    <Compile Include="ServiceImplementation\QuerySystemStatus.cs" />
+    <Compile Include="ServiceImplementation\ServiceBase.cs" />
+    <Compile Include="ServiceImplementation\ServiceException.cs" />
+    <Compile Include="ServiceImplementation\NpaNxx.cs" />
+    <Compile Include="ServiceImplementation\NpaLookupByZip.cs" />
+    <Compile Include="ServiceImplementation\CustomerLookupByMDN.cs" />
+    <Compile Include="ServiceImplementation\PortEligibility.cs" />
+    <Compile Include="ServiceImplementation\DTO\SprintActivateNowResponse.cs" />
+    <Compile Include="ServiceImplementation\SoapBase.cs" />
+    <Compile Include="ServiceImplementation\UpgradeEligible.cs" />
+    <Compile Include="ServiceImplementation\ActivationReplace.cs" />
+    <Compile Include="ServiceImplementation\ValidatePlansAndOptions.cs" />
+    <Compile Include="ServiceImplementation\ValidateDevice.cs" />
+    <Compile Include="ServiceImplementation\ValidateAddress.cs" />
+    <Compile Include="ServiceImplementation\DTO\ValidateAddressRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\ActivationRequest.cs" />
+    <Compile Include="ServiceImplementation\DTO\ActivationResponse.cs" />
+    <Compile Include="ServiceImplementation\DTO\DTOAuthenticationRequest.cs" />
+    <Compile Include="SprintService.asmx.cs">
+      <DependentUpon>SprintService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\HttpTransientErrorDetectionStrategy.cs" />
+    <Compile Include="Utils\SessionHelper.cs" />
+    <Compile Include="Utils\RequestHelper.cs" />
+    <Compile Include="Utils\SoapHeader.cs" />
+    <Compile Include="Utils\WcfEventHelper.cs" />
+    <Compile Include="Utils\XmlHelper.cs" />
+    <Compile Include="WCF\InterceptChannelBindingElement.cs" />
+    <Compile Include="WCF\InterceptChannelBindingElementExtensionElement.cs" />
+    <Compile Include="WCF\InterceptChannelFactory.cs" />
+    <Compile Include="WCF\InterceptResponseChannel.cs" />
+    <Compile Include="WCF\ResponseEventArgs.cs" />
+    <Compile Include="WCF\RequestEventArgs.cs" />
+    <Compile Include="WCF\ErrorEventArgs.cs" />
+    <Compile Include="WCF\ErrorHandler.cs" />
+    <Compile Include="WCF\ErrorHandlerBehavior.cs" />
+    <Compile Include="WCF\ErrorServiceBehavior.cs" />
+    <Compile Include="WCF\SimpleBehaviorExtensionElement.cs" />
+    <Compile Include="WCF\SimpleEndpointBehavior.cs" />
+    <Compile Include="WCF\SimpleMessageInspector.cs" />
+    <Compile Include="WCF\SprintHeader.cs" />
+    <Compile Include="XSDs\ovm-request.designer.cs" />
+    <Compile Include="XSDs\ovm-response.designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WirelessAdvocates\WirelessAdvocates.csproj">
+      <Project>{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}</Project>
+      <Name>WirelessAdvocates</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\SCSDevAafes.pubxml" />
+    <None Include="Properties\PublishProfiles\SCSDevCostco.pubxml" />
+    <None Include="Properties\PublishProfiles\SCSProdAafes.pubxml" />
+    <None Include="Properties\PublishProfiles\SCSProdCostco.pubxml" />
+    <None Include="Properties\PublishProfiles\SCSTestAafes.pubxml" />
+    <None Include="Properties\PublishProfiles\SCSTestCostco.pubxml" />
+    <None Include="Service References\AddressMgmtService\SprintCSI.AddressMgmtService.CityState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressMgmtService\SprintCSI.AddressMgmtService.QueryReverseNameAddressResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressMgmtService\SprintCSI.AddressMgmtService.ValidateAddressResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressMgmtService\SprintCSI.AddressMgmtService.ValidateCoverageDetailsResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressMgmtService\SprintCSI.AddressMgmtService.WsMessageHeaderType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressMgmtService\v1.wsdl" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\AddressMgmtService\v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressMgmtService\v11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressMgmtService\v12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressMgmtService\v13.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressMgmtService\v14.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressMgmtService\v15.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.DevAafes.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.DevCostco.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Prod.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.ProdAafes.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.ProdCostco.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.QA.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.StgAafes.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.StgCostco.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.TestAafes.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.TestCostco.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\checkNumberPortingEligibility.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\checkOrderStatus.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doAccountValidation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doActivateNow.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doActivateReservedDevice.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doActivation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doCoverageCheck.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doCreditCancel.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doCreditCheck.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doDeactivation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doInventoryCheck.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doPreAuthorization.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\doValidation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\getBillSummary.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\getCorporateDiscount.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\getDeviceInfo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\getNpaNxx.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\getOptionsInfo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\getPortInInfo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\getSecurityQuestion.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\ovm-common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\ovm-request.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\ovm-response.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\performAuthenticationResendPin.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\performServiceValidation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\queryAvailableOptions.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\queryAvailablePlans.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\QueryCsa.wsdl" />
+    <None Include="XSDs\queryCsaV2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\QueryNumberPortingService.wsdl" />
+    <None Include="XSDs\queryPlansDetailInfo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\validatePlansAndOptions.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="XSDs\Util\XSDObjectGen.exe.config" />
+    <None Include="XSDs\Util\XSDObjectGen.vshost.exe.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AddressMgmtService\" />
+    <WCFMetadataStorage Include="Service References\QPOService\" />
+    <WCFMetadataStorage Include="Service References\QueryDeviceInfoService\" />
+    <WCFMetadataStorage Include="Service References\QuerySystemStatusService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DevCostco|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <PublishDatabases>false</PublishDatabases>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>
+    </DefineConstants>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DevAafes|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TestAafes|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TestCostco|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ProdCostco|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ProdAafes|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'StgCostco|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'StgAafes|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mock|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DevPageMaster|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'StgPageMaster|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TestPageMaster|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ProdPageMaster|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:58913/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

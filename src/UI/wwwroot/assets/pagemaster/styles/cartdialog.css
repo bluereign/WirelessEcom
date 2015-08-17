@@ -1,0 +1,20 @@
+.cartHeader
+{
+	background:url('/assets/pagemaster/images/pagemaster_logo.jpg') 15px 5px no-repeat #f5f2f2 !important;
+}
+
+.x-dlg .x-dlg-hd-left {
+	background: url('/assets/aafes/images/skin/skin-cart-dialog-box.png') no-repeat 0px -41px !important;
+}
+
+.x-dlg .x-dlg-hd {
+    background: url("/assets/aafes/images/skin/skin-cart-dialog-box.png") repeat-x scroll 0 -82px transparent !important;
+}
+
+.x-dlg .x-dlg-hd-right {
+    background: url('/assets/aafes/images/skin/skin-cart-dialog-box.png') no-repeat right 0px !important;
+}
+
+.x-dlg .x-dlg-dlg-body {
+    border-color: #0f4b7f;
+}

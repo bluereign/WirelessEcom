@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryDeviceResourceInfo/v1/queryDeviceResourceInfo.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryDeviceResourceInfo/v1/queryDeviceResourceInfo.xsd" version="1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryDeviceResourceInfo" type="tns:QueryDeviceResourceInfoType" />
+  <xs:element name="queryDeviceResourceInfoResponse" type="tns:QueryDeviceResourceInfoResponseType" />
+  <xs:complexType name="QueryDeviceResourceInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="userId" type="tns:DeviceUserIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Alphanumeric User ID.   Valid characters are 0 - 9 and A - Z.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="searchCriteria" type="tns:SearchCriteriaType">
+        <xs:annotation>
+          <xs:documentation>Structure containing choice of esnMeidHex, esnMeidDec or macId </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="fetchUiccInfo" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>Request additional UICC information like PIN/PUC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryDeviceResourceInfoResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="subscriberId" type="tns:SubscriptionIdentifierType">
+        <xs:annotation>
+          <xs:documentation>The subscription ID with which the ESN/MEID was associated.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceInfo" type="tns:DeviceInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure containing subscriber’s device details</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="mdnInfo" type="tns:MdnInfoType">
+        <xs:annotation>
+          <xs:documentation>The mobile identification number with which the ESN/MEID was associated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="naiInfo" type="tns:NaiInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure containing details about the subscriber’s NAI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="billSysCode" type="tns:BillingSystemCodeType">
+        <xs:annotation>
+          <xs:documentation>Billing System Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="hpppttId" type="tns:HighPerformancePushToTalkIdentifierStringType">
+        <xs:annotation>
+          <xs:documentation>High Performance Push To Talk Identifier. HPPTT ID will only be returned if the device is HPPTT capable and HPPTT service is associated with the subscriber</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="httpInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>An indicator identifying is a device is HPPTT capable.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="resellerPartnerId" type="tns:ResellerPartnerIdentifierType">
+        <xs:annotation>
+          <xs:documentation>The resellerId for the subscription in NMS. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceInfoType">
+    <xs:sequence>
+      <xs:element name="data3GInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>An indicator denoting whether the device has 3G capabilities.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="readyLinkInd" type="tns:FeatureSupportedFlagType">
+        <xs:annotation>
+          <xs:documentation>An indicator denoting whether the device has Ready Link capabilities.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelNumber" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>A unique value to identify the type of equipment being shipped by the manufacturer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="manufacturerLocation" type="tns:DeviceManufacturerLocationIdentifierType">
+        <xs:annotation>
+          <xs:documentation>The ID of the manufacturer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="masterSubsidyLock" type="tns:MasterSubsidyLockCodeType">
+        <xs:annotation>
+          <xs:documentation>Used as part 1 of a 2-part authentication.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="oneTimeKeyPadSubsidyLock" type="tns:OneTimeKeypadSubisidyLockCodeType">
+        <xs:annotation>
+          <xs:documentation>Used as part 2 of a 2-part authentication.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="authenticationKey" type="tns:AuthenticationKeyType">
+        <xs:annotation>
+          <xs:documentation>The Authentication key is used to authenticate the handset during Over-The-Air (OTA) activation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceStatus" type="tns:DeviceActivationStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Derived by NMS using the Activation_Status and Disposition_Code of the ESN or MEID
+
+Valid Values:
+E – ESN/MEID Enabled (active)
+D – ESN/MEID Disabled (not active)
+L – Lost/Stolen
+F – Fraudulent
+P – Pre-Paid Unprovisionable
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceSerialNumberHex" type="tns:DeviceSerialNumberHexType">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in hex format</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceSerialNumberDecimal" type="tns:DeviceSerialNumberDecType">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in decimal format</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pseudoEsn" type="tns:ElectronicSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Pseudo ESN.  In decimal format. Returned if the MDN is associated with an MEID.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="prlName" type="tns:PreferredRoamingListNameType">
+        <xs:annotation>
+          <xs:documentation>Preferred Roaming List name that was downloaded to this device</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="modelName" type="tns:ModelNameType">
+        <xs:annotation>
+          <xs:documentation>Model name of ESN/MEID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="equipSoftwareVersion" type="tns:VersionStringType">
+        <xs:annotation>
+          <xs:documentation>Equipment initial software version</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="systemCreationDate" type="tns:CreationDateType">
+        <xs:annotation>
+          <xs:documentation>Equipment EDF load date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="iccId" type="tns:UniversalIntegratedCircuitCardIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Integrated Circuit Card 
+Returned for LTE-capable devices</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="imsi" type="tns:InternationalMobileSubscriberIdentityStringType">
+        <xs:annotation>
+          <xs:documentation>The IMSI of the LTE capable device for both embedded and removable UICC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="parentModelNumber" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>The parent modeNumber for the child modelNumber provided in the API response.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceType" type="tns:DeviceTransceiverTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>E - CDMA or embedded LTE or dual-mode WiMax.
+U – Removable transceiver/USIM transceiver</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="uiccInfo" type="tns:UiccInfoType">
+        <xs:annotation>
+          <xs:documentation>Additional iccId information
+Only returned if fetchUiccInfo is ‘true’ in the request</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MdnInfoType">
+    <xs:sequence>
+      <xs:element name="mdn" type="tns:MobileDirectoryNumberStringType">
+        <xs:annotation>
+          <xs:documentation>Mobile Directory Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="mdnStatus" type="tns:MobileDirectoryNumberStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>The MDN status in NMS (current values should be either AI (Assigned In Use) or AR (Assigned Reserved)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="portActivityStatus" type="tns:PortStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Denotes the current status of the port activity associated to the MDN.
+Valid values include:
+IP – in progress
+IC – individually complete
+SO – In progress, in NPA Split, old MDN
+SN – in progress, in NPA Split, new MDN
+PC – port complete
+NP – no porting activity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="portState" type="tns:NumberPortabilityDirectionTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Denotes the direction of the MDN port.
+Valid values include:
+I – Port In
+O – Port Out
+N – No Porting</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numberGroup" type="tns:NumberGroupType">
+        <xs:annotation>
+          <xs:documentation>Must be a Number Group, which corresponds to a leaf level CSA.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="msid" type="tns:MobileStationIdentificationNumberType">
+        <xs:annotation>
+          <xs:documentation>Mobile Station Identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sid" type="tns:SystemIdentificationNumberType">
+        <xs:annotation>
+          <xs:documentation>System ID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NaiInfoRequestType">
+    <xs:sequence>
+      <xs:element name="naiUserName" type="tns:UserNameType">
+        <xs:annotation>
+          <xs:documentation>The user name associated with the NAI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="naiRealm" type="tns:RealmType">
+        <xs:annotation>
+          <xs:documentation>The realm associated with the NAI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NaiInfoType">
+    <xs:sequence>
+      <xs:element name="naiUserName" type="tns:UserNameType">
+        <xs:annotation>
+          <xs:documentation>The user name associated with the NAI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="naiRealm" type="tns:RealmType">
+        <xs:annotation>
+          <xs:documentation>The realm associated with the NAI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="naiStatus" type="tns:NetworkAccessIdentifierStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>The current status of the NAI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaType">
+    <xs:choice>
+      <xs:element name="deviceSerialNumberHex" type="tns:DeviceSerialNumberHexType">
+        <xs:annotation>
+          <xs:documentation>
+ESN/Mobile Equipment Identifier(MEID) in hex format
+Required if ESNMEIDDcmlID is  not provided</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceSerialNumberDecimal" type="tns:DeviceSerialNumberDecType">
+        <xs:annotation>
+          <xs:documentation>ESN/Mobile Equipment Identifier(MEID) in decimal format
+Required if ESNMEIDHexID is not provided, ignored otherwise.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="mdn" type="tns:MobileDirectoryNumberStringType">
+        <xs:annotation>
+          <xs:documentation>Mobile Directory Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="iccId" type="tns:UniversalIntegratedCircuitCardIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Integrated Circuit Card
+Only LTE removable iccId is supported</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="imsi" type="tns:InternationalMobileSubscriberIdentityStringType">
+        <xs:annotation>
+          <xs:documentation>The IMSI of the LTE capable device for both embedded and removable UICC</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="naiInfo" type="tns:NaiInfoRequestType">
+        <xs:annotation>
+          <xs:documentation>The structure containing the NAI user name and realm</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="UiccInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pin1" type="tns:PersonalIdentificationNumberType">
+        <xs:annotation>
+          <xs:documentation>ICCID Personal Identification Number 1
+Will be returned if the ICCID has a PIN1 in NMS</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="puc1" type="tns:PhoneLockCodeType">
+        <xs:annotation>
+          <xs:documentation>ICCID Personal Unlock Code 1
+Will be returned if the ICCID has a PUC1 in NMS</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AuthenticationKeyType">
+    <xs:annotation>
+      <xs:documentation>The Authentication Key (A-Key) for over the air activation. A 26 character key used to authenticate a handset.                              
+The first twenty decimal digits are used for the A-key as converted from the 64 bit A-key.  If the A-key is less than 20 decimal digits, it shall be padded with zero's.  The A-key checksum shall be 6 decimal digits as converted from the 18 bit checksum.  If the checksum is less than 6 decimal digits it shall be padded with zeros.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BillingSystemCodeType">
+    <xs:annotation>
+      <xs:documentation>Billing System Code is used to specify which Billing System is responsible for providing billing for the specified MDN.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BinaryExpressionType">
+    <xs:annotation>
+      <xs:documentation>Binary Expression is a type of an expression with two possible states,"true"and"false".</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="CreationDateType">
+    <xs:annotation>
+      <xs:documentation>Creation Date is the date on which the associated message data was created.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date" />
+  </xs:simpleType>
+  <xs:simpleType name="DeviceActivationStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Device Activation Status Code is derived by NMS using the Activation_Status and Disposition_Code of the ESN or MEID
+
+Valid Values:
+E – ESN/MEID Enabled (active)
+D – ESN/MEID Disabled (not active)
+L – Lost/Stolen
+F – Fraudulent
+P – Pre-Paid Unprovisionable</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="E" />
+      <xs:enumeration value="D" />
+      <xs:enumeration value="L" />
+      <xs:enumeration value="F" />
+      <xs:enumeration value="P" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceManufacturerLocationIdentifierType">
+    <xs:annotation>
+      <xs:documentation>The Device Manufacturer Location Identifier designates the location of the manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberDecType">
+    <xs:annotation>
+      <xs:documentation>A Device Serial Number Decimal is the value of a electronic serial number OR Mobile Equipment Identifier(MEID) in decimal format.  This type should be used when it is not known what type the serial number is.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="11" />
+      <xs:maxLength value="18" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberHexType">
+    <xs:annotation>
+      <xs:documentation>A Device Serial Number Hex is the value of a electronic serial number OR Mobile Equipment Identifier(MEID) in hexidecimal format.  This type should be used when it is not known what type the serial number is.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="14" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceTransceiverTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Device Transceiver Type Code designates a specific type of removable or embedded device transceiver.
+Valid Values:
+E - CDMA or embedded LTE or dual-mode WiMax,
+U - Removable transceiver/USIM transceiver
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceUserIdentifierType">
+    <xs:annotation>
+      <xs:documentation>The device user identifier is the alphanumeric User ID assocated to device activity.   
+Valid characters are 0 - 9 and A - Z.  
+The User ID may be a system ID in the case of PRL updates.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+      <xs:pattern value="[a-z A-Z 0-9]+" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ElectronicSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>Electronic Serial Number is a unique number that is embedded electronically by the manufacturer into a CDMA wireless communication device that identifies that individual unit. It can be represented in 11-digit decimal or 8-digit hexadecimal (HEX) format. Once ESNs are exhausted, MEIDs are embedded in devices to uniquely identify the device. This is the 8 digit hexidecimal representation.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FeatureSupportedFlagType">
+    <xs:annotation>
+      <xs:documentation>Feature Supported Flag is a boolean indicator of whether the related feature is supported. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="HighPerformancePushToTalkIdentifierStringType">
+    <xs:annotation>
+      <xs:documentation>High Performance Push To Talk Identifier (HPPTTID) is the identifier of a Subscription utilizing the QChat  Push-To-Talk techniology. HPPTTID is constructed in the username@domain URI format.  The username will be a MDN or UFMI based number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InternationalMobileSubscriberIdentityStringType">
+    <xs:annotation>
+      <xs:documentation>International Mobile Subscriber Identity (IMSI) is a unique number associated with all GSM and Universal Mobile Telecommunications System (UMTS) network mobile phone users. It is stored in the Subscriber Identity Module (SIM) inside the phone and is sent by the phone to the network. It is also used to acquire other details of the mobile in the Home Location Register (HLR) or as locally copied in the Visitor Location Register. In order to avoid the subscriber being identified and tracked by eavesdroppers on the radio interface, the IMSI is sent as rarely as possible and a randomly generated TMSI is sent instead.
+
+The IMSI is used in any mobile network that interconnects with other networks, in particular CDMA and EVDO networks as well as GSM nets. This number is provisioned in the phone directly or in the R-UIM card (a CDMA analogue equivalent to a SIM card in GSM)
+
+An IMSI is usually 15 digits long, but can be shorter (for example MTN South Africa's IMSIs are 14 digits). The first 3 digits are the Mobile Country Code (MCC), and is followed by the Mobile Network Code (MNC), either 2 digits (European standard) or 3 digits (North American standard). The remaining digits are the Mobile Subscriber Identification Number (MSIN) within the network's customer base.
+
+The IMSI conforms to the International Telecommunication Union (ITU) E.212 numbering standard.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MasterSubsidyLockCodeType">
+    <xs:annotation>
+      <xs:documentation>Master Subsidy Lock (MSL) is used for programming the handset when the one-time subsidy lock code fails due to error, or when the phone needs to be reprogrammed for any reason.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Mobile Directory Number Status code designates the status of the MDN in NMS (current values should be either AI (Assigned In Use) or AR (Assigned Reserved)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberStringType">
+    <xs:annotation>
+      <xs:documentation>Mobile Directory Number (MDN) is the actual phone number one would dial to reach a specific mobile phone.
+
+
+
+Prior to Wireless Number Portability, MDN was the same number as the Mobile Identification Number (MIN) for many mobile phones. But now that MDNs can be ported (moved) to other carriers, MDN and MIN will be different for ported numbers.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileStationIdentificationNumberType">
+    <xs:annotation>
+      <xs:documentation>Mobile Station Identity (MSID) is the number that is associated with the home service provider and the wireless phone number. This is reprogrammed when the user changes home service providers.
+
+MSID is the internal identifying number for a CDMA handset's phone number under Local Number Portability.  Mobile Station Identification Number stays with the carrier while the MDN stays with the customer.</xs:documentation>
+      <xs:documentation>Mobile Station Identification Number (MSID) is the internal identifying number for a CDMA handset's phone number under Local Number Portability.  Mobile Station Identification Number stays with the carrier while the MDN stays with the customer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNameType">
+    <xs:annotation>
+      <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNumberType">
+    <xs:annotation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NetworkAccessIdentifierStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Network Access Identifier Status Code designates the status of the Network Access Identifier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumberGroupType">
+    <xs:annotation>
+      <xs:documentation>Number Group (NGP) is identified as CSA by the Ensemble billing system and groups ranges for a number of resources such as IPs, IMSIs, NPANXXs, and UFs . This grouping represents a geographical zone that includes specific ranges.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumberPortabilityDirectionTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Number Portability Direction Indicator designates a port direction returned by the external number management system.
+Valid Values Include:
+A = Wireless to Wireless,
+B = Wireless to Wireline (not being used),
+C = Wireline to Wireless)...
+alias: Port Direction Indicator</xs:documentation>
+      <xs:documentation>Number portability direction indicator returned by the external number management system  (A = Wireless to Wireless, B = Wireless to Wireline (not being used), C = Wireline to Wireless).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OneTimeKeypadSubisidyLockCodeType">
+    <xs:annotation>
+      <xs:documentation>One Time Keypad Subsidy Lock (OTKSL) is a six-digit code used by CDMA phones as an activation code. It is used to activate a brand new phone onto wireless service, and it works only one time. This code makes it possible for a consumer to purchase the phone anywhere, call up the provider's toll-free number, and then activate the wireless phone from the directions given by the representative on the other end of the line. After the initial programming, the code is no longer valid, and the only way to program the phone is via the MSL (master subsidy lock).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PersonalIdentificationNumberType">
+    <xs:annotation>
+      <xs:documentation>Personal Identification Number (PIN) is a secret numeric password shared between a user and a system that can be used to authenticate the user to the system. Typically, the user is required to provide a non-confidential user identifier or token (such as a banking card) and a confidential PIN to gain access to the system. Upon receiving the User ID and PIN, the system looks up the PIN based upon the User ID and compares the looked-up PIN with the received PIN. The user is granted access only when the number entered matches with the number stored in the system.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PhoneLockCodeType">
+    <xs:annotation>
+      <xs:documentation>Phone Lock Code is used in conjunction with the phone lock feature. When activated, the phone will lock after you switch your phone off and back on. Each time the phone is turned on, it will prompt you to enter a lock code before it will allow a call to be placed, or to access most of the phone's memory and menu features. Calls, such as emergency or other numbers programmed as unlocked phone numbers may be placed without entering a lock code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PortStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Port Status Code is a 2 character code that Identifies one of the following status of a port.
+PI = Port-in
+PP = Port-in Progress
+PO = Port-out
+CI = Cancel port-in
+CO = Cancel port-out
+IC = Port-In Complete Canceled
+IS = Port-In Complete Successful
+OC = Port-Out Complete Canceled
+OS = Port-Out Complete Successful</xs:documentation>
+      <xs:documentation>Port Status Code is a 2 character code that Identifies one of the following status of a port.
+PI = Port-in
+PP = Port-in Progress
+PO = Port-out
+CI = Cancel port-in
+CO = Cancel port-out
+IC = Port-In Complete Canceled
+IS = Port-In Complete Successful
+OC = Port-Out Complete Canceled
+OS = Port-Out Complete Successful</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PreferredRoamingListNameType">
+    <xs:annotation>
+      <xs:documentation>The Preferred Roaming List Name is the name of a file which resides in a handset's memory and contains a list of Sprint PCS and cellular network information. The PRL can assist the handset with acquisition of the Sprint PCS network and when a customer is roaming, the file directs the handset to acquire a signal from one of our roaming partners.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RealmType">
+    <xs:annotation>
+      <xs:documentation>The realm is the portion of the URL that occurs after the @ sign.</xs:documentation>
+      <xs:documentation>The realm is the portion of the URL that occurs after the @ sign.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="43" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ResellerPartnerIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Reseller Partner Identifier is a unique identifier of a reseller partner.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriptionIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Subscription Identifier uniquely identifies an instance of SUBSCRIPTION</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SystemIdentificationNumberType">
+    <xs:annotation>
+      <xs:documentation>System Identification Number (SID) which is assigned to identify a particular cellular carrier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniversalIntegratedCircuitCardIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Universal Integrated Circuit Card Identifier is a unique identifier embedded in the smart card used in mobile terminals in CDMA, GSM and UMTS networks.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UserNameType">
+    <xs:annotation>
+      <xs:documentation>User Name is an identifier of the identity associated with a party role which is the public part of a paired identity assertion.  User Name consists of all of the characters preceding the @ sign in a URL identifying a member of the specified Domain. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VersionStringType">
+    <xs:annotation>
+      <xs:documentation>Version Number  identifies a release or iteration of a Service, Header, Trailer, Business Transaction, API, etc.</xs:documentation>
+      <xs:documentation>Version Integer holds a string value that identifies a release or iteration of a Service, Header, Trailer, Business Transaction, API, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

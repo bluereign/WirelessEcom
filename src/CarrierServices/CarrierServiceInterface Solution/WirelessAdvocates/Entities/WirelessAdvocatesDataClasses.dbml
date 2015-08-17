@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CARTOYS" EntityNamespace="DB" Class="WirelessAdvocatesDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="salesorder.LineService" Member="LineServices">
+    <Type Name="LineService">
+      <Column Name="LineServiceId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderDetailId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ServiceType" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="ServiceId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CarrierServiceId" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="MonthlyFee" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Mandatory" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="OrderDetail_LineService" Member="OrderDetail" ThisKey="OrderDetailId" OtherKey="OrderDetailId" Type="OrderDetail" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="salesorder.Address" Member="Addresses">
+    <Type Name="Address">
+      <Column Name="AddressGuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Company" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Address1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Address2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Address3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(2)" CanBeNull="true" />
+      <Column Name="Zip" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="DaytimePhone" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="EveningPhone" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="Address_Order" Member="Orders" ThisKey="AddressGuid" OtherKey="BillAddressGuid" Type="Order" />
+      <Association Name="Address_Order1" Member="Orders1" ThisKey="AddressGuid" OtherKey="ShipAddressGuid" Type="Order" />
+    </Type>
+  </Table>
+  <Table Name="service.CheckoutSessionState" Member="CheckoutSessionStates">
+    <Type Name="CheckoutSessionState">
+      <Column Name="CheckoutSessionStateGUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ReferenceNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SubReferenceNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ServiceCall" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="service.CarrierInterfaceLog" Member="CarrierInterfaceLogs">
+    <Type Name="CarrierInterfaceLog">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LoggedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ReferenceNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Carrier" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="RequestType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Data" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="service.TestSIMS" Member="TestSIMs">
+    <Type Name="TestSIM">
+      <Column Name="SIM" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Used" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="catalog.Device" Member="Devices">
+    <Type Name="Device">
+      <Column Name="DeviceGuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CarrierGuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ManufacturerGuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="UPC" Type="System.String" DbType="NVarChar(12) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(67) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="salesorder.OrderDetail" Member="OrderDetails">
+    <Type Name="OrderDetail">
+      <Column Name="OrderDetailId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderDetailType" Type="System.Char" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="OrderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GroupNumber" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GroupName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ProductId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GersSku" Type="System.String" DbType="VarChar(9)" CanBeNull="true" />
+      <Column Name="ProductTitle" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="PartNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="COGS" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="RetailPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="NetPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TotalWeight" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Taxable" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Taxes" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ShipmentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="OrderDetail_LineService" Member="LineServices" ThisKey="OrderDetailId" OtherKey="OrderDetailId" Type="LineService" />
+      <Association Name="OrderDetail_WirelessLine" Member="WirelessLines" ThisKey="OrderDetailId" OtherKey="OrderDetailId" Type="WirelessLine" />
+    </Type>
+  </Table>
+  <Table Name="catalog.Service" Member="Services">
+    <Type Name="Service">
+      <Column Name="ServiceGuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CarrierGuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CarrierServiceId" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
+      <Column Name="CarrierBillCode" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(72)" CanBeNull="true" />
+      <Column Name="MonthlyFee" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="salesorder.[Order]" Member="Orders">
+    <Type Name="Order">
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ShipAddressGuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="BillAddressGuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="EmailAddress" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ShipMethodId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ActivationType" Type="System.Char" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="IPaddress" Type="System.String" DbType="VarChar(39)" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GERSStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GERSRefNum" Type="System.String" DbType="VarChar(14)" CanBeNull="true" />
+      <Column Name="TimeSentToGERS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ShipCost" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="CarrierId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CheckoutReferenceNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SalesTaxTransactionId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ServiceZipCode" Type="System.String" CanBeNull="true" />
+      <Association Name="Order_WirelessAccount" Member="WirelessAccounts" ThisKey="OrderId" OtherKey="OrderId" Type="WirelessAccount" />
+      <Association Name="Address_Order" Member="Address" ThisKey="BillAddressGuid" OtherKey="AddressGuid" Type="Address" IsForeignKey="true" />
+      <Association Name="Address_Order1" Member="Address1" ThisKey="ShipAddressGuid" OtherKey="AddressGuid" Type="Address" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="salesorder.WirelessLine" Member="WirelessLines">
+    <Type Name="WirelessLine">
+      <Column Name="WirelessLineId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderDetailId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PlanId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CarrierPlanId" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="PlanType" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="NewMDN" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="ESN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IMEI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CurrentMDN" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CurrentCarrier" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsMDNPort" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PortRequestId" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="PortResponse" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="PortStatus" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="IsNPArequested" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="UpgradeEligible" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="RequestedActivationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CarrierReferenceId1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CarrierReferenceId2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CarrierReferenceId3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PortInDueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ContractLength" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MonthlyFee" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="MarketCode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="NPARequested" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="SIM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ActivationStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ActivationFee" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="PortInCurrentCarrierAccountNumber" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="PortInCurrentCarrierPin" Type="System.String" DbType="NVarChar(4)" CanBeNull="true" />
+      <Association Name="OrderDetail_WirelessLine" Member="OrderDetail" ThisKey="OrderDetailId" OtherKey="OrderDetailId" Type="OrderDetail" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="salesorder.WirelessAccount" Member="WirelessAccounts">
+    <Type Name="WirelessAccount">
+      <Column Name="WirelessAccountId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FamilyPlan" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="CarrierOrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DOB" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DrvLicState" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="DrvLicExpiry" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Initial" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CarrierOrderId" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="CurrentAcctNumber" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CurrentAcctPIN" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="CurrentTotalLines" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CurrentPlanType" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="CreditCode" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="MaxLinesAllowed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DepositReq" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DepositAccept" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DepositTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DepositId" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="DepositAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ActivationAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="PrePayId" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="PrePayAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="NewAccountNo" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="NewAccountType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BillCycleDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CarrierStatus" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CarrierStatusDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CarrierId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ActivationStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CarrierTermsTimeStamp" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EncryptedSSN" Type="System.Data.Linq.Binary" DbType="VarBinary(128)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="EncryptedDrvLicNumber" Type="System.Data.Linq.Binary" DbType="VarBinary(128)" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Order_WirelessAccount" Member="Order" ThisKey="OrderId" OtherKey="OrderId" Type="Order" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Catalog.Property" Member="Properties">
+    <Type Name="Property">
+      <Column Name="Value" Type="System.String" IsReadOnly="true" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="salesorder.GetWirelessAccountByOrderId" Method="GetWirelessAccountByOrderId">
+    <Parameter Name="OrderId" Parameter="orderId" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetWirelessAccountByOrderIdResult">
+      <Column Name="WirelessAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FamilyPlan" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="CarrierOrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DOB" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DrvLicState" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="DrvLicExpiry" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Initial" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CarrierOrderId" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="CurrentAcctNumber" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CurrentAcctPIN" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="CurrentTotalLines" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CurrentPlanType" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="CreditCode" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="MaxLinesAllowed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DepositReq" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DepositAccept" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DepositTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DepositId" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="DepositAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ActivationAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="PrePayId" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="PrePayAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="NewAccountNo" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="NewAccountType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BillCycleDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CarrierStatus" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CarrierStatusDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CarrierId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ActivationStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CarrierTermsTimeStamp" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SSN" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="DrvLicNumber" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="salesorder.GetWirelessAccountByWirelessAccountId" Method="GetWirelessAccountByWirelessAccountId">
+    <Parameter Name="WirelessAccountId" Parameter="wirelessAccountId" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetWirelessAccountByWirelessAccountIdResult">
+      <Column Name="WirelessAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FamilyPlan" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="CarrierOrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DOB" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DrvLicState" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="DrvLicExpiry" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Initial" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CarrierOrderId" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="CurrentAcctNumber" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CurrentAcctPIN" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="CurrentTotalLines" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CurrentPlanType" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="CreditCode" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="MaxLinesAllowed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DepositReq" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DepositAccept" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DepositTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DepositId" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="DepositAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ActivationAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="PrePayId" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="PrePayAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="NewAccountNo" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="NewAccountType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="BillCycleDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CarrierStatus" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CarrierStatusDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CarrierId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ActivationStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CarrierTermsTimeStamp" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SSN" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="DrvLicNumber" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="salesorder.UpdateWirelessAccount" Method="UpdateWirelessAccount">
+    <Parameter Name="WirelessAccountId" Parameter="wirelessAccountId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="OrderId" Parameter="orderId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FamilyPlan" Parameter="familyPlan" Type="System.Int16" DbType="SmallInt" />
+    <Parameter Name="CarrierOrderDate" Parameter="carrierOrderDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="SSN" Parameter="sSN" Type="System.String" DbType="VarChar(11)" />
+    <Parameter Name="DOB" Parameter="dOB" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="DrvLicNumber" Parameter="drvLicNumber" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="DrvLicState" Parameter="drvLicState" Type="System.String" DbType="VarChar(2)" />
+    <Parameter Name="DrvLicExpiry" Parameter="drvLicExpiry" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Initial" Parameter="initial" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CarrierOrderId" Parameter="carrierOrderId" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="CurrentAcctNumber" Parameter="currentAcctNumber" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="CurrentAcctPIN" Parameter="currentAcctPIN" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="CurrentTotalLines" Parameter="currentTotalLines" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CurrentPlanType" Parameter="currentPlanType" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="CreditCode" Parameter="creditCode" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="MaxLinesAllowed" Parameter="maxLinesAllowed" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DepositReq" Parameter="depositReq" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="DepositAccept" Parameter="depositAccept" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="DepositTypeId" Parameter="depositTypeId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DepositId" Parameter="depositId" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="DepositAmount" Parameter="depositAmount" Type="System.Decimal" DbType="Money" />
+    <Parameter Name="ActivationAmount" Parameter="activationAmount" Type="System.Decimal" DbType="Money" />
+    <Parameter Name="PrePayId" Parameter="prePayId" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="PrePayAmount" Parameter="prePayAmount" Type="System.Decimal" DbType="Money" />
+    <Parameter Name="NewAccountNo" Parameter="newAccountNo" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="NewAccountType" Parameter="newAccountType" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="BillCycleDate" Parameter="billCycleDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="CarrierStatus" Parameter="carrierStatus" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="CarrierStatusDate" Parameter="carrierStatusDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="CarrierId" Parameter="carrierId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ActivationStatus" Parameter="activationStatus" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CarrierTermsTimeStamp" Parameter="carrierTermsTimeStamp" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

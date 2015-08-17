@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2012 rel. 2 sp1 (x64) (http://www.altova.com) by Sprint Employee (SPRINT) -->
+<!--Main document view.-->
+<!--08/06/2012 GBL12.3 - PJ007215 Changes by Suresh. Added new Optional Structure to accept Siebel Offers List in the ActivationRequest. -->
+<!--12/19/2012 GBL13.1 PJ004987 Tracy Turner added optional boolean accessoryOnlyInd to orderInfo structure on request-->
+<!--01/11/2013	Suresh Gundu	GBL 13.2	PJ007935	Web to Retail Changes.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="ActivationRequest">
+		<xs:sequence>
+			<xs:element name="order" type="OrderInfoType" minOccurs="0">
+				<!-- This tag should be populated in activation requests only for Upgrade/Replace order types-->
+				<!-- It should be populated when the ptn provided for an Upgrade/Replace order  in the credit check            
+
+					phase is different from the ptn provided in the activation request although they belong to the same account number.
+
+					If the ptn doesn't belong to the same account for which the credit check is done, then it will be errored back. 
+
+					If account-number is passed here, it will be ignored. Only ptn will be accepted. -->
+			</xs:element>
+			<xs:element name="order-date" type="xs:dateTime" minOccurs="0">
+				<!--The date/time that the order was created by the customer.  
+
+					Format is "CCYY-MM-DDThh:mm:ss"  (T is the date/time separator).-->
+			</xs:element>
+			<xs:element name="account-type" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Establishes the AT/ST of new BAN</xs:documentation>
+							</xs:annotation>
+							<xs:element name="customer-type" type="CustomerType"/>
+							<xs:sequence>
+								<xs:element name="account-type" type="AccountType"/>
+								<xs:element name="account-sub-type" type="AccountSubType"/>
+							</xs:sequence>
+						</xs:choice>
+						<xs:element name="language" type="LanguageCode" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Default language associated to the account</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="corp-gov-info" type="CorporateGovernmentInfo" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Corporate discount information if customer is elilgible</xs:documentation>
+							</xs:annotation>
+							<!--For corporate customers (customer type of CORPORATE_BUSINESS or 
+
+					CORPORATE_INDIVIDUAL), this section is required.-->
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="security-info" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="sec-pin" type="RequiredStringSecPin" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Securiy PIN used for customer authentication</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="sec-question-code" type="RequiredStringMax3" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Security question code linked to the question customer seleted to answer</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="sec-answer" type="AnswerType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Customer answer to security question</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="sec-email" type="EmailAddress" minOccurs="0"/>
+						<xs:element name="sec-address" type="Address" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="credit-check-info" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Depending on liability of account, social security number or federal tax id is required to be linked to new BAN</xs:documentation>
+							</xs:annotation>
+							<xs:element name="ssn">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:whiteSpace value="collapse"/>
+										<xs:pattern value="\d{4}|\d{9}"/>
+									</xs:restriction>
+								</xs:simpleType>
+								<!--Format of SSN should be xxxxxxxxx.-->
+							</xs:element>
+							<xs:element name="federal-tax-id">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:whiteSpace value="collapse"/>
+										<xs:pattern value="\d{9}"/>
+									</xs:restriction>
+								</xs:simpleType>
+								<!--Format of federal tax id should be xxxxxxxxx.-->
+							</xs:element>
+						</xs:choice>
+						<xs:element name="credit-app-number" type="RequiredString" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Credit portal application number linked to completed credit check</xs:documentation>
+							</xs:annotation>
+							<!--Credit application reference number.-->
+						</xs:element>
+						<xs:element name="drivers-license" type="DriversLicense" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Traditional method of identification, included with identification-method structure</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="date-of-birth" type="xs:date" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Consumer date of birth</xs:documentation>
+							</xs:annotation>
+							<!--Format is "CCYY-MM-DD" for date of birth.-->
+						</xs:element>
+						<xs:element name="identification-method" type="IdentificationMethod" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Primary and secondary methods of identification (aligns with Amdocs)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="credit-check-status" type="CreditCheckStatus" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="customer-info" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="billing" type="ExtBillingInfoType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Customer billing information including name, address, phone numbers, email address, etc</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="physical" type="PhysicalInfoType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Physical address if billing address is a PO Box which cannot be used to run a credit check</xs:documentation>
+							</xs:annotation>
+							<!--Optional tag for collecting physical address information. 
+
+					Only needed if billing address is a PO box address.-->
+						</xs:element>
+						<xs:element name="contact" type="ExtContactType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Customer contact name if different than billing name.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="nextel-fulfilled" type="xs:boolean" minOccurs="0">
+				<!--Whether the order will be fulfilled by Nextel or not.-->
+			</xs:element>
+			<xs:element name="sec-pin" type="RequiredStringSecPin" minOccurs="0"/>
+			<xs:element name="rccp-wanted" type="xs:boolean" minOccurs="0">
+				<!--Whether recurring credit card payment is wanted by the customer.-->
+			</xs:element>
+			<xs:element name="status-url" type="xs:anyURI" minOccurs="0">
+				<!--The URL to which status responses should be sent.-->
+			</xs:element>
+			<xs:element name="affiliate-name" type="RequiredString" minOccurs="0"/>
+			<xs:element name="agent-code" type="RequiredStringMax8" minOccurs="0">
+				<!--Smart agent code.-->
+			</xs:element>
+			<xs:element name="reserve-subscriber" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For use with partner fulfilled orders when creating the subscriber in reserved status.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="order-referral-dc-number" type="RequiredString" minOccurs="0"/>
+			<xs:element name="shipping" type="ShippingType" minOccurs="0"/>
+			<xs:element name="web-to-retail-order-info" type="WebToRetailOrderInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This structure defines the elements that will be called specifically for W2R orders.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deposit-payment" type="CreditCard" minOccurs="0">
+				<!--Credit card payment is required for deposit payment.-->
+			</xs:element>
+			<xs:element name="equipment-payment-type" type="EquipmentPaymentType" minOccurs="0">
+				<!--How the user would like to pay for equipment.-->
+			</xs:element>
+			<xs:element name="equipment-payment" type="CreditCard" minOccurs="0">
+				<!--Credit card payment information for equipment payment.-->
+			</xs:element>
+			<xs:element name="equipment-estimated-tax" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="rccp-payment" type="CreditCard" minOccurs="0">
+				<!--Credit card payment information for recurring credit card payment.-->
+			</xs:element>
+			<xs:element name="sales-channel" type="xs:string" minOccurs="0"/>
+			<xs:element name="service" type="ServiceType"/>
+			<xs:element name="order-shipping" type="OrderShippingType" minOccurs="0"/>
+			<xs:element name="default-service-change" type="xs:boolean" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="service-area-address" type="Address" minOccurs="0">
+					<!-- This is an optional tag that allows the customer to specify the service area OrderShippingType in order to determine the correct region for their phone usage.-->
+				</xs:element>
+				<xs:element name="activation-zip-code" type="ZipCode" minOccurs="0">
+					<!-- This is an optional tag that allows the customer to change the activation-zip-code. However, if the new zip-code doesn't have a coverage then the request will be rejected back.  -->
+				</xs:element>
+			</xs:choice>
+			<xs:element name="summary-bill" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="ebill-email" type="EmailAddress" minOccurs="0"/>
+			<!-- Email Address for eBill option.-->
+			<xs:element name="email-address" type="EmailAddress" minOccurs="0"/>
+			<xs:element name="buy-back" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="buy-back-device-key" type="RequiredStringMax15"/>
+						<xs:element name="device-manufacture" type="RequiredStringMax100" minOccurs="0"/>
+						<xs:element name="model" type="RequiredStringMax50" minOccurs="0"/>
+						<xs:element name="buy-back-carrier" type="RequiredStringMax20"/>
+						<xs:element name="equipment-id" type="RequiredStringMax30" minOccurs="0"/>
+						<xs:element name="eqp-buy-back-price">
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:fractionDigits value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="donation-ind">
+							<xs:annotation>
+								<xs:documentation>Buy Back device donation Indicator</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="Y"/>
+									<xs:enumeration value="N"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="siebel-offer-list" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>List of optional Siebel Offers.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="siebel-offer-info" type="SiebelOfferInfoType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Siebel Offer Info Structure</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="accessory-only-ind" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="rep-id" type="RequiredStringMax20" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ID of the Sprint Representative that created this order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<!--Activation request message.-->
+	</xs:complexType>
+	<xs:complexType name="SiebelOfferInfoType">
+		<xs:sequence>
+			<xs:element name="siebel-offer-id" type="RequiredStringMax10">
+				<xs:annotation>
+					<xs:documentation>Unique identifier assigned to each offer when they are created in Siebel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="siebel-campaign-id" type="RequiredStringMax10">
+				<xs:annotation>
+					<xs:documentation>Unique identifier assigned to each offer when they are created in Siebel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="siebel-program-id">
+				<xs:annotation>
+					<xs:documentation>Unique identifier assigned to each program when they are created in Siebel.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:positiveInteger">
+						<xs:pattern value="\d{1,5}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="offer-level" type="RequiredStringMax20">
+				<xs:annotation>
+					<xs:documentation>Identifies if the offer is BAN or Subscriber Level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offer-user-id" type="RequiredStringMax9">
+				<xs:annotation>
+					<xs:documentation>Unique ID assigned to each user in the frontend application</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="siebel-subscriber-list" type="SiebelSubscriberListType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>List of Siebel Subscribers</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SiebelSubscriberListType">
+		<xs:sequence>
+			<xs:element name="subscriber-id" type="RequiredStringMax20" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Subscriber Identifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="doActivation" type="ActivationRequest"/>
+	<xs:complexType name="ActivationResponse">
+		<xs:sequence>
+			<xs:element name="order-date" type="xs:dateTime" minOccurs="0">
+				<!--The date/time that the order was created by the customer.  
+
+					Format is "CCYY-MM-DDThh:mm:ss"  (T is the date/time separator).-->
+			</xs:element>
+			<xs:element name="activation-date" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="first-name" type="RequiredStringMax35" minOccurs="0"/>
+			<xs:element name="last-name" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="2"/>
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="sales-channel" type="xs:string" minOccurs="0"/>
+			<xs:element name="service">
+				<xs:complexType>
+					<xs:choice maxOccurs="50">
+						<xs:element name="plan" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="phone" type="PhoneResponse" minOccurs="0" maxOccurs="unbounded">
+										<!--the minimum that can occur is 0 because there are instances where an error could occur and no phone elements exist.-->
+									</xs:element>
+									<xs:element name="result-details" type="xs:string" minOccurs="0">
+										<!--Details or an explanation in more detail of the result.-->
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="id" type="IDType" use="required"/>
+							</xs:complexType>
+							<!--Phone and plan details are needed for activation.-->
+						</xs:element>
+						<xs:element name="accessory">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="accessory-order-key" type="VendorOrderKey" minOccurs="0"/>
+								</xs:sequence>
+								<xs:attribute name="id" type="IDType" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="activation-fee" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--Amount required for activation.-->
+			</xs:element>
+			<xs:element name="account-number" type="AccountNumber" minOccurs="0">
+				<!--Nextel account number for this user.-->
+			</xs:element>
+			<xs:element name="anniversary-date" type="xs:date" minOccurs="0">
+				<!--Anniversary date for this account -->
+			</xs:element>
+			<xs:element name="rccp-allowed" type="xs:boolean" minOccurs="0">
+				<!--Whether RCCP is allowed for this user.-->
+			</xs:element>
+			<xs:element name="comment" type="RequiredString" minOccurs="0">
+				<!--General comment section.-->
+			</xs:element>
+			<xs:element name="order-fulfillment" type="FulfillmentData" minOccurs="0">
+				<!--Data regarding fulfillment of order by Nextel.-->
+			</xs:element>
+			<xs:element name="applied-promos" type="AppliedPromos" minOccurs="0">
+				<!--Indicates application of promotions on transaction-->
+			</xs:element>
+			<xs:element name="expiration-date" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="cancellation-date" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="error-reason" type="RequiredStringMax4000" minOccurs="0"/>
+			<xs:element name="next-steps" type="RequiredStringMax4000" minOccurs="0"/>
+			<xs:element name="low-bal-threshold" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--Low Balance threshold for this account .-->
+			</xs:element>
+			<xs:element name="reactivation-fee" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--Amount required for reactivation.-->
+			</xs:element>
+			<xs:element name="min-amount" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--Minimum Amount required for reactivation.-->
+			</xs:element>
+			<xs:element name="future-port-in-number" type="PhoneNumber" minOccurs="0"/>
+			<xs:element name="current-balance" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="activation-talking-points" type="RequiredStringMax2000" minOccurs="0"/>
+			<xs:element name="Offer-Trx-Id" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--BOGX offer transaction ID 9-digit unique number, a dash and then a 77 suffix-->
+			</xs:element>
+			<xs:element name="ebill-email" type="EmailAddress" minOccurs="0"/>
+			<xs:element name="sprint-order-id" type="FASTOrderKey" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WebToRetailOrderInfoType">
+		<xs:sequence>
+			<xs:element name="store-info" type="StoreInfoType"/>
+			<xs:element name="deposit-equip-card-handle" type="RequiredStringMax30" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Payment card handle containg the key to idenitfy the Deposit and Equipment authorization details.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="doActivationResponse" type="ActivationResponse"/>
+</xs:schema>

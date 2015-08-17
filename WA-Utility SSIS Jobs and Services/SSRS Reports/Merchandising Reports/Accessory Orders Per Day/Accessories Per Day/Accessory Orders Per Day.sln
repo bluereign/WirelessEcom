@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Accessory Orders Per Day", "Report Project2\Accessory Orders Per Day.rptproj", "{56546954-7614-40C2-BE7C-AC0092BFEDA7}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 1
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver.cartoys.corp:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56546954-7614-40C2-BE7C-AC0092BFEDA7}.Debug|Default.ActiveCfg = Debug
+		{56546954-7614-40C2-BE7C-AC0092BFEDA7}.Debug|Default.Build.0 = DebugLocal
+		{56546954-7614-40C2-BE7C-AC0092BFEDA7}.Debug|Default.Deploy.0 = DebugLocal
+		{56546954-7614-40C2-BE7C-AC0092BFEDA7}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{56546954-7614-40C2-BE7C-AC0092BFEDA7}.DebugLocal|Default.Build.0 = DebugLocal
+		{56546954-7614-40C2-BE7C-AC0092BFEDA7}.Release|Default.ActiveCfg = Release
+		{56546954-7614-40C2-BE7C-AC0092BFEDA7}.Release|Default.Build.0 = Release
+		{56546954-7614-40C2-BE7C-AC0092BFEDA7}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

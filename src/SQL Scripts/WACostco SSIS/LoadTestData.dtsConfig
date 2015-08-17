@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<DTSConfiguration>
+	<DTSConfigurationHeading>
+		<DTSConfigurationFileInfo GeneratedBy="BETTER_WAY\rd7151" GeneratedFromPackageName="LoadTestData" GeneratedFromPackageID="{B47A7456-CC90-4F79-A178-8D660D4861A0}" GeneratedDate="12/18/2009 12:12:52 PM"/>
+	</DTSConfigurationHeading>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA GERS].Properties[Password]" ValueType="String">
+		<ConfiguredValue>train01</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA GERS].Properties[ServerName]" ValueType="String">
+		<ConfiguredValue>2.4.1.34/train</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA GERS].Properties[UserName]" ValueType="String">
+		<ConfiguredValue>sqltrain</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA Online DB].Properties[InitialCatalog]" ValueType="String">
+		<ConfiguredValue>WACostcoWeblinkTest</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA Online DB].Properties[Password]" ValueType="String">
+		<ConfiguredValue>w3bl!nk</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA Online DB].Properties[ServerName]" ValueType="String">
+		<ConfiguredValue>CT1065\SQL2008</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Connections[WA Online DB].Properties[UserName]" ValueType="String">
+		<ConfiguredValue>weblink</ConfiguredValue>
+	</Configuration>
+</DTSConfiguration>

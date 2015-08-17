@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2012 rel. 2 sp1 (x64) (http://www.altova.com) by Sprint Employee (SPRINT) -->
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="CreditRequest">
+		<xs:sequence>
+			<xs:element name="order" type="OrderInfoType"/>
+			<xs:element name="debug-score" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Z]{1}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="subscriber-agreement" type="xs:boolean">
+				<!--Whether the subscriber has agreed to the subscriber agreement (true|false|1|0).-->
+			</xs:element>
+			<xs:element name="customer-type" type="CustomerType"/>
+			<xs:element name="pass-code" type="RequiredStringMax20" minOccurs="0"/>
+			<xs:element name="sec-pin" type="RequiredStringSecPin" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="sec-question-code" type="RequiredStringMax3" minOccurs="0"/>
+				<xs:element name="sec-answer" type="AnswerType"/>
+			</xs:sequence>
+			<xs:element name="language" type="LanguageCode" minOccurs="0"/>
+			<xs:element name="rep-id" type="RequiredStringMax20" minOccurs="0">
+				<!--Representative ID.-->
+			</xs:element>
+			<xs:element name="program-code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Z]{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="handset-count" type="UnsignedByteMax99"/>
+			<xs:element name="intl-handset-count" type="UnsignedByteMax99" minOccurs="0">
+				<!--Number of handsets that will have international dialing feature included.  
+
+					This number must be less than or equal to the value noted in handset-count.-->
+			</xs:element>
+			<xs:element name="corp-gov-info" type="CorporateGovernmentInfo" minOccurs="0">
+				<!--For corporate customers (customer type of CORPORATE_BUSINESS or 
+
+					CORPORATE_INDIVIDUAL), this section is required.-->
+			</xs:element>
+			<xs:element name="billing" type="BillingInfoType" minOccurs="0"/>
+			<xs:element name="physical" type="PhysicalInfoType" minOccurs="0">
+				<!--Optional tag for collecting physical address information. 
+
+					Only needed if billing address is a PO box address.-->
+			</xs:element>
+			<xs:element name="contact" type="ContactType" minOccurs="0"/>
+			<xs:element name="activation-zip-code" type="ZipCode" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="ssn" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="collapse"/>
+							<xs:pattern value="\d{4}|\d{9}"/>
+						</xs:restriction>
+					</xs:simpleType>
+					<!--Format of SSN should be xxxxxxxxx.-->
+				</xs:element>
+				<xs:element name="federal-tax-id" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="collapse"/>
+							<xs:pattern value="\d{9}"/>
+						</xs:restriction>
+					</xs:simpleType>
+					<!--Format of federal tax id should be xxxxxxxxx.-->
+				</xs:element>
+			</xs:choice>
+			<xs:element name="drivers-license" type="DriversLicense" minOccurs="0"/>
+			<xs:element name="date-of-birth" type="xs:date" minOccurs="0">
+				<!--Format is "CCYY-MM-DD" for date of birth.-->
+			</xs:element>
+			<xs:element name="identification-method" type="IdentificationMethod" minOccurs="0"/>
+			<xs:element name="cc-pin-code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="check-credit-status" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+		<!--Credit request message.-->
+	</xs:complexType>
+	<xs:element name="doCreditCheck" type="CreditRequest"/>
+	<xs:complexType name="CreditResponse">
+		<xs:sequence>
+			<xs:element name="nextel-order-id" type="NextelOrderKey" minOccurs="0"/>
+			<xs:element name="result" type="CreditResult"/>
+			<xs:element name="app-number" type="RequiredString" minOccurs="0">
+				<!--Credit application reference number.-->
+			</xs:element>
+			<xs:element name="cancelled-ban" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="sec-pin" type="RequiredStringSecPin" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence>
+					<xs:element name="deposit-per-handset" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:decimal">
+								<xs:fractionDigits value="2"/>
+							</xs:restriction>
+						</xs:simpleType>
+						<!--Amount of the deposit, if required.-->
+					</xs:element>
+					<xs:element name="extra-deposit-per-handset" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:decimal">
+								<xs:fractionDigits value="2"/>
+							</xs:restriction>
+						</xs:simpleType>
+						<!--Extra deposit for handsets over the linit-->
+					</xs:element>
+					<xs:element name="spending-limit-per-handset" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:decimal">
+								<xs:fractionDigits value="2"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="tiered-deposit" type="TieredDeposit" maxOccurs="100"/>
+			</xs:choice>
+			<xs:element name="intl-deposit-per-handset" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--Amount of the deposit, if required.-->
+			</xs:element>
+			<xs:element name="total-deposit" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--Total deposit-->
+			</xs:element>
+			<xs:element name="deposit-variance" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--Deposit variance for cross network upgrade-->
+			</xs:element>
+			<xs:element name="number-handsets-approved" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer"/>
+				</xs:simpleType>
+				<!--The number of handsets approved for customer.-->
+			</xs:element>
+			<xs:element name="bill-to-account-allowed" type="xs:boolean">
+				<!--Whether "bill to account" is allowed for this order.-->
+			</xs:element>
+			<xs:element name="additional-handset-eligible-date" type="xs:date" minOccurs="0">
+				<!--Date on which the the customer is eligible for buying more handsets.-->
+			</xs:element>
+			<xs:element name="hybrid-phone-allowed" type="xs:boolean">
+				<!--Whether "hybrid phone" is allowed for this order.-->
+			</xs:element>
+			<xs:element name="order" type="OrderInfoType"/>
+			<xs:element name="account-info" type="AccountInfo" minOccurs="0">
+				<!--Account Info will be populated if the order type is an add-on order. It will contain information about the phones and price plans they already have on account.-->
+			</xs:element>
+			<xs:element name="customer-type" type="CustomerType" minOccurs="0"/>
+			<xs:element name="billing" type="BillingInfoType" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="ssn" type="RequiredString">
+					<!--SSN must be encrypted.  Format of SSN should be xxxxxxxxx.-->
+				</xs:element>
+				<xs:element name="federal-tax-id" type="RequiredString">
+					<!--Federal tax id must be encrypted.  Format of federal tax id should be xxxxxxxxx.-->
+				</xs:element>
+			</xs:choice>
+			<xs:element name="drivers-license" type="DriversLicense" minOccurs="0"/>
+			<xs:element name="date-of-birth" type="xs:date" minOccurs="0">
+				<!--Format is "CCYY-MM-DD" for date of birth.-->
+			</xs:element>
+		</xs:sequence>
+		<!--Credit response message Ends.-->
+	</xs:complexType>
+	<xs:complexType name="CreditCheckResponse">
+		<xs:choice>
+			<xs:element name="creditCheckResponse" type="CreditResponse"/>
+			<xs:element name="ackNackResponse" type="ParseResponse"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="doCreditCheckResponse" type="CreditCheckResponse"/>
+</xs:schema>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<!--Corporate Discount Request schema.-->
+	<xs:complexType name="CorporateDiscountRequest">
+		<xs:sequence>
+			<xs:choice>
+				<xs:choice>
+					<xs:element name="master-company-name" type="RequiredStringMax128"/>
+					<xs:element name="corp-gov-id" type="RequiredStringMax20"/>
+				</xs:choice>
+				<xs:sequence>
+					<xs:choice>
+						<xs:sequence>
+							<xs:element name="company-id" type="xs:positiveInteger" minOccurs="0"/>
+							<xs:element name="employee-proof" type="xs:boolean" minOccurs="0"/>
+						</xs:sequence>
+						<xs:choice>
+							<xs:element name="reference-ptn" type="PhoneNumber"/>
+							<xs:element name="account-number" type="AccountNumber"/>
+						</xs:choice>
+					</xs:choice>
+				</xs:sequence>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="getCorporateDiscount" type="CorporateDiscountRequest"/>
+	<!--Corporate Discount Request schema.-->
+	<!--Corporate Discount Response elements' types.-->
+	<xs:complexType name="CorporateDiscountResponse">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="company-info" type="CompanyInfo" maxOccurs="100"/>
+				<xs:sequence>
+					<xs:element name="corporate-discount-info" type="CorporateDiscountInfo" minOccurs="0"/>
+					<xs:choice minOccurs="0">
+						<xs:element name="corporate-hierarchy" type="CorporateHierarchy"/>
+						<xs:element name="account-hierarchy" type="AccountHierarchy"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:choice>
+		</xs:sequence>
+		<!--Corporate discount response message.-->
+	</xs:complexType>
+	<xs:element name="getCorporateDiscountResponse" type="CorporateDiscountResponse"/>
+	<!--Corporate Discount Response elements' types.-->
+</xs:schema>

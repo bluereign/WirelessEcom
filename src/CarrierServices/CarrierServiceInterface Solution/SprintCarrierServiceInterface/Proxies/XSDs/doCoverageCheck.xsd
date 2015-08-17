@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="CoverageCheckRequest">
+		<xs:sequence>
+			<xs:element name="service-zip" type="ZipCode" maxOccurs="10"/>
+		</xs:sequence>
+		<!--Coverage check request message.-->
+	</xs:complexType>
+	<xs:element name="doCoverageCheck" type="CoverageCheckRequest"/>
+	<xs:complexType name="CoverageCheckResponse">
+		<xs:sequence>
+			<xs:element name="coverage-info" type="Coverage" maxOccurs="10"/>
+		</xs:sequence>
+		<!--coverage check response message.-->
+	</xs:complexType>
+	<xs:complexType name="Coverage">
+		<xs:sequence>
+			<xs:element name="service-zip" type="ZipCode"/>
+			<xs:element name="iden-coverage" type="YesNoType" minOccurs="0"/>
+			<xs:element name="iden-coverage-amt" type="xs:integer" minOccurs="0"/>
+			<xs:element name="cdma-coverage" type="YesNoType" minOccurs="0"/>
+			<xs:element name="cdma-coverage-amt" type="xs:integer" minOccurs="0"/>
+			<xs:element name="ps-coverage" type="YesNoType" minOccurs="0"/>
+			<xs:element name="ps-coverage-amt" type="xs:integer" minOccurs="0"/>
+			<xs:element name="evdo-coverage" type="YesNoType" minOccurs="0"/>
+			<xs:element name="evdo-coverage-amt" type="xs:integer" minOccurs="0"/>
+			<xs:element name="dcs-coverage" type="YesNoType" minOccurs="0"/>
+			<xs:element name="dcs-coverage-amt" type="xs:integer" minOccurs="0"/>
+			<xs:element name="wmx-coverage" type="YesNoType" minOccurs="0"/>
+			<xs:element name="wmx-coverage-amt" type="xs:integer" minOccurs="0"/>
+			<xs:element name="submarket" type="xs:string" minOccurs="0"/>
+			<xs:element name="csa" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<!-- coverage info.-->
+	</xs:complexType>
+	<xs:element name="doCoverageCheckResponse" type="CoverageCheckResponse"/>
+</xs:schema>

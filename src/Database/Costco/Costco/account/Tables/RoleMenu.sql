@@ -1,0 +1,6 @@
+﻿CREATE TABLE [account].[RoleMenu] (
+    [RoleGuid] UNIQUEIDENTIFIER NOT NULL,
+    [MenuGuid] UNIQUEIDENTIFIER NOT NULL,
+    CONSTRAINT [PK_RoleMenu] PRIMARY KEY CLUSTERED ([RoleGuid] ASC, [MenuGuid] ASC)
+);
+

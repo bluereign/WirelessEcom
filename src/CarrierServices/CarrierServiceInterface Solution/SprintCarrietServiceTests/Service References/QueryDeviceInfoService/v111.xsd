@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryAccountDeviceList/v1/queryAccountDeviceList.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryAccountDeviceList/v1/queryAccountDeviceList.xsd" version="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryAccountDeviceList" type="tns:QueryAccountDeviceList" />
+  <xs:element name="queryAccountDeviceListResponse" type="tns:QueryAccountDeviceListResponse" />
+  <xs:complexType name="QueryAccountDeviceList">
+    <xs:sequence>
+      <xs:element name="info" type="tns:SearchCriteria" />
+      <xs:element minOccurs="0" name="deviceList" type="tns:SearchDeviceList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryAccountDeviceListResponse">
+    <xs:sequence minOccurs="0">
+      <xs:element minOccurs="0" name="deviceList" type="tns:DeviceList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Device">
+    <xs:sequence>
+      <xs:element name="deviceSerialNumber" type="tns:EquipmentSerialNumberString">
+        <xs:annotation>
+          <xs:documentation>Equipment Serial Number is an identifier used by the device to communicate (broadcast) its identity to the wireless mobile network.
+
+Equipment Serial Number is one of the following:
+
+Electronic Serial Number (ESN);
+
+Mobile Equipment IDentifier (MEID);
+
+International Mobile Equipment Identfier (IMEI);
+
+Subscriber Identify Module (SIM);
+
+Manufacturer Serial Number (MSN).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceSerialType" type="tns:EquipmentSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Equipment Serial Number Type classifies Equipment serial numbers as one of the following:  ESN, MEID, IMEI, SIM, or MSN.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceInfo">
+    <xs:sequence>
+      <xs:element name="deviceSerialNumber" type="tns:EquipmentSerialNumberString">
+        <xs:annotation>
+          <xs:documentation>Equipment Serial Number is an identifier used by the device to communicate (broadcast) its identity to the wireless mobile network.
+
+Equipment Serial Number is one of the following:
+
+Electronic Serial Number (ESN);
+
+Mobile Equipment IDentifier (MEID);
+
+International Mobile Equipment Identfier (IMEI);
+
+Subscriber Identify Module (SIM);
+
+Manufacturer Serial Number (MSN).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceSerialType" type="tns:EquipmentSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Equipment Serial Number Type classifies Equipment serial numbers as one of the following:  ESN, MEID, IMEI, SIM, or MSN.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceSeqNumber" type="tns:SequenceNumber">
+        <xs:annotation>
+          <xs:documentation>Device Sequence Number. If a BAN has more than 100 devices this field value can be used to request next set of devices under that BAN in subsequent calls.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceStatus" type="tns:AirraveDeviceStatusCode">
+        <xs:annotation>
+          <xs:documentation>The status of the airave device. Valid values are:
+I - In Use
+A - Available
+C - Cancelled
+L - Lost / Stolen</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="provisionType" type="tns:EquipmentActivationStatusCode">
+        <xs:annotation>
+          <xs:documentation>Equipment Activation Status Code contains the provisioning status of a unique instance of a piece of equipment. Valid values are:
+C - Inactive
+H - Equipment Activation is Required
+Y - Activated Equipment</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemId" type="tns:StockKeepingUnitEns">
+        <xs:annotation>
+          <xs:documentation>Stock Keeping Unit represents the Sprint Inventory Stock Keeping Unit (SKU).  Stock Keeping Unit identifies a group of PRODUCT instances.  It could identify a handset Model and Model Number, a Kit or an accessory. </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelNumber" type="tns:ModelNumber">
+        <xs:annotation>
+          <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modelName" type="tns:ModelName">
+        <xs:annotation>
+          <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="manufacturerName" type="tns:ManufacturerName">
+        <xs:annotation>
+          <xs:documentation>Manufacturer Name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="soldDate" type="tns:DeviceSoldDate">
+        <xs:annotation>
+          <xs:documentation>Device Sold date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="expirationDate" type="tns:DeviceExpirationDate">
+        <xs:annotation>
+          <xs:documentation>Device Expiration date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FilterInfo">
+    <xs:sequence minOccurs="0">
+      <xs:element name="includeExpired" type="tns:BinaryExpression">
+        <xs:annotation>
+          <xs:documentation>Flag indicating whether expired devices on the BAN should be returned or not.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteria">
+    <xs:choice>
+      <xs:element name="ban" type="tns:BillingAccountNumber">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="subscriberId" type="tns:SubscriptionIdentifierEns">
+        <xs:annotation>
+          <xs:documentation>Subscription Identifier uniquely identifies an instance of SUBSCRIPTION</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="mdn" type="tns:MobileDirectoryNumberString">
+        <xs:annotation>
+          <xs:documentation>'Mobile Directory Number (MDN) is the actual phone number one would dial to reach a specific mobile phone.
+Prior to Wireless Number Portability, MDN was the same number as the Mobile Identification Number (MIN) for many mobile phones. But now that MDNs can be ported (moved) to other carriers, MDN and MIN will be different for ported numbers.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="device" type="tns:Device" />
+      <xs:element name="ufmi" type="tns:UrbanFleetMemberIdentifierString">
+        <xs:annotation>
+          <xs:documentation>Urban Fleet Member Identifier (UFMI) is the combinaiton of the Urban Area Id, Fleet Id, and Member Id representing an address in a format recognized within iDEN Push-To-Talk (PTT) or Direct Connect. For example, a UFMI number of 500•600•700, translates to 500 is the Urban Area ID, 600 is the Fleet, and 700 is the Member.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ipAddress" type="tns:InternetProtocolAddressString">
+        <xs:annotation>
+          <xs:documentation>An Internet Protocol Address is the numerical address by which a location in the Internet is identified. Computers on the Internet use IP addresses to route traffic and establish connections among themselves.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="imsi" type="tns:InternationalMobileSubscriberIdentityString">
+        <xs:annotation>
+          <xs:documentation>International Mobile Subscriber Identity (IMSI) is a unique number associated with all GSM and Universal Mobile Telecommunications System (UMTS) network mobile phone users. It is stored in the Subscriber Identity Module (SIM) inside the phone and is sent by the phone to the network. It is also used to acquire other details of the mobile in the Home Location Register (HLR) or as locally copied in the Visitor Location Register. In order to avoid the subscriber being identified and tracked by eavesdroppers on the radio interface, the IMSI is sent as rarely as possible and a randomly generated TMSI is sent instead.
+The IMSI is used in any mobile network that interconnects with other networks, in particular CDMA and EVDO networks as well as GSM nets. This number is provisioned in the phone directly or in the R-UIM card (a CDMA analogue equivalent to a SIM card in GSM)
+An IMSI is usually 15 digits long, but can be shorter (for example MTN South Africa's IMSIs are 14 digits). The first 3 digits are the Mobile Country Code (MCC), and is followed by the Mobile Network Code (MNC), either 2 digits (European standard) or 3 digits (North American standard). The remaining digits are the Mobile Subscriber Identification Number (MSIN) within the network's customer base.
+The IMSI conforms to the International Telecommunication Union (ITU) E.212 numbering standard</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="nai" type="tns:NetworkAccessIdentifierString">
+        <xs:annotation>
+          <xs:documentation>Network Access Identifier (NAI) is a standard way of identifying users who request access to a network. 
+
+The standard syntax is"user@realm". </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="hppttId" type="tns:HighPerformancePushToTalkIDString">
+        <xs:annotation>
+          <xs:documentation>High Performance Push To Talk Identifier (HPPTTID) is the identifier of a Subscription utilizing the QChat  Push-To-Talk technology. The HPPTTID is constructed in the username@domain URI format.  The username will be a MDN or UFMI based number.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SearchDeviceList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="filterByDeviceSerialType" type="tns:EquipmentSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Equipment Serial Number Type classifies Equipment serial numbers as one of the following:  ESN, MEID, IMEI, SIM, or MSN.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="filterInfo" type="tns:FilterInfo" />
+      <xs:element minOccurs="0" name="deviceSeqNumber" type="tns:SequenceNumber">
+        <xs:annotation>
+          <xs:documentation>Because this API returns up to 100 records in a single call any application calling this API can use the esnSeqNumber returned in first call of this API to request next set of devices.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceList">
+    <xs:sequence>
+      <xs:element name="areMore" type="tns:MoreRecordsAvailableBooleanFlag">
+        <xs:annotation>
+          <xs:documentation>Flag to determine if there are more devices on the BAN and can be retrieved in subsequent calls.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="100" name="deviceInfo" type="tns:DeviceInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AirraveDeviceStatusCode">
+    <xs:annotation>
+      <xs:documentation>The status of the airave device. Valid values are:
+I - In Use
+A - Available
+C - Cancelled
+L - Lost / Stolen</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="A" />
+      <xs:enumeration value="I" />
+      <xs:enumeration value="C" />
+      <xs:enumeration value="L" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BinaryExpression">
+    <xs:annotation>
+      <xs:documentation>Binary Expression is a type of an expression with two possible states,"true"and"false".</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountNumber">
+    <xs:annotation>
+      <xs:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSoldDate">
+    <xs:annotation>
+      <xs:documentation>Device Sold Date is the date on which the device is sold.</xs:documentation>
+      <xs:documentation>Entry Date holds the calendar date data is entered into a system.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date" />
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentSerialNumberString">
+    <xs:annotation>
+      <xs:documentation>Equipment Serial Number holds the identifier used by the device to communicate (broadcast) its identity to the wireless mobile network.  
+
+Network Device Identifier will contain one of the following: 
+Electronic Serial Number (ESN); 
+Mobile Equipment IDentifier (MEID);
+International Mobile Equipment Identfie (IMEI);
+Subscriber Identify Module (SIM).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>EquipmentSerialNumberType is a value that classifies a device serial number as being an ESN, MEID, MSN, IMEI, or SIM.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceExpirationDate">
+    <xs:annotation>
+      <xs:documentation>Device Expiration Date is the expiration date of the device</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date" />
+  </xs:simpleType>
+  <xs:simpleType name="FetchInformationFlag">
+    <xs:annotation>
+      <xs:documentation>Fetch Information Flag is a boolean flag that indicates whether for the api to request the information associated to the request structure.
+true - the API will perform request for the associated information
+false - the API will request the assoociated information</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="HighPerformancePushToTalkIDString">
+    <xs:annotation>
+      <xs:documentation>High Performance Push To Talk Identifier (HPPTTID) is the identifier of a Subscription utilizing the QChat  Push-To-Talk techniology. HPPTTID is constructed in the username@domain URI format.  The username will be a MDN or UFMI based number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InternationalMobileSubscriberIdentityString">
+    <xs:annotation>
+      <xs:documentation>International Mobile Subscriber Identity (IMSI) holds a unique identifier allocated to each mobile subscriber in a GSM and UMTS network. It consists of a MCC (Mobile Country Code), a MNC (Mobile Network Code) and a MSIN (Mobile Station Identification Number).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InternetProtocolAddressString">
+    <xs:annotation>
+      <xs:documentation>Electronic Address represents the character string of the electronic address.</xs:documentation>
+      <xs:documentation>An Internet Protocol Address is the numerical address by which a location in the Internet is identified. Computers on the Internet use IP addresses to route traffic and establish connections among themselves.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="7" />
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileDirectoryNumberString">
+    <xs:annotation>
+      <xs:documentation>The method of identifying telephone trunks in the public network of North America, called World Numbering Zone 1 by the ITU-T. the Plan has 3 ways of identifying phone numbers in North America -- a 3-digit area code, a 3-digit exchange or central office code, and 4-digit subscriber code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NetworkAccessIdentifierString">
+    <xs:annotation>
+      <xs:documentation>Network Access Identifier holds the concatenation of the a user name and realm.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriptionIdentifierEns">
+    <xs:annotation>
+      <xs:documentation>Subscription Identifier Ensemble uniquely identifies an instance of SUBSCRIPTION in the Ensemble system.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UrbanFleetMemberIdentifierString">
+    <xs:annotation>
+      <xs:documentation>Urban Fleet Member Identifier String contains the concatenation of the Urban Identifier,'*' Fleet Identifier, '*' and Member IDentifier used to identify the Direct Connect Subscriber in the iDen network. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="23" />
+      <xs:minLength value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ManufacturerName">
+    <xs:annotation>
+      <xs:documentation>Manufacturer Name</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelName">
+    <xs:annotation>
+      <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+      <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNumber">
+    <xs:annotation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MoreRecordsAvailableBooleanFlag">
+    <xs:annotation>
+      <xs:documentation>More Records Available Boolean Flag indicates that there are more records available for retrieval.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="SequenceNumber">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StockKeepingUnitEns">
+    <xs:annotation>
+      <xs:documentation>Stock Keeping Unit represents the Sprint Inventory Stock Keeping Unit (SKU).  Stock Keeping Unit identifies a group of PRODUCT instances.  It could identify a handset Model and Model Number, a Kit or an accessory. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentActivationStatusCode">
+    <xs:annotation>
+      <xs:documentation>Equipment Activation Status Code contains the provisioning status of a unique instance of a piece of equipment. Valid values are:
+C - Inactive
+H - Equipment Activation is Required
+Y - Activated Equipment</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

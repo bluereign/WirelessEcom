@@ -1,0 +1,2 @@
+<cfoutput>#Now()#</cfoutput>
+<cfabort>

@@ -1,0 +1,4 @@
+﻿CREATE FULLTEXT CATALOG [ProductsTableFullTextIndexCatalog]
+    WITH ACCENT_SENSITIVITY = OFF
+    AUTHORIZATION [dbo];
+

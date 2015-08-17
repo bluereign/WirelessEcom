@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns0="http://integration.sprint.com/eai/services/QueryDeviceInfoService/v1/QueryDeviceInfoService.wsdl" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://integration.sprint.com/eai/services/QueryDeviceInfoService/v1/QueryDeviceInfoService.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:schema>
+      <xsd:import schemaLocation="v1.xsd2.xsd" namespace="http://integration.sprint.com/common/ErrorDetailsV2.xsd" />
+      <xsd:import schemaLocation="v1.xsd3.xsd" namespace="http://integration.sprint.com/common/header/WSMessageHeader/v2" />
+      <xsd:import schemaLocation="v1.xsd4.xsd" namespace="http://integration.sprint.com/interfaces/queryAccountDeviceList/v1/queryAccountDeviceList.xsd" />
+      <xsd:import schemaLocation="v1.xsd5.xsd" namespace="http://integration.sprint.com/interfaces/queryCdmaDeviceInfo/v2/queryCdmaDeviceInfoV2.xsd" />
+      <xsd:import schemaLocation="v1.xsd6.xsd" namespace="http://integration.sprint.com/interfaces/queryDeviceCapabilities/v2/queryDeviceCapabilitiesV2.xsd" />
+      <xsd:import schemaLocation="v1.xsd7.xsd" namespace="http://integration.sprint.com/interfaces/queryDeviceCatalogInfo/v1/queryDeviceCatalogInfo.xsd" />
+      <xsd:import schemaLocation="v1.xsd8.xsd" namespace="http://integration.sprint.com/interfaces/queryDeviceHistoryByResource/v1/queryDeviceHistoryByResource.xsd" />
+      <xsd:import schemaLocation="v1.xsd9.xsd" namespace="http://integration.sprint.com/interfaces/queryDeviceInfo/v1/queryDeviceInfo.xsd" />
+      <xsd:import schemaLocation="v1.xsd10.xsd" namespace="http://integration.sprint.com/interfaces/queryDeviceList/v1/queryDeviceList.xsd" />
+      <xsd:import schemaLocation="v1.xsd11.xsd" namespace="http://integration.sprint.com/interfaces/queryDeviceOrderHistory/v1/queryDeviceOrderHistory.xsd" />
+      <xsd:import schemaLocation="v1.xsd12.xsd" namespace="http://integration.sprint.com/interfaces/queryDeviceResourceInfo/v1/queryDeviceResourceInfo.xsd" />
+      <xsd:import schemaLocation="v1.xsd13.xsd" namespace="http://integration.sprint.com/interfaces/querySubscriberDeviceList/v1/querySubscriberDeviceList.xsd" />
+      <xsd:import schemaLocation="v1.xsd14.xsd" namespace="http://integration.sprint.com/interfaces/validateBuybackDevice/v1/validateBuybackDevice.xsd" />
+      <xsd:import schemaLocation="v1.xsd15.xsd" namespace="http://integration.sprint.com/interfaces/validateDevice/v6/validateDeviceV6.xsd" />
+      <xsd:import schemaLocation="v1.xsd16.xsd" namespace="http://integration.sprint.com/interfaces/validateDevice/v7/validateDeviceV7.xsd" />
+      <xsd:import schemaLocation="v1.xsd17.xsd" namespace="http://integration.sprint.com/interfaces/validateDevice/v8/validateDeviceV8.xsd" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="faultmessage2">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/common/ErrorDetailsV2.xsd" name="fault2" element="xsns:errorDetailItem" />
+  </wsdl:message>
+  <wsdl:message name="queryAccountDeviceList">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryAccountDeviceList/v1/queryAccountDeviceList.xsd" name="parameters" element="xsns:queryAccountDeviceList" />
+  </wsdl:message>
+  <wsdl:message name="queryAccountDeviceListResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryAccountDeviceList/v1/queryAccountDeviceList.xsd" name="parameters" element="xsns:queryAccountDeviceListResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryCdmaDeviceInfoV2">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryCdmaDeviceInfo/v2/queryCdmaDeviceInfoV2.xsd" name="parameters" element="xsns:queryCdmaDeviceInfoV2" />
+  </wsdl:message>
+  <wsdl:message name="queryCdmaDeviceInfoV2Response">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryCdmaDeviceInfo/v2/queryCdmaDeviceInfoV2.xsd" name="parameters" element="xsns:queryCdmaDeviceInfoV2Response" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceCapabilitiesV2">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceCapabilities/v2/queryDeviceCapabilitiesV2.xsd" name="parameters" element="xsns:queryDeviceCapabilitiesV2" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceCapabilitiesV2Response">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceCapabilities/v2/queryDeviceCapabilitiesV2.xsd" name="parameters" element="xsns:queryDeviceCapabilitiesV2Response" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceCatalogInfo">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceCatalogInfo/v1/queryDeviceCatalogInfo.xsd" name="parameters" element="xsns:queryDeviceCatalogInfo" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceCatalogInfoResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceCatalogInfo/v1/queryDeviceCatalogInfo.xsd" name="parameters" element="xsns:queryDeviceCatalogInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceHistoryByResource">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceHistoryByResource/v1/queryDeviceHistoryByResource.xsd" name="parameters" element="xsns:queryDeviceHistoryByResource" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceHistoryByResourceResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceHistoryByResource/v1/queryDeviceHistoryByResource.xsd" name="parameters" element="xsns:queryDeviceHistoryByResourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceInfo">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceInfo/v1/queryDeviceInfo.xsd" name="parameters" element="xsns:queryDeviceInfo" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceInfoResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceInfo/v1/queryDeviceInfo.xsd" name="parameters" element="xsns:queryDeviceInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceList">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceList/v1/queryDeviceList.xsd" name="parameters" element="xsns:queryDeviceList" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceListResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceList/v1/queryDeviceList.xsd" name="parameters" element="xsns:queryDeviceListResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceOrderHistory">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceOrderHistory/v1/queryDeviceOrderHistory.xsd" name="parameters" element="xsns:queryDeviceOrderHistory" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceOrderHistoryResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceOrderHistory/v1/queryDeviceOrderHistory.xsd" name="parameters" element="xsns:queryDeviceOrderHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceResourceInfo">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceResourceInfo/v1/queryDeviceResourceInfo.xsd" name="parameters" element="xsns:queryDeviceResourceInfo" />
+  </wsdl:message>
+  <wsdl:message name="queryDeviceResourceInfoResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/queryDeviceResourceInfo/v1/queryDeviceResourceInfo.xsd" name="parameters" element="xsns:queryDeviceResourceInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="querySubscriberDeviceList">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/querySubscriberDeviceList/v1/querySubscriberDeviceList.xsd" name="parameters" element="xsns:querySubscriberDeviceList" />
+  </wsdl:message>
+  <wsdl:message name="querySubscriberDeviceListResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/querySubscriberDeviceList/v1/querySubscriberDeviceList.xsd" name="parameters" element="xsns:querySubscriberDeviceListResponse" />
+  </wsdl:message>
+  <wsdl:message name="validateBuybackDevice">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateBuybackDevice/v1/validateBuybackDevice.xsd" name="parameters" element="xsns:validateBuybackDevice" />
+  </wsdl:message>
+  <wsdl:message name="validateBuybackDeviceResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateBuybackDevice/v1/validateBuybackDevice.xsd" name="parameters" element="xsns:validateBuybackDeviceResponse" />
+  </wsdl:message>
+  <wsdl:message name="validateDeviceV6">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateDevice/v6/validateDeviceV6.xsd" name="validateDeviceV6Request" element="xsns:validateDeviceV6" />
+  </wsdl:message>
+  <wsdl:message name="validateDeviceV6Response">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateDevice/v6/validateDeviceV6.xsd" name="validateDeviceV6Response" element="xsns:validateDeviceV6Response" />
+  </wsdl:message>
+  <wsdl:message name="validateDeviceV7">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateDevice/v7/validateDeviceV7.xsd" name="validateDeviceV7Request" element="xsns:validateDeviceV7" />
+  </wsdl:message>
+  <wsdl:message name="validateDeviceV7Response">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateDevice/v7/validateDeviceV7.xsd" name="validateDeviceV7Response" element="xsns:validateDeviceV7Response" />
+  </wsdl:message>
+  <wsdl:message name="validateDeviceV8">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateDevice/v8/validateDeviceV8.xsd" name="validateDeviceV8Request" element="xsns:validateDeviceV8" />
+  </wsdl:message>
+  <wsdl:message name="validateDeviceV8Response">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/interfaces/validateDevice/v8/validateDeviceV8.xsd" name="validateDeviceV8Response" element="xsns:validateDeviceV8Response" />
+  </wsdl:message>
+  <wsdl:message name="wsMessageHeader">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/common/header/WSMessageHeader/v2" name="head" element="xsns:wsMessageHeader" />
+  </wsdl:message>
+  <wsdl:portType name="QueryDeviceInfoPortType">
+    <wsdl:operation name="QueryAccountDeviceList">
+      <wsdl:input name="QueryAccountDeviceListRequest" message="ns0:queryAccountDeviceList" />
+      <wsdl:output name="QueryAccountDeviceListResponse" message="ns0:queryAccountDeviceListResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryCdmaDeviceInfoV2">
+      <wsdl:input name="QueryCdmaDeviceInfoV2Request" message="ns0:queryCdmaDeviceInfoV2" />
+      <wsdl:output name="QueryCdmaDeviceInfoV2Response" message="ns0:queryCdmaDeviceInfoV2Response" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceCapabilitiesV2">
+      <wsdl:input name="QueryDeviceCapabilitiesV2Request" message="ns0:queryDeviceCapabilitiesV2" />
+      <wsdl:output name="QueryDeviceCapabilitiesV2Response" message="ns0:queryDeviceCapabilitiesV2Response" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceCatalogInfo">
+      <wsdl:input name="QueryDeviceCatalogInfoRequest" message="ns0:queryDeviceCatalogInfo" />
+      <wsdl:output name="QueryDeviceCatalogInfoResponse" message="ns0:queryDeviceCatalogInfoResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceHistoryByResource">
+      <wsdl:input name="QueryDeviceHistoryByResourceRequest" message="ns0:queryDeviceHistoryByResource" />
+      <wsdl:output name="QueryDeviceHistoryByResourceResponse" message="ns0:queryDeviceHistoryByResourceResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceInfo">
+      <wsdl:input name="QueryDeviceInfoRequest" message="ns0:queryDeviceInfo" />
+      <wsdl:output name="QueryDeviceInfoResponse" message="ns0:queryDeviceInfoResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceList">
+      <wsdl:input name="QueryDeviceListRequest" message="ns0:queryDeviceList" />
+      <wsdl:output name="QueryDeviceListResponse" message="ns0:queryDeviceListResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceOrderHistory">
+      <wsdl:input name="QueryDeviceOrderHistoryRequest" message="ns0:queryDeviceOrderHistory" />
+      <wsdl:output name="QueryDeviceOrderHistoryResponse" message="ns0:queryDeviceOrderHistoryResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceResourceInfo">
+      <wsdl:input name="QueryDeviceResourceInfoRequest" message="ns0:queryDeviceResourceInfo" />
+      <wsdl:output name="QueryDeviceResourceInfoResponse" message="ns0:queryDeviceResourceInfoResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="QuerySubscriberDeviceList">
+      <wsdl:input name="QuerySubscriberDeviceListRequest" message="ns0:querySubscriberDeviceList" />
+      <wsdl:output name="QuerySubscriberDeviceListResponse" message="ns0:querySubscriberDeviceListResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateBuybackDevice">
+      <wsdl:input name="ValidateBuybackDeviceRequest" message="ns0:validateBuybackDevice" />
+      <wsdl:output name="ValidateBuybackDeviceResponse" message="ns0:validateBuybackDeviceResponse" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateDeviceV6">
+      <wsdl:input name="ValidateDeviceV6Request" message="ns0:validateDeviceV6" />
+      <wsdl:output name="ValidateDeviceV6Response" message="ns0:validateDeviceV6Response" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateDeviceV7">
+      <wsdl:input name="ValidateDeviceV7Request" message="ns0:validateDeviceV7" />
+      <wsdl:output name="ValidateDeviceV7Response" message="ns0:validateDeviceV7Response" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateDeviceV8">
+      <wsdl:input name="ValidateDeviceV8Request" message="ns0:validateDeviceV8" />
+      <wsdl:output name="ValidateDeviceV8Response" message="ns0:validateDeviceV8Response" />
+      <wsdl:fault name="fault" message="ns0:faultmessage2" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="QueryDeviceInfoBinding" type="ns0:QueryDeviceInfoPortType">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryAccountDeviceList">
+      <soap11:operation soapAction="QueryAccountDeviceList" style="document" />
+      <wsdl:input name="QueryAccountDeviceListRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryAccountDeviceListResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryCdmaDeviceInfoV2">
+      <soap11:operation soapAction="QueryCdmaDeviceInfoV2" style="document" />
+      <wsdl:input name="QueryCdmaDeviceInfoV2Request">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryCdmaDeviceInfoV2Response">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceCapabilitiesV2">
+      <soap11:operation soapAction="QueryDeviceCapabilitiesV2" style="document" />
+      <wsdl:input name="QueryDeviceCapabilitiesV2Request">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryDeviceCapabilitiesV2Response">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceCatalogInfo">
+      <soap11:operation soapAction="QueryDeviceCatalogInfo" style="document" />
+      <wsdl:input name="QueryDeviceCatalogInfoRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryDeviceCatalogInfoResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceHistoryByResource">
+      <soap11:operation soapAction="queryDeviceHistoryByResource" style="document" />
+      <wsdl:input name="QueryDeviceHistoryByResourceRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryDeviceHistoryByResourceResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceInfo">
+      <soap11:operation soapAction="QueryDeviceInfo" style="document" />
+      <wsdl:input name="QueryDeviceInfoRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryDeviceInfoResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceList">
+      <soap11:operation soapAction="QueryDeviceList" style="document" />
+      <wsdl:input name="QueryDeviceListRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryDeviceListResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceOrderHistory">
+      <soap11:operation soapAction="QueryDeviceOrderHistory" style="document" />
+      <wsdl:input name="QueryDeviceOrderHistoryRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryDeviceOrderHistoryResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeviceResourceInfo">
+      <soap11:operation soapAction="QueryDeviceResourceInfo" style="document" />
+      <wsdl:input name="QueryDeviceResourceInfoRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryDeviceResourceInfoResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySubscriberDeviceList">
+      <soap11:operation soapAction="QuerySubscriberDeviceList" style="document" />
+      <wsdl:input name="QuerySubscriberDeviceListRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QuerySubscriberDeviceListResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateBuybackDevice">
+      <soap11:operation soapAction="ValidateBuybackDevice" style="document" />
+      <wsdl:input name="ValidateBuybackDeviceRequest">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ValidateBuybackDeviceResponse">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateDeviceV6">
+      <soap11:operation soapAction="validateDevice6" style="document" />
+      <wsdl:input name="ValidateDeviceV6Request">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ValidateDeviceV6Response">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateDeviceV7">
+      <soap11:operation soapAction="validateDevice7" style="document" />
+      <wsdl:input name="ValidateDeviceV7Request">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ValidateDeviceV7Response">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateDeviceV8">
+      <soap11:operation soapAction="validateDevice8" style="document" />
+      <wsdl:input name="ValidateDeviceV8Request">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ValidateDeviceV8Response">
+        <soap11:body use="literal" />
+        <soap11:header message="ns0:wsMessageHeader" part="head" use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap11:fault use="literal" name="fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QueryDeviceInfoService">
+    <wsdl:port name="QueryDeviceInfoPortType" binding="ns0:QueryDeviceInfoBinding">
+      <soap11:address location="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryDeviceInfoService/v1" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

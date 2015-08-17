@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryDeviceCatalogInfo/v1/queryDeviceCatalogInfo.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryDeviceCatalogInfo/v1/queryDeviceCatalogInfo.xsd" version="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryDeviceCatalogInfo" type="tns:QueryDeviceCatalogInfoRequestType" />
+  <xs:element name="queryDeviceCatalogInfoResponse" type="tns:QueryDeviceCatalogInfoResponseType" />
+  <xs:complexType name="QueryDeviceCatalogInfoRequestType">
+    <xs:sequence>
+      <xs:element name="itemId" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>Ensemble Item ID of the device sku</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryDeviceCatalogInfoResponseType">
+    <xs:sequence>
+      <xs:element name="itemId" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>Ensemble Item ID of the device sku</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="displayName" type="tns:ModelNameType">
+        <xs:annotation>
+          <xs:documentation>Device internal display name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="networkType" type="tns:NetworkTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Network Type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="imageUrl" type="tns:UniformResourceLocatorType">
+        <xs:annotation>
+          <xs:documentation>URl to the Device image</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceFrequencyList" type="tns:DeviceFrequencyListType">
+        <xs:annotation>
+          <xs:documentation>List of supported device frequencies </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deviceCapabilityList" type="tns:DeviceCapabilityListType">
+        <xs:annotation>
+          <xs:documentation>List of business capabilites</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="additionalPropertyList" type="tns:PropertyListType">
+        <xs:annotation>
+          <xs:documentation>Device additional properties </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceFrequencyListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="deviceFrequencyInfo" type="tns:DeviceFrequencyInfoType">
+        <xs:annotation>
+          <xs:documentation>Device Supported frenquency</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceFrequencyInfoType">
+    <xs:sequence>
+      <xs:element name="frequencyValue" type="tns:UnitOfMeasureValueType">
+        <xs:annotation>
+          <xs:documentation>Supported frequency value
+GSM-900, 1800, 1900, etc</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceCapabilityListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="deviceCapabilityInfo" type="tns:DeviceCapabilityInfoType">
+        <xs:annotation>
+          <xs:documentation>Device business capabilities</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceCapabilityInfoType">
+    <xs:sequence>
+      <xs:element name="capabilityName" type="tns:CapabilityTypeNameType">
+        <xs:annotation>
+          <xs:documentation>Capability Name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="capabilityCode" type="tns:CapabilityTypeIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Capability Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PropertyListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="additionalPropertyInfo" type="tns:PropertyInfoType">
+        <xs:annotation>
+          <xs:documentation>Device additional properties </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PropertyInfoType">
+    <xs:sequence>
+      <xs:element name="propertyName" type="tns:ParameterTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Property name . For example isSellable.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="propertyValue" type="tns:ParameterValueType">
+        <xs:annotation>
+          <xs:documentation>Property Value</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CapabilityTypeIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Capabillity Type Identifier designates a specific capability type for a device.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CapabilityTypeNameType">
+    <xs:annotation>
+      <xs:documentation>Capabillity Type Name is a common name for a specific capability type for a device.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNameType">
+    <xs:annotation>
+      <xs:documentation>Model Name holds the Manufacturer's name for the class or model of  PRODUCT.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNumberType">
+    <xs:annotation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NetworkTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>The network type code identifies which network the subscriber is associated to.
+Possible values:
+C - CDMA
+I - IDEN</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ParameterTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Parameter Type Code designates the data type of parameter found in the Parameter Value element. These two elements are sent as a matched pair to define various parameters service or feature being provisioned.
+Valid Values Include:
+OPERATIONMODE,
+NAI,
+NAIINDEX,
+REVERSETUNNELINGIND,
+MOBILEIPADDRESS,
+PRIMARYHOMEAGENT,
+SECONDARYHOMEAGENT,
+MNHAAUTHALGORITHM,
+SPIHA,
+MNHASHAREDSECRET,
+MNAAAAUTHALGORITHM,
+SPIAAA,
+MNAAASHAREDSECRET,
+SPIINDAAA,
+SPIINDHA,
+MDN,
+MSID...</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ParameterValueType">
+    <xs:annotation>
+      <xs:documentation>Parameter Value designates the actual data associate to the Parameter Type Code element. These two elements are sent as a matched pair to define various parameters service or feature being provisioned.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniformResourceLocatorType">
+    <xs:annotation>
+      <xs:documentation>Uniform Resource Locator (URL, previously Universal Resource Locator) - usually pronounced by sounding out each letter but, in some quarters, pronounced"Earl"- is the unique address for a file that is accessible on the Internet. A common way to get to a Web site is to enter the URL of its home page file in your Web browser's address line. However, any file within that Web site can also be specified with a URL. Such a file might be any Web (HTML) page other than the home page, an image file, or a program such as a common gateway interface application or Java applet. The URL contains the name of the protocol to be used to access the file resource, a domain name that identifies a specific computer on the Internet, and a pathname, a hierarchical description that specifies the location of a file in that computer.On the Web (which uses the Hypertext Transfer Protocol, or HTTP), an example of a URL is:http://www.ietf.org/rfc/rfc2396.txtwhich specifies the use of a HTTP (Web browser) application, a unique computer named www.ietf.org, and the location of a text file or page to be accessed on that computer whose pathname is /rfc/rfc2396.txt.A URL for a particular image on a Web site might look like this:http://searchnetworking.techtarget.com/WhatIs/images/coaxla.gifA URL for a file meant to be downloaded using the File Transfer Protocol (FTP) would require that the"ftp"protocol be specified like this hypothetical URL:ftp://www.somecompany.com/whitepapers/widgets.psA URL is a type of URI (Uniform Resource Identifier, formerly called Universal Resource Identifier.)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:simpleType name="UnitOfMeasureValueType">
+    <xs:annotation>
+      <xs:documentation>Unit Of Measure Value contains the value of the actual item or instance as specified by the unit of measure code.  For example, if the unit of measure code contains 'Volume', then the unit of measure value would contain the value '16' that represents the volume of a specified item or instance, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

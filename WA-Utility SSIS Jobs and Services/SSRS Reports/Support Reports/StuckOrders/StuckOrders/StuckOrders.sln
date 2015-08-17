@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "StuckOrders", "StuckOrders\StuckOrders.rptproj", "{49735A70-5A47-4D74-ADF9-B927CCF4DF67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49735A70-5A47-4D74-ADF9-B927CCF4DF67}.Debug|Default.ActiveCfg = Debug
+		{49735A70-5A47-4D74-ADF9-B927CCF4DF67}.Debug|Default.Build.0 = Debug
+		{49735A70-5A47-4D74-ADF9-B927CCF4DF67}.Debug|Default.Deploy.0 = Debug
+		{49735A70-5A47-4D74-ADF9-B927CCF4DF67}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{49735A70-5A47-4D74-ADF9-B927CCF4DF67}.DebugLocal|Default.Build.0 = DebugLocal
+		{49735A70-5A47-4D74-ADF9-B927CCF4DF67}.Release|Default.ActiveCfg = Release
+		{49735A70-5A47-4D74-ADF9-B927CCF4DF67}.Release|Default.Build.0 = Release
+		{49735A70-5A47-4D74-ADF9-B927CCF4DF67}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

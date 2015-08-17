@@ -1,0 +1,1 @@
+<cflocation url="/catalog/list" addtoken="false" />

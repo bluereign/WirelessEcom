@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Sprint Employee (SPRINT) -->
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="ServiceValidationRequest">
+		<xs:sequence>
+			<xs:element name="order-date" type="xs:dateTime">
+				<!--The date/time that the order was created by the customer.  Format is "CCYY-MM-DDThh:mm:ss"  (T is the date/time separator).-->
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:sequence>
+					<xs:element name="account-type" type="AccountType"/>
+					<xs:element name="account-sub-type" type="AccountSubType"/>
+				</xs:sequence>
+				<xs:element name="customer-type" type="CustomerType"/>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="service-zip" type="ZipCode"/>
+				<xs:element name="submarket" type="RequiredStringMax3"/>
+				<xs:element name="csa" type="RequiredStringMax10"/>
+			</xs:choice>
+			<xs:element name="sales-channel" type="RequiredStringMax10" minOccurs="0"/>
+			<xs:element name="account-number" type="AccountNumber" minOccurs="0"/>
+			<xs:element name="action" type="ServiceValidationActionType"/>
+			<xs:element name="primary-subscriber-id" type="RequiredStringMax20" minOccurs="0">
+				<!--Primary subscriber ID needed if adding to a family plan.  -->
+			</xs:element>
+			<xs:element name="primary-plan-id" type="RequiredStringMax30" minOccurs="0">
+				<!--Primary plan ID needed if adding to a family plan and no primary subscriber ID provided.  -->
+			</xs:element>
+			<xs:element name="service-agreement" type="service-agreement" minOccurs="0">
+				<!--Contract term.  -->
+			</xs:element>
+			<xs:element name="plan-options" type="ServicePlanOptionsType" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="model-id" type="RequiredStringMax30" minOccurs="0"/>
+				<xs:element name="meid" type="MEID" minOccurs="0"/>
+				<xs:element name="hsn" type="HSN" minOccurs="0"/>
+				<xs:element name="mac-id" type="MACID" minOccurs="0"/>
+			</xs:choice>
+			<xs:element name="airave" type="xs:boolean" minOccurs="0">
+				<!--Required if the order involves the purchase of Airave equipment. -->
+			</xs:element>
+			<xs:element name="credit-class" type="RequiredStringMax15" minOccurs="0"/>
+			<xs:element name="corp-gov-id" type="RequiredStringMax20" minOccurs="0">
+				<!--Corporate or government ID for CORPORATE_BUSINESS and CORPORATE_INDIVIDUAL customer types.-->
+			</xs:element>
+			<xs:element name="bundle-sub-val" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="sub-info" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="sub-line-id" type="IDType"/>
+									<xs:element name="sub-action" type="ServiceValidationActionType"/>
+									<xs:element name="sub-plan-options" type="ServicePlanOptionsType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="remove-barring-soc" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="remove-blocklist-soc" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+		<!--Service validation request message.-->
+	</xs:complexType>
+	<xs:element name="performServiceValidation" type="ServiceValidationRequest"/>
+	<xs:complexType name="ServiceValidationResponse">
+		<xs:sequence>
+			<xs:element name="validation-succeeded" type="xs:boolean"/>
+			<xs:element name="family-sub-pp-change" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="bundle-sub-pp-change" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="primary-bundle-soc" type="RequiredStringMax20"/>
+						<xs:element name="secondary-bundle-soc" type="RequiredStringMax20"/>
+						<xs:element name="remove-sub-count" type="xs:integer"/>
+						<xs:element name="bundle-secondary-sub" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="subscriber-id" type="RequiredStringMax20"/>
+									<xs:element name="reference-ptn" type="PhoneNumber" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="lts-sub-remaining" type="xs:positiveInteger" minOccurs="0"/>
+			<xs:element name="bill-summary-info" type="BillSummaryInfoType" minOccurs="0"/>
+			<xs:element name="plan" type="ServiceValidationPlanType" minOccurs="0"/>
+			<xs:element name="option" type="ServiceValidationOptionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="expired-plan" type="ServiceValidationPlanType" minOccurs="0"/>
+			<xs:element name="expired-option" type="ServiceValidationOptionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="expired-resource-management" type="ResourceManagement" minOccurs="0"/>
+			<xs:element name="changed-socs" type="ServiceValidationChangedSocs" minOccurs="0"/>
+			<xs:element name="legacy-plans" type="ServiceValidationLegacyPlans" minOccurs="0"/>
+			<!--<xs:element name="changed-socs" minOccurs="1">
+				 <xs:complexType>
+					<xs:sequence>
+						<xs:element name="option" type="ServiceValidationOptionType" minOccurs="1" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>-->
+			<xs:element name="resource-management" type="ResourceManagement" minOccurs="0"/>
+			<xs:element name="suggestion-group" type="SuggestionGroup" minOccurs="0" maxOccurs="100"/>
+			<xs:element name="data-soc-ind" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="messaging-soc-ind" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="voice-control-valid" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceValidationChangedSocs">
+		<xs:sequence>
+			<xs:element name="option" type="ServiceValidationOptionType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceValidationLegacyPlans">
+		<xs:sequence>
+			<xs:element name="plan-id" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="performServiceValidationResponse" type="ServiceValidationResponse"/>
+</xs:schema>

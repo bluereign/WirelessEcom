@@ -1,0 +1,63 @@
+html { 
+  background: url('/assets/pagemaster/images/campaigns/Expedia-Demo-background-1.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#top-nav-bar {
+	background-color: #0f4b7f;
+    color: #efefef;
+}
+
+#top-nav-bar a, #top-nav-bara:active, #top-nav-bara:hover, #top-nav-bar a:focus{
+	color: #efefef;
+}
+
+#campaign-header {
+	background: #63b7d9;
+}
+
+#pagemaster-menu-nav li > a:hover {
+	color: #333;
+	background-color: #ccc;
+}
+
+#product-listing-grid li .product-title-container h1 {
+	color: #0f4b7f;
+}
+
+#product-listing-grid li .product-title-container a:hover {
+	color: #0f4b7f;
+}
+
+#product-listing-grid .btn-select {
+    background-color: #0f4b7f;
+    color: #fff;
+}
+
+#product-listing-grid .btn-select:hover, #product-listing-grid .btn-select:focus {
+	background-color: #63b7d9;
+}
+
+#campaign-bottom-banner-container {
+	background: url('/assets/pagemaster/images/ShopAndroid_bar_transparent.png') #63b7d9 no-repeat left bottom;
+}
+
+#campaign-bottom-banner-container > a {
+	color: #fff;
+}
+
+#campaign-bottom-banner-container > a:hover {
+	color: #fff; /* Campaign override */
+}
+
+#disclaimer-container {
+	color: #333;
+}
+
+#footer-nav-bar {
+	background-color: rgba(255,255,255,.2);
+	color: #333;
+}

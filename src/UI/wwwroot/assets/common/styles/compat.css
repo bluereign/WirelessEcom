@@ -1,0 +1,15 @@
+﻿/***************************************************************
+
+This is the browser compatibility stylesheet.  The purpose of this
+file is to contain all the css 'hacks' that are required to ensure
+site uniformity across down-level browsers.
+
+This file will always be the last file included in any page, so
+it will have the ability to override any other stylesheet.
+
+Please target your styles at specific problem browsers using 
+CSS 'hacks'. Some examples : [http://www.tantek.com/CSS/Examples/]
+
+
+
+****************************************************************/

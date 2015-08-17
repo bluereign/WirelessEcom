@@ -1,0 +1,2413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>CarToys</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.0</ProjectVersion>
+    <ProjectGuid>{82223430-d345-41bc-a304-f6ba1d57c41b}</ProjectGuid>
+    <DSP>Microsoft.Data.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <ShowWizard>True</ShowWizard>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <IncludeSchemaNameInFileName>True</IncludeSchemaNameInFileName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchema</DefaultFileStructure>
+    <DeployToDatabaseAddToServerExplorer>True</DeployToDatabaseAddToServerExplorer>
+    <DeployToScript>True</DeployToScript>
+    <CatalogPropertiesFile>Properties\Database.sqlsettings</CatalogPropertiesFile>
+    <ServerPropertiesFile>
+    </ServerPropertiesFile>
+    <LoadSqlClrTypes>True</LoadSqlClrTypes>
+    <RootNamespace>CarToys</RootNamespace>
+    <DefaultSchema>dbo</DefaultSchema>
+    <PreviousProjectVersion>4.0</PreviousProjectVersion>
+    <AllowServerObjects>False</AllowServerObjects>
+    <AllowDatabaseObjects>True</AllowDatabaseObjects>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>.\sql\release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TargetConnectionString>Data Source=.;Integrated Security=True;Pooling=False</TargetConnectionString>
+    <TargetDatabase>
+    </TargetDatabase>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <SuppressWarnings>
+    </SuppressWarnings>
+    <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
+    <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
+    <DeployToDatabase>True</DeployToDatabase>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>.\sql\debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TargetConnectionString>Data Source=.;Integrated Security=True;Pooling=False</TargetConnectionString>
+    <TargetDatabase>
+    </TargetDatabase>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <SuppressWarnings>
+    </SuppressWarnings>
+    <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
+    <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
+    <DeployToDatabase>False</DeployToDatabase>
+  </PropertyGroup>
+  <!--Import the settings-->
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\TeamData\Microsoft.Data.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\Pre-Deployment" />
+    <Folder Include="Scripts\Post-Deployment" />
+    <Folder Include="Data Generation Plans" />
+    <Folder Include="Schema Comparisons" />
+    <Folder Include="Properties\" />
+    <Folder Include="Schema Objects\" />
+    <Folder Include="Schema Objects\Schemas\" />
+    <Folder Include="Schema Objects\Schemas\dbo\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Service Broker\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Service Broker\Queues\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Views\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Views\Statistics\" />
+    <Folder Include="Schema Objects\Database Level Objects\" />
+    <Folder Include="Schema Objects\Database Level Objects\Assemblies\" />
+    <Folder Include="Schema Objects\Database Level Objects\Database Triggers\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Schemas\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Users\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Certificates\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Asymmetric Keys\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Master Keys\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Signatures\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Symmetric Keys\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Database Encryption Keys\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Database Audit Specification\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Roles\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Roles\Application Roles\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Roles\Database Roles\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Broker Priorities\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Contracts\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Event Notifications\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Message Types\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Remote Service Binding\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Routes\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Services\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Full Text Stoplists\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Filegroups\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Files\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Full Text Catalogs\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Partition Functions\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Partition Schemes\" />
+    <Folder Include="Schema Objects\Schemas\catalog\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Tables\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Views\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\catalog\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Tables\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Views\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\salesorder\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\service\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\service\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\service\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\service\Tables\" />
+    <Folder Include="Schema Objects\Schemas\service\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\service\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\service\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\service\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\service\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\service\Views\" />
+    <Folder Include="Schema Objects\Schemas\service\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\service\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\service\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\test\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\test\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\test\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\test\Tables\" />
+    <Folder Include="Schema Objects\Schemas\test\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\test\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\test\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\test\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\test\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\test\Views\" />
+    <Folder Include="Schema Objects\Schemas\test\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\test\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\test\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\admin\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\admin\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\admin\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\admin\Tables\" />
+    <Folder Include="Schema Objects\Schemas\admin\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\admin\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\admin\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\admin\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\admin\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\admin\Views\" />
+    <Folder Include="Schema Objects\Schemas\admin\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\admin\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\admin\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\account\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\account\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\account\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\account\Tables\" />
+    <Folder Include="Schema Objects\Schemas\account\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\account\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\account\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\account\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\account\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\account\Views\" />
+    <Folder Include="Schema Objects\Schemas\account\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\account\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\account\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\ups\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\ups\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\ups\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\ups\Tables\" />
+    <Folder Include="Schema Objects\Schemas\ups\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\ups\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\ups\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\ups\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\ups\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\ups\Views\" />
+    <Folder Include="Schema Objects\Schemas\ups\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\ups\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\ups\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\cart\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\cart\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\cart\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\cart\Tables\" />
+    <Folder Include="Schema Objects\Schemas\cart\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\cart\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\cart\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\cart\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\cart\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\cart\Views\" />
+    <Folder Include="Schema Objects\Schemas\cart\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\cart\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\cart\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Tables\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Views\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\maintenance\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Tables\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Views\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\websecurity\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\util\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\util\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\util\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\util\Tables\" />
+    <Folder Include="Schema Objects\Schemas\util\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\util\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\util\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\util\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\util\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\util\Views\" />
+    <Folder Include="Schema Objects\Schemas\util\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\util\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\util\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\report\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\report\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\report\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\report\Tables\" />
+    <Folder Include="Schema Objects\Schemas\report\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\report\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\report\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\report\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\report\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\report\Views\" />
+    <Folder Include="Schema Objects\Schemas\report\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\report\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\report\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\gers\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\gers\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\gers\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\gers\Tables\" />
+    <Folder Include="Schema Objects\Schemas\gers\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\gers\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\gers\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\gers\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\gers\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\gers\Views\" />
+    <Folder Include="Schema Objects\Schemas\gers\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\gers\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\gers\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\content\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\content\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\content\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\content\Tables\" />
+    <Folder Include="Schema Objects\Schemas\content\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\content\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\content\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\content\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\content\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\content\Views\" />
+    <Folder Include="Schema Objects\Schemas\content\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\content\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\content\Views\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\logging\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\logging\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\logging\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\logging\Tables\" />
+    <Folder Include="Schema Objects\Schemas\logging\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\logging\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\logging\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\logging\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\logging\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\logging\Views\" />
+    <Folder Include="Schema Objects\Schemas\logging\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\logging\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\logging\Views\Statistics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PropertiesFile Include="Properties\Database.sqlsettings">
+    </PropertiesFile>
+    <PropertiesFile Include="Properties\Database.sqldeployment">
+    </PropertiesFile>
+    <PropertiesFile Include="Properties\Database.sqlcmdvars">
+    </PropertiesFile>
+    <Build Include="Properties\Database.sqlpermissions">
+      <ModelBuilderType>Permissions</ModelBuilderType>
+    </Build>
+    <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql">
+      <SubType>Code</SubType>
+    </PreDeploy>
+    <PostDeploy Include="Scripts\Post-Deployment\Script.PostDeployment.sql">
+      <SubType>Code</SubType>
+    </PostDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <BuildContributorArgument Include="OutDir=$(OutDir)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.Image.DF_Image_ImageGuid.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.Image.DF_Image_Ordinal.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.Market.DF_CarrierMarket_MarketGuid.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.ServiceMasterGroup.DF_Table_1_ServiceMasterGroupId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.Activity.DF_Activity_Timestamp.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.ServiceMaster.DF_ServiceMaster_ServiceMasterId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Promotions.DF_Promotions_CreateDate.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Promotions.DF__Promotion__Activ__129EAA56.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.PaymentMethod.DF__PaymentMet__Sort__51851410.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.ShipMethod.DF_ShipMethod_IsActive.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.SessionStockReservation.DF_SessionStockReservation_ReservedTime.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Coupon.DF_Coupon_DateCreated.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Constraints\service.CarrierInterfaceLog.DF_CarrierInterfaceLog_Compiled.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.WirelessAccount.DF_OrderWireless_OW_Date.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.WirelessAccount.DF_OrderWireless_FamilyPlan.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.UserCoupon.DF_UserCoupon_IsRedeemed.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.Address.DF_Address_AddressGuid.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.OrderDetail.DF__orderdeta__ow_ty__2062B9C8.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.OrderDetail.DF__OrderDeta__Total__658C0CBD.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.OrderDetail.DF_OrderDetails_Taxable.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.OrderDetail.DF__OrderDeta__Order__5CF6C6BC.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\Constraints\test.StdOut.DF_StdOut_CreateTime.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.Company.DF_Company_IsCarrier.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.Company.DF_Company_CompanyGuid.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\admin\Tables\Constraints\admin.Actions.DF__Actions__Obsolet__579B7187.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Constraints\service.TestSIMS.DF_TestSIMS_Used.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.PropertyMasterGroup.DF_Table_1_PropertyMasterGroupId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.PropertyMaster.DF_PropertyMaster_PropertyMasterId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.DeviceFreeAccessory.DF_DeviceFreeAccessory_DeviceFreeAccessoryGuid.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.WirelessLine.DF_WirelessLine_ActivationStatus.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\Constraints\account.Functionality.DF_Functionality_FunctionalityGuid.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.Product.DF_Product_Active.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.PropertyMasterAlias.DF_PropertyMasterAlias_PropertyMasterAliasGuid.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Constraints\service.CheckoutSessionState.DF_CheckoutSessionState.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.Property.DF_ProductProperty_PropertyId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.Property.DF__Property__Active__07ECDD10.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.RateplanService.DF_RateplanService_IsIncluded.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.RateplanService.DF_RateplanService_IsRequired.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Constraints\catalog.RateplanService.DF_RateplanService_IsDefault.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.PromotionCodes.DF_PromotionCodes_DateCreated.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.AdminMenu.DF_AdminMenu_AdminMenuId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.UserPromotion.DF_UserPromotion_IsRedeemed.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.Order.DF__Orders__Status__4EA8A765.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Constraints\salesorder.Order.DF_Orders_SentToGERS.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.AdminComponent.DF_AdminComponent_AdminComponentId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF_Orders_SentToGERS.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF_Orders_costatus.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF__Orders__Company___4AD81681.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF__Orders__SameAsUs__4CC05EF3.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF__Orders__Processe__4DB4832C.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF__Orders__Status__4EA8A765.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF_Orders_exported.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF_Orders_Split_Order_Id.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF_Orders_OrderType.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF__orders__STORE_ID__29CC2871.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\dbo.Orders.DF_Orders_ship_type.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\Constraints\account.Role.DF_Role_RoleGuid.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Storage\Files\CarToys_Log.sqlfile.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Storage\Files\PRIMARY.CarToys_Data.sqlfile.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Storage\Files\ftfg_ProductsTableFullTextIndexCatalog.ftrow_ProductsTableFullTextIndexCatalog.sqlfile.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.Shipment.FK_Shipment_ShipMethod.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Market.FK_Market_Company.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanDevice.FK_RateplanDevice_Device.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanDevice.FK_RateplanDevice_Rateplan.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.GersPrice.FK_GersPrice_GersPriceGroup.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Service.FK_Service_Company.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Service.FK_Service_ProductGuidType.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ServiceMaster.FK_ServiceMaster_ServiceMasterGroup.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.Payment.FK_Payments_Orders.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.Payment.FK_Payments_PaymentMethods.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.WirelessAccount.FK_WirelessAccount_Order.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\dbo.UserCoupon.FK_UserCoupon_Coupon.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ProductTag.FK_ProductTag_ProductGuid.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Rateplan.FK_Rateplan_ProductGuidType.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.PropertyMaster.FK_PropertyMaster_PropertyMasterGroup.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.LineService.FK_LineService_OrderDetail.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ProductGuid.FK_ProductGuidType_ProductTypes.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.WirelessLine.FK_WirelessLine_OrderDetail.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Product.FK_Product_GersItm.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Product.FK_Product_ProductGuid.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.PropertyMasterAlias.FK_PropertyMasterAlias_PropertyMaster.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ZipCodeMarket.FK_ZipCodeMarket_Market.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanService.FK_RateplanService_Rateplan.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanService.FK_RateplanService_Service.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanMarket.FK_RateplanMarket_Market.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanMarket.FK_RateplanMarket_Rateplan.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.DeviceService.FK_DeviceService_Device.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.DeviceService.FK_DeviceService_Service.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\dbo.UserPromotion.FK_UserPromotion_PromotionCodes.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ServiceExclusion.FK_ServiceExclusion_Service.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ServiceExclusion.FK_ServiceExclusion_ProductGuid.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Storage\Full Text Catalogs\ProductsTableFullTextIndexCatalog.fulltext.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Storage\Full Text Catalogs\ServiceLogFullTextIndexCatalog.fulltext.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Indexes\service.CarrierInterfaceLog.Full-text Index.fulltextindex.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Storage\Filegroups\ftfg_ProductsTableFullTextIndexCatalog.filegroup.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Indexes\service.PaymentGatewayListener.idx_PaymentGatewayListener.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Image.IX_catalog_Image_ReferenceGuid_Ordinal.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Market.IX_Market.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.GersPrice.IDX_GersPrice.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Service.IX_Service.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Service.IX_ServiceGuid_CarrierBillCode_MonthlyFee.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.ServiceMaster.IX_ServiceManagerGroupLookups.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Promotions.idx_DateStart_DateEnd.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.States.i_state_code.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Users.users_temp.IX_users_UserName.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Users.users_temp.IX_users_Authentication.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Users.users_temp.IX_users_Login.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Users.users_temp.IX_users_IP.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Users.users_temp.IX_users_IP_UserName.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Users.IX_users_temp_SearchUsers.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Users.Users_indx_DateCreate.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.GersStock._GersStockSku, sysname,_.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.WirelessAccount.IX_WirelessAccount_OrderId.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Rateplan.IDX_Rateplan.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Rateplan.IX_Rateplan.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.OrderDetail.IX_OrderId_GroupNumber_OrderDetailId.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.OrderDetail.IX_OrderDetailType_OrderId_OrderDetailId.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.OrderDetail.IDX_OrderDetail.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Company.IX_Company.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Rebate.IDX_Rebate.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.ProductGuid.IX_ProductGuidType.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.WirelessLine.IX_OrderDetailId_WirelessLineId.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Product.IX_ProductGuid_Active_ProductId_GersSku.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Property.IX_Name_ProductGuid.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Property.IDX_Property.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Property.IDX_Property_NPP.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Property.IDX_Property_NPI.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Property.IDX_Property_NAPP.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.Property.IDX_Property_PAN.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.RateplanService.IX_ServiceGuid_RateplanGuid_IsIncluded.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Indexes\catalog.DeviceService.IX_ServiceGuid_DeviceGuid.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.Order.IX_UserId_OrderDate_OrderId.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.Order.IDX_Order.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.Order.IDX_Order_SS.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.Order.IDX_Order_SG.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Indexes\salesorder.Order.IDX_Order_GSO.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Orders.User_ID2.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Orders.Orders_OrderDate.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Orders.Order_Status.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\dbo.Orders.idx_HomePhone.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_ProductSearchTEST.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_ProductSearch_2003_12_28.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\ups\Programmability\Functions\ups.GetZonesForZipCode.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\ups\Programmability\Functions\ups.GetZoneListForZipCode.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Functions\salesorder.GetShipMethodForOrder.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_ProductSearch.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_ProductWireless.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_ProductCar.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.udf_List2GuidList.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.udf_List2Table.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_FeaturedProducts_20040324.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.udf_ListToIntegerTable.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_RelatedProducts2.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_FeaturedProducts.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.Shipment.PK_Shipment.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Keys\service.PaymentGatewayListener.PK_PaymentGatewayListener.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Image.PK_Image.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanDevice.PK_RateplanDevice.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.OrderToRebates.PK_OrderToRebates.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.WirelessAccount_Secure.PK_WirelessAccountSecure.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.GersPriceGroup.PK_GersPriceGroup.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Keys\service.IncomingGersStock.PK_GersStock.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ServiceMasterGroup.PK_ServiceMasterGroup.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.Activity.PK_Activity.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.GersItm.PK_GersItm.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ServiceMaster.PK_ServiceMaster.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\dbo.Promotions.PK_Promotions.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.PaymentMethod.PK__PaymentMethods__5090EFD7.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\dbo.Users.PK_users_temp_2.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.ShipMethod.PK_ShipMethods.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.SessionStockReservation.PK_SessionStockReservation_1.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.GersStock.PK_GersStock.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\ups\Tables\Keys\ups.ZoneCodes980.PK_ZoneCodes980.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\ups\Tables\Keys\ups.HolidayCalendar.PK_HolidayCalendar.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\dbo.Coupon.PK_Coupon.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Keys\service.CarrierInterfaceLog.PK_service.CarrierInterfaceLog.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.WirelessAccount.PK_WirelessAccount.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\cart\Tables\Keys\cart.Recommendation.PK__Recommen__AA15BEE4392D3049.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.Address.PK_Address.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Device.PK_Device.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.DeviceServiceMasterGroupOptional.PK_DeviceServiceMasterGroupOptional.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ProductTag.PK_ProductTag.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.OrderDetail.PK_OrderDetails.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Company.PK_Company.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ProductType.PK_ProductTypes.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.PropertyMasterGroup.PK_PropertyMasterGroup.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.PropertyMaster.PK_PropertyMaster.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.LineService.PK_LineService.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\Keys\account.RoleFunctionality.PK_RoleFunctionality.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.WirelessLine.PK_WirelessLine.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\Keys\account.Functionality.PK_Functionality.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Product.PK_Product.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\admin\Tables\Keys\admin.callNotes.PK__callNote__03C97EFD17CC3C7E.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.FilterGroup.PK_FilterGroup.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.PropertyMasterAlias.PK_PropertyMasterAlias.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.FilterOption.PK_FilterOption.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Keys\service.CheckoutSessionState.PK_CheckoutSessionState.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\Keys\service.CustomerLookUpPlan.PK__Customer__8204AE0D04053AF3.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Bundle.PK_Bundle.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ZipCodeMarket.PK_ZipCodeMarket.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Property.PK_Property.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanService.PK_RateplanService.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\dbo.PromotionCodes.PK_PromotionCodes.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanMarket.PK_RateplanMarket.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.DeviceService.PK_DeviceService.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\dbo.AdminMenu.PK_AdminMenu.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.Order.PK__Orders__49E3F248.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\dbo.AdminComponent.PK_AdminComponent.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.RateplanException.PK_RateplanException.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\dbo.Orders.PK__Orders__49E3F248.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.ServiceExclusion.PK_ServiceExclusion.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\Keys\account.Role.PK_Role.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\Keys\account.UserRole.PK_UserRole.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\Keys\account.RoleMenu.PK_RoleMenu.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.dt_verstamp007.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.AddDeviceToOrder.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\maintenance\Programmability\Stored Procedures\maintenance.WeblinkFailures_Minus_3_usp.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.usp_KioskECOMCommissions.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\maintenance\Programmability\Stored Procedures\maintenance.Fraud_AddressAccount_usp.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.sp_DeleteBackupsFromDBDirectory.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\maintenance\Programmability\Stored Procedures\maintenance.WebLinkFailure_Minus_7_usp.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.sp_SiteTraffic.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Stored Procedures\catalog.SetHoldBackQty.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.ReserveStock.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Stored Procedures\catalog.CloneDeviceFeatures.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.AllocateStockToOrderDetail.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\maintenance\Programmability\Stored Procedures\maintenance.WebLinkFailure_Minus_1_usp.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.AssignIMEIToWirelessLine.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Programmability\Stored Procedures\test.CreateAccessory.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.sp_CreateUser.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.AllocateStockToOrderDetailResetoOrderStatus.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\websecurity\Programmability\Stored Procedures\websecurity.spAddBannedUsers.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.RemoveOrderDetailLine.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Stored Procedures\catalog.spInputEditorsChoice.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.sp_moveobject.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.sp_movecat.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.CancelOrder.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.sUser.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.AddItemOrderDetail.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.AddMissingKits.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\maintenance\Programmability\Stored Procedures\maintenance.WebLinkFailure_Minus_6_usp.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.CreateAccessory.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.AddShipmentInfo.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Stored Procedures\salesorder.AddSingleUpsTrackingNumberToOrder.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.usp_KioskECOMCommissions_new.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\maintenance\Programmability\Stored Procedures\maintenance.WebLinkFailure_Minus_2_usp.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.sp_DeleteFileIfExists.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.sp_QueryRetatedProducts2.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Programmability\Stored Procedures\test.AddFakeInventory.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Stored Procedures\catalog.CreateFreeAccessory.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.sp_readTextFile.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\dbo.dt_verstamp006.proc.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Roles\Database Roles\web_carrierservice.role.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Roles\Database Roles\web_ecomsite.role.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Roles\Database Roles\web_ordermanagement.role.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\CarToys.rolememberships.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_EvenCents.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Functions\salesorder.GetOrderSLA.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Functions\catalog.GetRateplanActivationFee.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_Generate_Column_List.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_Generate_SQL_Script.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_Generate_SQL_to_Drop_Foreign_Keys.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_ForeignKeys.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Programmability\Functions\service.IsWeekend.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\ups\Programmability\Functions\ups.GetDeliveryDateFromTransitDays.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Functions\salesorder.GetDeliveryDateFromOrderDate.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Programmability\Functions\salesorder.GetDeliveryDate.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.WordCount.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.regexObj.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.regexFind.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_ListGetAt.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Functions\catalog.CheckGersSku.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.CapFirst.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.GetPINFromXML.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.GetMDNFromXML.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.GetUpgradeGersSkuUsingXmlData.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\util\Programmability\Functions\util.udf_StripHTML.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_ListFind.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Functions\catalog.GetUpgradeCommissionSku.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_ListLen.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Functions\catalog.GetRateplanGersSku.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_Path_to_fulfillment.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.GetPlanCodeFromXML.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Functions\catalog.GetDepositGersSku.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_URLformat.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Functions\catalog.HaveStock.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_telephone_keypad.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.fn_remove_alpha.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Functions\catalog.GetRateplanMonthlyFee.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Programmability\Functions\catalog.GetRateplanMonthlyFee2.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Functions\dbo.GetServiceZipFromXML.function.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_Processed.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_FirstName.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_ShipFirstName.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_ShipState.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_ShipLastName.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.hind_1959730084_38A.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.hind_1959730084_4A_1A_38A_63A.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.hind_1959730084_4A_38A_1A_63A.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_LastName.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_Special_Code.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_storecode.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_MarketPlaceOrder_ID.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Statistics\dbo.Orders.Statistic_ShipMethod_Id.statistic.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.WirelessAccount_Secure.IX_WirelessAccount_OrderId_UNIQUE_SECURE.ukey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\Keys\salesorder.Address.IX_Address.ukey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Device.IX_Device_UniqueUPCByManufacturer.ukey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\Keys\catalog.Rateplan.IX_Rateplan_CarrierBillCode.ukey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\cfdbo.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\weblink.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\UPSWorldShip.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\WebService_ATT.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\WebService_TMO.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\WebService_VZW.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\prodadmin.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\ECOM_sqlservice.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\synccatalog.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\reports.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\jprior.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\nbritton.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\WALLC_113109.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Users\Palani.user.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Views\dbo.vGetAllProducts.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.dn_Plans.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.vRateplanDeviceServiceSPT.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Views\salesorder.vMissingKits.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.vRateplanDeviceService.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Views\salesorder.CurrentInventory.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Views\dbo.vOrdersToGERSAmazonTest.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Views\salesorder.CapturesWaiting.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Views\salesorder.ActivationsWaiting.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.vRateplanDeviceServiceTMO.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.dn_Accessories.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.dn_PrePaids.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Views\test.FreeAccessories.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.SortRanks.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\report\Views\report.OrderStatus.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.vRateplanDeviceServiceVZW.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.dn_Plans2.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.vProductRebateTotal.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\report\Views\report.HandsetPriceHistory.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.vProductRebates.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\report\Views\report.OrderDetailDump.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.Inventory.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Views\service.WeblinkAddCommissionSkuUnion.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\report\Views\report.OrderDump.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Views\dbo.VExport.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.dn_Phones.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.dn_Phones_all.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Views\salesorder.vUPSKeyedImport.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Views\salesorder.vPaymentDiffs.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Views\catalog.vRateplanDeviceServiceATT.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\test.BulkLoadPropertyBackup.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.Shipment.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\test.AccDes.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.PaymentGatewayListener.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.WeblinkAdditionalCommissionSkus.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.RebateToFilter.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\test.SrvDes.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\account.UserRoleBackup.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Image.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.Session.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.rebate_good.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Market.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.RateplanDevice.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.producttag2.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.OrderToRebates.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.WirelessAccount_Secure.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.GersPriceGroup.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.IncomingGersStock.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.GersPrice.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.VerizonCatsCreditStatus.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.ProductTagTest.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.VerizonCatsOrderStatus.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.ServiceMasterGroup.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.Activity.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.GersItm.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\gers\Tables\gers.KioskStaff.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Service.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.Countries.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.ServiceMaster.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.Promotions.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.PaymentMethod.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\content\Tables\content.Multimedia.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\content\Tables\content.ProductMultimedia.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.States.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.Users.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.ShipMethod.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.SessionStockReservation.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.EmailTemplate.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.Payment.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.GersStock.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\test.WirelessAccountBackup.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\ups\Tables\ups.ZoneCodes980.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.AsyncListener.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\ups\Tables\ups.TransitTime.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\ups\Tables\ups.ServiceType.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\ups\Tables\ups.HolidayCalendar.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\test.DeviceFreeAccessory.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.Coupon.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.CarrierInterfaceLog.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.WirelessAccount.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.UserCoupon.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\cart\Tables\cart.Recommendation.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.ShipMethodPromos.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.Address.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Device.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\test.DeletedWirelessLine.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\test.DeletedOrderDetail.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.DeviceServiceMasterGroupOptional.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.ProductTag.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Rateplan.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.OrderDetail.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\admin\Tables\admin.ActionCaptures.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\test.StdOut.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\test\Tables\test.WirelessLineFixIMEIOnDupShipments.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Company.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\admin\Tables\admin.Actions.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.TestSIMS.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\logging\Tables\logging.Activity.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Rebate.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.OrderStatus.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.ProductType.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.RebateToProduct.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\websecurity\Tables\websecurity.BannedUsers.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.PropertyMasterGroup.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.PropertyMaster.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.LineService.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\account.RoleFunctionality.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.DeviceFreeAccessory.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.ProductGuid.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.WirelessLine.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\account.Functionality.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Product.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\admin\Tables\admin.callNotes.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.FilterGroup.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.PropertyMasterAlias.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\admin\Tables\admin.callNoteSubjects.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.FilterOption.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.CheckoutSessionState.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.AccessoryForDevice.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.CustomerLookUpPlan.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Bundle.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.ZipCodeMarket.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Property.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.CustomerLookUpService.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.RateplanService.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.PromotionCodes.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.RateplanMarket.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.DeviceService.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.AdminMenu.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.UserPromotion.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\salesorder\Tables\salesorder.Order.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\admin\Tables\admin.OrderNoteSubject.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.AdminComponent.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\cart\Tables\cart.CartType.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\admin\Tables\admin.OrderNote.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\service\Tables\service.CatalogLoad.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\cart\Tables\cart.ServiceMasterGroupCartType.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.RateplanException.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.Orders.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.Accessory.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\catalog\Tables\catalog.ServiceExclusion.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\account.Role.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\account.UserRole.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Schemas\account\Tables\account.RoleMenu.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Certificates\WACert.cert.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Master Keys\Master Key.masterkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Service Broker\Routes\AutoCreatedLocal.route.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\account.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\admin.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\cart.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\catalog.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\content.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\customer.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\deprecated.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\gers.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\logging.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\maintenance.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\report.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\salesorder.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\service.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\test.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\tmobile.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\ups.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\util.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Schemas\websecurity.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Database Level Objects\Security\Symmetric Keys\WAKey.symkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Types\User Defined Table Types\dbo.GuidList.udtt.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\dbo.OldProdToNewProd.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+  </ItemGroup>
+</Project>

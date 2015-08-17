@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [gmontague]
+    WITH PASSWORD = N'hrc9nsg0tpnocZi%oo{ttjhnmsFT7_&#$!~<f`uyexohhZmM', SID = 0x80EAD519C95F0D4393FDE4A2DFFD14CD, DEFAULT_DATABASE = [master], DEFAULT_LANGUAGE = [us_english], CHECK_EXPIRATION = ON;
+

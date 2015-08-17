@@ -1,0 +1,15 @@
+﻿
+
+
+CREATE FUNCTION [util].[udf_ParseLog] (@Text nvarchar(max))
+	RETURNS XML
+AS
+
+BEGIN
+	DECLARE @NewText XML=
+	
+	CONVERT(XML,REPLACE(REPLACE(CONVERT(NVARCHAR(MAX),REPLACE(CONVERT(NVARCHAR(MAX),@Text),CHAR(9),'')),'utf-8','utf-16'),'US-ASCII','utf-16'))
+
+	
+	RETURN @NewText
+END

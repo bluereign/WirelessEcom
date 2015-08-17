@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTSConfiguration>
+	<Configuration ConfiguredType="Property" Path="\Package\Send Mail Task.Properties[ToLine]" ValueType="String">
+		<ConfiguredValue>abritt@cartoys.com</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package\Send Mail Task.Properties[CCLine]" ValueType="String">
+		<ConfiguredValue>rdelzer@cartoys.com</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package\Send Mail Task.Properties[Subject]" ValueType="String">
+		<ConfiguredValue>IMEI/MEID/SIM Parse Failures</ConfiguredValue>
+	</Configuration>
+</DTSConfiguration>

@@ -1,0 +1,3 @@
+CREATE SCHEMA [cartoys]
+AUTHORIZATION [dbo]
+GO

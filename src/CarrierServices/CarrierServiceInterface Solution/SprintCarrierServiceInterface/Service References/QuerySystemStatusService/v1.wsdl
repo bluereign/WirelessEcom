@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns0="http://integration.sprint.com/canonical/v1/interfaces/QuerySystemStatusService.wsdl" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://integration.sprint.com/canonical/v1/interfaces/QuerySystemStatusService.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:schema>
+      <xsd:import schemaLocation="v1.xsd1.xsd" namespace="http://integration.sprint.com/canonical/v1/interfaces/QuerySystemStatusService.wsdl" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="PingRequest">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/canonical/v1/interfaces/QuerySystemStatusService.wsdl" name="parameters" element="xsns:ping" />
+  </wsdl:message>
+  <wsdl:message name="PingResponse">
+    <wsdl:part xmlns:xsns="http://integration.sprint.com/canonical/v1/interfaces/QuerySystemStatusService.wsdl" name="parameters" element="xsns:pingResponse" />
+  </wsdl:message>
+  <wsdl:portType name="QuerySystemStatusPortType">
+    <wsdl:operation name="ping">
+      <wsdl:input name="pingRequest" message="ns0:PingRequest" />
+      <wsdl:output name="pingResponse" message="ns0:PingResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="QuerySystemStatusSOAPBinding" type="ns0:QuerySystemStatusPortType">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ping">
+      <soap11:operation soapAction="urn:#ping" style="document" />
+      <wsdl:input name="pingRequest">
+        <soap11:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="pingResponse">
+        <soap11:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QuerySystemStatusService">
+    <wsdl:port name="QuerySystemStatusPortType" binding="ns0:QuerySystemStatusSOAPBinding">
+      <soap11:address location="https://webservicesgatewaytest.sprint.com:444/services/demo/secured/QuerySystemStatusService/v1" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

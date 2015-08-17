@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryDeviceOrderHistory/v1/queryDeviceOrderHistory.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryDeviceOrderHistory/v1/queryDeviceOrderHistory.xsd" version="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryDeviceOrderHistory" type="tns:QueryDeviceOrderHistoryRequestType" />
+  <xs:element name="queryDeviceOrderHistoryResponse" type="tns:QueryDeviceOrderHistoryResponseType" />
+  <xs:complexType name="QueryDeviceOrderHistoryRequestType">
+    <xs:sequence>
+      <xs:element name="deviceList" type="tns:DeviceListType">
+        <xs:annotation>
+          <xs:documentation>list of structures containing ban and primary resource.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryDeviceOrderHistoryResponseType">
+    <xs:sequence>
+      <xs:element name="deviceOrderHistoryList" type="tns:DeviceOrderHistoryListType">
+        <xs:annotation>
+          <xs:documentation>list of devices and history</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceOrderHistoryListType">
+    <xs:sequence>
+      <xs:element maxOccurs="5" name="deviceOrderHistoryInfo" type="tns:DeviceOrderHistoryInfoType">
+        <xs:annotation>
+          <xs:documentation>device related data up to 5 devices.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceListType">
+    <xs:sequence>
+      <xs:element maxOccurs="5" name="deviceInfo" type="tns:DeviceInfoType">
+        <xs:annotation>
+          <xs:documentation>device related data</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceIdType">
+    <xs:choice>
+      <xs:element name="esn" type="tns:ElectronicSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>Electronic Serial Number - Decimal only.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="imei" type="tns:InternationalMobileEquipmentIdentifierStringType">
+        <xs:annotation>
+          <xs:documentation>International Mobile Equipment Identifier.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="macId" type="tns:MediumAccessControlAddressType">
+        <xs:annotation>
+          <xs:documentation>Media Acces Coltrol ID.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="meid" type="tns:MobileEquipmentIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Mobile Equipment Identifier - Decimal only.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="simId">
+        <xs:annotation>
+          <xs:documentation>Sim id (Decimal only)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:SubscriberIdentityModuleIdentifierType" />
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="uiccId" type="tns:UniversalIntegratedCircuitCardIdentifierType">
+        <xs:annotation>
+          <xs:documentation>LTE identifier.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="DeviceOrderHistoryInfoType">
+    <xs:sequence>
+      <xs:element name="deviceId" type="tns:DeviceSerialNumberType">
+        <xs:annotation>
+          <xs:documentation>device idnetifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceIdTypeCode" type="tns:DeviceSerialNumberTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>indicates the type of id - esn, macId, imei, ismi, meid etc</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="activityInfoList" type="tns:ActivityInfoListType">
+        <xs:annotation>
+          <xs:documentation>Structure containing activity info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ban" type="tns:BillingAccountNumberType">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceId" type="tns:DeviceIdType">
+        <xs:annotation>
+          <xs:documentation>structure enabling choice of many device identifiers</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActivityInfoListType">
+    <xs:sequence>
+      <xs:element maxOccurs="50" name="activityInfo" type="tns:ActivityInfoType">
+        <xs:annotation>
+          <xs:documentation>activity related to the device</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActivityInfoType">
+    <xs:sequence>
+      <xs:element name="activityDate" type="tns:EventDateType">
+        <xs:annotation>
+          <xs:documentation>Date activity occurred format YYYY-MM-DD</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderType" type="tns:OrderTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Description about the type of order ex return, exchange.  EX -  RG = regular order RM = return order.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="orderId" type="tns:OrderIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Identifier of the order from the originating system</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ban" type="tns:BillingAccountNumberType">
+        <xs:annotation>
+          <xs:documentation>Billing Account Number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="lineNumber" type="tns:LineItemIdentifierType">
+        <xs:annotation>
+          <xs:documentation>If available the lineNumber will represent the order line item number on the order associated with the activity.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="rmaNumber" type="tns:RmaAuthorizationNumberType">
+        <xs:annotation>
+          <xs:documentation>If the activity is a return the return merchandise authorization number will be returned if available.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="outboundTrackingNumber" type="tns:TrackingNumberType">
+        <xs:annotation>
+          <xs:documentation>Tracking number of shipment to customer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="BillingAccountNumberType">
+    <xs:annotation>
+      <xs:documentation>Billing Account Number uniquely identifies an instance of Billing Account used to accrue charges for invoicing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>Device Serial Number a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Device Serial Number Type Code designates a device type: IMEI(I), MSN(M), SIM(S), Kit (K), or ESN (E) for CDMA platform.
+Valid values:
+I - IMEI
+M - MSN
+S - SIM
+K - Kit
+E - ESN
+A - Airave (macId)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ElectronicSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>Electronic Serial Number is a unique number that is embedded electronically by the manufacturer into a CDMA wireless communication device that identifies that individual unit. It can be represented in 11-digit decimal or 8-digit hexadecimal (HEX) format. Once ESNs are exhausted, MEIDs are embedded in devices to uniquely identify the device.   This is the 11 digit decimal representation.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="11" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ErrorDescriptionType">
+    <xs:annotation>
+      <xs:documentation>Error Description holds a textual narrative dcescribing an error.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ErrorMessageIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Error Message Identifier uniquely identifies a specific error message from the system that encountered the error.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EventDateType">
+    <xs:annotation>
+      <xs:documentation>Event Date is the calendar date on which an event occurred.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date" />
+  </xs:simpleType>
+  <xs:simpleType name="InternationalMobileEquipmentIdentifierStringType">
+    <xs:annotation>
+      <xs:documentation>International Mobile Equipment Identifier String is the string representation of an equipment identification number, similar to a serial numberi, used to identify a wireless network access device.</xs:documentation>
+      <xs:documentation>International Mobile Equipment Identfier is a wireless telecommunications term. An equipment identification number, similar to a serial numberi, used to identify a wireless network access device.
+
+Length 15 characters.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="18" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LineItemIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Line Item Identifier uniquely identifies a line item of a particular invoice, sale, or bill.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int" />
+  </xs:simpleType>
+  <xs:simpleType name="MediumAccessControlAddressType">
+    <xs:annotation>
+      <xs:documentation>Medium Access Control Address (MAC Address) contains a 12 byte hexadecimal value used to identify a device used in the IEEE sublayer of a network which controls access to the shared medium by network-attached devices. 
+
+In the context of the OSI reference model, the Medium Access Control (MAC) layer extends above to the Data Link Layer and below to the Physical Layer.</xs:documentation>
+      <xs:documentation>alias: MAC ID</xs:documentation>
+      <xs:documentation>alias: Media Access Control Identifcation</xs:documentation>
+      <xs:documentation>Medium Access Control Address (MAC Address) contains a 12 byte hexadecimal value used to identify a device used in the IEEE sublayer of a network which controls access to the shared medium by network-attached devices. 
+
+In the context of the OSI reference model, the Medium Access Control (MAC) layer extends above to the Data Link Layer and below to the Physical Layer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MobileEquipmentIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Mobile Equipment IDentifier (MEID) is a globally unique number for a physical piece of mobile station equipment. Equipment identifiers are 'burned' into a CDMA device, and should be resistant to modification.  The ESN will migrate to the MEID with assignments anticipated to begin in the 2004 to 2005 timeframe.   
+
+This is the 18 character decimal representation.</xs:documentation>
+      <xs:documentation>A Mobile Equipment IDentifier (MEID) is a globally unique number for a physical piece of mobile station equipment. Equipment identifiers are 'burned' into a CDMA device, and should be resistant to modification.  The ESN will migrate to the MEID with assignments anticipated to begin in the 2004 to 2005 timeframe.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="18" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrderIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Order Identifier uniquely identifies an order.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrderTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Order Type Code identifies the ORDER as one of the following: 
+RG - Regular
+RM - RMA</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RmaAuthorizationNumberType">
+    <xs:annotation>
+      <xs:documentation>Return Merchandise Authorization (RMA) Number is a unique number which is generated to identify the RMA authorization.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriberIdentityModuleIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Subscriber Identify Module (SIM) Identifier identifies the ''smart'' card installed or inserted into a IDEN mobile telephone containing all subscriber-related data. This facilitates a telephone call from any valid mobile telephone since the subscriber data is used to complete the call rather than the telephone internal serial number.
+
+Length 15 characters.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TrackingNumberType">
+    <xs:annotation>
+      <xs:documentation>Tracking Number is a unique number used by the shipping company to identify and trace packages and freight shipments as they move through the shipment process to their destination. The shipping company automatically assigns a tracking number to the package or shipment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UniversalIntegratedCircuitCardIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Universal Integrated Circuit Card Identifier is a uniqe identifier embedded in the smart card used in mobile terminals in CDMA, GSM and UMTS networks.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

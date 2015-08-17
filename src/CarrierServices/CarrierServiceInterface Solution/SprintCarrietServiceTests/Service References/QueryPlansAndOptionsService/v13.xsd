@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryAvailableEquipmentServices/v1/queryAvailableEquipmentServices.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/queryAvailableEquipmentServices/v1/queryAvailableEquipmentServices.xsd" version="1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="queryAvailableEquipmentServices" type="tns:QueryAvailableEquipmentServicesType" />
+  <xs:element name="queryAvailableEquipmentServicesResponse" type="tns:QueryAvailableEquipmentServicesResponseType" />
+  <xs:complexType name="QueryAvailableEquipmentServicesType">
+    <xs:sequence>
+      <xs:element name="accountInfo" type="tns:AccountInfoType">
+        <xs:annotation>
+          <xs:documentation>Account information </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="subscriberId" type="tns:SubscriberIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Required on device swap requests</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceInfo" type="tns:DeviceInfoType">
+        <xs:annotation>
+          <xs:documentation>Device information
+Note: Provide New Device info on Device Swap requests</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="subscriberAddOnSocList" type="tns:SubscriberAddOnSocListType">
+        <xs:annotation>
+          <xs:documentation>All non-price plan SOCs for the subscriber	Required on device swap requests </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="accountAddOnSocList" type="tns:AccountAddOnSocListType">
+        <xs:annotation>
+          <xs:documentation>BAN-level SOCs that are currently effective for the subscription/BAN			Required on device swap requests</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="QueryAvailableEquipmentServicesResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="equipmentProtectionList" type="tns:EquipmentProtectionListType">
+        <xs:annotation>
+          <xs:documentation>List of  equipment protection services</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="existingEquipmentProtectionList" type="tns:ExistingEquipmentProtectionListType">
+        <xs:annotation>
+          <xs:documentation>Currently effective  Equipment protection services for the susbscriber:
+Note: Only returned when subscriberId is provided in the request (Device Swap)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="errorInfoList" type="tns:ErrorListType">
+        <xs:annotation>
+          <xs:documentation>List of errors</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountInfoType">
+    <xs:sequence>
+      <xs:element name="accountType" type="tns:BillingAccountTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Type of Account </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="accountSubType" type="tns:BillingAccountSubTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Account subtype </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeviceInfoType">
+    <xs:sequence>
+      <xs:element name="serialType" type="tns:EquipmentSerialNumberTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Serial Type – Indicates the type of the Equipment ID.
+Values:
+A - MAC ID
+E – ESN
+I – IMEI
+M - MSN
+S - SIM</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemId" type="tns:ModelNumberType">
+        <xs:annotation>
+          <xs:documentation>SKU of the subscriber’s device.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EquipmentProtectionListType">
+    <xs:sequence>
+      <xs:element maxOccurs="50" name="equipmentProtectionInfo" type="tns:EquipmentProtectionInfoType">
+        <xs:annotation>
+          <xs:documentation>0 to 50 equipmentProtectionInfo records</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EquipmentProtectionInfoType">
+    <xs:sequence>
+      <xs:element name="availableType" type="tns:DeviceCoverageCodeType">
+        <xs:annotation>
+          <xs:documentation>Type of equipment protection plan.  Values: TEP, ERSP, ERP</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="categoryLevel" type="tns:DeviceCoverageLevelCodeType">
+        <xs:annotation>
+          <xs:documentation>Equipement protection equipment level</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="socList" type="tns:SocListType">
+        <xs:annotation>
+          <xs:documentation>List of available SOCs related to the equipment protection type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorInfoType">
+    <xs:sequence>
+      <xs:element name="errorCode" type="tns:ErrorMessageIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Error Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="errorMessage" type="tns:ErrorMessageType">
+        <xs:annotation>
+          <xs:documentation>Error Message</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorListType">
+    <xs:sequence>
+      <xs:element maxOccurs="100" name="errorInfo" type="tns:ErrorInfoType">
+        <xs:annotation>
+          <xs:documentation>Error Info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SocListType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="socInfo" type="tns:SocInfoType">
+        <xs:annotation>
+          <xs:documentation>Available SOC code </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriberAddOnSocListType">
+    <xs:sequence>
+      <xs:element maxOccurs="100" name="socInfo" type="tns:SubscriberSocInfoRequestType">
+        <xs:annotation>
+          <xs:documentation>List of existing subscriber level  SOCs </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountAddOnSocListType">
+    <xs:sequence>
+      <xs:element maxOccurs="100" name="socInfo" type="tns:AccountSocInfoRequestType">
+        <xs:annotation>
+          <xs:documentation>List of existing account level  SOCs </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubscriberSocInfoRequestType">
+    <xs:sequence>
+      <xs:element name="socCode" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>SOC code </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExistingEquipmentProtectionInfoType">
+    <xs:sequence>
+      <xs:element name="type" type="tns:DeviceCoverageCodeType">
+        <xs:annotation>
+          <xs:documentation>Type of equipment protection plan.  Values: TEP, ERSP, ERP</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="categoryLevel" type="tns:DeviceCoverageLevelCodeType">
+        <xs:annotation>
+          <xs:documentation>Equipement protection equipment level</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="socCode" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Available SOC code </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="banLevelInd" type="tns:BinaryExpressionType">
+        <xs:annotation>
+          <xs:documentation>True indicates that addOnSoc is  is an account level addOnSoc</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExistingEquipmentProtectionListType">
+    <xs:sequence>
+      <xs:element maxOccurs="50" name="existingEquipmentProtectionInfo" type="tns:ExistingEquipmentProtectionInfoType">
+        <xs:annotation>
+          <xs:documentation>Structure containing existing Equipment protection Info</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SocInfoType">
+    <xs:sequence>
+      <xs:element name="socCode" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>Available SOC code </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountSocInfoRequestType">
+    <xs:sequence>
+      <xs:element name="socCode" type="tns:ServiceOrderCodeType">
+        <xs:annotation>
+          <xs:documentation>SOC code </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="socLevelCode" type="tns:ServiceOrderLevelCodeType">
+        <xs:annotation>
+          <xs:documentation>SOC level code 
+Value of ‘B’ means it is binding and it is inherited by subscriber. Also for SOC Level code ‘B’, the subscriber can not remove it from its agreement. Value of ‘C’ means it is not binding. ‘C’ also means that if this soc is attached at ban level subscriber will inherit it but can remove it from their agreement.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="BillingAccountSubTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Billing Account SubType Code further categorizes the Billing Account within the context of the assigned Billing Account Type Code used primarily for Customer segmentation in General Ledger reporting and collection treatment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BillingAccountTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Billing Account Type Code identifies the account typeof the BILLING_QACCOUNT. It is used mainly for segregation of the G/L reporting and Collection treatment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BinaryExpressionType">
+    <xs:annotation>
+      <xs:documentation>Binary Expression is a type of an expression with two possible states,"true"and"false".</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="DeviceCoverageCodeType">
+    <xs:annotation>
+      <xs:documentation>Device Coverage Code indicates whether MDN had Device Coverage impacts
+Values include: 
+NA - Not Applicable
+NONE - None
+TEP - Total Equipment Protection
+ESRP
+ERP</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceCoverageLevelCodeType">
+    <xs:annotation>
+      <xs:documentation>Device Coverage Level Code indicates a level which the Device Coverage.
+Values include:
+1 - TEP category level,
+2 -  ERSP and ERP category level...
+</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeviceSerialNumberType">
+    <xs:annotation>
+      <xs:documentation>Device Serial Number is a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xs:documentation>
+      <xs:documentation>Device Serial Number a unique number that is embedded electronically by the manufacturer into a wireless communication device that identifies that individual unit.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="10" />
+      <xs:pattern value="[a-zA-Z0-9]{8}|[a-zA-Z0-9]{10}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentSerialNumberTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Equipment Serial Number Type Code is a value that classifies a device serial number as being an ESN, MEID, MSN, IMEI, or SIM.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ErrorMessageType">
+    <xs:annotation>
+      <xs:documentation>Error Message contains textual detail of why a particular transaction failed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ErrorMessageIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Error Message Identifier uniquely identifies a specific error message from the system that encountered the error.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelNumberType">
+    <xs:annotation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+      <xs:documentation>Model Number contains a unique value within the class of PRODUCT identified by Model Name used to identify the type of equipment being shipped by the Manufacturer.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ServiceOrderCodeType">
+    <xs:annotation>
+      <xs:documentation>Service Order Code</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="9" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ServiceOrderLevelCodeType">
+    <xs:annotation>
+      <xs:documentation>Service Order Level Code indicates whether the Price Plan or the SOC is at a PTN level, at a BAN level or at a Product Level.
+Values:
+B - Ban Level
+C - PTN Level
+P - Product Level</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubscriberIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Subscriber Identifier is a string that uniquely identifies a subscriber.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+      <xs:minLength value="8" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

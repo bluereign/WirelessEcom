@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="VerizonService.asmx.cs" Class="VerizonCarrierServiceInterface.VerizonService" %>

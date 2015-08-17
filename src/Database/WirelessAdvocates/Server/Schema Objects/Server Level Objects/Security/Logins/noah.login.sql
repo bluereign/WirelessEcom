@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [noah]
+    WITH PASSWORD = N'xhrcnsg>tpSnwono?oet2tkhmsFT7_&#$!~<&n{$fuly>&e3', SID = 0x85E1E14858DDF94F9773BDA690153322, DEFAULT_DATABASE = [master], DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+

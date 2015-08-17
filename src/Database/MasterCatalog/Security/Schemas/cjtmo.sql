@@ -1,0 +1,3 @@
+CREATE SCHEMA [cjtmo]
+AUTHORIZATION [dbo]
+GO

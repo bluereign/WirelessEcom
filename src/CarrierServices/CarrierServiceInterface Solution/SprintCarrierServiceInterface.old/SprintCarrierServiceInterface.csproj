@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DF9DA7C9-C480-47E2-8A13-6CDEDAAE1ED2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SprintCarrierServiceInterface</RootNamespace>
+    <AssemblyName>SprintCarrierServiceInterface</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SprintService.asmx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interfaces\common\PostResponse.cs" />
+    <Compile Include="Interfaces\controller\CreditCheckResponse.cs" />
+    <Compile Include="Interfaces\controller\CustomerValidation.cs" />
+    <Compile Include="Interfaces\controller\NpaResponse.cs" />
+    <Compile Include="Interfaces\controller\ValidatePortIn.cs" />
+    <Compile Include="Interfaces\model\checkOrderStatus.cs" />
+    <Compile Include="Interfaces\model\doAccountValidation.cs" />
+    <Compile Include="Interfaces\model\doActivateNow.cs" />
+    <Compile Include="Interfaces\model\doActivateReservedDevice.cs" />
+    <Compile Include="Interfaces\model\doActivation.cs" />
+    <Compile Include="Interfaces\model\doCoverageCheck.cs" />
+    <Compile Include="Interfaces\model\doCreditCancel.cs" />
+    <Compile Include="Interfaces\model\doCreditCheck.cs" />
+    <Compile Include="Interfaces\model\doDeactivation.cs" />
+    <Compile Include="Interfaces\model\doInventoryCheck.cs" />
+    <Compile Include="Interfaces\model\doPreAuthorization.cs" />
+    <Compile Include="Interfaces\model\doValidation.cs" />
+    <Compile Include="Interfaces\model\getBillSummary.cs" />
+    <Compile Include="Interfaces\model\getCorporateDiscount.cs" />
+    <Compile Include="Interfaces\model\getDeviceInfo.cs" />
+    <Compile Include="Interfaces\model\getNpaNxx.cs" />
+    <Compile Include="Interfaces\model\getOptionsInfo.cs" />
+    <Compile Include="Interfaces\model\getPortInInfo.cs" />
+    <Compile Include="Interfaces\model\getSecurityQuestion.cs" />
+    <Compile Include="Interfaces\model\ovm-common.cs" />
+    <Compile Include="Interfaces\model\ovm-request.cs" />
+    <Compile Include="Interfaces\model\ovm-response.cs" />
+    <Compile Include="Interfaces\model\performAuthenticationResendPin.cs" />
+    <Compile Include="Interfaces\model\performServiceValidation.cs" />
+    <Compile Include="Interfaces\model\queryPlansDetailInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SprintService2.asmx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Interfaces\SprintServiceBus.cs" />
+    <Compile Include="Tests4Services\ServiceTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WirelessAdvocates\WirelessAdvocates.csproj">
+      <Project>{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}</Project>
+      <Name>WirelessAdvocates</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dev.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Test.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Local.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Prod.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52184</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

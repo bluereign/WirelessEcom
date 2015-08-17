@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:exset="http://exslt.org/sets" xmlns:wsdlhttp="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://integration.sprint.com/canonical/v1/interfaces/QuerySystemStatusService.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://integration.sprint.com/canonical/v1/interfaces/QuerySystemStatusService.wsdl">
+  <xsd:complexType name="PingRequestType">
+    <xsd:annotation>
+      <xsd:documentation>The PingRequest interface provides the ability to perform a simple health check inquiry against the system.  The request interface requires no data input and has no side effects.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+  <xsd:complexType name="PingResponseType">
+    <xsd:annotation>
+      <xsd:documentation>The PingResponse interface indicates the status of the system.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="status" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>A value of true indicates that the system is up and available to take requests.  A value of false indicates that the system cannot service requests.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="ping" type="tns:PingRequestType" />
+  <xsd:element name="pingResponse" type="tns:PingResponseType" />
+</xs:schema>

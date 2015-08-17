@@ -1,0 +1,858 @@
+/*Css created on 10 March 2010 by Neologix used for printing pages*/
+
+body 
+{
+	font-size:62.5%;
+	font-family:Arial, Tahoma, Sans-Serif;
+	color:#6b6b6b;
+	margin:0;
+	padding:0;
+}
+
+td
+{
+	font-family:Arial, Tahoma, Sans-Serif;
+	color:#6b6b6b;	
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active
+{
+	color:#90c750;	
+}
+
+h1
+{
+	font-size:2.5em;
+	font-weight:normal;
+	margin-top:0;
+}
+
+h3
+{
+	font-size:1.6em;
+	letter-spacing:0.1em;
+	padding:0;
+	margin:0;
+}
+
+h4
+{
+	margin:1.5em 0 0 0;
+	font-size:1.2em;
+}
+
+p
+{
+	font-size:1.2em;
+	line-height:1.5em;
+}
+
+sup
+{
+	font-size: 0.5em;	
+}
+
+.shim
+{
+	width:950px;
+	margin:0 auto;
+	position:relative;
+}
+
+.smButton_accent,
+.btnExpand,
+.btnCollapse
+{
+	background:url('../images/ui/smButton_accent.gif') left top no-repeat #fff;
+	font-size:1.1em;
+	display:block;
+	width:49px;
+	height:16px;
+	text-decoration:none;
+	margin:0.5em;
+	padding-left:0.5em;
+}
+
+.smButton_accent:hover
+{
+	text-decoration:underline;
+}
+
+.medButton_accent
+{
+	background:url('../images/ui/medButton_accent.gif') left top no-repeat #fff;
+	font-size:1.1em;
+	display:block;
+	width:80px;
+	height:16px;
+	text-align:center;
+	text-decoration:none;
+}
+
+.medButton_accent:hover
+{
+	text-decoration:underline;
+}
+/*Style modified by Neologix*/
+.formControl
+{
+	text-align:right;
+	margin-top:1em;
+	clear:both;
+	display:none;
+}
+/* End Style modified by Neologix*/
+span.actionButton,
+span.actionButtonLow
+{	
+	background:url('../images/ui/button_bg_r.gif') right top no-repeat transparent;	
+	padding-right:5px;
+	height:24px;
+	cursor:pointer;
+	display:inline-block;
+	margin:0 0.5em;
+}
+
+span.actionButtonDisabled,
+span.actionButtonLowDisabled
+{	
+	background:url('../images/ui/button_disabled_bg_r.gif') right top no-repeat transparent;	
+	padding-right:5px;
+	height:24px;
+	cursor:pointer;
+	display:inline-block;
+	margin:0 0.5em;
+}
+
+span.actionButton a,
+span.actionButtonLow a
+{
+	background:url('../images/ui/button_bg_L.gif') left top no-repeat transparent;
+	height:21px;
+	line-height:24px;
+	display:inline-block;
+	text-align:left;
+	color:#555;
+	text-decoration:none;
+	font-size:1.4em;
+	padding:0 0.5em;
+	border:none;
+	cursor:pointer;
+}
+
+span.actionButtonDisabled a,
+span.actionButtonLowDisabled a
+{
+	background:url('../images/ui/button_disabled_bg_L.gif') left top no-repeat transparent;
+	height:21px;
+	line-height:24px;
+	display:inline-block;
+	text-align:left;
+	color:#555;
+	text-decoration:none;
+	font-size:1.4em;
+	padding:0 0.5em;
+	border:none;
+	cursor:pointer;
+}
+
+span.actionButton a:hover,
+span.actionButtonLow a:hover,
+span.actionButtonDisabled a:hover,
+span.actionButtonLowDisabled a:hover
+{
+	text-decoration:underline;
+}
+
+span.actionButtonLow
+{
+	background:url('../images/ui/white_button_bg_02.gif') right top no-repeat transparent;
+}
+
+span.actionButtonLow a
+{
+	background:url('../images/ui/white_button_bg_01.gif') left top no-repeat transparent;
+	padding-bottom:3px;
+}
+
+td span.actionButton a, /*address the ie issue of tables not inheriting font sizes*/
+td span.actionButtonDisabled a /*address the ie issue of tables not inheriting font sizes*/
+{
+	font-size: 14px;
+	line-height:24px;
+}
+
+.superscript
+{
+	font-size:0.5em;
+	vertical-align:top;
+}
+
+#header
+{
+	display:none;
+}
+
+#header img
+{
+	border:none;
+}
+
+#header #WAlogo
+{
+	float:left;
+}
+
+#header #topbanner
+{
+	position:absolute;
+	right:357px;
+	top:-10px;
+}
+#header div.topbanner
+{
+	position:absolute;
+	right:377px;
+	top:0px;
+	width: 400px;
+	text-align:center;
+	font-size: 1.2em;
+}
+
+#header #BrandLogo
+{
+	position:absolute;
+	right:220px;
+}
+#header #BrandLogo img
+{
+	border: 0px;
+}
+
+#header #search
+{
+}
+
+#header form
+{
+	display:inline;
+	/*position:relative;*/
+}
+
+#header form a
+{
+	position:relative;
+	text-decoration:none;
+}
+
+#header form label
+{
+	font-size:1.2em;
+	/*position:relative;*/
+	top:-3px;
+	padding-right:0.5em;
+}
+
+#header form input
+{
+	margin-bottom:0.5em;
+	width:110px;
+}
+
+#header form .searchGo
+{
+	width:25px;
+	cursor:pointer;
+	background:url('../images/ui/searchGo.gif') left top no-repeat #fff;
+	border:none;
+	height:28px;
+	font-size:0;
+	margin:0;
+}
+
+#lnkMyAccount
+{
+	padding-right:1em;
+	border-right:1px solid #cfcfcf;
+}
+
+#lnkMyCart
+{
+	padding-left:20px;
+	background:url('../images/ui/cart_pos.gif') left top no-repeat #fff;
+	
+}
+
+
+
+
+
+#header .Nav,
+#header .Nav li,
+#header .Nav ul
+{
+	list-style:none;
+	padding:0;
+	margin:0;
+	text-align:left;
+}
+
+#header .Nav
+{	
+	height:35px;
+	margin-top:3px;
+	padding-left:2em;
+}
+
+#header .Nav ul
+{
+	display:none;
+}
+
+
+#header .Nav li
+{
+	display:block;
+	float:left;
+	font-size:1.4em;
+	border-left: 1px dashed #333;
+	position:relative;	
+}
+
+#header .Nav li.first
+{
+	border-left:none;
+}
+
+#header .Nav li.hover
+{
+}
+
+#header .Nav li.hover a
+{
+	text-decoration:underline;
+}
+
+#header .Nav li.hover ul
+{
+	display:block;
+	position:absolute;	
+	z-index:100;
+	width:800px;
+	left:0;
+	top:35px;
+}
+
+#header .Nav li.hover ul a
+{
+	font-size:0.7em;
+	color:#6b6b6b !important;
+	text-decoration:none;
+}
+#header .Nav li.hover ul a:hover
+{
+	text-decoration:underline;
+}
+
+#header .Nav a,
+#header .Nav a:link,
+#header .Nav a:visited,
+#header .Nav a:hover,
+#header .Nav a:active
+{
+	color:#333;
+	text-decoration:none;
+	display:inline-block;
+	padding:0 1em;
+	line-height:35px;
+}
+
+#logo-header
+{
+	margin-left: 2px;
+	margin-bottom: 5px;
+}
+
+#mainContent
+{
+	float:left;
+	width:100%;
+	margin-bottom:40px;
+}
+
+/*=======================================*/
+
+    	.workflow
+    	{
+    		width:878px;
+    		margin:0 auto 30px;
+    		height:70px;
+			display:none;
+    	}
+    	
+    	   	
+		.workflow .lines
+		{
+			float:left;	
+			margin:0;
+			padding:0;
+			list-style:none;
+			width:121px;
+			height:69px;
+    		background:url('../images/ui/workflow_lines_bg.gif') left top no-repeat #fff;
+		}
+		.workflow .lines li
+		{
+			text-align:center;
+		}
+    	
+    	.workflow .steps,
+    	.workflow .steps li
+    	{
+    		list-style:none;
+    		margin:0;
+    		padding:0;
+    	}
+    	
+    	.workflow .steps li
+    	{
+    		float:left;
+    		text-align:right;
+    		padding-right:10px;
+    		padding-top:10px;
+    		height:59px;
+    		width:159px;
+    		background:url('../images/ui/workflow_1_bg.gif') left top no-repeat transparent;
+			font-size:0.85em;
+    	}
+    	
+    	.workflow .steps .step_2
+    	{
+    		background-image:url('../images/ui/workflow_2_bg.gif');
+    	}
+    	.workflow .steps .step_3
+    	{
+    		background-image:url('../images/ui/workflow_3_bg.gif');
+    	}
+    	.workflow .steps .step_4
+    	{
+    		background-image:url('../images/ui/workflow_4_bg.gif');
+    	}
+    	
+    	
+    	.workflow .steps span
+    	{
+    		font-size:1.6em;
+    		font-weight:bold;
+    	}
+    	
+    	.workflow .steps .cart
+    	{
+    		width:71px;
+//    		background:url('../images/ui/workflow_cart_bg.gif') left top no-repeat transparent;
+    		background:url('../images/ui/workflow_cart_bg.gif') left top no-repeat transparent;
+			background-position: 0px -69px !important;
+    	}
+    	
+    	.workflow .steps .cart span
+    	{
+    		display:none;
+    	}
+    	
+		.workflow li.complete + li.complete,
+		.workflow li.complete,
+		.workflow li.complete + .cart
+		{
+//			background-position: 0px -69px !important;
+			background-position: 0px 0px !important;
+		}
+		
+		.workflow li.notComplete + li.notComplete,
+		.workflow li.notComplete
+		{
+//			background-position: 0px 0px !important;
+			background-position: 0px -69px !important;
+		}
+		
+		.workflow li.notComplete + li.complete
+		{
+//			background-position: 0px -207px !important;
+			background-position: 0px -138px !important;
+		}
+		
+		.workflow li.complete + li.notComplete
+		{
+//			background-position: 0px -138px !important;
+			background-position: 0px -207px !important;
+		}
+		
+    	
+    	.workflow .steps a, .workflow .steps div.action
+    	{
+    		color:#e1393d;
+    		font-size:1.4em;
+    		font-weight:bold;
+//    		width:130px;
+    		width:140px;
+    		display:block;
+    		float:right;
+    		text-decoration:none;
+    	}
+    	
+		.workflow .steps li.notComplete a
+		{
+//			color:#fff;
+			color:#6b6b6b;
+			text-decoration:underline;
+		}
+		/*Style included by Neologix*/
+    	 .noPrint
+		 {
+		 	display:none;
+		 }
+		 .noRemove
+		 {
+		 	display:none;			
+		 }
+		 .hideWhenPrinted
+		{
+		display: none;
+		}
+
+		/* End Style included by Neologix*/
+/*=======================================*/
+#footer
+{
+	display:none;
+}
+
+#footer .Nav,
+#footer .Nav ul,
+#footer .Nav li
+{
+	list-style:none;
+	margin:0;
+	padding:0;
+	font-size:1.2em;
+}
+
+#footer .Nav
+{
+	height:205px;
+	padding-top:1.5em;
+	margin-bottom:6em;
+}
+
+#footer .Nav li
+{
+	float:left;
+}
+
+#footer .Nav li a
+{	
+	display:block;
+	width:120px;
+	height:2.4em;	
+	border-right:1px dashed #fff;
+	text-align:center;
+	font-size:1.2em;
+}
+
+#footer .Nav li a.first
+{	
+	border-left:1px dashed #fff;
+}
+
+#footer .Nav li li a
+{
+	border:none;
+	font-size:1em;
+}
+
+#footer .Nav ul
+{
+	width:60px;
+}
+
+#footer .Nav ul li
+{
+	display:block;
+	font-size:0.7em;
+}
+
+#footer .Nav a,
+#footer .Nav a:link,
+#footer .Nav a:visited,
+#footer .Nav a:hover,
+#footer .Nav a:active
+{
+	color:#333;
+	text-decoration:none;
+}
+
+#footer .Nav a:hover
+{
+	text-decoration:underline;
+}
+
+#poweredBy
+{
+	clear:both;
+	width:250px;
+	float:left;
+}
+
+#footer img
+{	
+	border:0;
+}
+
+address
+{
+	font-size:1.2em;
+	font-weight:bold;
+	color:#333;
+	font-style:normal;
+}
+
+.org
+{
+	display:none;
+}
+.street-address
+{
+	display:block;
+}
+
+#brand
+{
+	float:right;
+	width:250px;
+	font-size:1.2em;
+}
+
+#brand img
+{
+	border: none;	
+}
+
+#subFooter
+{
+	width:450px;
+	margin:0 auto;
+	text-align:center;
+}
+
+#subFooter ul,
+#subFooter ul li
+{
+	margin:0;
+	padding:0;
+}
+
+#subFooter ul li
+{
+	display:inline;
+}
+
+#subFooter a,
+#subFooter a:link,
+#subFooter a:visited,
+#subFooter a:hover,
+#subFooter a:active
+{
+	font-weight:bold;
+	padding:0 0.5em;
+	line-height:2em;
+	color:#333;
+	white-space:nowrap;
+}
+
+
+
+.doc
+{
+	margin-bottom:10em;
+}
+
+.doc h2
+{
+	font-weight:normal;
+	font-size:2em;
+}
+
+
+.doc p,
+.doc li
+{
+	font-size:1.2em;
+	line-height:1.6em;
+}
+
+.doc h3
+{
+	font-size:1.3em;
+	color:#6b6b6b;
+	margin:0;
+	padding:0;
+}
+
+/* Landing Pages */
+
+table.landing a img
+{
+	border:none;
+	margin-right:5px;
+	display:block;
+}
+
+.subnavContainer
+{
+	background:url('../images/ui/subnav_bg.gif') top left repeat-x #fff;
+}
+
+#subnav > li
+{
+	padding:1em 1.5em 1em 0.7em;
+	border-top:1px solid #fff;
+	border-bottom:1px solid #ccc;
+}
+
+#subnav h5
+{
+	margin:0;
+	padding:0 0 0 1.7em;
+	background:url('../images/ui/accordian_indicator.gif') left top no-repeat transparent;
+	line-height:23px;
+	cursor:pointer;
+	font-size:1.3em;
+}
+
+#subnav h5.expanded
+{
+	background-position:left -23px;
+}
+
+#subnav div.accordianBody
+{
+	/*DO NOT ADD PADDING OR MARGINS TO THIS ELEMENT*/
+	/*it will interfere with the accordian animation*/
+}
+
+#subnav div.accShim
+{
+	padding-top:0.5em;
+	padding-left:2.5em;
+}
+
+#subnav div p
+{
+	font-size:1em;
+}
+
+#subnav li ul
+{
+}
+
+#subnav li li a
+{
+	line-height:2.3em;
+	height:2em;
+	display:block;
+	padding-left:25px;
+	background:url('../images/ui/accentButton.gif') left top no-repeat transparent;
+	text-decoration:none;
+}
+
+#subnav li li a:hover
+{
+	text-decoration:underline;
+	background-position:3px top;
+}
+
+#subnav .login
+{
+	border-top:1px solid #ccc;
+	padding-top:5px;
+	margin-top:5px;
+}
+
+#subnav .login label
+{
+	display:block;
+}
+
+#subnav .login .formControl
+{
+	display:inline;
+	padding-left:30px;
+}
+
+#subnav .login .formControl span.actionButton
+{
+	margin-top:5px;
+}
+
+#subnav .login .check
+{
+	display:inline;
+}
+
+ul.disc,
+ul.disc li
+{
+	list-style-type:disc;
+	list-style:disc inside none;
+	font-size:1.1em;
+	padding:2px;
+	margin-bottom:4px;
+}
+
+ul.circle,
+ul.circle li
+{
+	list-style-type:circle;
+	font-size:1.1em;
+	padding:2px;
+	margin-bottom:4px;
+}
+
+ul.square,
+ul.square li
+{
+	list-style-type:square;
+	font-size:1.1em;
+	padding:2px;
+	margin-bottom:4px;
+}
+
+ol.upper-roman,
+ol.upper-roman li
+{
+	list-style-type:upper-roman;
+	font-size:1.1em;
+	padding:2px;
+	margin-bottom:4px;
+}
+
+ol.lower-alpha,
+ol.lower-alpha li
+{
+	list-style-type:lower-alpha;
+	font-size:1.1em;
+	padding:2px;
+	margin-bottom:4px;
+}
+
+table.normal, tr.normal, th.normal, td.normal
+{
+	font-size:1.2em;
+	border:1px solid #ccc;
+	padding:2px;
+	spacing:4px;
+	margin:0px;
+}

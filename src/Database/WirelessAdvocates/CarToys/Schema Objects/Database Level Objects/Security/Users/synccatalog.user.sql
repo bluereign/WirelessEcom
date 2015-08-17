@@ -1,0 +1,2 @@
+﻿CREATE USER [synccatalog] WITHOUT LOGIN;
+

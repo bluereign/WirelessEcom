@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="InventoryCheckRequest">
+		<xs:sequence>
+			<xs:element name="handset-check" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="model-id" type="RequiredStringMax30" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<!-- Inventory check request message-->
+	</xs:complexType>
+	<xs:element name="doInventoryCheck" type="InventoryCheckRequest"/>
+	<xs:complexType name="InventoryCheckResponse">
+		<xs:sequence>
+			<xs:element name="inventory-level" type="InventoryLevel" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!--Parse inventory check response message.-->
+	</xs:complexType>
+	<xs:complexType name="InventoryLevel">
+		<xs:sequence>
+			<xs:element name="model-id" type="RequiredStringMax30" minOccurs="0"/>
+			<xs:element name="inventory" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="doInventoryCheckResponse" type="InventoryCheckResponse"/>
+</xs:schema>

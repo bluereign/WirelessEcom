@@ -1,0 +1,183 @@
+
+
+Upgrade activations:
+Code complete by 10/3 (3 weeks)
+Testing 10/4-10/8
+Deploy 10/9
+
+New/AAL:
+Code complete by 10/23
+Testing 10/24-10/30
+Deploy 10/30
+
+
+(Per Randolph) These are the current API methods used in the checkout path for Sprint:
+
+•	NpaNxx                  calls CoverageCheck_Interface
+•	CustomerLookupByMDN     calls CustomerInquiry & CheckCreditExistingAccount
+•	CheckCredit				calls OrderValidationModule.doCreditCheck
+•	ValidateAddress 		stubbed out in SprintCarrierInterface (see 5989)
+•	ValidatePortIn          calls PortEligibility
+
+
+(Per CGeorge) Sprint APIs in service today:
+
+ActivationImpl = EAI_OVM_API_ActivateNow_Interface
+CheckCreditExistingAccountImpl = EAI_OVM_API_CreditCheck_Interface
+CheckCreditImpl = EAI_OVM_API_CreditCheck_Interface
+CustomerLookupByMDNImpl = EAI_OVM_API_AccountValidation_Interface
+NpaNxxImpl = OVM_API_CoverageCheck_Interface
+PlansRequest = EAI_OVM_API_Plans_Interface
+PortEligibilityImpl = EAI_OVM_API_ServiceValidation_Interface
+
+This is the verified mapping of WA Web Service API to Sprint APIs in service today:
+
+  WA Web Service                Sprint API                                  Sprint Service Request Message Type
+  ==========================    =======================================     ======================================================================================================
+x CheckCredit					EAI_OVM_API_CreditCheck_Interface			CREDIT_CHECK_REQUEST
+  CheckCreditExistingAccount    EAI_OVM_API_CreditCheck_Interface			CREDIT_CHECK_REQUEST
+x CustomerLookupByMDN			EAI_OVM_API_AccountValidation_Interface     ACCOUNT_VALIDATION_REQUEST
+  NPALookupByZip                Not Implemented                             [throw new NotImplementedException]
+x NpaNxx						OVM_API_CoverageCheck_Interface             NPA_NXX_REQUEST
+  ResendPin                     AuthenticationResendPinRequest              AUTHENTICATE_RESEND_PIN_REQUEST
+  SubmitOrder				    Not Implemented  		    	            ACTIVATION_REQUEST, PLANS_REQUEST, OPTIONS_REQUEST, SERVICE_VALIDATION_REQUEST 
+  TestCreditProduction          Stub                                        [stub]
+  UpdateOrder					Not Implemented                 			[throw new NotImplementedException] ACTIVATION_REQUEST, PLANS_REQUEST, OPTIONS_REQUEST
+  UpgradeEligible               Not Implemented                             [throw new NotImplementedException]
+x ValidateAddress 		        Not Implemented                             [stubbed out in SprintCarrierInterface (see 5989)]
+x ValidatePortIn			    EAI_OVM_API_ServiceValidation_Interface     PORT_ELIGIBILITY_REQUEST
+
+
+(Per Sprint) Required API's
+
+7UL/6ZN ACCOUNT_VALIDATION_REQUEST / OrderValidationModule.doAccountValidation			
+7UL/6ZN CREDIT_CHECK_REQUEST / OrderValidationModule.doCreditCheck
+7UL/76S QueryPlansAndOptionsService.validatePlansAndOptionsV1
+7UL/76S DiscountManagementService.lockRebateEligibilityV1
+7UL/6ZN ACTIVATION_REQUEST / OrderValidationModule.doActivation
+7UL/6ZN ACTIVATE_RESERVED_DEVICE_REQUEST / OrderValidationModule.doActivateReservedDevice
+
+
+https://waecom.atlassian.net/wiki/display/SPEC/Sprint+Automated+Activations?src=search
+
+
+Jason,
+
+As discussed, here are what all the numeric codes for the various statuses mean:
+
+salesorder.Order.Status
+
+•	0 = Pending
+•	1 = Submitted
+•	2 = Payment Complete
+•	3 = Closed
+•	4 = Cancelled
+
+salesorder.WirelessAccount.ActivationStatus
+
+•	0, Null = Ready
+•	1 = Requested
+•	2 = Success
+•	3 = Partial Success
+•	 4 = Failure
+•	5 = Error
+•	6 = Manual
+•	7 = Canceled
+
+salesorder.WirelessLine.ActivationStatus
+
+•	0, Null = Ready
+•	 1 = Requested
+•	 2 = Success
+•	 3 = Partial Success (never used)
+•	 4 = Failure
+•	 5 = Error
+•	 6 = Manual
+•	7 = Canceled
+
+salesorder.Order.GERSStatus
+
+•	1 = sent
+•	2 = success
+•	3 = shipped
+•	0 = ready
+•	-2 = missing allocations
+•	-3 = doubled up free accessories
+•	-4 = allocated quantity mismatch
+•	-5 = payment errors
+•	-6 = missing kits
+•	-7 = invalid ShipMethodId (this is currently disabled)
+•	-8 = mismatched GERS SKU
+
+
+
+
+
+FYI for you on the below apis with Sprint.  The list of services we have in place today, was given to me by Chris.  They gave us the zip file (I sent to you) with all of their API documentation and I have a preliminary list of what I think we will need to implement to automate the activations (push-button).  Just want to keep you informed, I’ll be updating confluence with a spec and I’m hoping you can start to review this documentation next week.
+
+Thanks,
+
+Candice Smith | eCommerce Program Manager | Wireless Advocates LLC | Office: 206-834-0810 | Cell: 425-466-9702 |
+
+This email and any attached files transmitted with are confidential or otherwise protected by work product confidentiality or other legal rules and intended solely for the use of the individual or entity to whom they are addressed.  If you are not the named addressee you should not disseminate, distribute, or copy this email or attachment.  Please notify the sender immediately by email if you have received this email by mistake, then delete this email from your system.  If you are not the intended recipient you are hereby notified that disclosing, copying, distributing, or taking any action in reliance on the content of this information is strictly prohibited.
+
+WARNING: Computer viruses can be transmitted via email.  The recipient should check this email and any attachments for the presence of viruses.  The Company accepts no liability for any damage caused by any virus transmitted or received by this email.
+
+
+From: Candice Smith 
+Sent: Wednesday, May 29, 2013 5:33 PM
+To: 'Welsh, Jill R [IT]'; Bollinger, Brian K [SLS]; Collins, Davina [SLS]; Lareef, Riyaz M [IT]; Handoo, Mitali [IT]; Hartman, Trevor [SLS]; Matt Golden; Chris Sager; Sharp, Mary E [SLS]; Meyer, Kimberly J [IT]; Haggard, Karen D [IT]; Sims, Octavis L [IT]; Green, Trina [SLS]
+Cc: Retail Partner Test Support; Keppen, Leah B [IT]
+Subject: RE: PJ 008718 Weekly | Costo (Wireless Advocates) Integration with Sprint
+
+Hi Jill,
+Here is the information I promised you today.  I have a couple questions on whether a couple of the APIs correspond to any items on the requirements list we originally went over and if they are I can look at the priority your team set and determine if we will proceed with implementing those as well.  Please let me know if you have any questions.
+
+The AAFES IPs:  
+http://test.aafesmobile.com is 68.64.53.107 
+http://demo.aafesmobile.com is 68.64.53.106
+http://aafesmobile.com is 68.64.53.105
+
+Costco Sprint APIs in service today:
+
+ActivationImpl = EAI_OVM_API_ActivateNow_Interface
+CheckCreditExistingAccountImpl = EAI_OVM_API_CreditCheck_Interface
+CheckCreditImpl = EAI_OVM_API_CreditCheck_Interface
+CustomerLookupByMDNImpl = EAI_OVM_API_AccountValidation_Interface
+NpaNxxImpl = OVM_API_CoverageCheck_Interface
+PlansRquest = EAI_OVM_API_Plans_Interface
+PortEligibilityImpl = EAI_OVM_API_ServiceValidation_Interface
+
+APIs that we will be implementing with this Project:
+Activation_Interface
+SecurityQuestions_Interface
+QueryNubmerPorting Service
+BillSummary – is this a requirement, does this API correspond to any of the original requirements in the file we reviewed in the beginning of the project?
+Options_Interface – is this a requirement, does this API correspond to any of the original requirements in the file we reviewed in the beginning of the project?
+
+
+
+Below are sample error message that you could receive for the scenarios below.
+ 
+<ovm-error-info>
+      <error-type>2</error-type>
+      <error-code>104</error-code>
+      <error-sub-name>PHONE_PLAN_INCOMPATIBLE</error-sub-name>
+      <error-details>Plan [PDS1234E] is not compatible with phone [EXIP564WH1]. Service plan ID is [1].</error-details>
+   </ovm-error-info>
+ 
+<ovm-error-info>
+      <error-type>2</error-type>
+      <error-code>105</error-code>
+      <error-sub-name>PLAN_INCOMPATIBLE_ID</error-sub-name>
+      <error-details>Feature [REQCEL3] is not compatible with service plan [PDS1234L].  The line ID was [1]. Service plan ID is [1].</error-details>
+   </ovm-error-info>
+   <ovm-response>
+
+These are the most common negative scenarios for activation from Sprint.  I believe some of these errors though are caught on our UI due to rate plan/feature associations to devices.  I could see needed to return these errors when there is an upgrade and the customer is keeping current plan, the new phone may be a 4G and the current plan might be a 3G plan.  I’m asking for the specific errors to associate to these issues.
+
+1.       Verify an error message is returned when adding  a 4G esn with a 3G price plan
+2.       Verify an error message is returned when adding a 3G esn with a 4G price plan
+3.       Verify an error message is returned if a 3G Hotspot is added to a 4G price plan
+4.       Verify an error message is returned if 3G data soc (PDSPREM10) is added to a 4G price plan.
+5.       Verify an error message is returned if a 4G data soc (PREM10RC) is added to a 3G price plan.

@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SWGErrorHandleModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SWGErrorHandleModelStoreContainer">
+          <EntitySet Name="Activation" EntityType="SWGErrorHandleModel.Store.Activation" store:Type="Tables" Schema="sprint" />
+          <EntitySet Name="CreditCheck" EntityType="SWGErrorHandleModel.Store.CreditCheck" store:Type="Tables" Schema="sprint" />
+        </EntityContainer>
+        <EntityType Name="Activation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorKeyAct" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="SubName" Type="nvarchar" Nullable="false" MaxLength="125" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+          <Property Name="Scenario" Type="nvarchar" MaxLength="600" />
+          <Property Name="Resolution" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Disposition" Type="int" />
+          <Property Name="LastUsedDate" Type="datetime" />
+          <Property Name="Count" Type="int" />
+        </EntityType>
+        <EntityType Name="CreditCheck">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorKeyCC" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="SubName" Type="nvarchar" Nullable="false" MaxLength="125" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+          <Property Name="Scenario" Type="nvarchar" MaxLength="600" />
+          <Property Name="Resolution" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Disposition" Type="int" />
+          <Property Name="LastUsedDate" Type="datetime" />
+          <Property Name="Count" Type="int" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SWGErrorHandleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Activation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorKeyAct" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SubName" Type="String" MaxLength="125" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Scenario" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="Resolution" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Disposition" Type="Int32" />
+          <Property Name="LastUsedDate" Type="DateTime" Precision="3" />
+          <Property Name="Count" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CreditCheck">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorKeyCC" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SubName" Type="String" MaxLength="125" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Scenario" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="Resolution" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Disposition" Type="Int32" />
+          <Property Name="LastUsedDate" Type="DateTime" Precision="3" />
+          <Property Name="Count" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="SWGErrorHandleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activations" EntityType="Self.Activation" />
+          <EntitySet Name="CreditChecks" EntityType="Self.CreditCheck" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SWGErrorHandleModelStoreContainer" CdmEntityContainer="SWGErrorHandleEntities">
+          <EntitySetMapping Name="Activations">
+            <EntityTypeMapping TypeName="SWGErrorHandleModel.Activation">
+              <MappingFragment StoreEntitySet="Activation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ErrorKeyAct" ColumnName="ErrorKeyAct" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SubName" ColumnName="SubName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Scenario" ColumnName="Scenario" />
+                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
+                <ScalarProperty Name="Disposition" ColumnName="Disposition" />
+                <ScalarProperty Name="LastUsedDate" ColumnName="LastUsedDate" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CreditChecks">
+            <EntityTypeMapping TypeName="SWGErrorHandleModel.CreditCheck">
+              <MappingFragment StoreEntitySet="CreditCheck">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ErrorKeyCC" ColumnName="ErrorKeyCC" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SubName" ColumnName="SubName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Scenario" ColumnName="Scenario" />
+                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
+                <ScalarProperty Name="Disposition" ColumnName="Disposition" />
+                <ScalarProperty Name="LastUsedDate" ColumnName="LastUsedDate" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="16aa45bfb7d848ff88ed8a828b094589" Name="Diagram1">
+        <EntityTypeShape EntityType="SWGErrorHandleModel.Activation" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SWGErrorHandleModel.CreditCheck" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

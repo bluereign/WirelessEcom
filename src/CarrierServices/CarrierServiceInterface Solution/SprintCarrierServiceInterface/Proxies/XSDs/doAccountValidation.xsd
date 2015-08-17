@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="AccountValidationRequest">
+		<xs:sequence>
+			<xs:element name="last-name" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="2"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="account-number" type="AccountNumber"/>
+				<xs:element name="reference-ptn" type="PhoneNumber"/>
+				<xs:element name="sim" type="RequiredStringMax20"/>
+				<xs:element name="meid" type="MEID"/>
+				<xs:element name="mac-id" type="MACID"/>
+			</xs:choice>
+			<xs:element name="requested-devices" type="RequestedDevices" minOccurs="0">
+				<!--For customers requesting the available pricing for select phone models -->
+			</xs:element>
+			<xs:element name="single-subscriber" type="xs:boolean" minOccurs="0">
+				<!--Indicates if rebates are to be sent only for the subscriber of the PTN sent in request or not.-->
+			</xs:element>
+			<xs:element name="sec-pin" type="RequiredStringSecPin" minOccurs="0"/>
+			<xs:element name="sec-answer" type="AnswerType" minOccurs="0"/>
+			<xs:element name="billing-zip" type="ZipCode" minOccurs="0"/>
+			<xs:element name="returnBogxInd" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+		<!--Account validation request message.-->
+	</xs:complexType>
+	<xs:element name="doAccountValidation" type="AccountValidationRequest"/>
+	<xs:complexType name="AccountValidationResponse">
+		<xs:sequence>
+			<xs:element name="account-status" type="AccountStatus">
+				<!--Account status.  Values can be: ACTIVE, TENTATIVE, CLOSED, CANCELLED, and SUSPENDED.-->
+			</xs:element>
+			<xs:element name="account-status-date" type="xs:dateTime" minOccurs="0">
+				<!--When account status was last updated.-->
+			</xs:element>
+			<xs:element name="account-number" type="AccountNumber" minOccurs="0">
+				<!--Account number-->
+			</xs:element>
+			<xs:element name="account-info" type="AccountInfo" minOccurs="0">
+				<!--Account Info-->
+			</xs:element>
+			<xs:element name="rebateBogxInfo" type="RebateBogxInfoType" minOccurs="0"/>
+			<xs:element name="billing-name" type="BillingName" minOccurs="0">
+				<!--Account holder's first and last name or company name-->
+			</xs:element>
+			<xs:element name="account-balance" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="payment-due-date" type="xs:date" minOccurs="0"/>
+			<xs:element name="balance-expiration-date" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+		<!--Account validation response message.-->
+	</xs:complexType>
+	<xs:element name="doAccountValidationResponse" type="AccountValidationResponse"/>
+</xs:schema>

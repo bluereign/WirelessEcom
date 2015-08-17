@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15.5, 8.625" name="WirelessAdvocatesDataClasses">
+  <DataContextMoniker Name="/WirelessAdvocatesDataClassesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="b140c82c-e3b3-4d41-817e-73a308c41e5e" absoluteBounds="10.875, 2.125, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/LineService" />
+      <nestedChildShapes>
+        <elementListCompartment Id="79ae5233-5feb-43b5-926e-adafe4232d89" absoluteBounds="10.89, 2.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="10d8669c-8805-42b9-8cbf-406ce0db1677" absoluteBounds="3, 5.25, 2, 3.1170068359375005">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/Address" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ee212f54-f593-4c6d-9c8b-8ddd5a163d18" absoluteBounds="3.015, 5.71, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e5ae39e5-af99-4711-b859-cb27f9d3dff0" absoluteBounds="10.875, 4.875, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/CheckoutSessionState" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2a9b0864-e43d-44c9-aad5-33e471dd69ca" absoluteBounds="10.89, 5.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bb862053-8169-4ee2-8809-54301330892e" absoluteBounds="8, 5.125, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/CarrierInterfaceLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="98136083-d1dd-4961-883a-3469d732a94d" absoluteBounds="8.015, 5.5850000000000009, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1fe383e3-f70b-4bac-bf21-254b56fb7fae" absoluteBounds="13, 0.625, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/TestSIM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="df4f68e7-470f-4e9b-8f5a-416d7e3f05f0" absoluteBounds="13.015, 1.0850000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f10c32a0-18ee-4995-9198-894949308f99" absoluteBounds="13.25, 2.125, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/Device" />
+      <nestedChildShapes>
+        <elementListCompartment Id="480b3add-94fb-47fe-9dac-60bcf4069c99" absoluteBounds="13.265, 2.5850000000000009, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ac0104d8-903d-4ac7-ad2d-1870dbe0a115" absoluteBounds="8, 0.5, 2, 4.4631168619791666">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/OrderDetail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7fe4d1df-42e7-4c56-a5e0-ef5fce860f05" absoluteBounds="8.015, 0.96, 1.9700000000000002, 3.9031168619791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10 : 3.20274983723958); (10.875 : 3.20274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/WirelessAdvocatesDataClassesDataContext/OrderDetail/OrderDetail_LineService" />
+      <nodes>
+        <classShapeMoniker Id="ac0104d8-903d-4ac7-ad2d-1870dbe0a115" />
+        <classShapeMoniker Id="b140c82c-e3b3-4d41-817e-73a308c41e5e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="de4c68b5-d99f-4a23-a71a-0628e163447a" absoluteBounds="13.25, 4.875, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/Service" />
+      <nestedChildShapes>
+        <elementListCompartment Id="798afcf4-6464-4a3a-b4d7-72582c46e9fa" absoluteBounds="13.265, 5.3350000000000009, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4829f675-048f-4e62-82d7-48f336307ce7" absoluteBounds="3, 0.625, 2, 4.4631168619791666">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/Order" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7c7bf51c-6471-4e62-8700-54e9ae95095c" absoluteBounds="3.0149999999999997, 1.085, 1.9700000000000002, 3.9031168619791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4 : 5.25); (4 : 5.08811686197917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/WirelessAdvocatesDataClassesDataContext/Address/Address_Order" />
+      <nodes>
+        <classShapeMoniker Id="10d8669c-8805-42b9-8cbf-406ce0db1677" />
+        <classShapeMoniker Id="4829f675-048f-4e62-82d7-48f336307ce7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5625 : 5.25); (4.5625 : 5.08811686197917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/WirelessAdvocatesDataClassesDataContext/Address/Address_Order1" />
+      <nodes>
+        <classShapeMoniker Id="10d8669c-8805-42b9-8cbf-406ce0db1677" />
+        <classShapeMoniker Id="4829f675-048f-4e62-82d7-48f336307ce7" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="fde71764-5016-495c-81a0-7ce202e1de17" absoluteBounds="5.625, 0.5, 2, 6.5784326171875">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/WirelessLine" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b23289d4-5bfb-4c2b-8217-95f1df1967b3" absoluteBounds="5.64, 0.96, 1.9700000000000002, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8 : 2.73155843098958); (7.625 : 2.73155843098958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/WirelessAdvocatesDataClassesDataContext/OrderDetail/OrderDetail_WirelessLine" />
+      <nodes>
+        <classShapeMoniker Id="ac0104d8-903d-4ac7-ad2d-1870dbe0a115" />
+        <classShapeMoniker Id="fde71764-5016-495c-81a0-7ce202e1de17" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="350aabb4-5f13-4b34-b1e0-8c0af5c6b9f9" absoluteBounds="0.5, 0.5, 2, 7.5399397786458326">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/WirelessAccount" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a57f3fd1-fe1d-47a3-950c-4e2496ba3bac" absoluteBounds="0.51500000000000012, 0.96, 1.9700000000000002, 6.979939778645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3 : 2.85655843098958); (2.5 : 2.85655843098958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/WirelessAdvocatesDataClassesDataContext/Order/Order_WirelessAccount" />
+      <nodes>
+        <classShapeMoniker Id="4829f675-048f-4e62-82d7-48f336307ce7" />
+        <classShapeMoniker Id="350aabb4-5f13-4b34-b1e0-8c0af5c6b9f9" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1413fe10-5a9e-4a95-bb2a-544c9c3f20c2" absoluteBounds="10.75, 0.625, 2, 1.0016910807291666">
+      <DataClassMoniker Name="/WirelessAdvocatesDataClassesDataContext/Property" />
+      <nestedChildShapes>
+        <elementListCompartment Id="adc5cf03-c43c-4595-ba17-e641d1cba358" absoluteBounds="10.765, 1.0850000000000009, 1.9700000000000002, 0.44169108072916663" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

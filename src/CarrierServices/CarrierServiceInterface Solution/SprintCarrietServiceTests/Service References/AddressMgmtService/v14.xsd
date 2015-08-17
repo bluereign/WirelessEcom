@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://integration.sprint.com/common/header/WSMessageHeader/v2" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/common/header/WSMessageHeader/v2" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="wsMessageHeader" type="WsMessageHeaderType" />
+  <xs:complexType name="BasicCredentialInfoType">
+    <xs:sequence>
+      <xs:element name="id">
+        <xs:annotation>
+          <xs:documentation>Can be used to specify a user or system id when communicating with an external system.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="LoginUserIdentifier">
+            <xs:maxLength value="20" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="password">
+        <xs:annotation>
+          <xs:documentation>Can be used to specify a user or system password when communicating with an external system.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="PasswordString">
+            <xs:maxLength value="20" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LoginType">
+    <xs:choice minOccurs="0">
+      <xs:element minOccurs="0" name="pin" type="PasswordPin">
+        <xs:annotation>
+          <xs:documentation>account pin</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="sdcLoginCredentials" type="SdcLoginCredentialsType">
+        <xs:annotation>
+          <xs:documentation>sdc stands for Sprint.com</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SdcLoginCredentialsType">
+    <xs:sequence>
+      <xs:element name="userId" type="LoginUserIdentifier" />
+      <xs:element minOccurs="0" name="password" type="PasswordString" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SecurityMessageHeaderType">
+    <xs:sequence>
+      <xs:choice minOccurs="0">
+        <xs:element minOccurs="0" name="sdcLoginCredentials" type="SdcLoginCredentialsType">
+          <xs:annotation>
+            <xs:documentation>sdc stands for Sprint.com</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="basicCredentialInfo" type="BasicCredentialInfoType">
+          <xs:annotation>
+            <xs:documentation>Can be used to provide authentication creditentials when communicating with an external system.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="pin" type="PasswordPin">
+          <xs:annotation>
+            <xs:documentation>account pin</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="taxIdCredentials" type="TaxIdCredentialsType" />
+        <xs:element name="securityAnswer" type="SecurityAnswerType">
+          <xs:annotation>
+            <xs:documentation>account security answer</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element minOccurs="0" name="corpId" type="CorporationIdentifier">
+        <xs:annotation>
+          <xs:documentation>corporation Id</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TrackingMessageHeaderType">
+    <xs:sequence>
+      <xs:element name="applicationId" type="ApplicationIdentifier">
+        <xs:annotation>
+          <xs:documentation>The ID of the application within the corporate entity from which this message originated.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="applicationUserId" type="ApplicationUserId">
+        <xs:annotation>
+          <xs:documentation>The ID of the user of the application within the corporate entity from which the message originated</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="consumerId" type="ApplicationIdentifier">
+        <xs:annotation>
+          <xs:documentation>The ID of the corporate entity or busines unit from which this message originated (e.g. Corporation code or Portal applId).</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messageId" type="MessageIdentifier">
+        <xs:annotation>
+          <xs:documentation>A unique identifier for this message, to enable tracking, reporting, and correlation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="conversationId" type="ConversationIdentifierType">
+        <xs:annotation>
+          <xs:documentation>Each message is part of a conversation between two or more systems in a given session.  The Conversation ID is a UID, which can be used to group all messages exchanged within a session.  This is field is primarily used for tracking, reporting, root-cause-analysis, and non-repudiation.  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timeToLive" type="SecondsToLiveQuantityType">
+        <xs:annotation>
+          <xs:documentation>Specifies how long in seconds this message is relevant after the message timestamp. The calling application can time-out after 'timeToLive' seconds.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="replyCompletionCode" type="ReplyCompletionCodeType">
+        <xs:annotation>
+          <xs:documentation>the provider’s declaration of its success or failure in processing the submitted request;  0 = Successful completion, 4 = Successful completion, but with a warning as to some unusual circumstance, 8 = Error, request was not processed successfully, 12 = Severe error, represents a failure that could indicate a major system irregularity</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messageDateTimeStamp" type="CreationDateTime">
+        <xs:annotation>
+          <xs:documentation>The dateTimeStamp of when the message was created.  This can be used for tracking and reporting and also by the consuming application to determine if the message is stale.  Timestamp should be in GMT TZ when the caller is unable to format with timezone and offset. e.g. 2007-10-01T14:20:33 is acceptable</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WsMessageHeaderType">
+    <xs:sequence>
+      <xs:element name="trackingMessageHeader" type="TrackingMessageHeaderType">
+        <xs:annotation>
+          <xs:documentation>SOAP header interface to carry data elements that are relevant to tracking, reporting, troubleshooting, and non-repudiation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="securityMessageHeader" type="SecurityMessageHeaderType">
+        <xs:annotation>
+          <xs:documentation>Carrries data elements for security validation. The API access may be based on first validating the security credentials</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="lax">
+      <xs:annotation>
+        <xs:documentation>This is used by AXIS. Do not delete this field or AXIS generated code will have issues.</xs:documentation>
+      </xs:annotation>
+    </xs:anyAttribute>
+  </xs:complexType>
+  <xs:complexType name="TaxIdCredentialsType">
+    <xs:sequence>
+      <xs:choice minOccurs="0">
+        <xs:element name="ssn" type="SocialSecurityNumberType">
+          <xs:annotation>
+            <xs:documentation>social security number</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="federalTaxId" type="FederalEmployerIdentificationNumberType">
+          <xs:annotation>
+            <xs:documentation>federal tax id</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ApplicationIdentifier">
+    <xs:annotation>
+      <xs:documentation>Application Identifier uniquely identifies an Application</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ApplicationUserId">
+    <xs:annotation>
+      <xs:documentation>Application User Identifier uniquely identifies the PARTY invoking the service.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CorporationIdentifier">
+    <xs:annotation>
+      <xs:documentation>Corporation Identifer uniquely identifies a corporate entity.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CreationDateTime">
+    <xs:annotation>
+      <xs:documentation>Creation Data Time represents a calendar Month, Day,Year, Hour, Minute, Second and Fraction Of A Second an event was created.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="LoginUserIdentifier">
+    <xs:annotation>
+      <xs:documentation>Login User Identifier holds the system login userid assigned to a PARTY.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="33" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MessageIdentifier">
+    <xs:annotation>
+      <xs:documentation>Message Identifier uniquely identifies a message.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PasswordPin">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PasswordString">
+    <xs:annotation>
+      <xs:documentation>Password String holds the string characters a PARTy designated as a Password into a system or Customer Account.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ReplyCompletionCodeType">
+    <xs:annotation>
+      <xs:documentation>Reply Completion Code holds the the provider's declaration of the Service's success or failure in processing the submitted request.
+
+Values:
+0 = Successful completion, 
+4 = Successful completion, but with a warning as to some unusual circumstance, 
+8 = Error, request was not processed successfully, 
+12 = Severe error, represents a failure that could indicate a major system irregularity</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long" />
+  </xs:simpleType>
+  <xs:simpleType name="ConversationIdentifierType">
+    <xs:annotation>
+      <xs:documentation>Conversation Identifier is a UID, which can be used to group all messages exchanged within a session.  This is field is primarily used for tracking, reporting, root-cause-analysis, and non-repudiation. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SecondsToLiveQuantityType">
+    <xs:annotation>
+      <xs:documentation>Seconds To Live Quantity specifies how long in seconds this message is relevant after the message timestamp. The calling application can time-out after 'timeToLive' seconds.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer" />
+  </xs:simpleType>
+  <xs:simpleType name="SecurityAnswerType">
+    <xs:annotation>
+      <xs:documentation>Security Answer holds the answer to the Security Question identified by Security Question Identifier.  This value must be supplied by the system user in response to the Security Question before they are allowed to proceed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SocialSecurityNumberType">
+    <xs:annotation>
+      <xs:documentation>Social Security number (SSN) is a 9-digit number issued to citizens, permanent residents, and temporary (working) residents under section 205(c)(2) of the Social Security Act, codified as 42 U.S.C.§ 405(c)(2). The number is issued to an individual by the Social Security Administration, an agency of the U.S. Federal Government. Its primary purpose is to track individuals for taxation purposes. In recent years the SSN has become a de facto national identification number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="4" />
+      <xs:maxLength value="9" />
+      <xs:pattern value="\d{4}|\d{9}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FederalEmployerIdentificationNumberType">
+    <xs:annotation>
+      <xs:documentation>Federal Employer Identification Number or (FEIN) is the corporate equivalent to a Social Security Number, although it is issued to anyone, including individuals, who has to pay withholding taxes on employees.
+
+The FEIN is a unique nine-digit number assigned by the Internal Revenue Service (IRS) to business entities operating in the United States for the purposes of identification. When the number is used for identification rather than employment tax reporting, it is usually referred to as a TIN, and when used for the purposes of reporting employment taxes, it is usually referred to as an EIN. 
+
+Similar in purpose to the Social Security Number assigned to individuals, EINs are used by employers, sole proprietors, corporations, partnerships, non-profit organizations, trusts and estates, government agencies, certain individuals and other business entities.  
+
+The IRS uses this number to identify taxpayers that are required to file various business tax returns. Individuals who are employers may choose to either obtain an EIN or use their Social Security Number for the purpose of reporting taxes withheld on behalf of their employees. Contrary to some misconceptions, credit bureaus and credit issuers can tell the difference between SSN and EIN Numbers.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="4" />
+      <xs:maxLength value="9" />
+      <xs:pattern value="\d{4}|\d{9}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

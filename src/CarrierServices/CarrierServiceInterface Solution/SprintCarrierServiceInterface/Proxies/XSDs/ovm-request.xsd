@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Ramesh C Sepehrrad (Nextel Communications) -->
+<!--OVM request schema.  Author: Joel Seeger  Version: OVM11.3-->
+<!-- edited by saurabhrais -->
+<!--OVM response schema.  Author: Raj S Version: OVM15.1 -->
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:include schemaLocation="doAccountValidation.xsd"/>
+	<xs:include schemaLocation="doActivation.xsd"/>
+	<xs:include schemaLocation="performAuthenticationResendPin.xsd"/>
+	<xs:include schemaLocation="doCoverageCheck.xsd"/>
+	<xs:include schemaLocation="doCreditCancel.xsd"/>
+	<xs:include schemaLocation="doCreditCheck.xsd"/>
+	<xs:include schemaLocation="doDeactivation.xsd"/>
+	<xs:include schemaLocation="doInventoryCheck.xsd"/>
+	<xs:include schemaLocation="doPreAuthorization.xsd"/>
+	<xs:include schemaLocation="performServiceValidation.xsd"/>
+	<xs:include schemaLocation="doValidation.xsd"/>
+	<xs:include schemaLocation="getBillSummary.xsd"/>
+	<xs:include schemaLocation="getCorporateDiscount.xsd"/>
+	<xs:include schemaLocation="getNpaNxx.xsd"/>
+	<xs:include schemaLocation="getOptionsInfo.xsd"/>
+	<xs:include schemaLocation="getPortInInfo.xsd"/>
+	<xs:include schemaLocation="getSecurityQuestion.xsd"/>
+	<xs:include schemaLocation="queryPlansDetailInfo.xsd"/>
+	<xs:include schemaLocation="doActivateReservedDevice.xsd"/>
+	<xs:include schemaLocation="getDeviceInfo.xsd"/>
+	<xs:include schemaLocation="doActivateNow.xsd"/>
+	<xs:include schemaLocation="checkOrderStatus.xsd"/>
+	<xs:element name="ovm">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ovm-header" type="RequestMessageHeader"/>
+				<xs:element name="ovm-request">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="credit-request" type="CreditRequest"/>
+							<xs:element name="activation-request" type="ActivationRequest"/>
+							<xs:element name="deactivation-request" type="DeactivationRequest"/>
+							<xs:element name="port-request" type="PortRequest"/>
+							<xs:element name="validation-request" type="ValidationRequest"/>
+							<xs:element name="port-status-request" type="PortStatusRequest"/>
+							<xs:element name="npa-nxx-request" type="NpaNxxRequest"/>
+							<xs:element name="account-validation-request" type="AccountValidationRequest"/>
+							<xs:element name="credit-cancel-request" type="CreditCancelRequest"/>
+							<xs:element name="pre-authorization-request" type="PreAuthorizationRequest"/>
+							<xs:element name="plans-request" type="PlansRequest"/>
+							<xs:element name="options-request" type="OptionsRequest"/>
+							<xs:element name="bill-summary-request" type="BillSummaryRequest"/>
+							<xs:element name="service-validation-request" type="ServiceValidationRequest"/>
+							<xs:element name="security-question-request" type="SecurityQuestionRequest"/>
+							<xs:element name="inventory-check-request" type="InventoryCheckRequest"/>
+							<xs:element name="authenticate-resend-pin-request" type="AuthenticationResendPinRequest"/>
+							<xs:element name="coverage-check-request" type="CoverageCheckRequest"/>
+							<xs:element name="corporate-discount-request" type="CorporateDiscountRequest"/>
+							<xs:element name="activate-reserved-device-request" type="ActivateReservedDeviceRequest"/>
+							<xs:element name="device-info-request" type="DeviceInfoRequest"/>
+							<xs:element name="activate-now-request" type="ActivateNowRequest"/>
+							<xs:element name="order-status-request" type="OrderStatusRequest"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

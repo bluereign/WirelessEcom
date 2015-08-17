@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "BSReport", "BSReport.rptproj", "{05DF40E5-54D0-45D6-BEB4-D83CBC496CE6}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BSReport.rptproj
+		SccLocalPath1 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05DF40E5-54D0-45D6-BEB4-D83CBC496CE6}.Debug|Default.ActiveCfg = Debug
+		{05DF40E5-54D0-45D6-BEB4-D83CBC496CE6}.Debug|Default.Build.0 = Debug
+		{05DF40E5-54D0-45D6-BEB4-D83CBC496CE6}.Debug|Default.Deploy.0 = Debug
+		{05DF40E5-54D0-45D6-BEB4-D83CBC496CE6}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{05DF40E5-54D0-45D6-BEB4-D83CBC496CE6}.DebugLocal|Default.Build.0 = DebugLocal
+		{05DF40E5-54D0-45D6-BEB4-D83CBC496CE6}.Release|Default.ActiveCfg = Release
+		{05DF40E5-54D0-45D6-BEB4-D83CBC496CE6}.Release|Default.Build.0 = Release
+		{05DF40E5-54D0-45D6-BEB4-D83CBC496CE6}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

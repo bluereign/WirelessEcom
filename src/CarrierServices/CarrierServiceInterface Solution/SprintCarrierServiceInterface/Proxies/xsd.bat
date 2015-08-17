@@ -1,0 +1,1 @@
+xsd doAccountValidation.xsd /classes /l:cs /n:WirelessAdvocate.CarrierServices.Proxies.Sprint

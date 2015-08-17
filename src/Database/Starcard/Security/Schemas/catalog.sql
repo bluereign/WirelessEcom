@@ -1,0 +1,5 @@
+CREATE SCHEMA [catalog]
+AUTHORIZATION [dbo]
+GO
+GRANT SELECT ON SCHEMA:: [catalog] TO [scaccess]
+GO

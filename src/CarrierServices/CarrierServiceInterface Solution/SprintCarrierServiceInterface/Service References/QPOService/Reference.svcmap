@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b03f4112-b143-4ce5-a046-7f2738743034" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="v1.xsd" MetadataType="Schema" ID="ac163fa9-370c-4db6-8d12-30dc546bbcbd" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1.xsd7.xsd" />
+    <MetadataFile FileName="v1.wsdl" MetadataType="Wsdl" ID="b8195ec1-2758-4bb3-94ba-21ca8b2269f4" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1?wsdl" />
+    <MetadataFile FileName="v11.xsd" MetadataType="Schema" ID="f39fa109-4ebd-4158-affd-95a9b3ccd879" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1.xsd9.xsd" />
+    <MetadataFile FileName="v12.xsd" MetadataType="Schema" ID="80db2314-2805-4148-9a85-59e8a18eb951" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1.xsd4.xsd" />
+    <MetadataFile FileName="v13.xsd" MetadataType="Schema" ID="c275fd69-c019-4a0b-944c-085bb05c9ef1" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1.xsd3.xsd" />
+    <MetadataFile FileName="v14.xsd" MetadataType="Schema" ID="5a889c68-ccc8-4e3c-808f-d473c3d83c8a" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1.xsd8.xsd" />
+    <MetadataFile FileName="v15.xsd" MetadataType="Schema" ID="b52f6fd9-dc65-40af-9b4c-8c33352a0aff" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1.xsd5.xsd" />
+    <MetadataFile FileName="v16.xsd" MetadataType="Schema" ID="66a34a28-e2d5-46d5-8b20-598a0790d52a" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1.xsd2.xsd" />
+    <MetadataFile FileName="v17.xsd" MetadataType="Schema" ID="af5242f4-7850-48a7-9ae7-7254d59fa1d7" SourceId="1" SourceUrl="https://webservicesgatewaytest.sprint.com:444/rtb2/services/wireless/account/QueryPlansAndOptionsService/v1.xsd6.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

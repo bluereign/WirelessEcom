@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://integration.sprint.com/eai/services/QueryCsa/v1/QueryCsa.wsdl" xmlns:envelope="http://integration.sprint.com/interfaces/QueryCsa/v1/QueryCsaEnvelope.xsd" xmlns:qryCsaV2="http://integration.sprint.com/interfaces/queryCsa/v2/queryCsaV2.xsd" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wshdr="http://integration.sprint.com/common/header/WSMessageHeader/v2" xmlns:err="http://integration.sprint.com/common/ErrorDetails.xsd" xmlns:err2="http://integration.sprint.com/common/ErrorDetailsV2.xsd" targetNamespace="http://integration.sprint.com/eai/services/QueryCsa/v1/QueryCsa.wsdl">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://integration.sprint.com/eai/services/QueryCsa/v1/QueryCsa.wsdl" targetNamespace="http://integration.sprint.com/eai/services/QueryCsa/v1/QueryCsa.wsdl">
+			<xs:import namespace="http://integration.sprint.com/interfaces/QueryCsa/v1/QueryCsaEnvelope.xsd" schemaLocation="QueryCsaEnvelope.xsd"/>
+			<xs:import namespace="http://integration.sprint.com/interfaces/queryCsa/v2/queryCsaV2.xsd" schemaLocation="queryCsaV2.xsd"/>
+			<xs:import namespace="http://integration.sprint.com/common/header/WSMessageHeader/v2" schemaLocation="WSMessageHeaderV2.xsd"/>
+			<xs:import namespace="http://integration.sprint.com/common/ErrorDetails.xsd" schemaLocation="ErrorDetails.xsd"/>
+			<xs:import namespace="http://integration.sprint.com/common/ErrorDetailsV2.xsd" schemaLocation="ErrorDetailsV2.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="queryCsaRequest">
+		<wsdl:part name="body" element="envelope:queryCsa"/>
+	</wsdl:message>
+	<wsdl:message name="queryCsaResponse">
+		<wsdl:part name="body" element="envelope:queryCsaResponse"/>
+	</wsdl:message>
+	<wsdl:message name="faultmessage">
+		<wsdl:part name="body" element="err:errorDetailItem"/>
+	</wsdl:message>
+	<wsdl:message name="WsMessageHeader">
+		<wsdl:part name="head" element="wshdr:wsMessageHeader"/>
+	</wsdl:message>
+	<wsdl:message name="queryCsaV2">
+		<wsdl:part name="body" element="qryCsaV2:queryCsaV2"/>
+	</wsdl:message>
+	<wsdl:message name="queryCsaV2Response">
+		<wsdl:part name="body" element="qryCsaV2:queryCsaV2Response"/>
+	</wsdl:message>
+	<wsdl:message name="faultmessage2">
+		<wsdl:part name="body" element="err2:errorDetailItem"/>
+	</wsdl:message>	
+	<wsdl:portType name="QueryCsaPortType">
+		<wsdl:operation name="QueryCsa">
+			<wsdl:input message="tns:queryCsaRequest"/>
+			<wsdl:output message="tns:queryCsaResponse"/>
+			<wsdl:fault name="fault" message="tns:faultmessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="QueryCsaV2">
+			<wsdl:input message="tns:queryCsaV2"/>
+			<wsdl:output message="tns:queryCsaV2Response"/>
+			<wsdl:fault name="fault" message="tns:faultmessage2"/>
+		</wsdl:operation>		
+	</wsdl:portType>
+	<wsdl:binding name="QueryCsaBinding" type="tns:QueryCsaPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="QueryCsa">
+			<soap:operation soapAction="queryCsa"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="QueryCsaV2">
+			<soap:operation soapAction="QueryCsaV2"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal"/>
+				<soap:header message="tns:WsMessageHeader" part="head" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>		
+	</wsdl:binding>
+	<wsdl:service name="QueryCsaService">
+		<wsdl:port name="QueryCsaPort" binding="tns:QueryCsaBinding">
+			<soap:address location="http://localhost:7001"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

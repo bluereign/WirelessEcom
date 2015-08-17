@@ -1,0 +1,3 @@
+CREATE SCHEMA [rebates]
+AUTHORIZATION [dbo]
+GO

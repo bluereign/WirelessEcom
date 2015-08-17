@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<!-- Activate Reserved Decive Request -->
+	<xs:complexType name="ActivateReservedDeviceRequest">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="sprint-order-id" type="NextelOrderKey"/>
+				<xs:element name="order-id" type="OrderID"/>
+			</xs:choice>
+			<xs:element name="ptn-list" type="PtnList" minOccurs="0"/>
+		</xs:sequence>
+		<!--Activate Reserved Device request message.-->
+	</xs:complexType>
+	<xs:element name="doActivateReservedDevice" type="ActivateReservedDeviceRequest"/>
+	<!-- Activate Reserved Decive Response -->
+	<xs:complexType name="ActivateReservedDeviceResponse">
+		<xs:sequence>
+			<xs:element name="service">
+				<xs:complexType>
+					<xs:choice maxOccurs="50">
+						<xs:element name="plan" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="phone" type="PhoneResponse" minOccurs="0" maxOccurs="unbounded">
+										<!--the minimum that can occur is 0 because there are instances where an error could occur and no phone elements exist.-->
+									</xs:element>
+									<xs:element name="result-details" type="xs:string" minOccurs="0">
+										<!--Details or an explanation in more detail of the result.-->
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="id" type="IDType" use="required"/>
+							</xs:complexType>
+							<!--Phone and plan details are needed for activation.-->
+						</xs:element>
+						<xs:element name="accessory">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="accessory-order-key" type="VendorOrderKey" minOccurs="0"/>
+								</xs:sequence>
+								<xs:attribute name="id" type="IDType" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="activation-fee" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+				<!--Amount required for activation.-->
+			</xs:element>
+			<xs:element name="account-number" type="AccountNumber" minOccurs="0">
+				<!--Nextel account number for this user.-->
+			</xs:element>
+			<xs:element name="comment" type="RequiredString" minOccurs="0">
+				<!--General comment section.-->
+			</xs:element>
+		</xs:sequence>
+		<!--Activate Reserved Device response message.-->
+	</xs:complexType>
+	<xs:element name="doActivateReservedDeviceResponse" type="ActivateReservedDeviceResponse"/>
+</xs:schema>

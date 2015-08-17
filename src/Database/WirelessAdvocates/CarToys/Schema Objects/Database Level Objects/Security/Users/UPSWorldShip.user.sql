@@ -1,0 +1,3 @@
+﻿CREATE USER [UPSWorldShip] WITHOUT LOGIN
+    WITH DEFAULT_SCHEMA = [salesorder];
+

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTSConfiguration>
+	<Configuration ConfiguredType="Property" Path="\Package.Variables[User::IncomingFileDirectory].Properties[Value]" ValueType="String">
+		<ConfiguredValue>C:\inetpub\ftproot\LocalUser\walive</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Variables[User::ProcessedFileDirectory].Properties[Value]" ValueType="String">
+		<ConfiguredValue>C:\inetpub\ftproot\LocalUser\walive\Processed</ConfiguredValue>
+	</Configuration>
+	<Configuration ConfiguredType="Property" Path="\Package.Variables[User::MinutesToLoop].Properties[Value]" ValueType="Int32">
+		<ConfiguredValue>50</ConfiguredValue>
+	</Configuration>
+</DTSConfiguration>

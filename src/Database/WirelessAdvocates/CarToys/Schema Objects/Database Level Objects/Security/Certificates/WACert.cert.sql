@@ -1,0 +1,5 @@
+﻿CREATE CERTIFICATE [WACert]
+    AUTHORIZATION [dbo]
+    WITH SUBJECT = N'Cert for encrypting sensitive WA data elements', START_DATE = N'04/23/2010 05:37:48', EXPIRY_DATE = N'04/23/2011 05:37:48'
+    ACTIVE FOR BEGIN_DIALOG = ON;
+

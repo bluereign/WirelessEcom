@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!---->
+<MigrationScript version="2" type="MigrationScript">
+  <Name>MasterCatalog 4021 to 4102</Name>
+  <FromVersion version="1" type="VersionInfoRaw">
+    <Version>4021</Version>
+    <ScriptFolderLocation>&lt;?xml version="1.0" encoding="utf-16" standalone="yes"?&gt;
+&lt;!----&gt;
+&lt;ISOCCompareLocation version="1" type="TfsLocation"&gt;
+  &lt;ServerUrl&gt;http://tfserver.cartoys.corp:8080/tfs/defaultcollection&lt;/ServerUrl&gt;
+  &lt;SourceControlFolder&gt;$/WA_Costco/src/Database/MasterCatalog&lt;/SourceControlFolder&gt;
+&lt;/ISOCCompareLocation&gt;</ScriptFolderLocation>
+  </FromVersion>
+  <ToVersion version="1" type="VersionInfoRaw">
+    <Version>4102</Version>
+    <ScriptFolderLocation>&lt;?xml version="1.0" encoding="utf-16" standalone="yes"?&gt;
+&lt;!----&gt;
+&lt;ISOCCompareLocation version="1" type="TfsLocation"&gt;
+  &lt;ServerUrl&gt;http://tfserver.cartoys.corp:8080/tfs/defaultcollection&lt;/ServerUrl&gt;
+  &lt;SourceControlFolder&gt;$/WA_Costco/src/Database/MasterCatalog&lt;/SourceControlFolder&gt;
+&lt;/ISOCCompareLocation&gt;</ScriptFolderLocation>
+  </ToVersion>
+  <ObjectIdentifiers type="ObjectIdentifiers" version="2">
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[catalog].[Channel]</FullyQualifiedName>
+      <Type>Table</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[catalog].[FilterChannel]</FullyQualifiedName>
+      <Type>Table</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[catalog].[Product]</FullyQualifiedName>
+      <Type>Table</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[service].[IncomingGersPrice]</FullyQualifiedName>
+      <Type>Table</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[service].[IncomingGersPriceGroup]</FullyQualifiedName>
+      <Type>Table</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[AAFES]</FullyQualifiedName>
+      <Type>Schema</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[orders].[dn_AllPlans]</FullyQualifiedName>
+      <Type>View</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[catalog].[vProductRebates]</FullyQualifiedName>
+      <Type>View</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[catalog].[vProductRebateTotal]</FullyQualifiedName>
+      <Type>View</Type>
+    </value>
+    <value version="1" type="ObjectIdentifier">
+      <FullyQualifiedName>[catalog].[dn_Plans]</FullyQualifiedName>
+      <Type>View</Type>
+    </value>
+  </ObjectIdentifiers>
+  <Description>Prepped database for channelized data insertion.</Description>
+</MigrationScript>

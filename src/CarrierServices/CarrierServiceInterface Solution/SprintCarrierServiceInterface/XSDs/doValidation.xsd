@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="ValidationRequest">
+		<xs:sequence>
+			<xs:element name="order" type="OrderInfoType"/>
+			<xs:element name="corp-gov-info" type="CorporateGovernmentInfo" minOccurs="0">
+				<!--For corporate customers (customer type of CORPORATE_BUSINESS or CORPORATE_INDIVIDUAL), this section is required.-->
+			</xs:element>
+			<xs:element name="activation-zip-code" type="ZipCode"/>
+			<xs:element name="handset-count" type="UnsignedByteMax99"/>
+		</xs:sequence>
+		<!--Validation request message.-->
+	</xs:complexType>
+	<xs:element name="doValidation" type="ValidationRequest"/>
+	<xs:complexType name="ValidationResponse">
+		<xs:sequence>
+			<xs:element name="nextel-order-id" type="NextelOrderKey" minOccurs="0"/>
+			<xs:element name="validation-result" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="doValidationResponse" type="ValidationResponse"/>
+</xs:schema>

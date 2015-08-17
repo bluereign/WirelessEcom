@@ -1,0 +1,2 @@
+﻿CREATE USER [Palani] WITHOUT LOGIN;
+

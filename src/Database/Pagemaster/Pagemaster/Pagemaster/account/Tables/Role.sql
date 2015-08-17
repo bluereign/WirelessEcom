@@ -1,0 +1,6 @@
+﻿CREATE TABLE [account].[Role] (
+    [RoleGuid] UNIQUEIDENTIFIER CONSTRAINT [DF_Role_RoleGuid] DEFAULT (newid()) ROWGUIDCOL NOT NULL,
+    [Role]     VARCHAR (50)     NOT NULL,
+    CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED ([RoleGuid] ASC) WITH (FILLFACTOR = 80)
+);
+

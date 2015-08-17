@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "PhoneOrdersPerDay", "PhoneOrdersPerDay\PhoneOrdersPerDay.rptproj", "{F049E247-06BD-4948-BA4B-9E9F834FDACC}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 1
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver.cartoys.corp:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F049E247-06BD-4948-BA4B-9E9F834FDACC}.Debug|Default.ActiveCfg = Debug
+		{F049E247-06BD-4948-BA4B-9E9F834FDACC}.Debug|Default.Build.0 = DebugLocal
+		{F049E247-06BD-4948-BA4B-9E9F834FDACC}.Debug|Default.Deploy.0 = DebugLocal
+		{F049E247-06BD-4948-BA4B-9E9F834FDACC}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{F049E247-06BD-4948-BA4B-9E9F834FDACC}.DebugLocal|Default.Build.0 = DebugLocal
+		{F049E247-06BD-4948-BA4B-9E9F834FDACC}.Release|Default.ActiveCfg = Release
+		{F049E247-06BD-4948-BA4B-9E9F834FDACC}.Release|Default.Build.0 = Release
+		{F049E247-06BD-4948-BA4B-9E9F834FDACC}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

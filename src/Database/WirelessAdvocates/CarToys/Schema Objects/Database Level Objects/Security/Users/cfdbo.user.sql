@@ -1,0 +1,2 @@
+﻿CREATE USER [cfdbo] WITHOUT LOGIN;
+

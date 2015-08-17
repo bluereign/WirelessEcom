@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/validateBuybackDevice/v1/validateBuybackDevice.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/validateBuybackDevice/v1/validateBuybackDevice.xsd" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="validateBuybackDevice" type="tns:ValidateBuybackDeviceRequestType" />
+  <xs:element name="validateBuybackDeviceResponse" type="tns:ValidateBuybackDeviceResponseType" />
+  <xs:complexType name="ValidateBuybackDeviceRequestType">
+    <xs:sequence>
+      <xs:element name="serialNumber">
+        <xs:annotation>
+          <xs:documentation>A valid product serial number. This must consist only of alpha-numeric characters and be at least 5 characters in length</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:EquipmentSerialNumberStringType">
+            <xs:minLength value="5" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="categoryList" type="tns:CategoryListType">
+        <xs:annotation>
+          <xs:documentation>List of categories</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="moreInformationInd" type="tns:MoreInformationFlagType">
+        <xs:annotation>
+          <xs:documentation>Flag to indicate if there is further information about the device, such as owner’s name and address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="moreInfo" type="tns:NoteTextType">
+        <xs:annotation>
+          <xs:documentation>If moreInformationInd is set to true, additional information can be passed using this field. The information sent in this field is used only for the purposes of law enforcement. 
+
+For PJ9531, the storeId should be passed in this field</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ValidateBuybackDeviceResponseType">
+    <xs:sequence>
+      <xs:element name="lostStolenInd" type="tns:ValidationResultTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Result of buyback validation check, indicates whether buyback should be processed</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CategoryListType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="categoryInfo">
+        <xs:annotation>
+          <xs:documentation>Structure containing category</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:complexContent mixed="false">
+            <xs:extension base="tns:CategoryInfoType" />
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CategoryInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="categoryCode" type="tns:ProductCategoryCodeType">
+        <xs:annotation>
+          <xs:documentation>A numeric category number to identify the type of product the serial relates to. Not sending this field will perform the search on all product categories.
+
+ID Category Name 
+1 Mobile/Cellular Phones 
+9 Tablet PC/PDA 
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ValidationResultTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Validation Result Type Code indicates if the validation attempt was successful.
+Valid Values:
+Passed - validation successful/passed
+Failed - validation unsuccessful/failed</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="NoteTextType">
+    <xs:annotation>
+      <xs:documentation>Note Text is the body of the text in the NOTE.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1000" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MoreInformationFlagType">
+    <xs:annotation>
+      <xs:documentation>More Information Flag indicates if there is more information is available.
+Valid Values: 
+True - More information is present
+False - No more information is present</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="ProductCategoryCodeType">
+    <xs:annotation>
+      <xs:documentation>Product Category Code is used for the categorization of products allowing grouping, selection, and pricing flexiblity.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:simpleType name="EquipmentSerialNumberStringType">
+    <xs:annotation>
+      <xs:documentation>Equipment Serial Number holds the identifier used by the device to communicate (broadcast) its identity to the wireless mobile network.  
+
+Network Device Identifier will contain one of the following: 
+Electronic Serial Number (ESN); 
+Mobile Equipment IDentifier (MEID);
+International Mobile Equipment Identfie (IMEI);
+Subscriber Identify Module (SIM).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

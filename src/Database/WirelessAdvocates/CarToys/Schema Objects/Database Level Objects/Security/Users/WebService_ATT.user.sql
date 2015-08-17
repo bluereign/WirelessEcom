@@ -1,0 +1,2 @@
+﻿CREATE USER [WebService_ATT] WITHOUT LOGIN;
+

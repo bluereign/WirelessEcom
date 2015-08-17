@@ -1,0 +1,3 @@
+﻿ALTER TABLE [catalog].[SessionStockReservation]
+    ADD CONSTRAINT [PK_SessionStockReservation_1] PRIMARY KEY CLUSTERED ([SessionId] ASC, [GroupNumber] ASC, [ProductId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

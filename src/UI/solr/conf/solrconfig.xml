@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <indexDefaults>
+    <useCompoundFile>false</useCompoundFile>
+    <mergeFactor>10</mergeFactor>
+    <ramBufferSizeMB>128</ramBufferSizeMB>
+    <maxMergeDocs>2147483647</maxMergeDocs>
+    <maxFieldLength>10000</maxFieldLength>
+    <writeLockTimeout>1000</writeLockTimeout>
+    <commitLockTimeout>10000</commitLockTimeout>
+    <lockType>single</lockType>
+  </indexDefaults>
+  <mainIndex>
+    <useCompoundFile>false</useCompoundFile>
+    <ramBufferSizeMB>128</ramBufferSizeMB>
+    <mergeFactor>10</mergeFactor>
+    <maxMergeDocs>2147483647</maxMergeDocs>
+    <maxFieldLength>10000</maxFieldLength>
+    <unlockOnStartup>false</unlockOnStartup>
+  </mainIndex>
+  <jmx/>
+  <updateHandler class="solr.DirectUpdateHandler2"/>
+  <query>
+    <maxBooleanClauses>1024</maxBooleanClauses>
+    <filterCache class="solr.FastLRUCache" size="16384" initialSize="4096" autowarmCount="4096"/>
+    <queryResultCache class="solr.FastLRUCache" size="16384" initialSize="4096" autowarmCount="1024"/>
+    <documentCache class="solr.FastLRUCache" size="16384" initialSize="16384" autowarmCount="0"/>
+    <enableLazyFieldLoading>true</enableLazyFieldLoading>
+    <queryResultWindowSize>150</queryResultWindowSize>
+    <queryResultMaxDocsCached>200</queryResultMaxDocsCached>
+    <HashDocSet maxSize="3000" loadFactor="0.75"/>
+    <listener event="newSearcher" class="solr.QuerySenderListener">
+      <arr name="queries">
+        <lst>
+          <str name="q">solr</str>
+          <str name="start">0</str>
+          <str name="rows">10</str>
+        </lst>
+        <lst>
+          <str name="q">rocks</str>
+          <str name="start">0</str>
+          <str name="rows">10</str>
+        </lst>
+        <lst>
+          <str name="q">static newSearcher warming query from solrconfig.xml</str>
+        </lst>
+      </arr>
+    </listener>
+    <listener event="firstSearcher" class="solr.QuerySenderListener">
+      <arr name="queries">
+        <lst>
+          <str name="q">fast_warm</str>
+          <str name="start">0</str>
+          <str name="rows">10</str>
+        </lst>
+        <lst>
+          <str name="q">static firstSearcher warming query from solrconfig.xml</str>
+        </lst>
+      </arr>
+    </listener>
+    <useColdSearcher>false</useColdSearcher>
+    <maxWarmingSearchers>4</maxWarmingSearchers>
+  </query>
+  <requestDispatcher handleSelect="true">
+    <requestParsers enableRemoteStreaming="false" multipartUploadLimitInKB="2048"/>
+    <httpCaching lastModifiedFrom="openTime" etagSeed="Solr">
+    </httpCaching>
+  </requestDispatcher>
+  <requestHandler name="dismax" class="solr.SearchHandler">
+    <lst name="defaults">
+      <str name="defType">dismax</str>
+      <str name="echoParams">explicit</str>
+      <str name="tie">0.1</str>
+      <str name="qf">
+        productID^20.0 productName^40.0 productDescription^50 productBrand^30.0 productNamePhonetic^10.0 productBrandPhonetic^5.0
+      </str>
+      <str name="pf">
+        productID^20.0 productName^40.0 productDescription^50 productBrand^30.0 productNamePhonetic^10.0 productBrandPhonetic^5.0
+      </str>
+      <str name="qs">1</str>
+      <str name="ps">0</str>
+      <str name="q.alt">*:*</str>
+      <str name="wt">json</str>
+      <str name="fl">itemType,productID,score</str>
+    </lst>
+    <arr name="last-components">
+      <str>spellcheck</str>
+    </arr>
+  </requestHandler>
+  <!-- spell checking stuff -->
+  <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
+    <str name="queryAnalyzerFieldType">textSpell</str>
+    <!-- 'q' only -->
+    <lst name="spellchecker">
+      <str name="name">spell</str>
+      <str name="field">spell</str>
+      <str name="buildOnOptimize">true</str>
+      <str name="spellcheckIndexDir">./spellchecker_spell</str>
+    </lst>
+    <lst name="spellchecker">
+      <!-- Use previous spellchecker index with different
+	         distance measure -->
+      <str name="name">jarowinkler</str>
+      <str name="field">spell</str>
+      <str name="distanceMeasure">org.apache.lucene.search.spell.JaroWinklerDistance</str>
+      <str name="buildOnOptimize">true</str>
+      <str name="spellcheckIndexDir">./spellchecker_spell</str>
+    </lst>
+    <lst name="spellchecker">
+      <str name="name">spellPhrase</str>
+      <str name="field">spellPhrase</str>
+      <str name="buildOnOptimize">true</str>
+      <str name="spellcheckIndexDir">./spellchecker_spellPhrase</str>
+    </lst>
+  </searchComponent>
+  <!--
+   
+   Search components are registered to SolrCore and used by Search Handlers
+   
+   By default, the following components are avaliable:
+    
+   <searchComponent name="query"     class="org.apache.solr.handler.component.QueryComponent" />
+   <searchComponent name="facet"     class="org.apache.solr.handler.component.FacetComponent" />
+   <searchComponent name="mlt"       class="org.apache.solr.handler.component.MoreLikeThisComponent" />
+   <searchComponent name="highlight" class="org.apache.solr.handler.component.HighlightComponent" />
+   <searchComponent name="debug"     class="org.apache.solr.handler.component.DebugComponent" />
+  
+   If you register a searchComponent to one of the standard names, that will be used instead.
+  
+   -->
+  <requestHandler name="/search" class="solr.SearchHandler">
+    <lst name="defaults">
+      <str name="echoParams">explicit</str>
+    </lst>
+    <!--
+    By default, this will register the following components:
+    
+    <arr name="components">
+      <str>query</str>
+      <str>facet</str>
+      <str>mlt</str>
+      <str>highlight</str>
+      <str>debug</str>
+    </arr>
+    
+    To insert handlers before or after the 'standard' components, use:
+    
+    <arr name="first-components">
+      <str>first</str>
+    </arr>
+    
+    <arr name="last-components">
+      <str>last</str>
+    </arr>
+    
+    -->
+  </requestHandler>
+  <!--
+  <searchComponent name="elevator" class="solr.QueryElevationComponent" >
+    <str name="queryFieldType">string</str>
+    <str name="config-file">elevate.xml</str>
+  </searchComponent> 
+ 
+  <requestHandler name="/elevate" class="solr.SearchHandler" startup="lazy">
+    <lst name="defaults">
+      <str name="echoParams">explicit</str>
+    </lst>
+    <arr name="last-components">
+      <str>elevator</str>
+    </arr>
+  </requestHandler> -->
+  <!-- Update request handler.  
+  
+       Note: Since solr1.1 requestHandlers requires a valid content type header if posted in 
+       the body. For example, curl now requires: -H 'Content-type:text/xml; charset=utf-8'
+       The response format differs from solr1.1 formatting and returns a standard error code.
+       
+       To enable solr1.1 behavior, remove the /update handler or change its path
+    -->
+  <requestHandler name="/update" class="solr.XmlUpdateRequestHandler"/>
+  <!--
+   Analysis request handler.  Since Solr 1.3.  Use to returnhow a document is analyzed.  Useful
+   for debugging and as a token server for other types of applications
+   -->
+  <requestHandler name="/analysis" class="solr.AnalysisRequestHandler"/>
+  <!-- CSV update handler, loaded on demand -->
+  <requestHandler name="/update/csv" class="solr.CSVRequestHandler" startup="lazy"/>
+  <!-- 
+   Admin Handlers - This will register all the standard admin RequestHandlers.  Adding 
+   this single handler is equivolent to registering:
+   
+  <requestHandler name="/admin/luke"       class="org.apache.solr.handler.admin.LukeRequestHandler" />
+  <requestHandler name="/admin/system"     class="org.apache.solr.handler.admin.SystemInfoHandler" />
+  <requestHandler name="/admin/plugins"    class="org.apache.solr.handler.admin.PluginInfoHandler" />
+  <requestHandler name="/admin/threads"    class="org.apache.solr.handler.admin.ThreadDumpHandler" />
+  <requestHandler name="/admin/properties" class="org.apache.solr.handler.admin.PropertiesRequestHandler" />
+  <requestHandler name="/admin/file"       class="org.apache.solr.handler.admin.ShowFileRequestHandler" >
+  
+  If you wish to hide files under ${solr.home}/conf, explicitly register the ShowFileRequestHandler using:
+  <requestHandler name="/admin/file" class="org.apache.solr.handler.admin.ShowFileRequestHandler" >
+    <lst name="invariants">
+     <str name="hidden">synonyms.txt</str> 
+     <str name="hidden">anotherfile.txt</str> 
+    </lst>
+  </requestHandler>
+  -->
+  <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers"/>
+  <!-- ping/healthcheck -->
+  <requestHandler name="/admin/ping" class="PingRequestHandler">
+    <lst name="defaults">
+      <str name="qt">standard</str>
+      <str name="q">solrpingquery</str>
+      <str name="echoParams">all</str>
+    </lst>
+  </requestHandler>
+  <!-- Echo the request contents back to the client -->
+  <requestHandler name="/debug/dump" class="solr.DumpRequestHandler">
+    <lst name="defaults">
+      <str name="echoParams">explicit</str>
+      <!-- for all params (including the default etc) use: 'all' -->
+      <str name="echoHandler">true</str>
+    </lst>
+  </requestHandler>
+  <highlighting>
+    <!-- Configure the standard fragmenter -->
+    <!-- This could most likely be commented out in the "default" case -->
+    <fragmenter name="gap" class="org.apache.solr.highlight.GapFragmenter" default="true">
+      <lst name="defaults">
+        <int name="hl.fragsize">100</int>
+      </lst>
+    </fragmenter>
+    <!-- A regular-expression-based fragmenter (f.i., for sentence extraction) -->
+    <fragmenter name="regex" class="org.apache.solr.highlight.RegexFragmenter">
+      <lst name="defaults">
+        <!-- slightly smaller fragsizes work better because of slop -->
+        <int name="hl.fragsize">70</int>
+        <!-- allow 50% slop on fragment sizes -->
+        <float name="hl.regex.slop">0.5</float>
+        <!-- a basic sentence pattern -->
+        <str name="hl.regex.pattern">[-\w ,/\n\"']{20,200}</str>
+      </lst>
+    </fragmenter>
+    <!-- Configure the standard formatter -->
+    <formatter name="html" class="org.apache.solr.highlight.HtmlFormatter" default="true">
+      <lst name="defaults">
+        <str name="hl.simple.pre"><![CDATA[<em>]]></str>
+        <str name="hl.simple.post"><![CDATA[</em>]]></str>
+      </lst>
+    </formatter>
+  </highlighting>
+  <!-- queryResponseWriter plugins... query responses will be written using the
+    writer specified by the 'wt' request parameter matching the name of a registered
+    writer.
+    The "default" writer is the default and will be used if 'wt' is not specified 
+    in the request. XMLResponseWriter will be used if nothing is specified here.
+    The json, python, and ruby writers are also available by default.
+
+    <queryResponseWriter name="xml" class="org.apache.solr.request.XMLResponseWriter" default="true"/>
+    <queryResponseWriter name="json" class="org.apache.solr.request.JSONResponseWriter"/>
+    <queryResponseWriter name="python" class="org.apache.solr.request.PythonResponseWriter"/>
+    <queryResponseWriter name="ruby" class="org.apache.solr.request.RubyResponseWriter"/>
+    <queryResponseWriter name="php" class="org.apache.solr.request.PHPResponseWriter"/>
+    <queryResponseWriter name="phps" class="org.apache.solr.request.PHPSerializedResponseWriter"/>
+
+    <queryResponseWriter name="custom" class="com.example.MyResponseWriter"/>
+  -->
+  <queryResponseWriter name="json" class="org.apache.solr.request.JSONResponseWriter"/>
+  <!-- XSLT response writer transforms the XML output by any xslt file found
+       in Solr's conf/xslt directory.  Changes to xslt files are checked for
+       every xsltCacheLifetimeSeconds.  
+   -->
+  <queryResponseWriter name="xslt" class="org.apache.solr.request.XSLTResponseWriter">
+    <int name="xsltCacheLifetimeSeconds">5</int>
+  </queryResponseWriter>
+  <!-- config for the admin interface -->
+  <admin>
+    <defaultQuery>solr</defaultQuery>
+    <!-- configure a healthcheck file for servers behind a loadbalancer
+    <healthcheck type="file">server-enabled</healthcheck>
+    -->
+  </admin>
+</config>

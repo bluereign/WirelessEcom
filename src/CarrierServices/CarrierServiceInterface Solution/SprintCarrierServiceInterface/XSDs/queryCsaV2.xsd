@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by LEE VAN AALSBURG (SPRINT) -->
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/queryCsa/v2/queryCsaV2.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://integration.sprint.com/interfaces/queryCsa/v2/queryCsaV2.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<!-- Date              Author                    Rel     Change                                                                                                                                                                                SR/Ticket#  -->
+	<!--06/20/2011  Steve Heichelheim   1.0       Added MVM standards and simple types                                                                                                                          GBL11.4   PJ004907-->
+	<!--09/14/2011  Ibrahim ElKhatib        1.1      Removed the enumeration from CoverageQuality4gType  (elements - coverageQualityWiMax, coverageQualityLte)     GBL11.4   PJ004907 CS#492142-->
+	<!---->
+	<xs:element name="queryCsaV2" type="tns:QueryCsaV2Type"/>
+	<xs:element name="queryCsaV2Response" type="tns:QueryCsaV2ResponseType"/>
+	<xs:complexType name="QueryCsaV2Type">
+		<xs:annotation>
+			<xs:documentation>This API provides the ability to request a CSA for an address from an external system.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="geoCode" type="tns:GeocodingTypeCodeType">
+				<xs:annotation>
+					<xs:documentation>Type of Geo Coding to perform.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="street" type="tns:PostalAddressLine1Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Street address (address number may be omitted for cross-street searches)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xStreet" type="tns:CrossStreetType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Cross Street is the name of an intersecting street for cross-street geocoding.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="city" type="tns:CityNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>City name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="state" type="tns:UspsStateAbbreviationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>State abbreviation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="zip" type="tns:PostalCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Structure holding the zip code 5+4</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="country" type="tns:CountryNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueryCsaV2ResponseType">
+		<xs:annotation>
+			<xs:documentation>This API provides the ability to request a CSA for an address from an external system.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="street" type="tns:PostalAddressLine1Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Input street address(address number may be ommitted for cross-street searches)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xStreet" type="tns:CrossStreetType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Cross street of intersection </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="city" type="tns:CityNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>City name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="state" type="tns:UspsStateAbbreviationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>State abbreviation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="zip" type="tns:PostalCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Structure holding the zip code 5+4</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="country" type="tns:CountryNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="longitude" type="tns:LongitudeNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Longitude of search result</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="latitude" type="tns:LatitudeNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Latitude of search result</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="confidence" type="tns:ConfidenceLevelType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates level of match that was found searching for the input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csa" type="tns:CommunicationServiceAreaIdentifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>CSA located at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cdmaInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicated CDMA coverage was found at the input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="wiMaxInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates WiMAX coverage was found at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lteInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates LTE coverage was found at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="evdoInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates EVDO coverage was found at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="idenInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates iDEN coverage was found at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hppttInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates Performance Push To Talk coverage was found at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="airaveConsumerInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates Consumer Airave coverage was found at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="airaveEnterpriseInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates Enterprise Airave coverage was found at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hybridInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates PowerSource coverage was found at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="coverageQualityCdma" type="tns:CoverageQualityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates the strength of CDMA coverage found at the input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="coverageQualityIden" type="tns:CoverageQualityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates the strength of iDEN coverage found at the input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="coverageQualityWiMax" type="tns:CoverageQuality4gType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates the strength of 4G coverage found at the input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="coverageQualityLte" type="tns:CoverageQuality4gType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates the strength of 4G coverage found at the input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="roamDigitalInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates digital roaming coverage was found at input address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="upcomingCoverageCdmaInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates new CDMA towers are scheduled to be activated in near the input address in the next 120 days</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="upcomingCoverageIdenInd" type="tns:BinaryExpressionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates new iDEN towers are scheduled to be activated in near the input address in the next 120 days</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="npa" type="tns:NpaNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference land-line NPA</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nxx" type="tns:NxxNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference land-line NXX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="affiliateName" type="tns:AffiliateNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Owner of coverage found at input address (name of affiliate if not Sprint PCS)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PostalCodeType">
+		<xs:sequence>
+			<xs:element name="uspsPostalCd" type="tns:UspsPostalCodeType">
+				<xs:annotation>
+					<xs:documentation>Postal code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="uspsPostalCdExtension" type="tns:UspsPostalCodeExtensionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Postal Code extension (Plus 4)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!---->
+	<!--Shared/MVM simple types-->
+	<xs:simpleType name="AffiliateNameType">
+		<xs:annotation>
+			<xs:documentation>Owner of coverage found at input address (name of affiliate if not Sprint PCS)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BinaryExpressionType">
+		<xs:annotation>
+			<xs:documentation>Binary Expression is a type of an expression with two possible states,"true"and"false".</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="CityNameType">
+		<xs:annotation>
+			<xs:documentation>City Name holds the textual string identifying a City.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="49"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CommunicationServiceAreaIdentifierType">
+		<xs:annotation>
+			<xs:documentation>Communication Service Area Identifier uniquely identifies an instance of a geographic area (CSA) served by a communication service provider, which can be broken down into regional, metropolitan, district and smaller sections called ''leaves.''</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConfidenceLevelType">
+		<xs:annotation>
+			<xs:documentation>Confidence Level indicates level of match that was found when searching.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryNameType">
+		<xs:annotation>
+			<xs:documentation>International Standardization Organization Country Name.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CoverageQualityType">
+		<xs:annotation>
+			<xs:documentation>Indicates the strength of coverage found at the input address.&#13;
+&#13;
+Values:  Best Coverage, Good Coverage, Fair Coverage, No coverage</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="13"/>
+			<xs:enumeration value="Best Coverage"/>
+			<xs:enumeration value="Good Coverage"/>
+			<xs:enumeration value="Fair Coverage"/>
+			<xs:enumeration value="No Coverage"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CrossStreetType">
+		<xs:annotation>
+			<xs:documentation>Cross Street is the name of an intersecting street for cross-street geocoding.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="99"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GeocodingTypeCodeType">
+		<xs:annotation>
+			<xs:documentation>Geocoding Type Code indicates the type of geocoding to perform. Valid values: ExactAddress, CrossStreet, Zip, CityState, International. </xs:documentation>
+			<xs:documentation>Type of geocoding to perform.  Valid values: ExactAddress, CrossStreet, Zip, CityState, International.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="13"/>
+			<xs:enumeration value="ExactAddress"/>
+			<xs:enumeration value="CrossStreet"/>
+			<xs:enumeration value="Zip"/>
+			<xs:enumeration value="CityState"/>
+			<xs:enumeration value="International"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LatitudeNumberType">
+		<xs:annotation>
+			<xs:documentation>Latitude Number is expressed as a floating point number in the range -90.0000 to +90.0000, using decimal degrees (as opposed to minutes and seconds).  Positive values indicate locations north of and on the equator.  Negative values indicate locations south of the equator.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="17"/>
+			<xs:fractionDigits value="14"/>
+			<xs:maxInclusive value="90"/>
+			<xs:minInclusive value="-90"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LongitudeNumberType">
+		<xs:annotation>
+			<xs:documentation>Longitude Number is expressed as a floating point number in the range -180.0000 to +180.0000, using decimal degrees (as opposed to minutes and seconds).  Positive values indicate locations east of and on the prime meridian (Greenwich).  Negative values indicate locations west of the prime meridian.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="17"/>
+			<xs:fractionDigits value="14"/>
+			<xs:maxInclusive value="180"/>
+			<xs:minInclusive value="-180"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NpaNumberType">
+		<xs:annotation>
+			<xs:documentation>Numbering Plan Area (NPA) Number is one of the geographical divisions of the United States, Canada, Bermuda, the Caribbean, Northwestern Mexico, Alaska, Hawaii, within which no two telephones will have the same seven-digit telephone number. (An NPA is represented by an Area Code.)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NxxNumberType">
+		<xs:annotation>
+			<xs:documentation>Network Numbering Exchange (NXX) Number represents the first three digits of the 7 digit phone number that identifies the specific telephone company central office which serves that number. These digits are referred to as the NXX where N can be any number from 2 to 9 and X can be any number. (NNX once upon a time was used to identify the local central office exchange. Now NNX has been changed to NXX, which allows local central offices to have numbers which look like area codes.)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PostalAddressLine1Type">
+		<xs:annotation>
+			<xs:documentation>Postal Address Line 1 is the first line of the postal address (StreetName, HouseNumber,ec.) of which there are three lines formatted to USPS standards.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UspsPostalCodeType">
+		<xs:annotation>
+			<xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UspsPostalCodeExtensionType">
+		<xs:annotation>
+			<xs:documentation>USPS Postal Code Extension contains the last 4 characters of the nine digit USPS Postal Code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UspsStateAbbreviationType">
+		<xs:annotation>
+			<xs:documentation>A United States Postal Service (USPS) State Abbreviation Code is the set of characters that are selected from a State or Protectorate name and specified by the USPS to represent the name of a State or US Protectorate for the purpose of mail delivery</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!---->
+	<!--New Simple Types-->
+	<xs:simpleType name="CoverageQuality4gType">
+		<xs:annotation>
+			<xs:documentation>Coverage Quality 4g Indicates the strength of 4g coverage found at the input address.
+Valid Values:
+In Building Coverage, 
+On Street Coverage, 
+No Coverage...</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!---->
+</xs:schema>

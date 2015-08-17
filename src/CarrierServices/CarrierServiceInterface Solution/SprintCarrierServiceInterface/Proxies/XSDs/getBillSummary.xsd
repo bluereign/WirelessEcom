@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="BillSummaryRequest">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="activation-zip-code" type="ZipCode" nillable="true"/>
+				<xs:element name="order-type" type="OrderType" nillable="true"/>
+				<xs:element name="plan" type="BillSummaryPlan" nillable="true" maxOccurs="50"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element name="account-number" type="AccountNumber"/>
+					<xs:element name="reference-ptn" type="PhoneNumber"/>
+				</xs:choice>
+				<xs:element name="second-bill" type="xs:boolean" minOccurs="0"/>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="getBillSummary" type="BillSummaryRequest"/>
+	<!-- Bill Summary Response will have either existing bill summary or bill estimate data.-->
+	<xs:complexType name="BillSummaryResponse">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="total-activation-fee" type="DoubleData"/>
+				<xs:element name="total-price-plan-charges" type="DoubleData"/>
+				<xs:element name="total-feature-charges" type="DoubleData"/>
+				<xs:element name="total-monthly-charges" type="DoubleData"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="bill-estimate" type="BillEstimateData" maxOccurs="2"/>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="getBillSummaryResponse" type="BillSummaryResponse"/>
+</xs:schema>

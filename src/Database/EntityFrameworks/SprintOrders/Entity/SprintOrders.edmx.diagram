@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b7f7246a41374e78be6568b2cc50fc0b" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="COSTCO.TESTModel.Address" Width="1.5" PointX="4.625" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COSTCO.TESTModel.LineService" Width="1.5" PointX="8.625" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COSTCO.TESTModel.Order" Width="1.5" PointX="2.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COSTCO.TESTModel.OrderDetail" Width="1.5" PointX="6.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COSTCO.TESTModel.WirelessAccount" Width="2" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COSTCO.TESTModel.WirelessLine" Width="1.5" PointX="4.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="COSTCO.TESTModel.CarrierInterfaceLog" Width="1.5" PointX="6.625" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COSTCO.TESTModel.CheckoutSessionState" Width="1.5" PointX="8.625" PointY="6.875" IsExpanded="true" />
+        <AssociationConnector Association="COSTCO.TESTModel.FK_LineService_OrderDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="COSTCO.TESTModel.FK_WirelessAccount_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="COSTCO.TESTModel.FK_WirelessLine_OrderDetail" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="COSTCO.TESTModel.Device" Width="1.5" PointX="10.875" PointY="2.375" />
+        <EntityTypeShape EntityType="COSTCO.TESTModel.Service" Width="1.5" PointX="10.875" PointY="5" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="TMobileService.asmx.cs" Class="TMobileCarrierServiceInterface.TMobileService" %>

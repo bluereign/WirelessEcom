@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Pagemaster", "Pagemaster\Pagemaster.sqlproj", "{FEB3F2EA-0AA2-40FA-B56F-DF120B3C610C}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Pagemaster\\Pagemaster.sqlproj
+		SccProjectName1 = Pagemaster
+		SccLocalPath1 = Pagemaster
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEB3F2EA-0AA2-40FA-B56F-DF120B3C610C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEB3F2EA-0AA2-40FA-B56F-DF120B3C610C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEB3F2EA-0AA2-40FA-B56F-DF120B3C610C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FEB3F2EA-0AA2-40FA-B56F-DF120B3C610C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEB3F2EA-0AA2-40FA-B56F-DF120B3C610C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEB3F2EA-0AA2-40FA-B56F-DF120B3C610C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

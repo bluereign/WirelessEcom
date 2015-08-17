@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CostcoDB", "CostcoDB\CostcoDB.csproj", "{FC83A3D1-D798-48C2-B205-B74C13010438}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4349FF20-FDE3-4B7B-AF48-E516E9E7DA90}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{5BE72CBD-8B24-49D4-8233-50CFD7CA2804}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryTests", "RepositoryTests\RepositoryTests.csproj", "{0B4BEC5E-84E6-46C1-8F19-6AEA326C314D}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CostcoDB\\CostcoDB.csproj
+		SccProjectName1 = CostcoDB
+		SccLocalPath1 = CostcoDB
+		SccProjectUniqueName2 = Repository\\Repository.csproj
+		SccProjectName2 = Repository
+		SccLocalPath2 = Repository
+		SccProjectUniqueName3 = RepositoryTests\\RepositoryTests.csproj
+		SccProjectName3 = RepositoryTests
+		SccLocalPath3 = RepositoryTests
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC83A3D1-D798-48C2-B205-B74C13010438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC83A3D1-D798-48C2-B205-B74C13010438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC83A3D1-D798-48C2-B205-B74C13010438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC83A3D1-D798-48C2-B205-B74C13010438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE72CBD-8B24-49D4-8233-50CFD7CA2804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE72CBD-8B24-49D4-8233-50CFD7CA2804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE72CBD-8B24-49D4-8233-50CFD7CA2804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE72CBD-8B24-49D4-8233-50CFD7CA2804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B4BEC5E-84E6-46C1-8F19-6AEA326C314D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B4BEC5E-84E6-46C1-8F19-6AEA326C314D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B4BEC5E-84E6-46C1-8F19-6AEA326C314D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B4BEC5E-84E6-46C1-8F19-6AEA326C314D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

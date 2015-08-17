@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<TestCase name="DdAddPhoneToCart" browser="ie" baseUrl="http://10.7.0.143/mainvfd/testvfd" timeoutHalfSeconds="20">
+  <CustomerInfo last4Ssn="2725" accountPassword="jcardon1">
+    <Name firstName="Direct" lastName="Delivery" />
+    <Home streetAddress="134 Pine St." city="Abilene" state="Texas" zipCode="79601" />
+    <Contact mobileNumber="302-502-6836" email="jcardon@wirelessadvocates.com" />
+    <CreditCard cardNumber="5472063333333330" expireMonth="12" expireYear="15" cvv="123" />
+  </CustomerInfo>
+  <Device id="23641" name="lg-g2-black" />
+  <Carrier zipCode="19977" password="HELLO" />
+</TestCase>

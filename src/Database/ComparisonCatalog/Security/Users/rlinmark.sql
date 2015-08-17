@@ -1,0 +1,2 @@
+CREATE USER [rlinmark] WITHOUT LOGIN
+GO

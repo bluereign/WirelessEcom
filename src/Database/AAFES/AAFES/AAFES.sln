@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AAFES", "AAFES\AAFES.sqlproj", "{C3614234-531A-425F-A9D8-051D7F09636A}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = AAFES\\AAFES.sqlproj
+		SccProjectName1 = AAFES
+		SccLocalPath1 = AAFES
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3614234-531A-425F-A9D8-051D7F09636A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3614234-531A-425F-A9D8-051D7F09636A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3614234-531A-425F-A9D8-051D7F09636A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C3614234-531A-425F-A9D8-051D7F09636A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3614234-531A-425F-A9D8-051D7F09636A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3614234-531A-425F-A9D8-051D7F09636A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

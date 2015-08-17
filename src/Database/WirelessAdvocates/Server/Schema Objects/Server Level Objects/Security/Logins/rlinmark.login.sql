@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [rlinmark]
+    WITH PASSWORD = N'!lgr!iyd|bUurnE|mCwliyvcmsFT7_&#$!~<szlnjRydxudb', SID = 0x1027BB220B4D8B46834F3525456B9EA9, DEFAULT_DATABASE = [CARTOYS], DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+

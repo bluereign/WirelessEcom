@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://integration.sprint.com/interfaces/validateAddress/v1/validateAddress.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://integration.sprint.com/interfaces/validateAddress/v1/validateAddress.xsd" version="1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="validateAddress" type="tns:ValidateAddressType">
+    <xs:annotation>
+      <xs:documentation>Validate a given United States based Address</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="validateAddressResponse" type="tns:ValidateAddressResponseType">
+    <xs:annotation>
+      <xs:documentation>Response from the validation process</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ValidateAddressType">
+    <xs:sequence>
+      <xs:element name="addressInfo" type="tns:RequestAddressType" />
+      <xs:element minOccurs="0" name="additionalValidationOptions" type="tns:AdditionalValidationOptionsType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ValidateAddressResponseType">
+    <xs:annotation>
+      <xs:documentation>Container element that holds the results from the valiation process</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="validatedAddressList" type="tns:ResponseAddressListType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdditionalAddressInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ruralRouteHighwayContractCode" type="tns:RuralRouteHighwayContractTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Validated and extractedRural Route/Highway Contract indicator
+ HC—The address is a Highway Contract address
+ RR—The address is a Rural Route address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="privateMailbox" type="tns:PrivateMailboxType">
+        <xs:annotation>
+          <xs:documentation>Extracted Private Mail box information from input address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="privateMailboxType" type="tns:PrivateMailboxTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>Validated and extracted type of private mailbox. Possible values
+include:
+• Standard
+• Non-Standard</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deliveryPointValidationCode" type="tns:DeliveryPointValidationStatusCodeType">
+        <xs:annotation>
+          <xs:documentation>Indicates the results of Delivery Point Validation (DPV)
+processing.
+• Y—DPV confirmed
+• N—Address not deliverable
+• S—Primary number was validated but secondary
+number could not be confirmed
+• D—Primary number was validated but secondary
+number was missing from input
+• M—The address matches multiple valid delivery points
+• U—Unconfirmed (because the address did not code at
+the ZIP + 4® level
+• V—The address caused a false-positive violation. For
+more information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="deliveryPointValidationNote" type="tns:DeliveryPointValidationNoteCodeType">
+        <xs:annotation>
+          <xs:documentation>• AA—Input address matched to the ZIP + 4® file.
+• A1—Input address not matched to the ZIP + 4® file.
+• BB—Input address matched to DPV (all components).
+• CC—Input address primary number matched to DPV but
+secondary number not match (present but not valid).
+• N1—Input address primary number matched to DPV but
+high rise address missing secondary number.
+• M1—Input address primary number missing.
+• M3—Input address primary number invalid.
+• P1—Input address missing PO, RR or HC Box number.
+• RR—Input address matched to CMRA.
+• R1—Input address matched to CMRA but secondary
+number not present.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="confidence" type="tns:ConfidenceLevelType">
+        <xs:annotation>
+          <xs:documentation>The level of confidence assigned to the address being returned. Range 
+is from zero (0) to 100; zero indicates failure, 100 indicates a very high
+level of confidence that the match results are correct. For multiple
+matches, the confidence level is 0. For details about how this number
+is calculated
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="recordType" type="tns:AddressTypeNameType">
+        <xs:annotation>
+          <xs:documentation>Indicates the record type: 
+• GeneralDelivery
+• HighRise
+• FirmRecord
+• Normal
+• PostOfficeBox
+• RRHighwayContract
+• Geographic (non USPS TIGER match)
+• Auxiliary (match to an auxiliary file)
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="matchScore" type="tns:AddressMatchScoreType">
+        <xs:annotation>
+          <xs:documentation>MatchScore provides an indication of the degree to which the output 
+address is correct. It is significantly different from Confidence in that
+Confidence is indicates how much the input address changed to obtain
+a match, whereas the meaning of Match Score varies between U.S. and
+non-U.S. addresses.
+For U.S. addresses, MatchScore is a one-digit score on a scale of 0 to 9
+that reflects the closeness of the street-name match (after
+transformations by ValidateAddress, if any). Zero indicates an exact
+match and 9 indicates the least likely match. If no match was found,
+this field is blank.
+</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdditionalValidationOptionsType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="multipleMatchInd" type="tns:FetchInformationFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates whether or not to return multiple address for
+the input address that has more than one possible
+match.
+true - return multiple matches (default).
+false - No, do not return multiple matches.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="maxMatchingAddressesToBeReturned">
+        <xs:annotation>
+          <xs:documentation>A number between 1 and 10 that indicates the maximum number of addresses to return. The default value is 1.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="tns:MaximumRecordCountType">
+            <xs:minInclusive value="1" />
+            <xs:maxInclusive value="10" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="deliveryPointValidationInd" type="tns:DeliveryPointValidationFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates whether to Perform Delivery Point Validation or not.
+false - do not perform Delivery Point Validation (default).
+true - perform Delivery Point Validation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResponseAddressListType">
+    <xs:annotation>
+      <xs:documentation>List of 1-3 validated addresses</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element maxOccurs="10" name="validatedAddressInfo" type="tns:ResponseAddressType">
+        <xs:annotation>
+          <xs:documentation>The type of address data being returned:
+- Standard
+- Parsed
+- Postal
+Always returned on successful validation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResponseAddressType">
+    <xs:annotation>
+      <xs:documentation>Container element that holds the address</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="addressType" type="tns:AddressTypeCodeType">
+        <xs:annotation>
+          <xs:documentation>S - Street
+P - PO Box
+R - Rural Route</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="addressLine1" type="tns:PostalAddressLine1Type">
+        <xs:annotation>
+          <xs:documentation>First line of the address, including street number, POBox or RR</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addressLine2" type="tns:PostalAddressLine2Type">
+        <xs:annotation>
+          <xs:documentation>Second address line. Can Include Apartment number, etc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ruralNumber" type="tns:RuralRouteBoxNumberType">
+        <xs:annotation>
+          <xs:documentation>Rural Route Box Number holds the number identifying a mail box on a rural route.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ruralRoute" type="tns:RuralRouteControlNumberType">
+        <xs:annotation>
+          <xs:documentation>Rural Route Control Number holds the rural road or highway identifier.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="pobNumber" type="tns:PostOfficeBoxNumberType">
+        <xs:annotation>
+          <xs:documentation>Validated and extracted Post office box number. If the address is a rural
+route address, the rural route box number will
+appear here.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="houseNumber" type="tns:StreetNumberType">
+        <xs:annotation>
+          <xs:documentation>Extracted house number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="apartmentNumber" type="tns:ApartmentNumberType">
+        <xs:annotation>
+          <xs:documentation>Validated and extracted Apartment number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="apartmentType" type="tns:ApartmentNumberType">
+        <xs:annotation>
+          <xs:documentation>Apartment designator (such as STE or APT)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="streetPrefix" type="tns:StreetSuffixType">
+        <xs:annotation>
+          <xs:documentation>The type of street when the street type appears before the
+base street name. For example, AVENUE:</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="streetName" type="tns:StreetNameType">
+        <xs:annotation>
+          <xs:documentation>Extracted Street name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="streetSuffix" type="tns:StreetSuffixType">
+        <xs:annotation>
+          <xs:documentation>Extracted Street name suffix. E.g., St., Lane, blvd., etc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="leadingDirection" type="tns:StreetDirectionType">
+        <xs:annotation>
+          <xs:documentation>Street directional that precedes the street name. For
+example, the N in 138 N Main Street.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="trailingDirection" type="tns:StreetDirectionType">
+        <xs:annotation>
+          <xs:documentation>Street directional that follows the street name. For
+example, the N in 456 Washington N.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="city" type="tns:CityNameType">
+        <xs:annotation>
+          <xs:documentation>City name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="state" type="tns:StateNameType">
+        <xs:annotation>
+          <xs:documentation>State or province</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="zipCode" type="tns:UspsPostalCodeType">
+        <xs:annotation>
+          <xs:documentation>U.S. ZIP Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="zip4Code" type="tns:UspsPostalCodeExtensionType">
+        <xs:annotation>
+          <xs:documentation>4 digit zipcode extension</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" default="usa" name="country" type="tns:CountryNameType">
+        <xs:annotation>
+          <xs:documentation>Country name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="companyName" type="tns:CompanyNameType">
+        <xs:annotation>
+          <xs:documentation>Validated and extracted Company or firm name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="usUrbanName" type="tns:UspsUrbanizationNameType">
+        <xs:annotation>
+          <xs:documentation>Validated and extracted U.S. address urbanization name, may be required for Peurto Rico Addresses</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addressNotFoundInCode1Ind" type="tns:AddressDatabaseMismatchFlag">
+        <xs:annotation>
+          <xs:documentation>Indicates whether address is found in Code1 DB or not.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="multipleMatchesFoundInd" type="tns:AddressValidationMultipleMatchFlagType">
+        <xs:annotation>
+          <xs:documentation>Indicates if multiple matching addresses are found or not for  the input address. 
+true - multiple matches found</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="additionalAddressInfo" type="tns:AdditionalAddressInfoType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestAddressType">
+    <xs:annotation>
+      <xs:documentation>Container element that holds the address</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="addressLine1" type="tns:PostalAddressLine1Type">
+        <xs:annotation>
+          <xs:documentation>First line of the address, including street number, POBox or RR</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="addressLine2" type="tns:PostalAddressLine2Type">
+        <xs:annotation>
+          <xs:documentation>Second address line. Can Include Apartment number, etc.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="city" type="tns:CityNameType">
+        <xs:annotation>
+          <xs:documentation>City name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="state" type="tns:StateNameType">
+        <xs:annotation>
+          <xs:documentation>State or province</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="zipCode" type="tns:UspsPostalCodeType">
+        <xs:annotation>
+          <xs:documentation>U.S. ZIP Code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="zip4Code" type="tns:UspsPostalCodeExtensionType">
+        <xs:annotation>
+          <xs:documentation>4 digit zipcode extension</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" default="usa" name="country" type="tns:CountryNameType">
+        <xs:annotation>
+          <xs:documentation>Country name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="companyName" type="tns:CompanyNameType">
+        <xs:annotation>
+          <xs:documentation>Company or firm name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="usUrbanName" type="tns:UspsUrbanizationNameType">
+        <xs:annotation>
+          <xs:documentation>U.S. address urbanization name, may be required for Peurto Rico Addresses</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AddressTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Address Type Code distinguishes an address as either a Military address, Rural address, Street address, PO Box address or a Foreign address.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AddressTypeNameType">
+    <xs:annotation>
+      <xs:documentation>Address Type Name is a text representation of an address type.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ApartmentDesignatorType">
+    <xs:annotation>
+      <xs:documentation>Apartment Designator is an Address Component that holds a value identifying the address as a type of apartment.Examples:"APT""UNIT"Etc.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ApartmentNumberType">
+    <xs:annotation>
+      <xs:documentation>Apartment Number is an Address Component that contains the identifier of the apartment within the context of a bilding's postal address.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CityNameType">
+    <xs:annotation>
+      <xs:documentation>City Name holds the textual string identifying a City.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CompanyNameType">
+    <xs:annotation>
+      <xs:documentation>Company Name is the common name for a company.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ConfidenceLevelType">
+    <xs:annotation>
+      <xs:documentation>The Confidence Level indicates level of match that was found when searching.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CountryNameType">
+    <xs:annotation>
+      <xs:documentation>International Standardization Organization Country Name.</xs:documentation>
+      <xs:documentation>International Standardization Organization Country Name.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FetchInformationFlagType">
+    <xs:annotation>
+      <xs:documentation>Fetch Information Flag is a boolean flag that indicates whether for the api to request the information associated to the request structure.
+true - the API will perform request for the associated information
+false - the API will request the assoociated information</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="PostalAddressLine1Type">
+    <xs:annotation>
+      <xs:documentation>Postal Address Line 1 is the first instance of the Postal Address Line is used in the creation of the Postal Address label. The Postal Address label is usually composed of three lines; 1. addresses, 2. street number and street name, 3. City, State, and Zipcode. In the case where PO Box is used the recipient may choose to insert their physical (aka street) address as line two, expanding the complete address to four lines. Providing both allows a sender to ship via the USPS or via a private carrier. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PostalAddressLine2Type">
+    <xs:annotation>
+      <xs:documentation>Postal Address Line 2  is the second instance of the Postal Address Line is used in the creation of the Postal Address label. The Postal Address label is usually composed of three lines; 1. addresses, 2. street number and street name, 3. City, State, and Zipcode. In the case where PO Box is used the recipient may choose to insert their physical (aka street) address as line two, expanding the complete address to four lines. Providing both allows a sender to ship via the USPS or via a private carrier. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PostOfficeBoxNumberType">
+    <xs:annotation>
+      <xs:documentation>Post Office Box Number holds a United States Postal Service Post Office Box Number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RuralRouteBoxNumberType">
+    <xs:annotation>
+      <xs:documentation>Rural Route Box Number holds the number identifying a mail box on a rural route.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RuralRouteControlNumberType">
+    <xs:annotation>
+      <xs:documentation>Rural Route Control Number holds the rural road or highway control number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StreetDirectionType">
+    <xs:annotation>
+      <xs:documentation>Street Direction is the component of a USPS Postal Address holding the compass bearing (North, East, South, West and various combinations and abbreviations) appearing before or after a Street Name.  e.g.: North Oak, South Oak, NorthWest Barry Road, Barry Road NW, Oak South, etc.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StateNameType">
+    <xs:annotation>
+      <xs:documentation>State Name is the name of a US State</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StreetNameType">
+    <xs:annotation>
+      <xs:documentation>Street Name is a USPS Postal Address component that holds the name of a street.  For example in, "123 Main Street", "Main" would reside in Street Name.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StreetNumberType">
+    <xs:annotation>
+      <xs:documentation>Street Number is a component of a USPS Posatal Address that holds the house or building number on a street.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StreetSuffixType">
+    <xs:annotation>
+      <xs:documentation>Street Suffix is a USPS Postal Address component that holds the trailing part of the street name.  For example in, "123 Main Street", "Street" would reside in Street Suffix.  Other values might be Cir, Vlvd, Rd, etc.</xs:documentation>
+      <xs:documentation>Street Suffix is a USPS Postal Address component that holds the trailing part of the street name.  For example in, "123 Main Street", "Street" would reside in Street Suffix.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCodeType">
+    <xs:annotation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>USPS Postal Code contains the first 5 characters of the nine digit USPS Postal Code.</xs:documentation>
+      <xs:documentation>alias: Ensemble: ADDR_DATA.ADR_ZIP</xs:documentation>
+      <xs:documentation>Ensemble: ADDR_DATA.ADR_ZIP
+
+The first 5 characters or digits of the address zip code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UspsPostalCodeExtensionType">
+    <xs:annotation>
+      <xs:documentation>USPS Posta Code Extension contains the last 4 characters of the nine digit USPS Postal Code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AddressDatabaseMismatchFlag">
+    <xs:annotation>
+      <xs:documentation>Address Database Mismatch Flag is a boolean indicator of whether an Address Database lookup failed or not.
+true - the corresponding address was not found in the Address Database
+false - the corresponding address was found in the Address Database</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="AddressMatchScoreType">
+    <xs:annotation>
+      <xs:documentation>Address Match Score provides an indication of the degree to which the output address is correct. It is significantly different from Confidence in that
+Confidence is indicates how much the input address changed to obtain
+a match, whereas the meaning of Match Score varies between U.S. and
+non-U.S. addresses.  For U.S. addresses, MatchScore is a one-digit score on a scale of 0 to 9 that reflects the closeness of the street-name match (after transformations by ValidateAddress, if any). Zero indicates an exact
+match and 9 indicates the least likely match. If no match was found,
+this field is blank.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AddressValidationFailureReasonTextType">
+    <xs:annotation>
+      <xs:documentation>Address Validation Failure Reason Text is the Reason for failure, if there is one.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30" />
+      <xs:minLength value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AddressValidationMultipleMatchFlagType">
+    <xs:annotation>
+      <xs:documentation>Address Validation Multiple Match Flag is a boolean indicator of whether multiple matching addresses were found when perfoming address validation.
+true - multiple matching addresses were found
+false - multiple matching addresses were not found</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="CommercialMailReceivingAgencyFlagType">
+    <xs:annotation>
+      <xs:documentation>Commercial Mail Receiving Agency Flag indicates whether the associated address belongs to a Commercial mail receiving agency (CMRA).
+true - address is a CMRA
+false - address is not a CMRA</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="DeliveryPointValidationFlagType">
+    <xs:annotation>
+      <xs:documentation>Delivery Point Validation Flag indicates whether or not to Perform Delivery Point Validation.
+Values:
+true - perform Delivery Point Validation
+false - do not perform Delivery Point Validation (default).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="DeliveryPointValidationNoteCodeType">
+    <xs:annotation>
+      <xs:documentation>Delivery Point Validation Note Code designates a specific note associated to the Delivery Point Validation (DPV) for an address.
+Values:
+AA - Input address matched to the ZIP + 4® file.
+A1 - Input address not matched to the ZIP + 4® file.
+BB - Input address matched to DPV (all components).
+CC - Input address primary number matched to DPV but
+secondary number not match (present but not valid).
+N1 -Input address primary number matched to DPV but
+high rise address missing secondary number.
+M1 - Input address primary number missing.
+M3 - Input address primary number invalid.
+P1 - Input address missing PO, RR or HC Box number.
+RR - Input address matched to CMRA.
+R1 - Input address matched to CMRA but secondary
+number not present.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2" />
+      <xs:enumeration value="AA" />
+      <xs:enumeration value="A1" />
+      <xs:enumeration value="BB" />
+      <xs:enumeration value="CC" />
+      <xs:enumeration value="N1" />
+      <xs:enumeration value="M1" />
+      <xs:enumeration value="M3" />
+      <xs:enumeration value="P1" />
+      <xs:enumeration value="RR" />
+      <xs:enumeration value="R1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DeliveryPointValidationStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Delivery Point Validation Status Code indicates the result of Delivery Point Validation (DPV) processing of an address.
+Y - DPV confirmed
+N - Address not deliverable
+S - Primary number was validated but secondary
+number could not be confirmed
+D - Primary number was validated but secondary
+number was missing from input
+M - The address matches multiple valid delivery points
+U - Unconfirmed (because the address did not code at
+the ZIP + 4® level
+V - The address caused a false-positive violation</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="1" />
+      <xs:enumeration value="Y" />
+      <xs:enumeration value="N" />
+      <xs:enumeration value="S" />
+      <xs:enumeration value="D" />
+      <xs:enumeration value="M" />
+      <xs:enumeration value="U" />
+      <xs:enumeration value="V" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IgnoredInputTextType">
+    <xs:annotation>
+      <xs:documentation>Ignored Input Text Type is the text value of input data that was ignored in processing.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LocatableAddressConversionSystemCandidateFlagType">
+    <xs:annotation>
+      <xs:documentation>Locatable Address Conversion System Candidate Flag indicates whether the address is a candidate for LACSLink conversion.
+true - candidate for LACSLink conversion
+false - not a candidate for LACSLink conversion
+
+The LACSLink product provides mailers an automated method of obtaining new addresses when:
+
+a 911 emergency system has been implemented to convert rural-style Addresses to city-style addresses. 
+a street address has been renamed or renumbered. 
+Address Management Systems (AMS) offices across the country collect and transfer information for this database to the National Customer Support Center in Memphis TN.
+
+The LACS service is available through all NCOALink® Full Service Provider Licensees and companies utilizing CASS Certified™ software. This service is offered as a stand-alone process or as a front-end process with the NCOALink service to ensure a high quality mailing list. 
+
+Input address information provided by a mailer to the licensee is first standardized according to Publication 28, Postal Addressing Standards to conform with U.S. Postal Service® requirements including the ZIP + 4® code. Once the address is standardized the input address is considered to be a candidate for matching against the LACSLink data under the following conditions:
+
+the address matches to a Rural Route or Highway Contract Record on the ZIP + 4 file 
+the address matches a record that has an “L” in the LACS Status indicator in the ZIP + 4 file 
+the address does not match a record in the ZIP + 4 file
+If an exact match is made with the old address information to the LACSLink data files, the new address should be provided to the mailer. 
+
+LACSLink benefits include the following:
+
+reduces undeliverable mail by providing the most current address information for matches made to the LACS file 
+prevents the need for duplicate mailpieces or re-mailings after address corrections are received since the address correction is applied prior to the mailing 
+lowers mailer costs by reducing the number of undeliverable and/or duplicate mailpieces by using the most current address information 
+provides the opportunity for faster product/service marketing through accurate mail delivery 
+
+A ZIP™ Code listing (Microsoft Word Format) contains one column of ZIP Codes and quantities of records on the LACS database. Currently, there are approximately 5.8 million records on the LACS database of addresses that have been converted. (e.g., E-911 changes, etc.) 
+
+This listing will give mailers a good indication whether or not an area on their mailing list has undergone conversion based on the ZIP Code of their customers. 
+
+NOTE: Just because a ZIP Code is found on this list, mailers should not assume that all the converted addresses have made it to the file. There are parts of the country that have only reported a percentage of their changes and therefore, the LACS database is not yet complete. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="MaximumRecordCountType">
+    <xs:annotation>
+      <xs:documentation>Maximum Record Count is a numerical representation of the maximum number of records that should be returned in a set of records.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer" />
+  </xs:simpleType>
+  <xs:simpleType name="PrivateMailboxFlagType">
+    <xs:annotation>
+      <xs:documentation>Private Mailbox Flag is a boolean indicator of whether the address is a private mailbox</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="PrivateMailboxType">
+    <xs:annotation>
+      <xs:documentation>Private Mailbox is used by Private companies offering mailbox rental services to individuals and businesses (known as Commercial Mail Receiving Agencies -CMRA). Addresses on mail received at a CMRA must adhere to specific requirements in the use of their private mailbox number (PMB). Mail sent to an addressee at a CMRA must include either the 'PMB' identifier or the '#', followed by the appropriate private mailbox number. Use of any other identifier is prohibited. Either a three line or four line address format can be used with a CMRA address and the PMB or # identifier. It is not permissible to combine the secondary address element of the mailing address for the CMRA and the CMRA customer's private box number.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PrivateMailboxTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Private Mailbox Type Code designates whether a private mailbox address is standard or non-standard.
+Values:
+S - standard private mailbox address
+N - non-standard private mailbox address</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RuralRouteHighwayContractTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Rural Route Highway Contract Type Code designates whether the address is for a Rural Route (RR) or a Highway Contract (HC).  In the case of a Highway Contract the US Postal system contracts non- USPS employees to deliver the mail to people in certain rural areas. The homes are assigned an HC route number and a mail box number, and the contractor uses his/her personal car rather than a traditional white USPS truck.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2" />
+      <xs:enumeration value="HC" />
+      <xs:enumeration value="RR" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SuccessFlagType">
+    <xs:annotation>
+      <xs:documentation>Success Flag is a boolean flag indicating whether the response is successful.
+true - success
+false - failure</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="UspsUrbanizationNameType">
+    <xs:annotation>
+      <xs:documentation>Usps Urbanization Name can be the most important part of the delivery address, the name is standardized. In most instances, use the abbreviated urbanization identifier "URB" followed by the urbanization name.
+
+Example:
+
+    Incorrect Form                  Correct Form
+    URBANIZATION GOLDEN GATE        URB GOLDEN GATE 
+Generally, urbanization names are not repeated within 5-digit zones and, in most cases, are served by the same carrier route. Therefore, a list of urbanization names serves as 5-digit ZIP Code verification.
+
+Certain words identify names as urbanizations. Words like "EXTENSION," "REPARTO," "ALTURAS," "ESTANCIAS," "QUINTAS," etc., are used instead of "URB." When these words are present, there is no need to place the abbreviation "URB" before the name of the urbanization. </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

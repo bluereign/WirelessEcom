@@ -1,0 +1,98 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllPagesCostco", "AAFES\All Pages\AllPagesCostco\AllPagesCostco.csproj", "{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Campaign", "AAFES\Campaign\AllPagesCostco\Campaign.csproj", "{BAE39F6B-8EC3-4436-ABFC-DA72B201A1B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTerms", "AAFES\Dashboard - Search Terms\SearchTerms\AllPagesCostco\SearchTerms.csproj", "{FFAE5EC2-BB20-4720-AC4F-FC3D36FD5317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard", "AAFES\Dashboard - TodayTraffic\Dashboard.csproj", "{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "AAFES\Events\AllPagesCostco\Events.csproj", "{EE10AFAE-1161-47F1-98A5-835649D5ECF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserOSGen", "AAFES\General Browser and OS\SearchTerms\AllPagesCostco\BrowserOSGen.csproj", "{7FDEB540-48E3-4619-9660-B3CA19FE9F4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuBehavior", "AAFES\SearchTerms\AllPagesCostco\MenuBehavior.csproj", "{DB02D264-7443-4616-A49B-4243E5D10237}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccProjectUniqueName0 = AAFES\\All\u0020Pages\\AllPagesCostco\\AllPagesCostco.csproj
+		SccProjectName0 = AAFES/All\u0020Pages/AllPagesCostco
+		SccAuxPath0 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath0 = AAFES\\All\u0020Pages\\AllPagesCostco
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = AAFES\\Campaign\\AllPagesCostco\\Campaign.csproj
+		SccProjectName1 = AAFES/Campaign/AllPagesCostco
+		SccAuxPath1 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath1 = AAFES\\Campaign\\AllPagesCostco
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = AAFES\\Dashboard\u0020-\u0020Search\u0020Terms\\SearchTerms\\AllPagesCostco\\SearchTerms.csproj
+		SccProjectName2 = AAFES/Dashboard\u0020-\u0020Search\u0020Terms/SearchTerms/AllPagesCostco
+		SccAuxPath2 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath2 = AAFES\\Dashboard\u0020-\u0020Search\u0020Terms\\SearchTerms\\AllPagesCostco
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = AAFES\\Dashboard\u0020-\u0020TodayTraffic\\Dashboard.csproj
+		SccProjectName3 = AAFES/Dashboard\u0020-\u0020TodayTraffic
+		SccAuxPath3 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath3 = AAFES\\Dashboard\u0020-\u0020TodayTraffic
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName4 = AAFES\\Events\\AllPagesCostco\\Events.csproj
+		SccProjectName4 = AAFES/Events/AllPagesCostco
+		SccAuxPath4 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath4 = AAFES\\Events\\AllPagesCostco
+		SccProvider4 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName5 = AAFES\\General\u0020Browser\u0020and\u0020OS\\SearchTerms\\AllPagesCostco\\BrowserOSGen.csproj
+		SccProjectName5 = AAFES/General\u0020Browser\u0020and\u0020OS/SearchTerms/AllPagesCostco
+		SccAuxPath5 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath5 = AAFES\\General\u0020Browser\u0020and\u0020OS\\SearchTerms\\AllPagesCostco
+		SccProvider5 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName6 = AAFES\\SearchTerms\\AllPagesCostco\\MenuBehavior.csproj
+		SccProjectName6 = AAFES/SearchTerms/AllPagesCostco
+		SccAuxPath6 = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath6 = AAFES\\SearchTerms\\AllPagesCostco
+		SccProvider6 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}.Debug|x86.ActiveCfg = Debug|x86
+		{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}.Debug|x86.Build.0 = Debug|x86
+		{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}.Release|x86.ActiveCfg = Release|x86
+		{79CE55FA-60E1-4CFD-A7F1-98E2CC59260A}.Release|x86.Build.0 = Release|x86
+		{BAE39F6B-8EC3-4436-ABFC-DA72B201A1B6}.Debug|x86.ActiveCfg = Debug|x86
+		{BAE39F6B-8EC3-4436-ABFC-DA72B201A1B6}.Debug|x86.Build.0 = Debug|x86
+		{BAE39F6B-8EC3-4436-ABFC-DA72B201A1B6}.Release|x86.ActiveCfg = Release|x86
+		{BAE39F6B-8EC3-4436-ABFC-DA72B201A1B6}.Release|x86.Build.0 = Release|x86
+		{FFAE5EC2-BB20-4720-AC4F-FC3D36FD5317}.Debug|x86.ActiveCfg = Debug|x86
+		{FFAE5EC2-BB20-4720-AC4F-FC3D36FD5317}.Debug|x86.Build.0 = Debug|x86
+		{FFAE5EC2-BB20-4720-AC4F-FC3D36FD5317}.Release|x86.ActiveCfg = Release|x86
+		{FFAE5EC2-BB20-4720-AC4F-FC3D36FD5317}.Release|x86.Build.0 = Release|x86
+		{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}.Debug|x86.ActiveCfg = Debug|x86
+		{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}.Debug|x86.Build.0 = Debug|x86
+		{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}.Release|x86.ActiveCfg = Release|x86
+		{AECC3DFD-EAF9-4D22-AB62-9ED954C48E32}.Release|x86.Build.0 = Release|x86
+		{EE10AFAE-1161-47F1-98A5-835649D5ECF7}.Debug|x86.ActiveCfg = Debug|x86
+		{EE10AFAE-1161-47F1-98A5-835649D5ECF7}.Debug|x86.Build.0 = Debug|x86
+		{EE10AFAE-1161-47F1-98A5-835649D5ECF7}.Release|x86.ActiveCfg = Release|x86
+		{EE10AFAE-1161-47F1-98A5-835649D5ECF7}.Release|x86.Build.0 = Release|x86
+		{7FDEB540-48E3-4619-9660-B3CA19FE9F4A}.Debug|x86.ActiveCfg = Debug|x86
+		{7FDEB540-48E3-4619-9660-B3CA19FE9F4A}.Debug|x86.Build.0 = Debug|x86
+		{7FDEB540-48E3-4619-9660-B3CA19FE9F4A}.Release|x86.ActiveCfg = Release|x86
+		{7FDEB540-48E3-4619-9660-B3CA19FE9F4A}.Release|x86.Build.0 = Release|x86
+		{DB02D264-7443-4616-A49B-4243E5D10237}.Debug|x86.ActiveCfg = Debug|x86
+		{DB02D264-7443-4616-A49B-4243E5D10237}.Debug|x86.Build.0 = Debug|x86
+		{DB02D264-7443-4616-A49B-4243E5D10237}.Release|x86.ActiveCfg = Release|x86
+		{DB02D264-7443-4616-A49B-4243E5D10237}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

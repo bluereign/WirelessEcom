@@ -1,0 +1,145 @@
+<cfcomponent name="PromotionCodes" output="false">
+
+	<cffunction name="init" access="public" returntype="PromotionCodes" output="false">
+
+		<cfset this.model = createObject('component', 'cfc.model.promotionCodes').init() />
+
+		<cfreturn this />
+	</cffunction>
+
+	<cffunction name="getPromotions" access="public" returntype="query" output="false">
+		<cfreturn this.model.getPromotions() />
+	</cffunction>
+
+	<cffunction name="getPromotion" access="public" returntype="query" output="false">
+		<cfargument name="promotionId" required="false" type="string" />
+		<cfargument name="promotionCode" required="false" type="string" />
+
+		<cfreturn this.model.getPromotion(argumentCollection = arguments) />
+	</cffunction>
+
+	<cffunction name="insertPromotion" access="public" returntype="boolean" output="false">
+		<cfargument name="c" required="true" type="string" />
+		<cfargument name="promotionCode" required="true" type="string" />
+		<cfargument name="startDate" required="true" type="date" />
+		<cfargument name="startTime" required="true" type="numeric" />
+		<cfargument name="endDate" required="true" type="date" />
+		<cfargument name="endTime" required="true" type="numeric" />
+		<cfargument name="discountValue" required="true" type="numeric" />
+		<cfargument name="createdBy" required="true" type="numeric" />
+
+		<cfset var insertPromotionReturn = false />
+		<cfset var errorCode = 0 />
+
+		<cfset arguments.startDateTime = createDateTime(year(arguments.startDate), month(arguments.startDate), day(arguments.startDate), arguments.startTime, 0, 0) />
+		<cfset arguments.endDateTime = createDateTime(year(arguments.endDate), month(arguments.endDate), day(arguments.endDate), arguments.endTime, 0, 0) />
+
+		<cfif not promotionExists(promotionCode = arguments.promotionCode)>
+			<cfset insertPromotionReturn = this.model.insertPromotion(argumentCollection = arguments) />
+		<cfelse>
+			<cfset errorCode = 1 />
+		</cfif>
+
+		<cfif insertPromotionReturn>
+			<cflocation url="index.cfm?c=#arguments.c#&go=home&add=true" addtoken="false" />
+		<cfelse>
+			<cflocation url="index.cfm?c=#arguments.c#&go=add&error=#errorCode#" addtoken="false" />
+		</cfif>
+
+		<cfreturn  />
+	</cffunction>
+
+	<cffunction name="updatePromotion" access="public" returntype="boolean" output="false">
+		<cfargument name="promotionId" required="true" type="string" />
+		<cfargument name="promotionCode" required="true" type="string" />
+		<cfargument name="startDate" required="true" type="date" />
+		<cfargument name="startTime" required="true" type="numeric" />
+		<cfargument name="endDate" required="true" type="date" />
+		<cfargument name="endTime" required="true" type="numeric" />
+		<cfargument name="discountValue" required="true" type="numeric" />
+		<cfargument name="updatedBy" required="true" type="numeric" />
+
+		<cfset var updatePromotionReturn = false />
+
+		<cfset arguments.startDateTime = createDateTime(year(arguments.startDate), month(arguments.startDate), day(arguments.startDate), arguments.startTime, 0, 0) />
+		<cfset arguments.endDateTime = createDateTime(year(arguments.endDate), month(arguments.endDate), day(arguments.endDate), arguments.endTime, 0, 0) />
+
+		<cfset updatePromotionReturn = this.model.updatePromotion(argumentCollection = arguments) />
+
+		<cfif updatePromotionReturn>
+			<cflocation url="index.cfm?c=#url.c#&go=home&edit=true" addtoken="false" />
+		<cfelse>
+			<cflocation url="index.cfm?c=#url.c#&go=edit&promotionId=#arguments.promotionId#&error=true" addtoken="false" />
+		</cfif>
+
+		<cfreturn updatePromotionReturn />
+	</cffunction>
+
+	<cffunction name="removePromotion" access="public" returntype="boolean" output="false">
+		<cfargument name="promotionId" required="true" type="string" />
+
+		<cfset var removePromotionReturn = this.model.removePromotion(argumentCollection = arguments) />
+
+		<cfif removePromotionReturn>
+			<cflocation url="index.cfm?c=#url.c#&go=home&remove=true" addtoken="false" />
+		<cfelse>
+			<cflocation url="index.cfm?c=#url.c#&go=home" addtoken="false" />
+		</cfif>
+
+		<cfreturn removePromotionReturn />
+	</cffunction>
+
+	<cffunction name="promotionExists" access="public" returntype="boolean" output="false">
+		<cfargument name="promotionCode" required="true" type="string" />
+
+		<cfreturn this.model.promotionExists(argumentCollection = arguments) />
+	</cffunction>
+
+	<cffunction name="promotionHasBeenAssigned" access="public" returntype="boolean" output="false">
+		<cfargument name="promotionId" required="true" type="numeric" />
+		<cfargument name="isRedeemed" required="false" type="boolean" />
+
+		<cfreturn this.model.promotionHasBeenAssigned(argumentCollection = arguments) />
+	</cffunction>
+
+	<cffunction name="getError" access="public" returntype="string" output="false">
+		<cfargument name="errorCode" required="true" type="numeric" />
+
+		<cfreturn this.model.getError(argumentCollection = arguments) />
+	</cffunction>
+
+	<cffunction name="isPromotionValid" access="public" returntype="string" output="false">
+		<cfargument name="promotionCode" required="true" type="string" />
+		<cfargument name="orderTotal" required="false" type="numeric" default="0" />
+
+		<cfset var isPromotionValidReturn = '' />
+
+		<cfset isPromotionValidReturn = this.model.isPromotionValid(argumentCollection = arguments) />
+
+		<cfreturn isPromotionValidReturn />
+	</cffunction>
+
+	<cffunction name="checkPromotionCode" access="public" returntype="string" output="false">
+		<cfargument name="promotionCode" required="true" type="string" />
+
+		<cfset var error = '' />
+		<cfset var checkPromotionCodeReturn = '' />
+		<cfset var qry_getPromotion = queryNew('undefined') />
+
+		<cfif not len(trim(arguments.promotionCode))>
+			<cfset error = 'false|The promotion code you provided is not valid.' />
+		<cfelseif listFirst(isPromotionValid(trim(arguments.promotionCode)), '|') is 'FALSE'>
+			<cfset error = 'false|The promotion code you provided is not valid.' />
+		</cfif>
+
+		<cfif len(trim(error))>
+			<cfset checkPromotionCodeReturn = error />
+		<cfelse>
+			<cfset application.model.checkOutHelper.setCheckoutPromotionCode(trim(arguments.promotionCode)) />
+			<cfset qry_getPromotion = getPromotion(promotionCode = trim(arguments.promotionCode)) />
+			<cfset checkPromotionCodeReturn = 'true|#qry_getPromotion.bundleName#|You have entered the following code.' />
+		</cfif>
+
+		<cfreturn checkPromotionCodeReturn />
+	</cffunction>
+</cfcomponent>

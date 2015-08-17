@@ -1,0 +1,247 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A08B63F9-466D-42A1-B321-7B43762ADC91}"
+	ProjectSection(SolutionItems) = preProject
+		CarrierServiceInterface.vsmdi = CarrierServiceInterface.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WirelessAdvocates", "WirelessAdvocates\WirelessAdvocates.csproj", "{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMobileCarrierServiceInterface", "TMobileCarrierServiceInterface\TMobileCarrierServiceInterface.csproj", "{9C899864-BACC-46A6-9279-9458A8705644}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivationResponse", "AttActivationCallback\ActivationResponse\ActivationResponse.csproj", "{640E0521-BBEC-4E8E-B813-13AC934ECF14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintCarrierServiceInterface", "SprintCarrierServiceInterface\SprintCarrierServiceInterface.csproj", "{92AAD83E-6D84-422D-9FA3-992EC1C93F41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintCarrierServiceTests", "SprintCarrietServiceTests\SprintCarrierServiceTests.csproj", "{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserGuides", "UserGuides", "{8226D4EC-E81A-423B-A99F-1171A96B5CD3}"
+	ProjectSection(SolutionItems) = preProject
+		UserGuides\AddressManagementService_User_Guide-v1.1.pdf = UserGuides\AddressManagementService_User_Guide-v1.1.pdf
+		UserGuides\APIs Sequence.docx = UserGuides\APIs Sequence.docx
+		c.html = c.html
+		UserGuides\DiscountManagementService_User_Guide-v2.0.pdf = UserGuides\DiscountManagementService_User_Guide-v2.0.pdf
+		UserGuides\doActivation.docx = UserGuides\doActivation.docx
+		UserGuides\doActivation.pdf = UserGuides\doActivation.pdf
+		UserGuides\doActivation.xlsx = UserGuides\doActivation.xlsx
+		UserGuides\doCreditCheck.docx = UserGuides\doCreditCheck.docx
+		UserGuides\doCreditCheck.pdf = UserGuides\doCreditCheck.pdf
+		UserGuides\doCreditCheck.xlsx = UserGuides\doCreditCheck.xlsx
+		UserGuides\EAI_API_checkLoanEligibility_Interface.docx = UserGuides\EAI_API_checkLoanEligibility_Interface.docx
+		UserGuides\EAI_API_createLoanContract_Interface.docx = UserGuides\EAI_API_createLoanContract_Interface.docx
+		UserGuides\EAI_API_lookupGroupAndEligibility_Interface.docx = UserGuides\EAI_API_lookupGroupAndEligibility_Interface.docx
+		UserGuides\EAI_API_validateDeviceV8_Interface.doc = UserGuides\EAI_API_validateDeviceV8_Interface.doc
+		UserGuides\EAI_OVM_API_AccountValidation_Interface.docx = UserGuides\EAI_OVM_API_AccountValidation_Interface.docx
+		UserGuides\EAI_OVM_API_ActivateNow_Interface.docx = UserGuides\EAI_OVM_API_ActivateNow_Interface.docx
+		UserGuides\EAI_OVM_API_ActivateReservedDevice_Interface.docx = UserGuides\EAI_OVM_API_ActivateReservedDevice_Interface.docx
+		UserGuides\EAI_OVM_API_PortEligibility_Interface.docx = UserGuides\EAI_OVM_API_PortEligibility_Interface.docx
+		UserGuides\EAI_OVM_API_PreAuthorization_Interface.docx = UserGuides\EAI_OVM_API_PreAuthorization_Interface.docx
+		UserGuides\Error_Documentation.xlsx = UserGuides\Error_Documentation.xlsx
+		History.txt = History.txt
+		UserGuides\QueryCsaService_User_Guide-v2.3[1].pdf = UserGuides\QueryCsaService_User_Guide-v2.3[1].pdf
+		UserGuides\QueryNumberPortingService_User_Guide-v1.1[1].pdf = UserGuides\QueryNumberPortingService_User_Guide-v1.1[1].pdf
+		UserGuides\QueryPlansAndOptions Service.pdf = UserGuides\QueryPlansAndOptions Service.pdf
+		UserGuides\QueryPlansAndOptionsService - validatePlansAndOptions User Guide.pdf = UserGuides\QueryPlansAndOptionsService - validatePlansAndOptions User Guide.pdf
+		UserGuides\RTB1 Accounts 10-10-13.xlsx = UserGuides\RTB1 Accounts 10-10-13.xlsx
+		UserGuides\RTB1 Accts 10-18-13.xlsx = UserGuides\RTB1 Accts 10-18-13.xlsx
+		UserGuides\RTB1 CDMA Devics 1-29-14.xlsx = UserGuides\RTB1 CDMA Devics 1-29-14.xlsx
+		UserGuides\RTB1 Devices 01-24-14.xlsx = UserGuides\RTB1 Devices 01-24-14.xlsx
+		UserGuides\RTB1 Devices 10-10-13.xlsx = UserGuides\RTB1 Devices 10-10-13.xlsx
+		UserGuides\RTB1 Upgrade Eligible Accts 10-17-13.xlsx = UserGuides\RTB1 Upgrade Eligible Accts 10-17-13.xlsx
+		UserGuides\WebServiceCalls.docx = UserGuides\WebServiceCalls.docx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5238BA79-27FA-4C77-B5E8-04C56CA713E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintMock", "SprintMock\SprintMock.csproj", "{160FC71E-4A9E-41D9-A9B4-343555EF1468}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfserver:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = WirelessAdvocates\\WirelessAdvocates.csproj
+		SccProjectName1 = WirelessAdvocates
+		SccLocalPath1 = WirelessAdvocates
+		SccProjectUniqueName2 = SprintCarrierServiceInterface\\SprintCarrierServiceInterface.csproj
+		SccProjectName2 = SprintCarrierServiceInterface
+		SccLocalPath2 = SprintCarrierServiceInterface
+		SccProjectUniqueName3 = AttActivationCallback\\ActivationResponse\\ActivationResponse.csproj
+		SccProjectName3 = AttActivationCallback/ActivationResponse
+		SccLocalPath3 = AttActivationCallback\\ActivationResponse
+		SccProjectUniqueName4 = TMobileCarrierServiceInterface\\TMobileCarrierServiceInterface.csproj
+		SccProjectName4 = TMobileCarrierServiceInterface
+		SccLocalPath4 = TMobileCarrierServiceInterface
+		SccProjectUniqueName5 = SprintCarrietServiceTests\\SprintCarrierServiceTests.csproj
+		SccProjectName5 = SprintCarrietServiceTests
+		SccLocalPath5 = SprintCarrietServiceTests
+		SccProjectUniqueName6 = SprintMock\\SprintMock.csproj
+		SccProjectName6 = SprintMock
+		SccLocalPath6 = SprintMock
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		DevAafes|Any CPU = DevAafes|Any CPU
+		DevCostco|Any CPU = DevCostco|Any CPU
+		DevPageMaster|Any CPU = DevPageMaster|Any CPU
+		Mock|Any CPU = Mock|Any CPU
+		ProdAafes|Any CPU = ProdAafes|Any CPU
+		ProdCostco|Any CPU = ProdCostco|Any CPU
+		ProdPageMaster|Any CPU = ProdPageMaster|Any CPU
+		Release|Any CPU = Release|Any CPU
+		StgAafes|Any CPU = StgAafes|Any CPU
+		StgCostco|Any CPU = StgCostco|Any CPU
+		StgPageMaster|Any CPU = StgPageMaster|Any CPU
+		TestAafes|Any CPU = TestAafes|Any CPU
+		TestCostco|Any CPU = TestCostco|Any CPU
+		TestPageMaster|Any CPU = TestPageMaster|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.DevAafes|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.DevAafes|Any CPU.Build.0 = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.DevCostco|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.DevCostco|Any CPU.Build.0 = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.DevPageMaster|Any CPU.ActiveCfg = DevPageMaster|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.DevPageMaster|Any CPU.Build.0 = DevPageMaster|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.Mock|Any CPU.ActiveCfg = Mock|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.Mock|Any CPU.Build.0 = Mock|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.ProdAafes|Any CPU.ActiveCfg = ProdAafes|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.ProdAafes|Any CPU.Build.0 = ProdAafes|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.ProdCostco|Any CPU.ActiveCfg = ProdCostco|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.ProdCostco|Any CPU.Build.0 = ProdCostco|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.ProdPageMaster|Any CPU.ActiveCfg = ProdPageMaster|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.ProdPageMaster|Any CPU.Build.0 = ProdPageMaster|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.StgAafes|Any CPU.ActiveCfg = StgAafes|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.StgAafes|Any CPU.Build.0 = StgAafes|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.StgCostco|Any CPU.ActiveCfg = StgCostco|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.StgCostco|Any CPU.Build.0 = StgCostco|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.StgPageMaster|Any CPU.ActiveCfg = StgPageMaster|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.StgPageMaster|Any CPU.Build.0 = StgPageMaster|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.TestAafes|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.TestAafes|Any CPU.Build.0 = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.TestCostco|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.TestCostco|Any CPU.Build.0 = Debug|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.TestPageMaster|Any CPU.ActiveCfg = TestPageMaster|Any CPU
+		{C5A9244F-4CD1-45F8-8F51-17C03386C6CC}.TestPageMaster|Any CPU.Build.0 = TestPageMaster|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.DevAafes|Any CPU.ActiveCfg = DevAafes|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.DevCostco|Any CPU.ActiveCfg = DevCostco|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.DevPageMaster|Any CPU.ActiveCfg = DevPageMaster|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.Mock|Any CPU.ActiveCfg = Mock|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.Mock|Any CPU.Build.0 = Mock|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.ProdAafes|Any CPU.ActiveCfg = ProdAafes|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.ProdCostco|Any CPU.ActiveCfg = ProdCostco|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.ProdPageMaster|Any CPU.ActiveCfg = ProdPageMaster|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.StgAafes|Any CPU.ActiveCfg = StgAafes|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.StgCostco|Any CPU.ActiveCfg = StgCostco|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.StgPageMaster|Any CPU.ActiveCfg = StgPageMaster|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.TestAafes|Any CPU.ActiveCfg = TestAafes|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.TestCostco|Any CPU.ActiveCfg = TestCostco|Any CPU
+		{9C899864-BACC-46A6-9279-9458A8705644}.TestPageMaster|Any CPU.ActiveCfg = TestPageMaster|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.DevAafes|Any CPU.ActiveCfg = DevAafes|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.DevCostco|Any CPU.ActiveCfg = DevCostco|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.DevPageMaster|Any CPU.ActiveCfg = DevPageMaster|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.Mock|Any CPU.ActiveCfg = Mock|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.ProdAafes|Any CPU.ActiveCfg = ProdAafes|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.ProdCostco|Any CPU.ActiveCfg = ProdCostco|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.ProdPageMaster|Any CPU.ActiveCfg = ProdPageMaster|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.StgAafes|Any CPU.ActiveCfg = StgAafes|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.StgCostco|Any CPU.ActiveCfg = StgCostco|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.StgPageMaster|Any CPU.ActiveCfg = StgPageMaster|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.TestAafes|Any CPU.ActiveCfg = TestAafes|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.TestCostco|Any CPU.ActiveCfg = TestCostco|Any CPU
+		{640E0521-BBEC-4E8E-B813-13AC934ECF14}.TestPageMaster|Any CPU.ActiveCfg = TestPageMaster|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.DevAafes|Any CPU.ActiveCfg = DevAafes|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.DevAafes|Any CPU.Build.0 = DevAafes|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.DevCostco|Any CPU.ActiveCfg = DevCostco|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.DevCostco|Any CPU.Build.0 = DevCostco|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.DevPageMaster|Any CPU.ActiveCfg = DevPageMaster|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.DevPageMaster|Any CPU.Build.0 = DevPageMaster|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.Mock|Any CPU.ActiveCfg = Mock|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.Mock|Any CPU.Build.0 = Mock|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.ProdAafes|Any CPU.ActiveCfg = ProdAafes|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.ProdAafes|Any CPU.Build.0 = ProdAafes|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.ProdCostco|Any CPU.ActiveCfg = ProdCostco|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.ProdCostco|Any CPU.Build.0 = ProdCostco|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.ProdPageMaster|Any CPU.ActiveCfg = ProdPageMaster|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.ProdPageMaster|Any CPU.Build.0 = ProdPageMaster|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.StgAafes|Any CPU.ActiveCfg = StgAafes|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.StgAafes|Any CPU.Build.0 = StgAafes|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.StgCostco|Any CPU.ActiveCfg = StgCostco|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.StgCostco|Any CPU.Build.0 = StgCostco|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.StgPageMaster|Any CPU.ActiveCfg = StgPageMaster|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.StgPageMaster|Any CPU.Build.0 = StgPageMaster|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.TestAafes|Any CPU.ActiveCfg = TestAafes|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.TestAafes|Any CPU.Build.0 = TestAafes|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.TestCostco|Any CPU.ActiveCfg = TestCostco|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.TestCostco|Any CPU.Build.0 = TestCostco|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.TestPageMaster|Any CPU.ActiveCfg = TestPageMaster|Any CPU
+		{92AAD83E-6D84-422D-9FA3-992EC1C93F41}.TestPageMaster|Any CPU.Build.0 = TestPageMaster|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.DevAafes|Any CPU.ActiveCfg = DevAafes|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.DevCostco|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.DevPageMaster|Any CPU.ActiveCfg = DevPageMaster|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.Mock|Any CPU.ActiveCfg = Mock|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.Mock|Any CPU.Build.0 = Mock|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.ProdAafes|Any CPU.ActiveCfg = ProdAafes|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.ProdCostco|Any CPU.ActiveCfg = ProdCostco|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.ProdPageMaster|Any CPU.ActiveCfg = ProdPageMaster|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.StgAafes|Any CPU.ActiveCfg = StgAafes|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.StgCostco|Any CPU.ActiveCfg = StgCostco|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.StgPageMaster|Any CPU.ActiveCfg = StgPageMaster|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.TestAafes|Any CPU.ActiveCfg = TestAafes|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.TestCostco|Any CPU.ActiveCfg = TestCostco|Any CPU
+		{8F8C1DC4-25C4-4521-B6FE-E8EDE933E996}.TestPageMaster|Any CPU.ActiveCfg = TestPageMaster|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.DevAafes|Any CPU.ActiveCfg = Debug|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.DevCostco|Any CPU.ActiveCfg = Debug|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.DevPageMaster|Any CPU.ActiveCfg = DevPageMaster|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.Mock|Any CPU.ActiveCfg = Mock|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.Mock|Any CPU.Build.0 = Mock|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.ProdAafes|Any CPU.ActiveCfg = Release|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.ProdCostco|Any CPU.ActiveCfg = Release|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.ProdPageMaster|Any CPU.ActiveCfg = ProdPageMaster|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.StgAafes|Any CPU.ActiveCfg = Release|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.StgCostco|Any CPU.ActiveCfg = Release|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.StgCostco|Any CPU.Build.0 = Release|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.StgPageMaster|Any CPU.ActiveCfg = StgPageMaster|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.TestAafes|Any CPU.ActiveCfg = Release|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.TestCostco|Any CPU.ActiveCfg = Release|Any CPU
+		{160FC71E-4A9E-41D9-A9B4-343555EF1468}.TestPageMaster|Any CPU.ActiveCfg = TestPageMaster|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.1.1212.0\lib\NET4;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.1.1212.0\DesignTime
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = CarrierServiceInterface.vsmdi
+	EndGlobalSection
+	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
+		SpecExplorer.ActivityCompletionStatus = 
+	EndGlobalSection
+	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
+		SpecExplorer.ActivityCompletionStatus = 
+	EndGlobalSection
+EndGlobal

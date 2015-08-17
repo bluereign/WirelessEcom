@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Sprint Employee (SPRINT) -->
+<!--Main document view.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://nextel.com/ovm" targetNamespace="http://nextel.com/ovm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="ovm-common.xsd"/>
+	<xs:complexType name="OrderStatusRequest">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="order-id" type="OrderID"/>
+				<xs:element name="sprint-order-id" type="NextelOrderKey"/>
+			</xs:choice>
+		</xs:sequence>
+		<!--Account validation request message.-->
+	</xs:complexType>
+	<xs:element name="checkOrderStatus" type="OrderStatusRequest"/>
+	<xs:complexType name="OrderStatusResponse">
+		<xs:sequence>
+			<xs:element name="order-complete" type="xs:boolean"/>
+			<xs:element name="cash-payment-status" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="account-number" type="AccountNumber" minOccurs="0">
+				<!--Nextel account number for this user.-->
+			</xs:element>
+		</xs:sequence>
+		<!--Account validation response message.-->
+	</xs:complexType>
+	<xs:element name="checkOrderStatusResponse" type="OrderStatusResponse"/>
+</xs:schema>

@@ -1,0 +1,3 @@
+CREATE SCHEMA [salesorder]
+AUTHORIZATION [dbo]
+GO

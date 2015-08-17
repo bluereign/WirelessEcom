@@ -1,0 +1,1298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s3="http://csi.cingular.com/CSI/Namespaces/Container/Public/ExecuteCreditCheckResponse.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://WirelessAdvocates.ATTCarrierServiceInterface/" xmlns:s1="http://csi.cingular.com/CSI/Namespaces/Container/Public/InquireMarketServiceAreasResponse.xsd" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s2="http://csi.cingular.com/CSI/Namespaces/Types/Public/CingularDataModel.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://WirelessAdvocates.ATTCarrierServiceInterface/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://WirelessAdvocates.ATTCarrierServiceInterface/">
+      <s:import namespace="http://csi.cingular.com/CSI/Namespaces/Container/Public/InquireMarketServiceAreasResponse.xsd" />
+      <s:import namespace="http://csi.cingular.com/CSI/Namespaces/Container/Public/ExecuteCreditCheckResponse.xsd" />
+      <s:element name="Echo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="echoMe" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EchoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EchoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TAP_ValidateAddress">
+        <s:complexType />
+      </s:element>
+      <s:element name="TAP_ValidateAddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TAP_ValidateAddressResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="addressToValidate" type="tns:Address" />
+            <s:element minOccurs="1" maxOccurs="1" name="addressType" type="tns:AddressType" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Address">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AddressLine3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExtendedZipCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="tns:Name" />
+          <s:element minOccurs="0" maxOccurs="1" name="Contact" type="tns:Contact" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Name">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleInitial" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Prefix" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Suffix" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Contact">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="WorkPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EveningPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CellPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkPhoneExt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ExtendedAddress">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Address">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="AddressType" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HouseNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DirectionalPrefix" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetType" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DirectionalSuffix" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AptDesignator" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AptNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountyName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DeliveryPointBarCode" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="AddressType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Shipping" />
+          <s:enumeration value="Billing" />
+          <s:enumeration value="PPU" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ValidateAddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateAddressResult" type="tns:AddressValidationResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AddressValidationResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ValidAddress" type="tns:ExtendedAddress" />
+              <s:element minOccurs="0" maxOccurs="1" name="PossibleAddressMatch" type="tns:ArrayOfExtendedAddress" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CarrierResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Result" />
+          <s:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ServiceResponseSubCode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryErrorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfExtendedAddress">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ExtendedAddress" nillable="true" type="tns:ExtendedAddress" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="NpaLookupByZip">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="zipCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="NpaInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Npa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NpaNxx" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ngp" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MarketCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfNpaInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="NpaInfo" nillable="true" type="tns:NpaInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="NpaLookupByZipResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NpaLookupByZipResult" type="tns:NpaResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="NpaResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="NpaSet" type="tns:ArrayOfNpaInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CustLookupByBan">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ban" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="serviceZip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="billingZip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CustLookupByBanResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="CustLookupByMsiSdn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mdn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="billingZip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CustLookupByMsiSdnResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMarketServiceAreaByMdn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="msiSdn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMarketServiceAreaByMdnResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMarketServiceAreaByMdnResult" type="s1:InquireMarketServiceAreasResponseInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CustomerLookupByMsiSdn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="msiSdn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="billingZip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CustomerInquiryLine">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsPrimaryLine" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mdn" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ShippingAddress" type="tns:Address" />
+          <s:element minOccurs="0" maxOccurs="1" name="BillingAddress" type="tns:Address" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContractStartSpecified" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ContractStart" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpgradeAvailableSpecified" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="EquipmentUpgradeAvailable" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AccountStatus" type="tns:AccountStatusCode" />
+          <s:element minOccurs="0" maxOccurs="1" name="CarrierAccountId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExistingLineMonthlyCharges" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="WirelessLineType" type="tns:WirelessLineType" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="AccountStatusCode">
+        <s:restriction base="s:string">
+          <s:enumeration value="CLOSED" />
+          <s:enumeration value="CANCELLED" />
+          <s:enumeration value="OPERATIONAL" />
+          <s:enumeration value="TENTATIVE" />
+          <s:enumeration value="SUSPENDED" />
+          <s:enumeration value="UNKNOWN" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="WirelessLineType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Undefined" />
+          <s:enumeration value="Line" />
+          <s:enumeration value="Data" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfCustomerInquiryLine">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomerInquiryLine" nillable="true" type="tns:CustomerInquiryLine" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CustomerLookupByMsiSdnResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CustomerLookupByMsiSdnResult" type="tns:CustomerInquiryResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CustomerInquiryResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="LinesApproved" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LinesActive" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LinesAvailable" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WirelessAccountType" type="tns:WirelessAccountType" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExistingAccountMonthlyCharges" type="s:decimal" />
+              <s:element minOccurs="0" maxOccurs="1" name="CustomerInquiryLines" type="tns:ArrayOfCustomerInquiryLine" />
+              <s:element minOccurs="0" maxOccurs="1" name="CustomerAccountNumber" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="WirelessAccountType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Undefined" />
+          <s:enumeration value="Individual" />
+          <s:enumeration value="MultiLine" />
+          <s:enumeration value="Family" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="TAP_ValidatePortIn">
+        <s:complexType />
+      </s:element>
+      <s:element name="TAP_ValidatePortInResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TAP_ValidatePortInResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidatePortIn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MDNList" type="tns:ArrayOfMDNSet" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReferenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMDNSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MDNSet" nillable="true" type="tns:MDNSet" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MDNSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MDN" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ServiceZipCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsPortable" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ValidatePortInResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidatePortInResult" type="tns:ValidatePortInResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ValidatePortInResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="MDNSet" type="tns:ArrayOfMDNSet" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="Tap_IAP_UE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mdn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="billingZip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Tap_IAP_UEResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="Tap_IAP_IC_ExecuteCreditCheck">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mdn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="billingZip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Tap_IAP_IC_ExecuteCreditCheckResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ExecuteCreditCheck_Test">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ban" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="serviceZip" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="numberOfLines" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteCreditCheck_TestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExecuteCreditCheck_TestResult" type="s3:ExecuteCreditCheckResponseInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestAttAddAccount">
+        <s:complexType />
+      </s:element>
+      <s:element name="TestAttAddAccountResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="TempEOActivation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderid" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TempEOActivationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TempEOActivationResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestOrderQueries">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="OrderNumber" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestOrderQueriesResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SubmitOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfLineActivationResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="LineActivationResponse" nillable="true" type="tns:LineActivationResponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LineActivationResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="MDN" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="IMEI" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EquipmentUpgradeResponse" type="tns:EquipmentUpgradeResponse" />
+              <s:element minOccurs="0" maxOccurs="1" name="ServicesActivationResponse" type="tns:ServicesActivationResponse" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EquipmentUpgradeResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ServicesActivationResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SubmitOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitOrderResult" type="tns:OrderActivationResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="OrderActivationResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="LineActivationResponses" type="tns:ArrayOfLineActivationResponse" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CheckCredit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="billingName" type="tns:Name" />
+            <s:element minOccurs="0" maxOccurs="1" name="serviceZipCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contactInfo" type="tns:Contact" />
+            <s:element minOccurs="0" maxOccurs="1" name="billingContactCredentials" type="tns:PersonalCredentials" />
+            <s:element minOccurs="1" maxOccurs="1" name="numberOfLines" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PersonalCredentials">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SSN" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdExpiration" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdType" type="tns:IdentificationType" />
+          <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DOB" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="IdentificationType">
+        <s:restriction base="s:string">
+          <s:enumeration value="DL" />
+          <s:enumeration value="MILI" />
+          <s:enumeration value="PASS" />
+          <s:enumeration value="TRIB" />
+          <s:enumeration value="ALIE" />
+          <s:enumeration value="DISA" />
+          <s:enumeration value="ID" />
+          <s:enumeration value="OTHER" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CheckCreditResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckCreditResult" type="tns:CreditCheckResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CreditCheckResponse">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CarrierResponse">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="NumberOfLines" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Deposit" type="s:decimal" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreditApplicationNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreditCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreditStatus" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CustomerAccountNumber" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://csi.cingular.com/CSI/Namespaces/Container/Public/InquireMarketServiceAreasResponse.xsd">
+      <s:import namespace="http://csi.cingular.com/CSI/Namespaces/Types/Public/CingularDataModel.xsd" />
+      <s:complexType name="InquireMarketServiceAreasResponseInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="state" type="s2:AddressStateInfo" />
+          <s:element minOccurs="0" maxOccurs="1" name="region" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="legacyWirelineFootprint" type="s2:WirelineLegacyFootprintInfo" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="zipcode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="county" type="s2:AddressCountyInfo" />
+          <s:element minOccurs="0" maxOccurs="1" name="npa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceAreas" type="s2:ServiceAreaLookupInfo" />
+          <s:element minOccurs="0" maxOccurs="1" name="Response" type="s2:ResponseInfo" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://csi.cingular.com/CSI/Namespaces/Types/Public/CingularDataModel.xsd">
+      <s:simpleType name="AddressStateInfo">
+        <s:restriction base="s:string">
+          <s:enumeration value="JA" />
+          <s:enumeration value="AL" />
+          <s:enumeration value="AK" />
+          <s:enumeration value="AZ" />
+          <s:enumeration value="AR" />
+          <s:enumeration value="CA" />
+          <s:enumeration value="CO" />
+          <s:enumeration value="CT" />
+          <s:enumeration value="DE" />
+          <s:enumeration value="DC" />
+          <s:enumeration value="FL" />
+          <s:enumeration value="GA" />
+          <s:enumeration value="HI" />
+          <s:enumeration value="ID" />
+          <s:enumeration value="IL" />
+          <s:enumeration value="IN" />
+          <s:enumeration value="IA" />
+          <s:enumeration value="KS" />
+          <s:enumeration value="KY" />
+          <s:enumeration value="LA" />
+          <s:enumeration value="ME" />
+          <s:enumeration value="MD" />
+          <s:enumeration value="MA" />
+          <s:enumeration value="MI" />
+          <s:enumeration value="MN" />
+          <s:enumeration value="MS" />
+          <s:enumeration value="MO" />
+          <s:enumeration value="MT" />
+          <s:enumeration value="NE" />
+          <s:enumeration value="NV" />
+          <s:enumeration value="NH" />
+          <s:enumeration value="NJ" />
+          <s:enumeration value="NM" />
+          <s:enumeration value="NY" />
+          <s:enumeration value="NC" />
+          <s:enumeration value="ND" />
+          <s:enumeration value="OH" />
+          <s:enumeration value="OK" />
+          <s:enumeration value="OR" />
+          <s:enumeration value="PA" />
+          <s:enumeration value="RI" />
+          <s:enumeration value="SC" />
+          <s:enumeration value="SD" />
+          <s:enumeration value="TN" />
+          <s:enumeration value="TX" />
+          <s:enumeration value="UT" />
+          <s:enumeration value="VT" />
+          <s:enumeration value="VA" />
+          <s:enumeration value="WA" />
+          <s:enumeration value="WV" />
+          <s:enumeration value="WI" />
+          <s:enumeration value="WY" />
+          <s:enumeration value="AB" />
+          <s:enumeration value="BC" />
+          <s:enumeration value="DR" />
+          <s:enumeration value="MB" />
+          <s:enumeration value="MX" />
+          <s:enumeration value="NB" />
+          <s:enumeration value="NF" />
+          <s:enumeration value="NS" />
+          <s:enumeration value="ON" />
+          <s:enumeration value="PE" />
+          <s:enumeration value="PQ" />
+          <s:enumeration value="PR" />
+          <s:enumeration value="SK" />
+          <s:enumeration value="VI" />
+          <s:enumeration value="DF" />
+          <s:enumeration value="NA" />
+          <s:enumeration value="GT" />
+          <s:enumeration value="PU" />
+          <s:enumeration value="YA" />
+          <s:enumeration value="SN" />
+          <s:enumeration value="BA" />
+          <s:enumeration value="AP" />
+          <s:enumeration value="CL" />
+          <s:enumeration value="AA" />
+          <s:enumeration value="BI" />
+          <s:enumeration value="PB" />
+          <s:enumeration value="AG" />
+          <s:enumeration value="BN" />
+          <s:enumeration value="CI" />
+          <s:enumeration value="CP" />
+          <s:enumeration value="CS" />
+          <s:enumeration value="DU" />
+          <s:enumeration value="GJ" />
+          <s:enumeration value="GR" />
+          <s:enumeration value="HD" />
+          <s:enumeration value="HK" />
+          <s:enumeration value="MC" />
+          <s:enumeration value="MR" />
+          <s:enumeration value="NL" />
+          <s:enumeration value="NZ" />
+          <s:enumeration value="OX" />
+          <s:enumeration value="QT" />
+          <s:enumeration value="QR" />
+          <s:enumeration value="SL" />
+          <s:enumeration value="SO" />
+          <s:enumeration value="TA" />
+          <s:enumeration value="TB" />
+          <s:enumeration value="TL" />
+          <s:enumeration value="VE" />
+          <s:enumeration value="YC" />
+          <s:enumeration value="ZA" />
+          <s:enumeration value="ZZ" />
+          <s:enumeration value="AE" />
+          <s:enumeration value="BE" />
+          <s:enumeration value="YT" />
+          <s:enumeration value="AS" />
+          <s:enumeration value="FM" />
+          <s:enumeration value="GM" />
+          <s:enumeration value="MH" />
+          <s:enumeration value="NO" />
+          <s:enumeration value="PL" />
+          <s:enumeration value="UM" />
+          <s:enumeration value="VZ" />
+          <s:enumeration value="CE" />
+          <s:enumeration value="CR" />
+          <s:enumeration value="LM" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="WirelineLegacyFootprintInfo">
+        <s:restriction base="s:string">
+          <s:enumeration value="SBC" />
+          <s:enumeration value="BLS" />
+          <s:enumeration value="UNKNOWN" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="AddressCountyInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="countyName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="countyType" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ServiceAreaLookupInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="localMarketType">
+            <s:simpleType>
+              <s:restriction base="s:string">
+                <s:enumeration value="TLG" />
+                <s:enumeration value="CPW" />
+              </s:restriction>
+            </s:simpleType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="isLocal" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="matchType">
+            <s:simpleType>
+              <s:restriction base="s:string">
+                <s:enumeration value="E" />
+                <s:enumeration value="C" />
+              </s:restriction>
+            </s:simpleType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="distance" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="serviceAreaDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Location">
+            <s:complexType>
+              <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="locationMarketType">
+                  <s:simpleType>
+                    <s:restriction base="s:string">
+                      <s:enumeration value="Local" />
+                      <s:enumeration value="NBI" />
+                    </s:restriction>
+                  </s:simpleType>
+                </s:element>
+                <s:element minOccurs="0" maxOccurs="1" name="serviceAreaCode" type="s:string" />
+                <s:element minOccurs="0" maxOccurs="1" name="market">
+                  <s:complexType>
+                    <s:complexContent mixed="false">
+                      <s:extension base="s2:MarketInfo">
+                        <s:sequence>
+                          <s:element minOccurs="0" maxOccurs="1" name="marketName" type="s:string" />
+                          <s:element minOccurs="0" maxOccurs="1" name="subMarketName" type="s:string" />
+                        </s:sequence>
+                      </s:extension>
+                    </s:complexContent>
+                  </s:complexType>
+                </s:element>
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="NumberBlock" type="s2:NpaNxxLineInfo" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="technology" type="s2:TechnologyTypeInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MarketInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="billingMarket" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="billingSubMarket" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="localMarket" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="NpaNxxLineInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="npa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="nxx" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="line" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RestrictedNpaNxxLineInfo">
+        <s:complexContent mixed="false">
+          <s:extension base="s2:NpaNxxLineInfo" />
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="TechnologyTypeInfo">
+        <s:restriction base="s:string">
+          <s:enumeration value="GSM" />
+          <s:enumeration value="TDMA" />
+          <s:enumeration value="GSM-GAIT" />
+          <s:enumeration value="GAIT" />
+          <s:enumeration value="TDMA-GAIT" />
+          <s:enumeration value="GSM-UMTS" />
+          <s:enumeration value="UMTS" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ResponseInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CreditDecisionInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="decisionReferenceNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="decisionCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="decisionReasonCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="decisionCodeDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="decisionCodeExpirationDate" type="s:date" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="depositAmount" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="approvedSubscriberLines" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" default="0" name="numberOfLinesAvailable" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="creditClass" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="creditDate" type="s:date" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://csi.cingular.com/CSI/Namespaces/Container/Public/ExecuteCreditCheckResponse.xsd">
+      <s:import namespace="http://csi.cingular.com/CSI/Namespaces/Types/Public/CingularDataModel.xsd" />
+      <s:complexType name="ExecuteCreditCheckResponseInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="billingMarket" type="s2:MarketInfo" />
+          <s:element minOccurs="0" maxOccurs="1" name="billingAccountNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreditDecision" type="s2:CreditDecisionInfo" />
+          <s:element minOccurs="0" maxOccurs="1" name="Response" type="s2:ResponseInfo" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="EchoSoapIn">
+    <wsdl:part name="parameters" element="tns:Echo" />
+  </wsdl:message>
+  <wsdl:message name="EchoSoapOut">
+    <wsdl:part name="parameters" element="tns:EchoResponse" />
+  </wsdl:message>
+  <wsdl:message name="TAP_ValidateAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:TAP_ValidateAddress" />
+  </wsdl:message>
+  <wsdl:message name="TAP_ValidateAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:TAP_ValidateAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateAddress" />
+  </wsdl:message>
+  <wsdl:message name="ValidateAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="NpaLookupByZipSoapIn">
+    <wsdl:part name="parameters" element="tns:NpaLookupByZip" />
+  </wsdl:message>
+  <wsdl:message name="NpaLookupByZipSoapOut">
+    <wsdl:part name="parameters" element="tns:NpaLookupByZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustLookupByBanSoapIn">
+    <wsdl:part name="parameters" element="tns:CustLookupByBan" />
+  </wsdl:message>
+  <wsdl:message name="CustLookupByBanSoapOut">
+    <wsdl:part name="parameters" element="tns:CustLookupByBanResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustLookupByMsiSdnSoapIn">
+    <wsdl:part name="parameters" element="tns:CustLookupByMsiSdn" />
+  </wsdl:message>
+  <wsdl:message name="CustLookupByMsiSdnSoapOut">
+    <wsdl:part name="parameters" element="tns:CustLookupByMsiSdnResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMarketServiceAreaByMdnSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMarketServiceAreaByMdn" />
+  </wsdl:message>
+  <wsdl:message name="GetMarketServiceAreaByMdnSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMarketServiceAreaByMdnResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomerLookupByMsiSdnSoapIn">
+    <wsdl:part name="parameters" element="tns:CustomerLookupByMsiSdn" />
+  </wsdl:message>
+  <wsdl:message name="CustomerLookupByMsiSdnSoapOut">
+    <wsdl:part name="parameters" element="tns:CustomerLookupByMsiSdnResponse" />
+  </wsdl:message>
+  <wsdl:message name="TAP_ValidatePortInSoapIn">
+    <wsdl:part name="parameters" element="tns:TAP_ValidatePortIn" />
+  </wsdl:message>
+  <wsdl:message name="TAP_ValidatePortInSoapOut">
+    <wsdl:part name="parameters" element="tns:TAP_ValidatePortInResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidatePortInSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidatePortIn" />
+  </wsdl:message>
+  <wsdl:message name="ValidatePortInSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidatePortInResponse" />
+  </wsdl:message>
+  <wsdl:message name="Tap_IAP_UESoapIn">
+    <wsdl:part name="parameters" element="tns:Tap_IAP_UE" />
+  </wsdl:message>
+  <wsdl:message name="Tap_IAP_UESoapOut">
+    <wsdl:part name="parameters" element="tns:Tap_IAP_UEResponse" />
+  </wsdl:message>
+  <wsdl:message name="Tap_IAP_IC_ExecuteCreditCheckSoapIn">
+    <wsdl:part name="parameters" element="tns:Tap_IAP_IC_ExecuteCreditCheck" />
+  </wsdl:message>
+  <wsdl:message name="Tap_IAP_IC_ExecuteCreditCheckSoapOut">
+    <wsdl:part name="parameters" element="tns:Tap_IAP_IC_ExecuteCreditCheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteCreditCheck_TestSoapIn">
+    <wsdl:part name="parameters" element="tns:ExecuteCreditCheck_Test" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteCreditCheck_TestSoapOut">
+    <wsdl:part name="parameters" element="tns:ExecuteCreditCheck_TestResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestAttAddAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:TestAttAddAccount" />
+  </wsdl:message>
+  <wsdl:message name="TestAttAddAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:TestAttAddAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="TempEOActivationSoapIn">
+    <wsdl:part name="parameters" element="tns:TempEOActivation" />
+  </wsdl:message>
+  <wsdl:message name="TempEOActivationSoapOut">
+    <wsdl:part name="parameters" element="tns:TempEOActivationResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestOrderQueriesSoapIn">
+    <wsdl:part name="parameters" element="tns:TestOrderQueries" />
+  </wsdl:message>
+  <wsdl:message name="TestOrderQueriesSoapOut">
+    <wsdl:part name="parameters" element="tns:TestOrderQueriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitOrder" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckCreditSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckCredit" />
+  </wsdl:message>
+  <wsdl:message name="CheckCreditSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckCreditResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ATTServiceSoap">
+    <wsdl:operation name="Echo">
+      <wsdl:input message="tns:EchoSoapIn" />
+      <wsdl:output message="tns:EchoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TAP_ValidateAddress">
+      <wsdl:input message="tns:TAP_ValidateAddressSoapIn" />
+      <wsdl:output message="tns:TAP_ValidateAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAddress">
+      <wsdl:input message="tns:ValidateAddressSoapIn" />
+      <wsdl:output message="tns:ValidateAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NpaLookupByZip">
+      <wsdl:input message="tns:NpaLookupByZipSoapIn" />
+      <wsdl:output message="tns:NpaLookupByZipSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CustLookupByBan">
+      <wsdl:input message="tns:CustLookupByBanSoapIn" />
+      <wsdl:output message="tns:CustLookupByBanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CustLookupByMsiSdn">
+      <wsdl:input message="tns:CustLookupByMsiSdnSoapIn" />
+      <wsdl:output message="tns:CustLookupByMsiSdnSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMarketServiceAreaByMdn">
+      <wsdl:input message="tns:GetMarketServiceAreaByMdnSoapIn" />
+      <wsdl:output message="tns:GetMarketServiceAreaByMdnSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomerLookupByMsiSdn">
+      <wsdl:input message="tns:CustomerLookupByMsiSdnSoapIn" />
+      <wsdl:output message="tns:CustomerLookupByMsiSdnSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TAP_ValidatePortIn">
+      <wsdl:input message="tns:TAP_ValidatePortInSoapIn" />
+      <wsdl:output message="tns:TAP_ValidatePortInSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePortIn">
+      <wsdl:input message="tns:ValidatePortInSoapIn" />
+      <wsdl:output message="tns:ValidatePortInSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Tap_IAP_UE">
+      <wsdl:input message="tns:Tap_IAP_UESoapIn" />
+      <wsdl:output message="tns:Tap_IAP_UESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Tap_IAP_IC_ExecuteCreditCheck">
+      <wsdl:input message="tns:Tap_IAP_IC_ExecuteCreditCheckSoapIn" />
+      <wsdl:output message="tns:Tap_IAP_IC_ExecuteCreditCheckSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteCreditCheck_Test">
+      <wsdl:input message="tns:ExecuteCreditCheck_TestSoapIn" />
+      <wsdl:output message="tns:ExecuteCreditCheck_TestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TestAttAddAccount">
+      <wsdl:input message="tns:TestAttAddAccountSoapIn" />
+      <wsdl:output message="tns:TestAttAddAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TempEOActivation">
+      <wsdl:input message="tns:TempEOActivationSoapIn" />
+      <wsdl:output message="tns:TempEOActivationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TestOrderQueries">
+      <wsdl:input message="tns:TestOrderQueriesSoapIn" />
+      <wsdl:output message="tns:TestOrderQueriesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <wsdl:input message="tns:SubmitOrderSoapIn" />
+      <wsdl:output message="tns:SubmitOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckCredit">
+      <wsdl:input message="tns:CheckCreditSoapIn" />
+      <wsdl:output message="tns:CheckCreditSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ATTServiceSoap" type="tns:ATTServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Echo">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/Echo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TAP_ValidateAddress">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TAP_ValidateAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAddress">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/ValidateAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NpaLookupByZip">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/NpaLookupByZip" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustLookupByBan">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/CustLookupByBan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustLookupByMsiSdn">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/CustLookupByMsiSdn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMarketServiceAreaByMdn">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/GetMarketServiceAreaByMdn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomerLookupByMsiSdn">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/CustomerLookupByMsiSdn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TAP_ValidatePortIn">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TAP_ValidatePortIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePortIn">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/ValidatePortIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Tap_IAP_UE">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/Tap_IAP_UE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Tap_IAP_IC_ExecuteCreditCheck">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/Tap_IAP_IC_ExecuteCreditCheck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteCreditCheck_Test">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/ExecuteCreditCheck_Test" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestAttAddAccount">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TestAttAddAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TempEOActivation">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TempEOActivation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestOrderQueries">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TestOrderQueries" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/SubmitOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckCredit">
+      <soap:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/CheckCredit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ATTServiceSoap12" type="tns:ATTServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Echo">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/Echo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TAP_ValidateAddress">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TAP_ValidateAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAddress">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/ValidateAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NpaLookupByZip">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/NpaLookupByZip" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustLookupByBan">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/CustLookupByBan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustLookupByMsiSdn">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/CustLookupByMsiSdn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMarketServiceAreaByMdn">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/GetMarketServiceAreaByMdn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomerLookupByMsiSdn">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/CustomerLookupByMsiSdn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TAP_ValidatePortIn">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TAP_ValidatePortIn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePortIn">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/ValidatePortIn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Tap_IAP_UE">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/Tap_IAP_UE" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Tap_IAP_IC_ExecuteCreditCheck">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/Tap_IAP_IC_ExecuteCreditCheck" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteCreditCheck_Test">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/ExecuteCreditCheck_Test" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestAttAddAccount">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TestAttAddAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TempEOActivation">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TempEOActivation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestOrderQueries">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/TestOrderQueries" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/SubmitOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckCredit">
+      <soap12:operation soapAction="http://WirelessAdvocates.ATTCarrierServiceInterface/CheckCredit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ATTService">
+    <wsdl:port name="ATTServiceSoap" binding="tns:ATTServiceSoap">
+      <soap:address location="http://10.7.0.93/ATTService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ATTServiceSoap12" binding="tns:ATTServiceSoap12">
+      <soap12:address location="http://10.7.0.93/ATTService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     

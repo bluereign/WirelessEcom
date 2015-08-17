@@ -1,0 +1,3 @@
+CREATE SCHEMA [tmobile]
+AUTHORIZATION [dbo]
+GO

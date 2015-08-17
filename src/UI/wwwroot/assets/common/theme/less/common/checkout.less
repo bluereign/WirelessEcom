@@ -1,0 +1,218 @@
+
+
+
+
+/********************************************
+         		MIXINS
+*********************************************/
+
+
+
+
+/********************************************
+         		STYLES
+*********************************************/
+
+body {
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	margin: 20px 0;
+}
+
+h1, .h1 {
+	font-size: 24px;
+	height: 40px;
+	padding: 7px;
+}
+
+form {
+
+	label, .control-label {
+		font-weight: inherit;
+		font-size: 16px;
+		font-color: #323232;
+	}
+
+	h2 {
+		text-transform: uppercase;
+		font-size: 24px;
+		font-weight: bold;
+		color: #006699;
+	}
+	
+	.sub-text {
+		font-size: 10px;
+		color: #323232
+	}
+
+	p {
+		font-size:14px;
+		color:#4c4c4c;
+	}
+	
+	p.error {
+		margin: 10px 0;
+		font-size: 10px;
+		color: #e0393d;
+	}
+}
+
+#main-heading {
+	background-color: @primaryColor;
+	color: #fff;
+	margin: 20px 0;
+	
+	h1 {
+		margin: 0;
+	}
+	
+}
+
+/* Menu of steps in checkout path */
+ul.checkout-breadcrumb {
+	padding: 0;
+	
+	li {
+		margin-bottom: 5px;
+		text-align: left;
+		list-style: none;
+		
+		span {
+			padding: 10px 15px;
+			border-radius: 5px;
+			background-color: @breadcrumbInactive;
+			color: @breadcrumbActiveText;
+			font-weight: bold;
+			display: block;
+		}
+		
+		span.completed {
+			background-color: @breadcrumbActive;
+			color: @breadcrumbInactiveText;
+		}
+	}
+}
+
+hr.bottom-break {
+	background-color: @primaryColor;
+	height: 8px;
+}
+
+.whats-this {
+	text-decoration: none;
+	cursor: help;
+	margin-left: 5px;
+	font-size: .9em;
+}
+
+/* Adds background to required form fields */
+.field-required {
+	background: #FFF url('/assets/common/images/required-corner-red.png') top right no-repeat !important;
+}
+
+/* Blue gradient container */
+.highlight-container {
+	border-width: 1px 1px 1px 0px;
+	border-color: #999;
+	border-style: solid;
+	padding: 5px 0px 5px;
+	border-radius: 0px 5px 5px 0px;
+	background: @highlightContainerGradientStart; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjY2RmZWQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(left,  @highlightContainerGradientStart 0%, @highlightContainerGradientEnd 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,@highlightContainerGradientStart), color-stop(100%,@highlightContainerGradientEnd)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left,  @highlightContainerGradientStart 0%,@highlightContainerGradientEnd 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left,  @highlightContainerGradientStart 0%,@highlightContainerGradientEnd 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left,  @highlightContainerGradientStart 0%,@highlightContainerGradientEnd 100%); /* IE10+ */
+	background: linear-gradient(to right,  @highlightContainerGradientStart 0%,@highlightContainerGradientEnd 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@highlightContainerGradientStart', endColorstr='@highlightContainerGradientEnd',GradientType=1 ); /* IE6-8 */
+}
+
+/* Container for back and continue buttons */
+.wizard-buttons {
+	text-align:right;
+}
+
+.copyright-container {
+	text-align: center;
+}
+
+.copyright {
+	font-size: .8em;	
+}
+
+/********************************************
+         OVER RIDE COLDBOX STYLES
+*********************************************/
+
+.cbox_messagebox{
+	font-size: 13px;
+	font-weight: bold;
+}
+.cbox_messagebox_info{
+	background: #D1E6EF url(/assets/common/images/messagebox/imsg.png) no-repeat scroll .5em 50%;
+	border: 1px solid #2580B2;
+	margin: 0.3em;
+	padding: 0pt 1em 0pt 3.5em;
+}
+.cbox_messagebox_warning{
+	background: #FFF2CF url(/assets/common/images/messagebox/wmsg.png) no-repeat scroll .5em 50%;
+	border: 1px solid #2580B2;
+	margin: 0.3em;
+	padding: 0pt 1em 0pt 3.5em;
+}
+.cbox_messagebox_error{
+	background: #FFFFE0 url(/assets/common/images/messagebox/emsg.png) no-repeat scroll .5em 50%;
+	border: 1px solid #2580B2;
+	margin: 0.3em;
+	padding: 0pt 1em 0pt 3.5em;
+}
+
+/********************************************
+         OVER RIDE BOOSTRAP STYLES
+*********************************************/
+
+.btn-lg {
+	width:176px;
+	height:40px;
+	padding:0px;
+	color:#fff;
+	font-weight:bold;
+	border-radius:5px;
+	margin-left:20px;
+}
+
+.btn-primary {
+	background: @buttonGradientStart; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRjOTBjMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDRlODgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  @buttonGradientStart 0%, @buttonGradientEnd 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@buttonGradientStart), color-stop(100%,@buttonGradientEnd)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  @buttonGradientStart 0%,@buttonGradientEnd 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  @buttonGradientStart 0%,@buttonGradientEnd 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  @buttonGradientStart 0%,@buttonGradientEnd 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  @buttonGradientStart 0%,@buttonGradientEnd 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@buttonGradientStart', endColorstr='@buttonGradientEnd',GradientType=0 ); /* IE6-8 */
+}
+
+.form-control {
+    border: 1px solid #006699;
+    border-radius: 0;
+    font-size: 16px;
+    height: 40px;
+}
+
+.navbar-default {
+    background-color: #fff;
+}
+
+/* Override max length TODO: Use custom Bootstrap */
+.container {
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 960px;
+}
+

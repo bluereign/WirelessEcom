@@ -1,0 +1,3 @@
+CREATE SCHEMA [websecurity]
+AUTHORIZATION [dbo]
+GO

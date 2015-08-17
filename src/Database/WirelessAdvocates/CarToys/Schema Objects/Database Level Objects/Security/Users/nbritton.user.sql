@@ -1,0 +1,2 @@
+﻿CREATE USER [nbritton] WITHOUT LOGIN;
+
