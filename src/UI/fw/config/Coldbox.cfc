@@ -231,6 +231,12 @@ Optional Methods
 		  "^10\.7\.0\.80$",					//Test Costco (alternate legacy ip for cms)
 		  "^test\.aafesmobile\.com",		//Test AAFES
 		  "^(.*)-demo\.wasvcs\.com",		//Test PageMaster
+		  "^Costco\.Ecom-dev-test-1\.enterprise\.corp",		//Test Costco
+		  "^Aafes\.Ecom-dev-test-1\.enterprise\.corp",		//Test AAFES
+		  "^Pagemaster\.Ecom-dev-test-1\.enterprise\.corp",		//Test PageMaster
+		  "^CostcoVfd\.Ecom-dev-test-1\.enterprise\.corp",		//Test CostcoVfd
+		  "^AafesVfd\.Ecom-dev-test-1\.enterprise\.corp",		//Test AAFESVfd
+		  "^PagemasterVfd\.Ecom-dev-test-1\.enterprise\.corp",		//Test PageMasterVfd
 		  "^68\.64\.53\.109$"			//Test AAFES
   ];
 
