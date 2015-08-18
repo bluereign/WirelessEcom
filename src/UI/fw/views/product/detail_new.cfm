@@ -511,7 +511,7 @@ $j(document).ready(function($j) {
 			
 <!---bootstrap namespace container--->
 <div class="bootstrap">
-<div class="container">
+<div class="container nonmodal-container">
 <div class="row">
 	<div class="col-md-4">
 		<cfif prc.productData.CarrierId eq 128>
