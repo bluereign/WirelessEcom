@@ -1936,7 +1936,8 @@ TEMPORARY DISABLE --->
 				<cfelse>
 					<!---Handles Finance BtnHeader for non-VFD finance phones --->
 					<cfif arguments.priceType eq "Finance">
-						<a class="ActionButton learnMoreBtn" href="##"><span>Warehouse Only</span></a>
+						<!---<a class="ActionButton learnMoreBtn" href="##"><span>Warehouse Only</span></a>--->
+						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##myModalCart"><span>Add to Cart</span></a>
 					<cfelse>
 						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
 					</cfif>
@@ -1945,6 +1946,8 @@ TEMPORARY DISABLE --->
 				<cfset thisWindowName = 'windowNotCompatible1' & createUUID() />
 				<!--- <span class="actionButtonDisabled"><a href="javascript:void(0)" class="priceTab" onclick="viewFooterContentInWindow('#variables.thisWindowName#', 'Wireless Advocates - Incompatible Type', '/index.cfm/go/shop/do/incompatibleType/planType/new/cartType/#arguments.priceType#/carrierId/#session.cart.getCarrierId()#/thisWindowName/#variables.thisWindowName#/'); return false;">3More Info</a></span> --->
 			</cfif>
+			
+			
 		</cfoutput>
 	</cfsavecontent>
 
@@ -2094,9 +2097,3 @@ TEMPORARY DISABLE --->
 		
 		<cfreturn productName />
 	</cffunction>
-	
-
-
-
-
-

@@ -17,7 +17,7 @@ body.modal-open .nonmodal-container{
     -o-filter: blur(1px);
     -ms-filter: blur(1px);
     filter: blur(1px);
-    opacity:0.2 !important;
+    opacity:0.3 !important;
 }
 
 .bootstrap div.container{
@@ -939,8 +939,12 @@ $j(document).ready(function($j) {
 					#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
 				</div>
 						
-				<div id="addtocart-finance" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
+				<!---<div id="addtocart-finance" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>addtocart-finance yo
 					<a class="ActionButton learnMoreBtn" href="javascript: return false;" data-toggle="modal" data-target="##financeModal" <cfif hide2yearpricing>style="width:460px;"</cfif>><span><cfif hide2yearpricing>#application.wirebox.getInstance('TextDisplayRenderer').getHide2YearFinancingButtonText()#<cfelse>Learn More</cfif></span></a>
+				</div>--->
+				<div id="addtocart-finance" class="pull-right" style="display:none;">
+					<cfset prc.renderAddToCartArgs.PriceType = 'finance' />
+					#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
 				</div>
 			</div>
 		</div>
@@ -1033,6 +1037,64 @@ $j(document).ready(function($j) {
 
 
 </div>
+
+
+<!--- Customer Type Modal --->
+<div class="modal fade" id="myModalCart" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<!-- Modal Body -->
+			<div class="modal-body">
+				<div class="container">
+					<div class="row">
+						<h1>#prc.productData.carrierName# Customer Type?</h1>
+						<p>Bacon ipsum dolor amet pork chop picanha kielbasa pastrami, biltong pancetta porchetta spare. Domo arigatoo mister roboto.  Domo, domo.</p>
+						<hr class="blueline" />
+						<br />
+						<div class="col-xs-6">
+							<h4>Existing #prc.productData.carrierName# customer?</h4>
+							<p>If you're already a(n) #prc.productData.carrierName# customer, you can Upgrade or Add a Line on your account.</p>
+							<br />
+							<br />
+							<div class="row center-block">
+								<div class="col-xs-6">
+									<a href="##" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a>
+								</div>
+								<div class="col-xs-6">
+									<a href="##" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-1">
+							<img src="/assets/costco/images/skin/skin-footer-bg.gif" height="80px" width="4px">
+						</div>
+						<div class="col-xs-5">
+							<h4>New #prc.productData.carrierName# customer?</h4>
+							<p>If you're not already a(n) #prc.productData.carrierName# customer, Continue here.</p>
+							<br />
+							<br />
+							<div class="row center-block">
+								<div class="col-xs-12">
+									<a href="##" class="btn btn-lg btn-primary">New to #prc.productData.carrierName#</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+				</div>
+			</div>			
+		</div>
+	</div>
+</div>
+<!--- /Customer Type Modal --->
+
+
+
 
 
 
