@@ -95,6 +95,16 @@
 		<!--- Commented out to try and fix TFS 7305. Scott 6/3/2005 --->
 		<!--- <cfset loadComponents() /> --->
 		
+		<!--- TEMP:: Added by Sutton.  Not intended for production --->
+		<cfif structKeyExists(url,"rephone")>
+		    <cfset application.view.Phone = createObject('component', 'cfc.view.Phone').init() >
+		</cfif>
+		<cfif structKeyExists(url,"recart")>
+		    <cfset application.view.cart = createObject('component', 'cfc.view.Cart').init() >
+		</cfif>
+		<!--- End --->
+
+		
 		<!--- Coldbox BootStrap Reinit Check --->
 		<cfif not structKeyExists(application,"cbBootstrap") or application.cbBootStrap.isfwReinit()>
 			<cflock name="coldbox.bootstrap_#hash(getCurrentTemplatePath())#" type="exclusive" timeout="5" throwontimeout="true">
