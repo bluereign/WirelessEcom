@@ -52,7 +52,7 @@
 			
 		// Channel config settings
 		channelConfigArgs = {
-			VfdEnabled = true,
+			VfdEnabled = false,
 			CarrierTwoYearRemoval = "109|6/1/2015",
 			VFDMkey = '2pypk0NTjimlDmKCQhNF9w==',
 			VFDIV = 'f+hYUyjprHt/6FhTKOmsew==',
