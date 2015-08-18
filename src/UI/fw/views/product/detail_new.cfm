@@ -11,6 +11,15 @@
 <cfoutput>
 <style type="text/css">
 
+body.modal-open .nonmodal-container{
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+    filter: blur(1px);
+    opacity:0.2 !important;
+}
+
 .bootstrap div.container{
 	max-width:760px;
 }
