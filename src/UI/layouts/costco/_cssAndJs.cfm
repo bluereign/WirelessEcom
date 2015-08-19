@@ -5,6 +5,7 @@
 <cfparam name="request.p.media" type="string" default="screen" /> 
 <cfparam name="bJavascriptIncluded" type="boolean" default="false" />
 <cfparam name="rc.bBootStrapIncluded" type="boolean" default="false" />
+<cfparam name="rc.deviceBuilderCssIncluded" type="boolean" default="false" />
 
 <cfoutput>
 	<cfif rc.bBootStrapIncluded>
@@ -20,6 +21,10 @@
 	<cfif rc.bBootStrapIncluded>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="#assetPaths.common#scripts/bootstrap/override.css" />
+	</cfif>
+	<cfif rc.deviceBuilderCssIncluded>
+		<!-- Device Builder -->
+		<link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
 	</cfif>
 
 	<cfif request.p.go is 'shop'>
@@ -79,9 +84,5 @@
 		<!-- Latest compiled and minified JS -->
 		<script type="text/javascript" src="#assetPaths.common#scripts/bootstrap/3.2.0-custom/js/bootstrap.min.js"></script>
 	</cfif>
-	
-<!---
-	
---->
 
 </cfoutput>

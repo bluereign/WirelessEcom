@@ -1058,7 +1058,7 @@ $j(document).ready(function($j) {
 							<br />
 							<div class="row center-block">
 								<div class="col-xs-6">
-									<a href="##" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a>
+									<a href="/default.cfm/devicebuilder/carrierlogin/" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a>
 								</div>
 								<div class="col-xs-6">
 									<a href="##" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a>
