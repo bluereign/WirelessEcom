@@ -1,7 +1,7 @@
 <cfoutput>
 
   <section class="content">
-    <form action="/default.cfm/devicebuilder/plans/type/#rc.type#">
+    <form action="#rc.nextStep#">
     <header class="main-header">
       <h1>Upgrade or Add a Line</h1>
       <p>Choose a line to Upgrade or Add a New Line for this device.</p>

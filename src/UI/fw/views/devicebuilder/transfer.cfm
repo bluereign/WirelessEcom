@@ -2,13 +2,13 @@
 
   <section class="content">
     <header class="main-header">
-      <h1>Carrier Account Login</h1>
+      <h1>Keep or Transfer Number</h1>
       <p>The primary Account Holder's information is used to verify status and line availability.</p>
     </header>
     <img alt="" src="/assets/costco/images/Trustwave.gif" alt="Trustwave" class="trustwave">
-    <form action="#rc.nextStep#">
+    <form action="/default.cfm/devicebuilder/upgrade/type/#rc.type#">
       <div class="pull-right">
-        <a href="#rc.prevStep#" class="btn">Previous</a>
+        <a href="##" class="btn">Previous</a>
         <button type="submit" class="btn btn-primary btn-lg">Continue</button>
       </div>
       <div class="form-group form-inline phone">
@@ -32,7 +32,7 @@
         <a href="##">Where do I get this?</a>
       </div>
       <div class="pull-right">
-        <a href="#rc.prevStep#" class="btn btn-block">Previous</a>
+        <a href="##" class="btn btn-block">Previous</a>
         <button type="submit" class="btn btn-primary btn-block btn-lg">Continue</button>
       </div>
     </form>

@@ -53,6 +53,7 @@
         <a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a>
       </div>
     </div>
+
     <ul class="nav nav-pills nav-justified">
       <cfif listFindNoCase("upgrade,add", rc.type)>
         <li role="presentation" <cfif rc.event is "devicebuilder.carrierlogin">class="active" </cfif>><a href="/default.cfm/devicebuilder/carrierlogin/type/#rc.type#">Carrier Login</a></li>
@@ -69,6 +70,7 @@
       </cfif>
       <li role="presentation" <cfif rc.event is "devicebuilder.orderreview">class="active" </cfif>><a href="/default.cfm/devicebuilder/orderreview/type/#rc.type#">Order Review</a></li>
     </ul>
+    
   </header>
   <div class="row main">
     <div class="col-md-9">

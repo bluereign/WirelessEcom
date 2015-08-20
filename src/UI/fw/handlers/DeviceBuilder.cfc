@@ -7,6 +7,24 @@
 
   <cfset listCustomerTypes = "upgrade,add,new" />
 
+  <!--- preHandler --->
+  <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+
+    <cfset rc.yohomey = 1>
+    <cfscript>
+      if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
+        rc.type = "new";
+      }
+
+      // rc.bBootStrapIncluded = true;
+      rc.deviceBuilderCssIncluded = true;
+      event.setLayout('devicebuilder');
+    </cfscript>
+  </cffunction>
+
   <!--- Default Action --->
   <cffunction name="carrierLogin" returntype="void" output="false" hint="Product details page">
     <cfargument name="event">
@@ -14,12 +32,8 @@
     <cfargument name="prc">
 
     <cfscript>
-      if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
-        rc.type = "new";
-      }
-      // rc.bBootStrapIncluded = true;
-      rc.deviceBuilderCssIncluded = true;
-      event.setLayout('devicebuilder');
+      rc.prevStep = CGi.http_referer;
+      rc.nextStep = event.buildLink('devicebuilder.upgrade') & '/type/' & rc.type;
       event.setView("devicebuilder/carrierlogin");
     </cfscript>
   </cffunction>
@@ -29,13 +43,23 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var nextAction = "" />
 
     <cfscript>
-      if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
-        rc.type = "new";
+      switch(rc.type) {
+        case "upgrade":
+          nextAction = "devicebuilder.plans";
+          break;
+        case "add":
+          nextAction = "devicebuilder.transfer";
+          break;
+        default: 
+          nextAction = "devicebuilder.plans";
+          break;
       }
-      rc.deviceBuilderCssIncluded = true;
-      event.setLayout('devicebuilder');
+
+      rc.prevStep = event.buildLink('devicebuilder.carrierLogin') & '/type/' & rc.type;
+      rc.nextStep = event.buildLink(nextAction) & '/type/' & rc.type;
       event.setView("devicebuilder/upgrade");
     </cfscript>
   </cffunction>
@@ -47,12 +71,36 @@
     <cfargument name="prc">
 
     <cfscript>
-      if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
-        rc.type = "new";
+      switch(rc.type) {
+        case "upgrade":
+          rc.prevStep = event.buildLink('devicebuilder.upgrade') & '/type/' & rc.type;
+          break;
+        case "add":
+          rc.prevStep = event.buildLink('devicebuilder.transfer') & '/type/' & rc.type;
+          break;
+        case "new":
+          rc.prevStep = CGI.http_referer;
+          break;
+        default: 
+          rc.prevStep = CGI.http_referer;
+          break;
       }
-      rc.deviceBuilderCssIncluded = true;
-      event.setLayout('devicebuilder');
+      
+      rc.nextStep = event.buildLink('devicebuilder.payment') & '/type/' & rc.type;
       event.setView("devicebuilder/plans");
+    </cfscript>
+  </cffunction>
+
+
+  <cffunction name="transfer" returntype="void" output="false" hint="Product details page">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+
+    <cfscript>
+      rc.prevStep = event.buildLink('devicebuilder.upgrade') & '/type/' & rc.type;
+      rc.nextStep = event.buildLink('devicebuilder.plans') & '/type/' & rc.type;
+      event.setView("devicebuilder/transfer");
     </cfscript>
   </cffunction>
 
@@ -63,11 +111,8 @@
     <cfargument name="prc">
 
     <cfscript>
-      if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
-        rc.type = "new";
-      }
-      rc.deviceBuilderCssIncluded = true;
-      event.setLayout('devicebuilder');
+      rc.prevStep = event.buildLink('devicebuilder.plans') & '/type/' & rc.type;
+      rc.nextStep = event.buildLink('devicebuilder.accessories') & '/type/' & rc.type;
       event.setView("devicebuilder/payment");
     </cfscript>
   </cffunction>
@@ -77,13 +122,25 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var nextAction = "" />
 
     <cfscript>
-      if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
-        rc.type = "new";
+      switch(rc.type) {
+        case "upgrade":
+          nextAction = "devicebuilder.orderreview";
+          break;
+        case "add":
+          nextAction = "devicebuilder.orderreview";
+          break;
+        case "new":
+          nextAction = "devicebuilder.porting";
+          break;
+        default: 
+          nextAction = "devicebuilder.orderreview";
+          break;
       }
-      rc.deviceBuilderCssIncluded = true;
-      event.setLayout('devicebuilder');
+      rc.prevStep = event.buildLink('devicebuilder.plans') & '/type/' & rc.type;
+      rc.nextStep = event.buildLink(nextAction) & '/type/' & rc.type;
       event.setView("devicebuilder/accessories");
     </cfscript>
   </cffunction>
@@ -93,14 +150,26 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var prevAction = "" />
 
     <cfscript>
-      if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
-        rc.type = "new";
+      switch(rc.type) {
+        case "upgrade":
+          prevAction = "devicebuilder.accessories";
+          break;
+        case "add":
+          prevAction = "devicebuilder.accessories";
+          break;
+        case "new":
+          prevAction = "devicebuilder.porting";
+          break;
+        default: 
+          prevAction = "devicebuilder.accessories";
+          break;
       }
-      rc.deviceBuilderCssIncluded = true;
+      rc.prevStep = event.buildLink(prevAction) & '/type/' & rc.type;
+      rc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       rc.includeTallyBox = false;
-      event.setLayout('devicebuilder');
       event.setView("devicebuilder/orderreview");
     </cfscript>
   </cffunction>
@@ -113,11 +182,8 @@
     <cfargument name="prc">
 
     <cfscript>
-      if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
-        rc.type = "new";
-      }
-      rc.deviceBuilderCssIncluded = true;
-      event.setLayout('devicebuilder');
+      rc.prevStep = event.buildLink('devicebuilder.accessories') & '/type/' & rc.type;
+      rc.nextStep = event.buildLink('devicebuilder.orderreview') & '/type/' & rc.type;
       event.setView("devicebuilder/porting");
     </cfscript>
   </cffunction>

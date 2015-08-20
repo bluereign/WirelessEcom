@@ -1,7 +1,7 @@
 <cfoutput>
 
   <section class="content">
-    <form action="/default.cfm/devicebuilder/payment/type/#rc.type#">
+    <form action="#rc.nextStep#">
     <header class="main-header">
       <h1>Pick Your Plan and Data</h1>
       <p>Pick a Plan and the amount of Data you will use per month.</p>

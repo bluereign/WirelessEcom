@@ -6,9 +6,9 @@
       <p>Choose wheather you would like to keep or get a new number.</p>
     </header>
     <img alt="" src="/assets/costco/images/Trustwave.gif" alt="Trustwave" class="trustwave">
-    <form action="/default.cfm/devicebuilder/orderreview/type/#rc.type#">
+    <form action="#rc.nextStep#">
       <div class="pull-right">
-        <a href="##" class="btn">Previous</a>
+        <a href="#rc.prevStep#" class="btn">Previous</a>
         <button type="submit" class="btn btn-primary btn-lg">Continue</button>
       </div>
       <div class="form-group form-inline phone">
@@ -32,7 +32,7 @@
         <a href="##">Where do I get this?</a>
       </div>
       <div class="pull-right">
-        <a href="##" class="btn btn-block">Previous</a>
+        <a href="#rc.prevStep#" class="btn btn-block">Previous</a>
         <button type="submit" class="btn btn-primary btn-block btn-lg">Continue</button>
       </div>
     </form>

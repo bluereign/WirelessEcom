@@ -5,9 +5,9 @@
       <h1>Accessorize Your Device</h1>
       <p>When an accessory is selected you will see it added to Your Order.</p>
     </header>
-    <form action="/default.cfm/devicebuilder/orderreview/type/#rc.type#">
+    <form action="#rc.nextStep#">
       <div class="pull-right">
-        <a href="/default.cfm/devicebuilder/payment" class="btn">Previous</a>
+        <a href="#rc.prevStep#" class="btn">Previous</a>
         <button type="submit" class="btn btn-primary btn-lg">Continue</button>
       </div>
       <section class="featured">
@@ -252,7 +252,7 @@
         </div>
       </section>
       <div class="pull-right">
-        <a href="##" class="btn btn-block">Previous</a>
+        <a href="#rc.prevStep#" class="btn btn-block">Previous</a>
         <button type="submit" class="btn btn-primary btn-block btn-lg">Continue</button>
       </div>
     </form>

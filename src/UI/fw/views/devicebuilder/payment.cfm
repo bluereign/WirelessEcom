@@ -5,9 +5,9 @@
       <h1>Payment, Protection &amp; Services Plans</h1>
       <p>The following services are available for your device based on your plan.</p>
     </header>
-    <form action="/default.cfm/devicebuilder/accessories/type/#rc.type#" method="post">
+    <form action="#rc.nextStep#" method="post">
       <div class="pull-right">
-        <a href="/default.cfm/devicebuilder/plans" class="btn">Previous</a>
+        <a href="#rc.prevStep#" class="btn">Previous</a>
         <button type="submit" class="btn btn-primary btn-lg">Continue</button>
       </div>
       <section>
@@ -114,7 +114,7 @@
         </div>
       </section>
       <div class="pull-right">
-        <a href="##" class="btn btn-block">Previous</a>
+        <a href="#rc.prevStep#" class="btn btn-block">Previous</a>
         <button type="submit" class="btn btn-primary btn-block btn-lg">Continue</button>
       </div>
     </form>
