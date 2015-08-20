@@ -1,9 +1,10 @@
+<cfparam name="rc.includeTallyBox" default="true" />
+<cfparam name="rc.type" default="upgrade" /> <!--- upgrade, add, new --->
+
 <cfset assetPaths = application.wirebox.getInstance("AssetPaths") />
 <cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
 <cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
 <cfset mercentAnalyticsTracker = application.wirebox.getInstance("MercentAnalyticsTracker") />
-
-<cfparam name="rc.includeTallyBox" default="true" />
 
 <cfparam name="request.currentTopNav" default="carrierlogin" type="string" />
 <cfparam name="request.title" default="Costco Wireless - Big Savings on Cell Phones - Offering Plans from Verizon Wireless, AT&T, T-Mobile, and Sprint." type="string" />
@@ -12,11 +13,9 @@
 <cfparam name="request.referringLink" default="#cgi.http_referer#" type="string" />
 <cfparam name="request.referringDomain" default="" type="string" />
 
-
 <cfif len(trim(request.referringLink)) and listLen(request.referringLink, '/') gte 2>
   <cfset request.referringDomain = listGetAt(request.referringLink, 2, '/') />
 </cfif>
-
 <cfset request.currentBodyId = listFirst(request.currentTopNav, '.') />
 
 <cfoutput>
@@ -55,12 +54,20 @@
       </div>
     </div>
     <ul class="nav nav-pills nav-justified">
-      <li role="presentation" <cfif rc.event is "devicebuilder.carrierlogin">class="active" </cfif>><a href="/default.cfm/devicebuilder/carrierlogin/">Carrier Login</a></li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.upgrade">class="active" </cfif>><a href="/default.cfm/devicebuilder/upgrade/">Upgrade/Add a Line</a></li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.plans">class="active" </cfif>><a href="/default.cfm/devicebuilder/plans">Plans and Data</a></li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.payment">class="active" </cfif>><a href="/default.cfm/devicebuilder/payment">Payment, Protection, and Services</a></li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.accessories">class="active" </cfif>><a href="/default.cfm/devicebuilder/accessories">Accessories</a></li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.orderreview">class="active" </cfif>><a href="/default.cfm/devicebuilder/orderreview">Order Review</a></li>
+      <cfif listFindNoCase("upgrade,add", rc.type)>
+        <li role="presentation" <cfif rc.event is "devicebuilder.carrierlogin">class="active" </cfif>><a href="/default.cfm/devicebuilder/carrierlogin/type/#rc.type#">Carrier Login</a></li>
+        <li role="presentation" <cfif rc.event is "devicebuilder.upgrade">class="active" </cfif>><a href="/default.cfm/devicebuilder/upgrade/type/#rc.type#">Upgrade/Add a Line</a></li>
+      </cfif>
+      <cfif rc.type is "add">
+        <li role="presentation" <cfif rc.event is "devicebuilder.transfer">class="active" </cfif>><a href="/default.cfm/devicebuilder/transfer/type/#rc.type#">Keep or Transfer Number</a></li>        
+      </cfif>
+      <li role="presentation" <cfif rc.event is "devicebuilder.plans">class="active" </cfif>><a href="/default.cfm/devicebuilder/plans/type/#rc.type#">Plans and Data</a></li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.payment">class="active" </cfif>><a href="/default.cfm/devicebuilder/payment/type/#rc.type#">Payment, Protection, and Services</a></li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.accessories">class="active" </cfif>><a href="/default.cfm/devicebuilder/accessories/type/#rc.type#">Accessories</a></li>
+      <cfif rc.type is "new">
+        <li role="presentation" <cfif rc.event is "devicebuilder.porting">class="active" </cfif>><a href="/default.cfm/devicebuilder/porting/type/#rc.type#">Number Porting</a></li>
+      </cfif>
+      <li role="presentation" <cfif rc.event is "devicebuilder.orderreview">class="active" </cfif>><a href="/default.cfm/devicebuilder/orderreview/type/#rc.type#">Order Review</a></li>
     </ul>
   </header>
   <div class="row main">

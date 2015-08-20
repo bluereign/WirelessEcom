@@ -5,7 +5,7 @@
       <h1>Accessorize Your Device</h1>
       <p>When an accessory is selected you will see it added to Your Order.</p>
     </header>
-    <form action="/default.cfm/devicebuilder/orderreview">
+    <form action="/default.cfm/devicebuilder/orderreview/type/#rc.type#">
       <div class="pull-right">
         <a href="/default.cfm/devicebuilder/payment" class="btn">Previous</a>
         <button type="submit" class="btn btn-primary btn-lg">Continue</button>

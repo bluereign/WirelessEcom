@@ -5,7 +5,7 @@
       <h1>Payment, Protection &amp; Services Plans</h1>
       <p>The following services are available for your device based on your plan.</p>
     </header>
-    <form action="/default.cfm/devicebuilder/accessories" method="post">
+    <form action="/default.cfm/devicebuilder/accessories/type/#rc.type#" method="post">
       <div class="pull-right">
         <a href="/default.cfm/devicebuilder/plans" class="btn">Previous</a>
         <button type="submit" class="btn btn-primary btn-lg">Continue</button>
