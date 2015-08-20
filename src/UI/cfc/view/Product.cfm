@@ -1937,7 +1937,7 @@ TEMPORARY DISABLE --->
 					<!---Handles Finance BtnHeader for non-VFD finance phones --->
 					<cfif arguments.priceType eq "Finance">
 						<!---<a class="ActionButton learnMoreBtn" href="##"><span>Warehouse Only</span></a>--->
-						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##myModalCart"><span>Add to Cart</span></a>
+						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
 					<cfelse>
 						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
 					</cfif>

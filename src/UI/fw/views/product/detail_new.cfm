@@ -486,6 +486,16 @@ $j(document).ready(function($j) {
 	 	$j('##btn-finance').click();
 	</cfif>
 	
+	// Customer Type Modal
+	$j('##btn-newToCarrier').on('click', function (e) {
+		$j('##customerTypeBlock').hide();
+		$j('##zipCodeBlock').show();
+	 });
+
+	$j('##btn-clearZipForm').on('click', function(e) {
+		$j('##zipCodeBlock').hide();
+		$j('##customerTypeBlock').show();
+	});
 		 	 
 });
 </script>
@@ -1040,13 +1050,14 @@ $j(document).ready(function($j) {
 
 
 <!--- Customer Type Modal --->
-<div class="modal fade" id="myModalCart" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
+<div class="modal fade" id="customerTypeModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<!-- Modal Body -->
 			<div class="modal-body">
 				<div class="container">
-					<div class="row">
+					
+					<div class="row" id="customerTypeBlock">
 						<h1>#prc.productData.carrierName# Customer Type?</h1>
 						<p>Bacon ipsum dolor amet pork chop picanha kielbasa pastrami, biltong pancetta porchetta spare. Domo arigatoo mister roboto.  Domo, domo.</p>
 						<hr class="blueline" />
@@ -1075,11 +1086,34 @@ $j(document).ready(function($j) {
 							<br />
 							<div class="row center-block">
 								<div class="col-xs-12">
-									<a href="##" class="btn btn-lg btn-primary">New to #prc.productData.carrierName#</a>
+									<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier">New to #prc.productData.carrierName#</a>
 								</div>
 							</div>
 						</div>
 					</div>
+
+					<div class="row" id="zipCodeBlock" style="display:none;">
+						<h1>Zip Code</h1>
+						<p>Zip code where you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
+						<hr class="blueline" />
+						
+						<form name="zipCode" method="post">
+						    <section>
+							    
+					    		<div class="col-xs-6">
+					    			<div style="float:left;margin-right:20px;">
+						        	<label for="zipCode"><h4>Enter Zip Code: &nbsp;&nbsp;&nbsp;</h4></label>
+						        	<input id="zipCode" type="text" value="" name="zipCode">
+								    </div>
+									</div>
+									<div class="col-xs-6">
+					        	<button id="btn-clearZipForm" type="button" class="btn btn-lg btn-default">Go Back</button>&nbsp;&nbsp;&nbsp;
+					        	<a href="/default.cfm/devicebuilder/plans/" class="btn btn-lg btn-success" style="padding-left:50px;padding-right:50px;">Continue</a>
+					      	</div>
+					    </section>
+						</form>
+					</div>
+
 					<br />
 					<br />
 					<br />
