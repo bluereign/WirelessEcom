@@ -16,17 +16,54 @@
     
     <cfscript>
       //TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
-      if (!listFindNoCase(listCustomerTypes,rc.type)) {
+      
+      // set Customer info in rc
+      if (!structKeyExists(rc,"type") OR !listFindNoCase(listCustomerTypes,rc.type)) {
         rc.type = "new";
       }
+      if (!structKeyExists(rc,"userData")) {
+        rc.userData = {
+          phoneLines = [
+            {phoneNumber = "(206) 555 - 1111", isAvailable = true},
+            {phoneNumber = "(206) 555 - 4545", isAvailable = true},
+            {phoneNumber = "(206) 555 - 2222", isAvailable = true},
+            {phoneNumber = "(206) 555 - 3333", isAvailable = false},
+            {phoneNumber = "(206) 555 - 4444", isAvailable = false},
+            {phoneNumber = "(206) 555 - 5555", isAvailable = false},
+            {phoneNumber = "(206) 555 - 6666", isAvailable = false}
+            ],
+          username = "thedude",
+          firstname = "The",
+          middleinitial = "L",
+          lastname = "Dude",
+          company = "Self-employed",
+          address1 = "Hey Bro St.",
+          address2 = "",
+          city = "Los Angelos",
+          state = "CA",
+          zip = "90210",
+          homephone = "123-432-1231",
+          workphone = ""
+        };
+      }
+      // set Device info in rc
       if (!structKeyExists(rc,"pid") OR !isNumeric(rc.pid)) {
         rc.pid = "00000";
         // relocate( '/index.cfm' );
       }
-      prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
+      if (!structKeyExists(prc,"productData")) {
+        prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
+      }
       if (!isNumeric(prc.productData.productId)) {
         relocate( '/index.cfm' );
       };
+      if (!structKeyExists(prc,"productService")) {
+        prc.productService = application.wirebox.getInstance( "ProductService" );
+      }
+      if (!structKeyExists(prc,"productImages")) {
+       prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
+      }
+
       // rc.bBootStrapIncluded = true;
       rc.deviceBuilderCssIncluded = true;
       event.setLayout('devicebuilder');
@@ -73,6 +110,7 @@
 
       rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       rc.nextStep = event.buildLink(nextAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+
       event.setView("devicebuilder/upgrade");
     </cfscript>
   </cffunction>

@@ -93,7 +93,8 @@
             <h3>Upgrading Line 1</h3>
             <div class="row">
               <div class="col-xs-3">
-                <img src="https://placeholdit.imgix.net/~text?txtsize=12&txt=50px&w=50&h=50" alt="device picture" />
+                <!--- <img src="https://placeholdit.imgix.net/~text?txtsize=12&txt=50px&w=50&h=50" alt="device picture" /> --->
+                <img class="img-responsive" id="prodDetailImg" src="#prc.productImages[1].imagesrc#" border="0" width="50" alt="#prc.productImages[1].imageAlt#"/>
               </div>
               <div class="col-xs-9">
                 <div class="name">#prc.productData.summaryTitle#</div>
@@ -103,12 +104,12 @@
                       <th colspan="2">Carrier Financing Name</th>
                     </thead>
                     <tr>
-                      <td>Due Monthly for XX Months</td>
-                      <td class="price">$21.67/mo*</td>
+                      <td>Due Monthly for 24 Months</td>
+                      <td class="price">#dollarFormat(prc.productData.FinancedMonthlyPrice24)#/mo*</td>
                     </tr>
                     <tr>
                       <td>Regular Price</td>
-                      <td class="price">#dollarFormat(prc.productData.price_retail)#</td>
+                      <td class="price">#dollarFormat(prc.productData.FinancedFullRetailPrice)#</td>
                     </tr>
                     <tr>
                       <td>Due Today*</td>
