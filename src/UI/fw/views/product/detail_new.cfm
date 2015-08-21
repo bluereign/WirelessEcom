@@ -1072,7 +1072,7 @@ $j(document).ready(function($j) {
 									<a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/upgrade/" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a>
 								</div>
 								<div class="col-xs-6">
-									<a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/add/" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a>
+									<a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/addaline/" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a>
 								</div>
 							</div>
 						</div>

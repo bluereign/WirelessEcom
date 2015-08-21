@@ -5,7 +5,7 @@
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
-  <cfset listCustomerTypes = "upgrade,add,new" />
+  <cfset listCustomerTypes = "upgrade,addaline,new" />
 
   
   <!--- preHandler --->
@@ -57,7 +57,7 @@
           prevAction = "devicebuilder.carrierLogin";
           nextAction = "devicebuilder.plans";
           break;
-        case "add":
+        case "addaline":
           prevAction = "devicebuilder.carrierLogin";
           nextAction = "devicebuilder.transfer";
           break;
@@ -84,7 +84,7 @@
         case "upgrade":
           rc.prevStep = event.buildLink('devicebuilder.upgrade') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
           break;
-        case "add":
+        case "addaline":
           rc.prevStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
           break;
         case "new":
@@ -140,8 +140,8 @@
           prevAction = "devicebuilder.plans";
           nextAction = "devicebuilder.orderreview";
           break;
-        case "add":
-          prevAction = "devicebuilder.plans";
+        case "addaline":
+          prevAction = "devicebuilder.payment";
           nextAction = "devicebuilder.orderreview";
           break;
         case "new":
@@ -171,7 +171,7 @@
         case "upgrade":
           prevAction = "devicebuilder.accessories";
           break;
-        case "add":
+        case "addaline":
           prevAction = "devicebuilder.accessories";
           break;
         case "new":
