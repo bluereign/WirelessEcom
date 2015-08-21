@@ -96,7 +96,7 @@
                 <img src="https://placeholdit.imgix.net/~text?txtsize=12&txt=50px&w=50&h=50" alt="device picture" />
               </div>
               <div class="col-xs-9">
-                <div class="name">Manufacturer Name, Device Name &amp; Model, Memory, Color, etc.</div>
+                <div class="name">#prc.productData.summaryTitle#</div>
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                       <td>Regular Price</td>
-                      <td class="price">$999.99</td>
+                      <td class="price">#dollarFormat(prc.productData.price_retail)#</td>
                     </tr>
                     <tr>
                       <td>Due Today*</td>

@@ -15,14 +15,18 @@
     <cfargument name="prc">
     
     <cfscript>
-      // TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
-      if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
+      //TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
+      if (!listFindNoCase(listCustomerTypes,rc.type)) {
         rc.type = "new";
       }
-      if (NOT structKeyExists(rc,"pid")) {
+      if (!structKeyExists(rc,"pid") OR !isNumeric(rc.pid)) {
         rc.pid = "00000";
+        // relocate( '/index.cfm' );
       }
-
+      prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
+      if (!isNumeric(prc.productData.productId)) {
+        relocate( '/index.cfm' );
+      };
       // rc.bBootStrapIncluded = true;
       rc.deviceBuilderCssIncluded = true;
       event.setLayout('devicebuilder');
