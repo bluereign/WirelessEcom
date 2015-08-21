@@ -6,9 +6,9 @@
       <p>The primary Account Holder's information is used to verify status and line availability.</p>
     </header>
     <img alt="" src="/assets/costco/images/Trustwave.gif" alt="Trustwave" class="trustwave">
-    <form action="/default.cfm/devicebuilder/upgrade/type/#rc.type#">
+    <form action="#rc.nextStep#">
       <div class="pull-right">
-        <a href="##" class="btn">Previous</a>
+        <a href="#rc.prevStep#" class="btn">Previous</a>
         <button type="submit" class="btn btn-primary btn-lg">Continue</button>
       </div>
       <div class="form-group form-inline phone">
