@@ -7,13 +7,13 @@
 
   <cfset listCustomerTypes = "upgrade,add,new" />
 
+  
   <!--- preHandler --->
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-
-    <cfset rc.yohomey = 1>
+    
     <cfscript>
       if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
         rc.type = "new";
@@ -25,6 +25,7 @@
     </cfscript>
   </cffunction>
 
+  
   <!--- Default Action --->
   <cffunction name="carrierLogin" returntype="void" output="false" hint="Product details page">
     <cfargument name="event">
@@ -44,21 +45,25 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var nextAction = "" />
+    <cfset var prevAction = "" />
 
     <cfscript>
       switch(rc.type) {
         case "upgrade":
+          prevAction = "devicebuilder.carrierLogin";
           nextAction = "devicebuilder.plans";
           break;
         case "add":
+          prevAction = "devicebuilder.carrierLogin";
           nextAction = "devicebuilder.transfer";
           break;
         default: 
+          prevAction = "devicebuilder.carrierLogin";
           nextAction = "devicebuilder.plans";
           break;
       }
 
-      rc.prevStep = event.buildLink('devicebuilder.carrierLogin') & '/type/' & rc.type;
+      rc.prevStep = event.buildLink(prevAction) & '/type/' & rc.type;
       rc.nextStep = event.buildLink(nextAction) & '/type/' & rc.type;
       event.setView("devicebuilder/upgrade");
     </cfscript>
@@ -123,23 +128,28 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var nextAction = "" />
+    <cfset var prevAction = "" />
 
     <cfscript>
       switch(rc.type) {
         case "upgrade":
+          prevAction = "devicebuilder.plans";
           nextAction = "devicebuilder.orderreview";
           break;
         case "add":
+          prevAction = "devicebuilder.plans";
           nextAction = "devicebuilder.orderreview";
           break;
         case "new":
+          prevAction = "devicebuilder.payment";
           nextAction = "devicebuilder.porting";
           break;
         default: 
+          prevAction = "devicebuilder.plans";
           nextAction = "devicebuilder.orderreview";
           break;
       }
-      rc.prevStep = event.buildLink('devicebuilder.plans') & '/type/' & rc.type;
+      rc.prevStep = event.buildLink(prevAction) & '/type/' & rc.type;
       rc.nextStep = event.buildLink(nextAction) & '/type/' & rc.type;
       event.setView("devicebuilder/accessories");
     </cfscript>
