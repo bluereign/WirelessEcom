@@ -1,5 +1,6 @@
 <cfparam name="rc.includeTallyBox" default="true" />
 <cfparam name="rc.type" default="upgrade" /> <!--- upgrade, add, new --->
+<cfparam name="rc.pid" default="00000" />
 
 <cfset assetPaths = application.wirebox.getInstance("AssetPaths") />
 <cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
@@ -56,19 +57,19 @@
 
     <ul class="nav nav-pills nav-justified">
       <cfif listFindNoCase("upgrade,add", rc.type)>
-        <li role="presentation" <cfif rc.event is "devicebuilder.carrierlogin">class="active" </cfif>><a href="/default.cfm/devicebuilder/carrierlogin/type/#rc.type#">Carrier Login</a></li>
-        <li role="presentation" <cfif rc.event is "devicebuilder.upgrade">class="active" </cfif>><a href="/default.cfm/devicebuilder/upgrade/type/#rc.type#">Upgrade/Add a Line</a></li>
+        <li role="presentation" <cfif rc.event is "devicebuilder.carrierlogin">class="active" </cfif>><a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/#rc.type#/">Carrier Login</a></li>
+        <li role="presentation" <cfif rc.event is "devicebuilder.upgrade">class="active" </cfif>><a href="/default.cfm/devicebuilder/upgrade/pid/#rc.pid#/type/#rc.type#/">Upgrade/Add a Line</a></li>
       </cfif>
       <cfif rc.type is "add">
-        <li role="presentation" <cfif rc.event is "devicebuilder.transfer">class="active" </cfif>><a href="/default.cfm/devicebuilder/transfer/type/#rc.type#">Keep or Transfer Number</a></li>        
+        <li role="presentation" <cfif rc.event is "devicebuilder.transfer">class="active" </cfif>><a href="/default.cfm/devicebuilder/transfer/pid/#rc.pid#/type/#rc.type#/">Keep or Transfer Number</a></li>        
       </cfif>
-      <li role="presentation" <cfif rc.event is "devicebuilder.plans">class="active" </cfif>><a href="/default.cfm/devicebuilder/plans/type/#rc.type#">Plans and Data</a></li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.payment">class="active" </cfif>><a href="/default.cfm/devicebuilder/payment/type/#rc.type#">Payment, Protection, and Services</a></li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.accessories">class="active" </cfif>><a href="/default.cfm/devicebuilder/accessories/type/#rc.type#">Accessories</a></li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.plans">class="active" </cfif>><a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/#rc.type#/">Plans and Data</a></li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.payment">class="active" </cfif>><a href="/default.cfm/devicebuilder/payment/pid/#rc.pid#/type/#rc.type#/">Payment, Protection, and Services</a></li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.accessories">class="active" </cfif>><a href="/default.cfm/devicebuilder/accessories/pid/#rc.pid#/type/#rc.type#/">Accessories</a></li>
       <cfif rc.type is "new">
-        <li role="presentation" <cfif rc.event is "devicebuilder.porting">class="active" </cfif>><a href="/default.cfm/devicebuilder/porting/type/#rc.type#">Number Porting</a></li>
+        <li role="presentation" <cfif rc.event is "devicebuilder.porting">class="active" </cfif>><a href="/default.cfm/devicebuilder/porting/pid/#rc.pid#/type/#rc.type#/">Number Porting</a></li>
       </cfif>
-      <li role="presentation" <cfif rc.event is "devicebuilder.orderreview">class="active" </cfif>><a href="/default.cfm/devicebuilder/orderreview/type/#rc.type#">Order Review</a></li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.orderreview">class="active" </cfif>><a href="/default.cfm/devicebuilder/orderreview/pid/#rc.pid#/type/#rc.type#/">Order Review</a></li>
     </ul>
     
   </header>

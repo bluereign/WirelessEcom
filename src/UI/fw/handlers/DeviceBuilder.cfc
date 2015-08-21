@@ -15,8 +15,12 @@
     <cfargument name="prc">
     
     <cfscript>
+      // TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
       if (NOT listFindNoCase(listCustomerTypes,rc.type)) {
         rc.type = "new";
+      }
+      if (NOT structKeyExists(rc,"pid")) {
+        rc.pid = "00000";
       }
 
       // rc.bBootStrapIncluded = true;
@@ -34,7 +38,7 @@
 
     <cfscript>
       rc.prevStep = CGi.http_referer;
-      rc.nextStep = event.buildLink('devicebuilder.upgrade') & '/type/' & rc.type;
+      rc.nextStep = event.buildLink('devicebuilder.upgrade') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/carrierlogin");
     </cfscript>
   </cffunction>
@@ -63,8 +67,8 @@
           break;
       }
 
-      rc.prevStep = event.buildLink(prevAction) & '/type/' & rc.type;
-      rc.nextStep = event.buildLink(nextAction) & '/type/' & rc.type;
+      rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+      rc.nextStep = event.buildLink(nextAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/upgrade");
     </cfscript>
   </cffunction>
@@ -78,10 +82,10 @@
     <cfscript>
       switch(rc.type) {
         case "upgrade":
-          rc.prevStep = event.buildLink('devicebuilder.upgrade') & '/type/' & rc.type;
+          rc.prevStep = event.buildLink('devicebuilder.upgrade') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
           break;
         case "add":
-          rc.prevStep = event.buildLink('devicebuilder.transfer') & '/type/' & rc.type;
+          rc.prevStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
           break;
         case "new":
           rc.prevStep = CGI.http_referer;
@@ -91,7 +95,7 @@
           break;
       }
       
-      rc.nextStep = event.buildLink('devicebuilder.payment') & '/type/' & rc.type;
+      rc.nextStep = event.buildLink('devicebuilder.payment') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/plans");
     </cfscript>
   </cffunction>
@@ -103,8 +107,8 @@
     <cfargument name="prc">
 
     <cfscript>
-      rc.prevStep = event.buildLink('devicebuilder.upgrade') & '/type/' & rc.type;
-      rc.nextStep = event.buildLink('devicebuilder.plans') & '/type/' & rc.type;
+      rc.prevStep = event.buildLink('devicebuilder.upgrade') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+      rc.nextStep = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/transfer");
     </cfscript>
   </cffunction>
@@ -116,8 +120,8 @@
     <cfargument name="prc">
 
     <cfscript>
-      rc.prevStep = event.buildLink('devicebuilder.plans') & '/type/' & rc.type;
-      rc.nextStep = event.buildLink('devicebuilder.accessories') & '/type/' & rc.type;
+      rc.prevStep = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+      rc.nextStep = event.buildLink('devicebuilder.accessories') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/payment");
     </cfscript>
   </cffunction>
@@ -149,8 +153,8 @@
           nextAction = "devicebuilder.orderreview";
           break;
       }
-      rc.prevStep = event.buildLink(prevAction) & '/type/' & rc.type;
-      rc.nextStep = event.buildLink(nextAction) & '/type/' & rc.type;
+      rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+      rc.nextStep = event.buildLink(nextAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/accessories");
     </cfscript>
   </cffunction>
@@ -177,7 +181,7 @@
           prevAction = "devicebuilder.accessories";
           break;
       }
-      rc.prevStep = event.buildLink(prevAction) & '/type/' & rc.type;
+      rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       rc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       rc.includeTallyBox = false;
       event.setView("devicebuilder/orderreview");
@@ -192,8 +196,8 @@
     <cfargument name="prc">
 
     <cfscript>
-      rc.prevStep = event.buildLink('devicebuilder.accessories') & '/type/' & rc.type;
-      rc.nextStep = event.buildLink('devicebuilder.orderreview') & '/type/' & rc.type;
+      rc.prevStep = event.buildLink('devicebuilder.accessories') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+      rc.nextStep = event.buildLink('devicebuilder.orderreview') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/porting");
     </cfscript>
   </cffunction>

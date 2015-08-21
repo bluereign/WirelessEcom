@@ -1069,10 +1069,10 @@ $j(document).ready(function($j) {
 							<br />
 							<div class="row center-block">
 								<div class="col-xs-6">
-									<a href="/default.cfm/devicebuilder/carrierlogin/type/upgrade" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a>
+									<a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/upgrade/" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a>
 								</div>
 								<div class="col-xs-6">
-									<a href="/default.cfm/devicebuilder/carrierlogin/type/add" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a>
+									<a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/add/" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a>
 								</div>
 							</div>
 						</div>
@@ -1108,7 +1108,7 @@ $j(document).ready(function($j) {
 									</div>
 									<div class="col-xs-6">
 					        	<button id="btn-clearZipForm" type="button" class="btn btn-lg btn-default">Go Back</button>&nbsp;&nbsp;&nbsp;
-					        	<a href="/default.cfm/devicebuilder/plans/type/new" class="btn btn-lg btn-success" style="padding-left:50px;padding-right:50px;">Continue</a>
+					        	<a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/new/" class="btn btn-lg btn-success" style="padding-left:50px;padding-right:50px;">Continue</a>
 					      	</div>
 					    </section>
 						</form>
