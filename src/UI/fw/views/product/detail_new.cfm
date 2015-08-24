@@ -1097,13 +1097,13 @@ $j(document).ready(function($j) {
 						<p>Zip code where you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
 						<hr class="blueline" />
 						
-						<form name="zipCode" method="post">
+						<form class="form-inline" name="zipCode" method="post">
 						    <section>
 							    
 					    		<div class="col-xs-6">
-					    			<div style="float:left;margin-right:20px;">
+					    			<div style="float:left;margin-right:20px;" class="form-group">
 						        	<label for="zipCode"><h4>Enter Zip Code: &nbsp;&nbsp;&nbsp;</h4></label>
-						        	<input id="zipCode" type="text" value="" name="zipCode">
+						        	<input id="zipCode" type="text" value="" name="zipCode" class="form-control" style="width:30%">
 								    </div>
 									</div>
 									<div class="col-xs-6">
