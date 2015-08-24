@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="stylesheets/global.css" rel="stylesheet" />
+</head>
+<body>
+@@include('./views/header.html')
+@@include('./views/primary-nav.html')
+<div class="container">
+	<div class="head">
+		<ul class="nav nav-pills nav-justified">
+			<li role="presentation" class="complete hidden-xs"><a href="upgrade-login.html"><span>1</span>Carrier Login</a></li>
+			<li role="presentation" class="complete hidden-xs"><a href="upgrade-add-line.html"><span>2</span>Upgrade/Add a Line</a></li>
+			<li role="presentation" class="complete hidden-xs"><a href="upgrade-plan-data.html"><span>3</span>Plans and Data</a></li>
+			<li role="presentation" class="complete hidden-xs"><a href="upgrade-payment-protection.html"><span>4</span>Protection &amp; Services</a></li>
+			<li role="presentation" class="active"><a href="upgrade-accessories.html"><span>5</span>Accessories</a></li>
+			<li role="presentation" class="hidden-xs"><a href="upgrade-cart.html"><span>6</span>Order Review</a></li>
+		</ul>
+	</div>
+	<div class="row main">
+		<div class="col-md-12">
+			<section class="content accessories">
+				<header class="main-header">
+					<h1>Accessorize Your Device</h1>
+					<p>When an accessory is selected you will see it added to Your Order.</p>
+				</header>
+				<form>
+					<div class="pull-right">
+						<a href="#">BACK</a>
+						<button type="submit" class="btn btn-primary">Continue</button>
+					</div>
+					<section class="featured">
+						<h4>Featured Accessories for Your Device</h4>
+						<div class="row">
+							<div class="col-sm-5">
+								<div class="product clearfix">
+									<img src="/images/ex-featured-accessories.jpg" alt="device picture" />
+									<div class="info">Spigen iPhone 6 Plus Tough Armor Case - Metal Slate</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn btn-remove">Remove</button>
+								</div>
+							</div>
+							<div class="col-sm-5">
+								<div class="product clearfix">
+									<img src="/images/ex-featured-accessories2.jpg" alt="device picture" />
+									<div class="info">Features Manufacturer, Device Name, and Color</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn">Add to Cart</button>
+								</div>
+							</div>
+							<div class="col-sm-5">
+								<div class="product clearfix">
+									<img src="/images/ex-featured-accessories.jpg" alt="device picture" />
+									<div class="info">Features Manufacturer, Device Name, and Color</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn btn-remove">Remove</button>
+								</div>
+							</div>
+						</div>
+					</section>
+					<section class="filters">
+						@@include('./views/accessories-filters.html')
+					</section>
+
+					<ul class="nav nav-tabs">
+						<li role="presentation" class="active">
+							<a href="#all" aria-controls="all" role="tab" data-toggle="tab">All Accessories</a>
+						</li>
+						<li role="presentation">
+							<a href="#cases" aria-controls="cases" role="tab" data-toggle="tab">Cases</a>
+						</li>
+						<li role="presentation">
+							<a href="#screen" aria-controls="screen" role="tab" data-toggle="tab">Screen Protectors</a>
+						</li>
+						<li role="presentation">
+							<a href="#onsale" aria-controls="onsale" role="tab" data-toggle="tab">On Sale Now</a>
+						</li>
+						<li role="presentation">
+							<a href="#custom" aria-controls="screen" role="tab" data-toggle="tab">Custom</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="all">
+							<div class="col-lg-4 col-xs-8">
+								<div class="product clearfix">
+									<img src="/images/ex-accessories.jpg" alt="device picture" />
+									<div class="info">Features Manufacturer, Device Name, and Color</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn btn-sm">Add to Cart</button>
+								</div>
+							</div>
+							<div class="col-lg-4 col-xs-8">
+								<div class="product sale clearfix">
+									<img src="/images/ex-accessories.jpg" alt="device picture" />
+									<div class="info">Features Manufacturer, Device Name, and Color</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn btn-sm">Add to Cart</button>
+								</div>
+							</div>
+							<div class="col-lg-4 col-xs-8">
+								<div class="product clearfix">
+									<img src="/images/ex-accessories2.jpg" alt="device picture" />
+									<div class="info">Features Manufacturer, Device Name, and Color</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn btn-sm">Add to Cart</button>
+								</div>
+							</div>
+							<div class="col-lg-4 col-xs-8">
+								<div class="product clearfix">
+									<img src="/images/ex-accessories2.jpg" alt="device picture" />
+									<div class="info">Features Manufacturer, Device Name, and Color</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn btn-sm">Add to Cart</button>
+								</div>
+							</div>
+							<div class="col-lg-4 col-xs-8">
+								<div class="product clearfix">
+									<img src="/images/ex-accessories.jpg" alt="device picture" />
+									<div class="info">Features Manufacturer, Device Name, and Color</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn btn-sm">Add to Cart</button>
+								</div>
+							</div>
+							<div class="col-lg-4 col-xs-8">
+								<div class="product clearfix">
+									<img src="/images/ex-accessories2.jpg" alt="device picture" />
+									<div class="info">Features Manufacturer, Device Name, and Color</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn btn-sm">Add to Cart</button>
+								</div>
+							</div>
+							<div class="col-lg-4 col-xs-8">
+								<div class="product clearfix">
+									<img src="/images/ex-accessories.jpg" alt="device picture" />
+									<div class="info">Features Manufacturer, Device Name, and Color</div>
+									<div class="price">$9.99</div>
+									<button type="button" class="btn btn-sm">Add to Cart</button>
+								</div>
+							</div>
+							<div class="col-lg-4 col-xs-8">
+								<div class="product special clearfix">
+									<img src="/images/ex-accessories.jpg" alt="device picture" />
+									<div class="callout">
+										<button type="button" class="btn btn-primary">View Details</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="cases">
+							...
+						</div>
+						<div role="tabpanel" class="tab-pane" id="screen">
+							...
+						</div>
+						<div role="tabpanel" class="tab-pane" id="onsale">
+							...
+						</div>
+						<div role="tabpanel" class="tab-pane" id="custom">
+							...
+						</div>
+					</div>
+
+					<div class="pull-right">
+						<a href="#">BACK</a>
+						<button type="submit" class="btn btn-primary btn-block">Continue</button>
+					</div>
+				</form>
+			</section>
+		</div>
+		@@include('./views/sidebar.html')
+	</div>
+</div>
+@@include('./views/footer.html')
+<script src="scripts/all.min.js"></script>
+</body>
+</html>

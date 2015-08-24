@@ -1,0 +1,121 @@
+.pricing {
+	h2 {
+		border-bottom: 5px solid @secondary;
+		margin-bottom: 10px;
+		padding-bottom: 10px;
+	}
+
+	.callout {
+		.gray-gradient;
+		border: 1px solid @gray-light;
+		.border-radius(5px);
+		box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+		color: @secondary;
+		.text-size(16);
+		font-weight: bold;
+		margin-bottom: 10px;
+		overflow: auto;
+
+		.col-xs-8 {
+			text-align: right;
+
+			&:first-child {
+				text-align: left;
+			}
+		}
+
+		&.active {
+			.gradient(lighten(@secondary, 10%), @secondary, @secondary);
+			color: #fff;
+		}
+	}
+
+	table {
+		margin: 0 -8px 20px;
+
+		tr {
+			> td {
+				border: 0;
+				text-align: right;
+
+				&:first-child {
+					text-align: left;
+				}
+			}
+		}
+	}
+}
+
+.new {
+	.device {
+		text-align: center;
+	}
+
+	h1 {
+		color: @secondary;
+		.text-size(28);
+	}
+
+	h3 {
+		border-bottom: 5px solid @secondary;
+		margin-bottom: 10px;
+		padding-bottom: 10px;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+
+		li {
+			display: inline-block;
+			margin-right: 10px;
+
+			img {
+				border: 1px solid @gray-light;
+			}
+		}
+	}
+}
+
+.benefits {
+	.pictures {
+		float: left;
+
+		li {
+			display: inline-block;
+		}
+	}
+
+	ul {
+		display: inline-block;
+
+		li {
+			display: block;
+		}
+	}
+
+	.nav-tabs {
+		border-bottom: 2px solid @secondary;
+		display: block;
+		margin-top: 20px;
+
+		li {
+			margin-right: 5px;
+
+			a {
+				border: 1px solid @gray;
+				border-bottom-color: @secondary;
+			}
+		}
+
+		li.active {
+			a {
+				border-bottom-color: transparent;
+				border-left: 2px solid @secondary;
+				border-right: 2px solid @secondary;
+				border-top: 2px solid @secondary;
+				.border-top-radius(5px);
+			}
+		}
+	}
+}

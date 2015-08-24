@@ -1,0 +1,19 @@
+                         @base-font-size: 16;
+@rounding-decimal-count: 8;
+
+@default-text: #6b6b6b;
+
+@gray-light: lighten(@gray-base, 70%);
+@gray-lightest: lighten(@gray-base, 95%);
+
+@primary: #599f33;
+@secondary: #0060a9;
+@href: #00aeef;
+
+.gray-gradient {
+	.gradient(#fefefe, #e8eaeb, #f6f7f8);
+}
+
+.green-gradient {
+	.gradient(lighten(@primary, 10%), @primary, @primary);
+}
