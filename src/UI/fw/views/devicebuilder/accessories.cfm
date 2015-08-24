@@ -1,5 +1,5 @@
 <cfoutput>
-
+<!--- <cfdump var="#prc.qAccessory#"> --->
   <section class="content accessories">
     <header class="main-header">
       <h1>Accessorize Your Device</h1>
@@ -10,7 +10,7 @@
         <a href="#rc.prevStep#" class="btn">Previous</a>
         <button type="submit" class="btn btn-primary btn-lg">Continue</button>
       </div>
-      <section class="featured">
+      <!--- <section class="featured">
         <h4>Featured Accessories for Your Device</h4>
         <div class="row">
           <div class="col-sm-4">
@@ -38,10 +38,10 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> --->
       <section class="filters">
         <div class="dropdown">
-          <a href="##" id="dLabel" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter Accessories</a>
+          <a href="##" id="dLabel" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter Accessories</a> <i>(filter not working)</i>
           <div class="dropdown-menu" aria-labelledby="dLabel">
             <div class="checkbox">
               <label>
@@ -195,46 +195,26 @@
 
           <div role="tabpanel" class="tab-pane active" id="all">
             <div class="row">
-              <div class="col-lg-3 col-sm-4">
-                <div class="product">
-                  <img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=120px&w=120&h=120" alt="device picture" />
-                  <div class="info">Features Manufacturer, Device Name, and Color</div>
-                  <div class="price">$9.99</div>
-                  <button type="button" class="btn btn-primary">Add to Cart</button>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-4">
-                <div class="product">
-                  <img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=120px&w=120&h=120" alt="device picture" />
-                  <div class="info">Features Manufacturer, Device Name, and Color</div>
-                  <div class="price">$9.99</div>
-                  <button type="button" class="btn btn-primary">Add to Cart</button>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-4">
-                <div class="product">
-                  <img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=120px&w=120&h=120" alt="device picture" />
-                  <div class="info">Features Manufacturer, Device Name, and Color</div>
-                  <div class="price">$9.99</div>
-                  <button type="button" class="btn btn-primary">Add to Cart</button>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-4">
-                <div class="product">
-                  <img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=120px&w=120&h=120" alt="device picture" />
-                  <div class="info">Features Manufacturer, Device Name, and Color</div>
-                  <div class="price">$9.99</div>
-                  <button type="button" class="btn btn-primary">Add to Cart</button>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-4">
-                <div class="product">
-                  <img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=120px&w=120&h=120" alt="device picture" />
-                  <div class="info">Features Manufacturer, Device Name, and Color</div>
-                  <div class="price">$9.99</div>
-                  <button type="button" class="btn btn-primary">Add to Cart</button>
-                </div>
-              </div>
+
+              <cfif prc.qAccessory.RecordCount>
+                <cfloop query="prc.qAccessory">
+                  <cfset local.stcFeeAccessoryPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(valueList(prc.qAccessory.accessoryGuid)) />
+                  <div class="col-lg-3 col-sm-4">
+                    <div class="product">
+                      <cfif structKeyExists(local.stcFeeAccessoryPrimaryImages, prc.qAccessory.accessoryGuid[prc.qAccessory.currentRow])>
+                        <img src="#application.view.imageManager.displayImage(imageGuid = local.stcFeeAccessoryPrimaryImages[prc.qAccessory.accessoryGuid[prc.qAccessory.currentRow]], height=100, width=0)#" alt="#htmlEditFormat(prc.qAccessory.summaryTitle[prc.qAccessory.currentRow])#" height="100" border="0" />
+                      <cfelse>
+                        <img src="#prc.assetPaths.common#images/catalog/noimage.jpg" height=100 border="0" alt="#htmlEditFormat(prc.qAccessory.summaryTitle[prc.qAccessory.currentRow])#" />
+                      </cfif>
+                      <!--- <img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=120px&w=120&h=120" alt="device picture" /> --->
+                      <div class="info" style="height:80px;">#prc.qAccessory.summaryTitle[prc.qAccessory.currentRow]#</div>
+                      <div class="price">#dollarFormat(prc.qAccessory.price_retail[prc.qAccessory.currentRow])#</div>
+                      <button type="button" class="btn btn-primary">Add to Cart</button>
+                    </div>
+                  </div>
+                </cfloop>
+              </cfif>
+
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="cases">

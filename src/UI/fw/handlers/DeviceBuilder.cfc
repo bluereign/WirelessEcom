@@ -179,6 +179,10 @@
     <cfset var prevAction = "" />
 
     <cfscript>
+      prc.CatalogService = application.model.Catalog;
+      prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories( event.getValue('pid', '') );
+      prc.AssetPaths = variables.AssetPaths;
+      
       switch(rc.type) {
         case "upgrade":
           prevAction = "devicebuilder.plans";
@@ -226,7 +230,7 @@
           prevAction = "devicebuilder.accessories";
           break;
       }
-      
+
       rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       rc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       rc.includeTallyBox = false;
