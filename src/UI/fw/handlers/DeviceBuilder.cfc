@@ -18,9 +18,7 @@
       //TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
       
       // set Customer info in rc
-      if (!structKeyExists(rc,"type") OR !listFindNoCase(listCustomerTypes,rc.type)) {
-        rc.type = "new";
-      }
+      //TODO: This should be a method call.  Possibly a good starting stub for the Wireless data access object proxy. 
       if (!structKeyExists(rc,"userData")) {
         rc.userData = {
           phoneLines = [
@@ -45,6 +43,10 @@
           homephone = "123-432-1231",
           workphone = ""
         };
+      }
+
+      if (!structKeyExists(rc,"type") OR !listFindNoCase(listCustomerTypes,rc.type)) {
+        rc.type = "new";
       }
       // set Device info in rc
       if (!structKeyExists(rc,"pid") OR !isNumeric(rc.pid)) {
@@ -110,7 +112,7 @@
 
       rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       rc.nextStep = event.buildLink(nextAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-
+      rc.addalineStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/addaline/';
       event.setView("devicebuilder/upgrade");
     </cfscript>
   </cffunction>
@@ -195,6 +197,7 @@
           nextAction = "devicebuilder.orderreview";
           break;
       }
+
       rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       rc.nextStep = event.buildLink(nextAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/accessories");
@@ -223,6 +226,7 @@
           prevAction = "devicebuilder.accessories";
           break;
       }
+      
       rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       rc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       rc.includeTallyBox = false;
