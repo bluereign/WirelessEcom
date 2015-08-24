@@ -209,7 +209,7 @@
                       <!--- <img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=120px&w=120&h=120" alt="device picture" /> --->
                       <div class="info" style="height:80px;">#prc.qAccessory.summaryTitle[prc.qAccessory.currentRow]#</div>
                       <div class="price">#dollarFormat(prc.qAccessory.price_retail[prc.qAccessory.currentRow])#</div>
-                      <button type="button" class="btn btn-primary">Add to Cart</button>
+                      <a type="button" class="btn btn-primary" onclick="alert('addToCart accessory pid: #prc.qAccessory.productId[prc.qAccessory.currentRow]#', '#prc.qAccessory.productId[prc.qAccessory.currentRow]#', 1);return false;" href="##"><span style="color:white">Add to Cart</span></a>
                     </div>
                   </div>
                 </cfloop>
