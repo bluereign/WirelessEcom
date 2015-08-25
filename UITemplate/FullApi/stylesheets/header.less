@@ -1,0 +1,182 @@
+.header {
+	padding: 20px 0 5px;
+
+	.disclaimer {
+		.text-size(12);
+		margin: 10px 0;
+
+		a {
+			text-decoration: underline;
+		}
+	}
+
+	.account {
+		display: none;
+	}
+
+	@media (min-width: @screen-sm-min) {
+		.disclaimer {
+			margin: 5px 0 0px;
+			text-align: center;
+			width: 440px;
+		}
+
+		.account {
+			display: block;
+		}
+	}
+}
+
+.navbar-nav li a:hover {
+	background-color: #444444;
+	transition: 0.7s all linear;
+	height: 100%;
+}
+
+.top-nav {
+	.gradient(#4177A6, #386891, #386891);
+	padding: 0;
+	position: relative;
+
+	@media (min-width: @screen-sm-min) {
+		&:after {
+			.gradient(#ededed, #fff, #ededed);
+			bottom: -12px;
+			content: ' ';
+			display: block;
+			height: 10px;
+			position: absolute;
+			width: 100%;
+		}
+	}
+
+	.navbar {
+		min-height: auto;
+		margin: 0;
+
+		.navbar-toggle {
+			border: 2px solid #fff;
+		}
+
+		.icon-bar {
+			background-color: #fff;
+		}
+	}
+
+	.nav-tabs {
+		border-bottom: 0;
+
+		> li {
+			float: none;
+
+			a {
+				color: #fff;
+				.border-radius(5px);
+			}
+
+			&.active {
+				> a {
+					color: @secondary;
+				}
+			}
+		}
+	}
+
+	.navbar-collapse {
+		border-top: 0;
+	}
+
+	@media (min-width: @screen-sm-min) {
+		.nav-tabs {
+			.text-size(14);
+			padding-left: 20px;
+
+			> li {
+				float: left;
+
+				a {
+					background: transparent;
+					border: 0;
+					border-left: thin dashed #fff;
+					padding: 10px 15px;
+				}
+
+				&:first-child {
+					a {
+						border-left: 0;
+					}
+				}
+
+				&.active {
+					> a {
+						background: #fff;
+						border-left: 0;
+						.border-top-radius(5px);
+						margin-top: 2px;
+						padding-top: 8px;
+					}
+
+					& + li a {
+						border-left: 0;
+					}
+				}
+			}
+		}
+
+		.nav-tabs > li.active a, .nav-tabs > li.active a:hover, .nav-tabs > li.active a:focus {
+			border: 0;
+		}
+	}
+}
+
+.account {
+	.text-size(10);
+	text-align: right;
+
+	ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	li {
+		border-left: 1px solid @gray;
+		display: inline-block;
+		padding: 0 7px;
+
+		&:first-child {
+			border-left: 0;
+		}
+	}
+
+	.cart {
+		background: url('/images/cart-icon.png') 5px 2px no-repeat;
+		padding-left: 25px;
+	}
+
+	.search {
+		label {
+			.text-size(12);
+			font-weight: normal;
+			margin-right: 7px;
+		}
+
+		&.form-group {
+			margin-bottom: 0;
+		}
+
+		.form-control {
+			.border-radius(2px);
+			height: 22px;
+			padding: 4px;
+		}
+
+		.btn-search {
+			background: url('/images/search-button.png');
+			border: 0;
+			font-size: 0;
+			height: 22px;
+			vertical-align: top;
+			width: 23px;
+		}
+	}
+}

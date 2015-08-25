@@ -1,0 +1,124 @@
+.head {
+	position: relative;
+
+	.content {
+		margin-bottom: 20px;
+	}
+
+	.logo {
+		display: block;
+		margin-top: 5px;
+	}
+
+	.disclaimer {
+		margin: 5px 0;
+		text-align: center;
+	}
+
+	.nav-pills {
+		a {
+			color: #898989;
+			padding: 0;
+			.text-size(12);
+
+			span,
+			&:after {
+				border: 3px solid #d9d9d9;
+				border-radius: 25px;
+				display: block;
+				margin: 0 auto;
+			}
+
+			span {
+				background: @gray-lighter;
+				border-color: transparent;
+				border-radius: 25px;
+				display: block;
+				.text-size(16);
+				height: 28px;
+				margin: 0 auto 5px;
+				width: 28px;
+			}
+
+			&:after {
+				box-shadow: inset 0 3px 3px rgba(150, 150, 150, 0.2);
+				display: block;
+				content: ' ';
+				height: 34px;
+				left: 50%;
+				margin-left: -17px;
+				position: absolute;
+				top: -3px;
+				width: 34px;
+			}
+		}
+
+
+		.active {
+			margin-top: 10px;
+
+			a {
+				span {
+					background: @gray-lightest;
+					border: 3px solid rgba(0, 0, 0, .15);
+				}
+			}
+		}
+
+		@media (min-width: @screen-sm-min) {
+			.active {
+				margin-top: 0;
+			}
+		}
+
+		.complete {
+			a {
+				span {
+					background-color: #4688c4;
+					border-color: #77aad6;
+					.text-size(0);
+				}
+
+				&:before {
+					color: #fff;
+					content: '✓';
+					display: block;
+					.text-size(16);
+					position: absolute;
+					top: 4px;
+					width: 100%;
+				}
+			}
+		}
+	}
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) {
+	#lnkMyAccount {
+		.text-size(10);
+	}
+
+	.nav-pills {
+		position: relative;
+		margin: 40px 0 20px;
+
+		&:before {
+			border-top: 3px solid rgba(150, 150, 150, 0.4);
+			border-bottom: 3px solid rgba(150, 150, 150, 0.2);
+			left: 50%;
+			margin-left: -43%;
+			position: absolute;
+			top: 11px;
+			width: 86%;
+		}
+
+		.complete {
+			a {
+				&:before {
+
+				}
+			}
+		}
+	}
+}

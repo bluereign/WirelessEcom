@@ -1,0 +1,156 @@
+.container {
+	.text-size(14);
+
+	img {
+		max-width: 100%;
+	}
+}
+
+.main {
+	margin-bottom: 20px;
+	margin-top: 20px;
+
+	.content {
+		form {
+			border: 1px solid @gray-light;
+			.border-radius(5px);
+			padding: 20px;
+
+			label {
+				font-weight: normal;
+			}
+		}
+
+		@media (min-width: @screen-sm-min) {
+			margin-bottom: 100px;
+		}
+	}
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) {
+	.trustwave {
+		float: right;
+		margin: 10px 20px 0 0;
+	}
+}
+
+.main-header {
+	margin-bottom: 32px;
+	padding-right: 0;
+
+	h1 {
+		color: @secondary;
+		.text-size(24);
+		margin: 0 0 5px;
+	}
+
+	p {
+		display: block;
+		.text-size(14);
+	}
+
+	/* Small devices (tablets, 768px and up) */
+	@media (min-width: @screen-sm-min) {
+		height: 85px;
+		padding-right: 175px;
+		padding-top: 30px;
+	}
+}
+
+form {
+	position: relative;
+
+	.pull-right {
+		margin-bottom: 20px;
+		width: 100%;
+
+		&:first-child {
+			display: none;
+		}
+	}
+
+	/* Small devices (tablets, 768px and up) */
+	@media (min-width: @screen-sm-min) {
+		.form-inline {
+
+			label {
+				width: 250px;
+			}
+
+				a {
+				margin-left: 30px;
+			}
+		}
+
+		.zip,
+		.ssn,
+		.pin {
+			.form-control {
+				width: 230px;
+			}
+		}
+
+		.pull-right {
+			bottom: -80px;
+			float: right;
+			position: absolute;
+			right: 0;
+			width: 150px;
+
+			&:first-child {
+				bottom: auto;
+				display: block;
+				top: -60px;
+			}
+
+			.btn {
+				display: inline;
+				margin-left: 20px;
+				padding: 10px 14px;
+				width: auto;
+			}
+		}
+	}
+}
+
+.phone {
+	label {
+		display: block;
+	}
+
+	.form-control {
+		display: inline-block;
+		width: 70px;
+	}
+
+	@media (min-width: @screen-sm-min) {
+		label {
+			display: inline-block;
+		}
+	}
+}
+
+.product {
+	border: 1px solid @gray-light;
+	.border-radius(5px);
+	margin-bottom: 15px;
+	padding: 10px;
+	text-align: center;
+
+	.info {
+		margin: 10px 0;
+	}
+}
+
+#existing .info {
+	float: left;
+}
+
+.legal {
+	background: @gray-lighter;
+	border: 1px solid @gray-light;
+	clear: both;
+	.text-size(12);
+	padding: 10px 20px;
+}
