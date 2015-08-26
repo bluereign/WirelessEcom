@@ -44,59 +44,112 @@
 <div class="container">
   <header class="header">
     <div class="content row">
-      <div class="col-md-3">
-        <a href="http://www.costco.com" id="WAlogo"><img src="#assetPaths.channel#images/costco_logosm.gif" alt="Costco.Com" title="Return to Costco.com" /></a>
+      <div class="col-md-4">
+        <a href="http://www.costco.com" class="logo"><img src="#assetPaths.channel#images/costco_logosm.gif" alt="Costco.Com" title="Return to Costco.com"></a>
       </div>
-      <div class="col-md-6">
-        <p class="disclaimer">You are no longer on Costco's site and are subject to the privacy policy of the company hosting this site. To review the privacy policy, <a href="/index.cfm/go/content/do/privacy">Click here</a>.</p>
+      <div class="col-md-8">
+        <p class="disclaimer">You are no longer on Costco's site and are subject to the privacy policy of the company hosting this site. To review the privacy policy, <a href="/index.cfm/go/content/do/privacy">click here</a>.</p>
       </div>
-      <div class="col-md-3 account">
-        <a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a>
+      <div class="col-md-4 account">
+        <ul>
+          <li><a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a></li>
+          <li class="cart"><a href="##">Your Cart</a></li>
+        </ul>
+        <div class="form-group form-inline search">
+          <label for="inputSearch">Search</label>
+          <input type="text" class="form-control" id="inputSearch">
+          <button type="submit" class="btn-search">Search</button>
+        </div>
       </div>
     </div>
-
-    <ul class="nav nav-pills nav-justified">
-      <cfif listFindNoCase("upgrade,addaline", rc.type)>
-        <li role="presentation" <cfif rc.event is "devicebuilder.carrierlogin">class="active" </cfif>><a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/#rc.type#/">Carrier Login</a></li>
-        <li role="presentation" <cfif rc.event is "devicebuilder.upgrade">class="active" </cfif>><a href="/default.cfm/devicebuilder/upgrade/pid/#rc.pid#/type/#rc.type#/">Upgrade/Add a Line</a></li>
-      </cfif>
-      <cfif rc.type is "addaline">
-        <li role="presentation" <cfif rc.event is "devicebuilder.transfer">class="active" </cfif>><a href="/default.cfm/devicebuilder/transfer/pid/#rc.pid#/type/#rc.type#/">Keep or Transfer Number</a></li>        
-      </cfif>
-      <li role="presentation" <cfif rc.event is "devicebuilder.plans">class="active" </cfif>><a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/#rc.type#/">Plans and Data</a></li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.payment">class="active" </cfif>><a href="/default.cfm/devicebuilder/payment/pid/#rc.pid#/type/#rc.type#/">Payment, Protection, and Services</a></li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.accessories">class="active" </cfif>><a href="/default.cfm/devicebuilder/accessories/pid/#rc.pid#/type/#rc.type#/">Accessories</a></li>
-      <cfif rc.type is "new">
-        <li role="presentation" <cfif rc.event is "devicebuilder.porting">class="active" </cfif>><a href="/default.cfm/devicebuilder/porting/pid/#rc.pid#/type/#rc.type#/">Number Porting</a></li>
-      </cfif>
-      <li role="presentation" <cfif rc.event is "devicebuilder.orderreview">class="active" </cfif>><a href="/default.cfm/devicebuilder/orderreview/pid/#rc.pid#/type/#rc.type#/">Order Review</a></li>
-    </ul>
-    
   </header>
-  <div class="row main">
-    <div class="col-md-9">
-      #trim(request.bodyContent)#
-    </div>
+</div>
+<div class="container-fluid top-nav">
+  <div class="container">
+    <nav class="navbar navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="##bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse fade" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav nav-tabs">
+            <li role="presentation"><a href="##">Home</a></li>
+            <li role="presentation"><a href="##">Hot Deals</a></li>
+            <li role="presentation" class="active"><a href="##">Phones</a></li>
+            <li role="presentation"><a href="##">Mobile Hotspot</a></li>
+            <li role="presentation"><a href="##">Accessories</a></li>
+            <li role="presentation"><a href="##">Check Upgrade Eligibility</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+<div class="container">
+  <div class="head">
+    <!--- upgrade nav --->
+    <ul class="nav nav-pills nav-justified">
+      <li role="presentation" <cfif rc.event is "devicebuilder.carrierlogin">class="active"<cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.upgrade,devicebuilder.plans,devicebuilder.payment,devicebuilder.accessories,devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
+        <a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/#rc.type#/"><span>1</span>Carrier Login</a>
+      </li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.upgrade">class="active"<cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.plans,devicebuilder.payment,devicebuilder.accessories,devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
+        <a href="/default.cfm/devicebuilder/upgrade/pid/#rc.pid#/type/#rc.type#/"><span>2</span>Upgrade/Add a Line</a>
+      </li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.plans">class="active"<cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.payment,devicebuilder.accessories,devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
+        <a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/#rc.type#/"><span>3</span>Plans and Data</a>
+      </li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.payment">class="active" <cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.accessories,devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
+        <a href="/default.cfm/devicebuilder/payment/pid/#rc.pid#/type/#rc.type#/"><span>4</span>Protection &amp; Services</a>
+      </li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.accessories">class="active" <cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
+        <a href="/default.cfm/devicebuilder/accessories/pid/#rc.pid#/type/#rc.type#/"><span>5</span>Accessories</a>
+      </li>
+      <li role="presentation" <cfif rc.event is "devicebuilder.orderreview">class="active" <cfelse>class="hidden-xs"</cfif>>
+        <a href="/default.cfm/devicebuilder/orderreview/pid/#rc.pid#/type/#rc.type#/"><span>6</span>Order Review</a>
+      </li>
+    </ul>
+  </div>
+  <div class="row main<cfif !rc.includeTallyBox> cart</cfif>">
+    
+    #trim(request.bodyContent)#
+
     <cfif rc.includeTallyBox>
-    <!--- Tally Box --->
-      <div class="col-md-3">
+
+      <!--- Tally Box --->
+      <div class="col-md-4">
         <div class="row totals">
-          <div class="col-xs-6">
-            Due Now <br> $0.00
+          <div class="wrap head">
+            <div class="col-xs-8">
+              Due Now
+            </div>
+            <div class="col-xs-8">
+              Monthly
+            </div>
           </div>
-          <div class="col-xs-6">
-            Monthly <br> $66.67
+          <div class="wrap">
+            <div class="col-xs-8">
+              $0.00
+            </div>
+            <div class="col-xs-8">
+              $66.67
+            </div>
           </div>
         </div>
         <div class="row">
           <aside class="details">
             <h3>Upgrading Line 1</h3>
             <div class="row">
-              <div class="col-xs-3">
-                <!--- <img src="https://placeholdit.imgix.net/~text?txtsize=12&txt=50px&w=50&h=50" alt="device picture" /> --->
+              <div class="col-xs-4">
                 <img class="img-responsive" id="prodDetailImg" src="#prc.productImages[1].imagesrc#" border="0" width="50" alt="#prc.productImages[1].imageAlt#"/>
               </div>
-              <div class="col-xs-9">
+              <div class="col-xs-12">
                 <div class="name">#prc.productData.summaryTitle#</div>
                 <div class="table-responsive">
                   <table class="table">
@@ -126,14 +179,15 @@
 
             <h4>Carrier Plan</h4>
             <div class="row">
-              <div class="col-xs-3">
-                <img src="https://placeholdit.imgix.net/~text?txtsize=12&txt=50px&w=50&h=50" alt="carrier plan picture" />
+              <div class="col-xs-4">
+                <img src="images/ex-sidebar-carrier.jpg" alt="carrier plan picture" />
               </div>
-              <div class="col-xs-9">
+              <div class="col-xs-12">
+                <div class="name">MORE Everything<br> Talk, Text, and Data</div>
                 <div class="table-responsive">
                   <table class="table">
                     <tr>
-                      <td>Not selected</td>
+                      <td>Due Monthly for 24 Months Regular Price Due Today*<br>Line Access Free</td>
                       <td class="price">$0.00</td>
                     </tr>
                   </table>
@@ -142,9 +196,10 @@
             </div>
             <h4>Protection &amp; Services</h4>
             <div class="row">
-              <div class="col-xs-3">
+              <div class="col-xs-4">
+                <img src="images/ex-sidebar-protection.jpg" alt="protection picture" />
               </div>
-              <div class="col-xs-9">
+              <div class="col-xs-12">
                 <div class="table-responsive">
                   <table class="table">
                     <tr>
@@ -157,10 +212,25 @@
             </div>
             <h4>Accessories</h4>
             <div class="row">
-              <div class="col-xs-3">
-                <img src="https://placeholdit.imgix.net/~text?txtsize=12&txt=50px&w=50&h=50" alt="accessories picture" />
+              <div class="col-xs-4">
+                <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" />
               </div>
-              <div class="col-xs-9">
+              <div class="col-xs-12">
+                <div class="table-responsive">
+                  <table class="table">
+                    <tr>
+                      <td>Costco Membership Benefits</td>
+                      <td class="price">FREE</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4">
+                <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" />
+              </div>
+              <div class="col-xs-12">
                 <div class="table-responsive">
                   <table class="table">
                     <tr>
@@ -174,45 +244,56 @@
           </aside>
         </div>
       </div>
-    <!--- /Tally Box --->
-    </cfif>
 
+    </cfif>
+    <!--- /Tally Box --->
 
   </div>
+</div> <!-- /container -->
 
-  <footer class="footer row">
-    <div class="col-md-3">
-      <img alt="" src="/assets/costco/images/Trustwave.gif" alt="Trustwave" class="trustwave">
-    </div>
-    <div class="footer-links col-md-6">
-      <ul>
-        <li><a href="/index.cfm/go/content/do/FAQ">FAQ</a></li>
-        <li><a href="/index.cfm/go/content/do/terms">Site Terms and Conditions</a></li>
-        <li><a href="/index.cfm/go/content/do/shipping">Shipping Policy</a></li>
-        <li><a href="/index.cfm/go/content/do/returns">Return Policy</a></li>
-        <li><a href="/index.cfm/go/content/do/serviceAgreement">Carrier Terms and Conditions</a></li>
-        <li><a href="/index.cfm/go/content/do/customerService">Customer Service</a></li>
-        <li><a href="/index.cfm/go/content/do/rebateCenter">Rebate Center</a></li>
-        <li><a href="/index.cfm/go/content/do/aboutus/">About Us</a></li>
-        <li><a href="/index.cfm/go/content/do/howShop">How to Shop</a></li>
-        <li><a href="/index.cfm/go/content/do/privacy/">Privacy Policy</a></li>
-        <li><a href="/index.cfm/go/content/do/supplychain">Supply Chain Disclosure</a></li>
-        <li><a href="/index.cfm/go/content/do/sitemap">Site Map</a></li>
-      </ul>
-      <div class="copyright">
-        &copy; Wireless Advocates, LLC 2004 - 2015. All Rights Reserved.
+<!--- Footer --->
+<footer class="container-fluid footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
+      </div>
+      <div class="col-md-8">
+        <div class="footer-links">
+          <ul>
+            <li><a href="/index.cfm/go/content/do/FAQ">FAQ</a></li>
+            <li><a href="/index.cfm/go/content/do/terms">Site Terms and Conditions</a></li>
+            <li><a href="/index.cfm/go/content/do/shipping">Shipping Policy</a></li>
+            <li><a href="/index.cfm/go/content/do/returns">Return Policy</a></li>
+            <li><a href="/index.cfm/go/content/do/serviceAgreement">Carrier Terms and Conditions</a></li>
+            <li><a href="/index.cfm/go/content/do/customerService">Customer Service</a></li>
+            <li><a href="/index.cfm/go/content/do/rebateCenter">Rebate Center</a></li>
+            <li><a href="/index.cfm/go/content/do/aboutus/">About Us</a></li>
+            <li><a href="/index.cfm/go/content/do/howShop">How to Shop</a></li>
+            <li><a href="/index.cfm/go/content/do/privacy/">Privacy Policy</a></li>
+            <li><a href="/index.cfm/go/content/do/supplychain">Supply Chain Disclosure</a></li>
+            <li><a href="/index.cfm/go/content/do/sitemap">Site Map</a></li>
+          </ul>
+          <div class="copyright">
+            &copy; Wireless Advocates, LLC 2004 - 2015. All Rights Reserved.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <a href="/index.cfm/go/content/do/aboutus/" class="wireless">
+          <img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="#assetPaths.channel#images/WirelessAdvocates_poweredBy_2.gif">
+        </a>
       </div>
     </div>
-    <div class="col-md-3">
-      <a href="/index.cfm/go/content/do/aboutus/"><img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="/assets/costco/images/WirelessAdvocates_poweredBy_2.gif" /></a>
-    </div>
-  </footer>
-</div>
-
+  </div>
+</footer>
+<!--- /Footer --->
 
 </body>
 </html>
 
+    <!--- #trim(request.bodyContent)# --->
+    
 </cfoutput>
 
 <cfset request.bodyContent = '' />

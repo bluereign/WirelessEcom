@@ -1,3 +1,5 @@
+<cfparam name="rc.deviceBuilderCssIncluded" default="false" />
+
 <cfset assetPaths = application.wirebox.getInstance("assetPaths") />
 
 <cfparam name="request.p.go" type="string" default="" />
@@ -12,18 +14,20 @@
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="#assetPaths.common#scripts/bootstrap/3.2.0-custom/css/bootstrap.min.css" />
 	</cfif>
-	<link rel="stylesheet" media="#request.p.media#" type="text/css" href="#assetPaths.common#styles/wa-core.css?v=1.0.0" />
-	<link rel="stylesheet" media="#request.p.media#" type="text/css" href="#assetPaths.channel#styles/main.css?v=2.0.5" />
-	<link rel="stylesheet" media="#request.p.media#" type="text/css" href="#assetPaths.common#styles/cartDialog.css?v=1.0.6" />
-	<link rel="stylesheet" media="#request.p.media#" type="text/css" href="#assetPaths.common#styles/verticalTabs.css?v=1.0.1" />
-	<link rel="stylesheet" media="print" type="text/css" href="#assetPaths.common#styles/cartDialog_print.css" />
-	<link rel="stylesheet" type="text/css" href="#assetPaths.common#scripts/prototip2.2.0.2/css/prototip.css" />
+	<cfif NOT rc.deviceBuilderCssIncluded>
+		<link rel="stylesheet" media="#request.p.media#" type="text/css" href="#assetPaths.common#styles/wa-core.css?v=1.0.0" />
+		<link rel="stylesheet" media="#request.p.media#" type="text/css" href="#assetPaths.channel#styles/main.css?v=2.0.5" />
+		<link rel="stylesheet" media="#request.p.media#" type="text/css" href="#assetPaths.common#styles/cartDialog.css?v=1.0.6" />
+		<link rel="stylesheet" media="#request.p.media#" type="text/css" href="#assetPaths.common#styles/verticalTabs.css?v=1.0.1" />
+		<link rel="stylesheet" media="print" type="text/css" href="#assetPaths.common#styles/cartDialog_print.css" />
+		<link rel="stylesheet" type="text/css" href="#assetPaths.common#scripts/prototip2.2.0.2/css/prototip.css" />		
+	</cfif>
 	<cfif rc.bBootStrapIncluded>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="#assetPaths.common#scripts/bootstrap/override.css" />
 	</cfif>
+	<!-- Device Builder -->
 	<cfif rc.deviceBuilderCssIncluded>
-		<!-- Device Builder -->
 		<link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
 	</cfif>
 
@@ -85,4 +89,8 @@
 		<script type="text/javascript" src="#assetPaths.common#scripts/bootstrap/3.2.0-custom/js/bootstrap.min.js"></script>
 	</cfif>
 
+	<!-- Device Builder -->
+	<cfif rc.deviceBuilderCssIncluded>
+		<script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
+	</cfif>
 </cfoutput>
