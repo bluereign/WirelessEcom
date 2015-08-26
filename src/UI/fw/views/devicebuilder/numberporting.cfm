@@ -1,20 +1,21 @@
 <cfoutput>
+
   <div class="col-md-12">
     <section class="content">
       <header class="main-header">
-        <h1>Keep Your Number or Pick a New Number?</h1>
-        <p>If you have an existing phone number and would like to keep it, enter the number below and click continue.</p>
+        <h1>New or Transfer an Existing Number</h1>
+        <p>Choose wheather you would like to keep or get a new number.</p>
       </header>
-      <img alt="" src="/assets/costco/images/Trustwave.gif" alt="Trustwave" class="trustwave">
+      <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
       <form action="#rc.nextStep#">
         <div class="pull-right">
-          <a href="#rc.prevStep#" class="btn">Previous</a>
-          <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+          <a href="##">BACK</a>
+          <button type="submit" class="btn btn-primary">Continue</button>
         </div>
         <div class="form-group form-inline phone">
-          <label for="inputPhone1">Phone Number to Transfer</label>
-          (<input type="text" class="form-control" id="inputPhone1" placeholder="206">)
-          <input type="text" class="form-control" id="inputPhone2">
+          <label for="inputPhone1">Number to Transfer</label>
+          ( <input type="text" class="form-control" id="inputPhone1"> )
+          <input type="text" class="form-control" id="inputPhone2"> -
           <input type="text" class="form-control" id="inputPhone3">
         </div>
         <div class="form-group form-inline zip">
@@ -30,18 +31,19 @@
         <div class="form-group form-inline ssn">
           <label for="inputSSN">Existing Carrier Account Number</label>
           <input type="text" class="form-control" id="inputSSN">
-          <a href="##">Who's SSN do I use?</a>
+          <a href="##" data-toggle="tooltip" title="temp">Who's SSN do I use?</a>
         </div>
         <div class="form-group form-inline pin">
-          <label for="inputPin">Existing Carrier Pin</label>
+          <label for="inputPin">Existing Carrier Passcode/PIN</label>
           <input type="text" class="form-control" id="inputPin">
-          <a href="##">Where do I get this?</a>
+          <a href="##" data-toggle="tooltip" title="temp">Where do I get this?</a>
         </div>
         <div class="pull-right">
-          <a href="##" class="btn btn-block">Previous</a>
-          <button type="submit" class="btn btn-primary btn-block btn-lg">Continue</button>
+          <a href="##">BACK</a>
+          <button type="submit" class="btn btn-primary btn-block">Continue</button>
         </div>
       </form>
     </section>
   </div>
+
 </cfoutput>

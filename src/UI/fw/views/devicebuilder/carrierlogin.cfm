@@ -1,4 +1,5 @@
 <cfoutput>
+
   <div class="col-md-12">
     <section class="content">
       <header class="main-header">
@@ -24,12 +25,12 @@
         <div class="form-group form-inline ssn">
           <label for="inputSSN">Last for Digits for Social Security Number</label>
           <input type="text" class="form-control" id="inputSSN">
-          <a href="##">Who's SSN do I use?</a>
+          <a href="##" data-toggle="tooltip" title="#rc.inputSSNTooltipTitle#">Who's SSN do I use?</a>
         </div>
         <div class="form-group form-inline pin">
           <label for="inputPin">Carrier Account Passcode/PIN</label>
           <input type="text" class="form-control" id="inputPin">
-          <a href="##">Where do I get this?</a>
+          <a href="##" data-toggle="tooltip" title="#rc.inputPinTooltipTitle#">Where do I get this?</a>
         </div>
         <div class="pull-right">
           <a href="##">BACK</a>
@@ -38,4 +39,5 @@
       </form>
     </section>
   </div>
+
 </cfoutput>

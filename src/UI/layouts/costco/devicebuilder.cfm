@@ -1,6 +1,8 @@
 <cfparam name="rc.includeTallyBox" default="true" />
+<cfparam name="rc.includeTooltip" default="false" />
 <cfparam name="rc.type" default="upgrade" /> <!--- upgrade, addaline, new --->
 <cfparam name="rc.pid" default="00000" />
+
 
 <cfset assetPaths = application.wirebox.getInstance("AssetPaths") />
 <cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
@@ -37,7 +39,8 @@
     #mercentAnalyticsTracker.tagPage()#
   </cfif> 
   #googleAnalyticsTracker.tagPage()#
-  <cfinclude template="_cssAndJs.cfm" />
+  <!--- <cfinclude template="_cssAndJs.cfm" /> --->
+  <link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
 </head>
 <body id="#request.currentBodyId#">
 
@@ -94,28 +97,21 @@
 </div>
 <div class="container">
   <div class="head">
-    <!--- upgrade nav --->
     <ul class="nav nav-pills nav-justified">
-      <li role="presentation" <cfif rc.event is "devicebuilder.carrierlogin">class="active"<cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.upgrade,devicebuilder.plans,devicebuilder.payment,devicebuilder.accessories,devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
-        <a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/#rc.type#/"><span>1</span>Carrier Login</a>
-      </li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.upgrade">class="active"<cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.plans,devicebuilder.payment,devicebuilder.accessories,devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
-        <a href="/default.cfm/devicebuilder/upgrade/pid/#rc.pid#/type/#rc.type#/"><span>2</span>Upgrade/Add a Line</a>
-      </li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.plans">class="active"<cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.payment,devicebuilder.accessories,devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
-        <a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/#rc.type#/"><span>3</span>Plans and Data</a>
-      </li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.payment">class="active" <cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.accessories,devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
-        <a href="/default.cfm/devicebuilder/payment/pid/#rc.pid#/type/#rc.type#/"><span>4</span>Protection &amp; Services</a>
-      </li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.accessories">class="active" <cfelse>class="hidden-xs<cfif listFindNoCase("devicebuilder.orderreview", rc.event)> complete</cfif>"</cfif>>
-        <a href="/default.cfm/devicebuilder/accessories/pid/#rc.pid#/type/#rc.type#/"><span>5</span>Accessories</a>
-      </li>
-      <li role="presentation" <cfif rc.event is "devicebuilder.orderreview">class="active" <cfelse>class="hidden-xs"</cfif>>
-        <a href="/default.cfm/devicebuilder/orderreview/pid/#rc.pid#/type/#rc.type#/"><span>6</span>Order Review</a>
-      </li>
+      <cfloop index="i" from="1" to="#arrayLen(rc.navItemsAction)#">
+        <cfset navUrl = event.buildLink('devicebuilder.#rc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/'>
+        <li role="presentation" 
+          <cfif listGetAt(rc.event,2,'.') is rc.navItemsAction[i]>
+            class="active"<cfelse>class="hidden-xs
+            <cfif i lt listFindNoCase(arrayToList(rc.navItemsAction), listGetAt(rc.event,2,'.'))>complete</cfif>"
+          </cfif>
+          >
+          <a href="#navUrl#"><span>#i#</span>#rc.navItemsText[i]#</a>
+        </li>
+      </cfloop>
     </ul>
   </div>
+
   <div class="row main<cfif !rc.includeTallyBox> cart</cfif>">
     
     #trim(request.bodyContent)#
@@ -288,6 +284,16 @@
   </div>
 </footer>
 <!--- /Footer --->
+
+<script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
+<cfif rc.includeTooltip>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip(); 
+  });
+  </script>
+</cfif>
 
 </body>
 </html>

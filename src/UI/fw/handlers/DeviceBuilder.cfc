@@ -13,12 +13,18 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var thisNavIndex = "" />
+    <cfset var nextNavIndex = "" />
+    <cfset var prevNavIndex = "" />
+    <cfset var nextAction = "" />
+    <cfset var prevAction = "" />
     
     <cfscript>
       //TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
       
       // set Customer info in rc
       //TODO: This should be a method call.  Possibly a good starting stub for the Wireless data access object proxy. 
+      //TODO: The phoneLines object should include the device id so that the correct device image can be displayed on the Upgrade page.
       if (!structKeyExists(rc,"userData")) {
         rc.userData = {
           phoneLines = [
@@ -46,12 +52,12 @@
       }
 
       if (!structKeyExists(rc,"type") OR !listFindNoCase(listCustomerTypes,rc.type)) {
-        rc.type = "new";
+        rc.type = "upgrade";
       }
       // set Device info in rc
       if (!structKeyExists(rc,"pid") OR !isNumeric(rc.pid)) {
-        rc.pid = "00000";
-        // relocate( '/index.cfm' );
+        // rc.pid = "00000";
+        relocate( '/index.cfm' );
       }
       if (!structKeyExists(prc,"productData")) {
         prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
@@ -65,9 +71,48 @@
       if (!structKeyExists(prc,"productImages")) {
        prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
       }
+      
+      // Navigation
+      switch(rc.type) {
+        case "upgrade":
+          rc.navItemsAction = ["carrierlogin","upgrade","plans","payment","accessories","orderreview"];
+          rc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          break;
+        case "addaline":
+          rc.navItemsAction = ["carrierlogin","upgrade","numberporting","plans","payment","accessories","orderreview"];
+          rc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Keep or Transfer Number","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          break;
+        case "new":
+          rc.navItemsAction = ["plans","payment","accessories","numberporting","orderreview"];
+          rc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          break;
+        default:
+          // same as 'upgrade'
+          rc.navItemsAction = ["carrierlogin","upgrade","plans","payment","accessories","orderreview"];
+          rc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          break;
+      }
 
-      // rc.bBootStrapIncluded = true;
-      rc.deviceBuilderCssIncluded = true;
+      thisNavIndex = listFindNoCase(arrayToList(rc.navItemsAction), listGetAt(rc.event,2,'.'));
+
+      if (isNumeric(thisNavIndex) and thisNavIndex gt 1) {
+        prevNavIndex = thisNavIndex - 1;
+        prevAction = rc.navItemsAction[prevNavIndex];
+        rc.prevStep = event.buildLink('devicebuilder.#prevAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+      } else {
+        rc.prevStep = CGI.http_referer;
+      }
+
+      if (isNumeric(thisNavIndex) and thisNavIndex lt arrayLen(rc.navItemsAction)) {
+        nextNavIndex = thisNavIndex + 1;
+        nextAction = rc.navItemsAction[nextNavIndex];
+        rc.nextStep = event.buildLink('devicebuilder.#prevAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+      } else {
+        rc.nextStep = "/index.cfm/go/checkout/do/billShip/";
+      }
+
+      // /Navigation
+
       event.setLayout('devicebuilder');
     </cfscript>
   </cffunction>
@@ -80,8 +125,21 @@
     <cfargument name="prc">
 
     <cfscript>
-      rc.prevStep = CGi.http_referer;
-      rc.nextStep = event.buildLink('devicebuilder.upgrade') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+      switch(rc.type) {
+        case "upgrade":
+          rc.inputSSNTooltipTitle = "Enter the last 4 numbers of the primary account holder's or authorized user's social security number to access account information to verify which phone numbers are eligible for upgrade.";
+          break;
+        case "addaline":
+          rc.inputSSNTooltipTitle = "Enter the last four numbers of the primary account holder's or authorized user's social security number to access account information to verify a new line can be added to the account.";
+          break;
+        default:
+          break;
+      }
+      
+      rc.inputPinTooltipTitle = "This could be the last 4 numbers of the primary account holder's social security number or a unique number sequence the primary account holder created for the account. If you do not remember this number or have this number, please call the carrier.";
+      rc.includeTooltip = true;
+
+      
       event.setView("devicebuilder/carrierlogin");
     </cfscript>
   </cffunction>
@@ -91,28 +149,10 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var nextAction = "" />
-    <cfset var prevAction = "" />
 
     <cfscript>
-      switch(rc.type) {
-        case "upgrade":
-          prevAction = "devicebuilder.carrierLogin";
-          nextAction = "devicebuilder.plans";
-          break;
-        case "addaline":
-          prevAction = "devicebuilder.carrierLogin";
-          nextAction = "devicebuilder.transfer";
-          break;
-        default: 
-          prevAction = "devicebuilder.carrierLogin";
-          nextAction = "devicebuilder.plans";
-          break;
-      }
-
-      rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-      rc.nextStep = event.buildLink(nextAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-      rc.addalineStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/addaline/';
+      rc.addalineStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/addaline/';     
+      rc.includeTooltip = true;
       event.setView("devicebuilder/upgrade");
     </cfscript>
   </cffunction>
@@ -124,36 +164,7 @@
     <cfargument name="prc">
 
     <cfscript>
-      switch(rc.type) {
-        case "upgrade":
-          rc.prevStep = event.buildLink('devicebuilder.upgrade') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-          break;
-        case "addaline":
-          rc.prevStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-          break;
-        case "new":
-          rc.prevStep = CGI.http_referer;
-          break;
-        default: 
-          rc.prevStep = CGI.http_referer;
-          break;
-      }
-      
-      rc.nextStep = event.buildLink('devicebuilder.payment') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/plans");
-    </cfscript>
-  </cffunction>
-
-
-  <cffunction name="transfer" returntype="void" output="false" hint="Product details page">
-    <cfargument name="event">
-    <cfargument name="rc">
-    <cfargument name="prc">
-
-    <cfscript>
-      rc.prevStep = event.buildLink('devicebuilder.upgrade') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-      rc.nextStep = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-      event.setView("devicebuilder/transfer");
     </cfscript>
   </cffunction>
 
@@ -164,8 +175,6 @@
     <cfargument name="prc">
 
     <cfscript>
-      rc.prevStep = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-      rc.nextStep = event.buildLink('devicebuilder.accessories') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/payment");
     </cfscript>
   </cffunction>
@@ -182,28 +191,7 @@
       prc.CatalogService = application.model.Catalog;
       prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories( event.getValue('pid', '') );
       prc.AssetPaths = variables.AssetPaths;
-      
-      switch(rc.type) {
-        case "upgrade":
-          prevAction = "devicebuilder.plans";
-          nextAction = "devicebuilder.orderreview";
-          break;
-        case "addaline":
-          prevAction = "devicebuilder.payment";
-          nextAction = "devicebuilder.orderreview";
-          break;
-        case "new":
-          prevAction = "devicebuilder.payment";
-          nextAction = "devicebuilder.porting";
-          break;
-        default: 
-          prevAction = "devicebuilder.plans";
-          nextAction = "devicebuilder.orderreview";
-          break;
-      }
 
-      rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-      rc.nextStep = event.buildLink(nextAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       event.setView("devicebuilder/accessories");
     </cfscript>
   </cffunction>
@@ -216,23 +204,6 @@
     <cfset var prevAction = "" />
 
     <cfscript>
-      switch(rc.type) {
-        case "upgrade":
-          prevAction = "devicebuilder.accessories";
-          break;
-        case "addaline":
-          prevAction = "devicebuilder.accessories";
-          break;
-        case "new":
-          prevAction = "devicebuilder.porting";
-          break;
-        default: 
-          prevAction = "devicebuilder.accessories";
-          break;
-      }
-
-      rc.prevStep = event.buildLink(prevAction) & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-      rc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       rc.includeTallyBox = false;
       event.setView("devicebuilder/orderreview");
     </cfscript>
@@ -240,15 +211,13 @@
 
 
   <!--- Default Action --->
-  <cffunction name="porting" returntype="void" output="false" hint="Product details page">
+  <cffunction name="numberporting" returntype="void" output="false" hint="Product details page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
 
     <cfscript>
-      rc.prevStep = event.buildLink('devicebuilder.accessories') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-      rc.nextStep = event.buildLink('devicebuilder.orderreview') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
-      event.setView("devicebuilder/porting");
+      event.setView("devicebuilder/numberporting");
     </cfscript>
   </cffunction>
 
