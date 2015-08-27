@@ -84,6 +84,28 @@
 		map("Carrier")
 			.to("cfc.model.Carrier")
 			.asSingleton();
+			
+		// FullAPI Carrier Services			
+		
+		map("CarrierFacade")
+			.to("fw.model.carrierApi.CarrierFacade")
+			.asSingleton();	
+			
+		map("AttCarrier")
+			.to("fw.model.carrierApi.Att.AttCarrier")
+			.initArg(name="ServiceURL", value=getProperty("Att_Carrier_Api_BaseUrl"))
+			.asSingleton();	
+			
+		map("VzwCarrier")
+			.to("fw.model.carrierApi.Verizon.VzwCarrier")
+			.initArg(name="ServiceURL", value=getProperty("Vzw_Carrier_Api_BaseUrl"))
+			.asSingleton();	
+		
+		map("MockCarrier")
+			.to("fw.model.carrierApi.Mock.MockCarrier")
+			.asSingleton();	
+		
+		
 		
 		// Geographic
 		map("GeoService")

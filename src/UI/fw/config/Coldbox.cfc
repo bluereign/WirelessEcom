@@ -376,6 +376,11 @@ Optional Methods
 		
 		// Core configs
 		settings.filterQueryCacheSpan = CreateTimeSpan(0,0,0,0);		
+		
+		//Carrier FULL API
+		settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test/Api";
+		settings.Vzw_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test/Api";
+		
 	}
 	
 	function staging() {
@@ -392,6 +397,10 @@ Optional Methods
 		
 		// Core configs
 		settings.filterQueryCacheSpan = CreateTimeSpan(0,0,10,0);
+		
+		//Carrier FULL API
+		settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test/Api";
+		settings.Vzw_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test/Api";
 	}
 	
 	function production() {
@@ -436,6 +445,11 @@ Optional Methods
 		
 		// Core configs
 		settings.filterQueryCacheSpan = CreateTimeSpan(0,0,10,0);		
+		
+		//Carrier FULL API
+		settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test/Api";
+		settings.Vzw_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test/Api";
+		
 	}
 
 	function pagemaster() {
