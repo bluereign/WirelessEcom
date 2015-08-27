@@ -106,7 +106,7 @@
       if (isNumeric(thisNavIndex) and thisNavIndex lt arrayLen(rc.navItemsAction)) {
         nextNavIndex = thisNavIndex + 1;
         nextAction = rc.navItemsAction[nextNavIndex];
-        rc.nextStep = event.buildLink('devicebuilder.#prevAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+        rc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       } else {
         rc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       }
@@ -139,7 +139,6 @@
       rc.inputPinTooltipTitle = "This could be the last 4 numbers of the primary account holder's social security number or a unique number sequence the primary account holder created for the account. If you do not remember this number or have this number, please call the carrier.";
       rc.includeTooltip = true;
 
-      
       event.setView("devicebuilder/carrierlogin");
     </cfscript>
   </cffunction>
@@ -217,6 +216,7 @@
     <cfargument name="prc">
 
     <cfscript>
+      rc.includeTooltip = true;
       event.setView("devicebuilder/numberporting");
     </cfscript>
   </cffunction>

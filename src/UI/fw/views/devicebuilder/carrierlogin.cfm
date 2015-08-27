@@ -9,7 +9,7 @@
       <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
       <form action="#rc.nextStep#">
         <div class="pull-right">
-          <a href="##">BACK</a>
+          <a href="#rc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
         <div class="form-group form-inline phone">
@@ -33,7 +33,7 @@
           <a href="##" data-toggle="tooltip" title="#rc.inputPinTooltipTitle#">Where do I get this?</a>
         </div>
         <div class="pull-right">
-          <a href="##">BACK</a>
+          <a href="#rc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btn-block">Continue</button>
         </div>
       </form>

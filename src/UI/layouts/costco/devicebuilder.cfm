@@ -39,7 +39,6 @@
     #mercentAnalyticsTracker.tagPage()#
   </cfif> 
   #googleAnalyticsTracker.tagPage()#
-  <!--- <cfinclude template="_cssAndJs.cfm" /> --->
   <link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
 </head>
 <body id="#request.currentBodyId#">

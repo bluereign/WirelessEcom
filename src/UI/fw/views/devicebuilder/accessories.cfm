@@ -8,7 +8,7 @@
       </header>
       <form action="#rc.nextStep#">
         <div class="pull-right">
-          <a href="##">BACK</a>
+          <a href="#rc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
         <!--- <section class="featured">
