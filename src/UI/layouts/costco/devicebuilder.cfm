@@ -1,5 +1,5 @@
-<cfparam name="rc.includeTallyBox" default="true" />
-<cfparam name="rc.includeTooltip" default="false" />
+<cfparam name="prc.includeTallyBox" default="true" />
+<cfparam name="prc.includeTooltip" default="false" />
 <cfparam name="rc.type" default="upgrade" /> <!--- upgrade, addaline, new --->
 <cfparam name="rc.pid" default="00000" />
 
@@ -79,7 +79,6 @@
           </button>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse fade" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav nav-tabs">
             <li role="presentation"><a href="##">Home</a></li>
@@ -90,32 +89,34 @@
             <li role="presentation"><a href="##">Check Upgrade Eligibility</a></li>
           </ul>
         </div>
+
       </div>
     </nav>
   </div>
 </div>
 <div class="container">
+  <!--- <Navigation --->
   <div class="head">
     <ul class="nav nav-pills nav-justified">
-      <cfloop index="i" from="1" to="#arrayLen(rc.navItemsAction)#">
-        <cfset navUrl = event.buildLink('devicebuilder.#rc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/'>
+      <cfloop index="i" from="1" to="#arrayLen(prc.navItemsAction)#">
+        <cfset navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/'>
         <li role="presentation" 
-          <cfif listGetAt(rc.event,2,'.') is rc.navItemsAction[i]>
+          <cfif listGetAt(rc.event,2,'.') is prc.navItemsAction[i]>
             class="active"<cfelse>class="hidden-xs
-            <cfif i lt listFindNoCase(arrayToList(rc.navItemsAction), listGetAt(rc.event,2,'.'))>complete</cfif>"
+            <cfif i lt listFindNoCase(arrayToList(prc.navItemsAction), listGetAt(rc.event,2,'.'))>complete</cfif>"
           </cfif>
           >
-          <a href="#navUrl#"><span>#i#</span>#rc.navItemsText[i]#</a>
+          <a href="#navUrl#"><span>#i#</span>#prc.navItemsText[i]#</a>
         </li>
       </cfloop>
     </ul>
-  </div>
+  </div> <!--- <end navigation --->
 
-  <div class="row main<cfif !rc.includeTallyBox> cart</cfif>">
+  <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
     
     #trim(request.bodyContent)#
 
-    <cfif rc.includeTallyBox>
+    <cfif prc.includeTallyBox>
 
       <!--- Tally Box --->
       <div class="col-md-4">
@@ -241,10 +242,10 @@
       </div>
 
     </cfif>
-    <!--- /Tally Box --->
+    <!--- <end tally box --->
 
   </div>
-</div> <!-- /container -->
+</div> <!--- <end container --->
 
 <!--- Footer --->
 <footer class="container-fluid footer">
@@ -285,7 +286,7 @@
 <!--- /Footer --->
 
 <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
-<cfif rc.includeTooltip>
+<cfif prc.includeTooltip>
   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script>
   $(document).ready(function(){

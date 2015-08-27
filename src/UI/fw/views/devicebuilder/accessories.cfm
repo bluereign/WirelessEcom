@@ -6,9 +6,9 @@
         <h1>Accessorize Your Device</h1>
         <p>When an accessory is selected you will see it added to Your Order.</p>
       </header>
-      <form action="#rc.nextStep#">
+      <form action="#prc.nextStep#">
         <div class="pull-right">
-          <a href="#rc.prevStep#">BACK</a>
+          <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
         <!--- <section class="featured">
@@ -240,7 +240,7 @@
         </div>
 
         <div class="pull-right">
-          <a href="#rc.prevStep#">BACK</a>
+          <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btn-block">Continue</button>
         </div>
       </form>

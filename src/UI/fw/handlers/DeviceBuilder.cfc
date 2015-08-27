@@ -25,8 +25,8 @@
       // set Customer info in rc
       //TODO: This should be a method call.  Possibly a good starting stub for the Wireless data access object proxy. 
       //TODO: The phoneLines object should include the device id so that the correct device image can be displayed on the Upgrade page.
-      if (!structKeyExists(rc,"userData")) {
-        rc.userData = {
+      if (!structKeyExists(prc,"userData")) {
+        prc.userData = {
           phoneLines = [
             {phoneNumber = "(206) 555 - 1111", isAvailable = true},
             {phoneNumber = "(206) 555 - 4545", isAvailable = true},
@@ -75,42 +75,41 @@
       // Navigation
       switch(rc.type) {
         case "upgrade":
-          rc.navItemsAction = ["carrierlogin","upgrade","plans","payment","accessories","orderreview"];
-          rc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsAction = ["carrierlogin","upgrade","plans","payment","accessories","orderreview"];
+          prc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
           break;
         case "addaline":
-          rc.navItemsAction = ["carrierlogin","upgrade","numberporting","plans","payment","accessories","orderreview"];
-          rc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Keep or Transfer Number","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsAction = ["carrierlogin","upgrade","numberporting","plans","payment","accessories","orderreview"];
+          prc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Keep or Transfer Number","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
           break;
         case "new":
-          rc.navItemsAction = ["plans","payment","accessories","numberporting","orderreview"];
-          rc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.navItemsAction = ["plans","payment","accessories","numberporting","orderreview"];
+          prc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
           break;
         default:
           // same as 'upgrade'
-          rc.navItemsAction = ["carrierlogin","upgrade","plans","payment","accessories","orderreview"];
-          rc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsAction = ["carrierlogin","upgrade","plans","payment","accessories","orderreview"];
+          prc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
           break;
       }
 
-      thisNavIndex = listFindNoCase(arrayToList(rc.navItemsAction), listGetAt(rc.event,2,'.'));
+      thisNavIndex = listFindNoCase(arrayToList(prc.navItemsAction), listGetAt(rc.event,2,'.'));
 
       if (isNumeric(thisNavIndex) and thisNavIndex gt 1) {
         prevNavIndex = thisNavIndex - 1;
-        prevAction = rc.navItemsAction[prevNavIndex];
-        rc.prevStep = event.buildLink('devicebuilder.#prevAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+        prevAction = prc.navItemsAction[prevNavIndex];
+        prc.prevStep = event.buildLink('devicebuilder.#prevAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       } else {
-        rc.prevStep = CGI.http_referer;
+        prc.prevStep = CGI.http_referer;
       }
 
-      if (isNumeric(thisNavIndex) and thisNavIndex lt arrayLen(rc.navItemsAction)) {
+      if (isNumeric(thisNavIndex) and thisNavIndex lt arrayLen(prc.navItemsAction)) {
         nextNavIndex = thisNavIndex + 1;
-        nextAction = rc.navItemsAction[nextNavIndex];
-        rc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+        nextAction = prc.navItemsAction[nextNavIndex];
+        prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       } else {
-        rc.nextStep = "/index.cfm/go/checkout/do/billShip/";
+        prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       }
-
       // /Navigation
 
       event.setLayout('devicebuilder');
@@ -127,17 +126,17 @@
     <cfscript>
       switch(rc.type) {
         case "upgrade":
-          rc.inputSSNTooltipTitle = "Enter the last 4 numbers of the primary account holder's or authorized user's social security number to access account information to verify which phone numbers are eligible for upgrade.";
+          prc.inputSSNTooltipTitle = "Enter the last 4 numbers of the primary account holder's or authorized user's social security number to access account information to verify which phone numbers are eligible for upgrade.";
           break;
         case "addaline":
-          rc.inputSSNTooltipTitle = "Enter the last four numbers of the primary account holder's or authorized user's social security number to access account information to verify a new line can be added to the account.";
+          prc.inputSSNTooltipTitle = "Enter the last four numbers of the primary account holder's or authorized user's social security number to access account information to verify a new line can be added to the account.";
           break;
         default:
           break;
       }
       
-      rc.inputPinTooltipTitle = "This could be the last 4 numbers of the primary account holder's social security number or a unique number sequence the primary account holder created for the account. If you do not remember this number or have this number, please call the carrier.";
-      rc.includeTooltip = true;
+      prc.inputPinTooltipTitle = "This could be the last 4 numbers of the primary account holder's social security number or a unique number sequence the primary account holder created for the account. If you do not remember this number or have this number, please call the carrier.";
+      prc.includeTooltip = true;
 
       event.setView("devicebuilder/carrierlogin");
     </cfscript>
@@ -150,8 +149,8 @@
     <cfargument name="prc">
 
     <cfscript>
-      rc.addalineStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/addaline/';     
-      rc.includeTooltip = true;
+      prc.addalineStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/addaline/';     
+      prc.includeTooltip = true;
       event.setView("devicebuilder/upgrade");
     </cfscript>
   </cffunction>
@@ -203,7 +202,7 @@
     <cfset var prevAction = "" />
 
     <cfscript>
-      rc.includeTallyBox = false;
+      prc.includeTallyBox = false;
       event.setView("devicebuilder/orderreview");
     </cfscript>
   </cffunction>
@@ -216,7 +215,7 @@
     <cfargument name="prc">
 
     <cfscript>
-      rc.includeTooltip = true;
+      prc.includeTooltip = true;
       event.setView("devicebuilder/numberporting");
     </cfscript>
   </cffunction>

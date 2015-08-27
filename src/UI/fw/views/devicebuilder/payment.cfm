@@ -5,9 +5,9 @@
         <h1>Payment, Protection &amp; Services Plans</h1>
         <p>The following services are available for your device based on your plan.</p>
       </header>
-      <form action="#rc.nextStep#">
+      <form action="#prc.nextStep#">
         <div class="pull-right">
-          <a href="#rc.prevStep#">BACK</a>
+          <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
         <section>
@@ -117,7 +117,7 @@
           </div>
         </section>
         <div class="pull-right">
-          <a href="#rc.prevStep#">BACK</a>
+          <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btn-block">Continue</button>
         </div>
       </form>

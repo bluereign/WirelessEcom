@@ -1,6 +1,6 @@
 <cfoutput>
   <div class="col-md-12">
-    <form action="#rc.nextStep#">
+    <form action="#prc.nextStep#">
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
