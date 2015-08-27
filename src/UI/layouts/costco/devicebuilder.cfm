@@ -3,7 +3,6 @@
 <cfparam name="rc.type" default="upgrade" /> <!--- upgrade, addaline, new --->
 <cfparam name="rc.pid" default="00000" />
 
-
 <cfset assetPaths = application.wirebox.getInstance("AssetPaths") />
 <cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
 <cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
@@ -23,7 +22,7 @@
 
 <cfoutput>
 
-<!DOCTYPE html>
+#html.doctype()#
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -66,6 +65,8 @@
     </div>
   </header>
 </div>
+
+<!--- <Blue Nav placeholder --->
 <div class="container-fluid top-nav">
   <div class="container">
     <nav class="navbar navbar-static-top" role="navigation">
@@ -78,7 +79,6 @@
             <span class="icon-bar"></span>
           </button>
         </div>
-
         <div class="collapse navbar-collapse fade" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav nav-tabs">
             <li role="presentation"><a href="##">Home</a></li>
@@ -89,11 +89,11 @@
             <li role="presentation"><a href="##">Check Upgrade Eligibility</a></li>
           </ul>
         </div>
-
       </div>
     </nav>
   </div>
-</div>
+</div> <!--- <end blue nav placeholder --->
+
 <div class="container">
   <!--- <Navigation --->
   <div class="head">
@@ -112,13 +112,14 @@
     </ul>
   </div> <!--- <end navigation --->
 
+  <!--- <Container And Views --->
   <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
-    
-    #trim(request.bodyContent)#
+    <!--- <p>You are now running <strong>#getSetting("codename",1)# #getSetting("version",1)# (#getsetting("suffix",1)#)</strong>.</p> --->
+    #renderView()#
 
     <cfif prc.includeTallyBox>
 
-      <!--- Tally Box --->
+      <!--- <Tally Box --->
       <div class="col-md-4">
         <div class="row totals">
           <div class="wrap head">
@@ -239,15 +240,14 @@
             </div>
           </aside>
         </div>
-      </div>
+      </div> <!--- <end tally box --->
 
     </cfif>
-    <!--- <end tally box --->
 
   </div>
 </div> <!--- <end container --->
 
-<!--- Footer --->
+<!--- <Footer --->
 <footer class="container-fluid footer">
   <div class="container">
     <div class="row">
@@ -283,23 +283,24 @@
     </div>
   </div>
 </footer>
-<!--- /Footer --->
+<!--- <end footer --->
+
 
 <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
+
+<!--- <Activate Tooltips --->
 <cfif prc.includeTooltip>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="#assetPaths.common#scripts/bootstrap/3.2.0-custom/js/bootstrap.min.js"></script>
   <script>
-  $(document).ready(function(){
+  $(function(){
       $('[data-toggle="tooltip"]').tooltip(); 
   });
   </script>
 </cfif>
+<!--- <end activate tooltips --->
 
 </body>
 </html>
-
-    <!--- #trim(request.bodyContent)# --->
-    
 </cfoutput>
 
 <cfset request.bodyContent = '' />
