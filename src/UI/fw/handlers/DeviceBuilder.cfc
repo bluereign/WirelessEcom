@@ -117,7 +117,6 @@
   </cffunction>
 
   
-  <!--- Default Action --->
   <cffunction name="carrierLogin" returntype="void" output="false" hint="Product details page">
     <cfargument name="event">
     <cfargument name="rc">
@@ -137,8 +136,6 @@
       
       prc.inputPinTooltipTitle = "This could be the last 4 numbers of the primary account holder's social security number or a unique number sequence the primary account holder created for the account. If you do not remember this number or have this number, please call the carrier.";
       prc.includeTooltip = true;
-
-      event.setView("devicebuilder/carrierlogin");
     </cfscript>
   </cffunction>
 
@@ -151,7 +148,6 @@
     <cfscript>
       prc.addalineStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/addaline/';     
       prc.includeTooltip = true;
-      event.setView("devicebuilder/upgrade");
     </cfscript>
   </cffunction>
 
@@ -160,10 +156,6 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-
-    <cfscript>
-      event.setView("devicebuilder/plans");
-    </cfscript>
   </cffunction>
 
 
@@ -171,10 +163,6 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-
-    <cfscript>
-      event.setView("devicebuilder/payment");
-    </cfscript>
   </cffunction>
 
 
@@ -189,8 +177,6 @@
       prc.CatalogService = application.model.Catalog;
       prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories( event.getValue('pid', '') );
       prc.AssetPaths = variables.AssetPaths;
-
-      event.setView("devicebuilder/accessories");
     </cfscript>
   </cffunction>
 
@@ -203,12 +189,10 @@
 
     <cfscript>
       prc.includeTallyBox = false;
-      event.setView("devicebuilder/orderreview");
     </cfscript>
   </cffunction>
 
 
-  <!--- Default Action --->
   <cffunction name="numberporting" returntype="void" output="false" hint="Product details page">
     <cfargument name="event">
     <cfargument name="rc">
@@ -216,7 +200,7 @@
 
     <cfscript>
       prc.includeTooltip = true;
-      event.setView("devicebuilder/numberporting");
+      // event.setView("devicebuilder/numberporting");
     </cfscript>
   </cffunction>
 
