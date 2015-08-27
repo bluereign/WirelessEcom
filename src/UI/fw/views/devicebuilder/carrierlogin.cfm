@@ -14,23 +14,23 @@
         </div>
         <div class="form-group form-inline phone">
           <label for="inputPhone1">Phone Number to Upgrade</label>
-          ( <input type="text" class="form-control" id="inputPhone1"> )
-          <input type="text" class="form-control" id="inputPhone2"> -
-          <input type="text" class="form-control" id="inputPhone3">
+          ( <input type="text" class="form-control" id="inputPhone1" name="inputPhone1" /> )
+          <input type="text" class="form-control" id="inputPhone2" name="inputPhone2" /> -
+          <input type="text" class="form-control" id="inputPhone3" name="inputPhone3" />
         </div>
         <div class="form-group form-inline zip">
           <label for="inputZip">Billing ZIP Code</label>
-          <input type="text" class="form-control" id="inputZip">
+          <input type="text" class="form-control" id="inputZip" name="inputZip">
         </div>
         <div class="form-group form-inline ssn">
-          <label for="inputSSN">Last for Digits for Social Security Number</label>
-          <input type="text" class="form-control" id="inputSSN">
-          <a href="##" data-toggle="tooltip" title="#prc.inputSSNTooltipTitle#">Who's SSN do I use?</a>
+          <label for="inputSSN">Last 4 Digits of Social Security Number</label>
+          <input type="text" class="form-control" id="inputSSN" name="inputSSN">
+          <a href="##" data-toggle="tooltip" title="#prc.inputSSNTooltipTitle#" id="inputSSNToolTip">Who's SSN do I use?</a>
         </div>
         <div class="form-group form-inline pin">
           <label for="inputPin">Carrier Account Passcode/PIN</label>
-          <input type="text" class="form-control" id="inputPin">
-          <a href="##" data-toggle="tooltip" title="#prc.inputPinTooltipTitle#">Where do I get this?</a>
+          <input type="text" class="form-control" id="inputPin" name="inputPin">
+          <a href="##" data-toggle="tooltip" title="#prc.inputPinTooltipTitle#" id="inputPinToolTip">Where do I get this?</a>
         </div>
         <div class="pull-right">
           <a href="#prc.prevStep#">BACK</a>
@@ -39,5 +39,5 @@
       </form>
     </section>
   </div>
-
+  
 </cfoutput>
