@@ -93,7 +93,7 @@
           break;
       }
 
-      thisNavIndex = listFindNoCase(arrayToList(prc.navItemsAction), listGetAt(rc.event,2,'.'));
+      thisNavIndex = listFindNoCase(arrayToList(prc.navItemsAction), event.getCurrentAction());
 
       if (isNumeric(thisNavIndex) and thisNavIndex gt 1) {
         prevNavIndex = thisNavIndex - 1;
