@@ -38,7 +38,7 @@
 
 .device-detail {
 	h4 {
-		color: @secondary;
+		color: @primary-color;
 	}
 
 	.description {
@@ -63,7 +63,7 @@
 	}
 
 	.price {
-		padding-top: 8px;
+		padding-top: 7px;
 
 		strong {
 			margin-left: 15px;
@@ -76,5 +76,27 @@
 
 	.btn-gray {
 		margin-right: 10px;
+	}
+
+	.device-main {
+		height: 200px;
+		width: 200px;
+	}
+
+	.device-thumb {
+		border: 1px solid @gray-lighter;
+		display: block;
+		height: 50px;
+		overflow: auto;
+		text-align: center;
+		width: 50px;
+
+		&.active {
+			border-color: @primary-color;
+		}
+
+		img {
+			max-height: 100%;
+		}
 	}
 }
