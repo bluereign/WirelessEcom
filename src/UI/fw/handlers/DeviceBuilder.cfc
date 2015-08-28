@@ -5,7 +5,7 @@
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
-  <cfset listCustomerTypes = "upgrade,addaline,new" />
+  <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
 
   
   <!--- preHandler --->
@@ -75,20 +75,38 @@
       // Navigation
       switch(rc.type) {
         case "upgrade":
-          prc.navItemsAction = ["carrierlogin","upgrade","plans","protection","accessories","orderreview"];
+          prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
           prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Carrier Login","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
           break;
         case "new":
           prc.navItemsAction = ["plans","protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
+          break;
+        case "upgradex":
+          prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
+          prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
+          prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
+          break;
+        case "addalinex":
+          prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
+          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
+          break;
+        case "newx":
+          prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
+          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
           break;
         default:
           // same as 'upgrade'
-          prc.navItemsAction = ["carrierlogin","upgrade","plans","protection","accessories","orderreview"];
+          prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
           prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
           break;
       }
@@ -140,7 +158,7 @@
   </cffunction>
 
 
-  <cffunction name="upgrade" returntype="void" output="false" hint="Product details page">
+  <cffunction name="upgradeline" returntype="void" output="false" hint="Product details page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">

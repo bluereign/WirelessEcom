@@ -20,17 +20,16 @@
               </div>
             </div>
           </cfloop>
-          <div class="col-md-4 col-sm-3 col-xs-8">
+          <!--- <div class="col-md-4 col-sm-3 col-xs-8">
             <div class="product">
               <img src="#prc.productImages[1].imagesrc#" alt="Add a New Line" />
               <div class="info">
                 Add a New Line
               </div>
-              <!--- #prc.addalineStep# --->
               <button class="btn btn-sm btn-primary" value="addaline">Add a New Line</button>
             </div>
           </div>
-        </div>
+        </div> --->
       </section>
     </form>
   </div>

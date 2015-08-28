@@ -6,7 +6,7 @@
         </header>
         <form>
           <div class="pull-right">
-            <a href="##">ADD ANOTHER DEVICE</a>
+            <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
             <button type="submit" class="btn btn-primary">Checkout Now</button>
           </div>
           <div class="content">
