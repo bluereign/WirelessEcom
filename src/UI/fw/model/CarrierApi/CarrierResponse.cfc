@@ -31,8 +31,7 @@
 	</cffunction>	
 	
 	<cffunction name="setStatus" access="public" returnType="void">
-		<cfargument name="status" type="numeric" required="true" />
-		
+		<cfargument name="status" type="numeric" required="true" />		
 		<cfset variables.instance.status = arguments.status />
 	</cffunction>
 	
