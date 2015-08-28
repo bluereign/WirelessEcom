@@ -76,11 +76,11 @@
       switch(rc.type) {
         case "upgrade":
           prc.navItemsAction = ["carrierlogin","upgrade","plans","payment","accessories","orderreview"];
-          prc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
           break;
         case "addaline":
-          prc.navItemsAction = ["carrierlogin","upgrade","numberporting","plans","payment","accessories","orderreview"];
-          prc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Keep or Transfer Number","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsAction = ["carrierlogin","plans","payment","accessories","numberporting","orderreview"];
+          prc.navItemsText = ["Carrier Login","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
           break;
         case "new":
           prc.navItemsAction = ["plans","payment","accessories","numberporting","orderreview"];
@@ -89,7 +89,7 @@
         default:
           // same as 'upgrade'
           prc.navItemsAction = ["carrierlogin","upgrade","plans","payment","accessories","orderreview"];
-          prc.navItemsText = ["Carrier Login","Upgrade/Add a Line","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
           break;
       }
 

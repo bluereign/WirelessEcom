@@ -11,12 +11,6 @@
 <cfparam name="request.title" default="Costco Wireless - Big Savings on Cell Phones - Offering Plans from Verizon Wireless, AT&T, T-Mobile, and Sprint." type="string" />
 <cfparam name="request.MetaDescription" default="Costco Wireless offers big savings on phones from Verizon, AT&amp;T, T-Mobile, and Sprint. In additional to great prices, Costco Wireless offers Free New Activation, Free shipping, and Free Accessories with the phone purchase." type="string" />
 <cfparam name="request.MetaKeywords" default="mobile phone,wireless phone,cellular phones,cell phone,cell phone plans,cellular phone service,service plan,cellular phone plans,prepaid plans,wireless phone service,cell phone plans,cell phone accessories,wireless phones,mobile phones,purchase cell phone,buy cell phone,research cell phones,compare cell phone prices,compare cell phones, cell phone comparison,cell service comparison,best cell phone deal,free cell phones,free cellular phones,buy,sold,online,best price,great deals,discount,discounts,specials" type="string" />
-<cfparam name="request.referringLink" default="#cgi.http_referer#" type="string" />
-<cfparam name="request.referringDomain" default="" type="string" />
-
-<cfif len(trim(request.referringLink)) and listLen(request.referringLink, '/') gte 2>
-  <cfset request.referringDomain = listGetAt(request.referringLink, 2, '/') />
-</cfif>
 
 <cfoutput>
 #html.doctype()#
@@ -37,6 +31,7 @@
   #googleAnalyticsTracker.tagPage()#
   <link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
 </head>
+
 <body id="#event.getCurrentAction()#">
   #renderView('devicebuilder/pageheader')#
 <div class="container">
@@ -48,7 +43,6 @@
     </cfif>
   </div>
 </div>
-
 #renderView('devicebuilder/pagefooter')#
 
 <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
