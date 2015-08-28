@@ -1,4 +1,10 @@
-function changeText(text) {
+function swapDeviceImage(src) {
+	var $mainImage = $('.device-main img');
+
+	$mainImage.attr('src', src);
+}
+
+function showHideText(text) {
 	var	SHOW_TEXT = 'Show Plan Details',
 		HIDE_TEXT = 'Hide Plan Details';
 
@@ -41,7 +47,9 @@ function buildSlider(div) {
 $(document).ready(function() {
 	var $carousel = $('.carousel'),
 		$newCustomer1 = $('#new-customer1'),
-		$newCustomer2 = $('#new-customer2');
+		$newCustomer2 = $('#new-customer2'),
+		$thumbnails = $('.device-thumb'),
+		$filterableProducts = $('.tab-pane .product');
 
 	// Carousel on Update Data Plan Page
 	buildSlider($carousel);
@@ -49,14 +57,44 @@ $(document).ready(function() {
 	// Swap text on Show/Hide Cart Details
 	$('.plan-details').on('click', function() {
 		var $this = $(this);
-		$(this).text(changeText($this.text()));
+
+		$(this).text(showHideText($this.text()));
 	});
 
 	// Modal for Verizon Wireless Customer Type
 	$newCustomer2.hide();
 
-	$newCustomer1.on('click', '.btn', function() {
+	$newCustomer1.on('click', '.btn', function(e) {
+		e.preventDefault();
 		toggleDiv('#new-customer1', '#new-customer2');
+	});
+
+	$thumbnails.on('click', function(e) {
+		e.preventDefault();
+		var $this = $(this),
+			newSrc = $this.children('img').data('full-src');
+
+		$thumbnails.removeClass('active');
+		$this.addClass('active');
+
+		swapDeviceImage(newSrc);
+	});
+
+	$('.accessories .product .image').hover(function() {
+		$(this).parent().toggleClass('hover');
+	});
+
+	// Filters on accessories
+	$('.nav-tabs a').on('click', function() {
+		var parentClass = $(this).parent().attr('class');
+
+		$filterableProducts.parent().hide();
+
+		if (parentClass === 'all') {
+			$filterableProducts.parent().show();
+		} else {
+			$('.' + parentClass).parent().show();
+		}
 	});
 });
 

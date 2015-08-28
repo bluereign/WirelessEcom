@@ -1,6 +1,6 @@
 .pricing {
 	h2 {
-		border-bottom: 5px solid @secondary;
+		border-bottom: 5px solid @primary-color;
 		margin-bottom: 10px;
 		padding-bottom: 10px;
 	}
@@ -10,7 +10,7 @@
 		border: 1px solid @gray-light;
 		.border-radius(5px);
 		box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
-		color: @secondary;
+		color: @primary-color;
 		.text-size(16);
 		font-weight: bold;
 		margin-bottom: 10px;
@@ -25,7 +25,7 @@
 		}
 
 		&.active {
-			.gradient(lighten(@secondary, 10%), @secondary, @secondary);
+			.gradient(lighten(@primary-color, 10%), @primary-color, @primary-color);
 			color: #fff;
 		}
 	}
@@ -52,12 +52,12 @@
 	}
 
 	h1 {
-		color: @secondary;
+		color: @primary-color;
 		.text-size(28);
 	}
 
 	h3 {
-		border-bottom: 5px solid @secondary;
+		border-bottom: 5px solid @primary-color;
 		margin-bottom: 10px;
 		padding-bottom: 10px;
 	}
@@ -95,7 +95,7 @@
 	}
 
 	.nav-tabs {
-		border-bottom: 2px solid @secondary;
+		border-bottom: 2px solid @primary-color;
 		display: block;
 		margin-top: 20px;
 
@@ -104,16 +104,16 @@
 
 			a {
 				border: 1px solid @gray;
-				border-bottom-color: @secondary;
+				border-bottom-color: @primary-color;
 			}
 		}
 
 		li.active {
 			a {
 				border-bottom-color: transparent;
-				border-left: 2px solid @secondary;
-				border-right: 2px solid @secondary;
-				border-top: 2px solid @secondary;
+				border-left: 2px solid @primary-color;
+				border-right: 2px solid @primary-color;
+				border-top: 2px solid @primary-color;
 				.border-top-radius(5px);
 			}
 		}
