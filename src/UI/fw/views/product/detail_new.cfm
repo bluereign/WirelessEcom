@@ -11,15 +11,6 @@
 <cfoutput>
 <style type="text/css">
 
-body.modal-open .nonmodal-container{
-    -webkit-filter: blur(1px);
-    -moz-filter: blur(1px);
-    -o-filter: blur(1px);
-    -ms-filter: blur(1px);
-    filter: blur(1px);
-    opacity:0.3 !important;
-}
-
 .bootstrap div.container{
 	max-width:760px;
 }
@@ -353,6 +344,51 @@ height: 24px;
 }
 
 
+/* <devicebuilder modal*/
+body.modal-open .nonmodal-container{
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+    filter: blur(1px);
+    opacity:0.3 !important;
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: ##000000;
+}
+.modal-backdrop.fade {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.modal-backdrop.in {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+.modal-header {
+  padding: 15px;
+  border-bottom: 1px solid ##e5e5e5;
+  min-height: 16.42857143px;
+}
+.modal-header {
+    padding:9px 15px;
+    border-bottom:1px solid ##e5e5e5;
+    background-color: ##428bca;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+     color:white;
+ }
+
+/* <end devicebuilder modal */
 </style>
 
 <script type="text/javascript">
@@ -1049,21 +1085,25 @@ $j(document).ready(function($j) {
 </div>
 
 
-<!--- Customer Type Modal --->
+
+<!--- Customer Type Modal (devicebuilder) v1--->
 <div class="modal fade" id="customerTypeModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg"> <!---  modal-lg --->
 		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="verizonCustomerModalLabel">#prc.productData.carrierName# Customer Type?</h4>
+			</div>
 			<!-- Modal Body -->
 			<div class="modal-body">
 				<div class="container">
-					
-					<div class="row" id="customerTypeBlock">
-						<h1>#prc.productData.carrierName# Customer Type?</h1>
-						<p>Bacon ipsum dolor amet pork chop picanha kielbasa pastrami, biltong pancetta porchetta spare. Domo arigatoo mister roboto.  Domo, domo.</p>
-						<hr class="blueline" />
+					<div class="row" >
+						<h4>Please choose from one of the options below.</h4>
 						<br />
-						<div class="col-xs-6">
-							<h4>Existing #prc.productData.carrierName# customer?</h4>
+						<div class="col-xs-6" style="background:##e5e5e5;padding:15px;">
+							<strong style="font-size:16px;">Existing #prc.productData.carrierName# customer?</strong>
+							<br />
+							<br />
 							<p>If you're already a(n) #prc.productData.carrierName# customer, you can Upgrade or Add a Line on your account.</p>
 							<br />
 							<br />
@@ -1077,10 +1117,11 @@ $j(document).ready(function($j) {
 							</div>
 						</div>
 						<div class="col-xs-1">
-							<img src="/assets/costco/images/skin/skin-footer-bg.gif" height="80px" width="4px">
 						</div>
-						<div class="col-xs-5">
-							<h4>New #prc.productData.carrierName# customer?</h4>
+						<div class="col-xs-5" style="background:##e5e5e5;padding:15px;" id="customerTypeBlock">
+							<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
+							<br />
+							<br />
 							<p>If you're not already a(n) #prc.productData.carrierName# customer, Continue here.</p>
 							<br />
 							<br />
@@ -1090,30 +1131,22 @@ $j(document).ready(function($j) {
 								</div>
 							</div>
 						</div>
-					</div>
-
-					<div class="row" id="zipCodeBlock" style="display:none;">
-						<h1>Zip Code</h1>
-						<p>Zip code where you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
-						<hr class="blueline" />
-						
-						<form class="form-inline" name="zipCode" method="post">
-						    <section>
-							    
-					    		<div class="col-xs-6">
-					    			<div style="float:left;margin-right:20px;" class="form-group">
-						        	<label for="zipCode"><h4>Enter Zip Code: &nbsp;&nbsp;&nbsp;</h4></label>
-						        	<input id="zipCode" type="text" value="" name="zipCode" class="form-control" style="width:30%">
-								    </div>
+						<div class="col-xs-5" style="background:##e5e5e5;padding:15px;display:none;" id="zipCodeBlock">
+							<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
+							<br />
+							<br />
+							<p>Please enter the zip codewhere you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
+							<div class="row">
+								<div class="col-md-6 col-md-offset-2">
+									<div class="form-group zip">
+										<label for="inputZip"><h4>ZIP Code</h4></label>
+										<input type="text" class="form-control" id="inputZip" width="50%">
 									</div>
-									<div class="col-xs-6">
-					        	<button id="btn-clearZipForm" type="button" class="btn btn-lg btn-default">Go Back</button>&nbsp;&nbsp;&nbsp;
-					        	<a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/new/" class="btn btn-lg btn-success" style="padding-left:50px;padding-right:50px;">Continue</a>
-					      	</div>
-					    </section>
-						</form>
+									<a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/new/" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</a>
+								</div>
+							</div>
+						</div>
 					</div>
-
 					<br />
 					<br />
 					<br />
@@ -1126,9 +1159,6 @@ $j(document).ready(function($j) {
 	</div>
 </div>
 <!--- /Customer Type Modal --->
-
-
-
 
 
 

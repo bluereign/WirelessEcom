@@ -11,9 +11,12 @@
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
+
+        <!--- TODO: Add cfif clause here to check for featured items.  Only display this section if count gt 0 --->
         <section class="featured">
           <h4>Featured Accessories for Your Device</h4>
             <div class="row">
+              
               <cfif prc.qAccessory.RecordCount>
                 <cfloop query="prc.qAccessory">
                   <cfset local.stcFeeAccessoryPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(valueList(prc.qAccessory.accessoryGuid)) />
@@ -21,10 +24,10 @@
                   <div class="col-sm-5">
                     <div class="product clearfix">
                       <cfif structKeyExists(local.stcFeeAccessoryPrimaryImages, prc.qAccessory.accessoryGuid[prc.qAccessory.currentRow])>
-                      <img src="#application.view.imageManager.displayImage(imageGuid = local.stcFeeAccessoryPrimaryImages[prc.qAccessory.accessoryGuid[prc.qAccessory.currentRow]], height=100, width=0)#" alt="#htmlEditFormat(prc.qAccessory.summaryTitle[prc.qAccessory.currentRow])#" height="100" border="0" />
-                    <cfelse>
-                      <img src="#prc.assetPaths.common#images/catalog/noimage.jpg" height=100 border="0" alt="#htmlEditFormat(prc.qAccessory.summaryTitle[prc.qAccessory.currentRow])#" />
-                    </cfif>
+                        <img src="#application.view.imageManager.displayImage(imageGuid = local.stcFeeAccessoryPrimaryImages[prc.qAccessory.accessoryGuid[prc.qAccessory.currentRow]], height=100, width=0)#" alt="#htmlEditFormat(prc.qAccessory.summaryTitle[prc.qAccessory.currentRow])#" height="100" border="0" />
+                      <cfelse>
+                        <img src="#prc.assetPaths.common#images/catalog/noimage.jpg" height=100 border="0" alt="#htmlEditFormat(prc.qAccessory.summaryTitle[prc.qAccessory.currentRow])#" />
+                      </cfif>
                       <div class="info" style="height:60px;">#prc.qAccessory.summaryTitle[prc.qAccessory.currentRow]#</div>
                       <div class="price">#dollarFormat(prc.qAccessory.price_retail[prc.qAccessory.currentRow])#</div>
                       <button type="button" class="btn btn-remove">Remove</button>
@@ -33,8 +36,9 @@
 
                 </cfloop>
               <cfelse>
-                There are none at this time.
+                There are featured accessories at this time.
               </cfif>
+
             </div>
         </section>
         
