@@ -59,9 +59,8 @@
                   <div class="details-link">Plan Details</div>
                 </a>
               </div>
-              <div class="info featured">
+              <div class="info">
                 <a href="##">
-                  <h4>Recommended</h4>
                   <h3><span>MORE Everything</span> Talk, Text and Data</h3>
                   <ul>
                     <li class="large"><span>3GB</span></li>
@@ -70,7 +69,7 @@
                     <li>Smartphone - $40</li>
                   </ul>
                   <div class="price">$65</div>
-                  <button class="btn btn-secondary btn-block">Select Package</button>
+                  <button class="btn btn-dark-gray btn-block">Select Package</button>
                   <div class="details-link">Plan Details</div>
                 </a>
               </div>
