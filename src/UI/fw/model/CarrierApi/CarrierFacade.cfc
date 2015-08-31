@@ -7,15 +7,26 @@
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.CarrierFacade">
 		<cfreturn this />
 	</cffunction>
+	
+	<!----------------------------------------------------------------------------------------------------
+		Carrier API Entry Points (alphabetical order)
+	----------------------------------------------------------------------------------------------------->
 
-	<cffunction name="Account" output="false" access="public" returntype="any">
-		
+	<cffunction name="account" output="false" access="public" returntype="any">		
 		<cfset var args = passthruArgs(argumentCollection = arguments ) />
-		<cfreturn carrierObject(arguments.carrierId).account(argumentCollection = args) />
-		
-		<cfreturn "" />
-		
+		<cfreturn carrierObject(arguments.carrierId).account(argumentCollection = args) />		
 	</cffunction>		
+	
+	<cffunction name="areaCode" output="false" access="public" returntype="any">		
+		<cfset var args = passthruArgs(argumentCollection = arguments ) />
+		<cfreturn carrierObject(arguments.carrierId).areaCode(argumentCollection = args) />		
+	</cffunction>			
+	
+	<!--------------------------------------------------------------------------------------------------
+		Helper Functions		
+	 --------------------------------------------------------------------------------------------------->
+	
+	
 	
 	<!---
 		Receives an argument collection and returns collection minus args on the excludedArgsList		

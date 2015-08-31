@@ -1,15 +1,17 @@
 <cfoutput>
-Welcome to the CarrierFacade Test Page<br/>
+<h1>Welcome to the CarrierFacade Test Page</h1>
 <a href="<cfoutput>#event.buildLink('testFullApi.account_input')#</cfoutput>"><button class="btn btn-default"  type="button">Do Another Lookup</button></a><br/><br/>
-<br/>Account Identifier: #rc.respObj.getAccountIdentifier()#
-<br/>Active Lines: #rc.respObj.getActiveLines()#
-
-<br/>Account Address:
-	<br/><span style="margin-left:10px;">#rc.respobj.getAddress().getAddressLine1()#</span>
-	<br/><span style="margin-left:10px;">#rc.respobj.getAddress().getAddressLine2()#</span>
-	<br/><span style="margin-left:10px;">#rc.respobj.getAddress().getCity()#, #rc.respobj.getAddress().getState()# #rc.respobj.getAddress().getZipCode()#-#rc.respobj.getAddress().getZipCodeExtension()#</span>
-	<br/><span style="margin-left:10px;">#rc.respobj.getAddress().getCountry()#</span>
-	
-<br/><br/>Intentional Missing Method: <b>#rc.respObj.getIDoNotExist()#</b><p/>
+<h2>
+<br/>getAccountIdentifier() = #rc.respObj.getAccountIdentifier()#
+<br/>getActiveLines() = #rc.respObj.getActiveLines()#
+<br/>getAddress().getAddressLine1() = #rc.respobj.getAddress().getAddressLine1()#
+<br/>getAddress().getAddressLine2() = #rc.respobj.getAddress().getAddressLine2()#
+<br/>getAddress().getCity() = #rc.respobj.getAddress().getCity()#
+<br/>getAddress().getState() = #rc.respobj.getAddress().getState()#
+<br/>getAddress().getZipCode() = #rc.respobj.getAddress().getZipCode()#
+<br/>getAddress().getZipCodeExtension() = #rc.respobj.getAddress().getZipCodeExtension()#
+<br/>getAddress().getCountry() = #rc.respobj.getAddress().getCountry()#
+<br/><br/>Intentional Missing Method- getIDoNotExist() = #rc.respObj.getIDoNotExist()#
+</h2>
 <cfdump var="#rc.respObj.getResponse()#" />
 </cfoutput>
