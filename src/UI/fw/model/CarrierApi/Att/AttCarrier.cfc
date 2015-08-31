@@ -47,6 +47,13 @@
 
 
 	<!---
+		Get the Service URL
+	 --->
+	<cffunction name="getServiceURL" returnType="string" access="public">
+		<cfreturn variables.CarrierServiceURL />
+	</cffunction>
+
+	<!---
 		For get calls converts args into a query string	
 	--->
 	<cffunction name="argsList" access="private" returnType="string">
