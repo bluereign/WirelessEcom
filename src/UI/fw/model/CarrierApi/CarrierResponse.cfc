@@ -58,9 +58,6 @@
 	
 	
 	<!--- Methods that should be implemented in the derived object --->
-	<!---<cffunction name="getAccountIdentifier" access="public" returnType="string">
-		<cfreturn "getAccountIdentier not implemented" />
-	</cffunction>--->
 	
 	<cffunction name="OnMissingMethod" access="public" returntype="any" output="false" hint="Handles missing method exceptions.">
 	    <cfargument name="MissingMethodName" type="string" required="true" hint="The name of the missing method." />
