@@ -14,12 +14,12 @@
 	
 	<cffunction name="account" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
 		<cfhttp url="#variables.CarrierServiceURL#/AttAccount?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>		
-		<cfreturn processResults(cfhttp.fileContent) />		
+		<cfreturn processResults(cfhttp) />	
 	</cffunction>
 	
 	<cffunction name="areaCode" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
 		<cfhttp url="#variables.CarrierServiceURL#/AttAreaCode?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>		
-		<cfreturn processResults(cfhttp.fileContent) />		
+		<cfreturn processResults(cfhttp) />		
 	</cffunction>
 
 	<!--------------------------------------------------------------------------------------------------
@@ -30,16 +30,20 @@
 		Look at the results of the call and set appropriate fields in the carrier response	
 	--->
 	<cffunction name="processResults" returnType="fw.model.CarrierApi.Att.AttCarrierResponse" access="private">
-		<cfargument name="apiResultString" type="string" required="true" /> 
+		<cfargument type="struct" name="cfhttpResult" required="true" /> 
+		<!---<cfargument name="apiResultString" type="string" required="true" /> --->
+		<cfset var emptyObj = {} />
 				
 		<cfset var carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttCarrierResponse').init() />
-		
-		<cfif isJson(arguments.apiResultString)>
-			<cfset carrierResponse.setResponse(deserializeJson(arguments.apiResultString,true)) />
-			<cfset carrierResponse.setStatus(0) />
+		<cfset carrierResponse.setHttpStatus(cfhttpResult.statusCode) />
+		<cfif isJson(arguments.cfhttpResult.fileContent)>			
+			<cfset carrierResponse.setResponse(deserializeJson(arguments.cfhttpResult.fileContent,true)) />
 		<cfelse>
-			<cfset carrierResponse.setStatus(404) />
+			<cfset carrierResponse.setResponse(emptyObj) />
 		</cfif>
+		
+		<!--- if httpStatus is 200 OK status = 0 else more specific case error may be set --->
+		
 		
 		<cfreturn carrierResponse />
 	
