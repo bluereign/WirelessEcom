@@ -26,16 +26,31 @@
 		</cfif>
 	</cffunction>
 	
+	<cffunction name="getSubscribers" access="public" returnType="array">
+		<cfset var local = {} />
+		<cfset local.resp = getResponse() />
+		<cfset local.subscribers = arrayNew(1) />
+		<cfloop array="#local.resp.account.subscribers#" index="local.s">
+			<cfset local.s.AccountStatus = local.s.accountStatus />
+			<cfset local.subscriber = createObject('component','fw.model.carrierApi.Subscriber').init() />
+				<cfset local.subscriber.setAccountStatus(local.s.AccountStatus) />
+				<cfset local.subscriber.setAddress(getAddress(local.s.address)) />	
+				<cfset local.subscriber.setEmail(local.s.contact.emailAddress) />
+			<cfset arrayAppend(local.subscribers,local.subscriber) />		
+		</cfloop>
+		<cfreturn local.subscribers />
+	</cffunction>
+	
 	<cffunction name="getAddress" access="public" returnType="cfc.model.address">
-		<cfset var resp = getResponse() />
+		<cfargument name="rawAddress" type="struct" required="false" default="#getResponse().account.address#" />
 		<cfset var address = createObject('component','cfc.model.Address').init() />
-		<cfset address.setAddressLine1(resp.account.address.addressLine1) />
-		<cfset address.setAddressLine2(resp.account.address.addressLine2) />
-		<cfset address.setCity(resp.account.address.city) />
-		<cfset address.setCountry(resp.account.address.Country) />
-		<cfset address.setState(resp.account.address.state) />
-		<cfset address.setZipCode(resp.account.address.zip.zip) />
-		<cfset address.setZipCodeExtension(resp.account.address.zip.zipExtension) />
+		<cfset address.setAddressLine1(rawAddress.addressLine1) />
+		<cfset address.setAddressLine2(rawAddress.addressLine2) />
+		<cfset address.setCity(rawAddress.city) />
+		<cfset address.setCountry(rawAddress.Country) />
+		<cfset address.setState(rawAddress.state) />
+		<cfset address.setZipCode(rawAddress.zip.zip) />
+		<cfset address.setZipCodeExtension(rawAddress.zip.zipExtension) />
 		<cfreturn address />
 	</cffunction>	
 	
