@@ -9,18 +9,7 @@
 	</cffunction>
 	
 	<cffunction name="account" output="false" access="public" returntype="any">
-		<cfset var returnobj = {} />
-		
-		<cfhttp url="#variables.CarrierServiceURL#?#argslist(arguments)#" method="GET">
-		</cfhttp>
-		
-		<cfif isJson(cfhttp.filecontent)>
-			<cfset returnObj =  deserializeJson(cfhttp.filecontent,true) />
-			<cfset returnObj.status = 0 />
-		<cfelse>
-			<cfset returnObj.status = 404 />
-		</cfif>
-		
+		<cfreturn "" />
 	</cffunction>
 	<!--------------------------------------------------------------------------------------------------
 		Helper Functions		
@@ -29,7 +18,7 @@
 	<!--- 
 		Look at the results of the call and set appropriate fields in the carrier response	
 	--->
-	<cffunction name="processResults" returnType="fw.model.CarrierApi.Verizon.VzwCarrierResponse" access="private">
+	<!---<cffunction name="processResults" returnType="fw.model.CarrierApi.Verizon.VzwCarrierResponse" access="private">
 		<cfargument name="apiResultString" type="string" required="true" /> 
 				
 		<cfset var carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.VzwCarrierResponse').init() />
@@ -43,7 +32,7 @@
 		
 		<cfreturn carrierResponse />
 	
-	</cffunction>
+	</cffunction>--->
 	
 	<!---
 		Get the Service URL

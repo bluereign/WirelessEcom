@@ -31,19 +31,33 @@
 	</cffunction>	
 	
 	<cffunction name="setStatus" access="public" returnType="void">
-		<cfargument name="status" type="numeric" required="true" />		
+		<cfargument name="status" type="string" required="true" />		
 		<cfset variables.instance.status = arguments.status />
 	</cffunction>
 	
-	<cffunction name="getStatus" access="public" returnType="numeric">
-		<cfreturn variables.instance.status />
+	<cffunction name="getStatus" access="public" returnType="string">
+		<cfif isDefined("variables.instance.status")>
+			<cfreturn variables.instance.status />
+		<cfelse>
+			<cfreturn "Undefined" />
+		</cfif>
+	</cffunction>
+	
+	<cffunction name="setHttpStatus" access="public" returnType="void">
+		<cfargument name="httpStatus" type="string" required="true" />		
+		<cfset variables.instance.httpStatus = arguments.httpStatus />
+	</cffunction>
+	
+	<cffunction name="getHttpStatus" access="public" returnType="string">
+		<cfif isDefined("variables.instance.httpStatus")>
+			<cfreturn variables.instance.httpStatus />
+		<cfelse>
+			<cfreturn "Undefined" />
+		</cfif>
 	</cffunction>
 	
 	
 	<!--- Methods that should be implemented in the derived object --->
-	<!---<cffunction name="getAccountIdentifier" access="public" returnType="string">
-		<cfreturn "getAccountIdentier not implemented" />
-	</cffunction>--->
 	
 	<cffunction name="OnMissingMethod" access="public" returntype="any" output="false" hint="Handles missing method exceptions.">
 	    <cfargument name="MissingMethodName" type="string" required="true" hint="The name of the missing method." />
