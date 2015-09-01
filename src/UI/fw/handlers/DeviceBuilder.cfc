@@ -11,10 +11,6 @@
 
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
 
-  <!--- DO NOT fire for the actions: carrierLoginPost --->
-  <!--- <cfset this.prehandler_except = "carrierLoginPost"> --->
-
-  
   <!--- preHandler --->
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
     <cfargument name="event">
@@ -132,6 +128,10 @@
       if (isNumeric(thisNavIndex) and thisNavIndex lt arrayLen(prc.navItemsAction)) {
         nextNavIndex = thisNavIndex + 1;
         nextAction = prc.navItemsAction[nextNavIndex];
+        if (!isDefined("rc.nextAction")) {
+          // don't overwrite one that has been passed in (via Form, etc.):
+          rc.nextAction = "devicebuilder.#nextAction#";
+        }
         prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       } else {
         prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
@@ -147,6 +147,8 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfparam name="rc.nextAction" default="devicebuilder.carrierlogin" />
+    <cfparam name="rc.carrierResponseMessage" default="" />
 
     <cfscript>
       switch(rc.type) {
@@ -165,29 +167,63 @@
     </cfscript>
   </cffunction>
 
+
   <cffunction name="carrierLoginPost" returntype="void" output="false" hint="Carrier Login page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfparam name="rc.carrierResponseMessage" default="" />
+    <cfparam name="rc.inputPhone1">
+    <cfparam name="rc.inputPhone2">
+    <cfparam name="rc.inputPhone3">
+    <cfparam name="rc.inputZip">
+    <cfparam name="rc.inputSSN">
+    <cfparam name="rc.inputPin">
+    <!--- <cfdump var="#rc.nextAction#"><cfabort> --->
 
-    <cfparam name="rc.carrierId" default="109" />
+    <cfscript>
+      switch (prc.productData.carrierId) {
+        case 109: {
+          rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
+          prc.args_account = {
+            carrierId = prc.productData.carrierId,
+            PhoneNumber = rc.PhoneNumber,
+            ZipCode = rc.inputZip,
+            SecurityId = rc.inputSSN,
+            Passcode = rc.inputPin
+          };
 
-    <cfset rc.attCarrier = variables.AttCarrier />
+          // for testing purposes/development:
+          rc.respObj = carrierFacade.Account(argumentCollection = prc.args_account);
+          rc.message = rc.respObj.getHttpStatus();
+          // rc.nextAction = "";
 
-    <cfset rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3 />
-    <cfset rc.ZipCode = rc.inputZip />
-    <cfset rc.SecurityId = rc.inputSSN />
-    <cfset rc.Passcode = rc.inputPin />
-
-    <cfset prc.args_account = {
-      carrierId = #rc.carrierId#,
-      PhoneNumber = "#rc.PhoneNumber#",
-      ZipCode = "#rc.ZipCode#",
-      SecurityId = "#rc.SecurityId#",
-      Passcode = "#rc.Passcode#"
-    } />
-    
-    <cfset rc.respObj = carrierFacade.Account(argumentCollection = prc.args_account) />
+          switch ( rc.respObj.getHttpStatus() ) {
+            case "200 OK": {
+              // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm:)
+              setNextEvent(
+                event="#rc.nextAction#",
+                persist="type,pid");
+              break;
+            }
+            default: {
+              session.carrierObj = carrierFacade.Account(argumentCollection = prc.args_account);
+              rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+              setNextEvent(
+                event="devicebuilder.carrierLogin",
+                persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+            }
+          };
+          break;
+        }
+        default: {
+          rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T device.  Please try again with an AT&T device. (carrierId: #prc.productData.carrierId#)";
+          setNextEvent(
+            event="devicebuilder.carrierLogin",
+            persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+        }
+      };
+    </cfscript>
 
   </cffunction>
 

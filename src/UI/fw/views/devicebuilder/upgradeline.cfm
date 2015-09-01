@@ -33,4 +33,9 @@
       </section>
     </form>
   </div>
+  <!--- <cfdump var="#prc.productData#" label="prc.productData"> --->
+  <!--- <cfdump var="#prc.productData.resultset#"> --->
+  prc.productData.productId: #prc.productData.productId#
+  <br/>
+  prc.productData.carrierId: #prc.productData.carrierId#
 </cfoutput>
