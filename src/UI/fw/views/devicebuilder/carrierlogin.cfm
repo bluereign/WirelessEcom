@@ -7,7 +7,10 @@
         <p>The primary Account Holder's information is used to verify status and line availability.</p>
       </header>
       <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
-      <form action="#prc.nextStep#">
+      <!--- <form action="#prc.nextStep#" method="post"> --->
+      <form action="#event.buildLink('devicebuilder.carrierLoginPost')#" method="post">
+        <input type="hidden" name="type" value="#rc.type#" />
+        <input type="hidden" name="pid" value="#rc.pid#" />
         <div class="pull-right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>

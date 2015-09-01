@@ -1,11 +1,18 @@
 <cfcomponent output="false" extends="BaseHandler">
   
+  <cfproperty name="CarrierFacade" inject="id:CarrierFacade" />
+  <cfproperty name="AttCarrier" inject="id:AttCarrier" />
+  <cfproperty name="VzwCarrier" inject="id:VzwCarrier" />
+
   <cfproperty name="AssetPaths" inject="id:assetPaths" scope="variables" />
   <cfproperty name="channelConfig" inject="id:channelConfig" scope="variables" />
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
+
+  <!--- DO NOT fire for the actions: carrierLoginPost --->
+  <!--- <cfset this.prehandler_except = "carrierLoginPost"> --->
 
   
   <!--- preHandler --->
@@ -20,6 +27,7 @@
     <cfset var prevAction = "" />
     
     <cfscript>
+
       //TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
       
       // set Customer info in rc
@@ -135,7 +143,7 @@
   </cffunction>
 
   
-  <cffunction name="carrierLogin" returntype="void" output="false" hint="Product details page">
+  <cffunction name="carrierLogin" returntype="void" output="false" hint="Carrier Login page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
@@ -157,8 +165,34 @@
     </cfscript>
   </cffunction>
 
+  <cffunction name="carrierLoginPost" returntype="void" output="false" hint="Carrier Login page">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
 
-  <cffunction name="upgradeline" returntype="void" output="false" hint="Product details page">
+    <cfparam name="rc.carrierId" default="109" />
+
+    <cfset rc.attCarrier = variables.AttCarrier />
+
+    <cfset rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3 />
+    <cfset rc.ZipCode = rc.inputZip />
+    <cfset rc.SecurityId = rc.inputSSN />
+    <cfset rc.Passcode = rc.inputPin />
+
+    <cfset prc.args_account = {
+      carrierId = #rc.carrierId#,
+      PhoneNumber = "#rc.PhoneNumber#",
+      ZipCode = "#rc.ZipCode#",
+      SecurityId = "#rc.SecurityId#",
+      Passcode = "#rc.Passcode#"
+    } />
+    
+    <cfset rc.respObj = carrierFacade.Account(argumentCollection = prc.args_account) />
+
+  </cffunction>
+
+
+  <cffunction name="upgradeline" returntype="void" output="false" hint="Upgrade a Line page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
@@ -170,21 +204,21 @@
   </cffunction>
 
 
-  <cffunction name="plans" returntype="void" output="false" hint="Product details page">
+  <cffunction name="plans" returntype="void" output="false" hint="Plans page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
   </cffunction>
 
 
-  <cffunction name="protection" returntype="void" output="false" hint="Product details page">
+  <cffunction name="protection" returntype="void" output="false" hint="Protection and Services page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
   </cffunction>
 
 
-  <cffunction name="accessories" returntype="void" output="false" hint="Product details page">
+  <cffunction name="accessories" returntype="void" output="false" hint="Accessories page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
@@ -199,7 +233,19 @@
   </cffunction>
 
 
-  <cffunction name="orderreview" returntype="void" output="false" hint="Product details page">
+  <cffunction name="numberporting" returntype="void" output="false" hint="Number Porting page">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+
+    <cfscript>
+      prc.includeTooltip = true;
+      // event.setView("devicebuilder/numberporting");
+    </cfscript>
+  </cffunction>
+
+
+  <cffunction name="orderreview" returntype="void" output="false" hint="Order Review/Cart page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
@@ -211,16 +257,32 @@
   </cffunction>
 
 
-  <cffunction name="numberporting" returntype="void" output="false" hint="Product details page">
+<!--- <cffunction name="aroundHandler" returntype="void" output="false" hint="Around handler">
     <cfargument name="event">
+    <cfargument name="targetAction">
+    <cfargument name="eventArguments">
     <cfargument name="rc">
     <cfargument name="prc">
 
     <cfscript>
-      prc.includeTooltip = true;
-      // event.setView("devicebuilder/numberporting");
+      try{
+        var args = {
+          event = arguments.event,
+          rc    = arguments.rc,
+          prc   = arguments.prc
+
+        };
+        structAppend(args,eventArguments);
+        return arguments.targetAction(argumentCollection=args);
+      }
+      catch(Any e){
+        log.error("Error executing #targetAction.toString()#: #e.message# #e.detail#", e);
+        event.setValue("exception", e)
+          .setView("devicebuilder/error");
+      }
     </cfscript>
-  </cffunction>
+  
+</cffunction> --->
 
 
 </cfcomponent>
