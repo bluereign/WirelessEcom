@@ -1087,8 +1087,17 @@ $j(document).ready(function($j) {
 
 
 <!--- Customer Type Modal (devicebuilder) v1--->
+<cfif structKeyExists(session,'carrierObj')>
+	<cfset rc.upgradeURL = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgrade/' />
+	<cfset rc.addalineURL = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/addaline/' />	
+<cfelse>
+	<cfset rc.upgradeURL = event.buildLink('devicebuilder.carrierlogin') & '/pid/' & rc.pid & '/type/upgrade/' />
+	<cfset rc.addalineURL = event.buildLink('devicebuilder.carrierlogin') & '/pid/' & rc.pid & '/type/addaline/' />
+</cfif>
+<cfset rc.newURL = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/new/' />
+
 <div class="modal fade" id="customerTypeModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
-	<div class="modal-dialog modal-lg"> <!---  modal-lg --->
+	<div class="modal-dialog <cfif !structKeyExists(session,'carrierObj')>modal-lg</cfif>">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -1100,7 +1109,7 @@ $j(document).ready(function($j) {
 					<div class="row" >
 						<h4>Please choose from one of the options below.</h4>
 						<br />
-						<div class="col-xs-6" style="background:##e5e5e5;padding:15px;">
+						<div class="col-xs-<cfif !structKeyExists(session,'carrierObj')>6<cfelse>9</cfif>" style="background:##e5e5e5;padding:15px;">
 							<strong style="font-size:16px;">Existing #prc.productData.carrierName# customer?</strong>
 							<br />
 							<br />
@@ -1109,43 +1118,52 @@ $j(document).ready(function($j) {
 							<br />
 							<div class="row center-block">
 								<div class="col-xs-6">
-									<a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/upgrade/" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a>
+									<!--- <a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/upgrade/" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a> --->
+									<a href="#rc.upgradeURL#" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a>
 								</div>
 								<div class="col-xs-6">
-									<a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/addaline/" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a>
+									<!--- <a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/addaline/" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a> --->
+									<a href="#rc.addalineURL#" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a>
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-1">
-						</div>
-						<div class="col-xs-5" style="background:##e5e5e5;padding:15px;" id="customerTypeBlock">
-							<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
-							<br />
-							<br />
-							<p>If you're not already a(n) #prc.productData.carrierName# customer, Continue here.</p>
-							<br />
-							<br />
-							<div class="row center-block">
-								<div class="col-xs-12">
-									<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier">New to #prc.productData.carrierName#</a>
-								</div>
+
+						<cfif !structKeyExists(session,'carrierObj')>
+						
+							<div class="col-xs-1">
 							</div>
-						</div>
-						<div class="col-xs-5" style="background:##e5e5e5;padding:15px;display:none;" id="zipCodeBlock">
-							<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
-							<br />
-							<br />
-							<p>Please enter the zip codewhere you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
-							<div class="row">
-								<div class="col-md-6 col-md-offset-2">
-									<div class="form-group zip">
-										<label for="inputZip"><h4>ZIP Code</h4></label>
-										<input type="text" class="form-control" id="inputZip" width="50%">
+							<div class="col-xs-5" style="background:##e5e5e5;padding:15px;" id="customerTypeBlock">
+								<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
+								<br />
+								<br />
+								<p>If you're not already a(n) #prc.productData.carrierName# customer, Continue here.</p>
+								<br />
+								<br />
+								<div class="row center-block">
+									<div class="col-xs-12">
+										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier">New to #prc.productData.carrierName#</a>
 									</div>
-									<a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/new/" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</a>
 								</div>
 							</div>
-						</div>
+							<div class="col-xs-5" style="background:##e5e5e5;padding:15px;display:none;" id="zipCodeBlock">
+								<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
+								<br />
+								<br />
+								<p>Please enter the zip codewhere you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
+								<div class="row">
+									<div class="col-md-6 col-md-offset-2">
+										<div class="form-group zip">
+											<label for="inputZip"><h4>ZIP Code</h4></label>
+											<input type="text" class="form-control" id="inputZip" width="50%">
+										</div>
+										<!--- <a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/new/" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</a> --->
+										<a href="#rc.newURL#" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</a>
+									</div>
+								</div>
+							</div>
+							
+							</cfif>
+
 					</div>
 					<br />
 					<br />
@@ -1158,7 +1176,7 @@ $j(document).ready(function($j) {
 		</div>
 	</div>
 </div>
-<!--- /Customer Type Modal --->
+<!--- /Customer Type Modal (devicebuilder) --->
 
 
 

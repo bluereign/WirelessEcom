@@ -20,17 +20,15 @@
               </div>
             </div>
           </cfloop>
-          <!--- <div class="col-md-4 col-sm-3 col-xs-8">
-            <div class="product">
-              <img src="#prc.productImages[1].imagesrc#" alt="Add a New Line" />
-              <div class="info">
-                Add a New Line
-              </div>
-              <button class="btn btn-sm btn-primary" value="addaline">Add a New Line</button>
-            </div>
-          </div>
-        </div> --->
       </section>
     </form>
   </div>
+  <!--- for debugging: --->
+  <!--- <cfdump var="#prc.productData#" label="prc.productData"> --->
+  <!--- <cfdump var="#prc.productData.resultset#"> --->
+<!---   prc.productData.productId: #prc.productData.productId#
+  <br/>
+  prc.productData.carrierId: #prc.productData.carrierId#
+  <br />
+   structKeyExists(session,'carrierObj'): #structKeyExists(session,'carrierObj')# --->
 </cfoutput>

@@ -11,10 +11,6 @@
 
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
 
-  <!--- DO NOT fire for the actions: carrierLoginPost --->
-  <!--- <cfset this.prehandler_except = "carrierLoginPost"> --->
-
-  
   <!--- preHandler --->
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
     <cfargument name="event">
@@ -132,6 +128,10 @@
       if (isNumeric(thisNavIndex) and thisNavIndex lt arrayLen(prc.navItemsAction)) {
         nextNavIndex = thisNavIndex + 1;
         nextAction = prc.navItemsAction[nextNavIndex];
+        if (!isDefined("rc.nextAction")) {
+          // don't overwrite one that has been passed in (via Form, etc.):
+          rc.nextAction = "devicebuilder.#nextAction#";
+        }
         prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       } else {
         prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
@@ -147,8 +147,18 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfparam name="rc.nextAction" default="devicebuilder.carrierlogin" />
+    <cfparam name="rc.carrierResponseMessage" default="" />
 
     <cfscript>
+      // DON'T DELETE UNTIL CONFIRMATION on whether or not a customer can log into a different carrier account...
+      // if user has already logged into their carrier, force to the next step. ??
+      // if ( structKeyExists(session,'carrierObj') ) {
+      //   setNextEvent(
+      //     event="#rc.nextAction#",
+      //     persist="type,pid");
+      // }
+
       switch(rc.type) {
         case "upgrade":
           prc.inputSSNTooltipTitle = "Enter the last 4 numbers of the primary account holder's or authorized user's social security number to access account information to verify which phone numbers are eligible for upgrade.";
@@ -165,29 +175,93 @@
     </cfscript>
   </cffunction>
 
+
   <cffunction name="carrierLoginPost" returntype="void" output="false" hint="Carrier Login page">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-
-    <cfparam name="rc.carrierId" default="109" />
-
-    <cfset rc.attCarrier = variables.AttCarrier />
-
-    <cfset rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3 />
-    <cfset rc.ZipCode = rc.inputZip />
-    <cfset rc.SecurityId = rc.inputSSN />
-    <cfset rc.Passcode = rc.inputPin />
-
-    <cfset prc.args_account = {
-      carrierId = #rc.carrierId#,
-      PhoneNumber = "#rc.PhoneNumber#",
-      ZipCode = "#rc.ZipCode#",
-      SecurityId = "#rc.SecurityId#",
-      Passcode = "#rc.Passcode#"
-    } />
     
-    <cfset rc.respObj = carrierFacade.Account(argumentCollection = prc.args_account) />
+    <cfset var isValid = 0 />
+
+    <cfparam name="rc.carrierResponseMessage" default="" />
+    <cfparam name="rc.inputPhone1" default="" />
+    <cfparam name="rc.inputPhone2" default="" />
+    <cfparam name="rc.inputPhone3" default="" />
+    <cfparam name="rc.inputZip" default="" />
+    <cfparam name="rc.inputSSN" default="" />
+    <cfparam name="rc.inputPin" default="" />
+    <!--- <cfdump var="#rc.nextAction#"><cfabort> --->
+
+    <cfscript>
+      // simple server-side validation
+      if ( 
+          !(
+            len(rc.inputPhone1) eq 3
+            AND
+            isNumeric(rc.inputPhone1)
+            AND
+            len(rc.inputPhone2) eq 3
+            AND
+            isNumeric(rc.inputPhone2)
+            AND
+            len(rc.inputZip) gte 5 and len(rc.inputZip) lte 10
+            AND
+            isNumeric(left(rc.inputZip, 5))
+            AND
+            isNumeric(right(rc.inputZip, 4))
+            AND
+            len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
+          )
+        ) {
+        rc.carrierResponseMessage = "There was an issue with the values you entered.  Please double check each value and then try again.";
+        setNextEvent(
+          event="devicebuilder.carrierLogin",
+          persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+      }
+
+
+      switch (prc.productData.carrierId) {
+        case 109: {
+          rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
+          prc.args_account = {
+            carrierId = prc.productData.carrierId,
+            PhoneNumber = rc.PhoneNumber,
+            ZipCode = rc.inputZip,
+            SecurityId = rc.inputSSN,
+            Passcode = rc.inputPin
+          };
+
+          // for testing purposes/development:
+          rc.respObj = carrierFacade.Account(argumentCollection = prc.args_account);
+          rc.message = rc.respObj.getHttpStatus();
+          // rc.nextAction = "";
+
+          switch ( rc.respObj.getHttpStatus() ) {
+            case "200 OK": {
+              // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm:)
+              session.carrierObj = carrierFacade.Account(argumentCollection = prc.args_account);
+              setNextEvent(
+                event="#rc.nextAction#",
+                persist="type,pid");
+              break;
+            }
+            default: {
+              rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+              setNextEvent(
+                event="devicebuilder.carrierLogin",
+                persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+            }
+          };
+          break;
+        }
+        default: {
+          rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T device.  Please try again with an AT&T device. (carrierId: #prc.productData.carrierId#)";
+          setNextEvent(
+            event="devicebuilder.carrierLogin",
+            persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+        }
+      };
+    </cfscript>
 
   </cffunction>
 
