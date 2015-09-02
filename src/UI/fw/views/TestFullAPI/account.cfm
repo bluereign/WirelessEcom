@@ -19,6 +19,7 @@
 	<br/>Subscriber ###s_count#
 	<br/>Subscriber.getAccountStatus() = #s.getAccountStatus()#
 	<br/>Subscriber.getEmail() = #s.getEmail()#
+	<br/>Subscriber.getNumber() = #s.getNumber()#
 	<br/>Subscriber.getAddress().getAddressLine1() = #s.getAddress().getAddressLine1()#
 	<br/>Subscriber.getAddress().getAddressLine2() = #s.getAddress().getAddressLine2()#
 	<br/>Subscriber.getAddress().getCity() = #s.getAddress().getCity()#

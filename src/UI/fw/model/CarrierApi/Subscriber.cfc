@@ -2,11 +2,13 @@
 
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.Subscriber">
 		
-		<cfset variables.instance = structNew() />	
+		<cfset variables.instance = structNew() />
+		<cfset setAccountStatus("undefined") />	
+		<cfset setEmail("") />	
+		<cfset setNumber("") />	
 		
 		<cfreturn this />
 	</cffunction>
-	
 	
 	<!---
 		Setters / Getters	
@@ -36,8 +38,7 @@
 		<cfelse>
 			<cfreturn CreateObject( "component", "cfc.model.Address" ).init(  ) />
 		</cfif>
-	</cffunction>
-	
+	</cffunction>	
 	
 	<cffunction name="setEmail" returnType="void" access="public">
 		<cfargument name="email" type="string" required="true" />
@@ -45,15 +46,16 @@
 	</cffunction>
 	
 	<cffunction name="getEmail" returnType="string" access="public">
-		<cfif isDefined("variables.instance.email") >
-			<cfreturn variables.instance.email />
-		<cfelse>
-			<cfreturn "" />
-		</cfif>
+		<cfreturn variables.instance.email />
 	</cffunction>
 
+	<cffunction name="setNumber" returnType="void" access="public">
+		<cfargument name="number" type="string" required="true" />
+		<cfset variables.instance.number = arguments.number />
+	</cffunction>
 	
-	
-	
-	
+	<cffunction name="getNumber" returnType="string" access="public">
+		<cfreturn variables.instance.number />
+	</cffunction>
+
 </cfcomponent>

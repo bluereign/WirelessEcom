@@ -36,6 +36,7 @@
 				<cfset local.subscriber.setAccountStatus(local.s.AccountStatus) />
 				<cfset local.subscriber.setAddress(getAddress(local.s.address)) />	
 				<cfset local.subscriber.setEmail(local.s.contact.emailAddress) />
+				<cfset local.subscriber.setNumber(local.s.number) />
 			<cfset arrayAppend(local.subscribers,local.subscriber) />		
 		</cfloop>
 		<cfreturn local.subscribers />
