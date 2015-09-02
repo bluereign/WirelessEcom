@@ -1152,17 +1152,18 @@ $j(document).ready(function($j) {
 								<p>Please enter the zip codewhere you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
 								<div class="row">
 									<div class="col-md-6 col-md-offset-2">
-										<div class="form-group zip">
-											<label for="inputZip"><h4>ZIP Code</h4></label>
-											<input type="text" class="form-control" id="inputZip" width="50%">
-										</div>
-										<!--- <a href="/default.cfm/devicebuilder/plans/pid/#rc.pid#/type/new/" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</a> --->
-										<a href="#rc.newURL#" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</a>
+										<form id="zipCodeForm" action="#rc.newURL#" method="post">
+											<div class="form-group zip">
+												<label for="inputZip"><h4>ZIP Code</h4></label>
+												<input type="number" class="form-control" id="inputZip" name="inputZip" width="50%" min="11111" max="99999" required>
+											</div>
+											<button type="submit" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</button>
+										</form>
 									</div>
 								</div>
 							</div>
 							
-							</cfif>
+						</cfif>
 
 					</div>
 					<br />
@@ -1177,7 +1178,6 @@ $j(document).ready(function($j) {
 	</div>
 </div>
 <!--- /Customer Type Modal (devicebuilder) --->
-
 
 
 

@@ -7444,7 +7444,7 @@ body {
   border-left: 0;
 }
 .account .cart {
-  background: url('/images/cart-icon.png') 5px 2px no-repeat;
+  background: url('/assets/costco/images/cart-icon.png') 5px 2px no-repeat;
   padding-left: 25px;
 }
 .account .search label {
@@ -7463,7 +7463,7 @@ body {
   padding: 4px;
 }
 .account .search .btn-search {
-  background: url('/images/search-button.png');
+  background: url('/assets/costco/images/search-button.png');
   border: 0;
   font-size: 0;
   height: 22px;

@@ -138,6 +138,10 @@
       }
       // /Navigation
 
+      if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip')) ) {
+        session.ZipCode = event.getValue('inputZip');
+      }
+
       event.setLayout('devicebuilder');
     </cfscript>
   </cffunction>
@@ -180,8 +184,6 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    
-    <cfset var isValid = 0 />
 
     <cfparam name="rc.carrierResponseMessage" default="" />
     <cfparam name="rc.inputPhone1" default="" />
@@ -282,7 +284,10 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-  </cffunction>
+<!---     <cfif event.valueExists('inputZip')>
+      <cfset session.ZipCode = event.getValue('inputZip') />
+    </cfif>
+ --->  </cffunction>
 
 
   <cffunction name="protection" returntype="void" output="false" hint="Protection and Services page">

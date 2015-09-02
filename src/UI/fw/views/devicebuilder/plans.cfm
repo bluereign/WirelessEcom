@@ -1,10 +1,17 @@
+<!--- 
+
+//TODO:
+  - Add logic to make sure session.ZipCode exists (and is valid zipcode).  If not, need to present a zip code field.  Also, need a Fogbugz case created for this.
+
+ --->
+
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#">
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
-          <p>Pick a Plan and the amount of Data you will use per month.</p>
+          <p>Pick a Plan and the amount of Data you will use per month. <cfif structKeyExists(session, "ZipCode")>(#session.ZipCode#)</cfif></p>
         </header>
         <ul class="nav nav-tabs">
           <li role="presentation" class="active">
