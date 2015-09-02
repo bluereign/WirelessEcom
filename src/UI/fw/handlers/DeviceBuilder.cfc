@@ -151,6 +151,14 @@
     <cfparam name="rc.carrierResponseMessage" default="" />
 
     <cfscript>
+      // DON'T DELETE UNTIL CONFIRMATION on whether or not a customer can log into a different carrier account...
+      // if user has already logged into their carrier, force to the next step. ??
+      // if ( structKeyExists(session,'carrierObj') ) {
+      //   setNextEvent(
+      //     event="#rc.nextAction#",
+      //     persist="type,pid");
+      // }
+
       switch(rc.type) {
         case "upgrade":
           prc.inputSSNTooltipTitle = "Enter the last 4 numbers of the primary account holder's or authorized user's social security number to access account information to verify which phone numbers are eligible for upgrade.";
@@ -201,13 +209,13 @@
           switch ( rc.respObj.getHttpStatus() ) {
             case "200 OK": {
               // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm:)
+              session.carrierObj = carrierFacade.Account(argumentCollection = prc.args_account);
               setNextEvent(
                 event="#rc.nextAction#",
                 persist="type,pid");
               break;
             }
             default: {
-              session.carrierObj = carrierFacade.Account(argumentCollection = prc.args_account);
               rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
               setNextEvent(
                 event="devicebuilder.carrierLogin",
