@@ -180,16 +180,46 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    
+    <cfset var isValid = 0 />
+
     <cfparam name="rc.carrierResponseMessage" default="" />
-    <cfparam name="rc.inputPhone1">
-    <cfparam name="rc.inputPhone2">
-    <cfparam name="rc.inputPhone3">
-    <cfparam name="rc.inputZip">
-    <cfparam name="rc.inputSSN">
-    <cfparam name="rc.inputPin">
+    <cfparam name="rc.inputPhone1" default="" />
+    <cfparam name="rc.inputPhone2" default="" />
+    <cfparam name="rc.inputPhone3" default="" />
+    <cfparam name="rc.inputZip" default="" />
+    <cfparam name="rc.inputSSN" default="" />
+    <cfparam name="rc.inputPin" default="" />
     <!--- <cfdump var="#rc.nextAction#"><cfabort> --->
 
     <cfscript>
+      // simple server-side validation
+      if ( 
+          !(
+            len(rc.inputPhone1) eq 3
+            AND
+            isNumeric(rc.inputPhone1)
+            AND
+            len(rc.inputPhone2) eq 3
+            AND
+            isNumeric(rc.inputPhone2)
+            AND
+            len(rc.inputZip) gte 5 and len(rc.inputZip) lte 10
+            AND
+            isNumeric(left(rc.inputZip, 5))
+            AND
+            isNumeric(right(rc.inputZip, 4))
+            AND
+            len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
+          )
+        ) {
+        rc.carrierResponseMessage = "There was an issue with the values you entered.  Please double check each value and then try again.";
+        setNextEvent(
+          event="devicebuilder.carrierLogin",
+          persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+      }
+
+
       switch (prc.productData.carrierId) {
         case 109: {
           rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
