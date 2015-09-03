@@ -24,6 +24,7 @@
     <cfset var prevAction = "" />
     
     <cfscript>
+      prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones";
       //TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
       
       // set Customer info in rc
@@ -341,6 +342,8 @@
     <cfargument name="prc">
     <cfset var prevAction = "" />
     <cfparam name="prc.showAddAnotherDeviceButton" default="true" />
+    <cfparam name="prc.showCheckoutnowButton" default="true" />
+    <cfparam name="prc.showClearCartLink" default="true" />
 
     <cfscript>
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
@@ -354,7 +357,6 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var carrierObjExists = false />
-    <cfset var browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones" />
 
     <cfscript>
       // TODO: Remove all items in the cart.
@@ -367,8 +369,7 @@
       carrierObjExists = structdelete(session, 'zipCode', true);
 
       // create warningMessage
-      flash.put("warningMessage","Your cart has been cleared. <a href='#browseDevicesUrl#'>Click here to go to Browse Devices.</a>");
-      flash.put("browseDevicesUrl", browseDevicesUrl);
+      flash.put("warningMessage","Your cart has been cleared. <a href='#prc.browseDevicesUrl#'>Click here to go to Browse Devices.</a>");
       flash.put("showNav", false);
       flash.put("showAddAnotherDeviceButton", false);
       flash.put("showCheckoutNowButton", false);
