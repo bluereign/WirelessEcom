@@ -1087,6 +1087,7 @@ $j(document).ready(function($j) {
 
 
 <!--- Customer Type Modal (devicebuilder) v1--->
+<!--- NOTE: if session.carrierObj exists, then session.zipCode should also exist --->
 <cfif structKeyExists(session,'carrierObj')>
 	<cfset rc.upgradeURL = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgrade/' />
 	<cfset rc.addalineURL = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/addaline/' />	
@@ -1155,7 +1156,7 @@ $j(document).ready(function($j) {
 										<form id="zipCodeForm" action="#rc.newURL#" method="post">
 											<div class="form-group zip">
 												<label for="inputZip"><h4>ZIP Code</h4></label>
-												<input type="number" class="form-control" id="inputZip" name="inputZip" width="50%" min="11111" max="99999" required>
+												<input type="number" class="form-control" id="inputZip" name="inputZip" width="50%" min="11111" max="99999" required value="<cfif structKeyExists(session,'zipCode')>#session.zipCode#</cfif>">
 											</div>
 											<button type="submit" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</button>
 										</form>

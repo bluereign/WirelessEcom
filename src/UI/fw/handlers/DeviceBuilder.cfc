@@ -11,6 +11,7 @@
 
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
 
+
   <!--- preHandler --->
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
     <cfargument name="event">
@@ -23,7 +24,6 @@
     <cfset var prevAction = "" />
     
     <cfscript>
-
       //TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
       
       // set Customer info in rc
@@ -138,8 +138,8 @@
       }
       // /Navigation
 
-      if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip')) ) {
-        session.ZipCode = event.getValue('inputZip');
+      if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip')) and !structKeyExists(session,"carrierObj")  ) {
+        session.zipCode = event.getValue('inputZip');
       }
 
       event.setLayout('devicebuilder');
@@ -220,9 +220,11 @@
           event="devicebuilder.carrierLogin",
           persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
       }
+      // /simple validation
 
 
       switch (prc.productData.carrierId) {
+        // AT&T: pid = 109
         case 109: {
           rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
           prc.args_account = {
@@ -236,12 +238,17 @@
           // for testing purposes/development:
           rc.respObj = carrierFacade.Account(argumentCollection = prc.args_account);
           rc.message = rc.respObj.getHttpStatus();
-          // rc.nextAction = "";
 
           switch ( rc.respObj.getHttpStatus() ) {
+            // Status of '200 OK' is success:
             case "200 OK": {
               // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm:)
+              
               session.carrierObj = carrierFacade.Account(argumentCollection = prc.args_account);
+              // session.zipCode = rc.inputZip;
+              // TODO: override the New Customer modal Zip that the customer may have previously entered: 
+              session.zipCode = session.carrierObj.getAddress().getZipCode();
+
               setNextEvent(
                 event="#rc.nextAction#",
                 persist="type,pid");
@@ -256,6 +263,8 @@
           };
           break;
         }
+        // Other carriers
+        // TODO: Add Verizon CarrierFacade handler
         default: {
           rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T device.  Please try again with an AT&T device. (carrierId: #prc.productData.carrierId#)";
           setNextEvent(
@@ -285,9 +294,10 @@
     <cfargument name="rc">
     <cfargument name="prc">
 <!---     <cfif event.valueExists('inputZip')>
-      <cfset session.ZipCode = event.getValue('inputZip') />
+      <cfset session.zipCode = event.getValue('inputZip') />
     </cfif>
- --->  </cffunction>
+ --->
+  </cffunction>
 
 
   <cffunction name="protection" returntype="void" output="false" hint="Protection and Services page">
@@ -331,7 +341,43 @@
     <cfset var prevAction = "" />
 
     <cfscript>
+      prc.clearCartAction = event.buildLink('devicebuilder.clearcart') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       prc.includeTallyBox = false;
+    </cfscript>
+  </cffunction>
+
+
+  <cffunction name="clearcart" returntype="void" output="false" hint="Order Review/Cart page">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+    <cfset var carrierObjExists = false />
+    <cfset var zipCodeExists = false />
+
+    <cfscript>
+      // TODO: Remove all items in the cart.
+
+      // remove carrierObj from session: 
+      carrierObjExists = structdelete(session, 'carrierObj', true);
+      
+      // remove zipCode from session:
+      // TODO: Possibly need to remove the following line for case 195
+      // carrierObjExists = structdelete(session, 'zipCode', true);
+
+      // create warningMessage
+
+      // NOTE: prc is not persisted with setNextEvent().
+      // prc.warningMessage = "Your cart was successfully cleared.";
+      // prc.showNav = false;
+
+      flash.put("warningMessage","Your cart has been cleared.  Click here to go to Browse Devices.");
+      flash.put("showNav", false);
+
+      setNextEvent(
+        event="devicebuilder.orderreview",
+        persist="type,pid"
+        );
+      
     </cfscript>
   </cffunction>
 

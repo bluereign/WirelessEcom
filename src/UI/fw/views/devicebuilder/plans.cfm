@@ -1,7 +1,7 @@
 <!--- 
 
 //TODO:
-  - Add logic to make sure session.ZipCode exists (and is valid zipcode).  If not, need to present a zip code field.  Also, need a Fogbugz case created for this.
+  - Add logic to make sure session.zipCode exists (and is valid zipcode).  If not, need to present a zip code field.  Also, need a Fogbugz case created for this.
 
  --->
 

@@ -6,9 +6,9 @@
         <h1>Carrier Account Login</h1>
         <p>The primary Account Holder's information is used to verify status and line availability.</p>
       </header>
-        <cfif len(rc.carrierResponseMessage)>
-          <p class="bg-danger" style="padding:10px">#rc.carrierResponseMessage#</p>
-        </cfif>
+      <cfif len(rc.carrierResponseMessage)>
+        <p class="bg-danger" style="padding:10px">#rc.carrierResponseMessage#</p>
+      </cfif>
       <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
       <!--- <form action="#prc.nextStep#" method="post"> --->
       <form action="#event.buildLink('devicebuilder.carrierLoginPost')#" method="post">

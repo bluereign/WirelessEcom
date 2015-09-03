@@ -2,6 +2,7 @@
 <cfparam name="prc.includeTooltip" default="false" />
 <cfparam name="rc.type" default="upgrade" /> <!--- upgrade, addaline, new --->
 <cfparam name="rc.pid" default="00000" />
+<cfparam name="prc.showNav" default="true" />
 
 <cfset assetPaths = application.wirebox.getInstance("AssetPaths") />
 <cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
@@ -35,7 +36,11 @@
 <body id="#event.getCurrentAction()#">
   #renderView('devicebuilder/pageheader')#
 <div class="container">
-  #renderView('devicebuilder/pagenav')#
+  <cfif prc.showNav>
+    #renderView('devicebuilder/pagenav')#  
+  <cfelse>
+    <br /><br /><br /><br />
+  </cfif>
   <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
     #renderView()#
     <cfif prc.includeTallyBox>

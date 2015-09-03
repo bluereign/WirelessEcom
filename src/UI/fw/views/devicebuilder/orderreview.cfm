@@ -1,6 +1,9 @@
 <cfoutput>
     <div class="col-md-12">
       <section class="content">
+        <cfif structKeyExists(prc,"warningMessage")>
+          <p class="bg-warning" style="padding:10px">#prc.warningMessage#</p>
+        </cfif>
         <header class="main-header">
           <h1>Cart</h1>
         </header>
@@ -108,7 +111,13 @@
       </section>
     </div>
     <div class="col-md-4">
-      <a href="##" class="clear">Clear Entire Cart</a>
+      <a href="#prc.clearCartAction#" class="clear">Clear Entire Cart</a>
+      <!--- 
+      //TODO:
+        The link "Clear Entire Cart" needs to 
+          - drop carrierObj and ZipCode from the session
+          - clear any devices, plans, accessories, etc. that the user has added to their cart view the devicebuilder.
+       --->
       <div class="sidebar">
         <h4>Have Questions?</h4>
         <ul>
