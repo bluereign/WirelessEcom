@@ -352,8 +352,8 @@ Optional Methods
   settings.filterQueryCacheSpan = CreateTimeSpan(0,0,0,0);
   
 	//Carrier FULL API
-	settings.Att_Carrier_Api_BaseUrl = "http://dev-ecom-sbus-2.enterprise.corp/wasvc/api";
-	settings.Vzw_Carrier_Api_BaseUrl = "http://dev-ecom-sbus-2.enterprise.corp/wasvc/api";
+	settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test.ATT/V1/api";
+	settings.Vzw_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test.Verizon/V1/api";
 
   }
 
@@ -383,8 +383,8 @@ Optional Methods
 		settings.filterQueryCacheSpan = CreateTimeSpan(0,0,0,0);		
 		
 		//Carrier FULL API
-		settings.Att_Carrier_Api_BaseUrl = "http://dev-ecom-sbus-2.enterprise.corp/wasvc/api";
-		settings.Vzw_Carrier_Api_BaseUrl = "http://dev-ecom-sbus-2.enterprise.corp/wasvc/api";
+	settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test.ATT/V1/api";
+	settings.Vzw_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test.Verizon/V1/api";
 		
 	}
 	
@@ -404,8 +404,8 @@ Optional Methods
 		settings.filterQueryCacheSpan = CreateTimeSpan(0,0,10,0);
 		
 		//Carrier FULL API
-		settings.Att_Carrier_Api_BaseUrl = "http://dev-ecom-sbus-2.enterprise.corp/wasvc/api";
-		settings.Vzw_Carrier_Api_BaseUrl = "http://dev-ecom-sbus-2.enterprise.corp/wasvc/api";
+	settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test.ATT/V1/api";
+	settings.Vzw_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test.Verizon/V1/api";
 	}
 	
 	function production() {
@@ -452,8 +452,8 @@ Optional Methods
 		settings.filterQueryCacheSpan = CreateTimeSpan(0,0,10,0);		
 		
 		//Carrier FULL API
-		settings.Att_Carrier_Api_BaseUrl = "http://dev-ecom-sbus-2.enterprise.corp/wasvc/api";
-		settings.Vzw_Carrier_Api_BaseUrl = "http://dev-ecom-sbus-2.enterprise.corp/wasvc/api";
+	settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test.ATT/V1/api";
+	settings.Vzw_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Test.Verizon/V1/api";
 		
 	}
 

@@ -26,10 +26,28 @@
 		<cfreturn processResults(cfhttp) />		
 	</cffunction>
 
-	<!--------------------------------------------------------------------------------------------------
-		Helper Functions		
-	 --------------------------------------------------------------------------------------------------->
 
+	<!--- 
+		Look at the results of the call and set appropriate fields in the carrier response	
+	--->
+	<cffunction name="processResults" returnType="fw.model.CarrierApi.Att.AttCarrierResponse" access="private">
+		<cfargument type="struct" name="cfhttpResult" required="true" /> 
+		<cfset var emptyObj = {} />
+				
+		<cfset var carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttCarrierResponse').init() />
+		<cfset carrierResponse.setHttpStatus(cfhttpResult.statusCode) />
+		<cfif isJson(arguments.cfhttpResult.fileContent)>			
+			<cfset carrierResponse.setResponse(deserializeJson(arguments.cfhttpResult.fileContent,true)) />
+		<cfelse>
+			<cfset carrierResponse.setResponse(emptyObj) />
+		</cfif>
+		
+		<!--- if httpStatus is 200 OK status = 0 else more specific case error may be set --->
+		
+		
+		<cfreturn carrierResponse />
+	
+	</cffunction>
 
 	<!---
 		Get the Service URL
