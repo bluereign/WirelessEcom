@@ -1,9 +1,10 @@
 <!--- 
 
 //TODO:
-  - Add logic to make sure session.zipCode exists (and is valid zipcode).  If not, need to present a zip code field.  Also, need a Fogbugz case created for this.
-
+  - Finish Case 346: The zip code validation should call the carrier of the device they are purchasing for to verify service with that carrier.
+  - make sure that an Upgrade Line has been selected for type=upgrade.
  --->
+
 
 <cfoutput>
   <div class="col-md-12">
@@ -11,7 +12,11 @@
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
-          <p>Pick a Plan and the amount of Data you will use per month. <cfif structKeyExists(session, "ZipCode")>(#session.ZipCode#)</cfif></p>
+          <p>Pick a Plan and the amount of Data you will use per month. <cfif structKeyExists(session, "ZipCode")>(#session.ZipCode#)</cfif>
+          <!--- Launch Zip Modal button for testing
+          <cfif rc.type is 'new'>
+            <a data-toggle="modal" href="##zipModal" class="btn btn-primary btn-sm">Zip modal</a></p>
+          </cfif> --->
         </header>
         <ul class="nav nav-tabs">
           <li role="presentation" class="active">
@@ -122,4 +127,6 @@
       </section>
     </form>
   </div>
+
+
 </cfoutput>

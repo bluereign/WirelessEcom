@@ -31,11 +31,22 @@
   </cfif> 
   #googleAnalyticsTracker.tagPage()#
   <link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
+  <!--- TODO: Add following to devicebuilder.css after final HTML prototype build --->
+  <style>
+  body.modal-open .nonmodal-container{
+      -webkit-filter: blur(5px);
+      -moz-filter: blur(5px);
+      -o-filter: blur(5px);
+      -ms-filter: blur(5px);
+      filter: blur(5px);
+      opacity:0.7 !important;
+  }
+  </style>
 </head>
 
 <body id="#event.getCurrentAction()#">
   #renderView('devicebuilder/pageheader')#
-<div class="container">
+<div class="container nonmodal-container">
   <cfif prc.showNav>
     #renderView('devicebuilder/pagenav')#  
   <cfelse>
@@ -53,6 +64,7 @@
 <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
 
 <cfif prc.includeTooltip>
+  <!--- Tooltip bootstrap js was ommited from devicebuilder.min.js.  Override required: --->
   <script type="text/javascript" src="#assetPaths.common#scripts/bootstrap/3.2.0-custom/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="#assetPaths.common#scripts/libs/jquery.validate.min.js"></script>
   <script>
@@ -64,6 +76,14 @@
 
 <cfif listFindNoCase("devicebuilder.carrierlogin", event.getCurrentEvent())>
   #renderView('devicebuilder/upgradeValidate')#
+</cfif>
+<cfif listFindNoCase("devicebuilder.plans", event.getCurrentEvent())>
+  #renderView('devicebuilder/plansmodal')#
+  <cfif rc.type is 'new' and !structKeyExists(session,"zipCode")>
+    <script>
+      $('##zipModal').modal('show');
+    </script>
+  </cfif>
 </cfif>
 
 </body>

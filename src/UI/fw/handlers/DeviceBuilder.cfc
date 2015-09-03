@@ -138,6 +138,7 @@
       }
       // /Navigation
 
+      // if inputZip exists, then set session.zipCode ONLY IF the user has not authenticated with a carrier login.
       if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip')) and !structKeyExists(session,"carrierObj")  ) {
         session.zipCode = event.getValue('inputZip');
       }
@@ -360,16 +361,11 @@
       // remove carrierObj from session: 
       carrierObjExists = structdelete(session, 'carrierObj', true);
       
+      // TODO: Remove the following 2 lines after testing to comply with case 195
       // remove zipCode from session:
-      // TODO: Possibly need to remove the following line for case 195
-      // carrierObjExists = structdelete(session, 'zipCode', true);
+      carrierObjExists = structdelete(session, 'zipCode', true);
 
       // create warningMessage
-
-      // NOTE: prc is not persisted with setNextEvent().
-      // prc.warningMessage = "Your cart was successfully cleared.";
-      // prc.showNav = false;
-
       flash.put("warningMessage","Your cart has been cleared.  Click here to go to Browse Devices.");
       flash.put("showNav", false);
 
