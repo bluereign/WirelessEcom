@@ -9,8 +9,12 @@
         </header>
         <form>
           <div class="pull-right">
-            <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
-            <button type="submit" class="btn btn-primary">Checkout Now</button>
+            <cfif prc.showAddAnotherDeviceButton>
+              <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
+            </cfif>
+            <cfif prc.showCheckoutnowButton>
+              <button type="submit" class="btn btn-primary">Checkout Now</button>
+            </cfif>
           </div>
           <div class="content">
             <div class="row hidden-xs">
@@ -111,7 +115,12 @@
       </section>
     </div>
     <div class="col-md-4">
-      <a href="#prc.clearCartAction#" class="clear">Clear Entire Cart</a>
+      <cfif prc.showClearCartLink>
+        <a href="#prc.clearCartAction#" class="clear">Clear Entire Cart</a>
+      <cfelse>
+        <a href="#prc.browseDevicesUrl#" class="clear">Browse Devices</a>
+      </cfif>
+      
       <!--- 
       //TODO:
         The link "Clear Entire Cart" needs to 
