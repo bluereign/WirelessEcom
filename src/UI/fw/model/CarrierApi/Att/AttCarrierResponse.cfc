@@ -26,6 +26,19 @@
 		</cfif>
 	</cffunction>
 	
+	<cffunction name="getAddress" access="public" returnType="cfc.model.address">
+		<cfargument name="rawAddress" type="struct" required="false" default="#getResponse().account.address#" />
+		<cfset var address = createObject('component','cfc.model.Address').init() />
+		<cfset address.setAddressLine1(rawAddress.addressLine1) />
+		<cfset address.setAddressLine2(rawAddress.addressLine2) />
+		<cfset address.setCity(rawAddress.city) />
+		<cfset address.setCountry(rawAddress.Country) />
+		<cfset address.setState(rawAddress.state) />
+		<cfset address.setZipCode(rawAddress.zip.zip) />
+		<cfset address.setZipCodeExtension(rawAddress.zip.zipExtension) />
+		<cfreturn address />
+	</cffunction>	
+	
 	<cffunction name="getSubscribers" access="public" returnType="array">
 		<cfset var local = {} />
 		<cfset local.resp = getResponse() />
@@ -42,18 +55,6 @@
 		<cfreturn local.subscribers />
 	</cffunction>
 	
-	<cffunction name="getAddress" access="public" returnType="cfc.model.address">
-		<cfargument name="rawAddress" type="struct" required="false" default="#getResponse().account.address#" />
-		<cfset var address = createObject('component','cfc.model.Address').init() />
-		<cfset address.setAddressLine1(rawAddress.addressLine1) />
-		<cfset address.setAddressLine2(rawAddress.addressLine2) />
-		<cfset address.setCity(rawAddress.city) />
-		<cfset address.setCountry(rawAddress.Country) />
-		<cfset address.setState(rawAddress.state) />
-		<cfset address.setZipCode(rawAddress.zip.zip) />
-		<cfset address.setZipCodeExtension(rawAddress.zip.zipExtension) />
-		<cfreturn address />
-	</cffunction>	
 	
 	<cffunction name="OnMissingMethod" access="public" returntype="any" output="false" hint="Handles missing method exceptions.">
 	    <cfargument name="MissingMethodName" type="string" required="true" hint="The name of the missing method." />

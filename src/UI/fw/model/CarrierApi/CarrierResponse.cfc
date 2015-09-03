@@ -56,6 +56,34 @@
 		</cfif>
 	</cffunction>
 	
+	<cffunction name="getAccountIdentifier" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isdefined("resp.account.accountIdentifier")>
+			<cfreturn resp.account.accountIdentifier />
+		<cfelse>
+			<cfreturn ""/>
+		</cfif>
+	</cffunction>
+	
+	<cffunction name="getActiveLines" access="public" returnType="numeric">
+		<cfreturn -1 />
+.	</cffunction>
+	
+	<cffunction name="getSubscribers" access="public" returnType="array">
+		<cfset var local = {} />
+		<cfset local.subscribers = arrayNew(1) />
+		<cfreturn local.subscribers />
+	</cffunction>
+	
+	<cffunction name="getAddress" access="public" returnType="cfc.model.address">
+		<cfargument name="rawAddress" type="struct" required="false" default="#structNew()#" />
+		<cfset var address = createObject('component','cfc.model.Address').init() />
+		<cfreturn address />
+	</cffunction>	
+	
+	
+	
+	
 	
 	<!--- Methods that should be implemented in the derived object --->
 	
