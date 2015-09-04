@@ -1,6 +1,6 @@
 <!---Samsung Galaxy S6+ landing page--->
 
-<html class="no-js">
+<!---<html class="no-js">--->
 <head>
     <meta charset="utf-8">
     <title></title>
@@ -30,7 +30,7 @@
 		
 		.contentText > input
 		{
-			width: 255px;
+			width: 225px;
 		}
 
 		.contentText > select {}
@@ -70,25 +70,26 @@
 </cfoutput>
 
 <script>
-	jQuery.noConflict();
-	jQuery(document).ready(function( $ ) {
+	var ss= jQuery.noConflict();
+//	jQuery.noConflict();
+	ss(document).ready(function($) {
 
 		//Set validation plugin defaults
-		jQuery.validator.setDefaults({
+		ss.validator.setDefaults({
 		   ignore: ".ignore"
 		   , errorElement: "em"
 		});
 		
-		$('#email').placeholder();
+		ss('#email').placeholder();
 	});
 
 	function ValidateNotificationForm()
 	{
-		var validator = jQuery("#notificationform").validate();
+		var validator = ss("#notificationform").validate();
 
-		if ( jQuery("#notificationform").valid() )
+		if ( ss("#notificationform").valid() )
 		{
-			jQuery('#notificationform').submit();
+			ss('#notificationform').submit();
 		}
 
 		return false;
@@ -97,8 +98,10 @@
 </head>
 
 
+<cfoutput>
 <body>
-
+<form id="notificationform" action="/notification/RegisterPresaleAlert/" method="post">
+<input type="hidden"  name="pageURL" id="pageURL" value='#CGI.SERVER_NAME & CGI.PATH_INFO#'> 
 <div  id="main" data-hero="zero" class="zero-landing-page">
   <div class="content clear 360zero ">
     <div class="content-container clear">
@@ -127,18 +130,18 @@
 
 				<!--- This content adds in the carrier dropdown and email box  --->
 				<div class="gs6Content" style="margin-top:-10px;">
-					<div class="contentText" style="float:left;margin-bottom:20px;">
+					<div class="contentText" style="margin-bottom:10px;">
 						<select name="campaignId" required>
 							<option value="" <cfif rc.CampaignId eq ''>selected</cfif>>Select your carrier</option>
-							<option value="1" <cfif rc.CampaignId eq '1'>selected</cfif>>AT&T</option>
+							<option value="5" <cfif rc.CampaignId eq '5'>selected</cfif>>AT&T</option>
 							<cfif application.model.Carrier.isEnabled(299)>
-								<option value="3" <cfif rc.CampaignId eq '3'>selected</cfif>>Sprint</option>
+								<option value="7" <cfif rc.CampaignId eq '7'>selected</cfif>>Sprint</option>
 							</cfif>
-							<option value="2" <cfif rc.CampaignId eq '2'>selected</cfif>>T-Mobile</option>
-							<option value="4" <cfif rc.CampaignId eq '4'>selected</cfif>>Verizon Wireless</option>
+							<option value="6" <cfif rc.CampaignId eq '6'>selected</cfif>>T-Mobile</option>
+							<option value="8" <cfif rc.CampaignId eq '8'>selected</cfif>>Verizon Wireless</option>
 						</select>
 					</div>
-					<div class="contentText" style="float:left;margin-bottom:20px; margin-left:10px;">
+					<div class="contentText" style="margin-bottom:20px;">
 						<input id="email" type="email" name="email" value="#rc.Email#" maxlength="50" placeholder="Enter your email address" required>
 					</div>
 					<div class="contentButton" style="clear:both;">
@@ -207,7 +210,7 @@
                 <h2 class="content-description-headline">Edge UX</h2>
                 <h2 class="content-description-sub-headline"></h2>
       
-                <p>Keep your top five contacts and apps at your fingertips for quick access. Always see who&#39;s contacting you with a discreet light-up notification on the edge screen.</p>
+                <p>Keep your top five contacts and apps at your fingertips for quick access. Always see who&##39;s contacting you with a discreet light-up notification on the edge screen.</p>
       
                   <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" class="button" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">Watch the video</a>--->
               </div>
@@ -232,7 +235,7 @@
                 <h2 class="content-description-headline">Live Broadcast</h2>
                 <h2 class="content-description-sub-headline"></h2>
       
-                <p>Share life&#39;s can&#39;t-miss moments with your friends as they happen. Take live video and broadcast it via YouTube<sup>TM</sup> with this built-in app.</p>
+                <p>Share life&##39;s can&##39;t-miss moments with your friends as they happen. Take live video and broadcast it via YouTube<sup>TM</sup> with this built-in app.</p>
       
                   <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" class="button" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">Watch the video</a>--->
       
@@ -310,7 +313,7 @@
                 <h2 class="content-description-headline">Samsung Pay</h2>
                 <h2 class="content-description-sub-headline"></h2>
       
-                <p>Samsung Pay works virtually anywhere you can swipe a card<sup>3</sup>. From the local grocery store to the corner caf&eacute;, it&#39;s easy to pay with your device.</p>
+                <p>Samsung Pay works virtually anywhere you can swipe a card<sup>3</sup>. From the local grocery store to the corner caf&eacute;, it&##39;s easy to pay with your device.</p>
       
                   <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" class="button" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">Watch the video</a>--->
       
@@ -355,37 +358,7 @@
           <img class="content-description-image" src="/assets/common/images/content/note5/images/zero/logo.png" alt="Samsung" />
 
 				<!--- This content adds in the carrier dropdown and email box  --->
-				<div class="gs6Content" style="text-align:center;">
-					<div class="contentText" style="margin-bottom:10px;">
-						<select name="campaignId" required>
-							<option value="" <cfif rc.CampaignId eq ''>selected</cfif>>Select your carrier</option>
-							<option value="1" <cfif rc.CampaignId eq '1'>selected</cfif>>AT&T</option>
-							<cfif application.model.Carrier.isEnabled(299)>
-								<option value="3" <cfif rc.CampaignId eq '3'>selected</cfif>>Sprint</option>
-							</cfif>
-							<option value="2" <cfif rc.CampaignId eq '2'>selected</cfif>>T-Mobile</option>
-							<option value="4" <cfif rc.CampaignId eq '4'>selected</cfif>>Verizon Wireless</option>
-						</select>
-					</div>
-					<div class="contentText" style="margin-bottom:10px;">
-						<input id="email" type="email" name="email" value="#rc.Email#" maxlength="50" placeholder="Enter your email address" required>
-					</div>
-					<div class="contentButton" style="clear:both;">
-						<div class="buttonContainer">
-							<div class="blockButton">
-								<a class="button" href="##" onClick="ValidateNotificationForm(); return false;">
-									<span class="PreOrder">Pre-Register Now</span>
-								</a>
-							</div>
-						</div>	
-						<!---<span class="buttonLegal" style="font-size:.6em;">This device has not been authorized as required by the rules of the Federal 
-						Communications Commission. This device is not, and may not be, offered for sale or lease, or sold or 
-						leased, until authorization is obtained.</span>--->
-					</div>
-				</div>
-
-            <!---<a href="#" class="button">Pre-order now</a>--->
-            <!---<a href="#" class="button">See the Galaxy Note5</a>--->
+				
         </div>
       </div>
   
@@ -402,22 +375,8 @@
     <script src="/assets/common/images/content/note5/components/jquery/jquery.min.js"></script>
     <script src="/assets/common/images/content/note5/components/picturefill/picturefill.min.js"></script>
     <script src="/assets/common/images/content/note5/js/scripts.min.js"></script>
-
+</form>
   </body>
+  </cfoutput>
 </html>
 
-<div class="modal">
-  <div class="modal-container">
-    
-    <span id="close"></span>
-
-    <video id="video-player" class="video-js vjs-default-skin" controls preload="auto" width="967" height="498" poster="">
-     <source src="" type='video/mp4'>
-     <source src="" type='video/webm'>
-     <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p> 
-    </video>
-  </div>
-</div>
-
-<div class="modal-background">
-</div>

@@ -16,7 +16,7 @@
 </head>
 <body>
 <!--- We only want this to work for local/private access --->	
-<cfif left(cgi.server_name,3) is "10." or refindnocase("^(local\.)(.)*(\.wa)$",cgi.server_name )>
+<cfif left(cgi.server_name,3) is "10." or refindnocase("^(local\.)(.)*(\.wa)$",cgi.server_name ) or refindnocase("(.)*(\.corp)$",cgi.server_name )>
 	
 	<div style="font-size:200%;">
 		<div>

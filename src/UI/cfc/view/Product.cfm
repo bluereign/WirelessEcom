@@ -355,7 +355,7 @@
 								<a href="/index.cfm/go/shop/do/#variables.productClass#Details/productId/#arguments.productData.productId[arguments.productData.currentRow]#"><img src="#assetPaths.common#images/Catalog/NoImage.jpg" height="160" alt="#htmlEditFormat(arguments.productData.summaryTitle[arguments.productData.currentRow])#" border="0" /></a>
 							</cfif>
 						<div onclick="window.location.href ='/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#'"  class="prodImg" style="text-align: center;background-image:url('#local.imgURL#');">
-						<cfif NOT arguments.productData.qtyOnHand[arguments.productData.currentRow] and NOT IsDefined("Session.VFD.access")>
+						<cfif NOT arguments.productData.qtyOnHand[arguments.productData.currentRow] and ( NOT IsDefined("Session.VFD.access") or session.vfd.access is 0)>
 							<img src="#assetPaths.common#images/ui/OutOfStock.png">
 						</cfif>	
 						<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
@@ -374,7 +374,7 @@
 									<cfswitch expression="#allocation.getInventoryTypeDescription()#">
 										<cfcase value="Pre-Sale">
 											<!---Pre-Sale: expected release date #dateformat(allocation.getReleaseDate(),"mm/dd/yyyy")#--->
-											<div class="imagePromotion">PRESALE</div>
+											<div class="imagePromotion">#channelConfig.getPresaleVerbiage()#</div>
 										</cfcase>
 										<cfcase value="Backorder">								
 											<!---<div class="imagePromotion"><!---BACKORDERED---></div>--->

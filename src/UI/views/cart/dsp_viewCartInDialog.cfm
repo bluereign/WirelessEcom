@@ -106,7 +106,7 @@
 									<li><input type="radio" name="targetLine" onclick="setTargetLine(#variables.iLine#);" id="add_to_#variables.iLine#" value="#variables.iLine#" <cfif variables.activeLine eq variables.iLine> checked</cfif> /> Line #variables.iLine#</li>
 								</cfloop>
 
-								<cfif session.cart.getActivationType() is not 'upgrade' and arrayLen(variables.cartLines) lt 5>
+								<cfif session.cart.getActivationType() DOES NOT CONTAIN 'upgrade' and arrayLen(variables.cartLines) lt 5>
 									<input type="hidden" name="lineID" value="#variables.iLine#" />
 									<li><input type="radio" name="targetLine" id="add_to_#variables.iLine#" onclick="setTargetLine(#variables.iLine#);" value="#variables.iLine#" <cfif variables.activeLine eq variables.iLine> checked</cfif> /> A new line</li>
 								</cfif>
@@ -353,7 +353,7 @@
 																cartTypeFilters = [];
 
 																// Add exclusive group options if rate plan is unknown for family Add-a-Line.
-																if(session.cart.getCarrierId() eq 128 and session.cart.getActivationType() is 'addaline' and session.cart.getAddALineType() is 'FAMILY')	{
+																if(session.cart.getCarrierId() eq 128 and session.cart.getActivationType() CONTAINS 'addaline' and session.cart.getAddALineType() is 'FAMILY')	{
 																	if(session.cart.getHasUnlimitedPlan() is 'Yes')	{
 																		arrayAppend(variables.cartTypeFilters, 7); //Add Unlimited options
 																	} else if(session.cart.getHasUnlimitedPlan() is 'No')	{
