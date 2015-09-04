@@ -144,6 +144,7 @@
 		<cfargument name="rc">
 		<cfargument name="prc">
 		
+		<cfset event.setLayout('checkoutVFD') />
 		<cfset event.setView('VFD/homePage') />
 	</cffunction>
 	

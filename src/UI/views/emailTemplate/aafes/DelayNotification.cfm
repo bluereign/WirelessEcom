@@ -99,7 +99,7 @@
 							Dear #theShippingAddress.getFirstName()# #theShippingAddress.getLastName()#,
 						</p>  
 						<p style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:##333333;">
-							Thank you for your recent Wireless Advocates Pre-Sale order with Exchangemobilecenter.com ! 
+							Thank you for your recent Wireless Advocates #application.wirebox.getInstance("ChannelConfig").getPresaleVerbiage()# order with Exchangemobilecenter.com ! 
 							We are sorry to tell you that due to the high demand, your order has been delayed. 
 							We are currently working to get you your device as quickly as possible and rest assured that 
 							by ordering with us you are guaranteed the device you want!
@@ -110,7 +110,7 @@
 					</div>
 					<div>
 						<p style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:##333333;">
-							Since your order contains a Pre-Sale device your order will be processed and shipped 
+							Since your order contains a #application.wirebox.getInstance("ChannelConfig").getPresaleVerbiage()# device your order will be processed and shipped 
 							between the following dates #DelayDateMsg#.  Once it ships, you will 
 							receive an automated email confirmation containing the tracking number so that you 
 							can monitor the progress of your shipment.

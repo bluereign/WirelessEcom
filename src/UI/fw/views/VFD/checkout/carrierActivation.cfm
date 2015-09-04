@@ -147,6 +147,16 @@
 	<input type="hidden" id="numberOfDevices" name="numberOfDevices" value="#arrayLen(variables.cartLines)#" />
 	<input type="hidden" id="orderID" name="orderID" value="#session.checkout.OrderId#" />
 	<input type="hidden" id="isActivation" name="isActivation" value="#application.model.CartHelper.cartContainsActivationItems()#"  />
+	<cfset local.carrierID = application.model.checkoutHelper.getCarrier()/>
+	<cfif local.carrierId eq "109"><!--- ATT --->
+		<input type="hidden" id="carrierAuthWording" name="carrierAuthWording" value="Activation Number" />
+	<cfelseif local.carrierId eq "128"><!--- TMOBILE --->
+		<input type="hidden" id="carrierAuthWording" name="carrierAuthWording" value="Activation Code" />
+	<cfelseif local.carrierId eq "42"><!--- VERIZON --->
+		<input type="hidden" id="carrierAuthWording" name="carrierAuthWording" value="Authorization Code" />
+	<cfelseif local.carrierId eq "299"><!--- SPRINT --->
+		<input type="hidden" id="carrierAuthWording" name="carrierAuthWording" value="MSID" />
+	</cfif>
 	<div class="bootstrap">
 		<div>
 			<h2>
@@ -553,6 +563,7 @@
 		function checkActivation(){
 		    var inputs = document.getElementsByClassName("activation");
 		    var deviceCount = 0;
+		    var carrierAuthWording = document.getElementById('carrierAuthWording').value
 		    for (i = 0; i < inputs.length; i++) {
 		        deviceCount++;
 		        var value = document.getElementById('activationID' + deviceCount).value;
@@ -560,7 +571,7 @@
 		            allActivated = true;
 		        }
 		        else {
-		            alert("You must have an Activation ID for each device before you can print.");
+		            alert("You must have a "+carrierAuthWording+" for each device before you can print.");
 		            allActivated = false;
 		            break;
 		        }

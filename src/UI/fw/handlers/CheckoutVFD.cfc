@@ -15,7 +15,7 @@
 
 	<cfparam name="request.config.disableSSL" default="false" type="boolean" />
 	<cfparam name="request.config.activeCarriers" default="42|109|128" type="string" />
-	<cfparam name="request.p.resultCode" default="" type="string" />
+	<!---<cfparam name="request.p.resultCode" default="" type="string" />--->
 	<!---<cfparam name="request.p.do" default="billShip" type="string" />--->
 	<cfparam name="request.p.do" default="startCheckout" type="string" />
 	<cfparam name="request.currentTopNav" default="checkout.startCheckout" type="string" />
@@ -32,7 +32,7 @@
 	</cfif>
 
 	<cfif cgi.server_port neq 443 and not request.config.disableSSL>
-		<cflocation url="https://#cgi.server_name#/index.cfm/#cgi.path_info#" addtoken="false" />
+		<cflocation url="https://#cgi.server_name##cgi.path_info#" addtoken="false" />
 	</cfif>
 
 	<cfif not structKeyExists(session, 'currentUser')>
@@ -176,8 +176,8 @@
 		<cfargument name="event">
 		<!---<cfargument name="rc">--->
 		<cfargument name="prc">
-		
 		<cfset request.p = Event.getCollection()/>
+		<cfparam name="request.p.resultCode" default="" type="string" />
 		
 		<cfset local = structNew() />
 			<cfset local.isByPassOn = false />
@@ -420,6 +420,7 @@
 
 				<cfif not local.isByPassOn>
 					<!--- Call the carrier / shipping validation services. --->
+					
 					<cfset local.billingResult = application.model.addressValidation.validateAddress(application.model.checkoutHelper.getBillingAddress(), 'Billing', application.model.checkoutHelper.getReferenceNumber(), local.billingCarrier, request.p.resultCode, session.cart.getZipCode(), application.model.checkoutHelper.getCarrierConversationId() ) />
 					<cfset application.model.checkoutHelper.setBillingResult(local.billingResult) />
 
@@ -873,7 +874,7 @@
 		<cfset application.model.checkoutHelper.setCurrentStep('payment') />
 
 		<!--- VFD access check MES --->
-		<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
+		<cfif channelConfig.getVfdEnabled()>
 				<cfset event.setLayout('checkoutVFD') />
 				<cfset event.setView('VFD/checkout/payment') />
 		<cfelse>
@@ -968,8 +969,9 @@
 	that it can open up the Carrier activation window in the correct way/size via js--->
 	<cffunction name="preCarrierActivation" returntype="void" output="false" hint="">
 		<cfargument name="event">
+		
 		<!--- VFD access check MES --->
-		<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
+		<cfif channelConfig.getVfdEnabled()>
 			<cfset event.setLayout('checkOutVFD') />
 			<cfset event.setView('VFD/checkout/preCarrierActivation') />
 		</cfif>
@@ -983,11 +985,11 @@
 		<cfset doAppleCareProcess(Order) />
 		<!---Do capture payment here--->
 		<!--- Cannot be tested on anything other than production--->
-		<cfif ChannelConfig.getEnvironment() eq 'production'>
+		<!---<cfif ChannelConfig.getEnvironment() eq 'production'>
 			<cfset doCapturePayment(OrderID) />
-		</cfif>
+		</cfif>--->
 		<!--- VFD access check MES --->
-		<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
+		<cfif channelConfig.getVfdEnabled()>
 			<cfset event.setLayout('checkOutVFD') />
 			<cfset event.setView('VFD/checkout/carrierActivation') />
 		</cfif>
@@ -1229,7 +1231,7 @@
 	 	<cfargument name="orderId" type="numeric" required="true" />
 	 	<cfset assetPaths = application.wirebox.getInstance("assetPaths") />
 		<cfset PaymentService = application.wirebox.getInstance("PaymentService") />
-		
+		<cfset session.adminuser.adminuserid = session.VFD.employeeNumber />
 		<cftry>
 		
 		<cfset order = CreateObject( "component", "cfc.model.Order" ).init()>
@@ -1270,6 +1272,7 @@
 			<cfelse>
 				<cfset payMethodId = 1 />
 			</cfif>
+						
 			
 			<cfquery name="qry_insertPayment" datasource="#application.dsn.wirelessadvocates#">
 				INSERT INTO salesorder.Payment (
@@ -1293,7 +1296,7 @@
 					NULL,
 					<cfqueryparam value="#Result.getReceiptNumber()#" cfsqltype="cf_sql_varchar" />,
 					<cfqueryparam value="#variables.payMethodId#" cfsqltype="cf_sql_integer" />,
-					'OMT',
+					'DD',
 					<cfqueryparam value="#Result.getGUID()#" cfsqltype="cf_sql_varchar" />,
 					NULL,
 					NULL,
@@ -1321,17 +1324,17 @@
 				order.setIsSalesTaxTransactionCommited(true);
 				
 				order.setStatus( 2 ); //Update status to submitted
-				order.setPaymentCapturedById( session.adminUser.adminUserId ); //Log user that captured payment
+				order.setPaymentCapturedById( session.UserId ); //Log user that captured payment
 				order.save();
 			
-				application.model.actionCaptures.insertActionCapture(adminUserId = session.adminUser.adminUserId, actionId = 2, orderId = Result.getSalesOrderNumber(), message = '');
+				application.model.actionCaptures.insertActionCapture(adminUserId = session.UserId, actionId = 2, orderId = Result.getSalesOrderNumber(), message = '');
 	
 				// Add order note
 				local.ticketStruct = StructNew();
 				local.ticketStruct.NoteBody = 'Payment Capture Sucessful - Verbiage: #Result.getVerbiage()#';
 				local.ticketStruct.OrderNoteSubjectId = 52;
 				local.ticketStruct.OrderId = Result.getSalesOrderNumber();
-				local.ticketStruct.CreatedById = session.adminuser.adminuserid;
+				local.ticketStruct.CreatedById = session.userid;
 				local.void = application.model.TicketService.addOrderNote(argumentCollection = local.ticketStruct);
 			</cfscript>
 			
@@ -1365,7 +1368,7 @@
 			<cfset local.ticketStruct.NoteBody = 'Payment Response: #Response.getMessage()#' />
 			<cfset local.ticketStruct.OrderNoteSubjectId = 52 />
 			<cfset local.ticketStruct.OrderId = arguments.orderId />
-			<cfset local.ticketStruct.CreatedById = session.adminuser.adminuserid />
+			<cfset local.ticketStruct.CreatedById = session.userid />
 			<cfset local.void = application.model.TicketService.addOrderNote(argumentCollection = local.ticketStruct) />			
 			
 			<div class="message">
@@ -1374,13 +1377,21 @@
 		</cfif>	
 	
 		<cfcatch>
-			<!--- Add order note --->
-			<cfset local.ticketStruct = StructNew()>
-			<cfset local.ticketStruct.NoteBody = 'Payment capture unsuccessful: #cfcatch.message# - #cfcatch.detail#' />
-			<cfset local.ticketStruct.OrderNoteSubjectId = 52 />
-			<cfset local.ticketStruct.OrderId = arguments.orderId />
-			<cfset local.ticketStruct.CreatedById = session.adminuser.adminuserid />
-			<cfset local.void = application.model.TicketService.addOrderNote(argumentCollection = local.ticketStruct) />
+			
+
+			<cfquery name="qry_insertError" datasource="#application.dsn.wirelessadvocates#">
+				INSERT INTO service.PaymentGatewayListener
+				(
+					Content,
+					CreatedDate
+				)
+				VALUES
+				(
+					<cfqueryparam value="Payment capture unsuccessful: #cfcatch.message# - #cfcatch.detail#" cfsqltype="cf_sql_longvarchar" />,
+					GETDATE()
+				)
+			</cfquery>
+			<cfdump var="#cfcatch.message#"><cfabort>
 			
 			<div class="message-sticky">
 				<cfoutput>Payment capture unsuccessful: #cfcatch.message# - #cfcatch.detail#</cfoutput>

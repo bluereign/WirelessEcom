@@ -1,6 +1,6 @@
 <!---Samsung Galaxy Note 5 landing page--->
 
-<html class="no-js">
+<!---<html class="no-js">--->
 <head>
     <meta charset="utf-8">
     <title></title>
@@ -30,7 +30,7 @@
 		
 		.contentText > input
 		{
-			width: 255px;
+			width: 225px;
 		}
 
 		.contentText > select {}
@@ -64,30 +64,31 @@
     </style>
 
 <cfoutput>
-	<script src="#prc.assetPaths.common#scripts/libs/jquery.validate.min.js"></script>
 	<script src="#prc.assetPaths.common#scripts/libs/jquery.placeholder.js"></script>
+	<script src="#prc.assetPaths.common#scripts/libs/jquery.validate.min.js"></script>
 </cfoutput>
 
 <script>
-	jQuery.noConflict();
-	jQuery(document).ready(function( $ ) {
+	var ss= jQuery.noConflict();
+//	jQuery.noConflict();
+	ss(document).ready(function($) {
 
 		//Set validation plugin defaults
-		jQuery.validator.setDefaults({
+		ss.validator.setDefaults({
 		   ignore: ".ignore"
 		   , errorElement: "em"
 		});
 		
-		$('#email').placeholder();
+		ss('#email').placeholder();
 	});
 
 	function ValidateNotificationForm()
 	{
-		var validator = jQuery("#notificationform").validate();
+		var validator = ss("#notificationform").validate();
 
-		if ( jQuery("#notificationform").valid() )
+		if ( ss("#notificationform").valid() )
 		{
-			jQuery('#notificationform').submit();
+			ss('#notificationform').submit();
 		}
 
 		return false;
@@ -96,9 +97,11 @@
 </head>
 
 
+<cfoutput>
 <body>
-
+<form id="notificationform" action="/notification/RegisterPresaleAlert/" method="post">
 <div id="main"  data-hero="noble" class="noble-landing-page">
+  <input type="hidden"  name="pageURL" id="pageURL" value='#CGI.SERVER_NAME & CGI.PATH_INFO#'>  
   <div class="content clear 360noble ">
     <div class="content-container clear">
       <div class="content-image content-left">
@@ -116,28 +119,23 @@
           <div class="content-description-container">
             <h2 class="content-description-headline">The&nbsp;next big&nbsp;thing</h2>
             <h2 class="content-description-sub-headline">is almost here</h2>
-              <img class="content-description-image" src="/assets/common/images/content/note5/images/noble/logo.png" alt="Samsung" />
-              <!-- hero thumbnail -->
-                <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">
-                  <img class="content-description-image" src="/assets/common/images/content/note5/images/noble/video-thumb.png" alt="" />
-                </a>--->
-  
-            <p>The reimagined Samsung Galaxy Note5 is designed to keep up with your busy life. Explore the multitasking features, seamless sharing and the enhanced S Pen you&#39;ll only find on a Galaxy Note.</p>
+              <img class="content-description-image" src="/assets/common/images/content/note5/images/noble/logo.png" alt="Samsung" />  
+            <p>The reimagined Samsung Galaxy Note5 is designed to keep up with your busy life. Explore the multitasking features, seamless sharing and the enhanced S Pen you&##39;ll only find on a Galaxy Note.</p>
 
 				<!--- This content adds in the carrier dropdown and email box  --->
 				<div class="gs6Content" style="margin-top:-10px;">
-					<div class="contentText" style="float:left;margin-bottom:20px;">
+					<div class="contentText" style="margin-bottom:10px;">
 						<select name="campaignId" required>
 							<option value="" <cfif rc.CampaignId eq ''>selected</cfif>>Select your carrier</option>
-							<option value="1" <cfif rc.CampaignId eq '1'>selected</cfif>>AT&T</option>
+							<option value="5" <cfif rc.CampaignId eq '5'>selected</cfif>>AT&T</option>
 							<cfif application.model.Carrier.isEnabled(299)>
-								<option value="3" <cfif rc.CampaignId eq '3'>selected</cfif>>Sprint</option>
+								<option value="7" <cfif rc.CampaignId eq '7'>selected</cfif>>Sprint</option>
 							</cfif>
-							<option value="2" <cfif rc.CampaignId eq '2'>selected</cfif>>T-Mobile</option>
-							<option value="4" <cfif rc.CampaignId eq '4'>selected</cfif>>Verizon Wireless</option>
+							<option value="6" <cfif rc.CampaignId eq '6'>selected</cfif>>T-Mobile</option>
+							<option value="8" <cfif rc.CampaignId eq '8'>selected</cfif>>Verizon Wireless</option>
 						</select>
 					</div>
-					<div class="contentText" style="float:left;margin-bottom:20px; margin-left:10px;">
+					<div class="contentText" style="margin-bottom:20px;">
 						<input id="email" type="email" name="email" value="#rc.Email#" maxlength="50" placeholder="Enter your email address" required>
 					</div>
 					<div class="contentButton" style="clear:both;">
@@ -148,14 +146,8 @@
 								</a>
 							</div>
 						</div>	
-						<!---<span class="buttonLegal" style="font-size:.6em;">This device has not been authorized as required by the rules of the Federal 
-						Communications Commission. This device is not, and may not be, offered for sale or lease, or sold or 
-						leased, until authorization is obtained.</span>--->
 					</div>
-				</div>
-  
-              <!---<a href="##" class="button" onclick="ValidateNotificationForm(); return false;">Pre-Order Now</a>--->
-  
+				</div>  
           </div>
         </div>
       </div>
@@ -179,8 +171,7 @@
                 <h2 class="content-description-sub-headline"></h2>
       
                 <p>Do more with the advanced S Pen. Jot down reminders, lists and schedules without waking the device. And S Pen features are easier to find from any screen or app with the Air Command menu.</p>
-      
-                  <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" class="button" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">Watch the video</a>--->
+
               </div>
             </div>
           </div>
@@ -204,10 +195,6 @@
                 <h2 class="content-description-sub-headline"></h2>
       
                 <p>Get immersed in the content you love with the adaptive 5.7&quot; Quad HD Super AMOLED 2560x1440 resolution display that adjusts to any light, making images pop.  Get an even bigger picture by connecting the Galaxy Note5 to your TV<sup>1</sup>.</p>
-      
-                  <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" class="button" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">Watch the video</a>--->
-      
-      
               </div>
             </div>
           </div>
@@ -223,20 +210,15 @@
                   <img srcset="/assets/common/images/content/note5/images/noble/lifestyle/multi-sm.jpg" alt="Samsung S6 Edge">
                 </picture>
               </div>
-      
             <div class="content-description content-left clear">
               <div class="content-description-container">
                 <h2 class="content-description-headline">Multi Window</h2>
                 <h2 class="content-description-sub-headline"></h2>
-      
                 <p>Multitask like never before. Open two apps side by side<sup>2</sup> so you can read the news while answering email.</p>
-      
-                  <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" class="button" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">Watch the video</a>--->
               </div>
             </div>
           </div>
       </div>
-      
       <div class="content clear  ">
         <div class="content-container clear">
           <div class="content-image content-left">
@@ -247,23 +229,16 @@
                   <img srcset="/assets/common/images/content/note5/images/noble/lifestyle/camera-sm.png" alt="Samsung S6 Edge">
                 </picture>
           </div>
-      
-      
+
             <div class="content-description content-right clear ">
               <div class="content-description-container">
                 <h2 class="content-description-headline">Camera</h2>
                 <h2 class="content-description-sub-headline"></h2>
-      
                 <p>Featuring a 16MP rear-facing camera, take sharper, clearer photos with features like image stabilization and a low-light sensor<sup>3</sup>. And take wide-angle selfies with the 5MP front-facing camera.</p>
-      
-                  <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" class="button" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">Watch the video</a>--->
-      
-      
               </div>
             </div>
           </div>
       </div>
-      
       <div class="content clear  content--lifestyle">
         <div class="content-container clear">
           <div class="content-image content-left">
@@ -274,18 +249,11 @@
                   <img srcset="/assets/common/images/content/note5/images/noble/lifestyle/pay-sm.jpg" alt="Samsung S6 Edge">
                 </picture>
           </div>
-      
-      
             <div class="content-description content-right clear ">
               <div class="content-description-container">
                 <h2 class="content-description-headline">Samsung Pay</h2>
                 <h2 class="content-description-sub-headline"></h2>
-      
-                <p>Samsung Pay works virtually anywhere you can swipe a card<sup>4</sup>. From the local grocery store to the corner caf&eacute;, it&#39;s easy to pay with your device.</p>
-      
-                  <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" class="button" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">Watch the video</a>--->
-      
-      
+                <p>Samsung Pay works virtually anywhere you can swipe a card<sup>4</sup>. From the local grocery store to the corner caf&eacute;, it&##39;s easy to pay with your device.</p>
               </div>
             </div>
           </div>
@@ -306,10 +274,7 @@
               <div class="content-description-container">
                 <h2 class="content-description-headline">SideSync</h2>
                 <h2 class="content-description-sub-headline"></h2>
-      
                 <p>Easily drag and drop photos and documents between Galaxy Note5 and most PCs or Macs<sup>5</sup>. And even respond to texts and answer calls directly on your laptop.</p>
-      
-                  <!---<a href="http://vjs.zencdn.net/v/oceans.mp4" class="button" data-video="http://vjs.zencdn.net/v/oceans" data-poster="http://www.videojs.com/img/poster.jpg">Watch the video</a>--->
               </div>
             </div>
           </div>
@@ -347,41 +312,7 @@
         <div class="content-container clear">
           <h2>The next big thing</h2>
           <h2>is almost here</h2>
-          <img class="content-description-image" src="/assets/common/images/content/note5/images/noble/logo.png" alt="Samsung" />
-
-				<!--- This content adds in the carrier dropdown and email box  --->
-				<div class="gs6Content" style="text-align:center;">
-					<div class="contentText" style="margin-bottom:10px;">
-						<select name="campaignId" required>
-							<option value="" <cfif rc.CampaignId eq ''>selected</cfif>>Select your carrier</option>
-							<option value="1" <cfif rc.CampaignId eq '1'>selected</cfif>>AT&T</option>
-							<cfif application.model.Carrier.isEnabled(299)>
-								<option value="3" <cfif rc.CampaignId eq '3'>selected</cfif>>Sprint</option>
-							</cfif>
-							<option value="2" <cfif rc.CampaignId eq '2'>selected</cfif>>T-Mobile</option>
-							<option value="4" <cfif rc.CampaignId eq '4'>selected</cfif>>Verizon Wireless</option>
-						</select>
-					</div>
-					<div class="contentText" style="margin-bottom:10px;">
-						<input id="email" type="email" name="email" value="#rc.Email#" maxlength="50" placeholder="Enter your email address" required>
-					</div>
-					<div class="contentButton" style="clear:both;">
-						<div class="buttonContainer">
-							<div class="blockButton">
-								<a class="button" href="##" onClick="ValidateNotificationForm(); return false;">
-									<span class="PreOrder">Pre-Register Now</span>
-								</a>
-							</div>
-						</div>	
-						<!---<span class="buttonLegal" style="font-size:.6em;">This device has not been authorized as required by the rules of the Federal 
-						Communications Commission. This device is not, and may not be, offered for sale or lease, or sold or 
-						leased, until authorization is obtained.</span>--->
-					</div>
-				</div>
-
-            <!---<a href="#" class="button">Pre-order now</a>--->
-            <!---<a href="#" class="button">See the GALAXY S6 EDGE+</a>--->
-            
+          <img class="content-description-image" src="/assets/common/images/content/note5/images/noble/logo.png" alt="Samsung" />            
         </div>
       </div>
   
@@ -398,22 +329,7 @@
     <script src="/assets/common/images/content/note5/components/jquery/jquery.min.js"></script>
     <script src="/assets/common/images/content/note5/components/picturefill/picturefill.min.js"></script>
     <script src="/assets/common/images/content/note5/js/scripts.min.js"></script>
-
+	</form>
   </body>
+ </cfoutput>
 </html>
-
-<div class="modal">
-  <div class="modal-container">
-    
-    <span id="close"></span>
-
-    <video id="video-player" class="video-js vjs-default-skin" controls preload="auto" width="967" height="498" poster="">
-     <source src="" type='video/mp4'>
-     <source src="" type='video/webm'>
-     <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p> 
-    </video>
-  </div>
-</div>
-
-<div class="modal-background">
-</div>

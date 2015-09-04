@@ -1,10 +1,10 @@
 <cfset GatewayRegistry = application.wirebox.getInstance("PaymentProcessorRegistry")>
 <cfset cardTypes = GatewayRegistry.listPaymentMethods() >
 
-<cfset assetPaths = application.wirebox.getInstance("assetPaths")>
+<!---<cfset assetPaths = application.wirebox.getInstance("assetPaths")>
 <cfinclude template="/views/checkout/paymentGatewayInclude.cfm" />
 <cfset GatewayRegistry = application.wirebox.getInstance("PaymentProcessorRegistry")>
-<cfset cardTypes = GatewayRegistry.listPaymentMethods() >
+<cfset cardTypes = GatewayRegistry.listPaymentMethods() >--->
 
 <cfset assetPaths = application.wirebox.getInstance("assetPaths")>
 <cfinclude template="/views/checkout/paymentGatewayInclude.cfm" />

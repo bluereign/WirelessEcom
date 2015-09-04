@@ -427,6 +427,26 @@
 		</cfsavecontent>
 		<cfhtmlhead text="#trim(local.popupWindow)#" />		
 		<cfsavecontent variable="local.accessoryHTML">
+			<style>
+				.prodDetail {
+					float: left;
+					border-top: 1px solid #cfcfcf;
+					position: relative;
+					height:inherit;
+					min-height:165px;
+					/*padding-top: 5px;*/
+				}
+				.prodDesc {
+					height:80%; 
+					border-collapse:collapse; 
+					display:block;
+				}
+				.details-price-container {
+					float:right;
+					margin-left: 20px; 
+					height: 165px;
+				}
+			</style>
 			<script type="text/javascript" language="javascript" src="<cfoutput>#getAssetPaths().common#</cfoutput>scripts/details.js"></script>
 			<script>
 				jQuery(document).ready(function() {
@@ -435,7 +455,7 @@
 					});
 				});
 			</script>
-
+			
 
 
 			<cfoutput query="arguments.accessoryData">

@@ -2135,7 +2135,11 @@
 				<cfif application.model.checkoutHelper.isWirelessOrder() && order.getOrderTotal() lte 0>
 					<cfset order.setStatus(2) />
 				<cfelseif application.model.checkoutHelper.isWirelessOrder()>
-					<cfset order.setStatus(1) />
+					<cfif !channelConfig.getVfdEnabled()>
+						<cfset order.setStatus(1) />
+					<cfelse><!---Direct Delivery orders are captured --->
+						<cfset order.setStatus(2) />
+					</cfif>
 				<cfelse>
 					<cfset order.setStatus(2) />
 				</cfif>
@@ -2177,7 +2181,7 @@
 		</cfif>
 		
 		<!--- If this is a VFD transaction proceed to Carrier Activation --->
-		<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
+		<cfif channelConfig.getVfdEnabled()>
 			<cflocation url="/CheckoutVFD/preCarrierActivation/" addtoken="false"/>
 		</cfif>
 		
