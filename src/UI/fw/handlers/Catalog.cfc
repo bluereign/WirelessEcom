@@ -30,7 +30,7 @@
 			}
 		
 			// Determine activation type pricing to display
-			if (event.getValue('ActivationType', '') eq 'upgrade')
+			if (event.getValue('ActivationType', '') contains 'upgrade')
 			{
 				rc.PriceDisplayType = 'upgrade';
 			}
@@ -115,9 +115,9 @@
 			rc.PriceDisplayType = 'new';
 
 			// Determine activation type pricing to display
-			if (event.getValue('ActivationType', '') eq 'upgrade') {
+			if (event.getValue('ActivationType', '') contains 'upgrade') {
 				rc.PriceDisplayType = 'upgrade';
-			} else if (event.getValue('ActivationType', '') eq 'addaline') {
+			} else if (event.getValue('ActivationType', '') contains 'addaline') {
 				rc.PriceDisplayType = 'addaline';
 			}
 			

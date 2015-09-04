@@ -49,6 +49,7 @@ $(document).ready(function() {
 		$newCustomer1 = $('#new-customer1'),
 		$newCustomer2 = $('#new-customer2'),
 		$thumbnails = $('.device-thumb'),
+		$products = $('.accessories .product');
 		$filterableProducts = $('.tab-pane .product');
 
 	// Carousel on Update Data Plan Page
@@ -80,10 +81,6 @@ $(document).ready(function() {
 		swapDeviceImage(newSrc);
 	});
 
-	$('.accessories .product .image').hover(function() {
-		$(this).parent().toggleClass('hover');
-	});
-
 	// Filters on accessories
 	$('.nav-tabs a').on('click', function() {
 		var parentClass = $(this).parent().attr('class');
@@ -95,6 +92,18 @@ $(document).ready(function() {
 		} else {
 			$('.' + parentClass).parent().show();
 		}
+	});
+
+	$products.on('mouseover', function() {
+		$(this).addClass('hover');
+	});
+
+	$products.find('.info-wrap').on('mouseover', function(e) {
+		e.stopPropagation();
+	});
+
+	$products.on('mouseout', function() {
+		$(this).removeClass('hover');
 	});
 });
 

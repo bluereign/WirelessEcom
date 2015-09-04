@@ -308,7 +308,7 @@ $().ready(function () {
 		
 		$(".confirmReturnSubmit").confirm( {
 			title: "Have Printed the Return Authorization?",
-			text: "Before submitting this return, please confirm you have printed at least 2 copies of the return authorization.",
+			text: "Before submitting this return, please confirm you have printed at least 3 copies of the return authorization.",
 			confirmButton: "Yes, I have printed return authorizations",
 			cancelButton: "Oops, I forgot - Do not submit",
 		    confirmButtonClass: "btn-warning",
@@ -361,13 +361,13 @@ $().ready(function () {
 			<div class="row"/>
 				<div class="col-md-12 returnSteps">
 					<ol id="Steps" class="Steps">
-					<li>Verify you have the items to be returned in hand.</li>
-					<li>Search for the order these items were on.</li>
+					<li>Verify that the customer has their device(s) to be returned in hand.</li>
+					<li>Search for the order containing these items.</li>
 					<li>Click on the correct order number.</li>
 					<li>Select the items to be returned and enter a reason and comment for each.</li>
 					<li>Deactivate the device(s) using the carrier activation portal</li>
 					<li>Generate a Label and get a tracking number from UPS CampusShip</li>
-					<li>Review the Return Summary information and print two copies</li>
+					<li>Review the Return Summary information and print three copies</li>
 					<li>Return submission completed.</li>
 					</ol>					
 				</div>

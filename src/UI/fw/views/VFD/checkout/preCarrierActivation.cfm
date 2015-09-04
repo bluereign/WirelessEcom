@@ -1,6 +1,6 @@
 <cfset GatewayRegistry = application.wirebox.getInstance("PaymentProcessorRegistry")>
 <cfset cardTypes = GatewayRegistry.listPaymentMethods() >
-
+<cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
 <cfset assetPaths = application.wirebox.getInstance("assetPaths")>
 
 <cfoutput>
@@ -10,7 +10,7 @@
 				var h = $j(window).height();
 				var w = $j(window).width();
 				window.open("/CheckoutVFD/carrierActivation", 'carrierActivation', 'width='+(w*.5)+', height='+h+', top=0, left=0,menubar=yes,toolbar=yes,resizable=1,scrollbars=1,personalbar=1');
-				window.location.href = "http://wa2go-test.wirelessadvocates.llc/";
+				window.location.href = "#channelConfig.getWA2GOurl()#";
 				//switch(carrierID){
 				//	case 109: //ATT
 				//		window.open(this.href, 'carrierActivation', 'width='+(w*.5)+', height='+h+', top=0, left=0,menubar=yes,toolbar=yes,resizable=1,scrollbars=1,personalbar=1');

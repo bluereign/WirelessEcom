@@ -1,3 +1,23 @@
+<cfparam name="form.refererURL" default="" />
+
+<cfif form.refererURL is not "">
+	<cfset testurl = replacenocase(form.RefererURL,"%2F","/","ALL") />
+	<cfif listlen(testURL,"/") GE 2>
+		<cfset IntendedURL = listgetat(testurl,2,"/") />
+		<cfset IntendedURLList = "costcodirectdelivery.wasvcs.com,10.7.0.143" />
+		<cfif SERVER_Name is not IntendedURL and listfindnocase(IntendedURLList,IntendedURL) >
+			<cfhttp url="http://#intendedurl#/AsyncListner/PaymentGatewayAsyncListener.cfm" method="post">
+			<cfloop collection="#form#" item="theField">
+				<cfif theField is not "FieldNames">
+					<cfhttpparam name="#theField#" type="FormField" value="#form[theField]#" encoded="true" >
+				</cfif>
+			</cfloop>
+			</cfhttp>
+			<cfoutput>#cfhttp.fileContent#</cfoutput><cfabort/>
+		</cfif>
+	</cfif>	
+</cfif>
+
 <cfset docContent = getHTTPRequestData().content />
 
 <cfset isOrderProcessed = true />

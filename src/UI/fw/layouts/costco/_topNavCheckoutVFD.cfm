@@ -4,7 +4,7 @@
 		<ul id="nav-menu" class="dropdown dropdown-horizontal">
 			<!--- VFD access check MES --->
 			<cfif (structKeyExists(session, "vfd")) and (session.VFD.Access eq true)>
-				<li class="first header"><a class="first header" href="/index.cfm/">&lt; Return to Shopping</a></li>
+				<li class="first header"><a class="first header" href="/mainVFD/homepageVFD">&lt; Return to Shopping</a></li>
 			<cfelse>
 				<li class="first header"><a class="first header" href="/index.cfm/go/cart/do/view/">&lt; Return to Shopping</a></li>
 			</cfif>

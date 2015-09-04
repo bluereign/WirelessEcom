@@ -399,36 +399,35 @@ $j(document).ready(function($j) {
 
 	
 	$j('##btn-contract').on('click', function (e) {
-		$j("[id^=priceblock-]").hide();
-		$j("[id^=addtocart-]").hide();
-		$j("[id^=availability-container-]").hide();
-	  	$j("##priceblock-contract").show();
-	  	$j("##availability-container-nonfinance").show();
-		$j("##addtocart-contract").show();
-		$j(this).addClass("active");
-		$j("[id^=btn-]").removeClass("active");
-		$j(this).addClass("active");
-		
-		$j("##priceBlockHeader-new").trigger("click");
-
+		if(!$j('##btn-contract').hasClass("active")){	
+			$j("[id^=priceblock-]").hide();
+			$j("[id^=addtocart-]").hide();
+			$j("[id^=availability-container-]").hide();
+		  	$j("##priceblock-contract").show();
+		  	$j("##availability-container-nonfinance").show();
+			$j("##addtocart-contract").show();
+			$j("##addtocartfinanceDiv").hide();
+			$j(this).addClass("active");
+			$j("[id^=btn-]").removeClass("active");
+			$j(this).addClass("active");
+			
+			$j("##priceBlockHeader-new").trigger("click");	
+		}
 	 });
 
 	$j('##btn-finance').on('click', function (e) {
-		$j("[id^=priceblock-]").hide();
-		$j("[id^=addtocart-]").hide();
-		$j("[id^=availability-container-]").hide();
-	  	$j("##priceblock-finance").show();
-	  	$j("##availability-container-finance").show();	  	
-		$j("##addtocart-finance").show();
-		$j("[id^=btn-]").removeClass("active");
-		$j(this).addClass("active");
+		if(!$j('##btn-finance').hasClass("active")){
+			$j("[id^=priceblock-]").hide();
+			$j("[id^=addtocart-]").hide();
+			$j("[id^=availability-container-]").hide();
+		  	$j("##priceblock-finance").show();
+		  	$j("##availability-container-finance").show();	  	
+			$j("##addtocartfinanceDiv").show();
+			$j("[id^=btn-]").removeClass("active");
+			$j(this).addClass("active");
 
-
-
-		$j("button[data-activation-type='finance']").first().trigger("click");
-		
-		
-				
+			$j("button[data-activation-type*='finance']").first().trigger("click");
+		}		
 	 });
 	 
 
@@ -453,6 +452,7 @@ $j(document).ready(function($j) {
 		$j("[id^=price-slide-]").slideUp();
 		$j("[id^=priceBlockHeader-]").not(this).removeClass("active");
 		$j("[id^=addtocart-]").hide();
+		$j("[class*='ActionButton']").show();
 		
 		$j(this).toggleClass("active");
 		var actType = $j(this).attr('data-activation-type');
@@ -460,6 +460,7 @@ $j(document).ready(function($j) {
 
 		if ($j(this).hasClass("active")) {
 			$j(this).next('[id^=price-slide-]').slideDown();
+			$j("[class*='ActionButton']").show();
 		};
 
 	 });
@@ -809,7 +810,7 @@ $j(document).ready(function($j) {
 			<div id="priceblock-finance">
 				<!--- Price point not available if zero dollars --->
 				<cfif prc.productData.FinancedMonthlyPrice24 neq 0>
-					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#24" data-activation-type="finance">
+					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#24" data-activation-type="financed-24">
 						<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>24</cfif></div>
 						
 						<cfif prc.productData.CarrierId eq 42>
@@ -823,7 +824,7 @@ $j(document).ready(function($j) {
 							<tr class="border-none"> 
 								<td>
 								<cfif prc.productData.CarrierId eq 42>
-									Retail Price
+									Full Retail Price
 								<cfelse>
 									Regular Price
 								</cfif>
@@ -850,7 +851,7 @@ $j(document).ready(function($j) {
 
 				<!--- Price point not available if zero dollars --->
 				<cfif prc.productData.FinancedMonthlyPrice18 neq 0>
-					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#18" data-activation-type="finance">
+					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#18" data-activation-type="financed-18">
 						<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>18</cfif></div>
 						<div style="float:right;"><span class="priceBlockHeaderSmall">Due Monthly for <cfif prc.productData.CarrierId eq 109>24<cfelse>18</cfif> Months</span> 	#dollarFormat(prc.productData.FinancedMonthlyPrice18)#</div>
 					</button>
@@ -871,7 +872,7 @@ $j(document).ready(function($j) {
 
 				<!--- Price point not available if zero dollars --->
 				<cfif prc.productData.FinancedMonthlyPrice12 neq 0>
-					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#12" data-activation-type="finance">
+					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#12" data-activation-type="financed-12">
 						<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>12</cfif></div>
 						<div style="float:right;"><span class="priceBlockHeaderSmall">Due Monthly for 20 Months</span> #dollarFormat(prc.productData.FinancedMonthlyPrice12)#</div>
 					</button>
@@ -958,7 +959,7 @@ $j(document).ready(function($j) {
 						<cfelseif prc.productData.IsAvailableOnline[prc.productData.currentRow]>
 							Online Only
 						<cfelseif prc.productData.IsAvailableInWarehouse[prc.productData.currentRow]>
-							#prc.textDisplayRenderer.getStoreAliasName()# Only
+							#prc.textDisplayRenderer.getStoreAliasName()# Only 
 						</cfif>
 					</em>
 				</div>
@@ -983,15 +984,35 @@ $j(document).ready(function($j) {
 				<div id="addtocart-nocontract" class="pull-right" style="display:none;">
 					<cfset prc.renderAddToCartArgs.PriceType = 'nocontract' />
 					#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
-				</div>
-						
-				<!---<div id="addtocart-finance" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>addtocart-finance yo
-					<a class="ActionButton learnMoreBtn" href="javascript: return false;" data-toggle="modal" data-target="##financeModal" <cfif hide2yearpricing>style="width:460px;"</cfif>><span><cfif hide2yearpricing>#application.wirebox.getInstance('TextDisplayRenderer').getHide2YearFinancingButtonText()#<cfelse>Learn More</cfif></span></a>
-				</div>--->
-				<div id="addtocart-finance" class="pull-right" style="display:none;">
-					<cfset prc.renderAddToCartArgs.PriceType = 'finance' />
+				</div>	
+				
+				<cfif prc.channelConfig.GetVFDEnabled()>
+				<div id="addtocart-financed-12" class="pull-right" style="display:none;">
+					<cfset prc.renderAddToCartArgs.PriceType = 'financed-12-new-upgrade-addaline' />
 					#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
 				</div>
+				<div id="addtocart-financed-18" class="pull-right" style="display:none;">
+					<cfset prc.renderAddToCartArgs.PriceType = 'financed-18-new-upgrade-addaline' />
+					#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+				</div>
+				<div id="addtocart-financed-24" class="pull-right" style="display:none;">
+					<cfset prc.renderAddToCartArgs.PriceType = 'financed-24-new-upgrade-addaline' />
+					#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+				</div>			
+				
+				<cfelse>
+					<!--<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
+						<a class="ActionButton learnMoreBtn" href="javascript: return false;" data-toggle="modal" data-target="##financeModal" <cfif hide2yearpricing>style="width:460px;"</cfif>><span><cfif hide2yearpricing>#application.wirebox.getInstance('TextDisplayRenderer').getHide2YearFinancingButtonText()#<cfelse>Learn More</cfif></span></a>
+					</div>-->
+					<!---<div id="addtocart-finance" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>addtocart-finance yo
+					<a class="ActionButton learnMoreBtn" href="javascript: return false;" data-toggle="modal" data-target="##financeModal" <cfif hide2yearpricing>style="width:460px;"</cfif>><span><cfif hide2yearpricing>#application.wirebox.getInstance('TextDisplayRenderer').getHide2YearFinancingButtonText()#<cfelse>Learn More</cfif></span></a>
+					</div>--->
+					<div id="addtocart-finance" class="pull-right" style="display:none;">
+						<cfset prc.renderAddToCartArgs.PriceType = 'finance' />
+						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+					</div>
+				</cfif>	
+				
 			</div>
 		</div>
 		

@@ -1,6 +1,6 @@
 <cfoutput>
 		<div class="row"/>		
-			<div class="col-md-12 instructions"><span class="instructionLabel">Instructions:</span> <span class="instructionText">If the customer has returned the device click YES. Otherwise, click NO</span></div>
+			<div class="col-md-12 instructions"><span class="instructionLabel">Instructions:</span> <span class="instructionText">If the customer has the device(s) to be returned in hand, click YES.  Otherwise click NO.</span></div>
 		</div>
 		
 		<div class="row">

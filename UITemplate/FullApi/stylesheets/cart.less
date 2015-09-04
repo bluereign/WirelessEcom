@@ -1,16 +1,12 @@
 .cart {
-	&.main {
-		&,
-		.content {
-			margin-bottom: 0;
-		}
-	}
-
+	&.main,
 	.main-header {
 		margin-bottom: 0;
 	}
 
 	.content {
+		margin-bottom: 20px;
+
 		form {
 			padding: 0;
 
@@ -87,8 +83,14 @@
 		}
 
 		.item {
+			img {
+				display: block;
+				margin: 0 auto;
+			}
+
 			a {
 				margin-top: 5px;
+				text-align: center;
 			}
 		}
 
@@ -136,6 +138,7 @@
 	.sidebar {
 		border: 1px solid @gray-light;
 		.border-radius(5px);
+		margin-bottom: 15px;
 
 		h4 {
 			border-bottom: 1px solid @gray-light;
@@ -153,12 +156,22 @@
 
 		ul {
 			list-style: none;
+			margin: 0;
 			padding: 0;
 
 			li {
 				background: @gray-lightest;
 				.text-size(12);
 				margin: 10px 0;
+
+				&:first-child {
+					margin-top: 0;
+				}
+
+				&:last-child {
+					.border-bottom-radius(5px);
+					margin-bottom: 0;
+				}
 
 				a {
 					color: #157efb;
@@ -170,7 +183,7 @@
 	}
 
 	.right {
-		width: 300px;
+		width: 305px;
 	}
 
 	.plan-details {
@@ -178,14 +191,20 @@
 		text-transform: uppercase;
 
 		&:after {
-			content:'▼' ;
+			width: 0;
+			height: 0;
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			border-bottom: 8px solid @href;
+			content: ' ';
 			display:inline-block;
 			margin: 10px 0 0 10px;
-			width:15px;
 		}
 
 		&.collapsed:after {
-			content:'▲' ;
+			border-bottom: none;
+			border-top: 8px solid @href;
+			content: ' ';
 			margin-top: 0;
 		}
 	}
@@ -196,9 +215,7 @@
 	border: 1px solid @gray-light;
 	.border-radius(5px);
 	.gray-gradient;
-	padding: 10px;
-	margin: 30px 0 15px 0;
-	text-align: right;
+	padding: 15px 10px;
 }
 
 .summary {

@@ -1,4 +1,5 @@
 <cfparam name="request.hasWirelessItemBeenAdded" type="boolean" default="false">
+<cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
 
 <cf_cartbody mode="edit" EnableCartReview="false">
 	<cfoutput>
@@ -14,7 +15,11 @@
 			Your cart is currently empty.
 			<br /><br /><br />
 			<span class="actionButton">
-				<a href="/index.cfm">Continue Shopping</a>
+				<cfif !channelConfig.getVfdEnabled()>
+					<a href="/index.cfm">Continue Shopping</a>
+				<cfelse>
+					<a href="/mainVFD/homepageVFD">Continue Shopping</a>
+				</cfif>
 			</span>
 		</div>
 	</cfoutput>

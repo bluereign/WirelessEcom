@@ -137,8 +137,14 @@
 					<h2>Direct Delivery News:</h2>
 					<hr size="2" Color="##0a94d6">
 					<div style="overflow: scroll; height: 200px;">
-						<p>#channelConfig.getScenarioDescription()# announcements will be available here.</p>
-
+						<!---<p>#channelConfig.getScenarioDescription()# announcements will be available here.</p>--->
+						<!---<cfhttp url='http://#CGI.HTTP_HOST#/Content-asp/ShowContent.aspx?l=e6d68f7a-1b6b-40fe-b287-d1af044b3dbb'>--->
+						<cfif ChannelConfig.getEnvironment() neq 'production'>					
+							<cfhttp url='http://10.7.0.80/Content-asp/ShowContent.aspx?t=2ebec2f9-b1fa-4e06-a138-112256acaa05'>
+						<cfelse>
+							<cfhttp url='http://10.7.0.144/Content-asp/ShowContent.aspx?t=2ebec2f9-b1fa-4e06-a138-112256acaa05'>
+						</cfif>
+						<cfoutput>#cfhttp.filecontent#</cfoutput>
 					</div>
 				</td>
 			</tr>

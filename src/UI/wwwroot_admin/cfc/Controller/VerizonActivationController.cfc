@@ -30,7 +30,8 @@
 			var isPortInSucessful = true;
 			var isActivationSuccessful = true;
 			var featureLists = [];
-
+			var contractIndex = 0;
+			
 			session.processMessages = [];
 
 			//application.model.Util.cfdump( variables.instance.IsDeviceInfoFinal );
@@ -357,8 +358,15 @@
 
 
 				pricePlanInfo = CreateObject('component', 'cfc.model.carrierservice.Verizon.common.PricePlanInfo').init();
-				pricePlanInfo.setContractId( pricePlanLookupReponse.MtnInfoList[1].PlanInfoList[1].AvailableContracts[1].ID );
-				pricePlanInfo.setContractDescription( pricePlanLookupReponse.MtnInfoList[1].PlanInfoList[1].AvailableContracts[1].Description );				
+				for (contractIndex=1; contractIndex LTE arrayLen(pricePlanLookupReponse.MtnInfoList[1].PlanInfoList[1].AvailableContracts); contractIndex=contractIndex+1) {
+					if (pricePlanLookupReponse.MtnInfoList[1].PlanInfoList[1].AvailableContracts[contractIndex].Description is "24 Months") break;
+				}
+				if (contractIndex gt arrayLen(pricePlanLookupReponse.MtnInfoList[1].PlanInfoList[1].AvailableContracts) ) {
+					ArrayAppend( session.processMessages, 'Activation error - ' & "2-year contract not available for this device" );
+					return session.processMessages;					
+				}
+				pricePlanInfo.setContractId( pricePlanLookupReponse.MtnInfoList[1].PlanInfoList[1].AvailableContracts[contractIndex].ID );
+				pricePlanInfo.setContractDescription( pricePlanLookupReponse.MtnInfoList[1].PlanInfoList[1].AvailableContracts[contractIndex].Description );				
 				
 				pricePlanInfo.setPlanList( planList );
 				

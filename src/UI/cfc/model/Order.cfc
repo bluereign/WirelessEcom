@@ -544,7 +544,7 @@
 									, 	<cfqueryparam value="#trim(this.getCampaignId())#" cfsqltype="cf_sql_varchar" null="#!this.getCampaignId()#" />
 									,	<cfqueryparam value="#trim(this.getSmsOptIn())#" cfsqltype="cf_sql_bit"  null="#!len(this.getSmsOptIn())#"/>
 									, 	<cfqueryparam value="#trim(this.getScenarioId())#" cfsqltype="cf_sql_varchar" null="#!this.getScenarioId()#" />
-									, 	<cfqueryparam value="#trim(this.getKioskId())#" cfsqltype="cf_sql_varchar" null="#!this.getKioskId()#" />
+									, 	<cfqueryparam value="#trim(this.getKioskId())#" cfsqltype="cf_sql_varchar" null="#!len(trim(this.getKioskId()))#" />
 									, 	<cfqueryparam value="#trim(this.getAssociateId())#" cfsqltype="cf_sql_varchar" null="#!this.getAssociateId()#" />
 																		
 						)
@@ -725,7 +725,7 @@
 								,	CampaignId						=	<cfqueryparam value="#trim(this.getCampaignId())#" cfsqltype="cf_sql_integer" null="#!this.getCampaignId()#" />
 								,	SmsOptIn						=	<cfqueryparam value="#trim(this.getSmsOptIn())#" cfsqltype="cf_sql_bit"  null="#!len(this.getSmsOptIn())#"/>
 								,	ScenarioId						=	<cfqueryparam value="#trim(this.getScenarioId())#" cfsqltype="cf_sql_integer" null="#!this.getScenarioId()#" />
-								,	KioskId							=	<cfqueryparam value="#trim(this.getKioskId())#" cfsqltype="cf_sql_integer" null="#!this.getKioskId()#" />
+								,	KioskId							=	<cfqueryparam value="#trim(this.getKioskId())#" cfsqltype="cf_sql_varchar" null="#!len(trim(this.getKioskId()))#" />
 								,	AssociateId						=	<cfqueryparam value="#trim(this.getAssociateId())#" cfsqltype="cf_sql_integer" null="#!this.getAssociateId()#" />
 						WHERE	OrderId								=	<cfqueryparam cfsqltype="cf_sql_integer" value="#this.getOrderId()#" />
 					</cfquery>
@@ -1079,9 +1079,11 @@
 
 	<cffunction name="hardReserveAllHardGoods" access="public" output="false" returntype="boolean">
 		<cfset var local = structNew()>
+		<cfset var channelConfig = application.wirebox.getInstance("ChannelConfig") >
 		<cfset local.success = true>
 		<cfset local.oCatalog = createObject('component','cfc.model.Catalog').init()>
-
+		
+		
 <!--- 		<cftry> --->
 			<!--- first, get all the hard goods that exist in this order --->
 			<cfquery name="local.qGetOrderHardGoods" datasource="#application.dsn.wirelessAdvocates#">
@@ -1124,7 +1126,7 @@
 			<!--- when the calls above have completed, we'll have made database-side changes to the order, so let's reload the order to reflect the database changes --->
 			<cfset this.load(this.getOrderId())>	
 			
-	
+		<cfif !channelConfig.getVFDEnabled()>
 			<!--- Apple Care related work --->
 			<cfset local.appleCare = application.wirebox.getInstance("AppleCare") />
 			<cfif local.appleCare.isAppleCareOrder(this.getOrderId())>
@@ -1205,7 +1207,7 @@
 				</cfloop>			
 			</cfif>	
 			<!--- end of Apple Care related work --->
-				
+		</cfif>	
 		<cfreturn local.success>
 	</cffunction>
 
@@ -1322,6 +1324,55 @@
 		<cfreturn qOrders />
 	</cffunction>
 
+	<cffunction name="getDirectDeliveryOrdersBySearchCriteria" output="false" access="public" returntype="query">
+		<cfargument name="searchCriteria" type="struct" required="true" />
+		<cfset var channelConfig = application.wirebox.getInstance("ChannelConfig") />
+		<cfset var qOrders = '' />
+
+		<cfquery name="qOrders" datasource="#application.dsn.wirelessAdvocates#" maxrows="50">
+			SELECT o.orderid, wl.IMEI, wa.FirstName, wa.LastName, wl.CurrentMDN, o.orderDate, ddr.ddReturnId, ddr.ReturnDate
+			FROM [salesorder].[order] o
+			INNER JOIN [salesorder].[orderdetail] od ON o.orderid = od.orderid
+			INNER JOIN [salesorder].[wirelessAccount] wa ON o.orderid = wa.orderid
+			LEFT OUTER JOIN [salesorder].[wirelessLine] wl ON od.orderDetailId = wl.orderDetailId
+			LEFT OUTER JOIN [salesorder].[ddreturn] ddr ON o.orderid = ddr.orderid
+			WHERE o.ScenarioId = 2
+				<cfif channelConfig.getDdAdminReturnFilterEnabled()>
+					and o.status = 3 and o.gersStatus = 3 and o.GERSRefNum is not null
+				</cfif>
+				<cfif searchCriteria.orderId is not "">
+					AND o.orderId = <cfqueryparam cfsqltype="CF_SQL_INTEGER" value="#searchCriteria.orderId#" >
+				</cfif>
+				<cfif searchCriteria.IMEI is not "">
+					AND wl.IMEI = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchCriteria.IMEI#" maxLength="25" >
+				</cfif>
+				<cfif searchCriteria.wirelessPhone is not "">
+					AND wl.currentMDN = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchCriteria.IMEI#" maxLength="25" >
+				</cfif>
+				
+				<!--- Search for First/Last name combinations --->
+				<cfif searchCriteria.firstName is not "" AND searchCriteria.lastName is not "">
+					AND (wa.firstName like <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchCriteria.firstName#%" >
+					AND wa.lastName like <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchCriteria.lastName#%" >)
+				<cfelseif searchCriteria.firstName is not "">
+					AND wa.firstName like <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchCriteria.firstName#%" >
+				<cfelseif searchCriteria.lastName is not "">
+					AND wa.lastName like <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchCriteria.lastName#%" >
+				</cfif>
+				
+				<!---Search based on date range --->
+				<cfif searchCriteria.orderDateFrom is not "" AND searchCriteria.orderDateTo is not "">
+					AND o.orderdate between '#searchCriteria.orderDateFrom#' and DATEADD(day,1,'#searchCriteria.orderDateTo#')
+				<cfelseif searchCriteria.orderDateFrom is not "">
+					AND o.orderDate >=  '#searchCriteria.orderDateFrom#'
+				<cfelseif searchCriteria.orderDateTo is not "">
+					AND o.orderDate <= DATEADD(day,1,'#searchCriteria.orderDateTo#')
+				</cfif>			
+			ORDER BY	o.OrderId, ddREturnId, ReturnDate, IMEI
+		</cfquery>
+
+		<cfreturn qOrders />
+	</cffunction>
 
 	<cffunction name="getOrderActivationLines"  output="false" access="public" returntype="query">
 		<cfargument name="orderId" type="numeric" required="true" />
@@ -1574,6 +1625,51 @@
 		</cfquery>
 
 		<cfreturn qActivations />
+	</cffunction>
+
+	<cffunction name="getPendingDDReturns" access="public" returntype="query" output="false">
+		<cfset var qDDReturns = 0 />
+
+		<cfquery name="qDDReturns" datasource="#application.dsn.wirelessAdvocates#">
+				SELECT distinct o.OrderId, o.OrderDate, o.Status, o.GERSStatus, CASE o.Status
+						WHEN 0 THEN 'Pending'
+						WHEN 1 THEN 'Submitted'
+						WHEN 2 THEN 'Order Placed'
+						WHEN 3 THEN
+							CASE o.GERSStatus
+								WHEN 2 THEN 'Packing'
+								WHEN 3 THEN 'Shipped'
+							ELSE 'Processing'
+							END
+						WHEN 4 THEN 'Cancelled'
+						ELSE ''
+						END StatusName, ba.FirstName AS BillingFirstName, ba.LastName AS BillingLastName,
+							u.UserName, u.FirstName AS AccountFirstName, u.LastName AS AccountLastName,
+							CASE
+							WHEN wa.ActivationStatus IS NULL THEN 'Ready'
+							WHEN wa.ActivationStatus = 0 THEN 'Ready'
+							WHEN wa.ActivationStatus = 1 THEN 'Requested'
+							WHEN wa.ActivationStatus = 2 THEN 'Success'
+							WHEN wa.ActivationStatus = 3 THEN 'Partial Success'
+							WHEN wa.ActivationStatus = 4 THEN 'Failure'
+							WHEN wa.ActivationStatus = 5 THEN 'Error'
+							WHEN wa.ActivationStatus = 6 THEN 'Manual'
+							WHEN wa.ActivationStatus = 7 THEN 'Canceled'
+						ELSE ''
+						END ActivationStatusName,
+						ISNULL(c.companyName, 'N/A') AS companyName, o.activationType			
+			FROM [salesOrder].[order] o
+			INNER JOIN [salesorder].[orderdetail] AS od ON o.orderid = od.orderid
+			INNER JOIN salesorder.wirelessline AS wl WITH (NOLOCK) ON od.orderdetailid = wl.orderdetailid
+			INNER JOIN	salesorder.Address AS ba WITH (NOLOCK) ON ba.AddressGuid = o.BillAddressGuid
+			INNER JOIN	salesorder.WirelessAccount AS wa WITH (NOLOCK) ON wa.OrderId = o.OrderId
+			INNER JOIN salesorder.DDReturnItem ddri ON ddri.orderDetailId = od.orderDetailId
+			INNER JOIN	dbo.Users AS u WITH (NOLOCK) ON u.User_ID = o.UserId
+			LEFT JOIN	catalog.company AS c WITH (NOLOCK) ON c.carrierId = o.carrierId
+				WHERE od.RMANumber is null or len(od.RMANumber) = 0
+			ORDER BY OrderId desc		</cfquery>
+
+		<cfreturn qDDReturns />
 	</cffunction>
 
 
@@ -1842,6 +1938,7 @@
 	</cffunction>
 
 	<cffunction name="getOrderDetail" access="public" returntype="cfc.model.OrderDetail[]" output="false">
+		<cfargument name="ddReturnSort" type="boolean" required="false" default="false"/>
 		<!--- returns a list of Order --->
 		<cfset var local = structNew()>
 		<!--- query all orders --->
@@ -1850,15 +1947,18 @@
             from salesorder.OrderDetail
             where
             	OrderId = <cfqueryparam cfsqltype="cf_sql_integer" value="#this.getOrderId()#">
+			<cfif arguments.ddReturnSort>
+				ORDER BY groupNumber, orderDetailId
+			</cfif>
         </cfquery>
 
         <cfset local.orderDetails = arrayNew(1)>
 
-        <cfset counter = 1>
+        <cfset local.counter = 1>
         <cfloop query="local.qGetOrderDetails">
-        	<cfset local.orderDetails[counter] = createObject("component","cfc.model.OrderDetail").init()>
-			<cfset local.orderDetails[counter].load(local.qGetOrderDetails.OrderDetailId)>
-			<cfset counter = counter + 1>
+        	<cfset local.orderDetails[local.counter] = createObject("component","cfc.model.OrderDetail").init()>
+			<cfset local.orderDetails[local.counter].load(local.qGetOrderDetails.OrderDetailId)>
+			<cfset local.counter = local.counter + 1>
         </cfloop>
 
         <cfreturn local.OrderDetails>
