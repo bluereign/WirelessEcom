@@ -55,7 +55,7 @@
 						<div id="search">
 							<div>
 								<cfif isDefined("session.scenario.scenarioType") and session.scenario.scenarioType is "VFD">
-									<a href="/VFD/homePage" id="homePageLink">Home</a>
+									<a href="/mainVFD/homepageVFD" id="homePageLink">Home</a>
 								<cfelse>
 									<cfif not session.userId>
 										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a>

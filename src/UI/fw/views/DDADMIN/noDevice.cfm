@@ -2,7 +2,7 @@
 	
 <cfoutput>
 		<div class="row"/>		
-			<div class="col-md-12 instructions">Instructions: If the customer has not returned the device(s) then a return transaction cannot be performed at this time.</div>
+			<div class="col-md-12 instructions">Instructions: If the customer does not have the device(s) in hand, a return transaction cannot be performed at this time.</div>
 		</div>
 		
 		<div class="row">

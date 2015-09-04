@@ -1,5 +1,6 @@
 <cfcomponent output="false" displayname="Cart">
-
+	<cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
+	
 	<cffunction name="init" access="public" returntype="Cart" output="false">
 		<!--- Remove this when this component is added to CS --->
         <cfset setAssetPaths( application.wirebox.getInstance("assetPaths") ) />
@@ -206,7 +207,11 @@
 										<a href="##" onclick="var ok=confirm('Are you sure you want to clear your cart?'); if(ok){ location.href='/index.cfm/go/cart/do/clearCart/blnDialog/0/'; }">Clear your Cart</a>
 									</span>
 									<span class="actionButtonLow">
-										<a href="/index.cfm">Continue Shopping</a>
+										<cfif !channelConfig.getVfdEnabled()>
+											<a href="/index.cfm">Continue Shopping</a>
+										<cfelse>
+											<a href="/mainVFD/homepageVFD">Continue Shopping</a>
+										</cfif>
 									</span>
 								</div>
 								<div class="controlsRight" style="float:right;">

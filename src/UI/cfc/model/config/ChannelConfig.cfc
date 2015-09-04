@@ -54,6 +54,8 @@
 		<cfargument name="VfdIV" type="string" default="false" required="false" />
 		<cfargument name="ScenarioDescription" type="string" default="false" required="false" />		
 		<cfargument name="TMORedirectEnabled" type="boolean" default="true" required="false" />
+		<cfargument name="PresaleVerbiage" type="string" default="" required="false" />
+		<cfargument name="WA2GOurl" type="string" default="" required="false" />
 		
 		<cfscript>
 			setEnvironment( arguments.Environment );
@@ -113,6 +115,8 @@
             setVfdIV( arguments.VfdIV );
             setScenarioDescription( arguments.ScenarioDescription );
             setTMORedirectEnabled( arguments.TmoRedirectEnabled);
+            setPresaleVerbiage( arguments.PresaleVerbiage);
+            setWA2GOurl( arguments.WA2GOurl);
         </cfscript>
 
     	<cfreturn this />
@@ -616,6 +620,22 @@
     <cffunction name="setScenarioDescription" access="public" returntype="void" output="false">
     	<cfargument name="ScenarioDescription" type="string" required="true" />
     	<cfset variables.instance.ScenarioDescription = arguments.ScenarioDescription />
+    </cffunction>
+    
+     <cffunction name="getPresaleVerbiage" access="public" returntype="string" output="false">
+    	<cfreturn variables.instance.PresaleVerbiage />
+    </cffunction>
+    <cffunction name="setPresaleVerbiage" access="public" returntype="void" output="false">
+    	<cfargument name="PresaleVerbiage" type="string" required="true" />
+    	<cfset variables.instance.PresaleVerbiage = arguments.PresaleVerbiage />
+    </cffunction>
+    
+     <cffunction name="getWA2GOurl" access="public" returntype="string" output="false">
+    	<cfreturn variables.instance.WA2GOurl />
+    </cffunction>
+    <cffunction name="setWA2GOurl" access="public" returntype="void" output="false">
+    	<cfargument name="WA2GOurl" type="string" required="true" />
+    	<cfset variables.instance.WA2GOurl = arguments.WA2GOurl />
     </cffunction>
  
     <cffunction name="throw" access="public" returntype="void" output="false" hint="Util function to mimic throw in CF8">

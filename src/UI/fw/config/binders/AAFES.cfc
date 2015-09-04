@@ -52,7 +52,7 @@
 			
 		// Channel config settings
 		channelConfigArgs = {
-			VfdEnabled = true,
+			VfdEnabled = false,
 			CarrierTwoYearRemoval = "109|6/1/2015",
 			VFDMkey = '2pypk0NTjimlDmKCQhNF9w==',
 			VFDIV = 'f+hYUyjprHt/6FhTKOmsew==',
@@ -131,7 +131,9 @@
 			DisplayPrepaidDevices = true,
 			DirectToRedesignDetailsPage = true,	//Temp for 6.5.0 release
 			OfferFinancedDevices = true,		
-			DefaultProductSort = 'Popular'			
+			DefaultProductSort = 'Popular',
+			PresaleVerbiage = 'Presale',
+			WA2GOurl = 'http://wa2gopilot.wirelessadvocates.llc/'			
 			// SearchIndexMethod = "GetAll" // method within cfc.model.product.cfm to use when creating the solr search index. GetAll=All Products. GetSearchable=excludes out of stock
 		};
 		
@@ -222,6 +224,7 @@
 		viewPaths["content.HTCOneM8"] = "/views/content/common/dsp_HTCOneM8.cfm";
 		viewPaths["content.ATTNext"] = "/views/content/common/dsp_ATTNext.cfm";
 		viewPaths["content.LGG3"] = "/views/content/common/dsp_LGG3.cfm";
+		viewPaths["content.iPhone"] = "/views/content/common/dsp_iPhone.cfm";
 		viewPaths["content.FisherHouseFoundation"] = "/views/content/aafes/landingpages/dsp_FisherHouseFoundation.cfm";
 		// emailTemplatePaths
 		viewPaths["emailTemplate.forgotPassword"] = "/views/emailTemplate/aafes/ForgotPassword.cfm";

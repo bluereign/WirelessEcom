@@ -1,12 +1,13 @@
 div#landingPageCarrierBanner
 {
-	border: 0px solid #000;
-	width: 729px;
+	border: 1px solid #efefef;
+	width: 727px;
 	height: 80px;
 	background-image: url('/Marketing/landingPage/images/Carrier_logos_banner_header_2.png');
 	background-repeat: no-repeat;
-	padding-bottom:7px;
+	margin-bottom:7px;
 	position: relative;
+	border-radius:3px;
 }
 
 

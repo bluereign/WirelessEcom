@@ -1,7 +1,13 @@
+<cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
+
 <cfoutput>
 	<div id="nav-menu-container">
 		<ul id="nav-menu" class="dropdown dropdown-horizontal">
-			<li class="first header"><a class="first header" href="/index.cfm/go/cart/do/view/">&lt; Return to Shopping</a></li>
+			<cfif !channelConfig.getVfdEnabled()>
+				<li class="first header"><a class="first header" href="/index.cfm/go/cart/do/view/">&lt; Return to Shopping</a></li>
+			<cfelse>
+				<li class="first header"><a class="first header" href="/mainVFD/homepageVFD">&lt; Return to Shopping</a></li>
+			</cfif>
 			<cfif not session.UserAuth.isLoggedIn()>
 				<cfset loginCallBack = '/index.cfm' & cgi.path_info />
 				<cfset loginCallBack = replaceNoCase(variables.loginCallBack, '/', '~', 'all') />

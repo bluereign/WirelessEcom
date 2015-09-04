@@ -92,6 +92,12 @@
 			<pattern>^10\.7\.0\.141$</pattern>
 			<pattern>^test\.aafesmobile\.com</pattern>
 			<pattern>^test\.masterOMT\.wa</pattern>
+			<pattern>^Costco\.ecom\-dev\-test\-1\.enterprise\.corp</pattern>
+		    <pattern>^Aafes\.Ecom-dev-test-1\.enterprise\.corp</pattern>
+		    <pattern>^Pagemaster\.Ecom-dev-test-1\.enterprise\.corp</pattern>
+		    <pattern>^CostcoVfd\.Ecom-dev-test-1\.enterprise\.corp</pattern>
+		    <pattern>^AafesVfd\.Ecom-dev-test-1\.enterprise\.corp</pattern>
+		    <pattern>^PagemasterVfd\.Ecom-dev-test-1\.enterprise\.corp</pattern>
 		</patterns>
 		<config>
 

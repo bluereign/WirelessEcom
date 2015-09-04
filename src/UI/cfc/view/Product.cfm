@@ -374,7 +374,7 @@
 									<cfswitch expression="#allocation.getInventoryTypeDescription()#">
 										<cfcase value="Pre-Sale">
 											<!---Pre-Sale: expected release date #dateformat(allocation.getReleaseDate(),"mm/dd/yyyy")#--->
-											<div class="imagePromotion">PRESALE</div>
+											<div class="imagePromotion">#channelConfig.getPresaleVerbiage()#</div>
 										</cfcase>
 										<cfcase value="Backorder">								
 											<!---<div class="imagePromotion"><!---BACKORDERED---></div>--->
