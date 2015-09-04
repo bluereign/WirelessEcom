@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<TestCase name="vzwAddLineToExistingPlan" browser="ie" baseUrl="http://Costco.Ecom-dev-test-1.enterprise.corp" timeoutHalfSeconds="20" activateDevice="false">
+  <Admin omtUsername="jcardon@wirelessadvocates.com" omtPassword="jcardon1">
+    <Line imei="" sim="" removeLine="false" />
+    <Database serverName="10.7.0.22" databaseName="COSTCO.TEST" username="" password="" />
+  </Admin>
+  <CustomerInfo last4Ssn="6400" accountPassword="jcardon1">
+    <Name firstName="Test" lastName="Script" />
+    <Home streetAddress="134 Pine St." city="Abilene" state="Texas" zipCode="79601" />
+    <Contact mobileNumber="6238109765" email="jcardon@wirelessadvocates.com" />
+    <CreditCard cardNumber="4005554444444403" expireMonth="12" expireYear="15" cvv="123" />
+  </CustomerInfo>
+  <Device id="10239" name="samsung-galaxy-s-4-16gb-black-mist" />
+  <Carrier zipCode="85387" password="HELLO" />
+</TestCase>

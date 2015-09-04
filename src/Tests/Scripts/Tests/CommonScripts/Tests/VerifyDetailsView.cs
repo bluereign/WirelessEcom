@@ -25,7 +25,7 @@ namespace SeleniumTests
         [TestCleanup]
         public void TeardownTest()
         {
-            Utilities.Log("+++ End Test", false);
+            Utilities.Log("+++ End Test");
             try
             {
                 Globals._Driver.Quit();
@@ -41,7 +41,7 @@ namespace SeleniumTests
         [TestMethod]
         public void TheVerifyDetailsViewTest()
         {
-            Globals._Driver.Navigate().GoToUrl(Globals._BaseURL);
+            Globals._Driver.Navigate().GoToUrl(Globals._BaseURL + "/index.cfm/go/shop/do/browsePhones");
 
             // Get the string of the text for the phone inside the top-left container
             string expectedString = Globals._Driver.FindElement(By.CssSelector("li.prodItem")).Text;

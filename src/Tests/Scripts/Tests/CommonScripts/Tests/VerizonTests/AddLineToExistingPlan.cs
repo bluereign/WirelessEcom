@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SeleniumTests
 {
     [TestClass]
-    public class NewMoreEverythingActivation
+    public class AddLineToExistingPlan
     {
         #region SetupTest
         [TestInitialize]
@@ -17,7 +14,7 @@ namespace SeleniumTests
             /* ==================================================================
              * ==   Must get the settings file before generating the log file. ==
              * ================================================================== */
-            Utilities.GetSettings("D:\\source\\WA_Costco\\src\\Tests\\Scripts\\Tests\\Collateral\\vzwMoreEverythingActivation_settings.xml");
+            Utilities.GetSettings("D:\\source\\WA_Costco\\src\\Tests\\Scripts\\Tests\\Collateral\\vzwAddLineToExistingPlan_settings.xml");
             Utilities.Log("+++ Begin test", true);
             Globals._Driver = Utilities.InitializeDriver();
             Globals._VerificationErrors = new StringBuilder();
@@ -39,25 +36,22 @@ namespace SeleniumTests
             Assert.AreEqual("", Globals._VerificationErrors.ToString());
         }
         #endregion
-        #region VzwNewMoreEverythingActivation
+        #region VzwAddLineToExistingPlan
         [TestMethod]
-        public void VzwNewMoreEverythingActivation()
+        public void VzwAddLineToExistingPlan()
         {
             // Navigate to the site
             Actors.NavigateToSite(Globals._BaseURL + "/index.cfm/go/shop/do/browsePhones");
 
-            // Select device
-            Actors.ClearCart();
-            Actors.SelectPhone(Globals._DeviceId, Globals._DeviceName);
+            // Select phone
+            if (!Actors.SelectPhone(Globals._DeviceId, Globals._DeviceName))
+                Actors.ClearCart();
 
-            // Add phone to cart
-            Actors.AddDeviceToCart(Globals._CustomerZipCode, Actors._AccountType.newAccount);
-
-            // Service plan
-            Actors.ChooseServicePlan(Actors._VerizonServicePlans.vzwMedium3GB);
+            // Cart -- zip code
+            Actors.AddDeviceToCart(Globals._CustomerZipCode, Actors._AccountType.addNewDeviceToExistingAccountFamilySharedPlan);
 
             // Cart - services
-            Actors.SelectDeviceServices(Actors._Services.vzwRequiredServiceFor3GAnd4GSmartphones);
+            Actors.SelectDeviceServices(Actors._Services.vzwMoreEverythingSmartphoneMonthlyLineAccess);
 
             // Select protection plan
             Actors.SelectProtectionPlan(Actors._ProtectionPlanType.none);
@@ -69,12 +63,16 @@ namespace SeleniumTests
             Actors.ReviewCart();
             Actors.ProceedToCheckout();
 
+            // Checkout
+            Actors.VerizonAccountLookup(Globals._CustomerMobileNumber, Globals._CustomerLast4Ssn, Globals._CarrierZipCode, 
+                Globals._CarrierPassword);
+
             // Keep current number
             Actors.ObtainNewMobileNumber();
 
             // Billing and Shipping
             Actors.BillingAndShipping(Globals._CustomerEmail, Globals._CustomerAccountPassword, Globals._CustomerFirstName,
-                Globals._CustomerLastName, Globals._CustomerStreetAddress, Globals._CustomerCity, Globals._CustomerState,
+                Globals._CustomerLastName, Globals._CustomerStreetAddress, Globals._CustomerCity, Globals._CustomerState, 
                 Globals._CustomerZipCode);
 
             // Carrier Application
@@ -88,9 +86,9 @@ namespace SeleniumTests
 
             // Cardholder Information
             Actors.ReviewPayment(Globals._CustomerFirstName + " " + Globals._CustomerLastName, Globals._CustomerStreetAddress,
-                Globals._CustomerCity, Globals._CustomerState, Globals._CustomerZipCode, Globals._CustomerMobileNumber,
+                Globals._CustomerCity, Globals._CustomerState, Globals._CustomerZipCode, Globals._CustomerMobileNumber, 
                 Globals._CustomerEmail);
-            Actors.CardholderInfo(Globals._CustomerCreditCard, Globals._CustomerCcExpirationMonth, Globals._CustomerCcExpirationYear,
+            Actors.CardholderInfo(Globals._CustomerCreditCard, Globals._CustomerCcExpirationMonth, Globals._CustomerCcExpirationYear, 
                 Globals._CustomerCcCvv);
 
             // Submit order
@@ -100,7 +98,7 @@ namespace SeleniumTests
             if (Globals._Driver.Title.Contains("Certificate Error"))
                 Actors.CertRecovery();
 
-            // Log the order number
+            // Get the order number and log it
             string orderNumber = Utilities.GetOrderNumber();
 
             // Activate the line in OMT

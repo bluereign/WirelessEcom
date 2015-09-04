@@ -24,7 +24,7 @@ namespace SeleniumTests
         [TestCleanup]
         public void TeardownTest()
         {
-            Utilities.Log("+++ End Test", false);
+            Utilities.Log("+++ End Test");
             try
             {
                 Globals._Driver.Quit();
