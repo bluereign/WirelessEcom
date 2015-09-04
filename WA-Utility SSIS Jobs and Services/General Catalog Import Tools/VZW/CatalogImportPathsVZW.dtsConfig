@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<DTSConfiguration>
-	<Configuration ConfiguredType="Property" Path="\Package.Variables[User::IncomingCatalogFolder].Properties[Value]" ValueType="String">
-		<ConfiguredValue>C:\Users\Public\Documents\IncomingCarrierCatalogs\VZW</ConfiguredValue>
-	</Configuration>
-	<Configuration ConfiguredType="Property" Path="\Package.Variables[User::RawFileDirectory].Properties[Value]" ValueType="String">
-		<ConfiguredValue>C:\Program Files\Microsoft SQL Server\100\DTS\Packages\General Catalog Import Tools\zRawFiles</ConfiguredValue>
-	</Configuration>
-</DTSConfiguration>
