@@ -1,9 +1,11 @@
 <cfcomponent displayname="ATT Carrier Response" hint="Contains response from carrier info" output="false" extends="fw.model.CarrierApi.CarrierResponse">
 
+
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.att.AttCarrierResponse">
 		
 		<cfset super.init() />
-		
+		<cfset variables.instance.carrierId = 109 />
+		<cfset variables.instance.carrierName = "AT&T" />
 		<cfreturn this />
 		
 	</cffunction>
@@ -20,9 +22,9 @@
 	<cffunction name="getActiveLines" access="public" returnType="numeric">
 		<cfset var resp = getResponse() />
 		<cfif isdefined("resp.account.activeLines") and isNumeric(resp.account.activeLines) >
-			<cfreturn getResponse().account.activeLines />
+			<cfreturn resp.account.activeLines />
 		<cfelse>
-			<cfreturn 0 />
+			<cfreturn -1 />
 		</cfif>
 	</cffunction>
 	
@@ -38,6 +40,34 @@
 		<cfset address.setZipCodeExtension(rawAddress.zip.zipExtension) />
 		<cfreturn address />
 	</cffunction>	
+	
+	<cffunction name="getCustomerEmail" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isDefined("resp.account.customer.emailAddress")>
+			<cfreturn resp.account.customer.emailAddress />
+		<cfelse>
+			<cfreturn "n/a" />
+		</cfif>
+	</cffunction>
+	
+	<cffunction name="getCustomerFirstName" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isDefined("resp.account.customer.contact.FirstName")>
+			<cfreturn resp.account.customer.contact.FirstName />
+		<cfelse>
+			<cfreturn "n/a" />
+		</cfif>
+	</cffunction>
+
+	<cffunction name="getCustomerLastName" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isDefined("resp.account.customer.contact.LastName")>
+			<cfreturn resp.account.customer.contact.LastName />
+		<cfelse>
+			<cfreturn "n/a" />
+		</cfif>
+	</cffunction>
+
 	
 	<cffunction name="getSubscribers" access="public" returnType="array">
 		<cfset var local = {} />

@@ -3,7 +3,8 @@
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.Verizon.VzwCarrierResponse">
 		
 		<cfset super.init() />
-		
+		<cfset variables.instance.carrierId = 42 />
+		<cfset variables.instance.carrierName = "Verizon" />
 		<cfreturn this />
 		
 	</cffunction>
@@ -17,6 +18,42 @@
 		</cfif>
 	</cffunction>
 	
+	<cffunction name="getActiveLines" access="public" returnType="numeric">
+		<cfset var resp = getResponse() />
+		<cfif isdefined("resp.CustomerAccount.activeLines") and isNumeric(resp.CustomerAccount.activeLines) >
+			<cfreturn resp.CustomerAccount.activeLines />
+		<cfelse>
+			<cfreturn -1 />
+		</cfif>
+	</cffunction>
+	
+	<cffunction name="getCustomerEmail" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isDefined("resp.CustomerAccount.email")>
+			<cfreturn #resp.customeraccount.email#/>
+		<cfelse>
+			<cfreturn "n/a" />
+		</cfif>
+	</cffunction>
+	
+	<cffunction name="getCustomerFirstName" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isDefined("resp.customerAccount.FirstName")>
+			<cfreturn resp.customerAccount.FirstName />
+		<cfelse>
+			<cfreturn "n/a" />
+		</cfif>
+	</cffunction>
+
+	<cffunction name="getCustomerLastName" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isDefined("resp.customerAccount.LastName")>
+			<cfreturn resp.customerAccount.LastName />
+		<cfelse>
+			<cfreturn "n/a" />
+		</cfif>
+	</cffunction>
+
 	<cffunction name="getAddress" access="public" returnType="cfc.model.address">
 		<cfargument name="rawAddress" type="struct" required="false" default="#getResponse().CustomerAccount.address#" />
 		<cfset var address = createObject('component','cfc.model.Address').init() />

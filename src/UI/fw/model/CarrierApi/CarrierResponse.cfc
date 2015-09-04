@@ -1,15 +1,27 @@
 ﻿<cfcomponent displayname="Carrier Response" hint="Contains response from carrier info" output="false" extends="fw.model.BaseService">
 
+	
 	<cfset variables.instance = StructNew() />
+
 	
 	
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.CarrierResponse">
 		
 		<cfset variables.instance.response = {} />
 		<cfset variables.instance.status = "" />
+		<cfset variables.instance.carrierId = 0 />
+		<cfset variables.instance.carrierName = "N/A" />
 		
 		<cfreturn this />
 		
+	</cffunction>
+	
+	<cffunction name="getCarrierId" access="public" returnType="numeric">
+		<cfreturn variables.instance.carrierId />
+	</cffunction>
+	
+	<cffunction name="getCarrierName" access="public" returnType="string">
+		<cfreturn variables.instance.carrierName />
 	</cffunction>
 	
 	<cffunction name="setResponse" access="public" returnType="boolean">
