@@ -10,13 +10,15 @@
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
-
+  <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
+  <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting,orderreview" />
 
   <!--- preHandler --->
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+
     <cfset var thisNavIndex = "" />
     <cfset var nextNavIndex = "" />
     <cfset var prevNavIndex = "" />
@@ -25,51 +27,52 @@
     
     <cfscript>
       prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/";
-      //TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
-      
-      // set Customer info in rc
-      //TODO: This should be a method call.  Possibly a good starting stub for the Wireless data access object proxy. 
-      //TODO: The phoneLines object should include the device id so that the correct device image can be displayed on the Upgrade page.
-      if (!structKeyExists(prc,"userData")) {
-        prc.userData = {
-          phoneLines = [
-            {phoneNumber = "(206) 555 - 1111", isAvailable = true},
-            {phoneNumber = "(206) 555 - 4545", isAvailable = true},
-            {phoneNumber = "(206) 555 - 2222", isAvailable = true},
-            {phoneNumber = "(206) 555 - 3333", isAvailable = false},
-            {phoneNumber = "(206) 555 - 4444", isAvailable = false},
-            {phoneNumber = "(206) 555 - 5555", isAvailable = false},
-            {phoneNumber = "(206) 555 - 6666", isAvailable = false}
-            ],
-          username = "thedude",
-          firstname = "The",
-          middleinitial = "L",
-          lastname = "Dude",
-          company = "Self-employed",
-          address1 = "Hey Bro St.",
-          address2 = "",
-          city = "Los Angelos",
-          state = "CA",
-          zip = "90210",
-          homephone = "123-432-1231",
-          workphone = ""
-        };
-      }
 
-      if (!structKeyExists(rc,"type") OR !listFindNoCase(listCustomerTypes,rc.type)) {
+      // <ZIP CHECK
+      // if user has authenticated into carrier, make sure that the session zip is the carrier response object zip.
+      // if inputZip exists and is valid, then set session.zipCode ONLY IF the user has not authenticated with a carrier login.
+      
+      // if (structKeyExists(session,"carrierObj")) {
+      //   session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
+      // } else if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip'))  ) {
+      //   session.cart.setZipcode(listFirst(event.getValue('inputZip'), '-'));
+      // }
+      // <end zip check
+
+      // <TYPE CHECK
+      // Make sure customer type exists.  If it does not, set it to upgrade.
+      if (!structKeyExists(rc,"type") or !listFindNoCase(listCustomerTypes, rc.type)) {
         rc.type = "upgrade";
       }
+      // <end type check
+
+      // <AUTH CHECK
+      // if customer type requires authentication on this action, send them to carrierlogin
+
+      // if (  listFindNoCase(listActionsRequireLogin, event.getCurrentAction())  and listFindNoCase(listCustomerTypesRequireLogin, rc.type) and !structKeyExists(session, "carrierObj")  ) {
+      //   setNextEvent(
+      //     event="devicebuilder.carrierLogin",
+      //     persist="type,pid");
+      // }
+      // <end auth check
+      
       // return customer to Browse all phones (no filter) if a product id is not found in the URL (or form field):
       if (!structKeyExists(rc,"pid") OR !isNumeric(rc.pid)) {
         relocate( prc.browseDevicesUrl );
       }
+      
       if (!structKeyExists(prc,"productData")) {
         prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
       }
+      
       // return customer to Browse all phones if product id is not found in the database:
       if (!isNumeric(prc.productData.productId)) {
         relocate( prc.browseDevicesUrl  );
+      } else {
+        session.cart.setCarrierId(prc.productData.carrierId);
       }
+
+      // Get product images
       if (!structKeyExists(prc,"productService")) {
         prc.productService = application.wirebox.getInstance( "ProductService" );
       }
@@ -77,7 +80,7 @@
        prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
       }
       
-      // Navigation
+      // <Navigation
       switch(rc.type) {
         case "upgrade":
           prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
@@ -137,17 +140,39 @@
       } else {
         prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       }
-      // /Navigation
+      // <end Navigation
 
-      // if inputZip exists and is valid, then set session.zipCode ONLY IF the user has not authenticated with a carrier login.
-      if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip')) and !structKeyExists(session,"carrierObj")  ) {
-        // session.zipCode = event.getValue('inputZip');
-        // session.cart.setZipcode(listFirst(session.zipCode, '-'));
-        session.cart.setZipcode(listFirst(event.getValue('inputZip'), '-'));
-        session.cart.setCarrierId(prc.productData.carrierId);
-      }
 
       event.setLayout('devicebuilder');
+
+      // <TEMP dummy data:
+      if (!structKeyExists(prc,"userData")) {
+        prc.userData = {
+          phoneLines = [
+            {phoneNumber = "(206) 555 - 1111", isAvailable = true},
+            {phoneNumber = "(206) 555 - 4545", isAvailable = true},
+            {phoneNumber = "(206) 555 - 2222", isAvailable = true},
+            {phoneNumber = "(206) 555 - 3333", isAvailable = false},
+            {phoneNumber = "(206) 555 - 4444", isAvailable = false},
+            {phoneNumber = "(206) 555 - 5555", isAvailable = false},
+            {phoneNumber = "(206) 555 - 6666", isAvailable = false}
+            ],
+          username = "thedude",
+          firstname = "The",
+          middleinitial = "L",
+          lastname = "Dude",
+          company = "Self-employed",
+          address1 = "Hey Bro St.",
+          address2 = "",
+          city = "Los Angelos",
+          state = "CA",
+          zip = "90210",
+          homephone = "123-432-1231",
+          workphone = ""
+        };
+      }
+      // <end Temp dummy data
+
     </cfscript>
   </cffunction>
 
@@ -156,6 +181,7 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+
     <cfparam name="rc.nextAction" default="devicebuilder.carrierlogin" />
     <cfparam name="rc.carrierResponseMessage" default="" />
 

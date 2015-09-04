@@ -79,7 +79,8 @@
 </cfif>
 <cfif listFindNoCase("devicebuilder.plans", event.getCurrentEvent())>
   #renderView('devicebuilder/plansmodal')#
-  <cfif rc.type is 'new' and !structKeyExists(session,"zipCode")>
+  <!--- <cfif rc.type is 'new' and !structKeyExists(session,"zipCode")> --->
+  <cfif rc.type is 'new' and (!structKeyExists(session.cart,"zipCode") or session.cart.zipcode is '00000')>
     <script>
       $('##zipModal').modal('show');
     </script>
