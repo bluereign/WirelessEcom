@@ -7538,11 +7538,13 @@ body {
   font-size: 0rem;
 }
 .head .nav-pills .complete a:before {
+  background: url('/images/checkmark.png') no-repeat center top;
   color: #fff;
-  content: '✓';
+  content: '';
   display: block;
   font-size: 16px;
   font-size: 1rem;
+  height: 17px;
   position: absolute;
   top: 4px;
   width: 100%;
@@ -7795,8 +7797,17 @@ form .right:first-child {
   padding: 10px;
   text-align: center;
 }
+.product .image {
+  display: block;
+  overflow: auto;
+  padding-bottom: 10px;
+}
+.product .image img {
+  display: block;
+  margin: 0 auto;
+}
 .product .info {
-  margin: 10px 0;
+  margin: 0 0 10px;
 }
 #existing .info {
   float: left;
@@ -7814,8 +7825,12 @@ form .right:first-child {
 }
 .accessories .product {
   background-color: #fff;
-  padding: 15px;
+  padding: 15px 0 0;
   position: relative;
+}
+.accessories .product .info-wrap {
+  overflow: auto;
+  padding: 0 15px 15px;
 }
 .accessories .product .info {
   font-size: 13px;
@@ -8116,11 +8131,11 @@ form .right:first-child {
   margin-top: 5px;
 }
 .cart.main,
-.cart.main .content {
-  margin-bottom: 0;
-}
 .cart .main-header {
   margin-bottom: 0;
+}
+.cart .content {
+  margin-bottom: 20px;
 }
 .cart .content form {
   padding: 0;
@@ -8186,8 +8201,13 @@ form .right:first-child {
   padding: 5px 0;
   white-space: nowrap;
 }
+.cart .content .item img {
+  display: block;
+  margin: 0 auto;
+}
 .cart .content .item a {
   margin-top: 5px;
+  text-align: center;
 }
 .cart .content .data {
   text-align: left;
@@ -8228,6 +8248,7 @@ form .right:first-child {
   border: 1px solid #b3b3b3;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+  margin-bottom: 15px;
 }
 .cart .sidebar h4 {
   border-bottom: 1px solid #b3b3b3;
@@ -8253,6 +8274,7 @@ form .right:first-child {
 }
 .cart .sidebar ul {
   list-style: none;
+  margin: 0;
   padding: 0;
 }
 .cart .sidebar ul li {
@@ -8261,13 +8283,21 @@ form .right:first-child {
   font-size: 0.75rem;
   margin: 10px 0;
 }
+.cart .sidebar ul li:first-child {
+  margin-top: 0;
+}
+.cart .sidebar ul li:last-child {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-bottom: 0;
+}
 .cart .sidebar ul li a {
   color: #157efb;
   display: block;
   padding: 10px;
 }
 .cart .right {
-  width: 300px;
+  width: 305px;
 }
 .cart .plan-details {
   font-size: 12px;
@@ -8275,13 +8305,19 @@ form .right:first-child {
   text-transform: uppercase;
 }
 .cart .plan-details:after {
-  content: '▼';
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid #00aeef;
+  content: ' ';
   display: inline-block;
   margin: 10px 0 0 10px;
-  width: 15px;
 }
 .cart .plan-details.collapsed:after {
-  content: '▲';
+  border-bottom: none;
+  border-top: 8px solid #00aeef;
+  content: ' ';
   margin-top: 0;
 }
 .promo {
@@ -8296,9 +8332,7 @@ form .right:first-child {
   background-image: -o-linear-gradient(top, #fefefe, #e8eaeb);
   background-image: linear-gradient(top, #fefefe, #e8eaeb);
   background-repeat: repeat-x;
-  padding: 10px;
-  margin: 30px 0 15px 0;
-  text-align: right;
+  padding: 15px 10px;
 }
 .summary .content {
   background: #eeeeee;
