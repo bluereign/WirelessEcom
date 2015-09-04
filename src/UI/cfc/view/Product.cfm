@@ -1895,7 +1895,8 @@ TEMPORARY DISABLE --->
 									<a class="DisabledButton" href="##" onclick="alert('#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockAlertText()#');return false;"><span>#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockButtonText()#</span></a>		
 								</cfif>
 							<cfelse>
-								<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+								<!--- <a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a> --->
+								<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
 							</cfif>
 						<cfelse>
 							<cfset thisWindowName = 'windowNotCompatible1' & createUUID() />
@@ -1913,15 +1914,21 @@ TEMPORARY DISABLE --->
 				<!--- <span class="actionButtonDisabled"><a href="##" onclick="alert('You may not add this to your cart because your cart currently has a<cfif session.cart.getActivationType() is 'new'> 2-year<cfelseif session.cart.getActivationType() is 'upgrade'>n upgrade<cfelseif session.cart.getActivationType() is 'addaline'>n add-a-line</cfif> designation.');return false;">Disabled</a></span> --->
 				<!---<cfif  (session.cart.getActivationType() CONTAINS "Finance") OR (arguments.priceType CONTAINS "Finance")>--->
 				<!--- Handling Financed phones and how contract phones interact with financed options --->
+				
+
 				<cfif (arguments.priceType CONTAINS "Finance")> <!--- Allows financed items (They are set with a pricetype of financed-XX-new-upgrade-addaline) ---->
-					<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+					<!--- <a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a> --->
+					<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
 				<cfelseif (session.cart.getActivationType() CONTAINS "Finance")> <!--- Enables AddALine, New, Upgrade add to cart button ---->					
 					<cfif (arguments.PriceType eq 'new') AND (session.cart.getActivationType() CONTAINS "new")> <!--- If it is a financed new allow contract new ---->
-						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+						<!--- <a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a> --->
+						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
 					<cfelseif (arguments.PriceType eq 'upgrade') AND (session.cart.getActivationType() CONTAINS "upgrade")> <!--- If it is a financed upgrade allow contract upgrade ---->
-						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+						<!--- <a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a> --->
+						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
 					<cfelseif (arguments.PriceType eq 'addaline') AND (session.cart.getActivationType() CONTAINS "addaline")> <!--- If it is a financed addaline allow contract addaline ---->
-						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+						<!--- <a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a> --->
+						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
 					<cfelse>
 					
 					</cfif>
@@ -1939,7 +1946,8 @@ TEMPORARY DISABLE --->
 						<!---<a class="ActionButton learnMoreBtn" href="##"><span>Warehouse Only</span></a>--->
 						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
 					<cfelse>
-						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+						<!--- <a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a> --->
+						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
 					</cfif>
 				</cfif>
 			<cfelse>

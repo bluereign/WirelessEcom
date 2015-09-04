@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<DTSConfiguration>
-  <Configuration ConfiguredType="Property" Path="\Package\Copy Data From Sharepoint List to Staging Table.Properties[[SharePoint List Source].[SiteListName]]" ValueType="String">
-    <ConfiguredValue>Staples Phone Tags</ConfiguredValue>
-  </Configuration>
-</DTSConfiguration>

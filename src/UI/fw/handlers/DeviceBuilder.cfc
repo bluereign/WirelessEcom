@@ -24,7 +24,7 @@
     <cfset var prevAction = "" />
     
     <cfscript>
-      prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones";
+      prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/";
       //TODO: rather than create default type and pid, should send user back to their CGI.http_referer/product detail page with alert to start over?
       
       // set Customer info in rc
@@ -139,7 +139,7 @@
       }
       // /Navigation
 
-      // if inputZip exists, then set session.zipCode ONLY IF the user has not authenticated with a carrier login.
+      // if inputZip exists and is valid, then set session.zipCode ONLY IF the user has not authenticated with a carrier login.
       if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip')) and !structKeyExists(session,"carrierObj")  ) {
         session.zipCode = event.getValue('inputZip');
       }
@@ -226,8 +226,8 @@
 
 
       switch (prc.productData.carrierId) {
-        // AT&T: pid = 109
-        case 109: {
+        // AT&T carrierId = 109, VZW carrierId = 42
+        case 109: case 42: {
           rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
           prc.args_account = {
             carrierId = prc.productData.carrierId,
@@ -266,9 +266,9 @@
           break;
         }
         // Other carriers
-        // TODO: Add Verizon CarrierFacade handler
+        // TODO: Determine how to handle the off chance if a customer gets here with a device that's not AT&T or Verizon
         default: {
-          rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T device.  Please try again with an AT&T device. (carrierId: #prc.productData.carrierId#)";
+          rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T or Verizon device.  Please try again with an AT&T or Verizon device. (carrierId: #prc.productData.carrierId#)";
           setNextEvent(
             event="devicebuilder.carrierLogin",
             persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
@@ -295,10 +295,7 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-<!---     <cfif event.valueExists('inputZip')>
-      <cfset session.zipCode = event.getValue('inputZip') />
-    </cfif>
- --->
+    <cfset prc.planData = application.model.plan.getByFilter(sort = "price") />
   </cffunction>
 
 
