@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<DTSConfiguration>
-	<Configuration ConfiguredType="Property" Path="\Package.Variables[User::IncomingCatalogFolder].Properties[Value]" ValueType="String">
-		<ConfiguredValue>C:\Users\Public\Documents\IncomingCarrierCatalogs\VZW</ConfiguredValue>
-	</Configuration>
-</DTSConfiguration>
