@@ -42,6 +42,7 @@ Optional Methods
 	function configure(){
 		
 		var channelName = getChannelName();
+		var binderFile = getBinderFile();
 		var testEnv = "";
 		var stageEnv = "";
 		var prodEnv = "";
@@ -118,7 +119,7 @@ Optional Methods
 		
 		// Wirebox
 		wirebox = {
-			binder = "fw.config.binders.#channelName#"
+			binder = "fw.config.binders.#binderFile#"
 		};
 		
 		// Flash persistence
@@ -456,6 +457,17 @@ Optional Methods
 			var channelNamePos = listLen(configPath,"\")-1;
 			var channelName = listGetAt( configPath, channelNamePos, "\" );
 			return channelName;
+		</cfscript>
+	</cffunction>
+	
+	<cffunction name="getBinderFile" access="private" output="false" returntype="string" hint="Returns a channel name used for paths and logic that is channel-specific">
+		<cfscript>
+				var binderPath = expandPath('/binderFile');
+				var binderNamePos = listLen(binderPath,"\");
+				var binderName = listGetAt( binderPath, binderNamePos, "\" );
+				var bindernameLength = len(binderName);
+				binderName = Left(binderName,bindernameLength-4);	
+			return binderName;
 		</cfscript>
 	</cffunction>
 	

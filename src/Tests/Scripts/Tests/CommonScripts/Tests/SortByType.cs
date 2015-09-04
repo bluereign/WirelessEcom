@@ -36,7 +36,7 @@ namespace SeleniumTests
         public void TheSortByTypeTest()
         {
             // Navigate to All Phones grid
-            Globals._Driver.Navigate().GoToUrl(Globals._BaseURL);
+            Globals._Driver.Navigate().GoToUrl(Globals._BaseURL + "/index.cfm/go/shop/do/browsePhones");
 
             // Select a sort value
             new SelectElement(Globals._Driver.FindElement(By.Id("SortBy"))).SelectByText(Utilities.SortType(_SortType.PriceLowToHigh));

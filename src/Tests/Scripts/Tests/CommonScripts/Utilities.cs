@@ -20,11 +20,14 @@ namespace SeleniumTests
     class Utilities
     {
         private static _Browser _BrowserType;
+        static string _PreviousError = "";
+        static string _PreviousMessage = "";
+        static int _ScreenshotNum = 0;
 
         #region CloseAlertAndGetItsText()
         public static string CloseAlertAndGetItsText()
         {
-            Log("++ CloseAlertAndGetItsText", false);
+            Log("++ CloseAlertAndGetItsText");
             try
             {
                 IAlert alert = Globals._Driver.SwitchTo().Alert();
@@ -37,7 +40,7 @@ namespace SeleniumTests
                 {
                     alert.Dismiss();
                 }
-                Log("++ AlertText: " + alertText, false);
+                Log("+ AlertText: " + alertText);
                 return alertText;
             }
             finally
@@ -74,6 +77,31 @@ namespace SeleniumTests
             return date;
         }
         #endregion
+        #region GetOrderNumber()
+        public static string GetOrderNumber()
+        {
+            Log("++ GetOrderNumber");
+            string orderNumber = "";
+
+            try
+            {
+                string pageText = Globals._Driver.FindElement(By.XPath("//div[@id='mainContent']/div/div/p")).Text;
+                int o = pageText.IndexOf("#");
+                pageText = pageText.Remove(0, o + 1);
+                int space = pageText.IndexOf(" ");
+                orderNumber = pageText.Remove(space);
+                Globals._OrderNumber = orderNumber;
+                Log("+ OrderNumber: " + orderNumber);
+
+                return orderNumber;
+            }
+            catch (Exception e)
+            {
+                Log("- " + e.Message);
+                return "false";
+            }
+        }
+        #endregion
         #region GetSettings()
         public static void GetSettings(string locationOfSettingsFile)
         {
@@ -90,6 +118,9 @@ namespace SeleniumTests
                 XmlElement personal = (XmlElement)xmlDoc.SelectSingleNode("//CustomerInfo");
                 XmlElement device = (XmlElement)xmlDoc.SelectSingleNode("//Device");
                 XmlElement carrier = (XmlElement)xmlDoc.SelectSingleNode("//Carrier");
+                XmlElement admin = (XmlElement)xmlDoc.SelectSingleNode("//Admin");
+                XmlElement line = (XmlElement)xmlDoc.SelectSingleNode("//Line");
+                XmlElement database = (XmlElement)xmlDoc.SelectSingleNode("//Database");
 
                 string timeoutOverride = testCase.GetAttribute("timeoutHalfSeconds");
                 if (timeoutOverride != "")
@@ -115,6 +146,16 @@ namespace SeleniumTests
                 Globals._DeviceName = device.GetAttribute("name");
                 Globals._CarrierPassword = carrier.GetAttribute("password");
                 Globals._CarrierZipCode = carrier.GetAttribute("zipCode");
+                Globals._AdminUsername = admin.GetAttribute("omtUsername");
+                Globals._AdminPassword = admin.GetAttribute("omtPassword");
+                Globals._Imei = line.GetAttribute("imei");
+                Globals._Sim = line.GetAttribute("sim");
+                Globals._RemoveLine = Convert.ToBoolean(line.GetAttribute("removeLine"));
+                Globals._ActivateLineInOmt = Convert.ToBoolean(testCase.GetAttribute("activateDevice"));
+                Globals._ServerName = database.GetAttribute("serverName");
+                Globals._DatabaseName = database.GetAttribute("databaseName");
+                Globals._DatabaseUsername = database.GetAttribute("username");
+                Globals._DatabasePassword = database.GetAttribute("password");
 
                 string browser = testCase.GetAttribute("browser");
                 switch(browser.ToLower())
@@ -166,7 +207,7 @@ namespace SeleniumTests
                     break;
             }
 
-            Log("++ InitializeDriver " + _BrowserType.ToString(), false);
+            Log("++ InitializeDriver " + _BrowserType.ToString());
 
             return driver;
         }
@@ -174,7 +215,7 @@ namespace SeleniumTests
         #region IsElementPresent()
         public static bool IsElementPresent(By by)
         {
-            Log("++ IsElementPresent", false);
+            Log("++ IsElementPresent");
             try
             {
                 Globals._Driver.FindElement(by);
@@ -182,7 +223,7 @@ namespace SeleniumTests
             }
             catch (NoSuchElementException e)
             {
-                Log("-- " + e.Message, false);
+                Log("- " + e.Message);
                 return false;
             }
         }
@@ -190,36 +231,67 @@ namespace SeleniumTests
         #region Logging()
         public static void Log(string message, bool createNewLogFile)
         {
+            // Exit if the message is identical to the previous message to avoid unnecessary noise
+            if (message == _PreviousError || message == _PreviousMessage)
+                return;
+
+            // Variable to store whether a screenshot is needed
             bool takeScreenshot = false;
+
             if (message.StartsWith("-"))
+            {
+                // Set the screenshot variable to true, increment the screenshot ID number, and store the previous error
                 takeScreenshot = true;
+                _ScreenshotNum++;
+                _PreviousError = message;
+            }
+            else
+                // Otherwise store the previous log message
+                _PreviousMessage = message;
+
+            // Assemble the timestamp to be used in the logfile name
             string month = DateTime.Now.Month.ToString();
             string day = DateTime.Now.Day.ToString();
             string year = DateTime.Now.Year.ToString();
             string hour = DateTime.Now.Hour.ToString();
             string minute = DateTime.Now.Minute.ToString();
-            string assembledDate = month + " - " + day + " - " + year + "_" + hour + " - " + minute;
+            string assembledDate = month + "-" + day + "-" + year + "_" + hour + "-" + minute;
 
+            // Prepend the timestamp to the log message
             message = DateTime.Now.ToString() + ":\t" + message;
 
+            // Match the screenshot name with the failure message in the log message
+            if (takeScreenshot)
+                message += ", screenshot:" + _ScreenshotNum.ToString();
+
+            // Create a new log file if the flag is set, otherwise we just append the log message
             if (createNewLogFile)
                 Globals._LogFilename = Globals._TestCaseName + " (" + assembledDate + ").txt";
 
+            // Store the location of the log file in the <Drive>:\Users\<user ID>\Documents\logging folder
             string logFileLocation = Environment.GetEnvironmentVariable("USERPROFILE") + "\\Documents\\logging";
 
+            // Create the folder if it doesn't already exist
             if (!Directory.Exists(logFileLocation))
                 Directory.CreateDirectory(logFileLocation);
 
             try
             {
+                // Write the log file
                 File.AppendAllText(logFileLocation + "\\" + Globals._LogFilename, message + "\r\n");
+
+                // Take a screenshot
                 if (takeScreenshot)
-                    Screenshot(logFileLocation, Globals._TestCaseName + "_" + assembledDate.Replace(" ", "") + ".png");
+                    Screenshot(logFileLocation, Globals._TestCaseName + " - " + _ScreenshotNum.ToString() + ".png");
             }
             catch (Exception e)
             {
                 Assert.Fail(e.Message);
             }
+        }
+        public static void Log(string message)
+        {
+            Log(message, false);
         }
         #endregion
         #region Screenshot()
@@ -233,7 +305,7 @@ namespace SeleniumTests
             }
             catch(Exception e)
             {
-                Log(e.Message, false);
+                Log(e.Message);
             }
         }
         #endregion
@@ -276,7 +348,7 @@ namespace SeleniumTests
         #region WaitForElement()
         public static bool WaitForElement(string element, _By by, int timeoutHalfSeconds)
         {
-            Log("++ WaitForElement", false);
+            Log("++ WaitForElement");
             for (int i = 0; i < timeoutHalfSeconds; i++)
             {
                 switch (by)
@@ -341,32 +413,8 @@ namespace SeleniumTests
 
                 Thread.Sleep(500);
             }
-            Log("-- Unable to find " + element, false);
+            Log("- Unable to find " + element);
             return false;
-        }
-        #endregion
-        #region GetOrderNumber()
-        public static string GetOrderNumber()
-        {
-            Log("++ GetOrderNumber", false);
-            string orderNumber = "";
-
-            try
-            {
-                string pageText = Globals._Driver.FindElement(By.XPath("//div[@id='mainContent']/div/div/p")).Text;
-                int o = pageText.IndexOf("#");
-                pageText = pageText.Remove(0, o + 1);
-                int space = pageText.IndexOf(" ");
-                orderNumber = pageText.Remove(space);
-                Log("+ OrderNumber: " + orderNumber, false);
-
-                return orderNumber;
-            }
-            catch (Exception e)
-            {
-                Log("-- " + e.Message, false);
-                return "false";
-            }
         }
         #endregion
     }
