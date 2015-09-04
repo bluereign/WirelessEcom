@@ -4,13 +4,12 @@
     <section class="content">
       <header class="main-header">
         <h1>Carrier Account Login</h1>
-        <p>The primary Account Holder's information is used to verify status and line availability.</p>
+        <p>The primary Account Holder's information is used to verify status and line availability.(carrierId: #prc.productData.carrierId#)</p>
       </header>
       <cfif len(rc.carrierResponseMessage)>
-        <p class="bg-danger" style="padding:10px">#rc.carrierResponseMessage#</p>
+        <p class="alert bg-danger" role="alert">#rc.carrierResponseMessage#</p>
       </cfif>
       <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
-      <!--- <form action="#prc.nextStep#" method="post"> --->
       <form action="#event.buildLink('devicebuilder.carrierLoginPost')#" method="post">
         <input type="hidden" name="type" value="#rc.type#" />
         <input type="hidden" name="pid" value="#rc.pid#" />
@@ -43,6 +42,7 @@
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btn-block">Continue</button>
         </div>
+        <p class="alert alert-info" role="alert" style="display:none"></p>
       </form>
     </section>
   </div>

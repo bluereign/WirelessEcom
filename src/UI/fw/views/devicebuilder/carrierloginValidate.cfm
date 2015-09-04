@@ -57,12 +57,11 @@
       errorElement: 'span',
       errorClass: 'help-block',
       errorPlacement: function(error, element) {
+          // don't display message for the first two phone number inputs or the feedback will be stacked, distorting form appearance:
           if ( element.attr("name") === 'inputPhone1' || element.attr("name") === 'inputPhone2' ) {
-            // don't display message
+            // do nothing here
           } else if (element.attr("name") === 'inputPhone3') {
               error.insertAfter(element);
-          // } else if (element.parent('.form-group').length) {
-          //     error.insertAfter(element.parent());
           } else if ( element.attr("name") === 'inputSSN' ) {
             error.insertAfter($('##inputSSNToolTip'));
           } else if ( element.attr("name") === 'inputPin' ) {
@@ -70,6 +69,12 @@
           } else {
               error.insertAfter(element);
           }
+      },
+      submitHandler: function(form) {
+        $('p.alert-info').show().text("Carrier Login in progress.....");
+        $('button:submit').attr("disabled", true);
+        console.log('validation complete');
+        form.submit();
       }
   });
 </script>

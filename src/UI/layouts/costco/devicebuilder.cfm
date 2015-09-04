@@ -75,7 +75,7 @@
 </cfif>
 
 <cfif listFindNoCase("devicebuilder.carrierlogin", event.getCurrentEvent())>
-  #renderView('devicebuilder/upgradeValidate')#
+  #renderView('devicebuilder/carrierloginValidate')#
 </cfif>
 <cfif listFindNoCase("devicebuilder.plans", event.getCurrentEvent())>
   #renderView('devicebuilder/plansmodal')#

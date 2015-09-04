@@ -4,7 +4,7 @@
   - Finish Case 346: The zip code validation should call the carrier of the device they are purchasing for to verify service with that carrier.
   - make sure that an Upgrade Line has been selected for type=upgrade.
  --->
-
+<cfdump var="#prc.planData#" label="prc.planData">
 
 <cfoutput>
   <div class="col-md-12">
