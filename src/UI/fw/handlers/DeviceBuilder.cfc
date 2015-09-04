@@ -59,16 +59,16 @@
       if (!structKeyExists(rc,"type") OR !listFindNoCase(listCustomerTypes,rc.type)) {
         rc.type = "upgrade";
       }
-      // set Device info in rc
+      // return customer to Browse all phones (no filter) if a product id is not found in the URL (or form field):
       if (!structKeyExists(rc,"pid") OR !isNumeric(rc.pid)) {
-        // rc.pid = "00000";
-        relocate( '/index.cfm' );
+        relocate( prc.browseDevicesUrl );
       }
       if (!structKeyExists(prc,"productData")) {
         prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
       }
+      // return customer to Browse all phones if product id is not found in the database:
       if (!isNumeric(prc.productData.productId)) {
-        relocate( '/index.cfm' );
+        relocate( prc.browseDevicesUrl  );
       };
       if (!structKeyExists(prc,"productService")) {
         prc.productService = application.wirebox.getInstance( "ProductService" );
@@ -130,7 +130,7 @@
         nextNavIndex = thisNavIndex + 1;
         nextAction = prc.navItemsAction[nextNavIndex];
         if (!isDefined("rc.nextAction")) {
-          // don't overwrite one that has been passed in (via Form, etc.):
+          // don't overwrite a nextAction value that has been manually passed in (via Form, etc.):
           rc.nextAction = "devicebuilder.#nextAction#";
         }
         prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
@@ -141,7 +141,9 @@
 
       // if inputZip exists and is valid, then set session.zipCode ONLY IF the user has not authenticated with a carrier login.
       if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip')) and !structKeyExists(session,"carrierObj")  ) {
-        session.zipCode = event.getValue('inputZip');
+        // session.zipCode = event.getValue('inputZip');
+        // session.cart.setZipcode(listFirst(session.zipCode, '-'));
+        session.cart.setZipcode(listFirst(event.getValue('inputZip'), '-'));
       }
 
       event.setLayout('devicebuilder');
@@ -237,20 +239,18 @@
             Passcode = rc.inputPin
           };
 
-          // for testing purposes/development:
+          // for testing purposes/development (carrierloginpost.cfm):
           rc.respObj = carrierFacade.Account(argumentCollection = prc.args_account);
           rc.message = rc.respObj.getHttpStatus();
 
           switch ( rc.respObj.getHttpStatus() ) {
             // Status of '200 OK' is success:
             case "200 OK": {
-              // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm:)
-              
               session.carrierObj = carrierFacade.Account(argumentCollection = prc.args_account);
-              // session.zipCode = rc.inputZip;
-              // TODO: override the New Customer modal Zip that the customer may have previously entered: 
-              session.zipCode = session.carrierObj.getAddress().getZipCode();
+              // session.zipCode = session.carrierObj.getAddress().getZipCode();
+              session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
 
+              // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm:)
               setNextEvent(
                 event="#rc.nextAction#",
                 persist="type,pid");
@@ -266,7 +266,7 @@
           break;
         }
         // Other carriers
-        // TODO: Determine how to handle the off chance if a customer gets here with a device that's not AT&T or Verizon
+        // TODO: Determine how to handle the off chance of a customer arriving here with a device that's not AT&T or Verizon
         default: {
           rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T or Verizon device.  Please try again with an AT&T or Verizon device. (carrierId: #prc.productData.carrierId#)";
           setNextEvent(
@@ -295,7 +295,8 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset prc.planData = application.model.plan.getByFilter(sort = "price") />
+    <cfset var filterargs = {} />
+    <cfset prc.planData = application.model.plan.getByFilter(filter=filterargs, sort="PriceAsc") />
   </cffunction>
 
 
@@ -363,7 +364,7 @@
       
       // TODO: Remove the following 2 lines after testing to comply with case 195
       // remove zipCode from session:
-      carrierObjExists = structdelete(session, 'zipCode', true);
+      // carrierObjExists = structdelete(session, 'zipCode', true);
 
       // create warningMessage
       flash.put("warningMessage","Your cart has been cleared. <a href='#prc.browseDevicesUrl#'>Click here to go to Browse Devices.</a>");

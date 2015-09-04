@@ -12,7 +12,7 @@
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
-          <p>Pick a Plan and the amount of Data you will use per month. <cfif structKeyExists(session, "ZipCode")>(#session.ZipCode#)</cfif>
+          <p>Pick a Plan and the amount of Data you will use per month. ( ZIP: #session.cart.getZipcode()# )
           <!--- Launch Zip Modal button for testing
           <cfif rc.type is 'new'>
             <a data-toggle="modal" href="##zipModal" class="btn btn-primary btn-sm">Zip modal</a></p>
