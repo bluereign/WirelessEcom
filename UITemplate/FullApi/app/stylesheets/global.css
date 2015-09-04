@@ -7538,11 +7538,13 @@ body {
   font-size: 0rem;
 }
 .head .nav-pills .complete a:before {
+  background: url('/images/checkmark.png') no-repeat center top;
   color: #fff;
-  content: '✓';
+  content: '';
   display: block;
   font-size: 16px;
   font-size: 1rem;
+  height: 17px;
   position: absolute;
   top: 4px;
   width: 100%;
@@ -7725,11 +7727,16 @@ form {
   position: relative;
   /* Small devices (tablets, 768px and up) */
 }
-form .pull-right {
+form .right {
   margin-bottom: 20px;
   width: 100%;
 }
-form .pull-right:first-child {
+form .right a {
+  display: block;
+  padding: 20px 0;
+  text-align: center;
+}
+form .right:first-child {
   display: none;
 }
 @media (min-width: 768px) {
@@ -7739,24 +7746,31 @@ form .pull-right:first-child {
   form .form-inline a {
     margin-left: 30px;
   }
+  form .form-inline .right {
+    float: right;
+  }
   form .zip .form-control,
   form .ssn .form-control,
   form .pin .form-control {
     width: 230px;
   }
-  form .pull-right {
+  form .right {
     bottom: -80px;
     float: right;
     position: absolute;
     right: 0;
     width: 150px;
   }
-  form .pull-right:first-child {
+  form .right:first-child {
     bottom: auto;
     display: block;
     top: -60px;
   }
-  form .pull-right .btn {
+  form .right a {
+    display: inline-block;
+    padding: 0;
+  }
+  form .right .btn {
     display: inline;
     margin-left: 20px;
     padding: 10px 14px;
@@ -7783,8 +7797,17 @@ form .pull-right:first-child {
   padding: 10px;
   text-align: center;
 }
+.product .image {
+  display: block;
+  overflow: auto;
+  padding-bottom: 10px;
+}
+.product .image img {
+  display: block;
+  margin: 0 auto;
+}
 .product .info {
-  margin: 10px 0;
+  margin: 0 0 10px;
 }
 #existing .info {
   float: left;
@@ -7802,8 +7825,12 @@ form .pull-right:first-child {
 }
 .accessories .product {
   background-color: #fff;
-  padding: 15px;
+  padding: 15px 0 0;
   position: relative;
+}
+.accessories .product .info-wrap {
+  overflow: auto;
+  padding: 0 15px 15px;
 }
 .accessories .product .info {
   font-size: 13px;
@@ -7834,10 +7861,8 @@ form .pull-right:first-child {
 .accessories .product.sale .price {
   color: #ff0000;
 }
-.accessories .product.special {
-  padding: 0;
-}
-.accessories .product.special .callout {
+.accessories .product .callout {
+  display: none;
   background-color: #0060a9;
   background-image: -moz-linear-gradient(top, #007ddc, #0060a9);
   background-image: -ms-linear-gradient(top, #007ddc, #0060a9);
@@ -7847,10 +7872,17 @@ form .pull-right:first-child {
   background-image: linear-gradient(top, #007ddc, #0060a9);
   background-repeat: repeat-x;
   overflow: auto;
-  padding: 40px 35px;
+  padding: 33px 35px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
-.accessories .product.special .callout .btn {
+.accessories .product .callout .btn {
   float: none;
+}
+.accessories .product.hover .callout {
+  display: block;
 }
 .accessories .featured h4 {
   margin-bottom: 40px;
@@ -8099,19 +8131,19 @@ form .pull-right:first-child {
   margin-top: 5px;
 }
 .cart.main,
-.cart.main .content {
-  margin-bottom: 0;
-}
 .cart .main-header {
   margin-bottom: 0;
+}
+.cart .content {
+  margin-bottom: 20px;
 }
 .cart .content form {
   padding: 0;
 }
-.cart .content form .pull-right .btn {
+.cart .content form .right .btn {
   display: inline-block;
 }
-.cart .content form .pull-right:first-child {
+.cart .content form .right:first-child {
   top: -70px;
 }
 .cart .content .row {
@@ -8141,7 +8173,7 @@ form .pull-right:first-child {
 .cart .content a {
   display: block;
 }
-.cart .content .pull-right a {
+.cart .content .right a {
   display: inline;
 }
 .cart .content td {
@@ -8169,8 +8201,13 @@ form .pull-right:first-child {
   padding: 5px 0;
   white-space: nowrap;
 }
+.cart .content .item img {
+  display: block;
+  margin: 0 auto;
+}
 .cart .content .item a {
   margin-top: 5px;
+  text-align: center;
 }
 .cart .content .data {
   text-align: left;
@@ -8211,6 +8248,7 @@ form .pull-right:first-child {
   border: 1px solid #b3b3b3;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+  margin-bottom: 15px;
 }
 .cart .sidebar h4 {
   border-bottom: 1px solid #b3b3b3;
@@ -8236,6 +8274,7 @@ form .pull-right:first-child {
 }
 .cart .sidebar ul {
   list-style: none;
+  margin: 0;
   padding: 0;
 }
 .cart .sidebar ul li {
@@ -8244,13 +8283,21 @@ form .pull-right:first-child {
   font-size: 0.75rem;
   margin: 10px 0;
 }
+.cart .sidebar ul li:first-child {
+  margin-top: 0;
+}
+.cart .sidebar ul li:last-child {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-bottom: 0;
+}
 .cart .sidebar ul li a {
   color: #157efb;
   display: block;
   padding: 10px;
 }
-.cart .pull-right {
-  width: 300px;
+.cart .right {
+  width: 305px;
 }
 .cart .plan-details {
   font-size: 12px;
@@ -8258,13 +8305,19 @@ form .pull-right:first-child {
   text-transform: uppercase;
 }
 .cart .plan-details:after {
-  content: '▼';
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid #00aeef;
+  content: ' ';
   display: inline-block;
   margin: 10px 0 0 10px;
-  width: 15px;
 }
 .cart .plan-details.collapsed:after {
-  content: '▲';
+  border-bottom: none;
+  border-top: 8px solid #00aeef;
+  content: ' ';
   margin-top: 0;
 }
 .promo {
@@ -8279,9 +8332,7 @@ form .pull-right:first-child {
   background-image: -o-linear-gradient(top, #fefefe, #e8eaeb);
   background-image: linear-gradient(top, #fefefe, #e8eaeb);
   background-repeat: repeat-x;
-  padding: 10px;
-  margin: 30px 0 15px 0;
-  text-align: right;
+  padding: 15px 10px;
 }
 .summary .content {
   background: #eeeeee;
@@ -8333,10 +8384,11 @@ form .pull-right:first-child {
   font-size: 16px;
   font-size: 1rem;
 }
-.summary .pull-right {
+.summary .right {
+  float: right;
   margin-bottom: 20px;
 }
-.summary .pull-right .btn {
+.summary .right .btn {
   margin-left: 20px;
 }
 .verizon-customer-type .modal-body h4 {
@@ -8388,7 +8440,7 @@ form .pull-right:first-child {
   margin-right: 15px;
 }
 .device-detail .price {
-  padding-top: 8px;
+  padding-top: 7px;
 }
 .device-detail .price strong {
   margin-left: 15px;
@@ -8398,6 +8450,24 @@ form .pull-right:first-child {
 }
 .device-detail .btn-gray {
   margin-right: 10px;
+}
+.device-detail .device-main {
+  height: 200px;
+  width: 200px;
+}
+.device-detail .device-thumb {
+  border: 1px solid #eeeeee;
+  display: block;
+  height: 50px;
+  overflow: auto;
+  text-align: center;
+  width: 50px;
+}
+.device-detail .device-thumb.active {
+  border-color: #0060a9;
+}
+.device-detail .device-thumb img {
+  max-height: 100%;
 }
 .pricing h2 {
   border-bottom: 5px solid #0060a9;

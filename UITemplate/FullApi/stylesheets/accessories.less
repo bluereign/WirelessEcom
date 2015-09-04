@@ -1,8 +1,13 @@
 .accessories {
 	.product {
 		background-color: #fff;
-		padding: 15px;
+		padding: 15px 0 0;
 		position: relative;
+
+		.info-wrap {
+			overflow: auto;
+			padding: 0 15px 15px;
+		}
 
 		.info {
 			.text-size(13);
@@ -37,17 +42,24 @@
 			}
 		}
 
-		&.special {
-			padding: 0;
+		.callout {
+			display: none;
+			.gradient(lighten(@primary-color, 10%), @primary-color, @primary-color);
+			overflow: auto;
+			padding: 33px 35px;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
 
+			.btn {
+				float: none;
+			}
+		}
+
+		&.hover {
 			.callout {
-				.gradient(lighten(@secondary, 10%), @secondary, @secondary);
-				overflow: auto;
-				padding: 40px 35px;
-
-				.btn {
-					float: none;
-				}
+				display: block;
 			}
 		}
 	}
