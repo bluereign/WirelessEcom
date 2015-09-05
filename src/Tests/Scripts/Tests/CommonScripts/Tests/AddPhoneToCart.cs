@@ -24,7 +24,7 @@ namespace SeleniumTests
         [TestCleanup]
         public void TeardownTest()
         {
-            Utilities.Log("+++ End Test", false);
+            Utilities.Log("+++ End Test");
             try
             {
                 Globals._Driver.Quit();
@@ -41,7 +41,7 @@ namespace SeleniumTests
         public void TheAddPhoneToCartTest()
         {
             // Navigate to the site
-            Actors.NavigateToSite(Globals._BaseURL);
+            Actors.NavigateToSite(Globals._BaseURL + "/index.cfm/go/shop/do/browsePhones");
 
             // Select device
             if (!Actors.SelectPhone(Globals._DeviceId, Globals._DeviceName))
@@ -51,7 +51,7 @@ namespace SeleniumTests
             Actors.AddDeviceToCart(Globals._CustomerZipCode, Actors._AccountType.newAccount);
 
             // Service plan
-            Actors.ChooseServicePlan(Actors._ServicePlan.vzw1GBMoreEverythingUnlimitedTalkText);
+            Actors.ChooseServicePlan(Actors._VerizonServicePlans.vzwMedium3GB);
 
             // Cart - services
             Actors.SelectDeviceServices(Actors._Services.vzwMoreEverythingSmartphoneMonthlyLineAccess);

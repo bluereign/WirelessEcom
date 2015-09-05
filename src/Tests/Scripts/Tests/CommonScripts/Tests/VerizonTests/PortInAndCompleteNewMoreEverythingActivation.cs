@@ -14,7 +14,7 @@ namespace SeleniumTests
             /* ==================================================================
              * ==   Must get the settings file before generating the log file. ==
              * ================================================================== */
-            Utilities.GetSettings("D:\\source\\WA_Costco\\src\\Tests\\Scripts\\Tests\\Collateral\\PortInAndCompleteNewMoreEverythingActivation_settings.xml");
+            Utilities.GetSettings("D:\\source\\WA_Costco\\src\\Tests\\Scripts\\Tests\\Collateral\\vzwPortInAndCompleteNewMoreEverythingActivation_settings.xml");
             Utilities.Log("+++ Begin test", true);
             Globals._Driver = Utilities.InitializeDriver();
             Globals._VerificationErrors = new StringBuilder();
@@ -24,7 +24,7 @@ namespace SeleniumTests
         [TestCleanup]
         public void TeardownTest()
         {
-            Utilities.Log("+++ End Test", false);
+            Utilities.Log("+++ End Test");
             try
             {
                 Globals._Driver.Quit();
@@ -41,7 +41,7 @@ namespace SeleniumTests
         public void VzwPortInAndCompleteNewMoreEverythingActivation()
         {
             // Navigate to the site
-            Actors.NavigateToSite(Globals._BaseURL);
+            Actors.NavigateToSite(Globals._BaseURL + "/index.cfm/go/shop/do/browsePhones");
 
             // Select phone
             Actors.ClearCart();
@@ -66,8 +66,10 @@ namespace SeleniumTests
             Actors.ReviewCart();
             Actors.ProceedToCheckout();
 
-            // Keep current number
-            Actors.RetainCurrentMobileNumber(Globals._RetainNumber, "Sprint", "928347978", "7853");
+            // Keep current number and provide previous carrier information
+            Actors.RetainCurrentMobileNumber(Globals._RetainNumber, "Sprint",
+                /* random account number */ "928347978",
+                /* 6 digit random pin for Sprint */ "785398");
 
             // Billing and Shipping
             Actors.BillingAndShipping(Globals._CustomerEmail, Globals._CustomerAccountPassword, Globals._CustomerFirstName,
@@ -98,7 +100,12 @@ namespace SeleniumTests
                 Actors.CertRecovery();
 
             // Log the order number
-            Utilities.GetOrderNumber();
+            string orderNumber = Utilities.GetOrderNumber();
+
+            // Activate the line in OMT
+            if (Globals._ActivateLineInOmt)
+                Actors.ActivateLine(Globals._AdminUsername, Globals._AdminUsername, orderNumber,
+                    Globals._Imei, Globals._Sim, Convert.ToBoolean(Globals._RemoveLine));
         }
         #endregion
     }

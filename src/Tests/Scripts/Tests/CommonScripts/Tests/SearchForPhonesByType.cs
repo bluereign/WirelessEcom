@@ -40,7 +40,7 @@ namespace SeleniumTests
         {
             string searchTerm = "iphone";
 
-            Globals._Driver.Navigate().GoToUrl(Globals._BaseURL);
+            Globals._Driver.Navigate().GoToUrl(Globals._BaseURL + "/index.cfm/go/shop/do/browsePhones");
             Globals._Driver.FindElement(By.Id("q")).Clear();
             Globals._Driver.FindElement(By.Id("q")).SendKeys(searchTerm);
             Globals._Driver.FindElement(By.CssSelector("input.searchGo")).Click();

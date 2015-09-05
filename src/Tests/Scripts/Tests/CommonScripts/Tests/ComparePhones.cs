@@ -39,7 +39,7 @@ namespace SeleniumTests
         public void TheComparePhonesTest()
         {
             // Navigate to the site
-            Globals._Driver.Navigate().GoToUrl(Globals._BaseURL);
+            Globals._Driver.Navigate().GoToUrl(Globals._BaseURL + "/index.cfm/go/shop/do/browsePhones");
 
             // Get the list of phones from the results
             IWebElement result = Globals._Driver.FindElement(By.XPath("//div[@id='resultsDiv']"));

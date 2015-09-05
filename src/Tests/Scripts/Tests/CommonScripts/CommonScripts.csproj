@@ -36,7 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="WebDriver">
       <HintPath>D:\Selenium\C-Sharp Driver\net40\WebDriver.dll</HintPath>
@@ -60,8 +62,8 @@
   <ItemGroup>
     <Compile Include="Actors.cs" />
     <Compile Include="Tests\VerizonTests\NewMoreEverythingActivation.cs" />
-    <Compile Include="Tests\VerizonTests\AlpAddLineToExistingPlan.cs" />
-    <Compile Include="Tests\VerizonTests\AlpUpgradeKeepExistingPlan.cs" />
+    <Compile Include="Tests\VerizonTests\AddLineToExistingPlan.cs" />
+    <Compile Include="Tests\VerizonTests\UpgradeKeepExistingPlan.cs" />
     <Compile Include="Tests\ComparePhones.cs" />
     <Compile Include="Tests\AddPhoneToCart.cs" />
     <Compile Include="Tests\DirectDelivery\DdAddPhoneToCart.cs" />
