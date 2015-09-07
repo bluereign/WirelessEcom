@@ -119,7 +119,7 @@ Optional Methods
 		
 		// Wirebox
 		wirebox = {
-			binder = "fw.config.binders.#binderFile#"
+			binder = "fw.config.binders.#channelName#"
 		};
 		
 		// Flash persistence
@@ -215,6 +215,7 @@ Optional Methods
 			"^scott\.aafesmobile\.com",
 			"^local\.vfd.\costco\.com",
 			"^local\.vfd.\aafes\.com",
+      "^local\.fullapi\.costco\.wa",
 			
 			//DEV AT&T Next Branches
 			"^local\.costco\.attnext\.wa",
