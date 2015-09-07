@@ -1,27 +1,10 @@
-<!--- 
-
-//TODO:
-  - Finish Case 346: The zip code validation should call the carrier of the device they are purchasing for to verify service with that carrier.
-  - make sure that an Upgrade Line has been selected for type=upgrade.
- --->
-event.getCurrentAction(): <cfoutput>#event.getCurrentAction()#</cfoutput>
-<br>
-session.cart.getCarrierId(): <cfdump var="#session.cart.getCarrierId()#">
-<br>
-session.planFilterSelections.filterOptions: <cfdump var="#session.planFilterSelections.filterOptions#" label="session.planFilterSelections.filterOptions">
-<br>
-session.planFilterSelections: <cfdump var="#session.planFilterSelections#" label="session.planFilterSelections">
-<br>
-
-<cfdump var="#prc.planData#" label="prc.planData">
-
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#">
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
-          <p>Pick a Plan and the amount of Data you will use per month. ( ZIP: #session.cart.getZipcode()# )
+          <p>Pick a Plan and the amount of Data you will use per month. <!--- ( ZIP: #session.cart.getZipcode()# ) --->
           <!--- Launch Zip Modal button for testing
           <cfif rc.type is 'new'>
             <a data-toggle="modal" href="##zipModal" class="btn btn-primary btn-sm">Zip modal</a></p>
@@ -35,99 +18,54 @@ session.planFilterSelections: <cfdump var="#session.planFilterSelections#" label
             <a href="##shared" aria-controls="shared" role="tab" data-toggle="tab">Shared Plans</a>
           </li>
         </ul>
+
         <div class="tab-content plans">
+          
           <div role="tabpanel" class="tab-pane active" id="individual">
             <div class="carousel" id="individualCarousel">
-              <div class="info">
-                <a href="##">
-                  <h3><span>MORE Everything</span> Talk, Text and Data</h3>
-                  <ul>
-                    <li class="large"><span>1GB</span></li>
-                    <li>Unlimited Talk &amp; Text</li>
-                    <li>FREE Mobile Hotspot</li>
-                    <li>Smartphone - $40</li>
-                  </ul>
-                  <div class="price">$50</div>
-                  <button class="btn btn-dark-gray btn-block">Select Package</button>
-                  <div class="details-link">Plan Details</div>
-                </a>
-              </div>
-              <div class="info">
-                <a href="##">
-                  <h3><span>MORE Everything</span> Talk, Text and Data</h3>
-                  <ul>
-                    <li class="large"><span>1GB</span></li>
-                    <li>Unlimited Talk &amp; Text</li>
-                    <li>FREE Mobile Hotspot</li>
-                    <li>Smartphone - $40</li>
-                  </ul>
-                  <div class="price">$50</div>
-                  <button class="btn btn-dark-gray btn-block">Select Package</button>
-                  <div class="details-link">Plan Details</div>
-                </a>
-              </div>
-              <div class="info">
-                <a href="##">
-                  <h3><span>MORE Everything</span> Talk, Text and Data</h3>
-                  <ul>
-                    <li class="large"><span>1GB</span></li>
-                    <li>Unlimited Talk &amp; Text</li>
-                    <li>FREE Mobile Hotspot</li>
-                    <li>Smartphone - $40</li>
-                  </ul>
-                  <div class="price">$50</div>
-                  <button class="btn btn-dark-gray btn-block">Select Package</button>
-                  <div class="details-link">Plan Details</div>
-                </a>
-              </div>
-              <div class="info">
-                <a href="##">
-                  <h3><span>MORE Everything</span> Talk, Text and Data</h3>
-                  <ul>
-                    <li class="large"><span>3GB</span></li>
-                    <li>Unlimited Talk &amp; Text</li>
-                    <li>FREE Mobile Hotspot</li>
-                    <li>Smartphone - $40</li>
-                  </ul>
-                  <div class="price">$65</div>
-                  <button class="btn btn-dark-gray btn-block">Select Package</button>
-                  <div class="details-link">Plan Details</div>
-                </a>
-              </div>
-              <div class="info">
-                <a href="##">
-                  <h3><span>MORE Everything</span> Talk, Text and Data</h3>
-                  <ul>
-                    <li class="large"><span>5GB</span></li>
-                    <li>Unlimited Talk &amp; Text</li>
-                    <li>FREE Mobile Hotspot</li>
-                    <li>Smartphone - $40</li>
-                  </ul>
-                  <div class="price">$80</div>
-                  <button class="btn btn-dark-gray btn-block">Select Package</button>
-                  <div class="details-link">Plan Details</div>
-                </a>
-              </div>
-              <div class="info">
-                <a href="##">
-                  <h3><span>MORE Everything</span> Talk, Text and Data</h3>
-                  <ul>
-                    <li class="large"><span>5GB</span></li>
-                    <li>Unlimited Talk &amp; Text</li>
-                    <li>FREE Mobile Hotspot</li>
-                    <li>Smartphone - $40</li>
-                  </ul>
-                  <div class="price">$80</div>
-                  <button class="btn btn-dark-gray btn-block">Select Package</button>
-                  <div class="details-link">Plan Details</div>
-                </a>
-              </div>
+              
+              <cfloop query="prc.planData">
+                <div class="info">
+                  <a href="##">
+                    <h3 style="height:40px"><span>#prc.planData.DetailTitle#</span></h3>
+                    <ul>
+                      <li class="large"><span>#prc.planData.DataLimitGB#GB</span></li>
+                    </ul>
+                    <div style="align:center;padding:20px;">#prc.planData.SummaryDescription#</div>
+                    <div class="price">$#int(prc.planData.MonthlyFee)#<!--- #dollarFormat(prc.planData.MonthlyFee)# ---></div>
+                    <button class="btn btn-dark-gray btn-block">Select Package</button>
+                    <div class="details-link">Plan Details (tooltip)</div>
+                  </a>
+                </div>
+              </cfloop>
+              
             </div>
           </div>
+
           <div role="tabpanel" class="tab-pane" id="shared">
-          ..
-          </div>
-        </div>
+            <div class="carousel" id="sharedCarousel">
+              
+              <cfloop query="prc.planData">
+                <cfif prc.planData.IsShared>
+                  <div class="info">
+                    <a href="##">
+                      <h3 style="height:40px"><span>#prc.planData.DetailTitle#</span></h3>
+                      <ul>
+                        <li class="large"><span>#prc.planData.DataLimitGB#GB</span></li>
+                      </ul>
+                      <div style="align:center;padding:20px;">#prc.planData.SummaryDescription#</div>
+                      <div class="price">$#int(prc.planData.MonthlyFee)#<!--- #dollarFormat(prc.planData.MonthlyFee)# ---></div>
+                      <button class="btn btn-dark-gray btn-block">Select Package</button>
+                      <div class="details-link">Plan Details</div>
+                    </a>
+                  </div>
+                </cfif>
+              </cfloop>
+
+            </div>
+          </div> <!--- tab-pane --->
+
+        </div> <!--- tab content plans --->
         <div class="legal">
           <p>Legal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
           <p>**Legal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
@@ -136,6 +74,4 @@ session.planFilterSelections: <cfdump var="#session.planFilterSelections#" label
       </section>
     </form>
   </div>
-
-
 </cfoutput>

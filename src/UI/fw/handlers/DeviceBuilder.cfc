@@ -4,6 +4,8 @@
   <cfproperty name="AttCarrier" inject="id:AttCarrier" />
   <cfproperty name="VzwCarrier" inject="id:VzwCarrier" />
 
+  <cfproperty name="PlanService" inject="id:PlanService" />
+
   <cfproperty name="AssetPaths" inject="id:assetPaths" scope="variables" />
   <cfproperty name="channelConfig" inject="id:channelConfig" scope="variables" />
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
@@ -308,7 +310,6 @@
         }
       };
     </cfscript>
-
   </cffunction>
 
 
@@ -328,6 +329,7 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var args = {} />
     
     <!--- 
     First attempts....
@@ -337,15 +339,12 @@
       select * from prc.planData where carrierid = #prc.productData.carrierId# order by planprice
     </cfquery>
     --->
-    
-    <cfquery name="prc.planData" datasource="#application.dsn.wirelessAdvocates#">
-      SELECT  p.RateplanGuid , p.ProductGuid , p.PlanId , p.ProductId , p.GersSku , p.CarrierBillCode , p.PlanName , p.PlanType , p.IsShared , p.PageTitle , p.SummaryTitle , p.DetailTitle , p.FamilyPlan , p.CompanyName , p.CarrierName , p.CarrierId , p.CarrierGuid , p.CarrierLogoSmall , p.CarrierLogoMedium , p.CarrierLogoLarge , p.SummaryDescription , p.DetailDescription , p.MetaKeywords , p.PlanPrice , p.MonthlyFee , p.IncludedLines , p.MaxLines , p.AdditionalLineFee , p.minutes_anytime , p.minutes_offpeak , p.minutes_mobtomob , p.minutes_friendsandfamily , p.unlimited_offpeak , p.unlimited_mobtomob , p.unlimited_friendsandfamily , p.unlimited_data , p.unlimited_textmessaging , p.free_longdistance , p.free_roaming , p.data_limit , p.DataLimitGB , p.additional_data_usage , IsNull( (SELECT TOP 1 pp.Value FROM catalog.Property pp WHERE pp.ProductGuid = p.ProductGuid AND pp.Name = 'PLAID_DEVICE_CAP_INDICATOR'), 'N') HasPlanDeviceCap 
-      FROM  catalog.dn_Plans AS p WITH (NOLOCK) 
-      WHERE 1 = 1 
-        AND p.carrierID IN ( #prc.productData.carrierId# ) 
-        AND p.PlanPrice > 0 
-        ORDER BY p.planPrice ASC, CAST(p.minutes_anytime AS integer) ASC, CAST(p.DataLimitGB AS DECIMAL(10,5)) ASC
-    </cfquery>
+    <!--- <cfscript>
+      args.carrierId = prc.productData.carrierId;
+      args.zipCode = session.cart.getZipcode();
+    </cfscript> --->
+
+    <cfset prc.planData = PlanService.getPlans(prc.productData.carrierId, session.cart.getZipcode()) />
   </cffunction>
 
 
