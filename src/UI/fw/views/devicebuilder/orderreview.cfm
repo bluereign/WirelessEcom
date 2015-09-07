@@ -124,7 +124,7 @@
       <!--- 
       //TODO:
         The link "Clear Entire Cart" needs to 
-          - drop carrierObj and ZipCode from the session
+          - drop carrierObj (but not ZipCode) from the session
           - clear any devices, plans, accessories, etc. that the user has added to their cart view the devicebuilder.
        --->
       <div class="sidebar">
