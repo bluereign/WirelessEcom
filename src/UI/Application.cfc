@@ -499,10 +499,12 @@
 
 		<cfparam name="request.config.bFriendlyErrorPages" type="boolean" default="true" />
 
-		<!--- If page is not found redirect to home page and do not loose the customer. --->
+		If page is not found redirect to home page and do not loose the customer.
 		<cfif arguments.exception.type is 'missingInclude'>
 			<cflocation url="/index.cfm" addtoken="false" />
 		</cfif>
+
+		<cfset request.config.bFriendlyErrorPages = false />
 
 		<cfif request.config.bFriendlyErrorPages>
 			<cfset local.objError.sendErrorEmail(arguments.exception) />

@@ -105,7 +105,13 @@
 			.to("fw.model.carrierApi.Mock.MockCarrier")
 			.asSingleton();	
 		
-		
+
+		// Carrier Plans
+		map("PlanService")
+			.to("fw.model.plan.PlanService")
+			.asSingleton();	
+			
+
 		
 		// Geographic
 		map("GeoService")

@@ -118,7 +118,7 @@
 	request.config.reinitAdmin = false;
 	
 	request.config.disableSSL = true;
-	application.bFriendlyErrorPages = true;
+	application.bFriendlyErrorPages = false;
 	
 	//Video Convertor
 	request.config.VideoConvertor.VideoFilePath = '#request.config.trunkRoot#media';

@@ -623,6 +623,8 @@ $j(document).ready(function($j) {
 
 <cfif request.config.debugInventoryData>
 	<cfsavecontent variable="rc.DebugData">
+		request.config.bFriendlyErrorPages: #request.config.bFriendlyErrorPages# <br>
+		application.bFriendlyErrorPages: #application.bFriendlyErrorPages# <br>
 		GERS SKU: #prc.productData.GersSku# <br>
 		Qty On-Hand: #prc.productData.QtyOnHand# <br>
 		UPC Code: #prc.productData.Upc# <br>
