@@ -42,7 +42,7 @@ Optional Methods
 	function configure(){
 		
 		var channelName = getChannelName();
-		var binderFile = getBinderFile();
+		var binderFullName = getBinderFile();
 		var testEnv = "";
 		var stageEnv = "";
 		var prodEnv = "";
@@ -119,7 +119,7 @@ Optional Methods
 		
 		// Wirebox
 		wirebox = {
-			binder = "fw.config.binders.#binderFile#"
+			binder = binderFullName
 		};
 		
 		// Flash persistence
@@ -461,14 +461,26 @@ Optional Methods
 	</cffunction>
 	
 	<cffunction name="getBinderFile" access="private" output="false" returntype="string" hint="Returns a channel name used for paths and logic that is channel-specific">
-		<cfscript>
-				var binderPath = expandPath('/binderFile');
-				var binderNamePos = listLen(binderPath,"\");
-				var binderName = listGetAt( binderPath, binderNamePos, "\" );
-				var bindernameLength = len(binderName);
-				binderName = Left(binderName,bindernameLength-4);	
-			return binderName;
-		</cfscript>
+		<cfset sf = CreateObject("java", "coldfusion.server.ServiceFactory")>
+		<cfset mapping = "/binderFile">
+		<cfset mappings = sf.runtimeService.getMappings()>
+		
+		<cfif structKeyExists(mappings, mapping)>
+			<cfset binderPath = expandPath('/binderFile')>
+			<cfset binderNamePos = listLen(binderPath,"\")>
+			<cfset binderName = listGetAt( binderPath, binderNamePos, "\" )>
+			<cfset bindernameLength = len(binderName)>
+			<cfset binderName = Left(binderName,bindernameLength-4)>
+			<cfset binderFullName = "fw.config.binders.#binderName#">
+			<cfreturn binderFullName>
+		<cfelse>	<!--- If 'binderFile' mapping does not exist, use default 'wirelessadvocates_config' --->
+			<cfset configPath = expandPath('/wirelessadvocates_config')>
+			<cfset channelNamePos = listLen(configPath,"\")-1>
+			<cfset channelName = listGetAt( configPath, channelNamePos, "\" )>
+			<cfset binderFullName = "fw.config.binders.#channelName#">
+			<cfreturn binderFullName>
+		</cfif>
+
 	</cffunction>
 	
 </cfcomponent>
