@@ -1,8 +1,6 @@
 <cfcomponent output="false" extends="BaseHandler">
   
   <cfproperty name="CarrierFacade" inject="id:CarrierFacade" />
-  <cfproperty name="AttCarrier" inject="id:AttCarrier" />
-  <cfproperty name="VzwCarrier" inject="id:VzwCarrier" />
 
   <cfproperty name="PlanService" inject="id:PlanService" />
 
@@ -28,6 +26,9 @@
     <cfset var prevAction = "" />
     
     <cfscript>
+      // KEEP THIS INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
+      // carrierObjExists = structdelete(session, 'carrierObj', true);
+
       prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/";
 
 
@@ -339,12 +340,19 @@
       select * from prc.planData where carrierid = #prc.productData.carrierId# order by planprice
     </cfquery>
     --->
-    <!--- <cfscript>
+
+    <cfscript>
       args.carrierId = prc.productData.carrierId;
       args.zipCode = session.cart.getZipcode();
-    </cfscript> --->
+    </cfscript>
 
-    <cfset prc.planData = PlanService.getPlans(prc.productData.carrierId, session.cart.getZipcode()) />
+    <cfset prc.planData = PlanService.getPlans(argumentCollection=args) />
+    <cfset prc.planDataShared = PlanService.getSharedPlans(argumentCollection=args) />
+
+    <!--- debugging: --->
+    <!--- <cfset prc.planDataShared = queryNew("id") /> --->
+    <!--- <cfdump var="#prc.planDataShared#"><cfabort> --->
+
   </cffunction>
 
 

@@ -975,8 +975,9 @@ $j(document).ready(function($j) {
 			</div>
 
 			<div class="col-md-6">
-
-				<cfif findNoCase( 'costco', prc.channelConfig.getDisplayName() )>
+				
+				<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only --->
+				<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase("109,42",prc.productData.CarrierId)>
 
 					<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
 				

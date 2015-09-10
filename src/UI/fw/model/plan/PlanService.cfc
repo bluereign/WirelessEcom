@@ -7,6 +7,7 @@
   <cffunction name="getPlans" access="public" output="false" returntype="any" hint="Return a query object of plans.">
     <cfargument name="carrierId" required="true" />
     <cfargument name="zipCode" required="true" />
+    <cfargument name="isShared" type="string" default="" />
     <cfargument name="idList" type="string" default="" />
 
     <cfquery name="planData" datasource="#application.dsn.wirelessAdvocates#">
@@ -58,21 +59,46 @@
       WHERE 1 = 1 
         AND p.carrierID IN ( #arguments.carrierId# ) 
         AND p.PlanPrice > 0 
-      <cfif len(trim(arguments.zipCode)) and not len(trim(arguments.idList))>
-        AND EXISTS  (
-            SELECT      1
-            FROM      catalog.dn_Plans AS p2 WITH (NOLOCK)
-            INNER LOOP JOIN catalog.RateplanMarket AS rm WITH (NOLOCK) ON p2.RateplanGuid = rm.RateplanGuid
-            INNER LOOP JOIN catalog.ZipCodeMarket AS zm WITH (NOLOCK) ON rm.MarketGuid = zm.MarketGuid
-            WHERE     zm.ZipCode  = <cfqueryparam value="#arguments.zipCode#" cfsqltype="cf_sql_varchar" />
-                  AND p2.CarrierBillCode = p.CarrierBillCode
+      <cfif len(trim(arguments.idList))>
+        AND (
+            1 = 0
+            <cfloop list="#arguments.idList#" index="local.thisId">
+              <cfif len(trim(local.thisId))>
+                OR (
+                  p.planId  = <cfqueryparam value="#local.thisId#" cfsqltype="cf_sql_integer" />
+                )
+              </cfif>
+            </cfloop>
           )
+      <cfelse>
+        <cfif arguments.isShared is 'true'>
+          AND p.IsShared = 1
+        </cfif>
+        <cfif len(trim(arguments.zipCode))>
+          AND EXISTS  (
+              SELECT      1
+              FROM      catalog.dn_Plans AS p2 WITH (NOLOCK)
+              INNER LOOP JOIN catalog.RateplanMarket AS rm WITH (NOLOCK) ON p2.RateplanGuid = rm.RateplanGuid
+              INNER LOOP JOIN catalog.ZipCodeMarket AS zm WITH (NOLOCK) ON rm.MarketGuid = zm.MarketGuid
+              WHERE     zm.ZipCode  = <cfqueryparam value="#arguments.zipCode#" cfsqltype="cf_sql_varchar" />
+                    AND p2.CarrierBillCode = p.CarrierBillCode
+            )
+        </cfif>
       </cfif>
-
-        ORDER BY p.planPrice ASC, CAST(p.minutes_anytime AS integer) ASC, CAST(p.DataLimitGB AS DECIMAL(10,5)) ASC
+      
+      ORDER BY p.planPrice ASC, CAST(p.minutes_anytime AS integer) ASC, CAST(p.DataLimitGB AS DECIMAL(10,5)) ASC
     </cfquery>
 
     <cfreturn planData />
+  </cffunction>
+
+  <cffunction name="getSharedPlans" access="public" output="false" returntype="any" hint="Return a query object of plans.">
+    <cfargument name="carrierId" required="true" />
+    <cfargument name="zipCode" required="true" />
+    <cfargument name="isShared" type="string" default="true" />
+    <cfargument name="idList" type="string" default="" />
+
+    <cfreturn getPlans(argumentCollection=arguments) />
   </cffunction>
 
 </cfcomponent>
