@@ -265,7 +265,7 @@
           rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
           prc.args_account = {
             carrierId = prc.productData.carrierId,
-            PhoneNumber = rc.PhoneNumber,
+            SubscriberNumber = rc.PhoneNumber,
             ZipCode = rc.inputZip,
             SecurityId = rc.inputSSN,
             Passcode = rc.inputPin
@@ -278,15 +278,16 @@
           switch ( rc.respObj.getHttpStatus() ) {
             // Status of '200 OK' is success:
             case "200 OK": {
-              session.carrierObj = carrierFacade.Account(argumentCollection = prc.args_account);
+              session.carrierObj = rc.respObj;
               // session.zipCode = session.carrierObj.getAddress().getZipCode();
               session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
+              
               // we only set carrier when they've logged in.  But, do we need carrier in the session?
               // session.cart.setCarrierId(prc.productData.carrierId);
 
               // TODO: Change above line to set session.cart.setCarrierId() from the carrierObj response when the method has been developed and made available.
 
-              // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm:)
+              // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
               setNextEvent(
                 event="#rc.nextAction#",
                 persist="type,pid");
@@ -436,35 +437,6 @@
       
     </cfscript>
   </cffunction>
-
-
-<!--- <cffunction name="aroundHandler" returntype="void" output="false" hint="Around handler">
-    <cfargument name="event">
-    <cfargument name="targetAction">
-    <cfargument name="eventArguments">
-    <cfargument name="rc">
-    <cfargument name="prc">
-    <cfset var args = "">
-
-    <cfscript>
-      try{
-        args = {
-          event = arguments.event,
-          rc    = arguments.rc,
-          prc   = arguments.prc
-
-        };
-        structAppend(args,eventArguments);
-        return arguments.targetAction(argumentCollection=args);
-      }
-      catch(Any e){
-        log.error("Error executing #targetAction.toString()#: #e.message# #e.detail#", e);
-        event.setValue("exception", e)
-          .setView("devicebuilder/error");
-      }
-    </cfscript>
-  
-</cffunction> --->
 
 
 </cfcomponent>
