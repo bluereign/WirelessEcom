@@ -29,19 +29,22 @@
         </header>
         <ul class="nav nav-tabs">
           
+          <!--- EXISTING --->
+          <cfif structKeyExists(session,"carrierObj")>
+            <li role="presentation">
+              <a href="##existing" aria-controls="shared" role="tab" data-toggle="tab">Existing Plans</a>
+            </li>
+          </cfif>
+          
+          <!--- INDIVIDUAL --->
           <li role="presentation" class="active">
             <a href="##individual" aria-controls="individual" role="tab" data-toggle="tab">Individual Plans</a>
           </li>
           
+          <!--- SHARED --->
           <cfif prc.planDataShared.recordcount>
             <li role="presentation">
               <a href="##shared" aria-controls="shared" role="tab" data-toggle="tab">Shared Plans</a>
-            </li>
-          </cfif>
-
-          <cfif structKeyExists(session,"carrierObj")>
-            <li role="presentation">
-              <a href="##existing" aria-controls="shared" role="tab" data-toggle="tab">Existing Plans</a>
             </li>
           </cfif>
 
@@ -49,6 +52,19 @@
 
         <div class="tab-content plans">
           
+          <!--- EXISTING --->
+          <cfif structKeyExists(session,"carrierObj")>
+            <div role="tabpanel" class="tab-pane" id="existing">
+              <div class="carousel" id="existingCarousel">
+                
+
+                ...
+
+              </div>
+            </div> <!--- tab-pane --->
+          </cfif>
+          
+          <!--- INDIVIDUAL --->
           <div role="tabpanel" class="tab-pane active" id="individual">
             <div class="carousel" id="individualCarousel">
               
@@ -69,7 +85,8 @@
               
             </div>
           </div> <!--- tab-pane --->
-
+          
+          <!--- SHARED --->
           <cfif prc.planDataShared.recordcount>
             <div role="tabpanel" class="tab-pane" id="shared">
               <div class="carousel" id="sharedCarousel">
@@ -88,17 +105,6 @@
                     </a>
                   </div>
                 </cfloop>
-
-              </div>
-            </div> <!--- tab-pane --->
-          </cfif>
-          
-          <cfif structKeyExists(session,"carrierObj")>
-            <div role="tabpanel" class="tab-pane" id="existing">
-              <div class="carousel" id="existingCarousel">
-                
-
-                ...
 
               </div>
             </div> <!--- tab-pane --->

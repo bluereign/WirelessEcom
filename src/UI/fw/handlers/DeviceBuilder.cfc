@@ -26,6 +26,9 @@
     <cfset var prevAction = "" />
     
     <cfscript>
+      // KEEP THIS INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
+      // carrierObjExists = structdelete(session, 'carrierObj', true);
+
       prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/";
 
 
