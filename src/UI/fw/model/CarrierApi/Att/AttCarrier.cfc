@@ -14,9 +14,9 @@
 	
 	<cffunction name="account" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
 		<!---<cfhttp url="#variables.CarrierServiceURL#/AttAccount?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>	--->	
-		<cfhttp url="#variables.CarrierServiceURL#/Account" method="POST">
+		<cfhttp url="#variables.CarrierServiceURL#/account/login" method="POST">
 			<cfhttpparam type="header" name="Content-Type" value="application/json" />
-    		<cfhttpparam type="body" value="#serializeJSON(arguments)#">
+    		<cfhttpparam type="body" value="#serializeJSonAddReferenceNumber(arguments)#">
 		</cfhttp>
 		<cfreturn processResults(cfhttp) />	
 	</cffunction>
