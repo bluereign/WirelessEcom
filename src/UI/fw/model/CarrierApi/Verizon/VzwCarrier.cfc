@@ -17,7 +17,8 @@
 	<cffunction name="account" output="false" access="public" returntype="fw.model.CarrierApi.Verizon.VzwCarrierResponse">
 		<cfhttp url="#variables.CarrierServiceURL#/VerizonAccount" method="POST">
 			<cfhttpparam type="header" name="Content-Type" value="application/json" />
-    		<cfhttpparam type="body" value="#serializeJSON(remapArgs(argumentCollection=arguments))#">
+    		<!---<cfhttpparam type="body" value="#serializeJSON(remapArgs(argumentCollection=arguments))#">--->
+			<cfhttpparam type="body" value="#serializeJSonAddReferenceNumber(arguments)#">
 		</cfhttp>
 		<cfreturn processResults(cfhttp) />	
 	</cffunction>

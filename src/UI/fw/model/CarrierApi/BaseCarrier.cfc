@@ -4,7 +4,16 @@
 		<cfreturn this />
 	</cffunction>
 
-
+	<cffunction name="serializeJSonAddReferenceNumber" access="public" returnType="string">
+		<cfargument name="args" type="struct" required="true" />
+	
+		<cfif isdefined("session.sessionid")>
+			<cfset arguments.args.ReferenceNumber = session.sessionid />
+		</cfif>
+		
+		<cfreturn serializeJSON(arguments.args) />
+	
+	</cffunction>
 	
 	
 	<!---
