@@ -23,6 +23,15 @@
 <cfloop array="#subscribers#" index="s">
 	<br/>Subscriber ###s_count#
 	<br/>Subscriber.getAccountStatus() = #s.getAccountStatus()#
+	<br/>Subscriber.getEligibilityDate() = #dateformat(s.getEligibilityDate(),"mm/dd/yyyy")#
+	<br/>Subscriber.getEligibilityStatus() = #s.getEligibilityStatus()#
+	<br/>Subscriber.getIsEligible() = #s.getIsEligible()#
+	<cfif s.getRatePlan().recordcount gt 0>
+		<br/>subscriber.getRatePlan()  - returns query
+		<br/><cfdump var="#s.getRatePlan()#">
+	<cfelse>
+		<br/>subscriber.getRatePlan() returned an empty query
+	</cfif>
 	<br/>Subscriber.getEmail() = #s.getEmail()#
 	<br/>Subscriber.getNumber() = #s.getNumber()#
 	<br/>Subscriber.getAddress().getAddressLine1() = #s.getAddress().getAddressLine1()#

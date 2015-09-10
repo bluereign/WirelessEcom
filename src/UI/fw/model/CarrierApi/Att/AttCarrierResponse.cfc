@@ -94,6 +94,10 @@
 				<cfset local.subscriber.setAddress(getAddress(local.s.address)) />	
 				<cfset local.subscriber.setEmail(local.s.contact.emailAddress) />
 				<cfset local.subscriber.setNumber(local.s.number) />
+				<cfset local.subscriber.setEligibilityDate(ParseDateTime(listgetat(local.s.upgradeInfo.eligibilityDate,1,"T"))) />
+				<cfset local.subscriber.setEligibilityStatus(local.s.upgradeInfo.EligibilityStatus) />
+				<cfset local.subscriber.setIsEligible(local.s.upgradeInfo.IsEligible) />
+				<cfset local.subscriber.setRatePlan(local.s.planInfo.Identifier) />
 			<cfset arrayAppend(local.subscribers,local.subscriber) />		
 		</cfloop>
 		<cfreturn local.subscribers />

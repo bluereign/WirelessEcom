@@ -25,6 +25,24 @@
 
 		<cfreturn local.PlanInfo />
 	</cffunction>
+	
+	<cffunction name="getDetailByBillCode" returntype="query">
+		<cfargument name="carrierBillcode" type="string" default="">
+		<cfset var local = structNew()>
+		<cfset local.PlanInfo = structNew()>
+
+		<cfquery name="local.PlanInfo" datasource="#application.dsn.wirelessAdvocates#">
+			SELECT
+				p.*
+			FROM
+				catalog.rateplan p
+			WHERE
+					p.carrierBillcode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#ARGUMENTS.carrierBillcode#">
+		</cfquery>
+
+
+		<cfreturn local.PlanInfo />
+	</cffunction>
 
 	<cffunction name="getCompare" access="public" returntype="query" output="false">
 		<cfargument name="planIDs" required="false" type="string" default="" />
