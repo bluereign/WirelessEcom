@@ -17,6 +17,11 @@
 		<cfreturn carrierObject(arguments.carrierId).account(argumentCollection = args) />		
 	</cffunction>		
 	
+	<cffunction name="upgradeEligibility" output="false" access="public" returntype="any">		
+		<cfset var args = passthruArgs(argumentCollection = arguments ) />
+		<cfreturn carrierObject(arguments.carrierId).upgradeEligibility(argumentCollection = args) />		
+	</cffunction>		
+	
 	<cffunction name="areaCode" output="false" access="public" returntype="any">		
 		<cfset var args = passthruArgs(argumentCollection = arguments ) />
 		<cfreturn carrierObject(arguments.carrierId).areaCode(argumentCollection = args) />		

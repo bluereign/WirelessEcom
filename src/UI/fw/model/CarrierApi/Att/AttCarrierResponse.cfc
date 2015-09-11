@@ -81,7 +81,6 @@
 			<cfreturn "n/a" />
 		</cfif>
 	</cffunction>
-
 	
 	<cffunction name="getSubscribers" access="public" returnType="array">
 		<cfset var local = {} />

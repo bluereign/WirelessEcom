@@ -50,5 +50,14 @@
 <br/><br/>Intentional Missing Method- getIDoNotExist() = #rc.respObj.getIDoNotExist()#
 </cfif>
 </h2>
-<cfdump var="#rc.respObj.getResponse()#" />
+<div style="margin-top:25px;">
+	<cfdump var="#rc.respObj.getResponse()#" />
+</div>
+<cfloop array="#rc.eligibility#" index="e" >
+	<div style="margin-top:25px;">
+		Subscriber Eligibility Detail:
+		<cfdump var="#e.getResponse()#" />
+	</div>
+</cfloop>	
+
 </cfoutput>

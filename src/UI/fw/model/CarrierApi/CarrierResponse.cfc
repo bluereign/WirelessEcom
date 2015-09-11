@@ -79,7 +79,34 @@
 	
 	<cffunction name="getActiveLines" access="public" returnType="numeric">
 		<cfreturn -1 />
-.	</cffunction>
+	</cffunction>
+
+	<cffunction name="getConversationid" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isdefined("resp.ConversationId")>
+			<cfreturn resp.conversationId />
+		<cfelse>
+			<cfreturn ""/>
+		</cfif>
+	</cffunction>	
+	
+	<cffunction name="getReferenceNumber" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isdefined("resp.ReferenceNumber")>
+			<cfreturn resp.referenceNumber />
+		<cfelse>
+			<cfreturn ""/>
+		</cfif>
+	</cffunction>	
+	
+	<cffunction name="getMessageReferenceId" access="public" returnType="string">
+		<cfset var resp = getResponse() />
+		<cfif isdefined("resp.messageReferenceId")>
+			<cfreturn resp.messageReferenceid />
+		<cfelse>
+			<cfreturn ""/>
+		</cfif>
+	</cffunction>	
 	
 	<cffunction name="getSubscribers" access="public" returnType="array">
 		<cfset var local = {} />

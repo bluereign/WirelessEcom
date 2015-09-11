@@ -21,6 +21,11 @@
 		<cfreturn processResults(cfhttp) />	
 	</cffunction>
 	
+	<cffunction name="upgradeEligibility" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
+		<cfhttp url="#variables.CarrierServiceURL#/UpgradeEligibility?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>		
+		<cfreturn processResults(cfhttp) />		
+	</cffunction>
+	
 	<cffunction name="areaCode" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
 		<cfhttp url="#variables.CarrierServiceURL#/AttAreaCode?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>		
 		<cfreturn processResults(cfhttp) />		
