@@ -350,7 +350,9 @@
         if ( structKeyExists(rc,"line") and isValid("integer", rc.line) and arrayLen(prc.subscribers) gte rc.line  ) {
           prc.subscriber = prc.subscribers[rc.line];
           prc.planDataExisting = prc.subscriber.getRatePlan();
+          prc.activetab = "existing";
         }
+        // TODO: Else, send redirect the logged in user to the upgradeline page here...
       }
       
       args.carrierId = prc.productData.carrierId;

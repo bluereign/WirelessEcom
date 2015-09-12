@@ -1,4 +1,9 @@
+<cfparam name="prc.activetab" default="individual" />
+
+
 <cfoutput>
+
+
 <!--- <DEBUG --->
                   <!--- <cfif structKeyExists(session,"carrierObj")>
                     <cfdump var="#session.carrierObj#">
@@ -14,9 +19,13 @@
                   <br>
                   <b>end debug info...</b>
                   <hr> --->
-<cfdump var="#prc.subscriber.getRatePlan()#">
+<!--- <cfdump var="#prc.subscriber.getRatePlan()#">
+<br>
+<cfdump var="#prc.planData#"> --->
 
 <!--- <end debug --->
+
+
 
   <div class="col-md-12">
     <form action="#prc.nextStep#">
@@ -33,13 +42,13 @@
           
           <!--- EXISTING --->
           <cfif structKeyExists(session,"carrierObj")>
-            <li role="presentation">
+            <li role="presentation" <cfif prc.activetab is 'existing'>class="active"</cfif> >
               <a href="##existing" aria-controls="shared" role="tab" data-toggle="tab">Existing Plans</a>
             </li>
           </cfif>
           
           <!--- INDIVIDUAL --->
-          <li role="presentation" class="active">
+          <li role="presentation" <cfif prc.activetab is 'individual'>class="active"</cfif> >
             <a href="##individual" aria-controls="individual" role="tab" data-toggle="tab">Individual Plans</a>
           </li>
           
@@ -56,18 +65,30 @@
           
           <!--- EXISTING --->
           <cfif structKeyExists(session,"carrierObj")>
-            <div role="tabpanel" class="tab-pane" id="existing">
+            <div role="tabpanel" class="tab-pane <cfif prc.activetab is 'existing'>active</cfif>" id="existing">
               <div class="carousel" id="existingCarousel">
                 
-
-                ...
+              <cfloop query="prc.planDataExisting">
+                <div class="info">
+                  <a href="##">
+                    <h3 style="height:40px"><span>#prc.planDataExisting.Title#</span></h3>
+                    <ul>
+                      <li class="large"><span>? GB</span></li>
+                    </ul>
+                    <div style="align:center;padding:20px;">#prc.planDataExisting.Type#</div>
+                    <div class="price">#dollarFormat(prc.planDataExisting.MonthlyFee)#</div>
+                    <button class="btn btn-dark-gray btn-block">Select Package</button>
+                    <div class="details-link">Plan Details</div>
+                  </a>
+                </div>
+              </cfloop>
 
               </div>
             </div> <!--- tab-pane --->
           </cfif>
           
           <!--- INDIVIDUAL --->
-          <div role="tabpanel" class="tab-pane active" id="individual">
+          <div role="tabpanel" class="tab-pane <cfif prc.activetab is 'individual'>active</cfif>" id="individual">
             <div class="carousel" id="individualCarousel">
               
               <cfloop query="prc.planData">
