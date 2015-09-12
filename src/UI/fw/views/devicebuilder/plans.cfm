@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- <DEBUG --->
-                  <cfif structKeyExists(session,"carrierObj")>
+                  <!--- <cfif structKeyExists(session,"carrierObj")>
                     <cfdump var="#session.carrierObj#">
                   </cfif>
                   <!--- <cfdump var="#prc.planData#"> --->
@@ -13,7 +13,9 @@
                   isStruct(session.cart): #isStruct(session.cart)#
                   <br>
                   <b>end debug info...</b>
-                  <hr>
+                  <hr> --->
+<cfdump var="#prc.subscriber.getRatePlan()#">
+
 <!--- <end debug --->
 
   <div class="col-md-12">

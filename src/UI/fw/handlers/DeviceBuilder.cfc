@@ -151,31 +151,31 @@
 
 
       // <TEMP dummy data:
-      if (!structKeyExists(prc,"userData")) {
-        prc.userData = {
-          phoneLines = [
-            {phoneNumber = "(206) 555 - 1111", isAvailable = true},
-            {phoneNumber = "(206) 555 - 4545", isAvailable = true},
-            {phoneNumber = "(206) 555 - 2222", isAvailable = true},
-            {phoneNumber = "(206) 555 - 3333", isAvailable = false},
-            {phoneNumber = "(206) 555 - 4444", isAvailable = false},
-            {phoneNumber = "(206) 555 - 5555", isAvailable = false},
-            {phoneNumber = "(206) 555 - 6666", isAvailable = false}
-            ],
-          username = "thedude",
-          firstname = "The",
-          middleinitial = "L",
-          lastname = "Dude",
-          company = "Self-employed",
-          address1 = "Hey Bro St.",
-          address2 = "",
-          city = "Los Angelos",
-          state = "CA",
-          zip = "90210",
-          homephone = "123-432-1231",
-          workphone = ""
-        };
-      }
+      // if (!structKeyExists(prc,"userData")) {
+      //   prc.userData = {
+      //     phoneLines = [
+      //       {phoneNumber = "(206) 555 - 1111", isAvailable = true},
+      //       {phoneNumber = "(206) 555 - 4545", isAvailable = true},
+      //       {phoneNumber = "(206) 555 - 2222", isAvailable = true},
+      //       {phoneNumber = "(206) 555 - 3333", isAvailable = false},
+      //       {phoneNumber = "(206) 555 - 4444", isAvailable = false},
+      //       {phoneNumber = "(206) 555 - 5555", isAvailable = false},
+      //       {phoneNumber = "(206) 555 - 6666", isAvailable = false}
+      //       ],
+      //     username = "thedude",
+      //     firstname = "The",
+      //     middleinitial = "L",
+      //     lastname = "Dude",
+      //     company = "Self-employed",
+      //     address1 = "Hey Bro St.",
+      //     address2 = "",
+      //     city = "Los Angelos",
+      //     state = "CA",
+      //     zip = "90210",
+      //     homephone = "123-432-1231",
+      //     workphone = ""
+      //   };
+      // }
       // <end Temp dummy data
 
 
@@ -321,6 +321,7 @@
     <cfargument name="prc">
 
     <cfscript>
+      prc.subscribers = session.carrierObj.getSubscribers();
       prc.addalineStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/addaline/';     
       prc.includeTooltip = true;
     </cfscript>
@@ -343,12 +344,22 @@
     --->
 
     <cfscript>
+      if (structKeyExists(session,"carrierObj")) {
+        prc.subscribers = session.carrierObj.getSubscribers();
+        // TODO: make sure a selected subscriber is handled (and required)
+        if ( structKeyExists(rc,"line") and isValid("integer", rc.line) and arrayLen(prc.subscribers) gte rc.line  ) {
+          prc.subscriber = prc.subscribers[rc.line];
+          prc.planDataExisting = prc.subscriber.getRatePlan();
+        }
+      }
+      
       args.carrierId = prc.productData.carrierId;
       args.zipCode = session.cart.getZipcode();
-    </cfscript>
+      
+      prc.planData = PlanService.getPlans(argumentCollection=args);
+      prc.planDataShared = PlanService.getSharedPlans(argumentCollection=args);
 
-    <cfset prc.planData = PlanService.getPlans(argumentCollection=args) />
-    <cfset prc.planDataShared = PlanService.getSharedPlans(argumentCollection=args) />
+    </cfscript>
 
     <!--- debugging: --->
     <!--- <cfset prc.planDataShared = queryNew("id") /> --->
