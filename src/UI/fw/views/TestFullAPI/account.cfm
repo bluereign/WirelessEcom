@@ -2,6 +2,7 @@
 <h1>Welcome to the CarrierFacade Test Page</h1>
 <a href="<cfoutput>#event.buildLink('testFullApi.account_input')#</cfoutput>"><button class="btn btn-default"  type="button">Do Another Lookup</button></a><br/><br/>
 <h2>
+<br/>getHttpStatusCode() = #rc.respObj.getHttpStatusCode()#
 <br/>getHttpStatus() = #rc.respObj.getHttpStatus()#
 <br/>getCarrierName() = #rc.respObj.getCarrierName()#
 <br/>getCarrierId() = #rc.respObj.getCarrierId()#
@@ -44,20 +45,17 @@
 	<cfset s_count = s_count + 1 />
 </cfloop>	
 
-
-
-
 <br/><br/>Intentional Missing Method- getIDoNotExist() = #rc.respObj.getIDoNotExist()#
 </cfif>
 </h2>
 <div style="margin-top:25px;">
 	<cfdump var="#rc.respObj.getResponse()#" />
 </div>
-<cfloop array="#rc.eligibility#" index="e" >
+<!---<cfloop array="#rc.eligibility#" index="e" >
 	<div style="margin-top:25px;">
 		Subscriber Eligibility Detail:
 		<cfdump var="#e.getResponse()#" />
 	</div>
-</cfloop>	
+</cfloop>	--->
 
 </cfoutput>

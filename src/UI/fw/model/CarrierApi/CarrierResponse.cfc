@@ -37,9 +37,7 @@
 	</cffunction>	
 	
 	<cffunction name="getResponse" access="public" returnType="struct">
-		
 		<cfreturn variables.instance.response />
-		
 	</cffunction>	
 	
 	<cffunction name="setStatus" access="public" returnType="void">
@@ -67,6 +65,20 @@
 			<cfreturn "Undefined" />
 		</cfif>
 	</cffunction>
+	
+	<cffunction name="setHttpStatusCode" access="public" returnType="void">
+		<cfargument name="httpStatusCode" type="numeric" required="true" />		
+		<cfset variables.instance.httpStatusCode = arguments.httpStatusCode />
+	</cffunction>
+	
+	<cffunction name="getHttpStatusCode" access="public" returnType="numeric">
+		<cfif isDefined("variables.instance.httpStatusCode")>
+			<cfreturn variables.instance.httpStatusCode />
+		<cfelse>
+			<cfreturn "0" />
+		</cfif>
+	</cffunction>
+	
 	
 	<cffunction name="getAccountIdentifier" access="public" returnType="string">
 		<cfset var resp = getResponse() />
@@ -120,7 +132,32 @@
 		<cfreturn address />
 	</cffunction>	
 	
+		<cffunction name="setResult" access="public" >
+		<cfargument name="result" type="boolean" default="false"/>
+		<cfset variables.instance.result = arguments.result />
+	</cffunction>
 	
+	<cffunction name="getResult" access="public" returnType="boolean">
+		<cfif isdefined("variables.instance.result")>
+			<cfreturn variables.instance.result />
+		<cfelse>
+			<cfreturn false />
+		</cfif>
+	</cffunction>
+	
+	<cffunction name="setResultDetail" access="public" >
+		<cfargument name="resultDetail" type="string" default="No detail information provided"/>
+		<cfset variables.instance.resultDetail = arguments.resultDetail />
+	</cffunction>
+	
+	<cffunction name="getResultDetail" access="public" returnType="string">
+		<cfif isdefined("variables.instance.resultDetail")>
+			<cfreturn variables.instance.resultDetail />
+		<cfelse>
+			<cfreturn "not available" />
+		</cfif>
+	</cffunction>
+
 	
 	
 	
@@ -129,7 +166,7 @@
 	<cffunction name="OnMissingMethod" access="public" returntype="any" output="false" hint="Handles missing method exceptions.">
 	    <cfargument name="MissingMethodName" type="string" required="true" hint="The name of the missing method." />
     	<cfargument name="MissingMethodArguments" type="struct" required="true" hint="The arguments that were passed to the missing method. This might be a named argument set or a numerically indexed set." />		
-	    <cfreturn "#missingMethodName#: method not found" />
+	    <cfreturn "CarrierResponse - #missingMethodName#: method not found" />
 	</cffunction>
 
 		

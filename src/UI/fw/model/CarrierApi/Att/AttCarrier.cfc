@@ -12,16 +12,25 @@
 		Carrier API Entry Points (alphabetical order)
 	----------------------------------------------------------------------------------------------------->
 	
-	<cffunction name="account" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
-		<!---<cfhttp url="#variables.CarrierServiceURL#/AttAccount?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>	--->	
-		<cfhttp url="#variables.CarrierServiceURL#/account/login" method="POST">
+	<cffunction name="account" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttAccountCarrierResponse">
+		<cfset var local = structNew() />	
+		<cfhttp url="#variables.CarrierServiceURL#/account/login" method="POST" result="local.cfhttp">
 			<cfhttpparam type="header" name="Content-Type" value="application/json" />
     		<cfhttpparam type="body" value="#serializeJSonAddReferenceNumber(arguments)#">
 		</cfhttp>
-		<cfreturn processResults(cfhttp) />	
+		<!--- create the carrier response --->
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttAccountCarrierResponse').init() />
+		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+
+		<cfset local.resp = local.carrierResponse.getResponse() />
+		<cfif structKeyExists(local.resp,"ResponseStatusMessage") and len(local.resp.ResponseStatusMessage)>
+			<cfset local.carrierResponse.setResult(false) />
+			<cfset local.carrierResponse.setResultDetail(local.resp.ResponseStatusMessage) />
+		</cfif>
+		<cfreturn local.carrierResponse />
 	</cffunction>
 	
-	<cffunction name="upgradeEligibility" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
+	<!---<cffunction name="upgradeEligibility" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
 		<cfhttp url="#variables.CarrierServiceURL#/UpgradeEligibility?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>		
 		<cfreturn processResults(cfhttp) />		
 	</cffunction>
@@ -29,26 +38,38 @@
 	<cffunction name="areaCode" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
 		<cfhttp url="#variables.CarrierServiceURL#/AttAreaCode?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>		
 		<cfreturn processResults(cfhttp) />		
-	</cffunction>
+	</cffunction>--->
 
 
 	<!--- 
 		Look at the results of the call and set appropriate fields in the carrier response	
 	--->
-	<cffunction name="processResults" returnType="fw.model.CarrierApi.Att.AttCarrierResponse" access="private">
+	<cffunction name="processResults" returnType="Any" access="private">
 		<cfargument type="struct" name="cfhttpResult" required="true" /> 
+		<cfargument type="any" name="carrierResponse" required="true" /> 
 		<cfset var emptyObj = {} />
-				
-		<cfset var carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttCarrierResponse').init() />
-		<cfset carrierResponse.setHttpStatus(cfhttpResult.statusCode) />
+		
+		<!--- create the carrier response --->
+		<!---<cfset var carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttCarrierResponse').init() />--->
+		<cfset carrierResponse.setHttpStatus(arguments.cfhttpResult.statusCode) />
+		<cfif isdefined("arguments.cfhttpResult.responseHeader.status_code") and isNumeric(arguments.cfhttpResult.responseHeader.status_code) >
+			<cfset carrierResponse.setHttpStatusCode(arguments.cfhttpResult.responseHeader.status_code) />
+		</cfif>
+		
+		<!--- Copy the response or an empty object into the carrierResponse --->
 		<cfif isJson(arguments.cfhttpResult.fileContent)>			
 			<cfset carrierResponse.setResponse(deserializeJson(arguments.cfhttpResult.fileContent,true)) />
 		<cfelse>
 			<cfset carrierResponse.setResponse(emptyObj) />
 		</cfif>
 		
-		<!--- if httpStatus is 200 OK status = 0 else more specific case error may be set --->
-		
+		<cfif arguments.cfhttpResult.responseHeader.status_code is 200>			
+			<cfset carrierResponse.setResult(true) />
+			<cfset carrierResponse.setResultDetail("OK") />
+		<cfelse>
+			<cfset carrierResponse.setResult(false) />
+			<cfset carrierResponse.setResultDetail("Processing Error") />
+		</cfif>
 		
 		<cfreturn carrierResponse />
 	
