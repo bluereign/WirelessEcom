@@ -66,6 +66,9 @@
               <!--- MORE Everything<br> Talk, Text, and Data --->
               <cfif structKeyExists(prc,"planInfo")>
                 #prc.planInfo.DetailTitle#
+                <cfif isDefined("prc.planDataExisting.productId") and prc.planDataExisting.productId eq prc.planInfo.productId>
+                  - Existing
+                </cfif>
               <cfelse>
                 (Plan not yet selected)
               </cfif>
@@ -81,7 +84,7 @@
                     <cfif structKeyExists(prc,"planInfo")>
                       #dollarFormat(prc.planInfo.MonthlyFee)#/mo
                     <cfelse>
-                      
+
                     </cfif>
                   </td>
                 </tr>
