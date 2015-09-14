@@ -104,7 +104,32 @@
 		map("MockCarrier")
 			.to("fw.model.carrierApi.Mock.MockCarrier")
 			.asSingleton();	
+			
+	// FullAPI Shopping Cart		
 		
+		map("cart")
+			.to("fw.model.shopping.cart")
+			.asSingleton();
+	
+		map("cartHelper")
+			.to("fw.model.shopping.cartHelper")
+			.asSingleton();
+							
+		map("cartItem")
+			.to("fw.model.shopping.cartItem")
+			.asSingleton();
+		
+		map("cartPriceBlock")
+			.to("fw.model.shopping.cartPriceBlock")
+			.asSingleton();
+
+			
+		map("cartValidationResponse")
+			.to("fw.model.shopping.cartValidationResponse")
+			.asSingleton();
+			
+			
+	
 
 		// Carrier Plans
 		map("PlanService")
