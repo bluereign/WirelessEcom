@@ -21,7 +21,7 @@
     </div>
     <div class="row">
       <aside class="details">
-        <h3>Upgrading Line 1</h3>
+        <h3>#prc.tallyboxHeader#</h3>
         <div class="row">
           <div class="col-xs-4">
             <img class="img-responsive" id="prodDetailImg" src="#prc.productImages[1].imagesrc#" border="0" width="50" alt="#prc.productImages[1].imageAlt#"/>

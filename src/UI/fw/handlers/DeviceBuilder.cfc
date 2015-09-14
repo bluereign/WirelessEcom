@@ -1,7 +1,6 @@
 <cfcomponent output="false" extends="BaseHandler">
   
   <cfproperty name="CarrierFacade" inject="id:CarrierFacade" />
-
   <cfproperty name="PlanService" inject="id:PlanService" />
 
   <cfproperty name="AssetPaths" inject="id:assetPaths" scope="variables" />
@@ -88,31 +87,37 @@
           prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
           prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
+          prc.tallyboxHeader = "Upgrading";
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Carrier Login","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
+          prc.tallyboxHeader = "Add a Line";
           break;
         case "new":
           prc.navItemsAction = ["plans","protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
+          prc.tallyboxHeader = "New Customer";
           break;
         case "upgradex":
           prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
           prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
+          prc.tallyboxHeader = "Upgrading";
           break;
         case "addalinex":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
+          prc.tallyboxHeader = "Add a Line";
           break;
         case "newx":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
+          prc.tallyboxHeader = "New Customer";
           break;
         default:
           // same as 'upgrade'
@@ -143,6 +148,30 @@
         prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       }
       // <end Navigation
+
+
+      // <SELECTED LINE AND SUBSCRIBERS
+      if (structKeyExists(session,"carrierObj")) {
+        prc.subscribers = session.carrierObj.getSubscribers();
+        // TODO: make sure a selected subscriber is handled (and required)
+        if ( structKeyExists(rc,"line") and isValid("integer", rc.line) and arrayLen(prc.subscribers) gte rc.line  ) {
+          prc.subscriber = prc.subscribers[rc.line];
+          prc.planDataExisting = prc.subscriber.getRatePlan();
+          prc.activetab = "existing";
+          // TODO: Wrap the following in a phone number formatting function:
+          prc.subscriber.phoneNumber = reReplace(prc.subscriber.getNumber(),"[{}\(\)\^$&%##!@=<>:;,~`'\'\*\?\/\+\|\[\\\\]|\]|\-",'','all');
+          prc.subscriber.phoneNumber1 = left(prc.subscriber.phoneNumber, 3);
+          prc.subscriber.phoneNumber2 = mid(prc.subscriber.phoneNumber, 4, 3);
+          prc.subscriber.phoneNumber3 = right(prc.subscriber.phoneNumber, 4);
+          prc.subscriber.phoneNumber = "(#prc.subscriber.phoneNumber1#) #prc.subscriber.phoneNumber2#-#prc.subscriber.phoneNumber3#";
+
+          prc.tallyboxHeader = "Upgrading " & prc.subscriber.phoneNumber;
+        }
+        // TODO: Else if page is 'plans' and type is 'upgrade', send redirect the logged in user to the upgradeline page here...
+      }
+      // <end selected line
+
+
 
 
       // <LAYOUT
@@ -333,40 +362,33 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var args = {} />
-    
-    <!--- 
-    First attempts....
-    <cfset prc.planData = application.model.plan.getByFilter(idList=rc.pid, sort="PriceAsc") />
-    <cfset prc.planData = application.model.plan.getByFilter(sort="PriceAsc") />
-    <cfquery name="prc.planData" dbtype="query">
-      select * from prc.planData where carrierid = #prc.productData.carrierId# order by planprice
-    </cfquery>
-    --->
 
     <cfscript>
-      if (structKeyExists(session,"carrierObj")) {
-        prc.subscribers = session.carrierObj.getSubscribers();
-        // TODO: make sure a selected subscriber is handled (and required)
-        if ( structKeyExists(rc,"line") and isValid("integer", rc.line) and arrayLen(prc.subscribers) gte rc.line  ) {
-          prc.subscriber = prc.subscribers[rc.line];
-          prc.planDataExisting = prc.subscriber.getRatePlan();
-          prc.activetab = "existing";
-        }
-        // TODO: Else, send redirect the logged in user to the upgradeline page here...
-      }
-      
+    // TODO: if type is 'upgrade', make sure a line is selected.  If not, send to 'upgradealine'.
+
       args.carrierId = prc.productData.carrierId;
       args.zipCode = session.cart.getZipcode();
       
       prc.planData = PlanService.getPlans(argumentCollection=args);
       prc.planDataShared = PlanService.getSharedPlans(argumentCollection=args);
-
     </cfscript>
+
+    <!--- If an existing plan's productId exists, then see if it is eligible (i.e. in the Individual or Shared plans queries) --->
+    <cfif isDefined("prc.planDataExisting.productId") and isNumeric(prc.planDataExisting.productId)>
+      <cfquery dbtype="query" name="qryExistingAvailable">
+        select productId from prc.planData where productId = #prc.planDataExisting.productId#
+        union
+        select productId from prc.planDataShared where productId = #prc.planDataExisting.productId#
+      </cfquery>
+      <cfif qryExistingAvailable.recordcount gt 0 >
+        <cfset prc.existingPlanEligible = true />
+      </cfif>
+    </cfif>
+
 
     <!--- debugging: --->
     <!--- <cfset prc.planDataShared = queryNew("id") /> --->
     <!--- <cfdump var="#prc.planDataShared#"><cfabort> --->
-
   </cffunction>
 
 

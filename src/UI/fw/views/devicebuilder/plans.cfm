@@ -1,4 +1,5 @@
 <cfparam name="prc.activetab" default="individual" />
+<cfparam name="prc.existingPlanEligible" default="false" />
 
 
 <cfoutput>
@@ -22,13 +23,16 @@
 <!--- <cfdump var="#prc.subscriber.getRatePlan()#">
 <br>
 <cfdump var="#prc.planData#"> --->
-
+<!--- <cfdump var="#prc.subscriber.getNumber()#"> --->
 <!--- <end debug --->
 
 
 
   <div class="col-md-12">
-    <form action="#prc.nextStep#">
+    <form action="#prc.nextStep#" method="post">
+      <cfif structKeyExists(rc,"line")>
+        <input type="hidden" name="line" value="#rc.line#">
+      </cfif>
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
@@ -71,13 +75,18 @@
               <cfloop query="prc.planDataExisting">
                 <div class="info">
                   <a href="##">
-                    <h3 style="height:40px"><span>#prc.planDataExisting.Title#</span></h3>
+                    <h3 style="height:40px"><span>#prc.planDataExisting.DetailTitle# - Existing</span></h3>
                     <ul>
-                      <li class="large"><span>? GB</span></li>
+                      <li class="large"><span>#prc.planDataExisting.DataLimitGB# GB</span></li>
                     </ul>
-                    <div style="align:center;padding:20px;">#prc.planDataExisting.Type#</div>
+                    <div style="align:center;padding:20px;">#prc.planDataExisting.SummaryDescription#</div>
                     <div class="price">#dollarFormat(prc.planDataExisting.MonthlyFee)#</div>
-                    <button class="btn btn-dark-gray btn-block">Select Package</button>
+                    <cfif prc.existingPlanEligible>
+                      <button class="btn btn-dark-gray btn-block">Select Package</button>
+                    <cfelse>
+                      <button class="btn btn-dark-gray btn-block" disabled="disabled">Unavailable for this device</button>
+                    </cfif>
+                    
                     <div class="details-link">Plan Details</div>
                   </a>
                 </div>
