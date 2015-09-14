@@ -373,6 +373,19 @@
       prc.planDataShared = PlanService.getSharedPlans(argumentCollection=args);
     </cfscript>
 
+    <!--- If an existing plan's productId exists, then see if it is eligible (i.e. in the Individual or Shared plans queries) --->
+    <cfif isDefined("prc.planDataExisting.productId") and isNumeric(prc.planDataExisting.productId)>
+      <cfquery dbtype="query" name="qryExistingAvailable">
+        select productId from prc.planData where productId = #prc.planDataExisting.productId#
+        union
+        select productId from prc.planDataShared where productId = #prc.planDataExisting.productId#
+      </cfquery>
+      <cfif qryExistingAvailable.recordcount gt 0 >
+        <cfset prc.existingPlanEligible = true />
+      </cfif>
+    </cfif>
+
+
     <!--- debugging: --->
     <!--- <cfset prc.planDataShared = queryNew("id") /> --->
     <!--- <cfdump var="#prc.planDataShared#"><cfabort> --->
