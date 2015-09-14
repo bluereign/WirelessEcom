@@ -1,6 +1,6 @@
 <cfoutput>
   <div class="col-md-12">
-    <form action="#prc.nextStep#">
+    <form action="#prc.nextStep#" method="post">
       <section class="content">
         <header class="main-header">
           <h1>Upgrade or Add a Line</h1>

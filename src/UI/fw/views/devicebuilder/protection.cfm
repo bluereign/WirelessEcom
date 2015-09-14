@@ -5,8 +5,11 @@
         <h1>Payment, Protection &amp; Services Plans</h1>
         <p>The following services are available for your device based on your plan.</p>
       </header>
-      <form action="#prc.nextStep#">
+      <form action="#prc.nextStep#" method="post">
         <div class="pull-right">
+          <cfif structKeyExists(rc,"line")>
+            <input type="hidden" name="line" value="#rc.line#">
+          </cfif>
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>

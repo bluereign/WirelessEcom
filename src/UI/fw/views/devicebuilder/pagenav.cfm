@@ -5,33 +5,36 @@
       <cfloop index="i" from="1" to="#arrayLen(prc.navItemsAction)#">
         
         <cfif event.getCurrentAction() is prc.navItemsAction[i]>
-          <cfset request.isCurrent = true>
+          <cfset prc.isCurrent = true>
         <cfelse>
-          <cfset request.isCurrent = false>
+          <cfset prc.isCurrent = false>
         </cfif>
         <cfif i lt listFindNoCase(arrayToList(prc.navItemsAction), event.getCurrentAction())>
-          <cfset request.isComplete = true>
-          <cfset request.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/'>
+          <cfset prc.isComplete = true>
+          <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/'>
+          <cfif structKeyExists(rc,"line")>
+            <cfset prc.navUrl = prc.navUrl & 'line/' & rc.line & '/'>
+          </cfif>
         <cfelse>
-          <cfset request.isComplete = false>
+          <cfset prc.isComplete = false>
 
 <!--- change this before production to disabled URL when item is not complete --->
 <!--- UNCOMMENT THIS NEXT LINE: --->
           <!--- <cfset request.navUrl = 'javascript: void(0)'> --->
 
 <!--- COMMENT OUT THIS NEXT LINE: --->
-          <cfset request.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/'>
+          <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/'>
 
         </cfif>
         
         <li role="presentation" 
-          <cfif request.isCurrent>
+          <cfif prc.isCurrent>
             class="active"
           <cfelse>
             class="hidden-xs
-            <cfif request.isComplete>complete</cfif>"
+            <cfif prc.isComplete>complete</cfif>"
           </cfif>>
-          <a href="#request.navUrl#"><span>#i#</span>#prc.navItemsText[i]#</a>
+          <a href="#prc.navUrl#"><span>#i#</span>#prc.navItemsText[i]#</a>
         </li>
       </cfloop>
     </ul>

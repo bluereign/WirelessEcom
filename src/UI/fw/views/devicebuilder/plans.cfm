@@ -22,13 +22,16 @@
 <!--- <cfdump var="#prc.subscriber.getRatePlan()#">
 <br>
 <cfdump var="#prc.planData#"> --->
-
+<!--- <cfdump var="#prc.subscriber.getNumber()#"> --->
 <!--- <end debug --->
 
 
 
   <div class="col-md-12">
-    <form action="#prc.nextStep#">
+    <form action="#prc.nextStep#" method="post">
+      <cfif structKeyExists(rc,"line")>
+        <input type="hidden" name="line" value="#rc.line#">
+      </cfif>
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
