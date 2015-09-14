@@ -29,30 +29,41 @@
 	</cffunction>
 	
 	<cffunction name="getAddress" access="public" returnType="cfc.model.address">
-		<cfargument name="rawAddress" type="struct" required="false" default="#getResponse().account.address#" />
-		<cfset var address = createObject('component','cfc.model.Address').init() />
+		<cfargument name="rawAddress" type="any" required="false" default="structNew()" />
+		<cfset var local = structNew() />	
+			
+		<cfif not isStruct(arguments.rawAddress)>
+			<cfset arguments.rawAddress = structNew() />
+		</cfif>
+		<cfif structIsEmpty(arguments.rawAddress)>
+			<cfset local.resp = getResponse() />
+			<cfif isdefined('resp.account.address')>
+				<cfset arguments.rawAddress = resp.account.address />
+			</cfif>
+		</cfif>
+		<cfset local.address = createObject('component','cfc.model.Address').init() />
 		<cfif isdefined("rawAddress.addressLine1")>
-			<cfset address.setAddressLine1(rawAddress.addressLine1) />
+			<cfset local.address.setAddressLine1(rawAddress.addressLine1) />
 		</cfif>
 		<cfif isdefined("rawAddress.addressLine2")>
-			<cfset address.setAddressLine2(rawAddress.addressLine2) />
+			<cfset local.address.setAddressLine2(rawAddress.addressLine2) />
 		</cfif>
 		<cfif isdefined("rawAddress.city")>
-			<cfset address.setCity(rawAddress.city) />
+			<cfset local.address.setCity(rawAddress.city) />
 		</cfif>
 		<cfif isdefined("rawAddress.country")>
-			<cfset address.setCountry(rawAddress.Country) />
+			<cfset local.address.setCountry(rawAddress.Country) />
 		</cfif>
 		<cfif isdefined("rawAddress.state")>
-			<cfset address.setState(rawAddress.state) />
+			<cfset local.address.setState(rawAddress.state) />
 		</cfif>
 		<cfif isdefined("rawAddress.zip.zip")>
-			<cfset address.setZipCode(rawAddress.zip.zip) />
+			<cfset local.address.setZipCode(rawAddress.zip.zip) />
 		</cfif>
 		<cfif isdefined("rawAddress.zip.zipExtension")>
-			<cfset address.setZipCodeExtension(rawAddress.zip.zipExtension) />
+			<cfset local.address.setZipCodeExtension(rawAddress.zip.zipExtension) />
 		</cfif>
-		<cfreturn address />
+		<cfreturn local.address />
 	</cffunction>	
 	
 	<cffunction name="getCustomerEmail" access="public" returnType="string">
