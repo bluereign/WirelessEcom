@@ -82,7 +82,7 @@
                     <div style="align:center;padding:20px;">#prc.planDataExisting.SummaryDescription#</div>
                     <div class="price">#dollarFormat(prc.planDataExisting.MonthlyFee)#</div>
                     <cfif prc.existingPlanEligible>
-                      <button class="btn btn-dark-gray btn-block">Select Package</button>
+                      <button class="btn btn-dark-gray btn-block" name="plan" value="#productid#">Select Package</button>
                     <cfelse>
                       <button class="btn btn-dark-gray btn-block" disabled="disabled">Unavailable for this device</button>
                     </cfif>
@@ -109,7 +109,7 @@
                     </ul>
                     <div style="align:center;padding:20px;">#prc.planData.SummaryDescription#</div>
                     <div class="price">$#int(prc.planData.MonthlyFee)#<!--- #dollarFormat(prc.planData.MonthlyFee)# ---></div>
-                    <button class="btn btn-dark-gray btn-block">Select Package</button>
+                    <button class="btn btn-dark-gray btn-block" name="plan" value="#productid#">Select Package</button>
                     <div class="details-link">Plan Details</div>
                   </a>
                 </div>
@@ -132,7 +132,7 @@
                       </ul>
                       <div style="align:center;padding:20px;">#prc.planDataShared.SummaryDescription#</div>
                       <div class="price">$#int(prc.planDataShared.MonthlyFee)#<!--- #dollarFormat(prc.planDataShared.MonthlyFee)# ---></div>
-                      <button class="btn btn-dark-gray btn-block">Select Package</button>
+                      <button class="btn btn-dark-gray btn-block" name="plan" value="#productid#">Select Package</button>
                       <div class="details-link">Plan Details</div>
                     </a>
                   </div>

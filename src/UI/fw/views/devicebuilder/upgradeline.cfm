@@ -1,6 +1,9 @@
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
+      <cfif structKeyExists(rc,"line")>
+        <input type="hidden" name="line" value="#rc.line#">
+      </cfif>
       <section class="content">
         <header class="main-header">
           <h1>Upgrade or Add a Line</h1>

@@ -57,15 +57,33 @@
         <h4>Carrier Plan</h4>
         <div class="row">
           <div class="col-xs-4">
-            <img src="images/ex-sidebar-carrier.jpg" alt="carrier plan picture" />
+            <cfif isDefined("session.carrierObj.carrierLogo")>
+              <img src="#session.carrierObj.carrierLogo#" alt="#session.carrierObj.getCarrierName()#" />
+            </cfif>
           </div>
           <div class="col-xs-12">
-            <div class="name">MORE Everything<br> Talk, Text, and Data</div>
+            <div class="name">
+              <!--- MORE Everything<br> Talk, Text, and Data --->
+              <cfif structKeyExists(prc,"planInfo")>
+                #prc.planInfo.DetailTitle#
+              <cfelse>
+                (Plan not yet selected)
+              </cfif>
+            </div>
             <div class="table-responsive">
               <table class="table">
                 <tr>
-                  <td>Due Monthly for 24 Months Regular Price Due Today*<br>Line Access Free</td>
-                  <td class="price">$0.00</td>
+                  <td>
+                    <!--- Due Monthly for 24 Months Regular Price Due Today*<br>Line Access Free --->
+
+                  </td>
+                  <td class="price">
+                    <cfif structKeyExists(prc,"planInfo")>
+                      #dollarFormat(prc.planInfo.MonthlyFee)#/mo
+                    <cfelse>
+                      
+                    </cfif>
+                  </td>
                 </tr>
               </table>
             </div>

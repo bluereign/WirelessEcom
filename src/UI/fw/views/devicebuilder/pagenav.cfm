@@ -15,6 +15,9 @@
           <cfif structKeyExists(rc,"line")>
             <cfset prc.navUrl = prc.navUrl & 'line/' & rc.line & '/'>
           </cfif>
+          <cfif structKeyExists(rc,"plan")>
+            <cfset prc.navUrl = prc.navUrl & 'plan/' & rc.plan & '/'>
+          </cfif>
         <cfelse>
           <cfset prc.isComplete = false>
 

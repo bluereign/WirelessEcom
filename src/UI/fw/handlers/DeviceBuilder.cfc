@@ -23,12 +23,14 @@
     <cfset var prevNavIndex = "" />
     <cfset var nextAction = "" />
     <cfset var prevAction = "" />
+    <cfset var argsPlan = {} />
     
     <cfscript>
       // KEEP THIS INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
 
       prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/";
+      prc.AssetPaths = variables.AssetPaths;
 
 
       // <ZIP CHECK
@@ -132,6 +134,12 @@
         prevNavIndex = thisNavIndex - 1;
         prevAction = prc.navItemsAction[prevNavIndex];
         prc.prevStep = event.buildLink('devicebuilder.#prevAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+        if (structKeyExists(rc,"line")) {
+          prc.prevStep = prc.prevStep & 'line/' & rc.line & '/';
+        }
+        if (structKeyExists(rc,"plan")) {
+          prc.prevStep = prc.prevStep & 'plan/' & rc.plan & '/';
+        }
       } else {
         prc.prevStep = CGI.http_referer;
       }
@@ -172,42 +180,24 @@
       // <end selected line
 
 
+      // <SELECTED PLAN
+      if (structKeyExists(rc,"plan") and isNumeric(rc.plan)) {
+        argsPlan.carrierId = prc.productData.carrierId;
+        argsPlan.zipCode = session.cart.getZipcode();
+        argsPlan.idList = rc.plan;
+        prc.planInfo = PlanService.getPlans(argumentCollection=argsPlan);
+      }
+      // <end selected plan
+
+
+      // <CARRIER LOGO
+
+      // <end carrier logo
 
 
       // <LAYOUT
       event.setLayout('devicebuilder');
       // <end layout
-
-
-      // <TEMP dummy data:
-      // if (!structKeyExists(prc,"userData")) {
-      //   prc.userData = {
-      //     phoneLines = [
-      //       {phoneNumber = "(206) 555 - 1111", isAvailable = true},
-      //       {phoneNumber = "(206) 555 - 4545", isAvailable = true},
-      //       {phoneNumber = "(206) 555 - 2222", isAvailable = true},
-      //       {phoneNumber = "(206) 555 - 3333", isAvailable = false},
-      //       {phoneNumber = "(206) 555 - 4444", isAvailable = false},
-      //       {phoneNumber = "(206) 555 - 5555", isAvailable = false},
-      //       {phoneNumber = "(206) 555 - 6666", isAvailable = false}
-      //       ],
-      //     username = "thedude",
-      //     firstname = "The",
-      //     middleinitial = "L",
-      //     lastname = "Dude",
-      //     company = "Self-employed",
-      //     address1 = "Hey Bro St.",
-      //     address2 = "",
-      //     city = "Los Angelos",
-      //     state = "CA",
-      //     zip = "90210",
-      //     homephone = "123-432-1231",
-      //     workphone = ""
-      //   };
-      // }
-      // <end Temp dummy data
-
-
     </cfscript>
   </cffunction>
 
@@ -292,7 +282,7 @@
         // AT&T carrierId = 109, VZW carrierId = 42
         case 109: case 42: {
           rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
-          prc.args_account = {
+          prc.argsAccount = {
             carrierId = prc.productData.carrierId,
             SubscriberNumber = rc.PhoneNumber,
             ZipCode = rc.inputZip,
@@ -301,7 +291,7 @@
           };
 
           // for testing purposes/development (carrierloginpost.cfm):
-          rc.respObj = carrierFacade.Account(argumentCollection = prc.args_account);
+          rc.respObj = carrierFacade.Account(argumentCollection = prc.argsAccount);
           rc.message = rc.respObj.getHttpStatus();
 
           switch ( rc.respObj.getHttpStatus() ) {
@@ -310,6 +300,12 @@
               session.carrierObj = rc.respObj;
               // session.zipCode = session.carrierObj.getAddress().getZipCode();
               session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
+
+              if (prc.productData.carrierId eq 109) {
+                session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
+              } else if (prc.productData.carrierId eq 42) {
+                session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
+              }
               
               // we only set carrier when they've logged in.  But, do we need carrier in the session?
               // session.cart.setCarrierId(prc.productData.carrierId);
@@ -361,16 +357,16 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var args = {} />
+    <cfset var argsPlan = {} />
 
     <cfscript>
-    // TODO: if type is 'upgrade', make sure a line is selected.  If not, send to 'upgradealine'.
+    // TODO: if type is 'upgrade', make sure a line is selected.  If rc.line does not exist, then send back to 'upgradealine'.
 
-      args.carrierId = prc.productData.carrierId;
-      args.zipCode = session.cart.getZipcode();
+      argsPlan.carrierId = prc.productData.carrierId;
+      argsPlan.zipCode = session.cart.getZipcode();
       
-      prc.planData = PlanService.getPlans(argumentCollection=args);
-      prc.planDataShared = PlanService.getSharedPlans(argumentCollection=args);
+      prc.planData = PlanService.getPlans(argumentCollection=argsPlan);
+      prc.planDataShared = PlanService.getSharedPlans(argumentCollection=argsPlan);
     </cfscript>
 
     <!--- If an existing plan's productId exists, then see if it is eligible (i.e. in the Individual or Shared plans queries) --->
@@ -396,6 +392,10 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <!--- TODO: If rc.plan does not exist, then send back to "plans" --->
+
+    <!--- <cfdump var="#rc#"><cfabort> --->
+
   </cffunction>
 
 
@@ -409,7 +409,6 @@
     <cfscript>
       prc.CatalogService = application.model.Catalog;
       prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories( event.getValue('pid', '') );
-      prc.AssetPaths = variables.AssetPaths;
     </cfscript>
   </cffunction>
 

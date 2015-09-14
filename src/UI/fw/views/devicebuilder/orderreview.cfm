@@ -32,7 +32,14 @@
               </div>
               <div class="col-md-8 col-xs-10 data">
                 <h3>#prc.productData.summaryTitle#</h3>
-                <p>Includes: 3GB Data, Unlimited Talk, Unlmited Text, Mobile Hotspot, Line Access Fee</p>
+                <p>
+                  <!--- Includes: 3GB Data, Unlimited Talk, Unlmited Text, Mobile Hotspot, Line Access Fee --->
+                  <cfif structKeyExists(prc,"planInfo")>
+                    Includes: #prc.planInfo.DetailTitle#
+                  <cfelse>
+                    (Plan not yet selected)
+                  </cfif>
+                </p>
               </div>
               <div class="col-md-2 col-xs-16 quantity"></div>
               <div class="col-md-2 col-xs-16 monthly">$65.00 <span class="visible-xs-inline">Monthly</span></div>
@@ -43,8 +50,12 @@
 
                 <div class="row">
                   <div class="collapse" id="plan-details1">
-                    <div class="col-md-12 col-xs-11">Apple iPhone 6 64GB - Space Gray</div>
-                    <div class="col-md-4 col-xs-5">$50.00</div>
+                    <cfif structKeyExists(prc,"planInfo")>
+                      <div class="col-md-12 col-xs-11">#prc.planInfo.DetailTitle#</div>
+                      <div class="col-md-4 col-xs-5">#dollarFormat(prc.planInfo.MonthlyFee)#</div>
+                    <cfelse>
+                      (Plan not yet selected)
+                    </cfif>
 
                     <div class="col-md-12 col-xs-11">Apple iPhone 6 64GB - Space Gray</div>
                     <div class="col-md-4 col-xs-5">$50.00</div>

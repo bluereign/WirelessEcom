@@ -10,6 +10,9 @@
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#">
           </cfif>
+          <cfif structKeyExists(rc,"plan")>
+            <input type="hidden" name="plan" value="#rc.plan#">
+          </cfif>
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
