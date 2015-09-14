@@ -23,9 +23,12 @@
 		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
 
 		<cfset local.resp = local.carrierResponse.getResponse() />
-		<cfif structKeyExists(local.resp,"ResponseStatusMessage") and len(local.resp.ResponseStatusMessage)>
+		<cfif structKeyExists(local.resp,"ResponseStatusMessage") and len(local.resp.ResponseStatusMessage) and local.resp.ResponseStatusMessage is not "null">
 			<cfset local.carrierResponse.setResult(false) />
 			<cfset local.carrierResponse.setResultDetail(local.resp.ResponseStatusMessage) />
+		<cfelse>			
+			<cfset local.carrierResponse.setResult(true) />
+			<cfset local.carrierResponse.setResultDetail("Success") />
 		</cfif>
 		<cfreturn local.carrierResponse />
 	</cffunction>

@@ -4,6 +4,8 @@
 <h2>
 <br/>getHttpStatusCode() = #rc.respObj.getHttpStatusCode()#
 <br/>getHttpStatus() = #rc.respObj.getHttpStatus()#
+<br/>getResult() = #rc.respObj.getResult()#
+<br/>getResultDetail() = #rc.respObj.getResultDetail()#
 <br/>getCarrierName() = #rc.respObj.getCarrierName()#
 <br/>getCarrierId() = #rc.respObj.getCarrierId()#
 <cfif rc.respObj.getHttpStatus() is "200 OK">
