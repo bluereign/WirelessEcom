@@ -380,6 +380,7 @@
       </cfquery>
       <cfif qryExistingAvailable.recordcount gt 0 >
         <cfset prc.existingPlanEligible = true />
+        <cfset rc.plan = qryExistingAvailable.productId />
       </cfif>
     </cfif>
 
