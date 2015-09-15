@@ -36,6 +36,9 @@
                   <!--- Includes: 3GB Data, Unlimited Talk, Unlmited Text, Mobile Hotspot, Line Access Fee --->
                   <cfif structKeyExists(prc,"planInfo")>
                     Includes: #prc.planInfo.DetailTitle#
+                    <cfif isDefined("prc.planDataExisting.productId") and prc.planDataExisting.productId eq prc.planInfo.productId>
+                      - Existing
+                    </cfif>
                   <cfelse>
                     (Plan not yet selected)
                   </cfif>
