@@ -56,13 +56,7 @@
       , p.additional_data_usage
       , IsNull( (SELECT TOP 1 pp.Value FROM catalog.Property pp WHERE pp.ProductGuid = p.ProductGuid AND pp.Name = 'PLAID_DEVICE_CAP_INDICATOR'), 'N') HasPlanDeviceCap 
       FROM  catalog.dn_Plans AS p WITH (NOLOCK) 
-      WHERE 1 = 1 
-        
-        <cfif len(trim(arguments.carrierId))>
-          AND p.carrierID IN ( #arguments.carrierId# )
-        </cfif>
-        
-        AND p.PlanPrice > 0 
+      WHERE 1 = 1
       <cfif len(trim(arguments.idList))>
         AND (
             1 = 0
@@ -75,6 +69,10 @@
             </cfloop>
           )
       <cfelse>
+        AND p.PlanPrice > 0 
+        <cfif len(trim(arguments.carrierId))>
+          AND p.carrierID IN ( #arguments.carrierId# )
+        </cfif>
         <cfif arguments.isShared is 'true'>
           AND p.IsShared = 1
         </cfif>

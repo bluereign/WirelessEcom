@@ -1,5 +1,5 @@
 <cfif !structKeyExists(rc,"plan")>
-  <cfset prc.DetailTitle = "No plan selected" />
+  <cfset prc.DetailTitle = "rc.plan does not exist" />
   <cfset prc.DataLimitGB = "0" />
   <cfset prc.SummaryDescription = "No plan selected" />
 <cfelseif structKeyExists(prc,"planInfo")>
