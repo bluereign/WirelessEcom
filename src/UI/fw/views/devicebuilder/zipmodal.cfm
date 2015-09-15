@@ -1,5 +1,5 @@
 <cfoutput>
-<!-- Modal -->
+  <!-- zipModal -->
   <div class="modal fade" id="zipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -32,4 +32,39 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+
+
+  <!--- planModal --->
+  <div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog"> 
+      <div class="modal-content">
+      </div><!-- /.modal-content --> 
+    </div><!-- /.modal-dialog --> 
+  </div>
+
+
+<!--- clear data from Bootstrap 3 modals to load dynamic data --->
+<script>
+$('body').on('hidden.bs.modal', '.modal', function () {
+  $(this).removeData('bs.modal');
+});
+</script>
+
+
+<!---
+  <script type="text/javascript">
+      jQuery(function($){
+           $('a.showme').click(function(ev){
+               ev.preventDefault();
+               var plan = $(this).data('id');
+               var title = "new title";
+               $("##planModal .modal-title").text( title );
+               $('##planModal').modal('show');
+           });
+      });
+  </script>
+--->
+
+
+
 </cfoutput>
