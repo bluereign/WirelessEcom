@@ -8,6 +8,8 @@
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
+  <cfset this.preHandler_except = "planmodal" />
+
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
   <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting,orderreview" />
@@ -378,6 +380,7 @@
       </cfquery>
       <cfif qryExistingAvailable.recordcount gt 0 >
         <cfset prc.existingPlanEligible = true />
+        <cfset rc.plan = qryExistingAvailable.productId />
       </cfif>
     </cfif>
 
@@ -385,6 +388,24 @@
     <!--- debugging: --->
     <!--- <cfset prc.planDataShared = queryNew("id") /> --->
     <!--- <cfdump var="#prc.planDataShared#"><cfabort> --->
+  </cffunction>
+
+
+  <cffunction name="planmodal" returntype="void" output="false" hint="Plan modal">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+    <cfset var argsPlan = {} />
+
+    <cfscript>
+      if (structKeyExists(rc,"plan")) {
+        argsPlan.idList = rc.plan;
+        prc.planInfo = PlanService.getPlans(argumentCollection=argsPlan);
+      }
+      event.noLayout();
+    </cfscript>
+    <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
+
   </cffunction>
 
 

@@ -37,10 +37,11 @@
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
           <p>Pick a Plan and the amount of Data you will use per month. <!--- ( ZIP: #session.cart.getZipcode()# ) --->
-          <!--- Launch Zip Modal button for testing
-          <cfif rc.type is 'new'>
+          Launch Zip Modal button for testing
+          <!--- <cfif rc.type is 'new'>
             <a data-toggle="modal" href="##zipModal" class="btn btn-primary btn-sm">Zip modal</a></p>
           </cfif> --->
+          <!--- <a data-toggle="modal" href="##planModal" class="btn btn-primary btn-sm">Plan modal</a></p> --->
         </header>
         <ul class="nav nav-tabs">
           
@@ -83,11 +84,10 @@
                     <div class="price">#dollarFormat(prc.planDataExisting.MonthlyFee)#</div>
                     <cfif prc.existingPlanEligible>
                       <button class="btn btn-dark-gray btn-block" name="plan" value="#prc.planDataExisting.productid#">Select Package</button>
+                      <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataExisting.productid#" >Plan Details</div>
                     <cfelse>
                       <button class="btn btn-dark-gray btn-block" disabled="disabled">Unavailable for this device</button>
                     </cfif>
-                    
-                    <div class="details-link">Plan Details</div>
                   </a>
                 </div>
               </cfloop>
@@ -102,6 +102,8 @@
               
               <cfloop query="prc.planData">
                 <div class="info">
+                  <!--- <a data-toggle="modal" data-target="##planModal"  href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#" >
+                  Launch Modal</a> --->
                   <a href="##">
                     <h3 style="height:40px"><span>#prc.planData.DetailTitle#</span></h3>
                     <ul>
@@ -110,7 +112,7 @@
                     <div style="align:center;padding:20px;">#prc.planData.SummaryDescription#</div>
                     <div class="price">$#int(prc.planData.MonthlyFee)#<!--- #dollarFormat(prc.planData.MonthlyFee)# ---></div>
                     <button class="btn btn-dark-gray btn-block" name="plan" value="#prc.planData.productid#">Select Package</button>
-                    <div class="details-link">Plan Details</div>
+                    <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planData.productid#" >Plan Details</div>
                   </a>
                 </div>
               </cfloop>
@@ -133,7 +135,7 @@
                       <div style="align:center;padding:20px;">#prc.planDataShared.SummaryDescription#</div>
                       <div class="price">$#int(prc.planDataShared.MonthlyFee)#<!--- #dollarFormat(prc.planDataShared.MonthlyFee)# ---></div>
                       <button class="btn btn-dark-gray btn-block" name="plan" value="#prc.planDataShared.productid#">Select Package</button>
-                      <div class="details-link">Plan Details</div>
+                      <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataShared.productid#" >Plan Details</div>
                     </a>
                   </div>
                 </cfloop>
@@ -151,4 +153,8 @@
       </section>
     </form>
   </div>
+
+
+
+
 </cfoutput>

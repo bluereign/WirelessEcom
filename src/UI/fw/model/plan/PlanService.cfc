@@ -5,8 +5,8 @@
   </cffunction>
   
   <cffunction name="getPlans" access="public" output="false" returntype="any" hint="Return a query object of plans.">
-    <cfargument name="carrierId" required="true" />
-    <cfargument name="zipCode" required="true" />
+    <cfargument name="carrierId" default=""  />
+    <cfargument name="zipCode" default="" />
     <cfargument name="isShared" type="string" default="" />
     <cfargument name="idList" type="string" default="" />
 
@@ -56,9 +56,7 @@
       , p.additional_data_usage
       , IsNull( (SELECT TOP 1 pp.Value FROM catalog.Property pp WHERE pp.ProductGuid = p.ProductGuid AND pp.Name = 'PLAID_DEVICE_CAP_INDICATOR'), 'N') HasPlanDeviceCap 
       FROM  catalog.dn_Plans AS p WITH (NOLOCK) 
-      WHERE 1 = 1 
-        AND p.carrierID IN ( #arguments.carrierId# ) 
-        AND p.PlanPrice > 0 
+      WHERE 1 = 1
       <cfif len(trim(arguments.idList))>
         AND (
             1 = 0
@@ -71,6 +69,10 @@
             </cfloop>
           )
       <cfelse>
+        AND p.PlanPrice > 0 
+        <cfif len(trim(arguments.carrierId))>
+          AND p.carrierID IN ( #arguments.carrierId# )
+        </cfif>
         <cfif arguments.isShared is 'true'>
           AND p.IsShared = 1
         </cfif>

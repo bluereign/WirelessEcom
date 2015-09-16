@@ -78,7 +78,7 @@
   #renderView('devicebuilder/carrierloginValidate')#
 </cfif>
 <cfif listFindNoCase("devicebuilder.plans", event.getCurrentEvent())>
-  #renderView('devicebuilder/plansmodal')#
+  #renderView('devicebuilder/zipmodal')#
   <!--- <cfif rc.type is 'new' and !structKeyExists(session,"zipCode")> --->
   <cfif rc.type is 'new' and !application.model.cartHelper.zipCodeEntered()>
     <script>
