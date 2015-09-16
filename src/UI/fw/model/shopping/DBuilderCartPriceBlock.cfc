@@ -1,6 +1,6 @@
-<cfcomponent output="false" displayname="CartPriceBlock">
+<cfcomponent output="false" displayname="dBuilderCartPriceBlock">
 
-	<cffunction name="init" access="public" returntype="cfc.model.CartPriceBlock" output="false">
+	<cffunction name="init" access="public" returntype="fw.model.shopping.dBuilderCartPriceBlock" output="false">
 		<cfargument name="dueToday" type="numeric" required="false" default="0" />
 		<cfargument name="firstBill" type="numeric" required="false" default="0" />
 		<cfargument name="monthly" type="numeric" required="false" default="0" />

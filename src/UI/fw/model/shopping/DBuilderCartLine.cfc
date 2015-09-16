@@ -1,6 +1,6 @@
 <cfcomponent output="false" displayname="CartLine">
 
-	<cffunction name="init" returntype="cfc.model.CartLine">
+	<cffunction name="init" returntype="fw.model.shopping.dBuilderCartLine">
 		<cfargument name="alias" type="string" required="false" default="" />
 		<cfargument name="phone" type="any" required="false" default="#getModel('CartItem').init()#" />
 		<cfargument name="plan" type="any" required="false" default="#getModel('CartItem').init()#" />
@@ -197,7 +197,7 @@
     
     <cffunction name="getCart" access="public" output="false" returntype="any">
 		<cfif structKeyExists( session, "cart" )>
-			<cfreturn session.cart>
+			<cfreturn session.dbuildercart>
 		<cfelse>
 			<cfreturn getModel('Cart').init()# />
 		</cfif>

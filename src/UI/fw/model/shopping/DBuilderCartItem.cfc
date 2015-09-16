@@ -1,9 +1,9 @@
-<cfcomponent output="false" displayname="CartItem">
-
-	<cffunction name="init" returntype="cfc.model.CartItem">
+<cfcomponent output="false" displayname="dBuilderCartItem">
+		
+	<cffunction name="init" returntype="fw.model.shopping.dBuilderCartItem">
 		<cfargument name="productID" type="numeric" required="false" default="0">
-		<cfargument name="prices" type="any" required="false" default="#getModel('CartPriceBlock').init()#">
-		<cfargument name="taxes" type="any" required="false" default="#getModel('CartPriceBlock').init()#">
+		<cfargument name="prices" type="any" required="false" default="#createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init()#">
+		<cfargument name="taxes" type="any" required="false" default="#createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init()#">
 		<cfargument name="type" type="string" required="false" default="">
         <cfargument name="title" type="string" required="false" default="" />
         <cfargument name="gersSKU" type="string" required="false" default="" />

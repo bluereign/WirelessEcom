@@ -105,39 +105,34 @@
 			.to("fw.model.carrierApi.Mock.MockCarrier")
 			.asSingleton();	
 			
-	// FullAPI Shopping Cart		
+	// Device Builder Shopping Cart		
 		
-		map("cart")
-			.to("fw.model.shopping.cart")
+		map("dBuilderCart")
+			.to("fw.model.shopping.dBuilderCart")
 			.asSingleton();
 	
-		map("cartHelper")
-			.to("fw.model.shopping.cartHelper")
+		map("dBuilderCartHelper")
+			.to("fw.model.shopping.dBuilderCartHelper")			
 			.asSingleton();
 							
-		map("cartItem")
-			.to("fw.model.shopping.cartItem")
+		map("dBuilderCartItem")
+			.to("fw.model.shopping.dBuilderCartItem")			
 			.asSingleton();
-		
-		map("cartPriceBlock")
-			.to("fw.model.shopping.cartPriceBlock")
+
+		map("dBuilderCartPriceBlock")
+			.to("fw.model.shopping.dBuilderCartPriceBlock")			
 			.asSingleton();
 
 			
-		map("cartValidationResponse")
-			.to("fw.model.shopping.cartValidationResponse")
+		map("dBuilderCartValidationResponse")
+			.to("fw.model.shopping.dBuilderCartValidationResponse")			
 			.asSingleton();
-			
-			
-	
 
-		// Carrier Plans
+	// Carrier Plans
 		map("PlanService")
 			.to("fw.model.plan.PlanService")
 			.asSingleton();	
-			
 
-		
 		// Geographic
 		map("GeoService")
 			.to("fw.model.geo.GeoService")

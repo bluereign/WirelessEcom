@@ -174,7 +174,6 @@
 			</cftry>
 		</cfloop>
 
-
 		<!--- Load Controller CFCs --->
 		<cfset application.controller.VerizonActivationController = Createobject("component", "admin.cfc.controller.VerizonActivationController").init( IsDeviceInfoFinal = request.config.ActivationSetting.Verizon.IsDeviceInfoFinal ) />
 		<cfset application.controller.AttActivationController = Createobject("component", "admin.cfc.controller.AttActivationController").init() />
@@ -218,7 +217,7 @@
 			application.model.VerizonCarrierService = CreateObject('component', 'cfc.model.carrierservice.Verizon.VerizonCarrierService').init( request.config.VerizonErosEndPoint );
 			application.model.RouteService = CreateObject('component', 'cfc.model.carrierservice.ServiceBus.RouteService').init( argumentCollection = request.config.CarrierServiceBus );
 		</cfscript>
-
+		
 	</cffunction>
 	
 	<cffunction name="loadBeanFactory" access="private" output="false" returntype="void">

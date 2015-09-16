@@ -1,7 +1,12 @@
-<cfcomponent output="false" displayname="CartHelper" extends="fw.model.BaseService">
+<cfcomponent output="false" displayname="dBuilderCartHelper" extends="fw.model.BaseService">
 
-	<cffunction name="init" returntype="fw.model.shopping.cartHelper">
-		<cfparam name="session.cart" type="any" default="#getModel('cart').init()#">
+	<cfproperty name="DBuilderCart" inject="id:DBuilderCart" />
+	<cfproperty name="DBuilderCartHelper" inject="id:DBuilderCartHelper" />
+	<cfproperty name="DBuilderCartItem" inject="id:DBuilderCartItem" />
+	<cfproperty name="DBuilderCartPriceBlock" inject="id:DBuilderCartPriceBlock" />
+	
+	<cffunction name="init" returntype="fw.model.shopping.dBuilderCartHelper">
+		<cfparam name="session.dBuilderCart" type="any" default="#createObject("Component","fw.model.shopping.dBuilderCart").init()#">
 		<!--- Remove this when this component is added to CS --->        
         <cfset setAssetPaths( application.wirebox.getInstance("assetPaths") ) />
 		<cfreturn this>
@@ -10,7 +15,7 @@
 	<cffunction name="zipcodeEntered" returntype="boolean">
 		<cfset var local = structNew()>
 		<cfset local.bEntered = true>
-		<cfif session.cart.getZipcode() eq "00000">
+		<cfif session.dbuildercart.getZipcode() eq "00000">
 			<cfset local.bEntered = false>
 		</cfif>
 		<cfreturn local.bEntered>
@@ -18,7 +23,7 @@
 
 	<cffunction name="clearCart" access="public" returntype="void" output="false">
 		<cfset var local = {} />
-		<cfset session.cart = getModel('cart').init() />
+		<cfset session.dbuildercart = createObject("Component","fw.model.shopping.dBuilderCart").init() />
 		<cfif application.wirebox.containsInstance("CampaignService")>
 			<cfset local.campaignService = application.wirebox.getInstance("CampaignService") />
 			<cfset local.campaign = local.campaignService.getCampaignBySubdomain( local.campaignService.getCurrentSubdomain() ) />
@@ -38,36 +43,36 @@
 	<cffunction name="addLineToCart" returntype="numeric">
 		<cfset var local = structNew()>
 
-		<cfset arrayAppend(session.cart.getLines(),getModel('CartLine').init())>
+		<cfset arrayAppend(session.dbuildercart.getLines(),createObject("Component","fw.model.shopping.dBuilderCartlineLine").init())>
 		<!--- if there's a family plan in the cart --->
-		<cfif session.cart.getFamilyPlan().hasBeenSelected()>
+		<cfif session.dbuildercart.getFamilyPlan().hasBeenSelected()>
 			<!--- pre-assign the selected family plan to the new line --->
-			<cfset local.cartLines = session.cart.getLines()>
-			<cfset local.cartLines[arrayLen(local.cartLines)].getPlan().setProductID(session.cart.getFamilyPlan().getProductID())>
+			<cfset local.cartLines = session.dbuildercart.getLines()>
+			<cfset local.cartLines[arrayLen(local.cartLines)].getPlan().setProductID(session.dbuildercart.getFamilyPlan().getProductID())>
 			<cfset local.cartLines[arrayLen(local.cartLines)].getPlan().setType("rateplan")>
-			<cfset session.cart.setLines(local.cartLines)>
+			<cfset session.dbuildercart.setLines(local.cartLines)>
 		</cfif>
 
 		 
 
-		<cfreturn arrayLen(session.cart.getLines())>
+		<cfreturn arrayLen(session.dbuildercart.getLines())>
 	</cffunction>
 
 	<cffunction name="deleteLine" access="public" returntype="void" output="false">
 		<cfargument name="lineNumber" type="numeric" required="true" />
 
-		<cfif arguments.lineNumber lte arrayLen(session.cart.getLines())>
+		<cfif arguments.lineNumber lte arrayLen(session.dbuildercart.getLines())>
 			<cftry>
-				<cfset arrayDeleteAt(session.cart.getLines(), arguments.lineNumber) />
-				<cfset session.cart.setCurrentLine(arrayLen(session.cart.getLines())) />
+				<cfset arrayDeleteAt(session.dbuildercart.getLines(), arguments.lineNumber) />
+				<cfset session.dbuildercart.setCurrentLine(arrayLen(session.dbuildercart.getLines())) />
 
-				<cfif not session.cart.getCurrentLine()>
+				<cfif not session.dbuildercart.getCurrentLine()>
 					<cfset removeFamilyPlan() />
 				</cfif>
 
 				<!--- Update line device pricing if this is a family plan order--->
-				<cfif session.cart.getHasFamilyPlan()>
-					<cfset updateFamilyPlanDevicePrices( session.cart ) />
+				<cfif session.dbuildercart.getHasFamilyPlan()>
+					<cfset updateFamilyPlanDevicePrices( session.dbuildercart ) />
 				</cfif>
 
 				 
@@ -81,11 +86,11 @@
 
 	<cffunction name="addLine" returntype="void">
 		<cfset var local = structNew()>
-		<cfif arrayLen(session.cart.getLines()) lt request.config.maxLines>
-			<cfset arrayAppend(session.cart.getLines(),getModel('CartLine').init())>
-			<cfset session.cart.setCurrentLine(arrayLen(session.cart.getLines()))>
-			<cfif session.cart.getFamilyPlan().hasBeenSelected()>
-				<cfset setFamilyPlan(session.cart.getFamilyPlan().getProductID())>
+		<cfif arrayLen(session.dbuildercart.getLines()) lt request.config.maxLines>
+			<cfset arrayAppend(session.dbuildercart.getLines(),createObject("Component","fw.model.shopping.dBuilderCartlineLine").init())>
+			<cfset session.dbuildercart.setCurrentLine(arrayLen(session.dbuildercart.getLines()))>
+			<cfif session.dbuildercart.getFamilyPlan().hasBeenSelected()>
+				<cfset setFamilyPlan(session.dbuildercart.getFamilyPlan().getProductID())>
 			</cfif>
 			 
 		</cfif>
@@ -94,10 +99,10 @@
 	<cffunction name="isEmpty" returntype="boolean">
 		<cfset var local = structNew()>
 		<cfset local.bEmpty = true>
-		<cfif arrayLen(session.cart.getOtherItems())>
+		<cfif arrayLen(session.dbuildercart.getOtherItems())>
 			<cfset local.bEmpty = false>
-		<cfelseif arrayLen(session.cart.getLines())>
-			<cfset local.cartLines = session.cart.getLines()>
+		<cfelseif arrayLen(session.dbuildercart.getLines())>
+			<cfset local.cartLines = session.dbuildercart.getLines()>
 			<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iLine">
 				<cfset local.thisLine = local.cartLines[local.iLine]>
 				<cfif local.thisLine.getPhone().hasBeenSelected() or local.thisLine.getPlan().hasBeenSelected() or arrayLen(local.thisLine.getFeatures()) or arrayLen(local.thisLine.getAccessories())>
@@ -113,7 +118,7 @@
 		<cfset var local = structNew()>
 		<cfset local.numLines = 0>
 		<cfif not isEmpty()>
-			<cfset local.numLines = arrayLen(session.cart.getLines())>
+			<cfset local.numLines = arrayLen(session.dbuildercart.getLines())>
 		</cfif>
 		<cfreturn local.numLines>
 	</cffunction>
@@ -122,7 +127,7 @@
 		<cfargument name="lineNumber" type="numeric" required="true">
 		<cfset var local = structNew()>
 		<cfset local.return = "Line #arguments.lineNumber#">
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfset local.thisLine = local.cartLines[arguments.lineNumber]>
 		<cfset local.lineAlias = local.thisLine.getAlias()>
 		<cfif len(trim(local.lineAlias))>
@@ -135,7 +140,7 @@
 		<cfargument name="line" type="numeric" required="true">
 		<cfset var local = arguments>
 		<cfset local.id = 0>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfif arrayLen(local.cartLines) gte local.line and local.line>
 			<cfset local.thisLine = local.cartLines[local.line]>
 			<cfif local.thisLine.getPhone().hasBeenSelected()>
@@ -149,7 +154,7 @@
 		<cfargument name="line" type="numeric" required="true">
 		<cfset var local = arguments>
 		<cfset local.id = 0>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfif arrayLen(local.cartLines) gte local.line and local.line>
 			<cfset local.thisLine = local.cartLines[local.line]>
 			<cfif local.thisLine.getPlan().hasBeenSelected()>
@@ -163,7 +168,7 @@
 		<cfargument name="line" type="numeric" required="true">
 		<cfset var local = arguments>
 		<cfset local.id = 0>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfif arrayLen(local.cartLines) gte local.line and local.line>
 			<cfset local.thisLine = local.cartLines[local.line]>
 			<cfif local.thisLine.getWarranty().hasBeenSelected()>
@@ -178,9 +183,9 @@
 		<cfset local.errors = arrayNew(1)>
 
 		<!--- if the user doesn't even have a cart yet --->
-		<cfif not isDefined("session.cart") or not isStruct(session.cart)>
+		<cfif not isDefined("session.dbuildercart") or not isStruct(session.dbuildercart)>
 			<!--- create one and send the user on his way --->
-			<cfset session.cart = getModel('cart').init()>
+			<cfset session.dbuildercart = createObject("Component","fw.model.shopping.dBuilderCartline").init()>
 			 
 			<cfreturn local.errors>
 		</cfif>
@@ -194,13 +199,13 @@
 				5.	no phone/plan cross-carrier combinations
 		--->
 
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 
 
 		<!--- selected plan available in zipcode --->
 		<cfif arguments.productType eq "plan" and zipcodeEntered()>
 			<cfset local.planAvailableInZipcode = false>
-			<cfif application.model.Plan.isPlanAvailableInZipcode(planId=arguments.product_id,zipcode=session.cart.getZipcode())>
+			<cfif application.model.Plan.isPlanAvailableInZipcode(planId=arguments.product_id,zipcode=session.dbuildercart.getZipcode())>
 				<cfset local.planAvailableInZipcode = true>
 			</cfif>
 			<cfif not local.planAvailableInZipcode>
@@ -239,7 +244,7 @@
 		<cfif request.p.productType eq "plan" and not isNumeric(request.p.product_id)>
 			<!--- cross plan type check --->
 			<cfset local.newPlanType = application.model.Plan.getPlanTypeByPlanStringID(planStringID="#request.p.product_id#")>
-			<cfif local.newPlanType eq "individual" and session.cart.getFamilyPlan().hasBeenSelected()>
+			<cfif local.newPlanType eq "individual" and session.dbuildercart.getFamilyPlan().hasBeenSelected()>
 				<cfset arrayAppend(local.errors,"You may not add an Individual plan to a cart containing a Family plan.<br>Please remove the Family Plan(s) from your cart before attempting to add an Individial Plan.")>
 			<cfelseif local.newPlanType eq "family">
 				<cfset local.selectedIndividualPlan = false>
@@ -281,7 +286,7 @@
 		</cfif>
 
 		<!--- restrict the user from cross-activationType adds to the cart (except New Family Plans)--->
-		<cfif request.p.productType eq "phone" and len(trim(session.cart.getActivationType())) and arrayLen(local.cartLines)>
+		<cfif request.p.productType eq "phone" and len(trim(session.dbuildercart.getActivationType())) and arrayLen(local.cartLines)>
 			<!--- determine the selected devices and features in the cart --->
 			<cfset local.stcSelectedDevices = getSelectedDevices()>
 			<cfset local.stcSelectedFeatures = getSelectedFeatures()>
@@ -289,8 +294,8 @@
 			<cfif structCount(local.stcSelectedDevices)>
 				<!--- verify that the activationType of the item being added matches the activationType assigned in the cart with the exception of New Family Plans --->
 				<cfif (request.p.activationType DOES NOT CONTAIN "finance")>
-					<cfif (session.cart.getActivationType() DOES NOT CONTAIN "finance")>
-						<cfif request.p.activationType neq session.cart.getActivationType() AND !(request.p.activationType DOES NOT CONTAIN 'upgrade' AND session.cart.getHasFamilyPlan())>
+					<cfif (session.dbuildercart.getActivationType() DOES NOT CONTAIN "finance")>
+						<cfif request.p.activationType neq session.dbuildercart.getActivationType() AND !(request.p.activationType DOES NOT CONTAIN 'upgrade' AND session.dbuildercart.getHasFamilyPlan())>
 							<cfset arrayAppend(local.errors, "You may not add devices of different activation types to your cart.")>
 						</cfif>
 					</cfif>
@@ -300,7 +305,7 @@
 					<cfif structKeyExists(local.stcSelectedDevices,arguments.cartLineNumber) and structKeyExists(local.stcSelectedFeatures,arguments.cartLineNumber) and arguments.product_id neq local.stcSelectedDevices[arguments.cartLineNumber]>
 						<!--- don't error here - just remove the features on the indicated cart line since a new device is being selected --->
 						<cfset local.cartLines[arguments.cartLineNumber].setFeatures(arrayNew(1))>
-						<cfset session.cart.setLines(local.cartLines)>
+						<cfset session.dbuildercart.setLines(local.cartLines)>
 						 
 					</cfif>
 				</cfif>
@@ -323,7 +328,7 @@
 		<cfset local.html = '' />
 
 		<cfset local.userSession = session />
-		<cfset local.cart = local.userSession.cart />
+		<cfset local.cart = local.usersession.dbuildercart />
 		<cfset local.cartLines = local.cart.getLines() />
 
 		<cfif arguments.line lte arrayLen(local.cartLines)>
@@ -524,7 +529,7 @@
 
 	<cffunction name="getSelectedDevices" returntype="struct">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<!--- determine if there are any devices selected in the cart lines --->
 		<cfset local.stc = structNew()>
 		<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iThisLine">
@@ -537,7 +542,7 @@
 
 	<cffunction name="getSelectedPlans" returntype="struct">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<!--- determine if there are any plans selected in the cart lines --->
 		<cfset local.stc = structNew()>
 		<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iThisLine">
@@ -550,7 +555,7 @@
 
 	<cffunction name="getSelectedFeatures" returntype="struct">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<!--- determine if there are any features selected in the cart lines --->
 		<cfset local.stc = structNew()>
 		<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iThisLine">
@@ -564,7 +569,7 @@
 	<cffunction name="hasSelectedFeatures" output="false" returntype="boolean">
 		<cfset var local = structNew()>
 		<cfset local.hasSelectedFeatures = false />
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iThisLine">
 			<cfif arrayLen(local.cartLines[local.iThisLine].getFeatures())>
 				<cfset local.hasSelectedFeatures = true />
@@ -576,7 +581,7 @@
 
 	<cffunction name="getSelectedAccessories" returntype="struct">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<!--- determine if there are any features selected in the cart lines --->
 		<cfset local.stc = structNew()>
 		<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iThisLine">
@@ -590,33 +595,33 @@
 	<cffunction name="setFamilyPlan" returntype="void">
 		<cfargument name="planID" type="numeric" required="true">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iLine">
 			<cfset local.thisLine = local.cartLines[local.iLine]>
 			<cfset local.thisLine.getPlan().setProductID(arguments.planID)>
 			<cfset local.thisLine.getPlan().setType("rateplan")>
 		</cfloop>
 		
-		<cfset session.cart.getFamilyPlan().setProductID(arguments.planID) />
-		<cfset session.cart.getFamilyPlan().setType("rateplan") />
-		<cfset session.cart.getFamilyPlan().setHasPlanDeviceCap( application.model.Plan.getHasPlanDeviceCap( arguments.planID ) ) />
-		<cfset session.cart.getFamilyPlan().setIsShared( application.model.Plan.getIsShared( arguments.planID ) ) />
+		<cfset session.dbuildercart.getFamilyPlan().setProductID(arguments.planID) />
+		<cfset session.dbuildercart.getFamilyPlan().setType("rateplan") />
+		<cfset session.dbuildercart.getFamilyPlan().setHasPlanDeviceCap( application.model.Plan.getHasPlanDeviceCap( arguments.planID ) ) />
+		<cfset session.dbuildercart.getFamilyPlan().setIsShared( application.model.Plan.getIsShared( arguments.planID ) ) />
 		
-		<cfset updateFamilyPlanDevicePrices( session.cart ) />
+		<cfset updateFamilyPlanDevicePrices( session.dbuildercart ) />
 		 
 	</cffunction>
 
 
 	<cffunction name="removeFamilyPlan" returntype="void">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iLine">
 			<cfset local.thisLine = local.cartLines[local.iLine]>
-			<cfset local.thisLine.setPlan(getModel('cartItem').init())>
+			<cfset local.thisLine.setPlan(createObject("Component","fw.model.shopping.dBuilderCartlineItem").init())>
 		</cfloop>
-		<cfset session.cart.setFamilyPlan(getModel('cartItem').init())>
+		<cfset session.dbuildercart.setFamilyPlan(createObject("Component","fw.model.shopping.dBuilderCartlineItem").init())>
 		 
-		<cfset updateFamilyPlanDevicePrices( session.cart ) />
+		<cfset updateFamilyPlanDevicePrices( session.dbuildercart ) />
 	</cffunction>
 
 
@@ -626,7 +631,7 @@
 
 		<!--- only add taxes if the billing address is not OR (Oregon) --->
 		<cfif application.model.CheckoutHelper.getBillingAddress().getState() neq "OR">
-			<cfset local.cartLines = session.cart.getLines()>
+			<cfset local.cartLines = session.dbuildercart.getLines()>
 			<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iLine">
 				<cfset local.thisLine = local.cartLines[local.iLine]>
 				<cfif local.thisLine.getPhone().hasBeenSelected()>
@@ -638,21 +643,21 @@
 					<cfset local.thisAccessory.getTaxes().setDueToday(1.00)>
 				</cfloop>
 			</cfloop>
-			<cfset local.otherItems = session.cart.getOtherItems()>
+			<cfset local.otherItems = session.dbuildercart.getOtherItems()>
 			<cfloop from="1" to="#arrayLen(local.otherItems)#" index="local.iItem">
 				<cfset local.thisItem = local.otherItems[local.iItem]>
 				<cfset local.thisItem.getTaxes().setDueToday(1.00)>
 			</cfloop>
 		</cfif>
 
-		<cfset session.cart.updateAllTaxes()>
+		<cfset session.dbuildercart.updateAllTaxes()>
 	</cffunction>
 
 	<cffunction name="clearLineFreeAccessories" access="public" output="false" returntype="void">
 		<cfargument name="lineNumber" type="numeric" required="true">
 		<cfset var local = structNew()>
 
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfset local.cartLine = local.cartLines[arguments.lineNumber]>
 		<cfset local.lineAccessories = local.cartLine.getAccessories()>
 		<cfloop from="#arrayLen(local.lineAccessories)#" to="1" index="local.iAccessory" step="-1">
@@ -663,7 +668,7 @@
 		</cfloop>
 		<cfset local.cartLine.setAccessories(local.lineAccessories)>
 		<cfset local.cartLines[arguments.lineNumber] = local.cartLine>
-		<cfset session.cart.setLines(local.cartLines)>
+		<cfset session.dbuildercart.setLines(local.cartLines)>
 	</cffunction>
 
 	<cffunction name="lineGetAccessoriesByType" access="public" output="false" returntype="array">
@@ -673,11 +678,11 @@
 		<cfset local.return = arrayNew(1)>
 
 		<cfif arguments.line neq request.config.otherItemsLineNumber>
-			<cfset local.cartLines = session.cart.getLines()>
+			<cfset local.cartLines = session.dbuildercart.getLines()>
 			<cfset local.cartLine = local.cartLines[local.line]>
 			<cfset local.lineAccessories = local.cartLine.getAccessories()>
 		<cfelse>
-			<cfset local.lineAccessories = session.cart.getOtherItems()>
+			<cfset local.lineAccessories = session.dbuildercart.getOtherItems()>
 		</cfif>
 		<cfloop from="1" to="#arrayLen(local.lineAccessories)#" index="local.iAccessory">
 			<cfset local.thisAccessory = local.lineAccessories[local.iAccessory]>
@@ -694,11 +699,11 @@
 
 		<cfset var local = structNew() />
 
-		<cfset local.cartLines = session.cart.getLines() />
+		<cfset local.cartLines = session.dbuildercart.getLines() />
 
 		<cfif arguments.line lte arrayLen(local.cartLines)>
 			<cfset local.cartLine = local.cartLines[arguments.line] />
-			<cfset local.cartLine.setPhone(getModel('cartItem').init()) />
+			<cfset local.cartLine.setPhone(createObject("Component","fw.model.shopping.dBuilderCartlineItem").init()) />
 			<cfset local.cartLine.setFeatures(arrayNew(1)) />
 			<cfset removeLineBundledAccessories(arguments.line) />
 
@@ -715,7 +720,7 @@
 	<cffunction name="removeLineBundledAccessories" access="public" output="false" returntype="void">
 		<cfargument name="lineNumber" type="numeric" required="true">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfset local.cartLine = local.cartLines[arguments.lineNumber]>
 		<cfset local.lineAccessories = local.cartLine.getAccessories()>
 		<cfloop from="#arrayLen(local.lineAccessories)#" to="1" step="-1" index="local.i">
@@ -734,18 +739,18 @@
 
 		<cfset local.bFamilyPlan = false />
 
-		<cfif session.cart.getFamilyPlan().hasBeenSelected()>
+		<cfif session.dbuildercart.getFamilyPlan().hasBeenSelected()>
 			<cfset local.bFamilyPlan = true />
 		</cfif>
 
 		<cfif local.bFamilyPlan>
 			<cfset removeFamilyPlan() />
 		<cfelse>
-			<cfset local.cartLines = session.cart.getLines() />
+			<cfset local.cartLines = session.dbuildercart.getLines() />
 
 			<cfif arguments.line lte arrayLen(local.cartLines)>
 				<cfset local.cartLine = local.cartLines[arguments.line] />
-				<cfset local.cartLine.setPlan(getModel('cartItem').init()) />
+				<cfset local.cartLine.setPlan(createObject("Component","fw.model.shopping.dBuilderCartlineItem").init()) />
 				<cfset local.cartLine.setFeatures(arrayNew(1)) />
 			</cfif>
 		</cfif>
@@ -763,14 +768,14 @@
 		<cfargument name="productId" type="numeric" required="true" />
 
 		<cfset var local = structNew() />
-		<cfset local.cartLines = session.cart.getLines() />
+		<cfset local.cartLines = session.dbuildercart.getLines() />
 
 		<cfif arguments.line lte arrayLen(local.cartLines) OR arguments.line eq request.config.otherItemsLineNumber>
 			<cfif arguments.line and arguments.line neq request.config.otherItemsLineNumber>
 				<cfset local.cartLine = local.cartLines[arguments.line] />
 				<cfset local.accessories = local.cartLine.getAccessories() />
 			<cfelse>
-				<cfset local.accessories = session.cart.getOtherItems() />
+				<cfset local.accessories = session.dbuildercart.getOtherItems() />
 			</cfif>
 
 			<cfloop from="1" to="#arrayLen(local.accessories)#" index="local.iAccessory">
@@ -787,7 +792,7 @@
 			<cfif arguments.line and arguments.line neq request.config.otherItemsLineNumber>
 				<cfset local.cartLine.setAccessories(local.accessories) />
 			<cfelse>
-				<cfset session.cart.setOtherItems(local.accessories) />
+				<cfset session.dbuildercart.setOtherItems(local.accessories) />
 			</cfif>
 
 			<cfif not cartContainsActivationItems()>
@@ -802,11 +807,11 @@
 		<cfargument name="line" type="numeric" required="true" />
 
 		<cfset var local = {} />
-		<cfset local.cartLines = session.cart.getLines() />
+		<cfset local.cartLines = session.dbuildercart.getLines() />
 
 		<cfif arguments.line lte arrayLen(local.cartLines)>
 			<cfset local.cartLine = local.cartLines[arguments.line] />
-			<cfset local.cartLine.setWarranty(getModel('cartItem').init()) />
+			<cfset local.cartLine.setWarranty(createObject("Component","fw.model.shopping.dBuilderCartlineItem").init()) />
 			<cfset request.hasWirelessItemBeenAdded = true />
 			 
 		</cfif>
@@ -817,7 +822,7 @@
 		<cfargument name="productId" type="numeric" required="true" />
 
 		<cfset var local = structNew() />
-		<cfset local.cartLines = session.cart.getLines() />
+		<cfset local.cartLines = session.dbuildercart.getLines() />
 
 		<cfif arguments.line lte arrayLen(local.cartLines)>
 			<cfset local.cartLine = local.cartLines[arguments.line] />
@@ -844,7 +849,7 @@
 		<cfargument name="line" type="numeric" required="true" />
 
 		<cfset var local = structNew() />
-		<cfset local.cartLines = session.cart.getLines() />
+		<cfset local.cartLines = session.dbuildercart.getLines() />
 
 		<cfif arguments.line lte arrayLen(local.cartLines)>
 			<cfset local.cartLine = local.cartLines[arguments.line] />
@@ -862,8 +867,8 @@
 	<cffunction name="changeZipcode" access="public" output="false" returntype="void">
 		<cfargument name="zipcode" type="string" required="true">
 		<cfset var local = structNew()>
-		<cfset session.cart = getModel('cart').init()>
-		<cfset session.cart.setZipcode(arguments.zipcode)>
+		<cfset session.dbuildercart = createObject("Component","fw.model.shopping.dBuilderCartline").init()>
+		<cfset session.dbuildercart.setZipcode(arguments.zipcode)>
 		<cfset request.hasWirelessItemBeenAdded = true>
 		 
 	</cffunction>
@@ -871,7 +876,7 @@
 	<cffunction name="cartContainsActivationItems" access="public" output="false" returntype="boolean">
 		<cfset var local = structNew()>
 		<cfset local.return = false>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.i">
 			<cfif local.cartLines[local.i].getPhone().hasBeenSelected() or local.cartLines[local.i].getPlan().hasBeenSelected()>
 				<cfset local.return = true>
@@ -883,16 +888,16 @@
 	</cffunction>
 
 	<cffunction name="resetActivationType" access="public" output="false" returntype="void">
-		<cfset session.cart.setActivationType("")>
-		<cfset session.cart.setUpgradeType("")>
-		<cfset session.cart.setPrePaid(false)>
+		<cfset session.dbuildercart.setActivationType("")>
+		<cfset session.dbuildercart.setUpgradeType("")>
+		<cfset session.dbuildercart.setPrePaid(false)>
 	</cffunction>
 
-	<cffunction name="validateCartForCheckout" access="public" output="false" returntype="fw.model.shopping.CartValidationResponse">
+	<cffunction name="validateCartForCheckout" access="public" output="false" returntype="fw.model.shopping.dBuilderCartlineValidationResponse">
 		<cfset var local = structNew()>
-		<cfset local.cartValidationResponse = getModel('CartValidationResponse').init()>
+		<cfset local.cartValidationResponse = createObject("Component","fw.model.shopping.dBuilderCartlineVaidationResponse").init()>
 
-		<cfset local.cart = session.cart>
+		<cfset local.cart = session.dbuildercart>
 		<cfset local.cartLines = local.cart.getLines()>
 
 		<!--- error if the cart appears to be empty --->
@@ -907,7 +912,7 @@
 				<cfif not local.thisLine.getPhone().hasBeenSelected() or not local.thisLine.getPlan().hasBeenSelected()>
 					<cfset local.cartValidationResponse.addError( "Line #local.iLine# does not contain a valid Device/Service Plan pairing." , 3 )>
 				<!--- verify that each rateplan has a valid service selected for any required service groups --->
-				<cfelseif not application.model.ServiceManager.verifyRequiredServiceSelections( local.thisLine.getPlan().getProductId(), local.thisLine.getPhone().getProductId(), getLineSelectedFeatures(local.iLine), false, ArrayNew(1), application.model.cart.getCartTypeId( session.cart.getActivationType() ) )>
+				<cfelseif not application.model.ServiceManager.verifyRequiredServiceSelections( local.thisLine.getPlan().getProductId(), local.thisLine.getPhone().getProductId(), getLineSelectedFeatures(local.iLine), false, ArrayNew(1), application.model.cart.getCartTypeId( session.dbuildercart.getActivationType() ) )>
 					<cfset local.cartValidationResponse.addError( "Line #local.iLine# is missing required Service selections.", 1 )>
 				</cfif>		
 			<!--- verify that equipment-only upgrades have all required service selections --->
@@ -958,7 +963,7 @@
 			<cfif not local.thisLine.getWarranty().hasBeenSelected() 
 				&& not local.thisLine.getDeclineWarranty() 
 				&& local.thisLine.getPhone().getDeviceServiceType() neq 'MobileBroadband' 
-				&& not (session.cart.getPrePaid() && not application.wirebox.getInstance("ChannelConfig").getOfferPrepaidDeviceWarrantyPlan())	>
+				&& not (session.dbuildercart.getPrePaid() && not application.wirebox.getInstance("ChannelConfig").getOfferPrepaidDeviceWarrantyPlan())	>
 				<cfset local.cartValidationResponse.addError( "You must either select a warranty or select 'No Thanks' on line #local.iline#", 11 )>
 			</cfif>
 		</cfloop>
@@ -974,7 +979,7 @@
 		</cfloop>
 
 		<!--- Validate accessories are in cart or no thanks except for prepaid phones --->
-		<cfif not session.cart.getPrepaid() >
+		<cfif not session.dbuildercart.getPrepaid() >
 			<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iLine">
 				<cfset local.thisLine = local.cartLines[local.iLine]>
 				<cfif (not arrayLen(local.thisLine.getAccessories()) and not local.thisLine.getDeclineAccessories())>
@@ -1004,7 +1009,7 @@
 		<cfargument name="line" type="numeric" required="true">
 		<cfset var local = structNew()>
 		<cfset local.return = "">
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfif arrayLen(local.cartLines) gte arguments.line>
 			<cfset local.thisLine = local.cartLines[arguments.line]>
 			<cfset local.thisLineFeatures = local.thisLine.getFeatures()>
@@ -1054,7 +1059,7 @@
 	<cffunction name="declineFeatures" access="public" output="false" returntype="void">
 		<cfargument name="line" type="numeric" required="true">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfif arrayLen(local.cartLines) gte arguments.line>
 			<cfset local.line = local.cartLines[arguments.line]>
 			<cfset local.line.setDeclineFeatures(true)>
@@ -1064,7 +1069,7 @@
 	<cffunction name="declineAccessories" access="public" output="false" returntype="void">
 		<cfargument name="line" type="numeric" required="true">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfif arrayLen(local.cartLines) gte arguments.line>
 			<cfset local.line = local.cartLines[arguments.line]>
 			<cfset local.line.setDeclineAccessories(true)>
@@ -1074,7 +1079,7 @@
 	<cffunction name="declineWarranty" access="public" output="false" returntype="void">
 		<cfargument name="line" type="numeric" required="true">
 		<cfset var local = structNew()>
-		<cfset local.cartLines = session.cart.getLines()>
+		<cfset local.cartLines = session.dbuildercart.getLines()>
 		<cfif arrayLen(local.cartLines) gte arguments.line>
 			<cfset local.line = local.cartLines[arguments.line]>
 			<cfset local.line.setDeclineWarranty(true)>
@@ -1129,7 +1134,7 @@
 
 		<cfscript>
 			var local = structNew();
-			local.cart = session.cart;
+			local.cart = session.dbuildercart;
 			local.cartLines = local.cart.getLines();
 
 			local.cartLines[arguments.line].getPhone().setProductID(arguments.productId);
@@ -1137,7 +1142,7 @@
 			local.cartLines[arguments.line].getPhone().getPrices().setDueToday(arguments.price);
 			local.cartLines[arguments.line].getPhone().getPrices().setCOGS(application.model.Product.getCOGS(arguments.productId));
 			local.cartLines[arguments.line].getPhone().getPrices().setRetailPrice(application.model[arguments.productType].getPriceByProductIDAndMode(ProductId=arguments.productId,mode="retail"));
-			session.cart.setCarrierId(application.model[arguments.productType].getCarrierIdByProductId(arguments.productId));
+			session.dbuildercart.setCarrierId(application.model[arguments.productType].getCarrierIdByProductId(arguments.productId));
 			
 			// clear any other free accessories on this line
 			application.model.CartHelper.clearLineFreeAccessories(lineNumber=arguments.line);
@@ -1149,7 +1154,7 @@
 				local.thisLineAccessories = local.cartLines[arguments.line].getAccessories();
 				for (local.i=1;local.i lte local.freeAccessories.recordCount;local.i=local.i+1)
 				{
-					local.thisFreeAccessory = getModel('CartItem').init();
+					local.thisFreeAccessory = createObject("Component","fw.model.shopping.dBuilderCartlineItem").init();
 					local.thisFreeAccessory.setProductId(local.freeAccessories.productId[local.i]);
 					local.thisFreeAccessory.setType("bundled");
 					local.thisFreeAccessory.getPrices().setDueToday(0);
@@ -1159,13 +1164,13 @@
 				}
 				local.cartLines[arguments.line].setAccessories(local.thisLineAccessories);
 			}
-			session.cart.setLines(local.cartLines);
-			session.cart.setCurrentLine(arguments.line);
-			session.cart.setActivationType(arguments.activationType);
+			session.dbuildercart.setLines(local.cartLines);
+			session.dbuildercart.setCurrentLine(arguments.line);
+			session.dbuildercart.setActivationType(arguments.activationType);
 			// if we just added a prepaid
 			if (arguments.productType eq "prepaid")
 			{
-				session.cart.setPrepaid(true);
+				session.dbuildercart.setPrepaid(true);
 			}
 //			session.phoneFilterSelections.planType = arguments.activationType;
 			session.phoneFilterSelections.filterOptions = 0;
@@ -1225,7 +1230,7 @@
 
 		<cfscript>
 			var local = structNew();
-			local.cart = session.cart;
+			local.cart = session.dbuildercart;
 			local.cartLines = local.cart.getLines();
 			local.thisPlan = application.model.Plan.getByFilter(idList=arguments.productId)>
 
@@ -1233,7 +1238,7 @@
 			local.cartLines[arguments.line].getPlan().setProductID(arguments.productId);
 			local.cartLines[arguments.line].getPlan().setType("rateplan");
 			local.cartLines[arguments.line].setPlanType(application.model.Plan.getPlanTypeByProductID(arguments.productId));
-			session.cart.setCarrierId(application.model.Product.getCarrierIdByProductId(arguments.productId));
+			session.dbuildercart.setCarrierId(application.model.Product.getCarrierIdByProductId(arguments.productId));
 //			session.planFilterSelections.planType = local.thisPlan.planType;
 			session.planFilterSelections.filterOptions = 0;
 			session.planFilterSelections.filterOptions = listAppend(session.planFilterSelections.filterOptions,application.model.FilterHelper.getFilterOptionId('plan','planType',local.thisPlan.planType));
@@ -1260,7 +1265,7 @@
 					local.iFeature = listGetAt(arguments.featureIds,local.i);
 					if (isNumeric(local.iFeature))
 					{
-						arrayAppend(local.arrFeatures,getModel('CartItem').init());
+						arrayAppend(local.arrFeatures,createObject("Component","fw.model.shopping.dBuilderCartlineItem").init());
 						local.arrFeatures[arrayLen(local.arrFeatures)].setProductID(local.iFeature);
 						local.arrFeatures[arrayLen(local.arrFeatures)].setType("service");
 					}
@@ -1275,7 +1280,7 @@
 				application.model.CartHelper.setFamilyPlan(arguments.productId);
 			}
 
-			session.cart.setCurrentLine(arguments.line);
+			session.dbuildercart.setCurrentLine(arguments.line);
 			 
 
 			request.hasWirelessItemBeenAdded = true;
@@ -1290,11 +1295,11 @@
 
 		<cfscript>
 			var local = structNew();
-			local.cart = session.cart;
+			local.cart = session.dbuildercart;
 			local.cartLines = local.cart.getLines();
 			local.thisAccessory = application.model.Accessory.getByFilter(idList=arguments.productId);
 
-			local.newAccessory = getModel('CartItem').init();
+			local.newAccessory = createObject("Component","fw.model.shopping.dBuilderCartlineItem").init();
 			local.newAccessory.setProductID(arguments.productId);
 			local.newAccessory.getPrices().setDueToday(local.thisAccessory.price);
 			local.newAccessory.getPrices().setCOGS(application.model.Product.getCOGS(local.newAccessory.getProductId()));
@@ -1307,9 +1312,9 @@
 				for (local.i=1;local.i lte arguments.qty;local.i=local.i+1)
 				{
 					// add this accessory to the general cart
-					arrayAppend(session.cart.getOtherItems(),local.newAccessory);
+					arrayAppend(session.dbuildercart.getOtherItems(),local.newAccessory);
 				}
-				session.cart.setCurrentLine(arguments.line);
+				session.dbuildercart.setCurrentLine(arguments.line);
 			}
 			else
 			{
@@ -1319,7 +1324,7 @@
 					arrayAppend(cartLines[arguments.line].getAccessories(),local.newAccessory);
 				}
 				local.addedAccessoryToWorkflow = true;
-				session.cart.setCurrentLine(arguments.line);
+				session.dbuildercart.setCurrentLine(arguments.line);
 			}
 			 
 
@@ -1349,9 +1354,9 @@
 			};
 
 			// line tooltip
-			if (arrayLen(session.cart.getLines()) gte arguments.line)
+			if (arrayLen(session.dbuildercart.getLines()) gte arguments.line)
 			{
-				local.cartLines = session.cart.getLines();
+				local.cartLines = session.dbuildercart.getLines();
 				local.cartLine = local.cartLines[arguments.line];
 				local.lineAlias = "Line #arguments.line#";
 				if (len(trim(local.cartLine.getAlias())))
@@ -1361,7 +1366,7 @@
 
 
 				//regluar, eq-only+plan
-				if ( (session.cart.getUpgradeType() neq "equipment-only" and not session.cart.getPrePaid() ) or (session.cart.getUpgradeType() eq "equipment+plan"))
+				if ( (session.dbuildercart.getUpgradeType() neq "equipment-only" and not session.dbuildercart.getPrePaid() ) or (session.dbuildercart.getUpgradeType() eq "equipment+plan"))
 				{
 					//set status
 					if(local.cartLine.getPhone().hasBeenSelected())
@@ -1390,7 +1395,7 @@
 						//local.toolTip.percent = local.toolTip.percent + 25;
 					}
 
-					if(session.cart.getAddALineType() eq "Family")
+					if(session.dbuildercart.getAddALineType() eq "Family")
 					{
 						local.toolTip.percent = local.toolTip.percent + 25;
 					}
@@ -1405,7 +1410,7 @@
 						local.toolTip.nextAction = "device";
 					}
 					// if there's no plan selected
-					else if (not local.cartLine.getPlan().hasBeenSelected()  and  session.cart.getAddALineType() neq "Family" )
+					else if (not local.cartLine.getPlan().hasBeenSelected()  and  session.dbuildercart.getAddALineType() neq "Family" )
 					{
 						local.toolTip.actionLabel = "Select a Service Plan for this line.";
 						local.toolTip.actionURL = application.view.Cart.getLink(arguments.line,"browsePlans");
@@ -1511,7 +1516,7 @@
 
 
 	<cffunction name="updateFamilyPlanDevicePrices" access="public" output="false" returntype="void">
-		<cfargument name="cart" type="cfc.model.Cart" required="true" />
+		<cfargument name="cart" type="fw.model.shopping.dBuilderCartline" required="true" />
 
 
 
@@ -1555,7 +1560,7 @@
 	</cffunction>
 
 	<cffunction name="addDefaultPlanAndServices" access="public" output="false" returntype="void">
-		<cfargument name="cartLine" type="cfc.model.CartLine" required="true" />
+		<cfargument name="cartLine" type="fw.model.shopping.dBuilderCartlineLine" required="true" />
 		<cfargument name="deviceProductId" type="string" required="true" />
 
 		<cfscript>
@@ -1578,7 +1583,7 @@
 				{
 					for (i=1; i <= qDefaultServices.RecordCount; i++)
 					{
-						featureItem = getModel('CartItem').init();
+						featureItem = createObject("Component","fw.model.shopping.dBuilderCartlineItem").init();
 						featureItem.setProductID( qDefaultServices['ProductId'][i] );
 						featureItem.setType( 'service' );
 						arrayAppend( featureItems, featureItem );
@@ -1595,7 +1600,7 @@
 	<cffunction name="removeEmptyCartLines" output="false" access="public" returntype="void">
 
 		<cfscript>
-			var cartLines = session.cart.getLines();
+			var cartLines = session.dbuildercart.getLines();
 			var cartLine = 0;
 			var i = 0;
 
@@ -1607,8 +1612,8 @@
 						&& ArrayLen( cartLine.getAccessories() ) eq 0
 						&& ( //No plans are required for equipment only upgrades and family add-a-line
 							cartLine.getPlan().getProductId() eq 0
- 							&& ( (session.cart.getActivationType() DOES NOT CONTAIN 'upgrade' and session.cart.getUpgradeType() neq 'equipment-only')
-								or (session.cart.getActivationType() DOES NOT CONTAIN 'addaline' and session.cart.getAddAlineType() neq 'family') )
+ 							&& ( (session.dbuildercart.getActivationType() DOES NOT CONTAIN 'upgrade' and session.dbuildercart.getUpgradeType() neq 'equipment-only')
+								or (session.dbuildercart.getActivationType() DOES NOT CONTAIN 'addaline' and session.dbuildercart.getAddAlineType() neq 'family') )
 						   )
 				   )
 				{
@@ -1617,8 +1622,8 @@
 
 			}
 
-			session.cart.setLines( cartLines );
-			session.cart.setCurrentLine(arrayLen(session.cart.getLines()));
+			session.dbuildercart.setLines( cartLines );
+			session.dbuildercart.setCurrentLine(arrayLen(session.dbuildercart.getLines()));
 		</cfscript>
 
 	</cffunction>
@@ -1648,9 +1653,9 @@
 	<cffunction name="getAccessoryPriceTotals" output="false" access="public" returntype="numeric">
 
 		<cfscript>
-			var cartLines = session.cart.getLines();
+			var cartLines = session.dbuildercart.getLines();
 			var lineAccessories = [];
-			var otherItems = session.cart.getOtherItems();
+			var otherItems = session.dbuildercart.getOtherItems();
 			var totalPrice = 0;
 			var i = 0;
 			var j = 0;
@@ -1686,7 +1691,7 @@
 		<cfscript>
 			var activationTypeAcronym = '';
 			
-			switch ( session.cart.getActivationType() )
+			switch ( session.dbuildercart.getActivationType() )
 			{
 				case 'new':
 					activationTypeAcronym = 'N';

@@ -1,16 +1,16 @@
-<cfcomponent output="false" displayname="Cart" extends="fw.model.BaseService">
+<cfcomponent output="false" displayname="dBuilderCart" extends="fw.model.BaseService">
 
-	<cffunction name="init" returntype="fw.model.shopping.cart">
+	<cffunction name="init" returntype="fw.model.shopping.dBuilderCart">
 		<cfargument name="orderID" type="numeric" required="false" default="0" />
 		<cfargument name="zipCode" type="string" required="false" default="00000" /> <!--- Service Zip Code --->
 		<cfargument name="lines" type="array" required="false" default="#arrayNew(1)#" />
 		<cfargument name="currentLine" type="numeric" required="false" default="0" />
 		<cfargument name="otherItems" type="array" required="false" default="#arrayNew(1)#" />
-		<cfargument name="familyPlan" type="any" required="false" default="#getModel('cartitem').init()#" />
+		<cfargument name="familyPlan" type="any" required="false" default="#CreateObject("component","fw.model.shopping.dBuilderCartItem").init()#" />
 		<cfargument name="additionalCharges" type="struct" required="false" default="#structNew()#" />
-		<cfargument name="prices" type="any" required="false" default="#getModel('cartPriceBlock').init()#" />
-		<cfargument name="taxes" type="any" required="false" default="#getModel('cartPriceBlock').init()#" />
-		<cfargument name="shipping" type="any" required="false" default="#getModel('cartPriceBlock').init()#" />
+		<cfargument name="prices" type="any" required="false" default="#createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init()#" />
+		<cfargument name="taxes" type="any" required="false" default="#createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init()#" />
+		<cfargument name="shipping" type="any" required="false" default="#createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init()#" />
 		<cfargument name="activationType" type="string" required="false" default="" /> <!--- new, upgrade, addaline --->
 		<cfargument name="upgradeType" type="string" required="false" default="" /> <!--- 'equipment-only', 'equipment+plan'--->
         <cfargument name="addALineType" type="string" required="false" default="" /> <!--- 'ind', 'Family' --->
@@ -51,6 +51,10 @@
 		<cfset setInstantRebateAmountTotal(arguments.instantRebateAmountTotal) />
 		<cfset setPromotionCodes(arguments.promotionCodes) />
 
+		<cfif not structKeyExists(session,"DbuilderCartFacade") >
+			<cfset session.dbuilderCartFacade = CreateObject("component","fw.model.shopping.dBuilderCartFacade").init(this) />
+		</cfif>
+
 		<cfreturn this />
 	</cffunction>
 
@@ -58,11 +62,11 @@
 
 		<cfset var local = {} />
 
-		<cfset local.cartPrices = getModel('cartPriceBlock').init() />
+		<cfset local.cartPrices = createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init() />
 		<cfset local.carrierID = getCarrierID() />
 		<cfset local.planCounts = {}> 
 
-		<cfset local.aLines = session.cart.getLines() />
+		<cfset local.aLines = session.dbuildercart.getLines() />
 
 		<cfloop from="1" to="#arrayLen(local.aLines)#" index="local.i">
 			<cfset local.phone = local.aLines[local.i].getPhone()> 
@@ -75,7 +79,7 @@
 				<cfset local.planCounts[ "_" & local.plan.getProductID() ]++>
 			</cfif>
 			
-			<cfset local.linePrices = cgetModel('cartPriceBlock').init() />
+			<cfset local.linePrices = createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init() />
 			<cfset cartLineActivationType = local.aLines[local.i].getCartLineActivationType() />
 			<cfif local.phone.hasBeenSelected() and cartLineActivationType contains 'financed'> 
 				
@@ -140,7 +144,7 @@
 
 			<!--- Add shared features only to line 1 --->
 			<cfif local.i eq 1>
-				<cfset local.aSharedFeatures = session.cart.getSharedFeatures() />
+				<cfset local.aSharedFeatures = session.dbuildercart.getSharedFeatures() />
 
 				<cfif arrayLen(local.aSharedFeatures)>
 					<cfloop from="1" to="#arrayLen(local.aSharedFeatures)#" index="local.ii">
@@ -226,10 +230,10 @@
 			<cfset local.cartPrices.setRetailPrice(local.cartPrices.getRetailPrice() + local.aLines[local.i].getPrices().getRetailPrice()) />
 		</cfloop>
 
-		<cfset local.aAccessories = session.cart.getOtherItems() />
+		<cfset local.aAccessories = session.dbuildercart.getOtherItems() />
 
 		<cfif arrayLen(local.aAccessories)>
-			<cfset local.linePrices = getModel('cartPriceBlock').init() />
+			<cfset local.linePrices = createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init() />
 
 			<cfloop from="1" to="#arrayLen(local.aAccessories)#" index="local.ii">
 				<cfif local.aAccessories[local.ii].getType() is 'accessory'>
@@ -258,19 +262,19 @@
 			</cfloop>
 		</cfif>
 		
-		<cfset session.cart.setLines(local.aLines) />
-		<cfset session.cart.setPrices(local.cartPrices) />
+		<cfset session.dbuildercart.setLines(local.aLines) />
+		<cfset session.dbuildercart.setPrices(local.cartPrices) />
 	</cffunction>
 
 	<cffunction name="updateAllTaxes" access="public" output="false" returntype="void">
 
 		<cfset var local = structNew() />
 
-		<cfset local.cartTaxes = getModel('cartPriceBlock').init() />
-		<cfset local.aLines = session.cart.getLines() />
+		<cfset local.cartTaxes = createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init() />
+		<cfset local.aLines = session.dbuildercart.getLines() />
 
 		<cfloop from="1" to="#arrayLen(local.aLines)#" index="local.i">
-			<cfset local.lineTaxes = getModel('cartPriceBlock').init() />
+			<cfset local.lineTaxes = createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init() />
 
 			<cfif local.aLines[local.i].getPhone().hasBeenSelected()>
 				
@@ -326,7 +330,7 @@
 			<cfset local.cartTaxes.setMonthly(local.cartTaxes.getMonthly() + local.aLines[local.i].getTaxes().getMonthly()) />
 		</cfloop>
 
-		<cfset local.aAccessories = session.cart.getOtherItems() />
+		<cfset local.aAccessories = session.dbuildercart.getOtherItems() />
 
 		<cfif arrayLen(local.aAccessories)>
 			<cfloop from="1" to="#arrayLen(local.aAccessories)#" index="local.ii">
@@ -336,8 +340,8 @@
 			</cfloop>
 		</cfif>
 
-		<cfset session.cart.setLines(local.aLines) />
-		<cfset session.cart.setTaxes(local.cartTaxes) />
+		<cfset session.dbuildercart.setLines(local.aLines) />
+		<cfset session.dbuildercart.setTaxes(local.cartTaxes) />
 	</cffunction>
 	
 	<cffunction name="updateAllDiscounts">
@@ -352,9 +356,9 @@
 			
 			if( getChannelConfig().isPromotionCodeAvailable() ) {
 			
-				promoCodes = session.cart.getPromotionCodes();
+				promoCodes = session.dbuildercart.getPromotionCodes();
 				codes = listToArray(structKeyList(promoCodes));
-				cartItems = session.cart.getCartItems();
+				cartItems = session.dbuildercart.getCartItems();
 				
 				// Discounts are currently a running total.. so we have to reset them before re-applying discounts
 				for( i=1; i <= arrayLen(cartItems); i++ ) {
@@ -370,15 +374,15 @@
 					Result = getPromotionService().evaluatePromotion( 
 							code = code, 
 							userID = session.userID,
-							accessoryTotal = session.Cart.getAccessoriesAmtDueToday(),
-							accessoryQuantity = arrayLen(session.Cart.getAccessories(includeFree=false)),
-							orderTotal = session.Cart.getCartItemsAmtDueToday(),
-							orderQuantity = arrayLen(session.Cart.getCartItems(includeFree=false)),
-							orderSKUList = session.Cart.getCartSKUList()
+							accessoryTotal = session.dbuilderCart.getAccessoriesAmtDueToday(),
+							accessoryQuantity = arrayLen(session.dbuilderCart.getAccessories(includeFree=false)),
+							orderTotal = session.dbuilderCart.getCartItemsAmtDueToday(),
+							orderQuantity = arrayLen(session.dbuilderCart.getCartItems(includeFree=false)),
+							orderSKUList = session.dbuilderCart.getCartSKUList()
 						);
 						
 					getPromotionService().addPromotiontoCart( 
-							cart = session.Cart, 
+							cart = session.dbuilderCart, 
 							result = Result, 
 							shipMethod = application.model.checkoutHelper.getShippingMethod(),
 							userID = session.userID
@@ -398,8 +402,8 @@
 
 		<cfscript>
 			var taxCalculator = application.wirebox.getInstance("TaxCalculator");
-			var cartLines = session.cart.getLines();
-			var otherItems = session.cart.getOtherItems();
+			var cartLines = session.dbuildercart.getLines();
+			var otherItems = session.dbuildercart.getOtherItems();
 			var accessories = 0;
 			var cartItems = [];
 			var args = {};
@@ -422,7 +426,7 @@
 				instantRebateAmt = getInstantRebateService().getQualifyingAmt( cartLines[i] ) * -1; 
 				if( instantRebateAmt < 0 ) 
 				{
-					rebate = getModel('cartItem').init();
+					rebate = createObject("Component","fw.model.shopping.dBuilderCartItem").init();
 					rebate.setProductID(-1337);
 					rebate.setGERSSKU('INSTANTREBATESAVINGS');
 					rebate.getPrices().setDueToday(instantRebateAmt);
@@ -470,9 +474,9 @@
 				}
 			}
 			
-			if( session.cart.getPrices().getDiscountTotal() > 0 ) 
+			if( session.dbuildercart.getPrices().getDiscountTotal() > 0 ) 
 			{
-				discount = buildTaxDiscountLineItem( session.cart.getPrices(), 'ORDERCOUPONAMOUNT' );
+				discount = buildTaxDiscountLineItem( session.dbuildercart.getPrices(), 'ORDERCOUPONAMOUNT' );
 				arrayAppend(cartItemsWithPromotions, discount);
 			} 
 			else 
@@ -551,21 +555,21 @@
     	<cfreturn result />
 	</cffunction>
 
-    <cffunction name="AddOtherItem" returntype="fw.model.shopping.CartItem" output="no" hint="Adds the provided fw.model.shopping.CartItem to the other items list.">
-    	<cfargument name="Item" type="fw.model.shopping.CartItem" required="yes">
+    <cffunction name="AddOtherItem" returntype="fw.model.shopping.dBuilderCartItem" output="no" hint="Adds the provided fw.model.shopping.dBuilderCartItem to the other items list.">
+    	<cfargument name="Item" type="fw.model.shopping.dBuilderCartItem" required="yes">
         <cfset ArrayAppend(variables.instance.otherItems, arguments.Item)>
         <cfreturn arguments.Item>
     </cffunction>
 
 	<cffunction name="getCurrentLineData" access="public" output="false" returntype="any">
 		<cfset var local = structNew()>
-		<cfif this.getCurrentLine() and this.getCurrentLine() neq request.config.otherItemsLineNumber and arrayLen(session.cart.getLines()) gte session.cart.getCurrentLine()>
-			<cfset local.cartLines = session.cart.getLines()>
+		<cfif this.getCurrentLine() and this.getCurrentLine() neq request.config.otherItemsLineNumber and arrayLen(session.dbuildercart.getLines()) gte session.dbuildercart.getCurrentLine()>
+			<cfset local.cartLines = session.dbuildercart.getLines()>
 			<cfreturn local.cartLines[this.getCurrentLine()]>
 		<cfelseif this.getCurrentLine() and this.getCurrentLine() eq request.config.otherItemsLineNumber>
-			<cfreturn session.cart.getOtherItems()>
+			<cfreturn session.dbuildercart.getOtherItems()>
 		<cfelse>
-			<cfset local.cartLine = getModel('cartLine').init()>
+			<cfset local.cartLine = createObject("Component","fw.model.shopping.dBuilderCartline").init()>
 			<cfreturn local.cartLine>
 		</cfif>
 	</cffunction>
@@ -909,12 +913,12 @@
 		<cfreturn structCount( getPromotionCodes() )>
 	</cffunction>
 	
-	<cffunction name="buildTaxDiscountLineItem" access="private" output="false" returntype="fw.model.shopping.CartItem" hint="">    
-    	<cfargument name="CartPriceBlock" type="fw.model.shopping.CartPriceBlock" required="true" />
+	<cffunction name="buildTaxDiscountLineItem" access="private" output="false" returntype="fw.model.shopping.dBuilderCartItem" hint="">    
+    	<cfargument name="CartPriceBlock" type="fw.model.shopping.dBuilderCartPriceBlock" required="true" />
 		<cfargument name="gersSKU" type="string" required="true" />
 		
 		<cfscript>
-			var DiscountItem = getModel('cartItem').init();
+			var DiscountItem = createObject("Component","fw.model.shopping.dBuilderCartItem").init();
 			var promotions = arguments.CartPriceBlock.getPromotionCodes();
 			var promoCodes = structKeyList(promotions);
 			var discountAmt = 0;
@@ -978,7 +982,7 @@
 	<cffunction name="hasCart" returntype="boolean">
 		<cfset var local = structNew()>
 		<cfset local.return = false>
-		<cfif isDefined("session.cart") and isStruct(session.cart)>
+		<cfif isDefined("session.dbuildercart") and isStruct(session.dbuildercart)>
 			<cfset local.return = true>
 		</cfif>
 		<cfreturn local.return>
