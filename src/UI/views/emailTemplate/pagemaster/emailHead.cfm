@@ -15,7 +15,7 @@
 				<tr>
 					<cfoutput>
 						<td valign="top" align="left">
-							<a href="http://membershipwireless.com">
+							<a href="##">
 								<img src="http://#request.config.emailTemplateDomain##assetPaths.channel#images/WirelessAdvocates_logosm.gif" 
 									alt="Wireless Advocates" width="143" height="38" />
 							</a>

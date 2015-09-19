@@ -1647,6 +1647,11 @@
 		<cfargument name="draggable" type="boolean" default="true">
 		<cfargument name="productType" type="string" default="productType">
 		<cfset var local = structNew()>
+		
+		<cfif channelConfig.getVfdEnabled()>
+			<cfset arguments.height = "620">
+		</cfif>
+		
 		<cfparam name="session.cart" default="#createObject('component','cfc.model.Cart').init()#">
 		<cfparam name="request.cart.numLines" default="#application.model.CartHelper.getNumberOfLines()#">
 

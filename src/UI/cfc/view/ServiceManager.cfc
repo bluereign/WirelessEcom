@@ -116,6 +116,7 @@
 				active = false,
 				name = '',
 				monthlyFee = '',
+				financedPrice = '',
 				carrierGuid = '',
 				carrierBillCode = '',
 				gersSku = 'MASTERCAT',
@@ -138,6 +139,7 @@
 			<cfset local.cartTypeId = local.serviceDetails.cartTypeId />
 			<cfset local.name = local.serviceDetails.Name />
 			<cfset local.monthlyFee = local.serviceDetails.MonthlyFee />
+			<cfset local.financedPrice = local.serviceDetails.FinancedPrice />
 			<cfset local.carrier = local.serviceDetails.Carrier />
 			<cfset local.carrierGuid = local.serviceDetails.CarrierGuid />
 			<cfset local.carrierBillCode = local.serviceDetails.CarrierBillCode />
@@ -273,6 +275,11 @@
 		                <li class="even">
 		                    <label class="field-title" title="The monthly fee of the service">Monthly Fee:</label>
 		                    <label><input name="monthlyFee" class="txtbox-long" value="<cfoutput>#local.monthlyFee#</cfoutput>" /></label>
+		                    <span class="clearFix">&nbsp;</span>
+		                </li>
+		                <li class="odd">
+		                    <label class="field-title" title="The monthly fee of the service for financed phones">Financed Price:</label>
+		                    <label><input name="financedPrice" class="txtbox-long" value="<cfoutput>#local.financedPrice#</cfoutput>" /></label>
 		                    <span class="clearFix">&nbsp;</span>
 		                </li>
 						
@@ -662,7 +669,11 @@
 		<cfset local.cartTypeId = arguments.cartTypeId />
 		<cfset local.ExcludeSharedGroup = false />
 		<cfset local.sharedFeatureGuids = [] />
-
+		
+		<cfset cartLines = session.cart.getLines()>
+		<cfset cartLine = request.p.cartCurrentLine />
+		<cfset local.deviceActivationType =  cartlines[cartLine].getCartLineActivationType()>
+		
 		<cfif local.type is 'I'>
 			<cfset local.readOnly = true />
 		</cfif>
@@ -716,10 +727,17 @@
 										<div id="inventoryDebugInfo_#qService.productId#" class="inventoryDebugInfo" onmouseout="hideInventoryDebugInfo(this);document.body.style.cursor='';">
 											<div style="float:left;">GERS SKU:</div><div style="float:right;">#qService.GersSku#ss</div><br/>
 											<div style="float:left;">Carrier Bill Code:</div><div style="float:right;">#qService.CarrierBillCode#</div><br/>
+											<div style="float:left;">Financed Price:</div><div style="float:right;">#qService.FinancedPrice#</div><br/>
 										</div>
 									</cfif>
 								</td>
-								<td class="featurePrice">#DollarFormat(qService.MonthlyFee)#</td>
+								<td class="featurePrice">
+									<cfif (local.deviceActivationType contains 'finance') and (len(qService.FinancedPrice))><!---Is a financed phone with a Financed Price--->
+										#dollarFormat(qService.FinancedPrice)#
+									<cfelse>
+										#DollarFormat(qService.MonthlyFee)#
+									</cfif>
+								</td>
 								<td>
 									<input type="radio"
 										name="chk_features_#qService.ProductId#"
@@ -782,11 +800,18 @@
 												<div id="inventoryDebugInfo_#serviceLabels.productId#" class="inventoryDebugInfo" onmouseout="hideInventoryDebugInfo(this);document.body.style.cursor='';">
 													<div style="float:left;">GERS SKU:</div><div style="float:right;">#serviceLabels.GersSku#</div><br/>
 													<div style="float:left;">Carrier Bill Code:</div><div style="float:right;">#serviceLabels.CarrierBillCode#</div><br/>
+													<div style="float:left;">Financed Price:</div><div style="float:right;">#serviceLabels.FinancedPrice#</div><br/>
 												</div>
 											</cfif>
 										</td>
 										<cfif local.type is not 'I'>
-											<td class="featurePrice">#dollarFormat(serviceLabels.monthlyFee)#</td>
+											<td class="featurePrice">
+												<cfif (local.deviceActivationType contains 'finance') and (len(serviceLabels.FinancedPrice))><!---Is a financed phone with a Financed Price--->
+													#dollarFormat(serviceLabels.FinancedPrice)#
+												<cfelse>
+													#dollarFormat(serviceLabels.monthlyFee)#
+												</cfif>
+											</td>	
 										</cfif>
 										<cfif not local.readOnly>
 											<td class="featureSelect">

@@ -41,7 +41,7 @@
 				<cfif local.isVFD>
 					<cfswitch expression="#local.environment#">
 						<cfcase value="development">
-							<cfset googleAnalyticsID = "UA-62999104-2">
+							<cfset googleAnalyticsID = "UA-62999104-1">
 						</cfcase>
 						
 						<cfcase value="test">
@@ -49,7 +49,7 @@
 						</cfcase>
 						
 						<cfcase value="production">
-							<cfset googleAnalyticsID = "UA-62999104-1">
+							<cfset googleAnalyticsID = "UA-62999104-2">
 						</cfcase>
 						
 						<cfdefaultcase>

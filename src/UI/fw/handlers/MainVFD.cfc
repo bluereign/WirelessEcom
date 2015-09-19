@@ -105,7 +105,7 @@
 			<cfset Session.VFD.access = true />
 			<cfset dSerial=DeserializeJSON(rc.decoded) />
 			<cfset Session.VFD.employeeNumber = dSerial.EMPLOYEEID />
-			<cfset session.cart.setKioskEmployeeNumber(dSerial.EMPLOYEEID) />
+			<!---<cfset session.cart.setKioskEmployeeNumber(dSerial.EMPLOYEEID) />--->
 			<cfset Session.VFD.kioskNumber = dSerial.STORECODE />
 			<cfset Session.VFD.expires = dSerial.EXPIRES />
 			

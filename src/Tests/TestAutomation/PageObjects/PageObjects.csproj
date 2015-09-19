@@ -53,8 +53,9 @@
     <Compile Include="BasePage.cs" />
     <Compile Include="BrowsePhonesPage.cs" />
     <Compile Include="BrowsePlansPage.cs" />
-    <Compile Include="BrowsePrepaids.cs" />
-    <Compile Include="ComparePhones.cs" />
+    <Compile Include="BrowsePrepaidsPage.cs" />
+    <Compile Include="ComparePhonesPage.cs" />
+    <Compile Include="DeviceUIControl.cs" />
     <Compile Include="HomePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SprintDeviceDetailsPage.cs" />

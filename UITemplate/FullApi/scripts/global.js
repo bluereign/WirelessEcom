@@ -17,31 +17,33 @@ function toggleDiv(divToHide, divToShow) {
 }
 
 function buildSlider(div) {
-	var	children = $(div).children('.info'),
-		featuredChildIndex = $('.featured').index(),
-		childrenLength = children.length,
-		options = {
-			dots: false,
-			infinite: true,
-			initialSlide: featuredChildIndex - 1,
-			speed: 300,
-			slidesToShow: 3,
-			slidesToScroll: 1,
-			responsive: [
-				{
-					breakpoint: 480,
-					settings: {
-						slidesToShow: 1
+
+		var	$this = $(div),
+			children = $this.children('.info'),
+			featuredChildIndex = $this.find('.featured').index(),
+			childrenLength = children.length,
+			options = {
+				dots: false,
+				infinite: false,
+				initialSlide: featuredChildIndex - 1,
+				speed: 300,
+				slidesToShow: 3,
+				slidesToScroll: 1,
+				responsive: [
+					{
+						breakpoint: 480,
+						settings: {
+							slidesToShow: 1
+						}
 					}
-				}
-			]
-		};
+				]
+			};
 
-	if (childrenLength < 3) {
-		options['arrows'] = false;
-	}
+		if (childrenLength < 3) {
+			options['arrows'] = false;
+		}
 
-	$(div).slick(options);
+		$(div).slick(options);
 }
 
 $(document).ready(function() {
@@ -52,8 +54,9 @@ $(document).ready(function() {
 		$products = $('.accessories .product');
 		$filterableProducts = $('.tab-pane .product');
 
-	// Carousel on Update Data Plan Page
-	buildSlider($carousel);
+	$carousel.each(function(index, el){
+		buildSlider(el);
+	});
 
 	// Swap text on Show/Hide Cart Details
 	$('.plan-details').on('click', function() {
@@ -70,6 +73,41 @@ $(document).ready(function() {
 		toggleDiv('#new-customer1', '#new-customer2');
 	});
 
+	// Filters on accessories
+	$('.nav-tabs a').on('click', function(e) {
+		var parentClass = $(this).parent().attr('class'),
+			$filterProducts = $filterableProducts.parent();
+
+		if ($filterableProducts) {
+			$filterProducts.hide();
+
+			if (parentClass === 'all') {
+				$filterProducts.show();
+			} else if (parentClass) {
+				$('.' + parentClass).parent().show();
+			}
+		}
+	});
+
+	$('.nav-tabs').on('shown.bs.tab', function (e, index) {
+		$carousel.each(function(index, el){
+			$carousel[index].slick.setPosition();
+		});
+	});
+
+	// View Details Mouseover
+	$products
+		.on('mouseover', function() {
+			$(this).addClass('hover');
+		})
+		.on('mouseout', function() {
+			$(this).removeClass('hover');
+		})
+		.find('.info-wrap').on('mouseover', function(e) {
+			e.stopPropagation();
+		});
+
+	// Swap images on thumbnail click in view details modal
 	$thumbnails.on('click', function(e) {
 		e.preventDefault();
 		var $this = $(this),
@@ -79,31 +117,6 @@ $(document).ready(function() {
 		$this.addClass('active');
 
 		swapDeviceImage(newSrc);
-	});
-
-	// Filters on accessories
-	$('.nav-tabs a').on('click', function() {
-		var parentClass = $(this).parent().attr('class');
-
-		$filterableProducts.parent().hide();
-
-		if (parentClass === 'all') {
-			$filterableProducts.parent().show();
-		} else {
-			$('.' + parentClass).parent().show();
-		}
-	});
-
-	$products.on('mouseover', function() {
-		$(this).addClass('hover');
-	});
-
-	$products.find('.info-wrap').on('mouseover', function(e) {
-		e.stopPropagation();
-	});
-
-	$products.on('mouseout', function() {
-		$(this).removeClass('hover');
 	});
 });
 

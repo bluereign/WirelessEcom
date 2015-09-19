@@ -52,6 +52,9 @@ function printConfirmation(){
 				<div id="header-checkout">
 					<a id="WAlogo" href="http://www.costco.com/" style="padding-top: 10px; padding-left: 25px"><img src="#assetPaths.channel#images/costco_logosm.gif" alt="Costco.Com" title="Return to the Costco.com homepage" /></a>
 				</div>
+				<div>
+					<span style="font-size:medium;font-weight:bold;float:right">Logged in Associate ID : #session.vfd.employeeNumber#</span>
+				</div>
 				<!---<cfinclude template="_topNavCheckoutVFD.cfm" />--->
 			</div>
 			<div id="nav-menu-container">

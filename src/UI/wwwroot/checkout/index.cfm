@@ -2175,10 +2175,10 @@
 			<cfoutput>#mercentAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>
 		</cfif>
 
-		<cfif request.config.enableAnalytics>
+		<!---<cfif request.config.enableAnalytics>--->
 			<cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
 			<cfoutput>#googleAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>
-		</cfif>
+		<!---</cfif>--->
 		
 		<!--- If this is a VFD transaction proceed to Carrier Activation --->
 		<cfif channelConfig.getVfdEnabled()>

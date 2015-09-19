@@ -1340,14 +1340,22 @@
 														<!---<cfset LineContainsKeepExistingService = true />--->
 														N/A
 													<cfelse>
-														#dollarFormat(local.service.getEstimatedMonthly())#
+														<cfif (local.orderDetail.getPurchaseType() eq "FP") AND (len(local.service.getEstimatedFinancedMonthly()))>
+															#dollarFormat(local.service.getEstimatedFinancedMonthly())#
+														<cfelse>
+															#dollarFormat(local.service.getEstimatedMonthly())# 
+														</cfif>
 													</cfif>
 												</td>
 												<td style="#local.right# text-align:right;" valign="top">
 													<!--- <cfif local.service.getProductId() eq request.config.keepExistingService.productId>
 														N/A
 													<cfelse> --->
-														#dollarFormat(local.service.getEstimatedMonthly())#
+													<cfif (local.orderDetail.getPurchaseType() eq "FP") AND (len(local.service.getEstimatedFinancedMonthly()))>
+														#dollarFormat(local.service.getEstimatedFinancedMonthly())#
+													<cfelse>
+														#dollarFormat(local.service.getEstimatedMonthly())# 
+													</cfif>
 													<!--- </cfif> --->
 												</td>
 											</tr>

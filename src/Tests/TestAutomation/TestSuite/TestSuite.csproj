@@ -7,7 +7,7 @@
     <ProjectGuid>{C7F75FCA-1996-4203-A056-D5586B44F99E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestSuite</RootNamespace>
+    <RootNamespace>TestAutomation.TestSuite</RootNamespace>
     <AssemblyName>TestSuite</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -61,6 +61,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

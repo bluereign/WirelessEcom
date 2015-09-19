@@ -12,16 +12,18 @@ namespace TestAutomation.PageObjects
 {
     public class HomePage : BasePage
     {
+        string HomePageUrl = "http://membershipwireless.com/";
+        //string TestHomePageUrl = "http://costco.ecom-dev-test-1.enterprise.corp/";
         public HomePage(IWebDriver Driver) : base(Driver)
-        {}
-
-        public override void Initialize()
         {
-            Driver.Navigate().GoToUrl(BasePageUI.HomePageUrl);
-            base.Initialize();
-            Console.WriteLine("Home page is loaded");
+            HomePageUrl = BasePageUI.HomePageUrl;
         }
 
+        public override void Initialize()
+        {            
+            Driver.Navigate().GoToUrl(HomePageUrl);
+            base.Initialize();
+        }
         
     }
 }

@@ -29,7 +29,7 @@
 
 		<cfif left(arguments.promoCouponCode, 2) is 'WA'>
 			<cfset validateCodeReturn = 'TRUE|$|0.00' />
-			<cfset session.cart.setKioskEmployeeNumber(arguments.promoCouponCode) />
+			<!---<cfset session.cart.setKioskEmployeeNumber(arguments.promoCouponCode) />--->
 		<cfelse>
 			<cfset validateCodeReturn = this.view.promotionCodes.isPromotionValid(promotionCode = trim(arguments.promoCouponCode), orderTotal = arguments.orderTotal) />
 
