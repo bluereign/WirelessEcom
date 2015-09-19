@@ -11,6 +11,8 @@ using TestAutomation.WebDriverExtensions;
 namespace TestAutomation.PageObjects
 {
     public class AttDeviceDetailsPage : BaseDeviceDetailsPage
-    {
+    {        
+        public AttDeviceDetailsPage(IWebDriver Driver, string DevicePageUrl): base(Driver, DevicePageUrl)
+        { }
     }
 }

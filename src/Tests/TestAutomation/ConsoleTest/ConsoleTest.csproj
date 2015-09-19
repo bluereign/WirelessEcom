@@ -57,6 +57,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">
+      <Project>{0ea7e84a-f39c-4d6c-9452-a104dbef3743}</Project>
+      <Name>BusinessObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PageObjects\PageObjects.csproj">
+      <Project>{f3147a6e-d624-44dd-b5f2-778b29986978}</Project>
+      <Name>PageObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{1dc12873-3811-4019-99b9-0581d6b30875}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebDriverExtensions\WebDriverExtensions.csproj">
       <Project>{a329d22b-b3bd-4966-8bf1-718ebd4c6b6d}</Project>
       <Name>WebDriverExtensions</Name>

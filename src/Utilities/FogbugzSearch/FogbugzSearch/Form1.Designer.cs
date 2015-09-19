@@ -241,6 +241,7 @@
             this.titleHeader});
             this.itemsLstVw.FullRowSelect = true;
             this.itemsLstVw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.itemsLstVw.HideSelection = false;
             this.itemsLstVw.Location = new System.Drawing.Point(12, 100);
             this.itemsLstVw.Name = "itemsLstVw";
             this.itemsLstVw.Size = new System.Drawing.Size(381, 121);
@@ -280,19 +281,19 @@
             this.contextMenu1.Name = "contextMenu1";
             this.contextMenu1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.contextMenu1.ShowImageMargin = false;
-            this.contextMenu1.Size = new System.Drawing.Size(128, 70);
+            this.contextMenu1.Size = new System.Drawing.Size(79, 48);
             // 
             // editContextMenuItem
             // 
             this.editContextMenuItem.Name = "editContextMenuItem";
-            this.editContextMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.editContextMenuItem.Size = new System.Drawing.Size(78, 22);
             this.editContextMenuItem.Text = "Edit";
             this.editContextMenuItem.Click += new System.EventHandler(this.editContextMenuItem_Click);
             // 
             // openContextMenuItem
             // 
             this.openContextMenuItem.Name = "openContextMenuItem";
-            this.openContextMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.openContextMenuItem.Size = new System.Drawing.Size(78, 22);
             this.openContextMenuItem.Text = "Open";
             this.openContextMenuItem.Click += new System.EventHandler(this.openContextMenuItem_Click);
             // 

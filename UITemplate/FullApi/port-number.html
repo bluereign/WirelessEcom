@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="stylesheets/global.css" rel="stylesheet" />
+</head>
+<body>
+    @@include('./views/header.html')
+    @@include('./views/primary-nav.html')
+    
+    <div class="container">
+        <div class="head">
+            <ul class="nav nav-pills nav-justified">
+                <li role="presentation" class="complete hidden-xs"><a href="upgrade-login.html"><span>1</span>Carrier Login</a></li>
+                <li role="presentation" class="complete hidden-xs"><a href="upgrade-add-line.html"><span>2</span>Upgrade/Add a Line</a></li>
+                <li role="presentation" class="complete hidden-xs"><a href="upgrade-plan-data.html"><span>3</span>Plans and Data</a></li>
+                <li role="presentation" class="complete hidden-xs"><a href="upgrade-payment-protection.html"><span>4</span>Protection &amp; Services</a></li>
+                <li role="presentation" class="complete hidden-xs"><a href="upgrade-accessories.html"><span>5</span>Accessories</a></li>
+                <li role="presentation" class="active"><a href="port-number.html"><span>6</span>Port Number</a></li>
+                <li role="presentation" class="hidden-xs"><a href="upgrade-cart.html"><span>7</span>Order Review</a></li>
+            </ul>
+        </div>
+        <div class="row main">
+            <div class="col-md-12">
+                <section class="content">
+                    <header class="main-header">
+                        <h1>Keep Your Current Number?</h1>
+                        <p>Choose whether you would like to keep or get a new number.</p>
+                    </header>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active">
+                            <a href="#port" aria-controls="port" role="tab" data-toggle="tab">Transfer my number to this device</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#newNumber" aria-controls="newNumber" role="tab" data-toggle="tab">Choose a new wireless number</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content portNumber">
+                        <div role="tabpanel" class="tab-pane active" id="port">
+                            <img alt="" src="/images/Trustwave.gif" alt="Trustwave" class="trustwave">
+                            <form>
+                                <div class="form-group form-inline phone">
+                                    <label for="inputPhone1">Number to Transfer</label>
+                                    ( <input type="text" class="form-control" id="inputPhone1"> )
+                                    <input type="text" class="form-control" id="inputPhone2"> -
+                                    <input type="text" class="form-control" id="inputPhone3">
+                                </div>
+                                <div class="form-group form-inline carrier">
+                                    <label for="selectCarrier">Existing Carrier</label>
+                                    <select class="form-control" id="selectCarrier">
+                                        <option value="">Select Existing Carrier</option>
+                                        <option value="AT&amp;T">AT&amp;T</option>
+                                        <option value="T-Mobile">T-Mobile</option>
+                                        <option value="Sprint">Sprint</option>
+                                        <option value="Alltel Wireless">Alltel Wireless</option>
+                                        <option value="Amp'd Mobile">Amp'd Mobile</option>
+                                        <option value="Boost Mobile">Boost Mobile</option>
+                                        <option value="Cellular One">Cellular One</option>
+                                        <option value="Cricket Communications">Cricket Communications</option>
+                                        <option value="Nextel">Nextel</option>
+                                        <option value="Virgin Mobile USA">Virgin Mobile USA</option>
+                                        <option value="OTHER">OTHER</option>
+                                    </select>
+                                </div>
+                                <div class="form-group form-inline accountNumber">
+                                    <label for="inputAccountNumber">Existing Carrier Account Number</label>
+                                    <input type="text" class="form-control" id="inputAccountNumber">
+                                    <a class="infoTip" title="The Billing Account Number for the current carrier of this mobile number. Failure to provide accurate information may result in a new number being assigned"></a>
+
+                                </div>
+                                <div class="form-group form-inline pin">
+                                    <label for="inputPin">Existing Carrier Pin</label>
+                                    <input type="text" class="form-control" id="inputPin">
+                                    <a class="infoTip" title="This is usually the last 4 digits of the account owner's social security number."></a>
+                                </div>
+                                <div class="right">
+                                    <a href="#">BACK</a>
+                                    <button type="submit" class="btn btn-primary btn-block">Continue</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="newNumber">
+                            <form>
+                                <div>
+                                    <div class="form-group form-inline zipCodeDisplay">
+                                        <label>Current Zip Code:</label>
+                                        <span id="zip-code-display-value">98065</span> <a href="#" id="change-zip-code">Change</a>
+                                    </div>
+                                    <div class="form-group form-inline zipCodeEdit">
+                                        <label>Current Zip Code:</label>
+                                        <input class="form-control" id="inputZipCode" type="text" value="98065" />
+                                        <a href="#" id="update-zip-code">Update</a>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="area-code">
+                                <div class="form-group form-inline areaCode">
+                                    <label for="selectAreaCode">Desired Area Code*</label>
+                                    <select class="form-control" id="selectAreaCode">
+                                        <option value="123">425-395</option>
+                                        <option value="456">425-894</option>
+                                        <option value="789">206-786</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    *Area Code options are based on the zip code entered
+                                </div>
+                                <div class="right">
+                                    <a href="#">BACK</a>
+                                    <button type="submit" class="btn btn-primary btn-block">Continue</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+
+                    </div>
+                </section>
+            </div>
+            @@include('./views/sidebar.html')
+        </div>
+    </div>
+    
+    @@include('./views/footer.html')
+    <script src="scripts/all.min.js"></script>
+    <script>
+       
+        $(document).ready(function () {
+            $('#change-zip-code').click(function (e) {
+                e.preventDefault();
+                toggleDiv('.zipCodeDisplay', '.zipCodeEdit');
+                $('#area-code').hide();
+            });
+
+            $('#inputZipCode').click(function () {
+                $(this).select();
+            });
+
+            $('#update-zip-code').click(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "zipcode.html",
+                    data: "zip=" + $('#inputZipCode').val(),
+                    dataType: "json",
+                    success: function (result) {
+                        var areaCodeList = $('#selectAreaCode');
+                        areaCodeList.empty();
+                        $.each(result.phoneNumbers, function (index, value) {
+                            areaCodeList
+                                .append(
+                                    $("<option></option>")
+                                        .attr("value", value.id)
+                                        .text(value.number)
+                                );
+                        });
+
+                        $('#zip-code-display-value').text($('#inputZipCode').val()).html();
+
+                        toggleDiv('.zipCodeEdit', '.zipCodeDisplay');
+                        $('#area-code').show();
+                    },
+                    error: function (result) {
+                        //TODO
+                    }
+                });
+            });
+        });
+
+
+    </script>
+</body>
+</html>

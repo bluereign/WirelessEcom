@@ -12,5 +12,8 @@ namespace TestAutomation.PageObjects
 {
     public class VerizonDeviceDetailsPage : BaseDeviceDetailsPage
     {
+        public VerizonDeviceDetailsPage(IWebDriver Driver, string DevicePageUrl) : base(Driver, DevicePageUrl)
+        { }
+
     }
 }

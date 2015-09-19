@@ -990,7 +990,11 @@
 													</cfif>
 											</td>
 											<td style="text-align:right">
-												#dollarFormat(local.lineFeatures[local.iFeature].getPrices().getMonthly())#
+												<cfif (local.cartline.getCartLineActivationType() CONTAINS 'finance') and (len(local.thisFeature.financedPrice))><!---Is a financed phone with a Financed Price--->
+													#dollarFormat(local.thisFeature.financedPrice)#
+												<cfelse>
+													#dollarFormat(local.lineFeatures[local.iFeature].getPrices().getMonthly())#
+												</cfif>
 											</td>
 											<td style="text-align:right">
 												--

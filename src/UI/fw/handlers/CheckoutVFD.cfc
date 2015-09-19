@@ -1102,7 +1102,7 @@
 		<cfset wirelessLine.load( rc.wirelessLineID ) />
 		<cfset wirelessLine.setActivationStatus('6') />
 		<cfset wirelessline.setNewMDN(rc.newMDN) />
-		<cfset wirelessline.setCarrierReferenceId1(rc.activationNum) />
+		<!---<cfset wirelessline.setCarrierReferenceId1(rc.activationNum) />--->
 		<cfset wirelessline.setCarrierReferenceId2(rc.financeNum) />	
 		<cfset wirelessLine.save() />
 		<!--- Update WirelessAccount --->
@@ -1592,7 +1592,7 @@
 		<cfset application.model.checkoutHelper.clearCheckOut() />
 		<cfset session.userID = 0 />
 		
-		<cfset event.setView('VFD/login') />
+		<cfset event.setView('VFD/logoutVFD') />
 	</cffunction>
 	
 </cfcomponent>

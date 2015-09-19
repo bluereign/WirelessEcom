@@ -1,311 +1,234 @@
 <!---iPhone landing page--->
 
 <style>
-	.gs5LandingPage /*use this class if we nolonger require two different looking landing pages for Costco and AAFES*/
+	.iPhoneLandingPage
 	{
 		font-family:Helvetica, Arial, sans-serif;
+		margin:20px auto;
 	}
-
-		/*.gs5Background use this class if we nolonger require two different looking landing pages for Costco and AAFES
+	
+		.PageRow
 		{
-			background-image:url('/assets/common/images/content/gs6/notify_BG_962x660_aafes.jpg');
-			height:680px;
-			width:962px;
-		}*/
-
-		.aafesMobile .gs5Background
+			width:960px;
+			clear:both;
+		}
+		
+		.grayBG
 		{
-			<!---background-image:url('/assets/common/images/content/gs6/notify_BG2_962x840_aafes.jpg');--->
-			background-color:#ccc;
-			height:300px;
-			width:962px;
+			background-color:#f0f0f0;
+			height:70px;
 		}
 
-		.membershipWireless .gs5Background
+		.whiteBG
 		{
-			<!---background-image:url('/assets/common/images/content/gs6/notify_BG2_962x840_costco.jpg');--->
-			background-color:#ccc;
-			height:300px;
-			width:962px;
+			background-color:#fff;
+			height:70px;
+		}
+		
+		.buttonBar
+		{
+			background-image:url('/assets/common/images/content/iphone/button_bar.png');
 		}
 
-			.aafesMobile .backgroundMasthead_aafes
+		.image_0
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_0.png');
+			height:210px;
+		}
+	
+		.membershipWireless #Register /* Added to hide the notification container on membershipwireless.com */
+		{
+			display:none;
+			height:0px;
+		}
+	
+		.image_1
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_1.jpg');
+			height:1041px;
+		}
+	
+		.image_2
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_2.jpg');
+			height:540px;
+		}
+	
+		.image_3
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_3.jpg');
+			height:603px;
+		}
+	
+		.image_4
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_4.jpg');
+			height:517px;
+		}
+	
+		.image_5
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_5.jpg');
+			height:625px;
+		}
+	
+		.image_6
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_6.jpg');
+			height:569px;
+		}
+	
+		.image_7
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_7.jpg');
+			height:597px;
+		}
+	
+		.image_8
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_8.jpg');
+			height:770px;
+		}
+	
+		.image_9
+		{
+			background-image:url('/assets/common/images/content/iphone/iphone6s_image_9.jpg');
+			height:696px;
+		}
+	
+			.rowButton
 			{
-				background-image:url('/assets/common/images/content/gs5/GS5_masthead_image_aafes.jpg');
-				background-repeat:no-repeat;
-				display:block;
-				height:150px;
-				width:960px;
+				border:2px solid #999;
+				border-radius:5px;
+				float:right;
+				font-weight:bolder;
+				margin-top:20px;
+				margin-right:20px;
+				padding:5px 20px;
 			}
 			
-			.aafesMobile .backgroundMasthead_costco,
-			.membershipWireless .backgroundMasthead_aafes
+			.membershipWireless .notifyMe
 			{
 				display:none;
-				height:0px;
-				width:0px;
 			}
-
-			.membershipWireless .backgroundMasthead_costco
+			
+			.grayBG .rowButton:hover
 			{
-				<!---background-image:url('/assets/common/images/content/gs5/GS5_masthead_image_costco.jpg');--->
-				background-repeat:no-repeat;
-				display:block;
-				height:150px;
-				width:960px;
+				background-color:#fff;
+				border:2px solid #666;
+				border-radius:5px;
 			}
-
-			.gs5Content
+			
+			.whiteBG .rowButton:hover
 			{
-				margin-left:185px;
-				padding-top:100px;
-				width:550px;
+				background-color:#f0f0f0;
+				border:2px solid #666;
+				border-radius:5px;
 			}
+			
+				.buttonText
+				{}
 
-				.contentText > em
+			.rowButton a
+			{
+				color:#808080;
+				text-decoration:none;
+			}
+			
+			.rowButton:hover a
+			{
+				color:#666;
+			}
+			
+			.rowButton:active a
+			{
+				color:#808080;
+			}
+			
+			.rowContent
+			{
+				float:left;
+				margin:20px 0px 0px 400px;
+			}
+			
+				.contentText
 				{
-					font-size: 14px;
-					font-weight: bold;
-					margin-left: 12px;
+					margin-bottom:10px;
 				}
 				
-				.contentText > input, .contentText > select {
-				    -webkit-box-sizing: border-box;
-				    -moz-box-sizing: border-box;
-				    box-sizing: border-box;  
-					border: 1px;
-					font-size: 16px;
-					height: 34px;
-					line-height: normal;
-					width: 225px;
-					background-color: #fff;
-					margin-bottom: 20px;
-					/*border-radius: 5px;*/
-					padding: 5px 5px;
-				}			
+				.contentText select				
+				{
+					width:186px;
+				}
+				
+				.contentText input				
+				{
+					width:180px;
+				}
+				
+					.textSignupTitle
+					{
+						font-size:2.5em;
+						margin-bottom:5px;
+					}
 					
+					.textSignupDesc
+					{
+						font-size:1.3em;
+						margin-bottom:20px;
+					}
+				
 				.contentButton
-				{}
+				{
+					margin-bottom:10px;
+				}
 					
 					.buttonContainer
 					{
+						border:2px solid #999;
+						border-radius:5px;
 						float:left;
-						margin-right:20px;
+						font-weight:bolder;
+						margin-top:5px;
+						padding:5px 20px;
 					}
 					
-						/* See buttons grouped below */
+					.buttonContainer:hover
+					{
+						background-color:#fff;
+					}
+					
+					.buttonContainer:active
+					{
+					}
+					
+					.buttonContainer a
+					{
+						color:#808080;
+						text-decoration:none;
+					}
+					
+					.buttonContainer:hover a
+					{
+						color:#666;
+					}
+					
+					.buttonContainer:active a
+					{
+						color:#808080;
+					}
 
-					.buttonLegal
-					{
-						color:#fff;
-						font-size:8px;
-					}
-			
-		.gs5Details
-		{
-			padding:50px 0px;
-			width:960px;
-		}
-		
-			.detailsRow
-			{
-				clear:both;
-				display:block;
-				margin-bottom:100px;
-				overflow:hidden;
-			}
-			
-			.detailsRowLast
-			{
-				clear:both;
-				display:block;
-				margin-bottom:0px;
-				overflow:hidden;
-			}
-			
-			.left{} /* used for positioning contents in a row where the image is on the left and the content on the right */
-			.right{} /* used for positioning contents in a row where the image is on the right and the content on the left */
-			
-				.left .rowImage
-				{
-					float:left;
-				}
-				
-				.right .rowImage
-				{
-					float:right;
-				}
-				
-				.rowTitle
-				{
-					float:right;
-					margin-right:10px;
-				}
-								
-					.titleHeader
-					{
-						font-weight:lighter;
-						font-size:42px;
-						font-style:italic;
-						margin-top:50px;
-						text-transform:capitalize;
-						text-align:center;
-					}
-					
-				.rowBlock
-				{
-					float:left;
-					margin-left:10px;
-				}
-					
-				.rowContent
-				{
-					float:none;
-					margin-bottom:50px;
-				}
-				
-				.left .rowContent
-				{
-					margin-left:450px;
-				}
-				
-				.right .rowContent
-				{
-					margin-left:0px;
-				}
-				
-					.contentTitle
-					{}
-					
-						.titleIcon
-						{
-							float:left;
-							height:37px;
-							width:37px;
-						}
-						
-						.titleText
-						{
-							color:#231f20;
-							float:none;
-							font-size:23px;
-							line-height:37px;
-							margin-left:47px;
-						}
-						
-					.contentBlock
-					{
-						color:#808285;
-						font-size:14px;
-						font-weight:lighter;
-						line-height:24px;
-					}
-					
-						.blockButton
+						.button_container
 						{}
 						
-							.button_container,
-							.aafesMobile .button_container_aafes,
-							.membershipWireless .button_container_costco
-							{
-								display:block;
-								height:29px;
-								width:130px;
-							}
-					
-							.membershipWireless .button_container_aafes,
-							.aafesMobile .button_container_costco
-							{
-								display:none;
-							}
-					
-								.Notify,
-								.PreOrder,
-								.BuyNow
-								{
-									background-repeat:no-repeat;
-									display:block;
-									height:29px;
-									width:130px;
-								}
-					
-								a.button_container span.BuyNow,
-								a.button_container_aafes span.BuyNow,
-								a.button_container_costco span.BuyNow
-								{
-									background-image:url('/assets/common/images/content/gs5/btn_sprite_BuyNow.png');
-									background-position:0px -0px;
-								}
-					
-								a.button_container span.BuyNow:hover,
-								a.button_container_aafes span.BuyNow:hover,
-								a.button_container_costco span.BuyNow:hover
-								{
-									background-image:url('/assets/common/images/content/gs5/btn_sprite_BuyNow.png');
-									background-position:0px -40px;
-								}
-					
-								a.button_container span.BuyNow:active,
-								a.button_container_aafes span.BuyNow:active,
-								a.button_container_costco span.BuyNow:active
-								{
-									background-image:url('/assets/common/images/content/gs5/btn_sprite_BuyNow.png');
-									background-position:0px -80px;
-								}
-					
-								a.button_container span.Notify,
-								a.button_container_aafes span.Notify,
-								a.button_container_costco span.Notify
-								{
-									background-image:url('/assets/common/images/content/gs5/btn_sprite_NotifyMe.png');
-									background-position:0px -0px;
-								}
-					
-								a.button_container span.Notify:hover,
-								a.button_container_aafes span.Notify:hover,
-								a.button_container_costco span.Notify:hover
-								{
-									background-image:url('/assets/common/images/content/gs5/btn_sprite_NotifyMe.png');
-									background-position:0px -40px;
-								}
-					
-								a.button_container span.Notify:active,
-								a.button_container_aafes span.Notify:active,
-								a.button_container_costco span.Notify:active
-								{
-									background-image:url('/assets/common/images/content/gs5/btn_sprite_NotifyMe.png');
-									background-position:0px -80px;
-								}
-					
-								a.button_container span.PreOrder,
-								a.button_container_aafes span.PreOrder,
-								a.button_container_costco span.PreOrder
-								{
-									background-image:url('/assets/common/images/content/gs6/btn_sprite_PreReg.png');
-									background-position:0px -0px;
-								}
-					
-								a.button_container span.PreOrder:hover,
-								a.button_container_aafes span.PreOrder:hover,
-								a.button_container_costco span.PreOrder:hover
-								{
-									background-image:url('/assets/common/images/content/gs6/btn_sprite_PreReg.png');
-									background-position:0px -30px;
-								}
-					
-								a.button_container span.PreOrder:active,
-								a.button_container_aafes span.PreOrder:active,
-								a.button_container_costco span.PreOrder:active
-								{
-									background-image:url('/assets/common/images/content/gs6/btn_sprite_PreReg.png');
-									background-position:0px -60px;
-								}
-					
-				.rowLegal
-				{
-					color:#808285;
-					font-size:8px;
-				}
+					.buttonLegal
+					{
+						float:none;
+						font-size:9px;
+						width:365px;
+						margin-left:165px;
+					}
+			
 </style>
 
 <cfoutput>
@@ -341,9 +264,14 @@
 
 <cfoutput>
 <form id="notificationform" action="/notification/RegisterPresaleAlert/" method="post">
-	<div class="gs5LandingPage">
-		<div class="gs5Background">
-			<div class="gs5Content">
+	<input type="hidden"  name="pageURL" id="pageURL" value='#CGI.SERVER_NAME & CGI.PATH_INFO#'> <!--- Required line of code to make the notifications work. --->
+	<div class="iPhoneLandingPage">
+		<div class="PageRow image_0" id="Register">
+			<div class="rowContent">
+				<div class="contentText">
+					<div class="textSignupTitle">iPhone 6s Notification Sign Up</div>
+					<div class="textSignupDesc">Sign up to be notified when the iPhone 6s and iPhone 6s Plus are available for purchase.</div>
+				</div>
 				<div class="contentText">
 					<select name="campaignId" required>
 						<option value="" <cfif rc.CampaignId eq ''>selected</cfif>>Select your carrier</option>
@@ -360,19 +288,97 @@
 				</div>
 				<div class="contentButton">
 					<div class="buttonContainer">
-						<div class="blockButton">
-							<a class="button_container" href="##" onclick="ValidateNotificationForm(); return false;" >
-								<span class="PreOrder"></span>
-							</a>
-						</div>
+						<a class="button_container" href="##" onclick="ValidateNotificationForm(); return false;" >
+							<span class="buttonText">Register to be Notified</span>
+						</a>
 					</div>	
-					<span class="buttonLegal">This device has not been authorized as required by the rules of the Federal 
+					<div class="buttonLegal">This device has not been authorized as required by the rules of the Federal 
 					Communications Commission. This device is not, and may not be, offered for sale or lease, or sold or 
-					leased, until authorization is obtained.</span>
+					leased, until authorization is obtained.</div>
 				</div>
 			</div>
 		</div>
-				
+		<div class="PageRow image_1"></div>
+		<div class="PageRow grayBG buttonBar">
+			<div class="rowButton">
+				<a href="/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,481,482/index?utm_source=iPhoneLandingPage&utm_medium=PreorderButton_3D-Touch&utm_campaign=iPhone6s"><span class="buttonText">Preorder Today</span></a>
+			</div>
+			<div class="rowButton notifyMe">
+				<a href="##Register"><span class="buttonText">Register to be Notified</span></a>
+			</div>
+		</div>
+		<div class="PageRow image_2"></div>
+		<div class="PageRow whiteBG buttonBar">
+			<div class="rowButton">
+				<a href="/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,481,482/index?utm_source=iPhoneLandingPage&utm_medium=PreorderButton_Pictures&utm_campaign=iPhone6s"><span class="buttonText">Preorder Today</span></a>
+			</div>
+			<div class="rowButton notifyMe">
+				<a href="##Register"><span class="buttonText">Register to be Notified</span></a>
+			</div>
+		</div>
+		<div class="PageRow image_3"></div>
+		<div class="PageRow grayBG buttonBar">
+			<div class="rowButton">
+				<a href="/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,481,482/index?utm_source=iPhoneLandingPage&utm_medium=PreorderButton_Architecture&utm_campaign=iPhone6s"><span class="buttonText">Preorder Today</span></a>
+			</div>
+			<div class="rowButton notifyMe">
+				<a href="##Register"><span class="buttonText">Register to be Notified</span></a>
+			</div>
+		</div>
+		<div class="PageRow image_4"></div>
+		<div class="PageRow whiteBG buttonBar">
+			<div class="rowButton">
+				<a href="/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,481,482/index?utm_source=iPhoneLandingPage&utm_medium=PreorderButton_Design&utm_campaign=iPhone6s"><span class="buttonText">Preorder Today</span></a>
+			</div>
+			<div class="rowButton notifyMe">
+				<a href="##Register"><span class="buttonText">Register to be Notified</span></a>
+			</div>
+		</div>
+		<div class="PageRow image_5"></div>
+		<div class="PageRow grayBG buttonBar">
+			<div class="rowButton">
+				<a href="/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,481,482/index?utm_source=iPhoneLandingPage&utm_medium=PreorderButton_Faster&utm_campaign=iPhone6s"><span class="buttonText">Preorder Today</span></a>
+			</div>
+			<div class="rowButton notifyMe">
+				<a href="##Register"><span class="buttonText">Register to be Notified</span></a>
+			</div>
+		</div>
+		<div class="PageRow image_6"></div>
+		<div class="PageRow whiteBG buttonBar">
+			<div class="rowButton">
+				<a href="/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,481,482/index?utm_source=iPhoneLandingPage&utm_medium=PreorderButton_TouchID&utm_campaign=iPhone6s"><span class="buttonText">Preorder Today</span></a>
+			</div>
+			<div class="rowButton notifyMe">
+				<a href="##Register"><span class="buttonText">Register to be Notified</span></a>
+			</div>
+		</div>
+		<div class="PageRow image_7"></div>
+		<div class="PageRow grayBG buttonBar">
+			<div class="rowButton">
+				<a href="/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,481,482/index?utm_source=iPhoneLandingPage&utm_medium=PreorderButton_iOS9&utm_campaign=iPhone6s"><span class="buttonText">Preorder Today</span></a>
+			</div>
+			<div class="rowButton notifyMe">
+				<a href="##Register"><span class="buttonText">Register to be Notified</span></a>
+			</div>
+		</div>
+		<div class="PageRow image_8"></div>
+		<div class="PageRow whiteBG buttonBar">
+			<div class="rowButton">
+				<a href="/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,481,482/index?utm_source=iPhoneLandingPage&utm_medium=PreorderButton_Why&utm_campaign=iPhone6s"><span class="buttonText">Preorder Today</span></a>
+			</div>
+			<div class="rowButton notifyMe">
+				<a href="##Register"><span class="buttonText">Register to be Notified</span></a>
+			</div>
+		</div>
+		<div class="PageRow image_9"></div>
+		<div class="PageRow grayBG buttonBar">
+			<div class="rowButton">
+				<a href="/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,481,482/index?utm_source=iPhoneLandingPage&utm_medium=PreorderButton_bottom&utm_campaign=iPhone6s"><span class="buttonText">Preorder Today</span></a>
+			</div>
+			<div class="rowButton notifyMe">
+				<a href="##Register"><span class="buttonText">Register to be Notified</span></a>
+			</div>
+		</div>
 	</div>
 	
 </form>

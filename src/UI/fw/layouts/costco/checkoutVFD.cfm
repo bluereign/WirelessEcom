@@ -59,6 +59,12 @@
 					<!---<img src="#assetPaths.common#images/onlinebenefit/banner_header_center_v2.jpg" width="440" height="55" border="0" />--->
 				</div>
 				<br/>
+				<div>
+					<cfif (structKeyExists(session, "vfd")) and (len(session.VFD.employeeNumber))>
+						<span style="font-size:medium;font-weight:bold;float:right">Logged in Associate ID : #session.vfd.employeeNumber#</span>
+					</cfif>
+				</div>
+				<br/>
 				<div id="carrier" name="carrier" >
 					<cfset local.carrierID = application.model.checkoutHelper.getCarrier()/>
 					<cfif local.carrierId eq "109"> <!--- ATT --->
