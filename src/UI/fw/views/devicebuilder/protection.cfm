@@ -1,3 +1,4 @@
+<!--- <cfdump var="#rc#"> --->
 <cfoutput>
   <div class="col-md-12">
     <section class="content">
@@ -20,12 +21,18 @@
           <h4>#session.carrierObj.getCarrierName()# Device Payment Options</h4>
           <div class="radio">
             <label>
-              <input type="radio" name="devicePayment" id="optionsDevicePayment1" value="devicePayment1" checked>
-              <select class="form-control">
-                <option value="FinancedMonthlyPrice24">#IIF(prc.productData.CarrierId eq 109, DE('30'), DE('24'))# Months: #dollarFormat(prc.productData.FinancedMonthlyPrice24)#/mo</option>
+              <input type="radio" name="paymentoption" id="optionsDevicePayment1" value="financed" checked>
+              <select name="finance" class="form-control">
+                <option value="financed-24" <cfif rc.finance is 'financed-24'>selected</cfif> >
+                  #IIF(prc.productData.CarrierId eq 109, DE('30'), DE('24'))# Months: #dollarFormat(prc.productData.FinancedMonthlyPrice24)#/mo
+                </option>
                 <cfif prc.productData.CarrierId eq 109>
-                  <option value="FinancedMonthlyPrice18">24 Months: #dollarFormat(prc.productData.FinancedMonthlyPrice18)#/mo</option>
-                  <option value="FinancedMonthlyPrice12">20 Months: #dollarFormat(prc.productData.FinancedMonthlyPrice12)#/mo</option>
+                  <option value="financed-18" <cfif rc.finance is 'financed-18'>selected</cfif> >
+                    24 Months: #dollarFormat(prc.productData.FinancedMonthlyPrice18)#/mo
+                  </option>
+                  <option value="financed-12" <cfif rc.finance is 'financed-12'>selected</cfif> >
+                    20 Months: #dollarFormat(prc.productData.FinancedMonthlyPrice12)#/mo
+                  </option>
                 </cfif>
               </select>
               CARRIER is requiring a down payment
@@ -39,7 +46,7 @@
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="devicePayment" id="optionsDevicePayment2" value="devicePayment2">
+              <input type="radio" name="paymentoption" id="optionsDevicePayment2" value="fullretail">
               Full Retail Price #dollarFormat(prc.productData.FinancedFullRetailPrice)#
             </label>
           </div>

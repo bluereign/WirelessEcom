@@ -1,5 +1,5 @@
+<!--- <cfdump var="#rc#"> --->
 <cfoutput>
-<!--- <cfdump var="#prc.qAccessory#"> --->
   <div class="col-md-12">
     <section class="content accessories">
       <header class="main-header">
@@ -14,6 +14,7 @@
           <cfif structKeyExists(rc,"plan")>
             <input type="hidden" name="plan" value="#rc.plan#">
           </cfif>
+          <input type="hidden" name="finance" value="#rc.finance#">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>

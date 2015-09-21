@@ -13,6 +13,7 @@
       <form action="#event.buildLink('devicebuilder.carrierLoginPost')#" method="post">
         <input type="hidden" name="type" value="#rc.type#" />
         <input type="hidden" name="pid" value="#rc.pid#" />
+        <input type="hidden" name="finance" value="#rc.finance#" />
         <input type="hidden" name="nextAction" value="#rc.nextAction#" />
         <div class="pull-right">
           <a href="#prc.prevStep#">BACK</a>
