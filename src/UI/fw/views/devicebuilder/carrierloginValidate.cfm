@@ -33,11 +33,6 @@
             maxlength: 4,
             required: true,
             digits: true         
-          },
-          inputPin: {
-            minlength: 4,
-            maxlength: 10,
-            required: true
           }
       },
       messages: {
@@ -72,6 +67,7 @@
       },
       submitHandler: function(form) {
         $('p.alert-info').show().text("Carrier Login in progress.....");
+        $('p.bg-danger').hide();
         $('button:submit').attr("disabled", true);
         console.log('validation complete');
         form.submit();
@@ -79,3 +75,12 @@
   });
 </script>
 </cfoutput>
+<!--- 
+,
+          inputPin: {
+            minlength: 4,
+            maxlength: 10,
+            required: true
+          }
+
+ --->

@@ -253,6 +253,7 @@
 
     <cfscript>
       // simple server-side validation
+      // AND len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
       if ( 
           !(
             len(rc.inputPhone1) eq 3
@@ -268,8 +269,6 @@
             isNumeric(left(rc.inputZip, 5))
             AND
             isNumeric(right(rc.inputZip, 4))
-            AND
-            len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
           )
         ) {
         rc.carrierResponseMessage = "There was an issue with the values you entered.  Please double check each value and then try again.";
@@ -296,37 +295,27 @@
           rc.respObj = carrierFacade.Account(argumentCollection = prc.argsAccount);
           rc.message = rc.respObj.getHttpStatus();
 
-          switch ( rc.respObj.getHttpStatus() ) {
-            // Status of '200 OK' is success:
-            case "200 OK": {
-              session.carrierObj = rc.respObj;
-              // session.zipCode = session.carrierObj.getAddress().getZipCode();
-              session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
+          if (rc.respObj.getResult() is 'true') {
+            session.carrierObj = rc.respObj;
+            session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
+            session.cart.setCarrierId(session.carrierObj.getCarrierId());
 
-              if (prc.productData.carrierId eq 109) {
-                session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
-              } else if (prc.productData.carrierId eq 42) {
-                session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
-              }
-              
-              // we only set carrier when they've logged in.  But, do we need carrier in the session?
-              // session.cart.setCarrierId(prc.productData.carrierId);
-
-              // TODO: Change above line to set session.cart.setCarrierId() from the carrierObj response when the method has been developed and made available.
-
-              // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
-              setNextEvent(
-                event="#rc.nextAction#",
-                persist="type,pid");
-              break;
+            if (session.carrierObj.getCarrierId() eq 109) {
+              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
+            } else if (prc.productData.carrierId eq 42) {
+              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
             }
-            default: {
-              rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
-              setNextEvent(
-                event="devicebuilder.carrierLogin",
-                persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
-            }
-          };
+
+            // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
+            setNextEvent(
+              event="#rc.nextAction#",
+              persist="type,pid");
+          } else {
+            rc.carrierResponseMessage = session.carrierObj.getResultDetail() & ".  We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+            setNextEvent(
+              event="devicebuilder.carrierLogin",
+              persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+          }
           break;
         }
         // Other carriers
