@@ -778,6 +778,15 @@
 			<cfreturn 0>
 		</cfif>
 	</cffunction>
+	
+	<cffunction name="getEstimatedFinancedMonthly" access="public" output="false" returntype="numeric">
+		<cfset financedMonthly = application.model.Feature.getByProductId(this.getProductId()).financedPrice />
+		<cfif (this.getOrderDetailType() eq "s") and (len(financedMonthly))>
+			<cfreturn financedMonthly+0>
+		<cfelse>
+			<cfreturn application.model.Feature.getByProductId(this.getProductId()).price+0>
+		</cfif>
+	</cffunction>
 
 	<cffunction name="getEstimatedFirstMonth" access="public" output="false" returntype="numeric">
 		<cfreturn this.getEstimatedMonthly()>

@@ -1057,7 +1057,9 @@ $j(document).ready(function($j) {
 			<h3 style="font-size:24px;">Costco Membership Benefits</h3>
 		</a>
 		<hr class="blueline" />
-
+		
+<!---Comment out per Case 703--->
+<!--- 
 	<div class="col-md-4">
 		<cfif prc.productData.CarrierId eq 128>
 			<img src="#assetPaths.channel#images/tmo_member_beni.jpg" class="img-responsive">
@@ -1065,10 +1067,12 @@ $j(document).ready(function($j) {
 			<img src="#assetPaths.channel#images/member_beni.jpg" class="img-responsive">
 		</cfif>
 	</div>
+	
+--->	
 	<div class="col-md-8">
 
 		<p><strong>FREE</strong> Shipping and Easy Returns <br/>
-		<strong>FREE</strong> Accessory Bonus Pack<super>**</super> including a dock and car charger <br/>
+		<strong>FREE</strong> Accessory Bonus Pack<super>**</super><!--- Case 703 ---><!--- including a dock and car charger ---><br/>
 		
 		<super>**</super>Contents of bonus pack vary by device. Also available in warehouse.</p>
 	</div>	

@@ -58,7 +58,7 @@ namespace FogbugzSearch
             caseCountLbl.Text = "";
         }
 
-        # region API Instantiation
+        #region API Instantiation
         public FBApi Api
         {
             get
@@ -108,7 +108,7 @@ namespace FogbugzSearch
         }
         #endregion
 
-        # region FormatXml()
+        #region FormatXml()
         public static string FormatXml(string xml, bool isIndented)
         {
             bool success = false;

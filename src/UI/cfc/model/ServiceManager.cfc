@@ -167,7 +167,7 @@
 		<cftry>
 			<cfquery name="local.getService" datasource="#application.dsn.wirelessAdvocates#">
 				SELECT		s.ServiceGuid, s.CarrierGuid, s.Title AS Name, s.CarrierBillCode,
-							s.MonthlyFee, p.GersSku AS GersSku, p.ProductId, ISNULL(p.Active, 0) AS Active,
+							s.MonthlyFee, s.FinancedPrice, p.GersSku AS GersSku, p.ProductId, ISNULL(p.Active, 0) AS Active,
 							ISNULL(c.CompanyName, '') AS Carrier, s.cartTypeId,
 							ISNULL((SELECT Value FROM catalog.Property WHERE Name = 'Title' AND ProductGuid = s.ServiceGuid), '') AS Title,
 							ISNULL((SELECT Value FROM catalog.Property WHERE Name = 'ShortDescription' AND ProductGuid = s.ServiceGuid), '') AS ShortDescription,
@@ -297,6 +297,7 @@
 			SELECT
 				sm.label
 				, s.MonthlyFee
+				, s.FinancedPrice
 				, sm.ServiceMasterGUID
 				, s.ServiceGUID
 				, p.ProductId
@@ -379,7 +380,7 @@
 
 		<cfquery name="local.getDeviceMinimumRequiredServices" datasource="#application.dsn.wirelessAdvocates#">
 			SELECT		smg.ServiceMasterGroupGuid,	smg.Label AS GroupLabel, sm.ServiceGUID, p.ProductId,
-						sm.Label, s.MonthlyFee
+						sm.Label, s.MonthlyFee, s.FinancedPrice
 			FROM		catalog.ServiceMaster AS sm WITH (NOLOCK)
 			INNER JOIN	catalog.Service AS s WITH (NOLOCK) ON s.ServiceGuid = sm.ServiceGuid
 			INNER JOIN	catalog.Product AS p WITH (NOLOCK) ON s.ServiceGuid = p.ProductGuid AND p.Active = 1
@@ -451,6 +452,7 @@
 				, sm.Label
 				, sp.ProductId
 				, s.MonthlyFee
+				, s.FinancedPrice
 			FROM catalog.ServiceMasterGroup smg WITH (NOLOCK)
 			INNER JOIN catalog.ServiceMaster sm WITH (NOLOCK) ON sm.ServiceMasterGroupGuid = smg.ServiceMasterGroupGuid
 			INNER JOIN catalog.Service s WITH (NOLOCK) ON s.ServiceGuid = sm.ServiceGUID
@@ -509,7 +511,7 @@
 
 			<cfquery name="local.qGetRateplanDeviceRequiredServiceData" datasource="#application.dsn.wirelessAdvocates#">
 				SELECT		smg.ServiceMasterGroupGuid, smg.MinSelected, smg.Label AS groupLabel, sm.Label, smg.Type,
-							s.ServiceGuid, s.MonthlyFee, p.ProductId
+							s.ServiceGuid, s.MonthlyFee, s.FinancedPrice, p.ProductId
 				FROM		catalog.ServiceMaster AS sm WITH (NOLOCK)
 				INNER JOIN	catalog.Service AS s WITH (NOLOCK) ON s.ServiceGuid = sm.ServiceGuid
 				INNER JOIN	catalog.Product AS p WITH (NOLOCK) ON s.ServiceGuid = p.ProductGuid AND p.Active = 1
@@ -638,6 +640,7 @@
 				    s.Title as Name,
 				    s.CarrierBillCode,
 				    s.MonthlyFee,
+				    s.FinancedPrice,
 				    p.GersSku as GersSku,
 				    IsNull(p.Active,0) as Active,
 				    ISNULL(c.CompanyName,'') as Carrier,
@@ -747,6 +750,7 @@
 				carrierBillCode = arguments.form.billCode,
 				name = arguments.form.name,
 				monthlyFee = arguments.form.monthlyFee,
+				financedPrice = arguments.form.financedPrice,
 				shortDescription = arguments.form.ShortDescription,
 				longDescription = arguments.form.longDescription,
 				gersSku = arguments.form.gersSku,
@@ -783,14 +787,16 @@
 					CarrierBillCode,
 					Title,
 					MonthlyFee,
-					cartTypeId
+					cartTypeId,
+					FinancedPrice
 				) VALUES (
 					<cfqueryparam cfsqltype="cf_sql_varchar" value="#local.serviceGuid#">,
 					<cfqueryparam cfsqltype="cf_sql_varchar" value="#local.carrierGuid#">,
 					<cfqueryparam cfsqltype="cf_sql_varchar" value="#local.carrierBillCode#">,
 					<cfqueryparam cfsqltype="cf_sql_varchar" value="#local.name#">,
 					<cfqueryparam cfsqltype="cf_sql_money" value="#local.monthlyFee#">,
-					<cfqueryparam cfsqltype="cf_sql_varchar" value="#local.cartTypeId#" />
+					<cfqueryparam cfsqltype="cf_sql_varchar" value="#local.cartTypeId#" />,
+					<cfif len(trim(local.FinancedPrice))><cfqueryparam cfsqltype="cf_sql_money" value="#local.FinancedPrice#"><cfelse>NULL</cfif>
 				)
 			</cfquery>
 			<cfcatch type="any">
@@ -937,6 +943,7 @@
     				carrierGuid = arguments.form.carrierGuid,
     				carrierBillCode = arguments.form.billCode,
     				monthlyFee = arguments.form.monthlyFee,
+    				financedPrice = arguments.form.financedPrice,
     				name = arguments.form.name,
     				gersSku = arguments.form.gersSku,
    					shortDescription = arguments.form.ShortDescription,
@@ -966,7 +973,8 @@
      				CarrierGuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.carrierGuid#" />,
      				CarrierBillCode = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.carrierBillCode#" />,
      				MonthlyFee = <cfqueryparam cfsqltype="cf_sql_money" value="#local.monthlyFee#" />,
-					cartTypeId = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.cartTypeId#" />
+					cartTypeId = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.cartTypeId#" />,
+					FinancedPrice = <cfif len(trim(local.financedPrice))><cfqueryparam cfsqltype="cf_sql_money"  value="#local.financedPrice#" /><cfelse>NULL</cfif>
      			WHERE ServiceGuid = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.serviceGuid#" />
      		</cfquery>
      		<cfcatch type="any">
@@ -1062,7 +1070,7 @@
 		<cfset var qService = 0 />
 
 		<cfquery name="qService" datasource="#application.dsn.wirelessAdvocates#">
-			SELECT		s.ServiceGuid, s.MonthlyFee, c.CarrierId, p.ProductId, smg.ServiceMasterGroupGuid,
+			SELECT		s.ServiceGuid, s.MonthlyFee, s.FinancedPrice, c.CarrierId, p.ProductId, smg.ServiceMasterGroupGuid,
 						smg.Type, smg.Label AS GroupLabel, sm.Label AS ServiceLabel, sm.ServiceMasterGuid,
 						ct.CartTypeId, ct.Name,
 						ISNULL((

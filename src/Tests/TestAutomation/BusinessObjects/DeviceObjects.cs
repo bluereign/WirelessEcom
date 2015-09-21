@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestAutomation.PageObjects;
 
 namespace TestAutomation.BusinessObjects
 {
@@ -17,12 +18,23 @@ namespace TestAutomation.BusinessObjects
         public bool isActive { get; set; }
         public bool isPrepaid { get; set; }
 
+        //Contract and Finance properties
+
+        //Quantity on Hand
+        //Real Quantity on Hand
+
         public DeviceDetails()
         {
 
         }
+
+        public DeviceDetails(DeviceUIControl deviceUIControl)
+        {
+            CarrierName = deviceUIControl.CarrierName;
+        }
     }
 
+    //OrderId will be useful for Device Activation
     public class OrderData
     {
         public int orderId { get; set; }

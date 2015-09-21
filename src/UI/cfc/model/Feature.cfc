@@ -6,11 +6,20 @@
 
 	<cffunction name="getByProductID" returntype="query">
 		<cfargument name="productID" type="string" required="true"> <!--- type is string to support IDs being passed in a list format --->
+		<cfset var channelConfig = application.wirebox.getInstance("ChannelConfig") >
 		<cfset var local = structNew()>
 
 		<cfquery name="local.qFeature" datasource="#application.dsn.wirelessAdvocates#">
 			SELECT
-				s.*
+				s.ServiceGuid
+			,	s.CarrierGuid
+			,	s.CarrierServiceId
+			,	s.CarrierBillCode
+			,	s.Title
+			,	s.CartTypeId
+			<cfif channelConfig.getVFDEnabled()>
+			, 	s.FinancedPrice
+			</cfif>
 			,	s.MonthlyFee as price
 			,	ISNULL((SELECT TOP 1 LTRIM(RTRIM(Label)) FROM catalog.ServiceMaster where ServiceGuid = s.ServiceGuid), ISNULL((SELECT LTRIM(RTRIM(Value)) FROM catalog.Property where Name = 'Title' and ProductGuid = s.ServiceGuid),s.Title)) as summaryTitle
 			,	ISNULL((SELECT TOP 1 LTRIM(RTRIM(Label)) FROM catalog.ServiceMaster where ServiceGuid = s.ServiceGuid), ISNULL((SELECT LTRIM(RTRIM(Value)) FROM catalog.Property where Name = 'Title' and ProductGuid = s.ServiceGuid),s.Title)) as detailTitle

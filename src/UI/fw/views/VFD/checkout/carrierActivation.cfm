@@ -148,7 +148,7 @@
 	<input type="hidden" id="orderID" name="orderID" value="#session.checkout.OrderId#" />
 	<input type="hidden" id="isActivation" name="isActivation" value="#application.model.CartHelper.cartContainsActivationItems()#"  />
 	<cfset local.carrierID = application.model.checkoutHelper.getCarrier()/>
-	<cfif local.carrierId eq "109"><!--- ATT --->
+	<!---<cfif local.carrierId eq "109"><!--- ATT --->
 		<input type="hidden" id="carrierAuthWording" name="carrierAuthWording" value="Activation Number" />
 	<cfelseif local.carrierId eq "128"><!--- TMOBILE --->
 		<input type="hidden" id="carrierAuthWording" name="carrierAuthWording" value="Activation Code" />
@@ -156,14 +156,23 @@
 		<input type="hidden" id="carrierAuthWording" name="carrierAuthWording" value="Authorization Code" />
 	<cfelseif local.carrierId eq "299"><!--- SPRINT --->
 		<input type="hidden" id="carrierAuthWording" name="carrierAuthWording" value="MSID" />
-	</cfif>
+	</cfif>--->
 	<div class="bootstrap">
 		<div>
-			<h2>
-				Carrier Activation
-			</h2>
-			<br/>
-			<br/>
+			<cfif local.hasActivationItems>
+				<h2>
+					You MUST Activate in the Carrier Portal 
+				</h2>
+				<h3>
+					Please use the information below to activate the device:
+				</h3>
+				<br/>
+				<br/>
+			<cfelse>
+				<h2>
+					Confirmation Processing 
+				</h2>
+			</cfif>
 		</div>
 		
 		<div class="pane">
@@ -182,17 +191,17 @@
 						#local.selectedPhone.summaryTitle# : #local.cartline.getCartLineActivationType()#
 					</div>
 					<div>
-						<label class="floatLeft" for="txtActivationIMEI">
+						<label class="floatLeft" for="txtActivationIMEI" style="font-size:x-large;font-weight:bold;color:red">
 							IMEI:
 						</label>
-						<input id="txtActivationIMEI#local.iCartLine#" name="activationIMEI#local.iCartLine#" 
+						<input style="font-size:larger;font-weight:bold;color:red" id="txtActivationIMEI#local.iCartLine#" name="activationIMEI#local.iCartLine#" 
 						       onclick="this.select();" value="#OrderDetail[local.iCartLine].getIMEI()#" readonly/>
 					</div>
 					<div>
-						<label class="floatLeft" for="txtActivationSIM">
+						<label class="floatLeft" for="txtActivationSIM" style="font-size:x-large;font-weight:bold;color:red">
 							SIM:
 						</label>
-						<input id="txtActivationSIM#local.iCartLine#" name="txtActivationSIM#local.iCartLine#" 
+						<input style="font-size:larger;font-weight:bold;color:red" id="txtActivationSIM#local.iCartLine#" name="txtActivationSIM#local.iCartLine#" 
 						       onclick="this.select();" value="#OrderDetail[local.iCartLine].getSim()#" readonly/>
 					</div>
 				</cfloop>
@@ -290,7 +299,7 @@
 		<div id="containerDiv" name="containerDiv" style="position:relative;height:100%;margin-left:230px;width:100%;margin-bottom:auto;">
 			<cfif local.carrierId eq "299"><!--- SPRINT --->
 				<div style="margin-right:auto;position:absolute;width:100%;height:490px;">
-					<iframe class="carrier" src="https://indirect.sprint.com/indrestricted/nrgen" 
+					<iframe class="carrier" src="https://indirect.sprint.com/public_docs/login.jsp?TYPE=33554433&REALMOID=06-00097e03-f8e8-1430-81ca-d05a90e54057&GUID=&SMAUTHREASON=0&METHOD=GET&SMAGENTNAME=$SM$IPT6JNv2Nyob5wa3FzytkOp01Cp7hGFrEf5Gy%2bnGLcoBW8im4xglgba6IEPA3D6J&TARGET=$SM$https://indirect.sprint.com/indrestricted/nrgen" 
 			     	  	id="carrierActivationSite" scrolling="yes">
 					</iframe>
 				</div>
@@ -299,23 +308,34 @@
 			<div class="carrier-box">
 				<cfset local.carrierID = application.model.checkoutHelper.getCarrier()/>
 				<cfif local.carrierId eq "109"><!--- ATT --->
+					<div style="position:absolute;top:10px;font-size:larger;font-weight:bold;text-align:center;font-size:x-large;color:red">
+						Click to Proceed to Activation Portal
+					</div>
 					<div style="position:absolute;">
 						<a rel="external-new-window"  href="http://opusld.att.com/opus/findhome.do">
 							<img class="carrier" src="#assetPaths.common#images/content/rebatecenter/att.jpg" width="117" height="51"><br/><h3 align="center" class="carrier">Click for AT&T Activation</h3>
 						</a>
 					</div>
 				<cfelseif local.carrierId eq "128"><!--- TMOBILE --->
+					<div style="position:absolute;top:10px;font-size:larger;font-weight:bold;text-align:center;font-size:x-large;color:red">
+						Click to Proceed to Activation Portal
+					</div>
 					<div style="position:absolute;">
 						<a class="carrier" rel="external-new-window" href="https://quikview.t-mobile.com/mosaic/##/applications/QuikViewWeb">
 							<img class="carrier" src="#assetPaths.common#images/content/rebatecenter/TM_authdealerlogo.jpg" width="150" height="25"><br/><h3 align="center" class="carrier">Click for T-Mobile</h3>
 						</a>
 					</div>
 				<cfelseif local.carrierId eq "42"><!--- VERIZON --->
-					<div style="position:absolute;">
-						<a rel="external-new-window"  href="https://cim.verizonwireless.com/cimPreAuth/?mode=friendly&destinationURL=https://eroes-ss.west.verizonwireless.com/eroes/eROES.jsp‎">
-							<img class="carrier" src="#assetPaths.common#images/carrierLogos/verizon_175.gif" /><br/><h3 align="center" class="carrier">Click for Verizon Activation</h3>
-						</a>
-					</div>
+						<div style="position:absolute;top:10px;font-size:larger;font-weight:bold;text-align:center;font-size:x-large;color:red">
+							Follow Below Instructions to Proceed to Activation Portal
+						</div>
+						<div>
+							<img class="carrier" src="#assetPaths.common#images/carrierLogos/verizon_175.gif" /><br/>
+						</div>
+						<div style="position:absolute;bottom:10px;font-size:larger;font-weight:bold;text-align:center;">
+							To activate customers for Verizon, copy and paste the link in the textbox into Internet Explorer
+							<input onclick="this.select();" style="color:red" value="https://cim.verizonwireless.com/cimPreAuth/?mode=friendly&destinationURL=https://eroes-ss.west.verizonwireless.com/eroes/eROES.jsp" readonly/>
+						</div>
 				</cfif>
 			</div>
 		</cfif>
@@ -335,9 +355,15 @@
 							&times;
 						</span>
 					</button>
-					<h2>
-						Confirmation
-					</h2>
+					<cfif local.hasActivationItems>
+						<h2>
+							Confirmation - <span style="font-size:x-large;font-weight:bold;color:red"> Make Sure the Device is ACTIVATED!</span>
+						</h2>
+					<cfelse>
+						<h2>
+							Confirmation
+						</h2>
+					</cfif>
 				</div>
 				<div class="modal-body">
 					<table id="confirmInfo" class="confirmInfo">
@@ -364,22 +390,24 @@
 					<cfif ( local.hasActivationItems)>
 						<tr>
 							<td style="margin:5px;"></td>
-							<td style="margin:5px;">
-								<cfset local.carrierID = application.model.checkoutHelper.getCarrier()/>
-								<cfif local.carrierId eq "109"><!--- ATT --->
-									Activation ##
-								<cfelseif local.carrierId eq "128"><!--- TMOBILE --->
-									Activation Code:
-								<cfelseif local.carrierId eq "42"><!--- VERIZON --->
-									Authorization Code:
-								<cfelseif local.carrierId eq "299"><!--- SPRINT --->
-									MSID:
-								</cfif>
-							</td>
-							<td style="margin:5px;width:20px;">&nbsp;</td>
+							
 							<td style="margin:5px;">Phone ##</td>
 							<td style="margin:5px;width:20px;">&nbsp;</td>
 							<td style="margin:5px;">Agreement ##</td>
+							
+							<td style="margin:5px;visibility:hidden;">
+								<!---<cfset local.carrierID = application.model.checkoutHelper.getCarrier()/>
+								<cfif local.carrierId eq "109"><!--- ATT --->
+									Activation ##<a href="##" data-toggle="tooltip" title="This is AT&T's' Activation number returned on activation completion"><span class="glyphicon glyphicon-info-sign"></a>
+								<cfelseif local.carrierId eq "128"><!--- TMOBILE --->
+									Activation Code<a href="##" data-toggle="tooltip" title="This is T-Mobile's Activation code returned on activation completion"><span class="glyphicon glyphicon-info-sign"></a>
+								<cfelseif local.carrierId eq "42"><!--- VERIZON --->
+									Authorization Code<a href="##" data-toggle="tooltip" title="This is Verizon's' Authorization code returned on activation completion"><span class="glyphicon glyphicon-info-sign"></a>
+								<cfelseif local.carrierId eq "299"><!--- SPRINT --->
+									MSID<a href="##" data-toggle="tooltip" title="This is Sprint's Mobile Station ID returned on activation completion"><span class="glyphicon glyphicon-info-sign"></a>
+								</cfif>--->
+							</td>
+							<td style="margin:5px;width:20px;">&nbsp;</td>
 						</tr>
 						<cfloop from="1" to="#arrayLen(local.cartLines)#" index="local.iCartLine">
 							<cfset local.cartLine = local.cartLines[local.iCartLine]/>
@@ -393,11 +421,7 @@
 									#local.iCartLine#  
 									<input type="hidden" id="wirelessLineID#local.iCartLine#" name="wirelessLineID#local.iCartLine#" value="#OrderDetail[local.iCartLine].getWirelessLineId()#" />
 								</td>
-								<td>
-									<input id="activationID#local.iCartLine#" name="activationID#local.iCartLine#" 
-									       class="activation" type='text' style="margin:5px;"/>
-								</td>
-								<td>&nbsp;</td>
+								
 								<td>
 									<div>
 									( <input id="Phone_#local.iCartLine#_NumPt1" name="Phone_#local.iCartLine#_NumPt1" onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('Phone_#local.iCartLine#_NumPt2'))" maxlength="3" style="width:40px;text-align:center;"/> )
@@ -415,6 +439,12 @@
 									       class="finance" type='text' style="margin:5px;width:120px" value="NA" readonly/>
 									</cfif>
 								</td>
+								
+								<td style="visibility:hidden;width:0px;">
+									<input id="activationID#local.iCartLine#" name="activationID#local.iCartLine#" 
+									       class="activation" type='text' style="margin:5px;"/>
+								</td>
+								<td>&nbsp;</td>
 							</tr>
 						</cfloop>
 					</cfif>
@@ -482,7 +512,7 @@
 		var allowFinish = false;
 		var allowPrint = false;
 		var openModalClicked = false;
-		var allActivated = false;
+		var allActivated = true;
 		var allFinanceAgreement = false;
 		var allValidNums = false;
 		var hasActivations = document.getElementById('isActivation').value;
@@ -509,7 +539,6 @@
 					var value2 = document.getElementById('Phone_'+deviceCount+'_NumPt2').value;
 					var value3 = document.getElementById('Phone_'+deviceCount+'_NumPt3').value;
 					var newMDN = value1 + value2 + value3;
-					var activationNum = document.getElementById('activationID'+deviceCount).value;
 					var financeNum = document.getElementById('finance'+deviceCount).value;
 					var orderID = document.getElementById('orderID').value;	
 					$j.ajax({
@@ -519,7 +548,6 @@
 						data: {
 							wirelessLineID: wirelessLineID,
 							newMDN: newMDN,
-							activationNum: activationNum,
 							orderID: orderID,
 							financeNum: financeNum
 						},
@@ -561,21 +589,6 @@
 		};
 		//Verifies that there are activations for each device
 		function checkActivation(){
-		    var inputs = document.getElementsByClassName("activation");
-		    var deviceCount = 0;
-		    var carrierAuthWording = document.getElementById('carrierAuthWording').value
-		    for (i = 0; i < inputs.length; i++) {
-		        deviceCount++;
-		        var value = document.getElementById('activationID' + deviceCount).value;
-		        if ((value.trim()).length) {
-		            allActivated = true;
-		        }
-		        else {
-		            alert("You must have a "+carrierAuthWording+" for each device before you can print.");
-		            allActivated = false;
-		            break;
-		        }
-		    }
 		    return allActivated;
 		}
 		//Verifies that there are finance agreements for each financed device

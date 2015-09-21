@@ -7746,11 +7746,24 @@ form .right:first-child {
   form .form-inline a {
     margin-left: 30px;
   }
+  form .form-inline a.infoTip {
+    background-image: url('../images/ui/1285180071_information.png');
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    height: 17px;
+    width: 17px;
+    display: inline-block;
+    margin-left: 5px;
+  }
   form .form-inline .right {
     float: right;
   }
+  form .accountNumber .form-control,
+  form .carrier .form-control,
   form .zip .form-control,
   form .ssn .form-control,
+  form .areaCode .form-control,
+  form .zipCodeEdit .form-control,
   form .pin .form-control {
     width: 230px;
   }
@@ -8065,6 +8078,32 @@ form .right:first-child {
   display: block;
   font-size: 40px;
   font-size: 2.5rem;
+}
+.main .portNumber form {
+  border: none;
+  padding: 0px 20px;
+}
+.portNumber {
+  border: 1px solid #b3b3b3;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-bottom: 20px;
+  padding: 40px 0;
+}
+.portNumber form .right {
+  margin-right: 20px;
+  bottom: -130px;
+}
+.portNumber form .zipCodeEdit {
+  display: none;
+}
+.portNumber form .zipCodeEdit a {
+  margin-left: 5px;
+}
+.portNumber form .zipCodeDisplay a {
+  margin-left: 5px;
+  font-size: 11px;
 }
 .footer {
   clear: both;

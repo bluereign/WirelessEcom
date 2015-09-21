@@ -12,5 +12,7 @@ namespace TestAutomation.PageObjects
 {
     public class TMobileDeviceDetailsPage : BaseDeviceDetailsPage
     {
+        public TMobileDeviceDetailsPage(IWebDriver Driver, string DevicePageUrl) : base(Driver, DevicePageUrl)
+        { }
     }
 }

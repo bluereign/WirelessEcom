@@ -611,12 +611,14 @@ $j(document).ready(function($j) {
 		<h3>Costco Membership Benefits</h3>
 		<hr class="blueline" />
 	
+<!---	
 	<div class="col-md-4">
 		<img src="#assetPaths.channel#images/tmo_member_beni.jpg" class="img-responsive">
 	</div>
+--->
 	
 	<div class="col-md-8">
-		<p><strong>FREE</strong> Accessory Bonus Pack<super>**</super> including a dock and car charger<super>***</super> <br/>
+		<p><strong>FREE</strong> Accessory Bonus Pack<super>**</super> <!---including a dock and car charger<super>***</super>---><br/>
 		<strong>FREE</strong> $25 Costco Cash Card<super>***</super><br/>
 		<strong>FREE</strong> Shipping<br/>
 		<strong>Dedicated</strong> Help &amp; Support<br/></p>
