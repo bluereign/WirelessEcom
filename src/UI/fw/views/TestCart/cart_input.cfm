@@ -1,4 +1,4 @@
-<cfparam name="zipCode" default="#session.dbuildercart.getZipCode()#" />
+<cfparam name="zipCode" default="#session.cart.getZipCode()#" />
 
 <!---input fixups for empty data --->
 <cfif zipcode is "00000"><cfset zipcode = "78205"></cfif>

@@ -51,9 +51,9 @@
 		<cfset setInstantRebateAmountTotal(arguments.instantRebateAmountTotal) />
 		<cfset setPromotionCodes(arguments.promotionCodes) />
 
-		<cfif not structKeyExists(session,"DbuilderCartFacade") >
-			<cfset session.dbuilderCartFacade = CreateObject("component","fw.model.shopping.dBuilderCartFacade").init(this) />
-		</cfif>
+<!---		<cfif not structKeyExists(session,"DbuilderCartFacade") >
+			<cfset session.cartFacade = CreateObject("component","fw.model.shopping.dBuilderCartFacade").init(this) />
+		</cfif>--->
 
 		<cfreturn this />
 	</cffunction>
@@ -66,7 +66,7 @@
 		<cfset local.carrierID = getCarrierID() />
 		<cfset local.planCounts = {}> 
 
-		<cfset local.aLines = session.dbuildercart.getLines() />
+		<cfset local.aLines = session.cart.getLines() />
 
 		<cfloop from="1" to="#arrayLen(local.aLines)#" index="local.i">
 			<cfset local.phone = local.aLines[local.i].getPhone()> 
@@ -144,7 +144,7 @@
 
 			<!--- Add shared features only to line 1 --->
 			<cfif local.i eq 1>
-				<cfset local.aSharedFeatures = session.dbuildercart.getSharedFeatures() />
+				<cfset local.aSharedFeatures = session.cart.getSharedFeatures() />
 
 				<cfif arrayLen(local.aSharedFeatures)>
 					<cfloop from="1" to="#arrayLen(local.aSharedFeatures)#" index="local.ii">
@@ -230,7 +230,7 @@
 			<cfset local.cartPrices.setRetailPrice(local.cartPrices.getRetailPrice() + local.aLines[local.i].getPrices().getRetailPrice()) />
 		</cfloop>
 
-		<cfset local.aAccessories = session.dbuildercart.getOtherItems() />
+		<cfset local.aAccessories = session.cart.getOtherItems() />
 
 		<cfif arrayLen(local.aAccessories)>
 			<cfset local.linePrices = createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init() />
@@ -262,8 +262,8 @@
 			</cfloop>
 		</cfif>
 		
-		<cfset session.dbuildercart.setLines(local.aLines) />
-		<cfset session.dbuildercart.setPrices(local.cartPrices) />
+		<cfset session.cart.setLines(local.aLines) />
+		<cfset session.cart.setPrices(local.cartPrices) />
 	</cffunction>
 
 	<cffunction name="updateAllTaxes" access="public" output="false" returntype="void">
@@ -271,7 +271,7 @@
 		<cfset var local = structNew() />
 
 		<cfset local.cartTaxes = createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init() />
-		<cfset local.aLines = session.dbuildercart.getLines() />
+		<cfset local.aLines = session.cart.getLines() />
 
 		<cfloop from="1" to="#arrayLen(local.aLines)#" index="local.i">
 			<cfset local.lineTaxes = createObject("Component","fw.model.shopping.dBuilderCartPriceBlock").init() />
@@ -330,7 +330,7 @@
 			<cfset local.cartTaxes.setMonthly(local.cartTaxes.getMonthly() + local.aLines[local.i].getTaxes().getMonthly()) />
 		</cfloop>
 
-		<cfset local.aAccessories = session.dbuildercart.getOtherItems() />
+		<cfset local.aAccessories = session.cart.getOtherItems() />
 
 		<cfif arrayLen(local.aAccessories)>
 			<cfloop from="1" to="#arrayLen(local.aAccessories)#" index="local.ii">
@@ -340,8 +340,8 @@
 			</cfloop>
 		</cfif>
 
-		<cfset session.dbuildercart.setLines(local.aLines) />
-		<cfset session.dbuildercart.setTaxes(local.cartTaxes) />
+		<cfset session.cart.setLines(local.aLines) />
+		<cfset session.cart.setTaxes(local.cartTaxes) />
 	</cffunction>
 	
 	<cffunction name="updateAllDiscounts">
@@ -356,9 +356,9 @@
 			
 			if( getChannelConfig().isPromotionCodeAvailable() ) {
 			
-				promoCodes = session.dbuildercart.getPromotionCodes();
+				promoCodes = session.cart.getPromotionCodes();
 				codes = listToArray(structKeyList(promoCodes));
-				cartItems = session.dbuildercart.getCartItems();
+				cartItems = session.cart.getCartItems();
 				
 				// Discounts are currently a running total.. so we have to reset them before re-applying discounts
 				for( i=1; i <= arrayLen(cartItems); i++ ) {
@@ -374,15 +374,15 @@
 					Result = getPromotionService().evaluatePromotion( 
 							code = code, 
 							userID = session.userID,
-							accessoryTotal = session.dbuilderCart.getAccessoriesAmtDueToday(),
-							accessoryQuantity = arrayLen(session.dbuilderCart.getAccessories(includeFree=false)),
-							orderTotal = session.dbuilderCart.getCartItemsAmtDueToday(),
-							orderQuantity = arrayLen(session.dbuilderCart.getCartItems(includeFree=false)),
-							orderSKUList = session.dbuilderCart.getCartSKUList()
+							accessoryTotal = session.cart.getAccessoriesAmtDueToday(),
+							accessoryQuantity = arrayLen(session.cart.getAccessories(includeFree=false)),
+							orderTotal = session.cart.getCartItemsAmtDueToday(),
+							orderQuantity = arrayLen(session.cart.getCartItems(includeFree=false)),
+							orderSKUList = session.cart.getCartSKUList()
 						);
 						
 					getPromotionService().addPromotiontoCart( 
-							cart = session.dbuilderCart, 
+							cart = session.cart, 
 							result = Result, 
 							shipMethod = application.model.checkoutHelper.getShippingMethod(),
 							userID = session.userID
@@ -402,8 +402,8 @@
 
 		<cfscript>
 			var taxCalculator = application.wirebox.getInstance("TaxCalculator");
-			var cartLines = session.dbuildercart.getLines();
-			var otherItems = session.dbuildercart.getOtherItems();
+			var cartLines = session.cart.getLines();
+			var otherItems = session.cart.getOtherItems();
 			var accessories = 0;
 			var cartItems = [];
 			var args = {};
@@ -474,9 +474,9 @@
 				}
 			}
 			
-			if( session.dbuildercart.getPrices().getDiscountTotal() > 0 ) 
+			if( session.cart.getPrices().getDiscountTotal() > 0 ) 
 			{
-				discount = buildTaxDiscountLineItem( session.dbuildercart.getPrices(), 'ORDERCOUPONAMOUNT' );
+				discount = buildTaxDiscountLineItem( session.cart.getPrices(), 'ORDERCOUPONAMOUNT' );
 				arrayAppend(cartItemsWithPromotions, discount);
 			} 
 			else 
@@ -563,11 +563,11 @@
 
 	<cffunction name="getCurrentLineData" access="public" output="false" returntype="any">
 		<cfset var local = structNew()>
-		<cfif this.getCurrentLine() and this.getCurrentLine() neq request.config.otherItemsLineNumber and arrayLen(session.dbuildercart.getLines()) gte session.dbuildercart.getCurrentLine()>
-			<cfset local.cartLines = session.dbuildercart.getLines()>
+		<cfif this.getCurrentLine() and this.getCurrentLine() neq request.config.otherItemsLineNumber and arrayLen(session.cart.getLines()) gte session.cart.getCurrentLine()>
+			<cfset local.cartLines = session.cart.getLines()>
 			<cfreturn local.cartLines[this.getCurrentLine()]>
 		<cfelseif this.getCurrentLine() and this.getCurrentLine() eq request.config.otherItemsLineNumber>
-			<cfreturn session.dbuildercart.getOtherItems()>
+			<cfreturn session.cart.getOtherItems()>
 		<cfelse>
 			<cfset local.cartLine = createObject("Component","fw.model.shopping.dBuilderCartline").init()>
 			<cfreturn local.cartLine>
@@ -982,7 +982,7 @@
 	<cffunction name="hasCart" returntype="boolean">
 		<cfset var local = structNew()>
 		<cfset local.return = false>
-		<cfif isDefined("session.dbuildercart") and isStruct(session.dbuildercart)>
+		<cfif isDefined("session.cart") and isStruct(session.cart)>
 			<cfset local.return = true>
 		</cfif>
 		<cfreturn local.return>

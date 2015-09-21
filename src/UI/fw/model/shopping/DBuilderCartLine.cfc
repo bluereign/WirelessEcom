@@ -197,7 +197,7 @@
     
     <cffunction name="getCart" access="public" output="false" returntype="any">
 		<cfif structKeyExists( session, "cart" )>
-			<cfreturn session.dbuildercart>
+			<cfreturn session.cart>
 		<cfelse>
 			<cfreturn getModel('Cart').init()# />
 		</cfif>
