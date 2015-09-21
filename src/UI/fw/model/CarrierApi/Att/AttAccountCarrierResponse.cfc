@@ -93,19 +93,21 @@
 		<cfset var local = {} />
 		<cfset local.resp = getResponse() />
 		<cfset local.subscribers = arrayNew(1) />
-		<cfloop array="#local.resp.account.subscribers#" index="local.s">
-			<cfset local.s.AccountStatus = local.s.accountStatus />
-			<cfset local.subscriber = createObject('component','fw.model.carrierApi.Subscriber').init() />
-				<cfset local.subscriber.setAccountStatus(local.s.AccountStatus) />
-				<cfset local.subscriber.setAddress(getAddress(local.s.address)) />	
-				<cfset local.subscriber.setEmail(local.s.contact.emailAddress) />
-				<cfset local.subscriber.setNumber(local.s.number) />
-				<cfset local.subscriber.setEligibilityDate(ParseDateTime(listgetat(local.s.upgradeInfo.eligibilityDate,1,"T"))) />
-				<cfset local.subscriber.setEligibilityStatus(local.s.upgradeInfo.EligibilityStatus) />
-				<cfset local.subscriber.setIsEligible(local.s.upgradeInfo.IsEligible) />
-				<cfset local.subscriber.setRatePlan(local.s.planInfo.Identifier) />
-			<cfset arrayAppend(local.subscribers,local.subscriber) />		
-		</cfloop>
+		<cfif isdefined("local.resp.account.subscribers")>
+			<cfloop array="#local.resp.account.subscribers#" index="local.s">
+				<cfset local.s.AccountStatus = local.s.accountStatus />
+				<cfset local.subscriber = createObject('component','fw.model.carrierApi.Subscriber').init() />
+					<cfset local.subscriber.setAccountStatus(local.s.AccountStatus) />
+					<cfset local.subscriber.setAddress(getAddress(local.s.address)) />	
+					<cfset local.subscriber.setEmail(local.s.contact.emailAddress) />
+					<cfset local.subscriber.setNumber(local.s.number) />
+					<cfset local.subscriber.setEligibilityDate(ParseDateTime(listgetat(local.s.upgradeInfo.eligibilityDate,1,"T"))) />
+					<cfset local.subscriber.setEligibilityStatus(local.s.upgradeInfo.EligibilityStatus) />
+					<cfset local.subscriber.setIsEligible(local.s.upgradeInfo.IsEligible) />
+					<cfset local.subscriber.setRatePlan(local.s.planInfo.Identifier) />
+				<cfset arrayAppend(local.subscribers,local.subscriber) />		
+			</cfloop>
+		</cfif>
 		<cfreturn local.subscribers />
 	</cffunction>
 	

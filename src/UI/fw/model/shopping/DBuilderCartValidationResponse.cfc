@@ -1,10 +1,10 @@
-<cfcomponent displayname="CartValidationResponse">
+<cfcomponent displayname="dBuilderCartValidationResponse">
 
 	<cfset variables.instance = structNew() />
 
 	<!--- CONSTRUCTOR --->
 
-	<cffunction name="init" access="public" output="false" returntype="fw.model.shopping.CartValidationResponse">
+	<cffunction name="init" access="public" output="false" returntype="fw.model.shopping.dBuilderCartValidationResponse">
 		<cfargument name="IsCartValid" type="boolean" required="false" default="true" />
 		<cfargument name="Errors" type="array" required="false" default="#arrayNew(1)#" />
 		<cfargument name="InvalidCartTypeId" type="numeric" required="false" default="0" />

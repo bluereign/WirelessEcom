@@ -1,6 +1,6 @@
 <cfcomponent output="false" displayname="CartLine">
 
-	<cffunction name="init" returntype="cfc.model.CartLine">
+	<cffunction name="init" returntype="fw.model.shopping.dBuilderCartLine">
 		<cfargument name="alias" type="string" required="false" default="" />
 		<cfargument name="phone" type="any" required="false" default="#getModel('CartItem').init()#" />
 		<cfargument name="plan" type="any" required="false" default="#getModel('CartItem').init()#" />
