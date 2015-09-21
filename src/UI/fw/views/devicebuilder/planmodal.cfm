@@ -19,16 +19,19 @@
     <input type="hidden" name="plan" value="#rc.plan#">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title">#prc.DetailTitle#</h4>
+      <h4 class="modal-title">Plan Details</h4>
     </div>
-    <div class="modal-body plans">
-      <div class="info">
-        <ul>
-          <li class="large"><span>#prc.DataLimitGB#GB</span></li>
-        </ul>
-        <p>#prc.SummaryDescription#</p>
-        <p>#prc.DetailDescription#</p>
-        <div class="price">#dollarFormat(prc.MonthlyFee)#/month</div>
+    <div class="modal-body">
+      <div class="plans">
+        <div class="info">
+          <h3 style="height:40px"><span>#prc.DetailTitle#</span></h3>
+          <ul>
+            <li class="large"><span>#prc.DataLimitGB#GB</span></li>
+          </ul>
+          <p>#prc.SummaryDescription#</p>
+          <p>#prc.DetailDescription#</p>
+          <div class="price">#dollarFormat(prc.MonthlyFee)#/month</div>
+        </div>
       </div>
     </div>
     
