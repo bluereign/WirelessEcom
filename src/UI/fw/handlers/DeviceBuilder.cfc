@@ -13,6 +13,7 @@
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
   <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting,orderreview" />
+  <cfset listActivationTypes = "financed-24,financed-18,financed-12,new,upgrade,addaline" /> <!--- TODO: determine what to do with new, upgrade, addaline  --->
 
   <!--- preHandler --->
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
@@ -36,12 +37,11 @@
 
 
       // <FINANCE PLAN CHECK
-      // if ( structKeyExists(rc,"finance") ){
-      //   rc.finance = rc.finance;
-      // }
-      if ( !structKeyExists(rc,"finance") OR !len(trim(rc.finance)) ) {
+      
+      if ( !structKeyExists(rc,"finance") OR !len(trim(rc.finance)) OR !listFindNoCase(listActivationTypes,rc.finance) ) {
         relocate( prc.browseDevicesUrl );
       }
+      
       if ( !structKeyExists(rc,"paymentoption") OR !len(trim(rc.paymentoption)) ) {
         rc.paymentoption = "financed"; //financed, fullretail
       }
@@ -62,7 +62,7 @@
 
       // <TYPE CHECK
       // Make sure customer type exists.  If it does not, set it to upgrade.
-      if (!structKeyExists(rc,"type") OR !listFindNoCase(listCustomerTypes,rc.type)) {
+      if ( !structKeyExists(rc,"type") OR !listFindNoCase(listCustomerTypes,rc.type) ) {
         rc.type = "upgrade";
       }
       // <end type check
@@ -149,7 +149,7 @@
       if (isNumeric(thisNavIndex) and thisNavIndex gt 1) {
         prevNavIndex = thisNavIndex - 1;
         prevAction = prc.navItemsAction[prevNavIndex];
-        prc.prevStep = event.buildLink('devicebuilder.#prevAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+        prc.prevStep = event.buildLink('devicebuilder.#prevAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/finance/' & rc.finance & '/';
         if (structKeyExists(rc,"line")) {
           prc.prevStep = prc.prevStep & 'line/' & rc.line & '/';
         }
@@ -207,9 +207,63 @@
       // <end selected plan
 
 
+
       // <CARRIER LOGO
 
       // <end carrier logo
+
+
+
+      // <TALLY BOX
+      prc.financeproductname = prc.productService.getFinanceProductName(carrierid=#prc.productData.CarrierId#);
+
+      // financed, fullretail
+      switch(rc.paymentoption) {
+        case "financed":
+          
+          prc.tallyboxFinanceMonthlyDueToday = 0;
+          // AT&T carrierId = 109, VZW carrierId = 42
+          if ( prc.productData.CarrierId eq 109 ) {
+
+            switch(rc.finance) {
+              case "financed-24":
+                prc.tallyboxFinanceTitle = prc.financeproductname & " 24";
+                prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 30 Months";
+                prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+                break;
+              case "financed-18":
+                prc.tallyboxFinanceTitle = prc.financeproductname & " 18";
+                prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
+                prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice18;
+                break;
+              case "financed-12":
+                prc.tallyboxFinanceTitle = prc.financeproductname & " 12";
+                prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 20 Months";
+                prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice12;
+                break;
+            }
+
+          } else {
+            prc.tallyboxFinanceTitle = prc.financeproductname;
+            prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
+            prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+          }
+
+          break;
+        
+        case "fullretail":
+          prc.tallyboxFinanceMonthlyDueToday = prc.productData.FinancedFullRetailPrice;
+          prc.tallyboxFinanceTitle = "Full Retail";
+          prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
+          prc.tallyboxFinanceMonthlyDueAmount = 0;
+          break;
+        default:
+          break;
+      }
+
+      // prc.tallyboxMonthlyDueTitle = "Due Monthly for 24 Months";
+      // prc.tallyboxMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+      // <end tally box
 
 
       // <LAYOUT
