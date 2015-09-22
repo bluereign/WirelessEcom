@@ -3,6 +3,7 @@
 
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.att.AttCarrierResponse">		
 		<cfset super.init() />
+		<cfset variables.instance.subscribers = arraynew(1) />
 		<cfreturn this />		
 	</cffunction>
 	
@@ -96,7 +97,8 @@
 		<cfif isdefined("local.resp.account.subscribers")>
 			<cfloop array="#local.resp.account.subscribers#" index="local.s">
 				<cfset local.s.AccountStatus = local.s.accountStatus />
-				<cfset local.subscriber = createObject('component','fw.model.carrierApi.Subscriber').init() />
+				<cfset local.subscriber = createObject('component','fw.model.carrierApi.Att.AttSubscriber').init() />
+					<cfset local.subscriber.setResponse(local.s) />
 					<cfset local.subscriber.setAccountStatus(local.s.AccountStatus) />
 					<cfset local.subscriber.setAddress(getAddress(local.s.address)) />	
 					<cfset local.subscriber.setEmail(local.s.contact.emailAddress) />
@@ -105,11 +107,16 @@
 					<cfset local.subscriber.setEligibilityStatus(local.s.upgradeInfo.EligibilityStatus) />
 					<cfset local.subscriber.setIsEligible(local.s.upgradeInfo.IsEligible) />
 					<cfset local.subscriber.setRatePlan(local.s.planInfo.Identifier) />
-				<cfset arrayAppend(local.subscribers,local.subscriber) />		
+					
+					<cfset addSubscriber(local.subscriber) />
 			</cfloop>
 		</cfif>
 		<cfreturn local.subscribers />
 	</cffunction>
+	
+	<cffunction name="addSubscriber" returnType="void" access="public" >
+		
+	</cffunction>		
 	
 	
 	<cffunction name="OnMissingMethod" access="public" returntype="any" output="false" hint="Handles missing method exceptions.">

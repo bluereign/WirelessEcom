@@ -31,7 +31,7 @@
 	<br/>Subscriber.getIsEligible() = #s.getIsEligible()#
 	<cfif s.getRatePlan().recordcount gt 0>
 		<br/>subscriber.getRatePlan()  - returns query
-		<br/><cfdump var="#s.getRatePlan()#">
+		<br/><cfdump var="#s.getRatePlan()#" expand="false">
 	<cfelse>
 		<br/>subscriber.getRatePlan() returned an empty query
 	</cfif>
@@ -44,6 +44,7 @@
 	<br/>Subscriber.getAddress().getZipCode() = #s.getAddress().getZipcode()#
 	<br/>Subscriber.getAddress().getZipCodeExtension() = #s.getAddress().getZipcodeExtension()#
 	<br/>Subscriber.getAddress().getCountry() = #s.getAddress().getCountry()#
+	<cfdump var="#s.getResponse()#" expand="false" />
 	<cfset s_count = s_count + 1 />
 </cfloop>	
 
@@ -51,7 +52,7 @@
 </cfif>
 </h2>
 <div style="margin-top:25px;">
-	<cfdump var="#rc.respObj.getResponse()#" />
+	<cfdump var="#rc.respObj.getResponse()#" expand="false" />
 </div>
 <!---<cfloop array="#rc.eligibility#" index="e" >
 	<div style="margin-top:25px;">

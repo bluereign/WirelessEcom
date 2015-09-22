@@ -14,6 +14,23 @@
 		Setters / Getters	
 	 --->
 	
+	<cffunction name="setResponse" access="public" returnType="boolean">
+		<cfargument name="response" type="any" required="true" hint="obj of response from carrier" > 
+		
+		<cfif isStruct(arguments.response)>
+			<cfset variables.instance.response = arguments.response />
+			<cfreturn true />
+		<cfelse>
+			<cfreturn false />
+		</cfif>
+		
+	</cffunction>	
+	
+	<cffunction name="getResponse" access="public" returnType="struct">
+		<cfreturn variables.instance.response />
+	</cffunction>	
+	
+	
 	<cffunction name="setAccountStatus" returnType="void" access="public">
 		<cfargument name="accountStatus" type="string" required="true">
 		<cfset variables.instance.accountStatus = arguments.accountStatus />
