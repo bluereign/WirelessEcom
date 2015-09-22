@@ -37,6 +37,7 @@
 		<cfset application.configMappingName = 'wirelessAdvocates_config' />
 		<cfset application.pathDelim = '\' />
 		<cfset application.scenarios = "ECOM,VFD,VSA" />
+		<cfset application.bFriendlyErrorPages = true /> <!--- default to true --->
 
 
 		<cfif application.applicationRootPath contains '/'>

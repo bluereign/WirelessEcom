@@ -78,6 +78,7 @@
 	request.config.ActiveCarriers = "42|109|128|299";  // production is 42|109|128|299
 	request.config.AllowedIPMask = "10.7.*"; //matches IP address on request startup. empty string allows all IPs
 	request.config.disableSSL = false;
+
 	request.config.disablePaymentGateway = false; //true = test mode
 	request.config.disableTestMode = true;
 	request.config.disableCarrierCheckout = "";  //42|109|128|299
