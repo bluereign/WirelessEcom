@@ -113,6 +113,7 @@
 	request.config.VideoConvertor.ThumbnailFolder = 'poster';
 	
 	request.config.disableSSL = true;
+	application.bFriendlyErrorPages = true;
 
 	// the domain value for emailTemplates 
 	request.config.emailTemplateDomain = cgi.server_name;

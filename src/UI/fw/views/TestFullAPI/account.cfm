@@ -24,8 +24,10 @@
 <cfset subscribers = rc.respObj.getSubscribers() />
 <cfset s_count = 1 />
 <cfloop array="#subscribers#" index="s">
-	<br/>Subscriber ###s_count#
+	<hr/>
+	<b>Subscriber ###s_count#</b><br/>
 	<br/>Subscriber.getAccountStatus() = #s.getAccountStatus()#
+	<br/>Subscriber.getUpgradeDownPaymentPercentage("NE",20) = #s..getUpgradeDownPaymentPercent("NE",20)#
 	<br/>Subscriber.getEligibilityDate() = #dateformat(s.getEligibilityDate(),"mm/dd/yyyy")#
 	<br/>Subscriber.getEligibilityStatus() = #s.getEligibilityStatus()#
 	<br/>Subscriber.getIsEligible() = #s.getIsEligible()#
@@ -50,15 +52,12 @@
 
 <br/><br/>Intentional Missing Method- getIDoNotExist() = #rc.respObj.getIDoNotExist()#
 </cfif>
+
+<br/><br/>CFDUMP of the Carrier Response for Account Login
 </h2>
 <div style="margin-top:25px;">
-	<cfdump var="#rc.respObj.getResponse()#" expand="false" />
+	<cfdump var="#rc.respObj.getResponse()#" expand="true" />
 </div>
-<!---<cfloop array="#rc.eligibility#" index="e" >
-	<div style="margin-top:25px;">
-		Subscriber Eligibility Detail:
-		<cfdump var="#e.getResponse()#" />
-	</div>
-</cfloop>	--->
+
 
 </cfoutput>

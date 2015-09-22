@@ -108,15 +108,12 @@
 					<cfset local.subscriber.setIsEligible(local.s.upgradeInfo.IsEligible) />
 					<cfset local.subscriber.setRatePlan(local.s.planInfo.Identifier) />
 					
-					<cfset addSubscriber(local.subscriber) />
+					<cfset arrayAppend(local.subscribers,local.subscriber) />
 			</cfloop>
 		</cfif>
 		<cfreturn local.subscribers />
 	</cffunction>
 	
-	<cffunction name="addSubscriber" returnType="void" access="public" >
-		
-	</cffunction>		
 	
 	
 	<cffunction name="OnMissingMethod" access="public" returntype="any" output="false" hint="Handles missing method exceptions.">
