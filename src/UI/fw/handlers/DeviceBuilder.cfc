@@ -35,6 +35,20 @@
       prc.AssetPaths = variables.AssetPaths;
 
 
+      // <FINANCE PLAN CHECK
+      // if ( structKeyExists(rc,"finance") ){
+      //   rc.finance = rc.finance;
+      // }
+      if ( !structKeyExists(rc,"finance") OR !len(trim(rc.finance)) ) {
+        relocate( prc.browseDevicesUrl );
+      }
+      if ( !structKeyExists(rc,"paymentoption") OR !len(trim(rc.paymentoption)) ) {
+        rc.paymentoption = "financed"; //financed, fullretail
+      }
+
+      // <end finance plan check
+
+
       // <ZIP CHECK
       // if user has authenticated into carrier, make sure that the session zip is the carrier response object zip (unless they have logged out with Clear Entire Cart).
       // else if inputZip exists and is valid, then set session.zipCode (ONLY IF the user has not authenticated with a carrier login).
@@ -166,6 +180,7 @@
         // TODO: make sure a selected subscriber is handled (and required)
         if ( structKeyExists(rc,"line") and isValid("integer", rc.line) and arrayLen(prc.subscribers) gte rc.line  ) {
           prc.subscriber = prc.subscribers[rc.line];
+          // you can't get the RatePlan without having selected a "line" (i.e. subscriber):
           prc.planDataExisting = prc.subscriber.getRatePlan();
           prc.activetab = "existing";
           // TODO: Wrap the following in a phone number formatting function:
@@ -274,7 +289,7 @@
         rc.carrierResponseMessage = "There was an issue with the values you entered.  Please double check each value and then try again.";
         setNextEvent(
           event="devicebuilder.carrierLogin",
-          persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+          persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
       }
       // /simple validation
 
@@ -309,12 +324,12 @@
             // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
             setNextEvent(
               event="#rc.nextAction#",
-              persist="type,pid");
+              persist="type,pid,finance");
           } else {
             rc.carrierResponseMessage = session.carrierObj.getResultDetail() & ".  We were unable to authenticate your wireless carrier information at this time.  Please try again.";
             setNextEvent(
               event="devicebuilder.carrierLogin",
-              persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+              persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
           }
           break;
         }
@@ -324,7 +339,7 @@
           rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T or Verizon device.  Please try again with an AT&T or Verizon device. (carrierId: #prc.productData.carrierId#)";
           setNextEvent(
             event="devicebuilder.carrierLogin",
-            persist="type,pid,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+            persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
         }
       };
     </cfscript>

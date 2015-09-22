@@ -1,3 +1,4 @@
+<!--- <cfdump var="#rc#"> --->
 <cfoutput>
   <div class="col-md-12">
     <section class="content">
@@ -17,30 +18,36 @@
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
         <section>
-          <h4>CARRIER Device Payment Options</h4>
+          <h4>#session.carrierObj.getCarrierName()# Device Payment Options</h4>
           <div class="radio">
             <label>
-              <input type="radio" name="devicePayment" id="optionsDevicePayment1" value="devicePayment1" checked>
-              <select class="form-control">
-                <option>Financing Option 1: $21.67/mo</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <input type="radio" name="paymentoption" id="optionsDevicePayment1" value="financed" checked>
+              <select name="finance" class="form-control">
+                <option value="financed-24" <cfif rc.finance is 'financed-24'>selected</cfif> >
+                  #IIF(prc.productData.CarrierId eq 109, DE('30'), DE('24'))# Months: #dollarFormat(prc.productData.FinancedMonthlyPrice24)#/mo
+                </option>
+                <cfif prc.productData.CarrierId eq 109>
+                  <option value="financed-18" <cfif rc.finance is 'financed-18'>selected</cfif> >
+                    24 Months: #dollarFormat(prc.productData.FinancedMonthlyPrice18)#/mo
+                  </option>
+                  <option value="financed-12" <cfif rc.finance is 'financed-12'>selected</cfif> >
+                    20 Months: #dollarFormat(prc.productData.FinancedMonthlyPrice12)#/mo
+                  </option>
+                </cfif>
               </select>
               CARRIER is requiring a down payment
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" value="">
-                  <a href="##">I Agree to the required CARRIER down payment of:</a> $XX.XX
+                  <input type="checkbox" value="1" checked disabled="1">
+                  <a href="##">I Agree to the required CARRIER down payment of:</a> $0.00
                 </label>
               </div>
             </label>
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="devicePayment" id="optionsDevicePayment2" value="devicePayment2">
-              Full Retail Price $599.99
+              <input type="radio" name="paymentoption" id="optionsDevicePayment2" value="fullretail">
+              Full Retail Price #dollarFormat(prc.productData.FinancedFullRetailPrice)#
             </label>
           </div>
         </section>

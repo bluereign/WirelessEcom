@@ -447,7 +447,6 @@ $j(document).ready(function($j) {
 // the price sliders
 
 	$j("[id^=priceBlockHeader-]").on('click', function (e) {
-
 		//hide all sliders and make all buttons inactive
 		$j("[id^=price-slide-]").slideUp();
 		$j("[id^=priceBlockHeader-]").not(this).removeClass("active");
@@ -463,7 +462,12 @@ $j(document).ready(function($j) {
 			$j("[class*='ActionButton']").show();
 		};
 
+		// devicebuilder
+		// console.log($j(this).attr('data-activation-type'));
+		$j("input[name='finance']").val(actType);
+
 	 });
+
 
 	$j('##specifications-tab').on('shown.bs.tab', function (e) {
 	  
@@ -1157,12 +1161,17 @@ $j(document).ready(function($j) {
 							<br />
 							<div class="row center-block">
 								<div class="col-xs-6">
-									<!--- <a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/upgrade/" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a> --->
-									<a href="#rc.upgradeURL#" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</a>
+									<form action="#rc.upgradeURL#" method="post">
+										<input type="hidden" name="finance" value="">
+										<button type="submit" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</button>
+									</form>
 								</div>
 								<div class="col-xs-6">
-									<!--- <a href="/default.cfm/devicebuilder/carrierlogin/pid/#rc.pid#/type/addaline/" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a> --->
-									<a href="#rc.addalineURL#" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</a>
+									<form action="#rc.addalineURL#" method="post">
+										<input type="hidden" name="finance" value="">
+										<button type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</button>
+									</form>
+
 								</div>
 							</div>
 						</div>
@@ -1192,6 +1201,7 @@ $j(document).ready(function($j) {
 								<div class="row">
 									<div class="col-md-6 col-md-offset-2">
 										<form id="zipCodeForm" action="#rc.newURL#" method="post">
+											<input type="hidden" name="finance" value="">
 											<div class="form-group zip">
 												<label for="inputZip"><h4>ZIP Code</h4></label>
 												<input type="number" class="form-control" id="inputZip" name="inputZip" width="50%" min="11111" max="99999" required value="<cfif application.model.cartHelper.zipCodeEntered()>#session.cart.getZipcode()#</cfif>">

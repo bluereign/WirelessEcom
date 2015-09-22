@@ -1,6 +1,8 @@
+<!--- <cfdump var="#rc#"> --->
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
+      <input type="hidden" name="finance" value="#rc.finance#">
       <cfif structKeyExists(rc,"line")>
         <input type="hidden" name="line" value="#rc.line#">
       </cfif>

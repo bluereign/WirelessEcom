@@ -1,43 +1,20 @@
+<!--- <cfdump var="#rc#"> --->
 <cfparam name="prc.activetab" default="individual" />
 <cfparam name="prc.existingPlanEligible" default="false" />
 
-
 <cfoutput>
-
-
-<!--- <DEBUG --->
-                  <!--- <cfif structKeyExists(session,"carrierObj")>
-                    <cfdump var="#session.carrierObj#">
-                  </cfif>
-                  <!--- <cfdump var="#prc.planData#"> --->
-                  <cfdump var="#session.cart.getCurrentLineData#">
-
-                  <b>DEBUG INFO:</b> 
-                  <br>
-                  application.model.CartHelper.zipcodeEntered(): #application.model.CartHelper.zipcodeEntered()#
-                  <br>
-                  isStruct(session.cart): #isStruct(session.cart)#
-                  <br>
-                  <b>end debug info...</b>
-                  <hr> --->
-<!--- <cfdump var="#prc.subscriber.getRatePlan()#">
-<br>
-<cfdump var="#prc.planData#"> --->
-<!--- <cfdump var="#prc.subscriber.getNumber()#"> --->
-<!--- <end debug --->
-
-
-
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
       <cfif structKeyExists(rc,"line")>
         <input type="hidden" name="line" value="#rc.line#">
+        <input type="hidden" name="finance" value="#rc.finance#">
       </cfif>
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
           <p>Pick a Plan and the amount of Data you will use per month. <!--- ( ZIP: #session.cart.getZipcode()# ) --->
           Launch Zip Modal button for testing
+          <!--- DEBUG: --->
           <!--- <cfif rc.type is 'new'>
             <a data-toggle="modal" href="##zipModal" class="btn btn-primary btn-sm">Zip modal</a></p>
           </cfif> --->
@@ -46,7 +23,7 @@
         <ul class="nav nav-tabs">
           
           <!--- EXISTING --->
-          <cfif structKeyExists(session,"carrierObj")>
+          <cfif structKeyExists(session,"carrierObj") and structKeyExists(prc,"planDataExisting") >
             <li role="presentation" <cfif prc.activetab is 'existing'>class="active"</cfif> >
               <a href="##existing" aria-controls="shared" role="tab" data-toggle="tab">Existing Plans</a>
             </li>
@@ -69,10 +46,10 @@
         <div class="tab-content plans">
           
           <!--- EXISTING --->
-          <cfif structKeyExists(session,"carrierObj")>
+          <cfif structKeyExists(session,"carrierObj") and structKeyExists(prc,"planDataExisting") >
             <div role="tabpanel" class="tab-pane <cfif prc.activetab is 'existing'>active</cfif>" id="existing">
               <div class="carousel" id="existingCarousel">
-                
+
               <cfloop query="prc.planDataExisting">
                 <div class="info">
                   <a href="##">
@@ -158,3 +135,25 @@
 
 
 </cfoutput>
+
+
+<!--- <DEBUG --->
+                  <!--- <cfif structKeyExists(session,"carrierObj")>
+                    <cfdump var="#session.carrierObj#">
+                  </cfif>
+                  <!--- <cfdump var="#prc.planData#"> --->
+                  <cfdump var="#session.cart.getCurrentLineData#">
+
+                  <b>DEBUG INFO:</b> 
+                  <br>
+                  application.model.CartHelper.zipcodeEntered(): #application.model.CartHelper.zipcodeEntered()#
+                  <br>
+                  isStruct(session.cart): #isStruct(session.cart)#
+                  <br>
+                  <b>end debug info...</b>
+                  <hr> --->
+<!--- <cfdump var="#prc.subscriber.getRatePlan()#">
+<br>
+<cfdump var="#prc.planData#"> --->
+<!--- <cfdump var="#prc.subscriber.getNumber()#"> --->
+<!--- <end debug --->
