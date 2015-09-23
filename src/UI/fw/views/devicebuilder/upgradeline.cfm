@@ -29,13 +29,15 @@
             <div class="col-md-4 col-sm-3 col-xs-8">
               <div class="product">
                 <img src="#prc.productImages[1].imagesrc#" alt="#prc.productImages[1].imageAlt#" />
-                <div class="info">#prc.subscribers[i].phoneNumber#</div>
+				<div class="manufacturer">apple</div>
+                <div class="model info ">iPhone 5</div>
+                <div class="phone info">#prc.subscribers[i].phoneNumber#</div>
                 <cfif prc.subscribers[i].isEligible>
                   <button class="btn btn-sm btn-primary" name="line" value="#i#">Upgrade Line</button>
                 <cfelse>
                   <button class="btn btn-sm btn-primary" disabled="disabled">
                     <cfif isDate(prc.subscribers[i].getEligibilityDate()) and dateCompare(prc.subscribers[i].getEligibilityDate(),now()) gte 0>
-                      Upgrade Eligible #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
+                      Eligible #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
                     </cfif>
                   </button>
                   <!--- <cfif isDate(prc.subscribers[i].getEligibilityDate())>
