@@ -239,6 +239,18 @@ Optional Methods
 		  "^CostcoVfd\.Ecom-dev-test-1\.enterprise\.corp",		//Test CostcoVfd
 		  "^AafesVfd\.Ecom-dev-test-1\.enterprise\.corp",		//Test AAFESVfd
 		  "^PagemasterVfd\.Ecom-dev-test-1\.enterprise\.corp",		//Test PageMasterVfd
+		  "^Costco\.Ecom-dev-test-2\.enterprise\.corp",		//Test Costco
+		  "^Aafes\.Ecom-dev-test-2\.enterprise\.corp",		//Test AAFES
+		  "^Pagemaster\.Ecom-dev-test-2\.enterprise\.corp",		//Test PageMaster
+		  "^CostcoVfd\.Ecom-dev-test-2\.enterprise\.corp",		//Test CostcoVfd
+		  "^AafesVfd\.Ecom-dev-test-2\.enterprise\.corp",		//Test AAFESVfd
+		  "^PagemasterVfd\.Ecom-dev-test-2\.enterprise\.corp",		//Test PageMasterVfd
+		  "^Costco\.Ecom-dev-test-3\.enterprise\.corp",		//Test Costco
+		  "^Aafes\.Ecom-dev-test-3\.enterprise\.corp",		//Test AAFES
+		  "^Pagemaster\.Ecom-dev-test-3\.enterprise\.corp",		//Test PageMaster
+		  "^CostcoVfd\.Ecom-dev-test-3\.enterprise\.corp",		//Test CostcoVfd
+		  "^AafesVfd\.Ecom-dev-test-3\.enterprise\.corp",		//Test AAFESVfd
+		  "^PagemasterVfd\.Ecom-dev-test-3\.enterprise\.corp",		//Test PageMasterVfd
 		  "^68\.64\.53\.109$"			//Test AAFES
   ];
 
