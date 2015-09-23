@@ -1,4 +1,5 @@
 <!--- <cfdump var="#rc#"> --->
+
 <cfoutput>
   <div class="col-md-12">
     <section class="content">
@@ -21,17 +22,21 @@
           <h4>#session.carrierObj.getCarrierName()# Device Payment Options</h4>
           <div class="radio">
             <label>
-              <input type="radio" name="paymentoption" id="optionsDevicePayment1" value="financed" checked>
-              <select name="finance" class="form-control">
-                <option value="financed-24" <cfif rc.finance is 'financed-24'>selected</cfif> >
-                  #IIF(prc.productData.CarrierId eq 109, DE('30'), DE('24'))# Months: #dollarFormat(prc.productData.FinancedMonthlyPrice24)#/mo
-                </option>
+              <input type="radio" name="paymentoption" id="optionsDevicePayment1" value="financed" <cfif rc.paymentoption is 'financed'>checked</cfif>>
+              <select name="finance" class="form-control" onchange="onChangeHandler(this.form,'financed')"><!--- temporary form post until ajax functionality built --->
                 <cfif prc.productData.CarrierId eq 109>
+                  <option value="financed-24" <cfif rc.finance is 'financed-24'>selected</cfif> >
+                    #prc.financeproductname# 24: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 30 Months
+                  </option>
                   <option value="financed-18" <cfif rc.finance is 'financed-18'>selected</cfif> >
-                    24 Months: #dollarFormat(prc.productData.FinancedMonthlyPrice18)#/mo
+                    #prc.financeproductname# 18: #dollarFormat(prc.productData.FinancedMonthlyPrice18)# Due Monthly for 24 Months
                   </option>
                   <option value="financed-12" <cfif rc.finance is 'financed-12'>selected</cfif> >
-                    20 Months: #dollarFormat(prc.productData.FinancedMonthlyPrice12)#/mo
+                    #prc.financeproductname# 12: #dollarFormat(prc.productData.FinancedMonthlyPrice12)# Due Monthly for 20 Months
+                  </option>
+                <cfelseif prc.productData.CarrierId eq 42>
+                  <option value="financed-24" <cfif rc.finance is 'financed-24'>selected</cfif> >
+                    #prc.financeproductname#: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 24 Months
                   </option>
                 </cfif>
               </select>
@@ -46,7 +51,7 @@
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="paymentoption" id="optionsDevicePayment2" value="fullretail">
+              <input type="radio" name="paymentoption" id="optionsDevicePayment2" value="fullretail" <cfif rc.paymentoption is 'fullretail'>checked</cfif> onchange="onChangeHandler(this.form,'fullretail')">
               Full Retail Price #dollarFormat(prc.productData.FinancedFullRetailPrice)#
             </label>
           </div>
@@ -141,4 +146,13 @@
       <p>†Legal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
     </div>
   </div>
+<script type="text/javascript">
+  function onChangeHandler(form,paymentoption) {
+    // alert('hey');
+    form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
+    form.paymentoption.value=paymentoption;
+    form.submit();
+  }
+</script>
+
 </cfoutput>

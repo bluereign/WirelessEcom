@@ -12,10 +12,10 @@
       </div>
       <div class="wrap">
         <div class="col-xs-8">
-          $0.00
+          $xx.xx
         </div>
         <div class="col-xs-8">
-          $66.67
+          $xx.xx
         </div>
       </div>
     </div>
@@ -31,11 +31,11 @@
             <div class="table-responsive">
               <table class="table">
                 <thead>
-                  <th colspan="2">Carrier Financing Name</th>
+                  <th colspan="2">#prc.tallyboxFinanceTitle#</th>
                 </thead>
                 <tr>
-                  <td>Due Monthly for 24 Months</td>
-                  <td class="price">#dollarFormat(prc.productData.FinancedMonthlyPrice24)#/mo*</td>
+                  <td>#prc.tallyboxFinanceMonthlyDueTitle#</td>
+                  <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueAmount)#/mo*</td>
                 </tr>
                 <tr>
                   <td>Regular Price</td>
@@ -43,11 +43,11 @@
                 </tr>
                 <tr>
                   <td>Due Today*</td>
-                  <td class="price">$0.00 Down</td>
+                  <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueToday)# <cfif rc.paymentoption is 'financed'>Down</cfif></td> <!--- hard code from detail_new.cfm --->
                 </tr>
                 <tr>
                   <td>Line Access Fee</td>
-                  <td class="price">$45.00</td>
+                  <td class="price">$xx.xx ?</td>
                 </tr>
               </table>
             </div>
@@ -95,7 +95,7 @@
         <h4>Protection &amp; Services</h4>
         <div class="row">
           <div class="col-xs-4">
-            <img src="images/ex-sidebar-protection.jpg" alt="protection picture" />
+            <!--- <img src="images/ex-sidebar-protection.jpg" alt="protection picture" /> --->
           </div>
           <div class="col-xs-12">
             <div class="table-responsive">

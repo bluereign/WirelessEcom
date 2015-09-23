@@ -11,7 +11,7 @@
         </cfif>
         <cfif i lt listFindNoCase(arrayToList(prc.navItemsAction), event.getCurrentAction())>
           <cfset prc.isComplete = true>
-          <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/'>
+          <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/finance/' & rc.finance & '/'>
           <cfif structKeyExists(rc,"line")>
             <cfset prc.navUrl = prc.navUrl & 'line/' & rc.line & '/'>
           </cfif>
@@ -26,7 +26,7 @@
           <!--- <cfset request.navUrl = 'javascript: void(0)'> --->
 
 <!--- COMMENT OUT THIS NEXT LINE: --->
-          <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/'>
+          <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/finance/' & rc.finance & '/'>
 
         </cfif>
         
