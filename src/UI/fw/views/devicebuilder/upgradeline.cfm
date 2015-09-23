@@ -34,9 +34,8 @@
                   <button class="btn btn-sm btn-primary" name="line" value="#i#">Upgrade Line</button>
                 <cfelse>
                   <button class="btn btn-sm btn-primary" disabled="disabled">
-                    Unavailable
                     <cfif isDate(prc.subscribers[i].getEligibilityDate()) and dateCompare(prc.subscribers[i].getEligibilityDate(),now()) gte 0>
-                      until #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
+                      Upgrade Eligible #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
                     </cfif>
                   </button>
                   <!--- <cfif isDate(prc.subscribers[i].getEligibilityDate())>
