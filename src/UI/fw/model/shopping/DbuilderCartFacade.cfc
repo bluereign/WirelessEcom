@@ -10,8 +10,12 @@
 	<cfset variables.filterHelper = application.wirebox.getInstance("FilterHelper") /> 
 	<cfset variables.PromotionService = application.wirebox.getInstance("PromotionService") />	
 	
-	<cffunction name="init" returntype="fw.model.shopping.dBuilderCartFacade" >
-		<!---<cfargument name="cart" type="fw.model.shopping.dBuilderCart" required="false" default="#session.cart#" />--->
+	<cfset variables.cartcfc = "cfc.model.cart" />
+	<cfset variables.cartItemcfc = "cfc.model.cartItem" />
+	<cfset variables.carthelper = "carthelper" />
+	
+	<cffunction name="init" returntype="fw.model.shopping.dbuilderCartFacade" >
+		<!---<cfargument name="cart" type="cfc.model.cart" required="false" default="#session.cart#" />--->
 		<cfset variables.instance = StructNew() />
 		<!---<cfset setCart(arguments.cart) />--->
 		<cfreturn this>
@@ -100,7 +104,7 @@
 		<cfset local.cartAddedFirstLine = false />
 
 		<cfif not structKeyExists(session, 'cart') or (structKeyExists(session, 'cart') and not isStruct(session.cart))>
-			<cfset session.cart = createObject('component', 'fw.model.shopping.DBuilderCart').init() />			 
+			<cfset session.cart = createObject('component', '#variables.cartcfc#').init() />			 
 		</cfif>
 
 
@@ -141,7 +145,7 @@
 		
 		<!--- Prompt for zipcode and verify activation type --->
 		<!---<cfif (listFindNoCase('phone,tablet,dataCardAndNetBook,prepaid,service', arguments.productType))>
-			<cfif not application.model.dbuilderCartHelper.zipCodeEntered()>
+			<cfif not application.model.carthelper.zipCodeEntered()>
 				<cfset qDevice = application.model[arguments.productType].getByFilter( idList = arguments.product_id, allowHidden = true ) />				
 				<cfinclude template="/views/cart/dsp_dialogGetZipCode.cfm" />
 				<cfexit method="exittag" />
@@ -166,7 +170,7 @@
 						<cfset local.currentLine = session.cart.getCurrentLine() />
 					</cfif>
 
-					<cfset local.selectedServices = application.model.dbuilderCartHelper.getLineSelectedFeatures( local.currentLine ) />
+					<cfset local.selectedServices = application.model.carthelper.getLineSelectedFeatures( local.currentLine ) />
 					<cfset local.requiredServices = application.model.ServiceManager.getDeviceMinimumRequiredServices(arguments.product_id) />
 
 					<!---<cfif session.cart.getUpgradeType() eq 'equipment-only' and local.requiredServices.RecordCount>
@@ -207,7 +211,7 @@
 		<!--- End Add a Line --->
 
 		<cfif isDefined('local.p.activationType') and local.p.activationType contains 'addaline' and not len(trim(session.cart.getAddALineType()))>
-			<cfif not application.model.dbuilderCartHelper.zipCodeEntered()>
+			<cfif not application.model.carthelper.zipCodeEntered()>
 				<!---<cfoutput>
 					<cfinclude template="/views/cart/dsp_dialogGetZipCode.cfm" />
 				</cfoutput>
@@ -244,7 +248,7 @@
 				<cfloop from="1" to="#arguments.qty#" index="iQty">
 					<cfif arrayLen(session.cart.getLines()) lt request.config.maxLines>
 						<cfset arguments.cartLineNumber = (arrayLen(session.cart.getLines()) + 1) />
-						<cfset local.arrErrors = application.model.dbuilderCartHelper.validateAddItem(argumentCollection = local.p) />
+						<cfset local.arrErrors = application.model.carthelper.validateAddItem(argumentCollection = local.p) />
 
 						<cfif arrayLen(local.arrErrors)>
 							<!---<cfoutput>
@@ -256,7 +260,7 @@
 						</cfif>
 
 						<!--- Add a line to the cart. --->
-						<cfset arguments.cartLineNumber = application.model.dbuilderCartHelper.addLineToCart() />
+						<cfset arguments.cartLineNumber = application.model.carthelper.addLineToCart() />
 						<cfset local.cartLines = session.cart.getLines() />
 						<cfset local.thisLine = local.cartLines[arguments.cartLineNumber] />
 
@@ -278,13 +282,13 @@
 							<cfset cartLines[arguments.cartLineNumber].getPhone().setDeviceServiceType( application.model[arguments.productType].getDeviceServiceType( arguments.product_id, session.cart.getCarrierId() ) )/>
 
 							<!--- Clear any other free accessories on this line. --->
-							<cfset apapplication.model.dbuilderCartHelper.clearLineFreeAccessories(lineNumber = arguments.cartLineNumber) />
+							<cfset apapplication.model.carthelper.clearLineFreeAccessories(lineNumber = arguments.cartLineNumber) />
 
 							<cfif local.freeAccessories.recordCount>
 								<cfset local.thisLineAccessories = local.cartlines[arguments.cartLineNumber].getAccessories() />
 
 								<cfloop query="local.freeAccessories">
-									<cfset local.thisFreeAccessory = createObject('component', 'cfc.model.CartItem').init() />
+									<cfset local.thisFreeAccessory = createObject('component', '#variables.cartItemcfc#').init() />
 									<cfset local.thisFreeAccessory.setProductId(local.freeAccessories.productId[local.freeAccessories.currentRow]) />
 									<cfset local.thisFreeAccessory.setType('bundled') />
 									<cfset local.thisFreeAccessory.getPrices().setDueToday(0) />
@@ -318,7 +322,7 @@
 								  OR ( session.cart.getActivationType() CONTAINS 'upgrade' AND session.cart.getUpgradeType() eq 'equipment+plan' )
 								  OR ( session.cart.getActivationType() CONTAINS 'addaline' AND session.cart.getAddALineType() eq 'ind') )>
 
-								<cfset application.model.dbuilderCartHelper.addDefaultPlanAndServices( cartLines[arguments.cartLineNumber], arguments.product_id ) />
+								<cfset application.model.carthelper.addDefaultPlanAndServices( cartLines[arguments.cartLineNumber], arguments.product_id ) />
 							</cfif>
 							<cfif arguments.productType EQ 'tablet'
 								AND NOT cartLines[arguments.cartLineNumber].getPlan().getProductId() AND
@@ -326,7 +330,7 @@
 								  OR ( session.cart.getActivationType() CONTAINS 'upgrade' AND session.cart.getUpgradeType() eq 'equipment+plan' )
 								  OR ( session.cart.getActivationType() CONTAINS 'addaline' AND session.cart.getAddALineType() eq 'ind') )>
 
-								<cfset application.model.dbuilderCartHelper.addDefaultPlanAndServices( cartLines[arguments.cartLineNumber], arguments.product_id ) />
+								<cfset application.model.carthelper.addDefaultPlanAndServices( cartLines[arguments.cartLineNumber], arguments.product_id ) />
 							</cfif>
 
 							<cfset session.phoneFilterSelections.filterOptions = 0 />
@@ -383,7 +387,7 @@
 
 									<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 										<cfif isNumeric(local.iFeature)>
-											<cfset arrayAppend(local.arrFeatures, createObject('component', 'cfc.model.CartItem').init()) />
+											<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
 											<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setProductID(local.iFeature) />
 											<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setType('service') />
@@ -397,10 +401,10 @@
 
 								<cfif variables.thisPlan.planType eq 'family' || (variables.thisPlan.planType eq 'data' && variables.thisPlan.IsShared)>
 									<!--- Apply this plan selection to the entire cart, including any existing lines. --->
-									<cfset application.model.dbuilderCartHelper.setFamilyPlan(arguments.product_id) />
+									<cfset application.model.carthelper.setFamilyPlan(arguments.product_id) />
 								<cfelse>
 									<!--- Reset shared family plan --->
-									<cfset session.cart.setFamilyPlan( CreateObject("component","cfc.model.CartItem").init() ) />
+									<cfset session.cart.setFamilyPlan( CreateObject("component",'#variables.cartItemcfc#').init() ) />
 								</cfif>
 							</cfif>
 							
@@ -411,7 +415,7 @@
 
 							<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 								<cfif isNumeric(local.iFeature)>
-									<cfset arrayAppend(local.arrFeatures, createObject('component', 'cfc.model.CartItem').init()) />
+									<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
 									<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setProductID(local.iFeature) />
 									<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setType('service') />
@@ -452,7 +456,7 @@
 			<cfset arguments.cartLineNumber = session.cart.getCurrentLine() />
 		</cfif>
 
-		<cfif (not arguments.cartLineNumber and application.model.dbuilderCartHelper.getNumberOfLines()) or (not arguments.cartLineNumber and arguments.productType is 'accessory')>
+		<cfif (not arguments.cartLineNumber and application.model.carthelper.getNumberOfLines()) or (not arguments.cartLineNumber and arguments.productType is 'accessory')>
 			<!---<cfoutput>
 				<cfinclude template="/views/cart/dsp_dialogWhichLine.cfm" />
 			</cfoutput>
@@ -466,7 +470,7 @@
 		<!--- If we've been given a line number, but it appears to be a new line not yet in the cart. --->
 		<cfif arguments.cartLineNumber and arguments.cartLineNumber gt arrayLen(local.cartLines) and arguments.cartLineNumber neq request.config.otherItemsLineNumber>
 			<!--- Add a new line to the cart. --->
-			<cfset argumentscartLineNumber = application.model.dbuilderCartHelper.addLineToCart() />
+			<cfset argumentscartLineNumber = application.model.carthelper.addLineToCart() />
 			<cfset local.cartLines = session.cart.getLines() />
 			 
 		</cfif>
@@ -480,15 +484,15 @@
 			<cfcase value="phone,tablet,dataCardAndNetbook,prepaid">
 
 				<!--- User may be changing device. Remove plans, services, etc for the previous device line. --->
-				<cfset application.model.dbuilderCartHelper.clearLineFreeAccessories(arguments.cartLineNumber) />
-				<cfset application.model.dbuilderCartHelper.removeLineBundledAccessories(arguments.cartLineNumber) />
+				<cfset application.model.carthelper.clearLineFreeAccessories(arguments.cartLineNumber) />
+				<cfset application.model.carthelper.removeLineBundledAccessories(arguments.cartLineNumber) />
 
 				<!--- Device change on the current line --->
-				<cfif application.model.dbuilderCartHelper.getLineDeviceProductId(arguments.cartLineNumber ) neq 0>
+				<cfif application.model.carthelper.getLineDeviceProductId(arguments.cartLineNumber ) neq 0>
 					<cfif session.cart.getFamilyPlan().hasBeenSelected()>
-						<cfset application.model.dbuilderCartHelper.removeAllLineFeatures(arguments.cartLineNumber) />
+						<cfset application.model.carthelper.removeAllLineFeatures(arguments.cartLineNumber) />
 					<cfelse>
-						<cfset application.model.dbuilderCartHelper.removePlan(arguments.cartLineNumber) />
+						<cfset application.model.carthelper.removePlan(arguments.cartLineNumber) />
 					</cfif>
 				</cfif>
 
@@ -510,14 +514,14 @@
 				<cfset local.cartLines[arguments.cartLineNumber].getPhone().setDeviceServiceType( application.model[arguments.productType].getDeviceServiceType( arguments.product_id, session.cart.getCarrierId() ) )/>
 
 				<!--- Clear any existing free accessories on this line. --->
-				<cfset application.model.dbuilderCartHelper.clearLineFreeAccessories(lineNumber = arguments.cartLineNumber) />
+				<cfset application.model.carthelper.clearLineFreeAccessories(lineNumber = arguments.cartLineNumber) />
 
 				<cfset local.freeAccessories = application.model[arguments.productType].getFreeAccessories(arguments.product_id) />
 				<cfset local.thisLineAccessories = local.cartLines[arguments.cartLineNumber].getAccessories() />
 
 				<cfif local.freeAccessories.recordCount>
 					<cfloop query="local.freeAccessories">
-						<cfset local.thisFreeAccessory = createObject('component', 'cfc.model.CartItem').init() />
+						<cfset local.thisFreeAccessory = createObject('component', '#variables.cartItemcfc#').init() />
 						<cfset local.thisFreeAccessory.setProductId(local.freeAccessories.productId[local.freeAccessories.currentRow]) />
 						<cfset local.thisFreeAccessory.setType('bundled') />
 						<cfset local.thisFreeAccessory.getPrices().setDueToday(0) />
@@ -535,7 +539,7 @@
 
 					<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 						<cfif isNumeric(local.iFeature)>
-							<cfset arrayAppend(local.arrFeatures, createObject('component', 'cfc.model.CartItem').init()) />
+							<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
 							<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setProductID(local.iFeature) />
 							<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setType('service') />
@@ -567,7 +571,7 @@
 					  OR ( session.cart.getActivationType() contains 'upgrade' AND session.cart.getUpgradeType() eq 'equipment+plan' )
 					  OR ( session.cart.getActivationType() contains 'addaline' AND session.cart.getAddALineType() eq 'ind') )>
 
-					<cfset application.model.dbuilderCartHelper.addDefaultPlanAndServices( local.cartLines[arguments.cartLineNumber], arguments.product_id ) />
+					<cfset application.model.carthelper.addDefaultPlanAndServices( local.cartLines[arguments.cartLineNumber], arguments.product_id ) />
 				</cfif>
 
 				<cfset session.phoneFilterSelections.filterOptions = 0 />
@@ -633,7 +637,7 @@
 
 					<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 						<cfif isNumeric(local.iFeature)>
-							<cfset arrayAppend(local.arrFeatures, createObject('component', 'cfc.model.CartItem').init()) />
+							<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
 							<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setProductID(local.iFeature) />
 							<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setType('service') />
@@ -687,7 +691,7 @@
 
 						<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 							<cfif isNumeric(local.iFeature)>
-								<cfset arrayAppend(local.arrFeatures, createObject('component', 'cfc.model.CartItem').init()) />
+								<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
 								<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setProductID(local.iFeature) />
 								<cfset local.arrFeatures[arrayLen(local.arrFeatures)].setType('service') />
@@ -700,10 +704,10 @@
 					<cfset thisPlan = application.model.plan.getByFilter(idList = local.p.product_id) />
 
 					<cfif variables.thisPlan.planType is 'family' || (variables.thisPlan.planType eq 'data' && variables.thisPlan.IsShared)>
-						<cfset application.model.dbuilderCartHelper.setFamilyPlan(local.p.product_id) />
+						<cfset application.model.carthelper.setFamilyPlan(local.p.product_id) />
 					<cfelse>
 						<!--- Reset shared family plan --->
-						<cfset session.cart.setFamilyPlan( CreateObject("component", "cfc.model.CartItem").init() ) />
+						<cfset session.cart.setFamilyPlan( CreateObject("component", '#variables.cartItemcfc#').init() ) />
 						<cfset session.cart.setSharedFeatures( ArrayNew(1) ) />
 					</cfif>
 
@@ -745,7 +749,7 @@
 			</cfcase>
 
 			<cfcase value="accessory">
-				<cfset newAccessory = createObject('component', 'cfc.model.CartItem').init() />
+				<cfset newAccessory = createObject('component', '#variables.cartItemcfc#').init() />
 				<cfset newAccessory.setProductID(local.p.product_id) />
 				<cfset thisAccessory = application.model.accessory.getByFilter(idList = local.p.product_id) />
 				<cfset newAccessory.setGersSKU(thisAccessory.GersSKU) />
@@ -791,7 +795,7 @@
 
 			<cfcase value="warranty">
 				<cfscript>
-					local.newWarranty = createObject('component', 'fw.model.shopping.DBuilderCartItem').init();
+					local.newWarranty = createObject('component', '#variables.cartItemcfc#').init();
 					local.newWarranty.setProductID(arguments.product_id);
 					local.thisWarranty = application.model.Warranty.getByID(arguments.product_id);
 					local.newWarranty.setGersSKU(local.thisWarranty.GersSKU);
@@ -823,11 +827,11 @@
 	<!--- Setters/Getters --->
 		
 	<cffunction name="setCart" returnType="void" access="public">
-		<cfargument name="cartObj" type="fw.model.shopping.DBuilderCart" required="true"  > 	
+		<cfargument name="cartObj" type="cfc.model.cart" required="true"  > 	
 		<cfset variables.instance.cart = arguments.cart />	
 	</cffunction>	
 	
-	<cffunction name="getCart" returnType="fw.model.shopping.DBuilderCart" access="public">
+	<cffunction name="getCart" returnType="cfc.model.cart" access="public">
 		<cfif isdefined("variables.instance.cart")>
 			<cfreturn variables.instance.cart />
 		<cfelse>

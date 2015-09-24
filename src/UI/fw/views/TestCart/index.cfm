@@ -1,8 +1,8 @@
 <h1>Welcome to the FW Shopping Cart Test Page</h1><br/>
 <cfoutput>
 	<h3>
-	<br/><a href="#event.buildLink('testCart.CartHelperTest')#"><h2>CartHelper Test</h2></a>
-	<a href="#event.buildLink('testCart.cart_input')#"><h2>Cart Input</h2></a>
+	<!---<br/><a href="#event.buildLink('testCart.CartHelperTest')#"><h2>CartHelper Test</h2></a>
+	<a href="#event.buildLink('testCart.cart_input')#"><h2>Cart Input</h2></a>--->
 	
 	
 	<br/><b>dBuilderCarthelper Functions</b>	
