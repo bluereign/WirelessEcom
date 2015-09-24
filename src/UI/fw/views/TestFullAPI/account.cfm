@@ -27,7 +27,7 @@
 	<hr/>
 	<b>Subscriber ###s_count#</b><br/>
 	<br/>Subscriber.getAccountStatus() = #s.getAccountStatus()#
-	<br/>Subscriber.getUpgradeDownPaymentPercentage("NE",20) = #s..getUpgradeDownPaymentPercent("NE",20)#
+	<br/>Subscriber.getUpgradeDownPaymentPercent("NE",20) = #s..getUpgradeDownPaymentPercent("NE",20)#
 	<br/>Subscriber.getEligibilityDate() = #dateformat(s.getEligibilityDate(),"mm/dd/yyyy")#
 	<br/>Subscriber.getEligibilityStatus() = #s.getEligibilityStatus()#
 	<br/>Subscriber.getIsEligible() = #s.getIsEligible()#
