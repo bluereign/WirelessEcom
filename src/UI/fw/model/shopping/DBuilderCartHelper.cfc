@@ -1516,9 +1516,7 @@
 
 
 	<cffunction name="updateFamilyPlanDevicePrices" access="public" output="false" returntype="void">
-		<cfargument name="cart" type="fw.model.shopping.dBuilderCartline" required="true" />
-
-
+		<cfargument name="cart" type="fw.model.shopping.dBuilderCart" required="true" />
 
 		<cfscript>
 			var cartLines = arguments.cart.getLines();

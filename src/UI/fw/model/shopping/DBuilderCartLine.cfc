@@ -2,18 +2,18 @@
 
 	<cffunction name="init" returntype="fw.model.shopping.dBuilderCartLine">
 		<cfargument name="alias" type="string" required="false" default="" />
-		<cfargument name="phone" type="any" required="false" default="#getModel('CartItem').init()#" />
-		<cfargument name="plan" type="any" required="false" default="#getModel('CartItem').init()#" />
+		<cfargument name="phone" type="any" required="false" default="#Createobject("component", "fw.model.shopping.dbuilderCartItem").init()#" />
+		<cfargument name="plan" type="any" required="false" default="#Createobject("component", "fw.model.shopping.dbuilderCartItem").init()#" />
 		<cfargument name="planType" type="string" required="false" default="" />
         <cfargument name="addALineType" type="string" required="false" default="" /> <!--- Ind, Family --->
-		<cfargument name="activationFee" type="any" required="false" default="#getModel('CartItem').init()#" />
+		<cfargument name="activationFee" type="any" required="false" default="#Createobject("component", "fw.model.shopping.dbuilderCartItem").init()#" />
 		<cfargument name="features" type="array" required="false" default="#arrayNew(1)#" />
 		<cfargument name="declineFeatures" type="boolean" required="false" default="false" />
 		<cfargument name="accessories" type="array" required="false" default="#arrayNew(1)#" />
 		<cfargument name="declineAccessories" type="boolean" required="false" default="false" />
-		<cfargument name="prices" type="any" required="false" default="#getModel('CartPriceBlock').init()#" />
-		<cfargument name="taxes" type="any" required="false" default="#getModel('CartPriceBlock').init()#" />
-		<cfargument name="Warranty" type="any" required="false" default="#getModel('CartItem').init()#" />
+		<cfargument name="prices" type="any" required="false" default="#Createobject("component", "fw.model.shopping.dbuilderCartPriceBlock").init()#" />
+		<cfargument name="taxes" type="any" required="false" default="#Createobject("component", "fw.model.shopping.dbuilderCartPriceBlock").init()#" />
+		<cfargument name="Warranty" type="any" required="false" default="#Createobject("component", "fw.model.shopping.dbuilderCartItem").init()#" />
 		<cfargument name="declineWarranty" type="boolean" required="false" default="false" />
 		<cfargument name="instantRebateAmount" type="numeric" required="false" default="0" />
 		<cfargument name="planIDCount" type="numeric" required="false" default="1" /> <!--- Num of previous lines (in cart) with the same plan ID (running total) --->
@@ -199,7 +199,7 @@
 		<cfif structKeyExists( session, "cart" )>
 			<cfreturn session.cart>
 		<cfelse>
-			<cfreturn getModel('Cart').init()# />
+			<cfreturn application.model.dbuildercart />
 		</cfif>
 	</cffunction>
 	
