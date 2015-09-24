@@ -63,12 +63,12 @@
 			<cfset local.p.phoneType = local.p.ActivationPriceOption />
 		</cfif>
 
-		<cfparam name="local.p.featureIDs" default="" type="string" />
-		<cfset local.p.changingPlanFeatures = false />
+		<cfparam name="variables.p.featureIDs" default="" type="string" />
+		<cfset variables.p.changingPlanFeatures = false />
 
 		<cfif arguments.product_id contains ':' and listLen(arguments.product_id, ':') gte 2>
-			<cfset local.p.changingPlanFeatures = true />
-			<cfset local.p.featureIDs = listChangeDelims(listGetAt(arguments.product_id, 2, ':'), ',', ',') />
+			<cfset variables.p.changingPlanFeatures = true />
+			<cfset variables.p.featureIDs = listChangeDelims(listGetAt(arguments.product_id, 2, ':'), ',', ',') />
 			<cfset arguments.product_id = listFirst(arguments.product_id, ':') />
 		<cfelseif arguments.product_id contains ':'>
 			<cfset arguments.product_id = listFirst(arguments.product_id, ':') />
@@ -152,7 +152,7 @@
 			</cfif>
 		</cfif>--->
 
-		<cfif structKeyExists(request, 'p') and structKeyExists(local.p, 'upgradeType')>
+		<cfif  structKeyExists(local.p, 'upgradeType')>
 			<cfset session.cart.setActivationType('upgrade') />
 			<cfset session.cart.setUpgradeType(local.p.upgradeType) />			 
 			<cfset local.p.isUpgradeTypeSet = true />
@@ -382,10 +382,10 @@
 								<cfset session.prePaidFilterSelections.filterOptions = 0 />
 								<cfset session.prePaidFilterSelections.filterOptions = listAppend(session.prePaidFilterSelections.filterOptions, filterHelper.getFilterOptionId('prepaid', 'carrierID', local_plan.carrierID)) />
 
-								<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+								<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 									<cfset local.arrFeatures = arrayNew(1) />
 
-									<cfloop list="#local.p.featureIDs#" index="local.iFeature">
+									<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
 										<cfif isNumeric(local.iFeature)>
 											<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
@@ -410,10 +410,10 @@
 							
 						</cfif>
 
-						<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+						<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 							<cfset local.arrFeatures = arrayNew(1) />
 
-							<cfloop list="#local.p.featureIDs#" index="local.iFeature">
+							<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
 								<cfif isNumeric(local.iFeature)>
 									<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
@@ -534,10 +534,10 @@
 					<cfset local.cartLines[arguments.cartLineNumber].setAccessories(local.thisLineAccessories) />
 				</cfif>
 
-				<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+				<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 					<cfset local.arrFeatures = arrayNew(1) />
 
-					<cfloop list="#local.p.featureIDs#" index="local.iFeature">
+					<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
 						<cfif isNumeric(local.iFeature)>
 							<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
@@ -632,10 +632,10 @@
 				* ids and a device selected on this line.
 				**
 				--->
-				<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+				<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 					<cfset local.arrFeatures = arrayNew(1) />
 
-					<cfloop list="#local.p.featureIDs#" index="local.iFeature">
+					<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
 						<cfif isNumeric(local.iFeature)>
 							<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
@@ -686,10 +686,10 @@
 					<cfset session.prePaidFilterSelections.filterOptions = 0 />
 					<cfset session.prePaidFilterSelections.filterOptions = listAppend(session.prePaidFilterSelections.filterOptions, filterHelper.getFilterOptionId('prepaid', 'carrierID', 'local_plan.carrierID')) />
 
-					<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+					<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 						<cfset local.arrFeatures = arrayNew(1) />
 
-						<cfloop list="#local.p.featureIDs#" index="local.iFeature">
+						<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
 							<cfif isNumeric(local.iFeature)>
 								<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 

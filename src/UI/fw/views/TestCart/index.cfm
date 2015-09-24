@@ -50,11 +50,11 @@
 
 <cfset args = { 
 	productType = "plan",
-	product_id = "46468:46598",
+	product_id = "46468:46598,489,453",
 	qty = 1,
 	cartLineNumber = #cartLineNo#
 } />	
-<br/>Add the Service for Line #cartlineno#
+<br/>Add the Service/Additional Services (phone protection,ringtones) for Line #cartlineno#
 <br/>Calling application.model.dBuilderCartFacade.addItem(argumentCollection = args)
 <cfdump var="#args#">
 <cfset resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = args) />
