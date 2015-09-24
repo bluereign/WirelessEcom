@@ -8,7 +8,7 @@
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
-  <cfset this.preHandler_except = "planmodal" />
+  <cfset this.preHandler_except = "planmodal,protectionmodal" />
 
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
@@ -37,7 +37,6 @@
 
 
       // <FINANCE PLAN CHECK
-      
       if ( !structKeyExists(rc,"finance") OR !len(trim(rc.finance)) OR !listFindNoCase(listActivationTypes,rc.finance) ) {
         relocate( prc.browseDevicesUrl );
       }
@@ -45,8 +44,22 @@
       if ( !structKeyExists(rc,"paymentoption") OR !len(trim(rc.paymentoption)) ) {
         rc.paymentoption = "financed"; //financed, fullretail
       }
-
       // <end finance plan check
+
+
+      // <WARRANTY OPTION CHECK
+      if ( !structKeyExists(rc,"wid") OR !len(trim(rc.wid)) ) {
+        rc.wid = 0; //financed, fullretail
+      }
+      if ( !rc.wid eq 0 ) {
+        prc.warrantyInfo = application.model.Warranty.getById(rc.wid);
+      } else {
+        prc.warrantyInfo.Price = 0;
+        prc.warrantyInfo.SummaryTitle = "No Equipment Protection Plan";
+        prc.warrantyInfo.ShortDescription = "No Equipment Protection Plan";
+        prc.warrantyInfo.LongDescription = "No Equipment Protection Plan";
+      }
+      // <end warranty option check
 
 
       // <ZIP CHECK
@@ -217,11 +230,12 @@
       // <TALLY BOX
       prc.financeproductname = prc.productService.getFinanceProductName(carrierid=#prc.productData.CarrierId#);
 
-      // financed, fullretail
+      // Payment Options: financed, fullretail
       switch(rc.paymentoption) {
         case "financed":
           
           prc.tallyboxFinanceMonthlyDueToday = 0;
+          
           // AT&T carrierId = 109, VZW carrierId = 42
           if ( prc.productData.CarrierId eq 109 ) {
 
@@ -261,8 +275,7 @@
           break;
       }
 
-      // prc.tallyboxMonthlyDueTitle = "Due Monthly for 24 Months";
-      // prc.tallyboxMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+      
       // <end tally box
 
 
@@ -471,9 +484,24 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset prc.qWarranty = application.model.Warranty.getByDeviceId( rc.pid ) />
     <!--- TODO: If rc.plan does not exist, then send back to "plans" --->
-
     <!--- <cfdump var="#rc#"><cfabort> --->
+
+  </cffunction>
+
+  <cffunction name="protectionmodal" returntype="void" output="false" hint="Plan modal">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+
+    <cfscript>
+      if (structKeyExists(rc,"wid")) {
+        prc.warrantyInfo = application.model.Warranty.getById(rc.wid);
+      }
+      event.noLayout();
+    </cfscript>
+    <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
 
   </cffunction>
 

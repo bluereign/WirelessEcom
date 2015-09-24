@@ -43,13 +43,6 @@
   </div>
 
 
-<!--- clear data from Bootstrap 3 modals to load dynamic data --->
-<script>
-$('body').on('hidden.bs.modal', '.modal', function () {
-  $(this).removeData('bs.modal');
-});
-</script>
-
 
 <!---
   <script type="text/javascript">

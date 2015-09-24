@@ -31,7 +31,7 @@
   </cfif> 
   #googleAnalyticsTracker.tagPage()#
   <link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
-  <!--- TODO: Add following to devicebuilder.css after final HTML prototype build --->
+  <!--- TODO: Add following to devicebuilder.css after final HTML prototype build and then remove it from this file --->
   <style>
   body.modal-open .nonmodal-container{
       -webkit-filter: blur(5px);
@@ -64,7 +64,7 @@
 <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
 
 <cfif prc.includeTooltip>
-  <!--- Tooltip bootstrap js was ommited from devicebuilder.min.js.  Override required: --->
+  <!--- Tooltip bootstrap js was ommited from devicebuilder.min.js.  Override required js: --->
   <script type="text/javascript" src="#assetPaths.common#scripts/bootstrap/3.2.0-custom/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="#assetPaths.common#scripts/libs/jquery.validate.min.js"></script>
   <script>
@@ -77,18 +77,39 @@
 <cfif listFindNoCase("devicebuilder.carrierlogin", event.getCurrentEvent())>
   #renderView('devicebuilder/carrierloginValidate')#
 </cfif>
+
+<!--- zipModal, planModal --->
 <cfif listFindNoCase("devicebuilder.plans", event.getCurrentEvent())>
   #renderView('devicebuilder/zipmodal')#
-  <!--- <cfif rc.type is 'new' and !structKeyExists(session,"zipCode")> --->
   <cfif rc.type is 'new' and !application.model.cartHelper.zipCodeEntered()>
     <script>
       $('##zipModal').modal('show');
     </script>
   </cfif>
 </cfif>
+<!--- <end zipModal, planModal --->
+
+
+<!--- <protectionModal --->
+<cfif listFindNoCase("devicebuilder.protection", event.getCurrentEvent())>
+  <div class="modal fade" id="protectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog modal-lg"> 
+      <div class="modal-content">
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+</cfif>
+<!--- <end protectionModal --->
+
+
+<!--- clear data from Bootstrap 3 modals to load dynamic data --->
+<script>
+  $('body').on('hidden.bs.modal', '.modal', function () {
+    $(this).removeData('bs.modal');
+  });
+</script>
+<!--- <end clear bootstrap data --->
 
 </body>
 </html>
 </cfoutput>
-
-<cfset request.bodyContent = '' />
