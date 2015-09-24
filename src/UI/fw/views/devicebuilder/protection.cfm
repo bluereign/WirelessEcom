@@ -1,13 +1,15 @@
 <!--- <cfdump var="#rc#"> --->
-
+<!--- <cfdump var="#prc.qWarranty#"> --->
 <cfoutput>
   <div class="col-md-12">
     <section class="content">
+
       <header class="main-header">
         <h1>Payment, Protection &amp; Services Plans</h1>
         <p>The following services are available for your device based on your plan.</p>
       </header>
-      <form action="#prc.nextStep#" method="post">
+
+      <form action="#prc.nextStep#" name="protectionForm" id="protectionForm" method="post">
         <div class="pull-right">
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#">
@@ -18,11 +20,13 @@
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
+
         <section>
+
           <h4>#session.carrierObj.getCarrierName()# Device Payment Options</h4>
           <div class="radio">
             <label>
-              <input type="radio" name="paymentoption" id="optionsDevicePayment1" value="financed" <cfif rc.paymentoption is 'financed'>checked</cfif>>
+              <input type="radio" name="paymentoption" value="financed" <cfif rc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
               <select name="finance" class="form-control" onchange="onChangeHandler(this.form,'financed')"><!--- temporary form post until ajax functionality built --->
                 <cfif prc.productData.CarrierId eq 109>
                   <option value="financed-24" <cfif rc.finance is 'financed-24'>selected</cfif> >
@@ -51,35 +55,37 @@
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="paymentoption" id="optionsDevicePayment2" value="fullretail" <cfif rc.paymentoption is 'fullretail'>checked</cfif> onchange="onChangeHandler(this.form,'fullretail')">
+              <input type="radio" name="paymentoption" value="fullretail" <cfif rc.paymentoption is 'fullretail'>checked</cfif> onchange="onChangeHandler(this.form,'fullretail')">
               Full Retail Price #dollarFormat(prc.productData.FinancedFullRetailPrice)#
             </label>
           </div>
+
         </section>
+        
         <section>
+
           <h4>Device Protection Options</h4>
-          <a href="##">Help me choose a Protection Plan</a>
+          <!--- <a href="##">Help me choose a Protection Plan</a> --->
+          <cfloop query="prc.qWarranty">
+            <!--- prc.qWarranty: active, contractTerm (months), deductible, deviceid, gersSku, longDescription, metaDescription, metaKeywords, price, productId, shortDescription, summaryTitle, UPC,   --->
+            <cfset local.thisURL = '/index.cfm/go/shop/do/warrantyDetails/cartCurrentLine/1/productId/#prc.qWarranty.ProductId#' />
+            <div class="radio">
+              <label for="AddProtectionPlan_#prc.qWarranty.productId#">
+                <input type="radio" name="wid" id="warrantyoption_#prc.qWarranty.productId#" value="#prc.qWarranty.productId#" onchange="onChangeHandler(this.form,this.form.paymentoption.value)"  <cfif rc.wid eq prc.qWarranty.productId>checked</cfif> >
+                <a type="button" data-toggle="modal" data-target="##protectionModal" href="#event.buildLink('devicebuilder.protectionmodal')#/pid/#rc.pid#/type/#rc.type#/wid/#prc.qWarranty.productId#">
+                  #prc.qWarranty.SummaryTitle# (#dollarformat(prc.qWarranty.price)#)
+                </a>
+                <cfif findNoCase("Apple",prc.qWarranty.SummaryTitle)><span class="actionLink" style="color:##009900;"> - Recommended</span></cfif>
+              </label>
+            </div>
+          </cfloop>
           <div class="radio">
             <label>
-              <input type="radio" name="deviceProtection" id="optionsDeviceProtection1" value="deviceProtection1" checked>
+              <input type="radio" name="wid" id="warrantyoption_0" value="0" onchange="onChangeHandler(this.form,this.form.paymentoption.value)" <cfif rc.wid eq 0>checked</cfif>  >
               No Equipment Protection Plan
             </label>
           </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="deviceProtection" id="optionsDeviceProtection1" value="deviceProtection1">
-              <a href="##"
-                type="button"
-                data-toggle="modal"
-                data-target="##carrierMobileProtectionModal">Carrier Mobile Protection Pack</a> $3.00/mo
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="deviceProtection" id="optionsDeviceProtection1" value="deviceProtection1">
-              <a href="##">SquareTrade Device Protection</a> $99.99
-            </label>
-          </div>
+
           <!-- Carrier Mobile Protection Modal -->
           <div class="modal fade" id="carrierMobileProtectionModal" tabindex="-1" role="dialog" aria-labelledby="carrierMobileProtectionModalLabel">
             <div class="modal-dialog" role="document">
@@ -99,8 +105,11 @@
               </div>
             </div>
           </div>
+
         </section>
+
         <section>
+
           <h4>Additional Service</h4>
           <div class="checkbox">
             <label>
@@ -133,7 +142,9 @@
               </div>
             </div>
           </div>
+
         </section>
+
         <div class="pull-right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btn-block">Continue</button>
@@ -148,7 +159,6 @@
   </div>
 <script type="text/javascript">
   function onChangeHandler(form,paymentoption) {
-    // alert('hey');
     form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
     form.paymentoption.value=paymentoption;
     form.submit();

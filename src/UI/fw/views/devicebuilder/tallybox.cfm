@@ -101,8 +101,8 @@
             <div class="table-responsive">
               <table class="table">
                 <tr>
-                  <td>Not selected</td>
-                  <td class="price">$0.00</td>
+                  <td>#prc.warrantyInfo.SummaryTitle#</td>
+                  <td class="price">#dollarFormat(prc.warrantyInfo.Price)#</td>
                 </tr>
               </table>
             </div>
