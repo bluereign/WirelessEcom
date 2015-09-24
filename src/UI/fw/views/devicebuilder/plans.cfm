@@ -63,7 +63,7 @@
                       <button class="btn btn-dark-gray btn-block" name="plan" value="#prc.planDataExisting.productid#">Select Package</button>
                       <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataExisting.productid#" >Plan Details</div>
                     <cfelse>
-                      <button class="btn btn-dark-gray btn-block" disabled="disabled">Unavailable for this device</button>
+                      <button class="btn btn-secondary btn-block" disabled="disabled">Unavailable for this device</button>
                     </cfif>
                   </a>
                 </div>
@@ -88,7 +88,7 @@
                     </ul>
                     <div style="align:center;padding:20px;">#prc.planData.SummaryDescription#</div>
                     <div class="price">$#int(prc.planData.MonthlyFee)#<!--- #dollarFormat(prc.planData.MonthlyFee)# ---></div>
-                    <button class="btn btn-dark-gray btn-block" name="plan" value="#prc.planData.productid#">Select Package</button>
+                    <button class="btn btn-secondary btn-block" name="plan" value="#prc.planData.productid#">Select Package</button>
                     <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planData.productid#" >Plan Details</div>
                   </a>
                 </div>
@@ -111,7 +111,7 @@
                       </ul>
                       <div style="align:center;padding:20px;">#prc.planDataShared.SummaryDescription#</div>
                       <div class="price">$#int(prc.planDataShared.MonthlyFee)#<!--- #dollarFormat(prc.planDataShared.MonthlyFee)# ---></div>
-                      <button class="btn btn-dark-gray btn-block" name="plan" value="#prc.planDataShared.productid#">Select Package</button>
+                      <button class="btn btn-secondary btn-block" name="plan" value="#prc.planDataShared.productid#">Select Package</button>
                       <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataShared.productid#" >Plan Details</div>
                     </a>
                   </div>
