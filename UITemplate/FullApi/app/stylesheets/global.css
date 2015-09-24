@@ -7047,8 +7047,16 @@ button.close {
 }
 .btn:hover,
 .btn:focus {
+  background-color: #0060a9;
+  background-image: -moz-linear-gradient(top, #007ddc, #0060a9);
+  background-image: -ms-linear-gradient(top, #007ddc, #0060a9);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#007ddc), to(#0060a9));
+  background-image: -webkit-linear-gradient(top, #007ddc, #0060a9);
+  background-image: -o-linear-gradient(top, #007ddc, #0060a9);
+  background-image: linear-gradient(top, #007ddc, #0060a9);
+  background-repeat: repeat-x;
   border-color: transparent;
-  color: #cccccc;
+  color: #fff;
 }
 .btn.btn-gray {
   background-color: #f2f2f2;
@@ -7822,6 +7830,12 @@ form .right:first-child {
 .product .info {
   margin: 0 0 10px;
 }
+.product .phone {
+  font-size: large;
+}
+.product .manufacturer {
+  text-transform: capitalize;
+}
 #existing .info {
   float: left;
 }
@@ -7832,6 +7846,62 @@ form .right:first-child {
   font-size: 12px;
   font-size: 0.75rem;
   padding: 10px 20px;
+}
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+.bs-callout h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+  margin-bottom: 0;
+}
+.bs-callout code {
+  border-radius: 3px;
+}
+.bs-callout + .bs-callout {
+  margin-top: -5px;
+}
+.bs-callout-default {
+  border-left-color: #777;
+}
+.bs-callout-default h4 {
+  color: #777;
+}
+.bs-callout-primary {
+  border-left-color: #428bca;
+}
+.bs-callout-primary h4 {
+  color: #428bca;
+}
+.bs-callout-success {
+  border-left-color: #5cb85c;
+}
+.bs-callout-success h4 {
+  color: #5cb85c;
+}
+.bs-callout-danger {
+  border-left-color: #ce4844;
+}
+.bs-callout-danger h4 {
+  color: #ce4844;
+}
+.bs-callout-warning {
+  border-left-color: #aa6708;
+}
+.bs-callout-warning h4 {
+  color: #aa6708;
+}
+.bs-callout-info {
+  border-left-color: #1b809e;
+}
+.bs-callout-info h4 {
+  color: #1b809e;
 }
 .accessories {
   /* Small devices (tablets, 768px and up) */
@@ -7885,11 +7955,9 @@ form .right:first-child {
   background-image: linear-gradient(top, #007ddc, #0060a9);
   background-repeat: repeat-x;
   overflow: auto;
-  padding: 33px 35px;
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: 27%;
+  left: 25%;
 }
 .accessories .product .callout .btn {
   float: none;
@@ -7908,6 +7976,9 @@ form .right:first-child {
   font-size: 22px;
   font-size: 1.375rem;
   line-height: 1.5;
+}
+.accessories .featured .callout {
+  left: 33%;
 }
 @media (min-width: 768px) {
   .accessories .col-sm-5 {
@@ -8025,39 +8096,6 @@ form .right:first-child {
 .plans .info .details-link {
   color: #00aeef;
   margin: 20px 0 10px;
-}
-.plans .info.featured a {
-  background-color: #e8f5ff;
-  border: 3px solid #0060a9;
-  padding: 40px 3px 3px;
-}
-.plans .info.featured a:hover {
-  background-color: #f2f2f2;
-}
-.plans .info.featured a h4 {
-  background-color: #599f33;
-  background-image: -moz-linear-gradient(top, #70c342, #599f33);
-  background-image: -ms-linear-gradient(top, #70c342, #599f33);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70c342), to(#599f33));
-  background-image: -webkit-linear-gradient(top, #70c342, #599f33);
-  background-image: -o-linear-gradient(top, #70c342, #599f33);
-  background-image: linear-gradient(top, #70c342, #599f33);
-  background-repeat: repeat-x;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  color: #fff;
-  display: block;
-  font-size: 14px;
-  font-size: 0.875rem;
-  margin: -35px 5px 0;
-  padding: 5px 0;
-  text-transform: uppercase;
-}
-.plans .info.featured a .price {
-  color: #000;
-}
-.plans .info.featured a li {
-  font-weight: bold;
 }
 .plans .info .price {
   font-size: 40px;
