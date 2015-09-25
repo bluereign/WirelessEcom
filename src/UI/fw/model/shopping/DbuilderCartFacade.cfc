@@ -749,37 +749,40 @@
 			</cfcase>
 
 			<cfcase value="accessory">
-				<cfset newAccessory = createObject('component', '#variables.cartItemcfc#').init() />
-				<cfset newAccessory.setProductID(local.p.product_id) />
-				<cfset thisAccessory = application.model.accessory.getByFilter(idList = local.p.product_id) />
-				<cfset newAccessory.setGersSKU(thisAccessory.GersSKU) />
-				<cfset newAccessory.getPrices().setDueToday(variables.thisAccessory.price) />
-				<cfset newAccessory.getPrices().setCOGS(application.model.product.getCOGS(variables.newAccessory.getProductId())) />
-				<cfset newAccessory.getPrices().setRetailPrice(variables.thisAccessory.price_retail) />
-				<cfset newAccessory.setType('accessory') />
-				<cfset addedAccessoryToWorkflow = false />
+				<cfset local.newAccessory = createObject('component', '#variables.cartItemcfc#').init() />
+				<cfset local.newAccessory.setProductID(arguments.product_id) />
+				<cfset local.thisAccessory = application.model.accessory.getByFilter(idList = arguments.product_id) />
+				<cfif local.thisAccessory.recordcount is 0>
+					<cfreturn "accessory not found" />
+				</cfif>
+				<cfset local.newAccessory.setGersSKU(local.thisAccessory.GersSKU) />
+				<cfset local.newAccessory.getPrices().setDueToday(local.thisAccessory.price) />
+				<cfset local.newAccessory.getPrices().setCOGS(application.model.product.getCOGS(local.newAccessory.getProductId())) />
+				<cfset local.newAccessory.getPrices().setRetailPrice(local.thisAccessory.price_retail) />
+				<cfset local.newAccessory.setType('accessory') />
+				<cfset local.addedAccessoryToWorkflow = false />
 
 				<!--- If the user is adding to 'other items'. --->
 				<cfif not arguments.cartLineNumber or arguments.cartLineNumber eq request.config.otherItemsLineNumber>
-					<cfloop from="1" to="#local.p.qty#" index="iQty">
-						<cfset arrayAppend(session.cart.getOtherItems(), variables.newAccessory) />
+					<cfloop from="1" to="#arguments.qty#" index="iQty">
+						<cfset arrayAppend(session.cart.getOtherItems(), local.newAccessory) />
 					</cfloop>
 
 					<cfset session.cart.setCurrentLine(arguments.cartLineNumber) />
 				<cfelse>
-					<cfloop from="1" to="#local.p.qty#" index="iQty">
-						<cfset arrayAppend(local.cartlines[arguments.cartLineNumber].getAccessories(), variables.newAccessory) />
+					<cfloop from="1" to="#arguments.qty#" index="iQty">
+						<cfset arrayAppend(local.cartlines[arguments.cartLineNumber].getAccessories(), local.newAccessory) />
 					</cfloop>
 
-					<cfset addedAccessoryToWorkflow = true />
+					<cfset local.addedAccessoryToWorkflow = true />
 					<cfset session.cart.setCurrentLine(arguments.cartLineNumber) />
 				</cfif>
 
 				 
-				<cfset request.hasWirelessItemBeenAdded = variables.addedAccessoryToWorkflow />
+				<cfset local.hasWirelessItemBeenAdded = local.addedAccessoryToWorkflow />
 				<cfset arguments.productType = '' />
 
-				<cfset local.getRebates = application.model.rebates.getProductInRebateFilter(productId = local.p.product_id, type = 'new') />
+				<cfset local.getRebates = application.model.rebates.getProductInRebateFilter(productId = arguments.product_id, type = 'new') />
 				<cfset local.rebateArray = session.cart.getRebates() />
 
 				<cfif local.getRebates.recordCount>
@@ -788,9 +791,10 @@
 					<cfset session.cart.setRebates(local.rebateArray) />
 				</cfif>
 
-				<cfinclude template="/views/cart/dsp_viewCartInDialog.cfm" />
+				<!---<cfinclude template="/views/cart/dsp_viewCartInDialog.cfm" />
 
-				<cfexit method="exittag" />
+				<cfexit method="exittag" />--->
+				<cfreturn "success" />
 			</cfcase>
 
 			<cfcase value="warranty">

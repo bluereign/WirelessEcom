@@ -21,6 +21,7 @@
 <!---<cfset CartLineNo = 1 />--->
 
 <cfset phoneids = "27716,27665,27674" />
+<cfset accessoryids = "515,10099,25766,4212,26626,45144" />
 
 <cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">
 		
@@ -72,13 +73,43 @@
 <cfset resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = args) />
 <br/>Result = #resultStr#
 
-<br/>Decline Accessories for Line #cartlineno#
-<br/>Calling application.model.carthelper.declineAccessories(#cartLineNo#)
-<cfset application.model.carthelper.declineAccessories(#cartLineNo#) />
+<cfset addAccessory = randrange(0,1) />
+
+<cfif addAccessory is 1 >
+<cfset accessoryIndex = randrange(1, listlen(accessoryIds))/>
+<cfset args = { 
+	productType = "accessory",
+	product_id = "#listgetat(accessoryids,accessoryIndex)#",
+	qty = 1,
+	cartLineNumber = #cartLineNo#
+} />	
+<br/>Add the Accessory for Line #cartlineno#
+<br/>Calling application.model.dBuilderCartFacade.addItem(argumentCollection = args)
 <cfdump var="#args#">
 <cfset resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = args) />
 <br/>Result = #resultStr#
+
+<cfelse>
+
+<br/>Decline Accessories for Line #cartlineno#
+<br/>Calling application.model.carthelper.declineAccessories(#cartLineNo#)
+<cfset application.model.carthelper.declineAccessories(#cartLineNo#) />
+</cfif>
+
 </cfloop>
+
+<cfset args = { 
+	productType = "accessory",
+	product_id = "#listgetat(accessoryids,accessoryIndex)#",
+	qty = 1,
+	cartLineNumber = 999
+} />	
+<br/>Add the Accessory to cart #cartlineno#
+<br/>Calling application.model.dBuilderCartFacade.addItem(argumentCollection = args)
+<cfdump var="#args#">
+<cfset resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = args) />
+<br/>Result = #resultStr#
+
 
 
 <br/>session.Carthelper.getNumberOfLines() = #session.Carthelper.getNumberOfLines()#	
