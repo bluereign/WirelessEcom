@@ -67,7 +67,7 @@
             <a href="##custom" aria-controls="screen" role="tab" data-toggle="tab">Custom</a>
           </li>
         </ul>
-
+<!--- TODO: THE RAW HTML HAS BEEN UPDATED FROM THE UI SIDE AND NEEDS TO BE INCORPORATED --->
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="all">
             <cfif prc.qAccessory.RecordCount>
