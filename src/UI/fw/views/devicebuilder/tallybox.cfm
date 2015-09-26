@@ -1,4 +1,5 @@
 <cfoutput>
+  <!--- prc.productData: <cfdump var="#prc.productData#"> --->
   <!--- <Tally Box --->
   <div class="col-md-4">
     <div class="row totals">

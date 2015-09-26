@@ -32,6 +32,12 @@
       // KEEP THIS INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
 
+      prc.carrierIdAtt = 109;
+      prc.carrierGuidAtt = "83d7a62e-e62f-4e37-a421-3d5711182fb0";
+      prc.carrierIdVzw = 42;
+      prc.carrierGuidVzw = "263a472d-74b1-494d-be1e-ad135dfefc43";
+
+
       prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/";
       prc.AssetPaths = variables.AssetPaths;
 
@@ -41,6 +47,7 @@
         relocate( prc.browseDevicesUrl );
       }
       
+      // param available in CF9
       if ( !structKeyExists(rc,"paymentoption") OR !len(trim(rc.paymentoption)) ) {
         rc.paymentoption = "financed"; //financed, fullretail
       }
@@ -51,13 +58,14 @@
       if ( !structKeyExists(rc,"wid") OR !len(trim(rc.wid)) ) {
         rc.wid = 0; //financed, fullretail
       }
-      if ( !rc.wid eq 0 ) {
-        prc.warrantyInfo = application.model.Warranty.getById(rc.wid);
-      } else {
+
+      if ( rc.wid eq 0 ) {
         prc.warrantyInfo.Price = 0;
         prc.warrantyInfo.SummaryTitle = "No Equipment Protection Plan";
         prc.warrantyInfo.ShortDescription = "No Equipment Protection Plan";
         prc.warrantyInfo.LongDescription = "No Equipment Protection Plan";
+      } else {
+        prc.warrantyInfo = application.model.Warranty.getById(rc.wid);
       }
       // <end warranty option check
 
@@ -237,7 +245,7 @@
           prc.tallyboxFinanceMonthlyDueToday = 0;
           
           // AT&T carrierId = 109, VZW carrierId = 42
-          if ( prc.productData.CarrierId eq 109 ) {
+          if ( prc.productData.CarrierId eq prc.carrierIdAtt ) {
 
             switch(rc.finance) {
               case "financed-24":
@@ -275,7 +283,7 @@
           break;
       }
 
-      
+
       // <end tally box
 
 
@@ -382,9 +390,9 @@
             session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
             session.cart.setCarrierId(session.carrierObj.getCarrierId());
 
-            if (session.carrierObj.getCarrierId() eq 109) {
+            if (session.carrierObj.getCarrierId() eq prc.carrierIdAtt) {
               session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
-            } else if (prc.productData.carrierId eq 42) {
+            } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
               session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
             }
 
@@ -484,9 +492,28 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset prc.qWarranty = application.model.Warranty.getByDeviceId( rc.pid ) />
+    <cfset var argsServices = {} />
+
+    <cfscript>
+      prc.qWarranty = application.model.Warranty.getByDeviceId(rc.pid);
+
+      if (prc.productData.carrierId eq prc.carrierIdAtt) {
+        argsServices.carrierId = prc.carrierGuidAtt;
+      } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
+        argsServices.carrierId = prc.carrierGuidVzw;
+      }
+
+      argsServices.type = "O";
+      argsServices.deviceGuid = prc.productData.productGuid;
+      // argsServices.HasSharedPlan = "no";
+      argsServices.HasSharedPlan = session.cart.getHasSharedPlan();
+      prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = argsServices);
+
+    </cfscript>
+
     <!--- TODO: If rc.plan does not exist, then send back to "plans" --->
     <!--- <cfdump var="#rc#"><cfabort> --->
+    <!--- <cfdump var="#prc.productData#"><cfabort> --->
 
   </cffunction>
 

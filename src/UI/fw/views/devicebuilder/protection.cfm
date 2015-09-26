@@ -1,5 +1,6 @@
 <!--- <cfdump var="#rc#"> --->
 <!--- <cfdump var="#prc.qWarranty#"> --->
+<!--- <cfdump var="#prc.groupLabels#"> --->
 <cfoutput>
   <div class="col-md-12">
     <section class="content">
@@ -111,18 +112,58 @@
         <section>
 
           <h4>Additional Service</h4>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="">
-              <a href="##" type="button" data-toggle="modal" data-target="##roadsideModal">Roadside Assistance</a> $2.99/mo
-            </label>
-          </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="">
-              <a href="##">Navigation Subscription</a> $9.99/mo
-            </label>
-          </div>
+          
+          <cfloop query="prc.groupLabels">
+            
+            <cfset serviceLabels = application.model.ServiceManager.getServiceMasterLabelsByGroup(groupGUID = prc.groupLabels.ServiceMasterGroupGuid, deviceId = prc.productData.productGuid)>
+
+            <cfset local.groupInputType = 'checkbox' />
+            <cfset local.hasNoneOption = false />
+            <cfset local.defaultIndex = 0 />
+            
+            <cfif prc.groupLabels.maxSelected eq 1>
+              <cfset local.groupInputType = 'radio' />
+              <cfif prc.groupLabels.minSelected eq 0>
+                <cfset local.hasNoneOption = true />
+              </cfif>
+            </cfif>
+            
+            <cfif prc.groupLabels.minSelected eq 1 and prc.groupLabels.maxSelected eq 1>
+              <cfset local.defaultIndex = 1 />
+            </cfif>
+            
+            <cfif serviceLabels.recordCount gt 0>
+              <div>#trim(prc.groupLabels.label)#</div>
+              
+              <cfloop query="serviceLabels">
+                <!--- request.config.debugInventoryData: #request.config.debugInventoryData# --->
+                <!--- serviceLabels.HideMessage[serviceLabels.currentRow]: #serviceLabels.HideMessage[serviceLabels.currentRow]# --->
+                <div class="checkbox">
+                  <label>
+                    <input type="#local.groupInputType#"
+                          id="chk_features_#serviceLabels.productId[serviceLabels.currentRow]#"
+                          name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#"
+                          value="#serviceLabels.productId[serviceLabels.currentRow]#"
+                          <cfif len(serviceLabels.recommendationId[serviceLabels.currentRow])>
+                            checked
+                          </cfif> />
+
+                    <a href="##" type="button" data-toggle="modal" data-target="##roadsideModal">#trim(serviceLabels.label)# (#serviceLabels.productId#)</a> 
+                    <cfif rc.paymentoption is 'financed' and (len(serviceLabels.FinancedPrice))><!---Is a financed phone with a Financed Price--->
+                      #dollarFormat(serviceLabels.FinancedPrice)#/mo
+                    <cfelse>
+                      #dollarFormat(serviceLabels.monthlyFee)#/mo
+                    </cfif>
+                  </label>
+                </div>
+              </cfloop>
+
+            </cfif>
+
+          </cfloop>
+
+          <br>
+          
           <!-- Roadside Protection Modal -->
           <div class="modal fade" id="roadsideModal" tabindex="-1" role="dialog" aria-labelledby="roadsideModalLabel">
             <div class="modal-dialog" role="document">
@@ -147,8 +188,9 @@
 
         <div class="pull-right">
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary btn-block">Continue</button>
+          <button type="submit" class="btn btn-primary">Continue</button>
         </div>
+
       </form>
     </section>
     <div class="legal">
