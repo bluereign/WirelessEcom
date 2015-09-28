@@ -101,15 +101,22 @@
 	
 	<cffunction name="getSubscribers" access="public" returnType="array">
 		<cfset var local = structNew() />
-		<cfreturn arrayNew(1) />
 		<cfset local.resp = getResponse() />
 		<cfset local.subscribers = arrayNew(1) />
 		<cfloop array="#local.resp.customerAccount.subscribers#" index="local.s">
 			<!---<cfset local.s.AccountStatus("not implemented") />--->
-			<cfset local.subscriber = createObject('component','fw.model.carrierApi.Subscriber').init() />
+			<cfset local.subscriber = createObject('component','fw.model.carrierApi.Verizon.VzwSubscriber').init() />
 				<cfset local.subscriber.setAccountStatus("not implemented") />
+				<cfset local.subscriber.setResponse(local.s) />
+				
 				<!---<cfset local.subscriber.setAddress(getAddress(local.s.address)) />--->	
 				<!---<cfset local.subscriber.setEmail(local.s.contact.emailAddress) />--->
+				<cfset local.subscriber.setEmail("not available") />
+					
+				<!---<cfset local.subscriber.setEligibilityDate(ParseDateTime(listgetat(local.s.upgradeInfo.eligibilityDate,1,"T"))) />
+				<cfset local.subscriber.setEligibilityStatus(local.s.upgradeInfo.EligibilityStatus) />--->
+				<cfset local.subscriber.setIsEligible(local.s.upgradeInfo.IsEligible) />
+					
 				<cfset local.subscriber.setNumber(local.s.number) />
 			<cfset arrayAppend(local.subscribers,local.subscriber) />		
 		</cfloop>
