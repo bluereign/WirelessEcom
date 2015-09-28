@@ -4,6 +4,29 @@
 <!--- <cfdump var="#prc.productData#"><cfabort> --->
 <!--- <cfdump var="#prc.deviceMinimumRequiredServices#"> --->
 <cfoutput>
+
+  <!--- rc.count = #structCount(rc)#<br> --->
+  <!--- structKeyExists(rc, "serviceCounter"): #structKeyExists(rc, "serviceCounter")#<br> --->
+  <!--- <cfset prc.selectedServices = "" />
+  <cfif structKeyExists(rc, "FieldNames") and findNoCase("chk_features_",rc.FieldNames)>
+    <cfloop index="thisField" list="#rc.FieldNames#">
+        <cfif findNoCase("chk_features_",thisField)>
+          <br/>#thisField#=#XmlFormat(rc[thisField])# findNoCase("chk_features_",thisField): #findNoCase("chk_features_",thisField)# value: #rc[thisField]#
+          <cfset prc.selectedServices = listAppend(prc.selectedServices,XmlFormat(rc[thisField]))>
+        </cfif>
+    </cfloop>
+  </cfif> --->
+
+  <!--- <cfif structKeyExists(prc,"selectedServices")>
+    <div>
+      <br><br>prc.selectedServices: <b>#prc.selectedServices#</b>
+    </div>
+  </cfif> --->
+  
+  <!--- <cfif structKeyExists(prc,"aSelectedServices")>
+    <cfdump var="#prc.aSelectedServices#">
+  </cfif> --->
+
   <div class="col-md-12">
     <section class="content">
 
@@ -71,7 +94,7 @@
           <!--- <a href="##">Help me choose a Protection Plan</a> --->
           <cfloop query="prc.qWarranty">
             <!--- prc.qWarranty: active, contractTerm (months), deductible, deviceid, gersSku, longDescription, metaDescription, metaKeywords, price, productId, shortDescription, summaryTitle, UPC,   --->
-            <cfset local.thisURL = '/index.cfm/go/shop/do/warrantyDetails/cartCurrentLine/1/productId/#prc.qWarranty.ProductId#' />
+            <cfset prc.thisURL = '/index.cfm/go/shop/do/warrantyDetails/cartCurrentLine/1/productId/#prc.qWarranty.ProductId#' />
             <div class="radio">
               <label for="AddProtectionPlan_#prc.qWarranty.productId#">
                 <input type="radio" name="wid" id="warrantyoption_#prc.qWarranty.productId#" value="#prc.qWarranty.productId#" onchange="onChangeHandler(this.form,this.form.paymentoption.value)"  <cfif rc.wid eq prc.qWarranty.productId>checked</cfif> >
@@ -97,6 +120,7 @@
           <!--- (for device: #prc.productData.productGuid#) --->
 
           <!--- <cfdump var="#prc.groupLabels#"> --->
+          <cfset prc.serviceCounter = 0>
           <cfloop query="prc.groupLabels">
             
             <!--- <cfset serviceLabels = application.model.ServiceManager.getServiceMasterLabelsByGroup(groupGUID = prc.groupLabels.ServiceMasterGroupGuid, deviceId = prc.productData.productGuid, returnAllCartTypes=true)> --->
@@ -104,19 +128,19 @@
 
             <!--- <cfdump var="#serviceLabels#"> --->
 
-            <cfset local.groupInputType = 'checkbox' />
-            <cfset local.hasNoneOption = false />
-            <cfset local.defaultIndex = 0 />
+            <cfset prc.groupInputType = 'checkbox' />
+            <cfset prc.hasNoneOption = false />
+            <cfset prc.defaultIndex = 0 />
             
             <cfif prc.groupLabels.maxSelected eq 1>
-              <cfset local.groupInputType = 'radio' />
+              <cfset prc.groupInputType = 'radio' />
               <cfif prc.groupLabels.minSelected eq 0>
-                <cfset local.hasNoneOption = true />
+                <cfset prc.hasNoneOption = true />
               </cfif>
             </cfif>
             
             <cfif prc.groupLabels.minSelected eq 1 and prc.groupLabels.maxSelected eq 1>
-              <cfset local.defaultIndex = 1 />
+              <cfset prc.defaultIndex = 1 />
             </cfif>
             
             <cfif serviceLabels.recordCount gt 0>
@@ -125,20 +149,28 @@
               <!--- <div><cfdump var="#serviceLabels#"></div> --->
               <!--- <cfdump var="#prc.deviceMinimumRequiredServices#"> --->
 
-              <cfset local.i = 1 />
+              <cfset prc.i = 1 />
               <cfloop query="serviceLabels">
+                <cfset prc.serviceCounter = prc.serviceCounter + 1 />
                 <!--- request.config.debugInventoryData: #request.config.debugInventoryData# --->
                 <!--- serviceLabels.HideMessage[serviceLabels.currentRow]: #serviceLabels.HideMessage[serviceLabels.currentRow]# --->
                 <div class="checkbox">
                   <label>
-                    <input type="#local.groupInputType#"
-                          id="chk_features_#serviceLabels.productId[serviceLabels.currentRow]#"
+                    <input type="#prc.groupInputType#"
                           name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#"
                           value="#serviceLabels.productId[serviceLabels.currentRow]#"
+                          <!--- id="chk_features_#serviceLabels.productId[serviceLabels.currentRow]#"
+                          name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#" 
+                          name="chk_features_#prc.serviceCounter#"--->
 
-                          <cfif len(serviceLabels.recommendationId[serviceLabels.currentRow]) or local.i eq local.defaultIndex>
+                          <cfif listFindNoCase(prc.selectedServices,serviceLabels.productId[serviceLabels.currentRow])>
                             checked
-                          </cfif> />
+                          <cfelseif len(serviceLabels.recommendationId[serviceLabels.currentRow]) or prc.i eq prc.defaultIndex>
+                            checked
+                          </cfif>
+
+                          onchange="onChangeHandler(this.form,this.form.paymentoption.value)" />
+
 
                     <a href="##" type="button" data-toggle="modal" data-target="##roadsideModal">#trim(serviceLabels.label)# (#serviceLabels.productId#)</a> 
                     <cfif rc.paymentoption is 'financed' and (len(serviceLabels.FinancedPrice))><!---Is a financed phone with a Financed Price--->
@@ -146,14 +178,16 @@
                     <cfelse>
                       #dollarFormat(serviceLabels.monthlyFee)#/mo
                     </cfif>
+                    <!--- - #prc.serviceCounter# --->
                   </label>
                 </div>
-                <cfset local.i = (local.i + 1) />
+                <cfset prc.i = (prc.i + 1) />
               </cfloop>
 
             </cfif>
 
           </cfloop>
+          <input type="hidden" name="serviceCounter" value="#prc.serviceCounter#" />
 
           <br>
           

@@ -46,10 +46,10 @@
                   <td>Due Today*</td>
                   <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueToday)# <cfif rc.paymentoption is 'financed'>Down</cfif></td> <!--- hard code from detail_new.cfm --->
                 </tr>
-                <tr>
+               <!---  <tr>
                   <td>Line Access Fee</td>
                   <td class="price">$xx.xx ?</td>
-                </tr>
+                </tr> --->
               </table>
             </div>
           </div>
@@ -97,12 +97,25 @@
         </div>
         <h4>Protection &amp; Services</h4>
         <div class="row">
-          <div class="col-xs-4">
-            <!--- <img src="images/ex-sidebar-protection.jpg" alt="protection picture" /> --->
-          </div>
-          <div class="col-xs-12">
+          <!--- <div class="col-xs-4">
+            <img src="images/ex-sidebar-protection.jpg" alt="protection picture" />
+          </div> --->
+          <div class="col-xs-16">
             <div class="table-responsive">
               <table class="table">
+                <cfif arrayLen(prc.aSelectedServices)>
+                  <cfloop index="i" from="1" to="#arrayLen(prc.aSelectedServices)#">
+                    <tr>
+                      <td>#prc.aSelectedServices[i].label# (#prc.aSelectedServices[i].productId#)</td>
+                      <td class="price">#dollarFormat(prc.aSelectedServices[i].MonthlyFee)#</td>
+                    </tr>                  
+                  </cfloop>
+                <cfelse>
+                  <tr>
+                    <td>No services selected</td>
+                    <td class="price"></td>
+                  </tr>
+                </cfif>
                 <tr>
                   <td>#prc.warrantyInfo.SummaryTitle#</td>
                   <td class="price">#dollarFormat(prc.warrantyInfo.Price)#</td>
@@ -113,16 +126,25 @@
         </div>
         <h4>Accessories</h4>
         <div class="row">
-          <div class="col-xs-4">
+          <!--- <div class="col-xs-4">
             <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" />
-          </div>
-          <div class="col-xs-12">
+          </div> --->
+          <div class="col-xs-16">
             <div class="table-responsive">
               <table class="table">
-                <tr>
-                  <td>Costco Membership Benefits</td>
-                  <td class="price">FREE</td>
-                </tr>
+                <!--- <cfif arrayLen(prc.aSelectedServices)>
+                  <cfloop index="i" from="1" to="#arrayLen(prc.aSelectedServices)#">
+                    <tr>
+                      <td>#prc.aSelectedServices[i].label# (#prc.aSelectedServices[i].productId#)</td>
+                      <td class="price">#dollarFormat(prc.aSelectedServices[i].MonthlyFee)#</td>
+                    </tr>                  
+                  </cfloop>
+                <cfelse>
+                  <tr>
+                    <td>No services selected</td>
+                    <td class="price"></td>
+                  </tr>
+                </cfif> --->
               </table>
             </div>
           </div>

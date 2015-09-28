@@ -29,7 +29,7 @@
     <cfset var argsPlan = {} />
     
     <cfscript>
-      // KEEP THIS INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
+      // KEEP THIS NEXT LINE INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
 
       prc.carrierIdAtt = 109;
@@ -233,6 +233,56 @@
       // <CARRIER LOGO
 
       // <end carrier logo
+
+
+
+      // <SELECTED SERVICES
+      if ( !structKeyExists(prc,"selectedServices")  ) {
+        prc.selectedServices = "";
+      }
+      if ( !structKeyExists(prc,"aSelectedServices")  ) {
+        prc.aSelectedServices = [];
+      }
+
+
+      // handle form fields from Payment, Protection and Services:
+      if ( structKeyExists(rc, "FieldNames") and findNoCase("chk_features_",rc.FieldNames) ) {
+        prc.selectedServices = "";
+        i = 0;
+        Fields = ListToArray(rc.FieldNames);
+        FieldName = "";
+        l = arrayLen(Fields);
+        for (i = 1; i lte l; i++)  // you also can use i++ instead
+        {
+          FieldName = Fields[i];
+          if ( findNoCase("chk_features_",FieldName) ) {
+            prc.selectedServices = listAppend(prc.selectedServices, XmlFormat(rc[FieldName]) );
+          }
+        }
+      }
+
+
+      // convert to array with productId, price, label for Tallybox
+      // prc.aSelectedServices = ListToArray(prc.selectedServices);
+      i = 0;
+      l = listLen(prc.selectedServices);
+
+      for (i = 1; i lte l; i++) {
+        thisService = structNew();
+        // thisService.productId = listGetAt(prc.selectedServices,i);
+        thisServiceQry = application.model.serviceManager.getServiceByProductId(productId = listGetAt(prc.selectedServices,i));
+        thisService.productId = thisServiceQry.productId;
+        thisService.monthlyFee = thisServiceQry.MonthlyFee;
+        thisService.label = thisServiceQry.label;
+        arrayAppend(prc.aSelectedServices, thisService);
+      }      
+
+
+
+
+
+
+      // <end selected services
 
 
 
