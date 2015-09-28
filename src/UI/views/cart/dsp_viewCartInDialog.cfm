@@ -742,7 +742,7 @@
 												</div>
 											</div>
 											<div class="linefooter">
-												<span><a href="##"onclick="if(confirm('Are you sure you want to delete this line?')){ColdFusion.navigate('/index.cfm/go/cart/do/deleteLine/line/#variables.iLine#/blnDialog/1/', 'dialog_addToCart')};return false;" class="actionlink">Remove this Line</a></span>
+												<span id="removeThisLine"><a href="##"onclick="if(confirm('Are you sure you want to delete this line?')){ColdFusion.navigate('/index.cfm/go/cart/do/deleteLine/line/#variables.iLine#/blnDialog/1/', 'dialog_addToCart')};return false;" class="actionlink">Remove this Line</a></span>
 											</div>
 										</div>
 									</div>

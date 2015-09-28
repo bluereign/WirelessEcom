@@ -94,9 +94,8 @@
 		<cfset var local = {} />
 		<cfset local.resp = getResponse() />
 		<cfset local.subscribers = arrayNew(1) />
-		<cfif isdefined("local.resp.account.subscribers")>
+		<cfif isdefined("local.resp.account.subscribers") and arrayLen(local.resp.account.subscribers)>
 			<cfloop array="#local.resp.account.subscribers#" index="local.s">
-				<cfset local.s.AccountStatus = local.s.accountStatus />
 				<cfset local.subscriber = createObject('component','fw.model.carrierApi.Att.AttSubscriber').init() />
 					<cfset local.subscriber.setResponse(local.s) />
 					<cfset local.subscriber.setAccountStatus(local.s.AccountStatus) />
