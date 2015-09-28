@@ -1,5 +1,8 @@
 <!--- <cfdump var="#rc#"> --->
 <!--- <cfdump var="#prc.qWarranty#"> --->
+<!--- <cfdump var="#prc.groupLabels#"> --->
+<!--- <cfdump var="#prc.productData#"><cfabort> --->
+<!--- <cfdump var="#prc.deviceMinimumRequiredServices#"> --->
 <cfoutput>
   <div class="col-md-12">
     <section class="content">
@@ -23,7 +26,7 @@
 
         <section>
 
-          <h4>#session.carrierObj.getCarrierName()# Device Payment Options</h4>
+          <h4>#prc.productData.carrierName# Device Payment Options</h4>
           <div class="radio">
             <label>
               <input type="radio" name="paymentoption" value="financed" <cfif rc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
@@ -86,43 +89,74 @@
             </label>
           </div>
 
-          <!-- Carrier Mobile Protection Modal -->
-          <div class="modal fade" id="carrierMobileProtectionModal" tabindex="-1" role="dialog" aria-labelledby="carrierMobileProtectionModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="carrierMobileProtectionModalLabel">Carrier Mobile Protection Pack</h4>
-                  <p>Protection provided to you from your carrier for your new device.</p>
-                </div>
-                <div class="modal-body">
-                  <p>Bacon ipsum dolor amet shankle turkey turducken ball tip. Ham turkey porchetta, ribeye venison filet mignon pork loin. Ball tip chicken tongue shank ham hock turducken biltong. Swine kielbasa strip steak salami, andouille flank corned beef beef ribs tongue pork.</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Add to Cart</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </section>
 
         <section>
 
           <h4>Additional Service</h4>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="">
-              <a href="##" type="button" data-toggle="modal" data-target="##roadsideModal">Roadside Assistance</a> $2.99/mo
-            </label>
-          </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" value="">
-              <a href="##">Navigation Subscription</a> $9.99/mo
-            </label>
-          </div>
+          <!--- (for device: #prc.productData.productGuid#) --->
+
+          <!--- <cfdump var="#prc.groupLabels#"> --->
+          <cfloop query="prc.groupLabels">
+            
+            <!--- <cfset serviceLabels = application.model.ServiceManager.getServiceMasterLabelsByGroup(groupGUID = prc.groupLabels.ServiceMasterGroupGuid, deviceId = prc.productData.productGuid, returnAllCartTypes=true)> --->
+            <cfset serviceLabels = application.model.ServiceManager.getServiceMasterLabelsByGroup(groupGUID = prc.groupLabels.ServiceMasterGroupGuid, deviceId = prc.productData.productGuid, cartTypeId = prc.cartTypeId)>
+
+            <!--- <cfdump var="#serviceLabels#"> --->
+
+            <cfset local.groupInputType = 'checkbox' />
+            <cfset local.hasNoneOption = false />
+            <cfset local.defaultIndex = 0 />
+            
+            <cfif prc.groupLabels.maxSelected eq 1>
+              <cfset local.groupInputType = 'radio' />
+              <cfif prc.groupLabels.minSelected eq 0>
+                <cfset local.hasNoneOption = true />
+              </cfif>
+            </cfif>
+            
+            <cfif prc.groupLabels.minSelected eq 1 and prc.groupLabels.maxSelected eq 1>
+              <cfset local.defaultIndex = 1 />
+            </cfif>
+            
+            <cfif serviceLabels.recordCount gt 0>
+              <div>#trim(prc.groupLabels.label)#</div>
+              <!--- <div><cfdump var="#prc.groupLabels#"></div> --->
+              <!--- <div><cfdump var="#serviceLabels#"></div> --->
+              <!--- <cfdump var="#prc.deviceMinimumRequiredServices#"> --->
+
+              <cfset local.i = 1 />
+              <cfloop query="serviceLabels">
+                <!--- request.config.debugInventoryData: #request.config.debugInventoryData# --->
+                <!--- serviceLabels.HideMessage[serviceLabels.currentRow]: #serviceLabels.HideMessage[serviceLabels.currentRow]# --->
+                <div class="checkbox">
+                  <label>
+                    <input type="#local.groupInputType#"
+                          id="chk_features_#serviceLabels.productId[serviceLabels.currentRow]#"
+                          name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#"
+                          value="#serviceLabels.productId[serviceLabels.currentRow]#"
+
+                          <cfif len(serviceLabels.recommendationId[serviceLabels.currentRow]) or local.i eq local.defaultIndex>
+                            checked
+                          </cfif> />
+
+                    <a href="##" type="button" data-toggle="modal" data-target="##roadsideModal">#trim(serviceLabels.label)# (#serviceLabels.productId#)</a> 
+                    <cfif rc.paymentoption is 'financed' and (len(serviceLabels.FinancedPrice))><!---Is a financed phone with a Financed Price--->
+                      #dollarFormat(serviceLabels.FinancedPrice)#/mo
+                    <cfelse>
+                      #dollarFormat(serviceLabels.monthlyFee)#/mo
+                    </cfif>
+                  </label>
+                </div>
+                <cfset local.i = (local.i + 1) />
+              </cfloop>
+
+            </cfif>
+
+          </cfloop>
+
+          <br>
+          
           <!-- Roadside Protection Modal -->
           <div class="modal fade" id="roadsideModal" tabindex="-1" role="dialog" aria-labelledby="roadsideModalLabel">
             <div class="modal-dialog" role="document">
@@ -147,10 +181,14 @@
 
         <div class="pull-right">
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary btn-block">Continue</button>
+          <button type="submit" class="btn btn-primary">Continue</button>
         </div>
+
       </form>
     </section>
+
+    
+
     <div class="legal">
       <p>Legal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
       <p>**Legal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>

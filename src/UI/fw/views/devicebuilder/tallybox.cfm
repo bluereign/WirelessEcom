@@ -1,4 +1,5 @@
 <cfoutput>
+  <!--- prc.productData: <cfdump var="#prc.productData#"> --->
   <!--- <Tally Box --->
   <div class="col-md-4">
     <div class="row totals">
@@ -57,8 +58,10 @@
         <h4>Carrier Plan</h4>
         <div class="row">
           <div class="col-xs-4">
-            <cfif isDefined("session.carrierObj.carrierLogo")>
-              <img src="#session.carrierObj.carrierLogo#" alt="#session.carrierObj.getCarrierName()#" />
+            <cfif prc.productData.carrierId eq prc.carrierIdAtt>
+              <img src="#prc.assetPaths.common#images/carrierLogos/att_logo_25.png" alt="#prc.productData.carrierName#" />
+            <cfelseif prc.productData.carrierId eq prc.carrierIdVzw>
+              <img src="#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png" alt="#prc.productData.carrierName#" />
             </cfif>
           </div>
           <div class="col-xs-12">

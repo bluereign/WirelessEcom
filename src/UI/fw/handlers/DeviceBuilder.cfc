@@ -32,6 +32,12 @@
       // KEEP THIS INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
 
+      prc.carrierIdAtt = 109;
+      prc.carrierGuidAtt = "83d7a62e-e62f-4e37-a421-3d5711182fb0";
+      prc.carrierIdVzw = 42;
+      prc.carrierGuidVzw = "263a472d-74b1-494d-be1e-ad135dfefc43";
+
+
       prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/";
       prc.AssetPaths = variables.AssetPaths;
 
@@ -41,6 +47,7 @@
         relocate( prc.browseDevicesUrl );
       }
       
+      // param available in CF9
       if ( !structKeyExists(rc,"paymentoption") OR !len(trim(rc.paymentoption)) ) {
         rc.paymentoption = "financed"; //financed, fullretail
       }
@@ -51,13 +58,14 @@
       if ( !structKeyExists(rc,"wid") OR !len(trim(rc.wid)) ) {
         rc.wid = 0; //financed, fullretail
       }
-      if ( !rc.wid eq 0 ) {
-        prc.warrantyInfo = application.model.Warranty.getById(rc.wid);
-      } else {
+
+      if ( rc.wid eq 0 ) {
         prc.warrantyInfo.Price = 0;
         prc.warrantyInfo.SummaryTitle = "No Equipment Protection Plan";
         prc.warrantyInfo.ShortDescription = "No Equipment Protection Plan";
         prc.warrantyInfo.LongDescription = "No Equipment Protection Plan";
+      } else {
+        prc.warrantyInfo = application.model.Warranty.getById(rc.wid);
       }
       // <end warranty option check
 
@@ -119,41 +127,42 @@
           prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
           prc.tallyboxHeader = "Upgrading";
+          prc.cartTypeId = 2;
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Carrier Login","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
           prc.tallyboxHeader = "Add a Line";
+          prc.cartTypeId = 3;
           break;
         case "new":
           prc.navItemsAction = ["plans","protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
-          prc.tallyboxHeader = "New Customer";
+          prc.tallyboxHeader = "New Customer (" & session.cart.getZipcode() & ")";
+          prc.cartTypeId = 1;
           break;
         case "upgradex":
           prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
           prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
           prc.tallyboxHeader = "Upgrading";
+          prc.cartTypeId = 2;
           break;
         case "addalinex":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
           prc.tallyboxHeader = "Add a Line";
+          prc.cartTypeId = 3;
           break;
         case "newx":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
           prc.tallyboxHeader = "New Customer";
-          break;
-        default:
-          // same as 'upgrade'
-          prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
-          prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          prc.cartTypeId = 1;
           break;
       }
 
@@ -237,7 +246,7 @@
           prc.tallyboxFinanceMonthlyDueToday = 0;
           
           // AT&T carrierId = 109, VZW carrierId = 42
-          if ( prc.productData.CarrierId eq 109 ) {
+          if ( prc.productData.CarrierId eq prc.carrierIdAtt ) {
 
             switch(rc.finance) {
               case "financed-24":
@@ -275,7 +284,7 @@
           break;
       }
 
-      
+
       // <end tally box
 
 
@@ -382,9 +391,9 @@
             session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
             session.cart.setCarrierId(session.carrierObj.getCarrierId());
 
-            if (session.carrierObj.getCarrierId() eq 109) {
+            if (session.carrierObj.getCarrierId() eq prc.carrierIdAtt) {
               session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
-            } else if (prc.productData.carrierId eq 42) {
+            } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
               session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
             }
 
@@ -393,7 +402,7 @@
               event="#rc.nextAction#",
               persist="type,pid,finance");
           } else {
-            rc.carrierResponseMessage = session.carrierObj.getResultDetail() & ".  We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+            rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
             setNextEvent(
               event="devicebuilder.carrierLogin",
               persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
@@ -484,9 +493,48 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset prc.qWarranty = application.model.Warranty.getByDeviceId( rc.pid ) />
+    <cfset var argsServices = {} />
+
+    <cfscript>
+      prc.qWarranty = application.model.Warranty.getByDeviceId(rc.pid);
+
+      if (prc.productData.carrierId eq prc.carrierIdAtt) {
+        argsServices.carrierId = prc.carrierGuidAtt;
+      } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
+        argsServices.carrierId = prc.carrierGuidVzw;
+      }
+
+      argsServices.type = "O";
+      argsServices.deviceGuid = prc.productData.productGuid;
+      argsServices.HasSharedPlan = session.cart.getHasSharedPlan();
+
+      prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = argsServices);
+
+
+      // debugging:
+      
+      // *** Definitely will need this:application.model.serviceManager.getDeviceMinimumRequiredServices(productId=prc.productData.productId)
+      // prc.deviceMinimumRequiredServices = application.model.serviceManager.getDeviceMinimumRequiredServices(productId=prc.productData.productId);
+
+      // prc.deviceServices = application.model.serviceManager.getDeviceServices(productId=prc.productData.productId);
+      // prc.devicePlanMinimumRequiredServices = application.model.serviceManager.getDevicePlanMinimumRequiredServices(DeviceId=prc.productData.productId,PlanId=rc.plan);
+      // prc.verifyRequiredServiceSelections = application.model.serviceManager.verifyRequiredServiceSelections(ratePlanProductId=rc.plan,deviceProductId=prc.productData.productId,selectedServiceProductIds='');
+
+      // argsServices = {};
+      // argsServices.carrierId=prc.productData.carrierId;
+      // argsServices.active=1;
+      // prc.getServices = application.model.serviceManager.getServices(argsServices);
+      // prc.getRequiredServicesByCartType = application.model.serviceManager.getRequiredServicesByCartType(cartTypeId=1,carriedId=prc.productData.carrierId);
+      // prc.getDefaultServices = application.model.serviceManager.getDefaultServices(RateplanGuid=,DeviceGuid=prc.productData.deviceGuid);
+
+      // <end debugging
+
+    </cfscript>
+
     <!--- TODO: If rc.plan does not exist, then send back to "plans" --->
     <!--- <cfdump var="#rc#"><cfabort> --->
+    <!--- <cfdump var="#prc.productData#"><cfabort> --->
+    <!--- <cfdump var="#prc.deviceMinimumRequiredServices#"><cfabort> --->
 
   </cffunction>
 

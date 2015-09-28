@@ -355,12 +355,12 @@
         <cfset local.result = local.requiredServices>
 
         <!--- get all services shared across all plans for this carrier. --->
-        <cfquery name="local.getSharedServices" datasource="#application.dsn.wirelessAdvocates#">
+        <!--- <cfquery name="local.getSharedServices" datasource="#application.dsn.wirelessAdvocates#">
         	select * from catalog.Rateplan
             where
             	CarrierGUID = '263A472D-74B1-494D-BE1E-AD135DFEFC43'
                 and type ='fam'
-        </cfquery>
+        </cfquery> --->
 
         <cfreturn local.result>
 

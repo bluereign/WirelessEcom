@@ -5,9 +5,15 @@
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
+      <!--- http://local.fullapi.costco.wa/devicebuilder/protection/pid/27671/type/new/ --->
+      <cfif structKeyExists(rc,"paymentoption")>
+        <input type="hidden" name="paymentoption" value="#rc.paymentoption#">
+      </cfif>
+      <cfif structKeyExists(rc,"paymentoption")>
+        <input type="hidden" name="finance" value="#rc.finance#">
+      </cfif>
       <cfif structKeyExists(rc,"line")>
         <input type="hidden" name="line" value="#rc.line#">
-        <input type="hidden" name="finance" value="#rc.finance#">
       </cfif>
       <section class="content">
         <header class="main-header">
