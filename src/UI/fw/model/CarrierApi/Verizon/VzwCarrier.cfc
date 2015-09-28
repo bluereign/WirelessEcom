@@ -14,15 +14,26 @@
 		<cfreturn this />
 	</cffunction>
 	
-	<cffunction name="account" output="false" access="public" returntype="fw.model.CarrierApi.Verizon.VzwCarrierResponse">
-		<cfhttp url="#variables.CarrierServiceURL#/VerizonAccount" method="POST">
+	<cffunction name="account" output="false" access="public" returntype="fw.model.CarrierApi.Verizon.VzwAccountCarrierResponse">
+		<cfset var local = structNew() />	
+		<cfhttp url="#variables.CarrierServiceURL#/VerizonAccount/login" method="POST" result="local.cfhttp">
 			<cfhttpparam type="header" name="Content-Type" value="application/json" />
-    		<!---<cfhttpparam type="body" value="#serializeJSON(remapArgs(argumentCollection=arguments))#">--->
-			<cfhttpparam type="body" value="#serializeJSonAddReferenceNumber(arguments)#">
+    		<cfhttpparam type="body" value="#serializeJSonAddReferenceNumber(arguments)#">
 		</cfhttp>
-		<cfreturn processResults(cfhttp) />	
-	</cffunction>
-	
+		<!--- create the carrier response --->
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Verizon.VzwAccountCarrierResponse').init() />
+		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+
+		<cfset local.resp = local.carrierResponse.getResponse() />
+		<cfif structKeyExists(local.resp,"ResponseStatusMessage") and len(local.resp.ResponseStatusMessage) and local.resp.ResponseStatusMessage is not "null">
+			<cfset local.carrierResponse.setResult(false) />
+			<cfset local.carrierResponse.setResultDetail(local.resp.ResponseStatusMessage) />
+		<cfelse>			
+			<cfset local.carrierResponse.setResult(true) />
+			<cfset local.carrierResponse.setResultDetail("Success") />
+		</cfif>
+		<cfreturn local.carrierResponse />
+	</cffunction>	
 	<!--------------------------------------------------------------------------------------------------
 		Helper Functions		
 	 --------------------------------------------------------------------------------------------------->
@@ -30,25 +41,36 @@
 	<!--- 
 		Look at the results of the call and set appropriate fields in the carrier response	
 	--->
-	<cffunction name="processResults" returnType="fw.model.CarrierApi.Verizon.VzwCarrierResponse" access="private">
+	<cffunction name="processResults" returnType="Any" access="private">
 		<cfargument type="struct" name="cfhttpResult" required="true" /> 
+		<cfargument type="any" name="carrierResponse" required="true" /> 
 		<cfset var emptyObj = {} />
-				
-		<cfset var carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Verizon.VzwCarrierResponse').init() />
-		<cfset carrierResponse.setHttpStatus(cfhttpResult.statusCode) />
+		
+		<!--- create the carrier response --->
+		<!---<cfset var carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttCarrierResponse').init() />--->
+		<cfset carrierResponse.setHttpStatus(arguments.cfhttpResult.statusCode) />
+		<cfif isdefined("arguments.cfhttpResult.responseHeader.status_code") and isNumeric(arguments.cfhttpResult.responseHeader.status_code) >
+			<cfset carrierResponse.setHttpStatusCode(arguments.cfhttpResult.responseHeader.status_code) />
+		</cfif>
+		
+		<!--- Copy the response or an empty object into the carrierResponse --->
 		<cfif isJson(arguments.cfhttpResult.fileContent)>			
 			<cfset carrierResponse.setResponse(deserializeJson(arguments.cfhttpResult.fileContent,true)) />
 		<cfelse>
 			<cfset carrierResponse.setResponse(emptyObj) />
 		</cfif>
 		
-		<!--- if httpStatus is 200 OK status = 0 else more specific case error may be set --->
-		
+		<cfif arguments.cfhttpResult.responseHeader.status_code is 200>			
+			<cfset carrierResponse.setResult(true) />
+			<cfset carrierResponse.setResultDetail("OK") />
+		<cfelse>
+			<cfset carrierResponse.setResult(false) />
+			<cfset carrierResponse.setResultDetail("Processing Error") />
+		</cfif>
 		
 		<cfreturn carrierResponse />
 	
 	</cffunction>
-
 	<!---
 		Get the Service URL
 	 --->
