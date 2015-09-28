@@ -97,7 +97,7 @@
 </cfif>
 
 </cfloop>
-
+<cfset accessoryIndex = randrange(1, listlen(accessoryIds))/>
 <cfset args = { 
 	productType = "accessory",
 	product_id = "#listgetat(accessoryids,accessoryIndex)#",
