@@ -127,41 +127,42 @@
           prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
           prc.tallyboxHeader = "Upgrading";
+          prc.cartTypeId = 2;
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Carrier Login","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
           prc.tallyboxHeader = "Add a Line";
+          prc.cartTypeId = 3;
           break;
         case "new":
           prc.navItemsAction = ["plans","protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
-          prc.tallyboxHeader = "New Customer";
+          prc.tallyboxHeader = "New Customer (" & session.cart.getZipcode() & ")";
+          prc.cartTypeId = 1;
           break;
         case "upgradex":
           prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
           prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
           prc.tallyboxHeader = "Upgrading";
+          prc.cartTypeId = 2;
           break;
         case "addalinex":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
           prc.tallyboxHeader = "Add a Line";
+          prc.cartTypeId = 3;
           break;
         case "newx":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
           prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
           prc.tallyboxHeader = "New Customer";
-          break;
-        default:
-          // same as 'upgrade'
-          prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
-          prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          prc.cartTypeId = 1;
           break;
       }
 
@@ -401,7 +402,7 @@
               event="#rc.nextAction#",
               persist="type,pid,finance");
           } else {
-            rc.carrierResponseMessage = session.carrierObj.getResultDetail() & ".  We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+            rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
             setNextEvent(
               event="devicebuilder.carrierLogin",
               persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
@@ -505,15 +506,35 @@
 
       argsServices.type = "O";
       argsServices.deviceGuid = prc.productData.productGuid;
-      // argsServices.HasSharedPlan = "no";
       argsServices.HasSharedPlan = session.cart.getHasSharedPlan();
+
       prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = argsServices);
+
+
+      // debugging:
+      
+      // *** Definitely will need this:application.model.serviceManager.getDeviceMinimumRequiredServices(productId=prc.productData.productId)
+      // prc.deviceMinimumRequiredServices = application.model.serviceManager.getDeviceMinimumRequiredServices(productId=prc.productData.productId);
+
+      // prc.deviceServices = application.model.serviceManager.getDeviceServices(productId=prc.productData.productId);
+      // prc.devicePlanMinimumRequiredServices = application.model.serviceManager.getDevicePlanMinimumRequiredServices(DeviceId=prc.productData.productId,PlanId=rc.plan);
+      // prc.verifyRequiredServiceSelections = application.model.serviceManager.verifyRequiredServiceSelections(ratePlanProductId=rc.plan,deviceProductId=prc.productData.productId,selectedServiceProductIds='');
+
+      // argsServices = {};
+      // argsServices.carrierId=prc.productData.carrierId;
+      // argsServices.active=1;
+      // prc.getServices = application.model.serviceManager.getServices(argsServices);
+      // prc.getRequiredServicesByCartType = application.model.serviceManager.getRequiredServicesByCartType(cartTypeId=1,carriedId=prc.productData.carrierId);
+      // prc.getDefaultServices = application.model.serviceManager.getDefaultServices(RateplanGuid=,DeviceGuid=prc.productData.deviceGuid);
+
+      // <end debugging
 
     </cfscript>
 
     <!--- TODO: If rc.plan does not exist, then send back to "plans" --->
     <!--- <cfdump var="#rc#"><cfabort> --->
     <!--- <cfdump var="#prc.productData#"><cfabort> --->
+    <!--- <cfdump var="#prc.deviceMinimumRequiredServices#"><cfabort> --->
 
   </cffunction>
 
