@@ -106,8 +106,8 @@
                 <cfif arrayLen(prc.aSelectedServices)>
                   <cfloop index="i" from="1" to="#arrayLen(prc.aSelectedServices)#">
                     <tr>
-                      <td>#prc.aSelectedServices[i].label# (#prc.aSelectedServices[i].productId#)</td>
-                      <td class="price">#dollarFormat(prc.aSelectedServices[i].MonthlyFee)#</td>
+                      <td>#prc.aSelectedServices[i].Title# (#prc.aSelectedServices[i].productId#)</td>
+                      <td class="price">#dollarFormat(prc.aSelectedServices[i].price)#</td>
                     </tr>                  
                   </cfloop>
                 <cfelse>

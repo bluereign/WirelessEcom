@@ -8,7 +8,7 @@
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
-  <cfset this.preHandler_except = "planmodal,protectionmodal" />
+  <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal" />
 
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
@@ -261,7 +261,6 @@
         }
       }
 
-
       // convert to array with productId, price, label for Tallybox
       // prc.aSelectedServices = ListToArray(prc.selectedServices);
       i = 0;
@@ -270,18 +269,17 @@
       for (i = 1; i lte l; i++) {
         thisService = structNew();
         // thisService.productId = listGetAt(prc.selectedServices,i);
-        thisServiceQry = application.model.serviceManager.getServiceByProductId(productId = listGetAt(prc.selectedServices,i));
-        thisService.productId = thisServiceQry.productId;
-        thisService.monthlyFee = thisServiceQry.MonthlyFee;
-        thisService.label = thisServiceQry.label;
-        arrayAppend(prc.aSelectedServices, thisService);
+        // thisServiceQry = application.model.serviceManager.getServiceByProductId(productId = listGetAt(prc.selectedServices,i));
+        if ( isNumeric(listGetAt(prc.selectedServices,i)) ) { // is not '' or 'nothanks'
+          thisServiceQry = application.model.feature.getByProductID(productID = listGetAt(prc.selectedServices,i));
+          thisService.productId = thisServiceQry.productId;
+          thisService.price = thisServiceQry.price;
+          thisService.Title = thisServiceQry.Title;
+          arrayAppend(prc.aSelectedServices, thisService);
+
+        }
+        
       }      
-
-
-
-
-
-
       // <end selected services
 
 
@@ -544,6 +542,7 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var argsServices = {} />
+    <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
 
     <cfscript>
       prc.qWarranty = application.model.Warranty.getByDeviceId(rc.pid);
@@ -600,6 +599,22 @@
       event.noLayout();
     </cfscript>
     <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
+
+  </cffunction>
+
+
+  <cffunction name="featuremodal" returntype="void" output="false" hint="Plan modal">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+
+    <cfscript>
+      if (structKeyExists(rc,"fid")) {
+        prc.featureInfo = application.model.Feature.getByProductID(rc.fid);
+      }
+      event.noLayout();
+    </cfscript>
+    <!--- <cfdump var="#prc.featureInfo#"><cfabort> --->
 
   </cffunction>
 

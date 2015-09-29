@@ -1,32 +1,30 @@
 <cfoutput>
-    <!--- <input type="hidden" name="wid" value="#rc.wid#"> --->
+    <!--- <input type="hidden" name="fid" value="#rc.fid#"> --->
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title">Carrier Mobile Protection Pack</h4>
-      <p>#prc.warrantyInfo.SummaryTitle#</p>
+      <h4 class="modal-title">#prc.featureInfo.detailTitle#</h4>
     </div>
     <div class="modal-body">
       <div class="plans">
         <div class="info">
-          <h3 style="height:40px"><span>#prc.warrantyInfo.SummaryTitle#</span></h3>
-          <p>#prc.warrantyInfo.ShortDescription#</p>
-          <p>#prc.warrantyInfo.LongDescription#</p>
-          <div class="price">#dollarFormat(prc.warrantyInfo.Price)#/month</div>
+          <h3 style="height:40px"><span>#prc.featureInfo.title#</span></h3>
+          <p>#prc.featureInfo.detailDescription#</p>
+          <div class="price">#dollarFormat(prc.featureInfo.Price)#/month</div>
         </div>
       </div>
     </div>
     
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <a href="##" type="button" class="btn btn-primary" name="btnAddWarranty" id="btnAddWarranty" value="#rc.wid#">Add to Cart</a>
+      <a href="##" type="button" class="btn btn-primary" name="btnAddFeature" id="btnAddFeature" value="#rc.fid#">Add to Cart</a>
     </div>
 
     <script>
-      $('##btnAddWarranty').click(function() {
+      $('##btnAddFeature').click(function() {
           var thisvalue = $(this).attr("value");
           // console.log($("##warrantyoption_"+thisvalue));
-          $("##warrantyoption_"+thisvalue).prop("checked",true);
-          $('##protectionModal').modal('hide');
+          $("##chk_features_"+thisvalue).prop("checked",true);
+          $('##featureModal').modal('hide');
 
           // temp: submit the form:
           var form = $("##protectionForm");

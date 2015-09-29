@@ -98,6 +98,34 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div>
+  <div class="modal fade" id="featureModal" tabindex="-2" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog modal-lg"> 
+      <div class="modal-content">
+
+
+        <!--- <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Feature Modal</h4>
+        </div>
+        <div class="modal-body">
+          <div class="plans">
+            <div class="info">
+              <h3 style="height:40px"><span>Hey</span></h3>
+              <p>Yo</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <a href="##" type="button" class="btn btn-primary" name="btnAddFeature" id="btnAddWarranty" value="">Add to Cart</a>
+        </div> --->
+
+
+
+      </div>
+    </div>
+  </div>
 </cfif>
 <!--- <end protectionModal --->
 

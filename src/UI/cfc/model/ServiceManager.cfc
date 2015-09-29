@@ -1158,35 +1158,4 @@
 
 		<cfreturn local.channelId />
 	</cffunction>
-
-
-  <cffunction name="getServiceByProductId" returntype="query">
-    <cfargument name="productId" required="false" type="numeric" default="0" />
-    
-    <cfquery name="local.qryServiceByProductId" datasource="#application.dsn.wirelessAdvocates#">
-      SELECT
-        sm.label
-        , s.MonthlyFee
-        , s.FinancedPrice
-        , sm.ServiceMasterGUID
-        , s.ServiceGUID
-        , p.ProductId
-        , p.GersSku
-        , (SELECT COUNT(1) FROM catalog.RateplanService WITH (NOLOCK) WHERE ServiceGuid = s.ServiceGuid) AS RatePlanRelatedServices
-        , (SELECT COUNT(1) FROM catalog.DeviceService WITH (NOLOCK) WHERE ServiceGuid = s.ServiceGuid) AS DeviceRelatedServices
-        , s.CarrierBillCode
-        , r.RecommendationId
-        , r.Description RecommendationDescription
-        , IsNull(r.hideMessage, 0) as hideMessage,
-        p.Active
-      FROM catalog.ServiceMaster AS sm WITH (NOLOCK)
-      INNER JOIN catalog.Service AS s WITH (NOLOCK) ON s.ServiceGuid = sm.ServiceGuid
-      INNER JOIN catalog.Product AS p WITH (NOLOCK) ON s.ServiceGuid = p.ProductGuid
-      LEFT JOIN cart.Recommendation r ON r.ProductId = p.ProductId
-      WHERE   p.ProductId = <cfqueryparam value="#arguments.productId#" cfsqltype="cf_sql_varchar" />
-    </cfquery>
-
-    <cfreturn local.qryServiceByProductId />
-
-  </cffunction>
 </cfcomponent>

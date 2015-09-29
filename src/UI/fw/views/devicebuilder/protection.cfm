@@ -1,33 +1,6 @@
-<!--- <cfdump var="#rc#"> --->
-<!--- <cfdump var="#prc.qWarranty#"> --->
-<!--- <cfdump var="#prc.groupLabels#"> --->
-<!--- <cfdump var="#prc.productData#"><cfabort> --->
-<!--- <cfdump var="#prc.deviceMinimumRequiredServices#"> --->
 <cfoutput>
-
-  <!--- rc.count = #structCount(rc)#<br> --->
-  <!--- structKeyExists(rc, "serviceCounter"): #structKeyExists(rc, "serviceCounter")#<br> --->
-  <!--- <cfset prc.selectedServices = "" />
-  <cfif structKeyExists(rc, "FieldNames") and findNoCase("chk_features_",rc.FieldNames)>
-    <cfloop index="thisField" list="#rc.FieldNames#">
-        <cfif findNoCase("chk_features_",thisField)>
-          <br/>#thisField#=#XmlFormat(rc[thisField])# findNoCase("chk_features_",thisField): #findNoCase("chk_features_",thisField)# value: #rc[thisField]#
-          <cfset prc.selectedServices = listAppend(prc.selectedServices,XmlFormat(rc[thisField]))>
-        </cfif>
-    </cfloop>
-  </cfif> --->
-
-  <!--- <cfif structKeyExists(prc,"selectedServices")>
-    <div>
-      <br><br>prc.selectedServices: <b>#prc.selectedServices#</b>
-    </div>
-  </cfif> --->
-  
-  <!--- <cfif structKeyExists(prc,"aSelectedServices")>
-    <cfdump var="#prc.aSelectedServices#">
-  </cfif> --->
-
   <div class="col-md-12">
+
     <section class="content">
 
       <header class="main-header">
@@ -99,8 +72,9 @@
               <label for="AddProtectionPlan_#prc.qWarranty.productId#">
                 <input type="radio" name="wid" id="warrantyoption_#prc.qWarranty.productId#" value="#prc.qWarranty.productId#" onchange="onChangeHandler(this.form,this.form.paymentoption.value)"  <cfif rc.wid eq prc.qWarranty.productId>checked</cfif> >
                 <a type="button" data-toggle="modal" data-target="##protectionModal" href="#event.buildLink('devicebuilder.protectionmodal')#/pid/#rc.pid#/type/#rc.type#/wid/#prc.qWarranty.productId#">
-                  #prc.qWarranty.SummaryTitle# (#dollarformat(prc.qWarranty.price)#)
-                </a>
+                  #prc.qWarranty.SummaryTitle#
+                </a> 
+                #dollarformat(prc.qWarranty.price)#
                 <cfif findNoCase("Apple",prc.qWarranty.SummaryTitle)><span class="actionLink" style="color:##009900;"> - Recommended</span></cfif>
               </label>
             </div>
@@ -117,16 +91,11 @@
         <section>
 
           <h4>Additional Service</h4>
-          <!--- (for device: #prc.productData.productGuid#) --->
 
-          <!--- <cfdump var="#prc.groupLabels#"> --->
           <cfset prc.serviceCounter = 0>
           <cfloop query="prc.groupLabels">
             
-            <!--- <cfset serviceLabels = application.model.ServiceManager.getServiceMasterLabelsByGroup(groupGUID = prc.groupLabels.ServiceMasterGroupGuid, deviceId = prc.productData.productGuid, returnAllCartTypes=true)> --->
-            <cfset serviceLabels = application.model.ServiceManager.getServiceMasterLabelsByGroup(groupGUID = prc.groupLabels.ServiceMasterGroupGuid, deviceId = prc.productData.productGuid, cartTypeId = prc.cartTypeId)>
-
-            <!--- <cfdump var="#serviceLabels#"> --->
+            <cfset serviceLabels = application.model.serviceManager.getServiceMasterLabelsByGroup(groupGUID = prc.groupLabels.ServiceMasterGroupGuid, rateplanId = prc.planInfo.ratePlanGuid, deviceId = prc.productData.productGuid, showActiveOnly = true, cartTypeId = prc.cartTypeId) />
 
             <cfset prc.groupInputType = 'checkbox' />
             <cfset prc.hasNoneOption = false />
@@ -145,71 +114,65 @@
             
             <cfif serviceLabels.recordCount gt 0>
               <div>#trim(prc.groupLabels.label)#</div>
-              <!--- <div><cfdump var="#prc.groupLabels#"></div> --->
-              <!--- <div><cfdump var="#serviceLabels#"></div> --->
-              <!--- <cfdump var="#prc.deviceMinimumRequiredServices#"> --->
-
               <cfset prc.i = 1 />
+              <cfset prc.nothanks = 1 />
               <cfloop query="serviceLabels">
                 <cfset prc.serviceCounter = prc.serviceCounter + 1 />
-                <!--- request.config.debugInventoryData: #request.config.debugInventoryData# --->
-                <!--- serviceLabels.HideMessage[serviceLabels.currentRow]: #serviceLabels.HideMessage[serviceLabels.currentRow]# --->
+
                 <div class="checkbox">
                   <label>
                     <input type="#prc.groupInputType#"
                           name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#"
+                          id="chk_features_#serviceLabels.productId[serviceLabels.currentRow]#"
                           value="#serviceLabels.productId[serviceLabels.currentRow]#"
-                          <!--- id="chk_features_#serviceLabels.productId[serviceLabels.currentRow]#"
-                          name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#" 
-                          name="chk_features_#prc.serviceCounter#"--->
 
-                          <cfif listFindNoCase(prc.selectedServices,serviceLabels.productId[serviceLabels.currentRow])>
+                          <cfif listFindNoCase(prc.selectedServices, serviceLabels.productId[serviceLabels.currentRow])>
+                            <cfset prc.nothanks = 0 />
                             checked
                           <cfelseif len(serviceLabels.recommendationId[serviceLabels.currentRow]) or prc.i eq prc.defaultIndex>
+                            <cfset prc.nothanks = 0 />
                             checked
                           </cfif>
 
                           onchange="onChangeHandler(this.form,this.form.paymentoption.value)" />
 
-
-                    <a href="##" type="button" data-toggle="modal" data-target="##roadsideModal">#trim(serviceLabels.label)# (#serviceLabels.productId#)</a> 
+                    <a type="button" data-toggle="modal" data-target="##featureModal" href="#event.buildLink('devicebuilder.featuremodal')#/pid/#rc.pid#/type/#rc.type#/fid/#serviceLabels.productId#">
+                      #trim(serviceLabels.label)#
+                    </a>
                     <cfif rc.paymentoption is 'financed' and (len(serviceLabels.FinancedPrice))><!---Is a financed phone with a Financed Price--->
                       #dollarFormat(serviceLabels.FinancedPrice)#/mo
                     <cfelse>
                       #dollarFormat(serviceLabels.monthlyFee)#/mo
                     </cfif>
-                    <!--- - #prc.serviceCounter# --->
                   </label>
                 </div>
                 <cfset prc.i = (prc.i + 1) />
               </cfloop>
 
+              <cfif prc.hasNoneOption>
+                <cfparam name="prc.nothanks" default="1" />
+                <div class="checkbox">
+                  <label>
+                    <input type="#prc.groupInputType#"
+                          name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#" 
+                          <cfif prc.nothanks eq 1>
+                            checked
+                          </cfif>
+
+                          onchange="onChangeHandler(this.form,this.form.paymentoption.value)" />
+
+                    <!--- No thanks --->
+                    No #trim(prc.groupLabels.label)# Option
+                    
+                  </label>
+                </div>
+              </cfif>
+
             </cfif>
 
           </cfloop>
-          <input type="hidden" name="serviceCounter" value="#prc.serviceCounter#" />
-
-          <br>
           
-          <!-- Roadside Protection Modal -->
-          <div class="modal fade" id="roadsideModal" tabindex="-1" role="dialog" aria-labelledby="roadsideModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="roadsideModalLabel">Roadside Assistance</h4>
-                  <p>Need help on the go? We have a solution for you.</p>
-                </div>
-                <div class="modal-body">
-                  <p>Bacon ipsum dolor amet shankle turkey turducken ball tip. Ham turkey porchetta, ribeye venison filet mignon pork loin. Ball tip chicken tongue shank ham hock turducken biltong. Swine kielbasa strip steak salami, andouille flank corned beef beef ribs tongue pork.</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Add to Cart</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <input type="hidden" name="serviceCounter" value="#prc.serviceCounter#" />
 
         </section>
 

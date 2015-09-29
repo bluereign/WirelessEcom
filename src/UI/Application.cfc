@@ -103,6 +103,9 @@
 		<cfif structKeyExists(url,"recart")>
 		    <cfset application.view.cart = createObject('component', 'cfc.view.Cart').init() >
 		</cfif>
+		<cfif structKeyExists(url,"reservice")>
+		    <cfset application.view.serviceManager = createObject('component', 'cfc.view.serviceManager').init() >
+		</cfif>
 		<!--- End --->
 
 		
