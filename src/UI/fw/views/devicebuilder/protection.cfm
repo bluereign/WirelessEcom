@@ -88,7 +88,7 @@
 
         </section>
         
-        <section>
+        <section class="seperator">
 
           <h4>Device Protection Options</h4>
           <!--- <a href="##">Help me choose a Protection Plan</a> --->
@@ -114,7 +114,7 @@
 
         </section>
 
-        <section>
+        <section class="seperator">
 
           <h4>Additional Service</h4>
           <!--- (for device: #prc.productData.productGuid#) --->
