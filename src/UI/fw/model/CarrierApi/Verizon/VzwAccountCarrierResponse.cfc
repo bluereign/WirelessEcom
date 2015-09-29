@@ -116,7 +116,7 @@
 				<!---<cfset local.subscriber.setEligibilityDate(ParseDateTime(listgetat(local.s.upgradeInfo.eligibilityDate,1,"T"))) />
 				<cfset local.subscriber.setEligibilityStatus(local.s.upgradeInfo.EligibilityStatus) />--->
 				<cfset local.subscriber.setIsEligible(local.s.upgradeInfo.IsEligible) />
-					
+				<cfset local.subscriber.setRatePlan(listgetat(local.s.planInfo[1].Identifier,1,'~')) />					
 				<cfset local.subscriber.setNumber(local.s.number) />
 			<cfset arrayAppend(local.subscribers,local.subscriber) />		
 		</cfloop>
