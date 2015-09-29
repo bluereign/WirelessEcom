@@ -9,7 +9,7 @@
       </header>
 
       <form action="#prc.nextStep#" name="protectionForm" id="protectionForm" method="post">
-        <div class="right">
+        <div class="pull-right">
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#">
           </cfif>
@@ -61,7 +61,7 @@
 
         </section>
         
-        <section class="seperator">
+        <section>
 
           <h4>Device Protection Options</h4>
           <!--- <a href="##">Help me choose a Protection Plan</a> --->
@@ -88,7 +88,7 @@
 
         </section>
 
-        <section class="seperator">
+        <section>
 
           <h4>Additional Service</h4>
 
@@ -176,7 +176,7 @@
 
         </section>
 
-        <div class="right">
+        <div class="pull-right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
