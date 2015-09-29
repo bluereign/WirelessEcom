@@ -98,7 +98,9 @@
 			<cfloop array="#local.resp.account.subscribers#" index="local.s">
 				<cfset local.subscriber = createObject('component','fw.model.carrierApi.Att.AttSubscriber').init() />
 					<cfset local.subscriber.setResponse(local.s) />
-					<cfset local.subscriber.setAccountStatus(local.s.AccountStatus) />
+					<cfif structKeyexists(local.s,"AccountStatus") >
+						<cfset local.subscriber.setAccountStatus(local.s.AccountStatus) />
+					</cfif>
 					<cfset local.subscriber.setAddress(getAddress(local.s.address)) />	
 					<cfset local.subscriber.setEmail(local.s.contact.emailAddress) />
 					<cfset local.subscriber.setNumber(local.s.number) />
