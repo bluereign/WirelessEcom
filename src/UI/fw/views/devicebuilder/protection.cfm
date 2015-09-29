@@ -36,7 +36,7 @@
       </header>
 
       <form action="#prc.nextStep#" name="protectionForm" id="protectionForm" method="post">
-        <div class="pull-right">
+        <div class="right">
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#">
           </cfif>
@@ -213,7 +213,7 @@
 
         </section>
 
-        <div class="pull-right">
+        <div class="right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
