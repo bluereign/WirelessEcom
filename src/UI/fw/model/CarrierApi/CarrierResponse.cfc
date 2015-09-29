@@ -24,6 +24,19 @@
 		<cfreturn variables.instance.carrierName />
 	</cffunction>
 	
+	<cffunction name="setTicks" access="public" returnType="void">
+		<cfargument name="ticks" type="numeric" required="false" default="0" />
+		<cfset variables.instance.ticks = arguments.ticks />
+	</cffunction>
+	
+	<cffunction name="getTicks" access="public" returnType="numeric">
+		<cfif structKeyExists(variables.instance,"ticks") >
+			<cfreturn variables.instance.ticks />
+		<cfelse>
+			<cfreturn 0 />
+		</cfif>
+	</cffunction>
+	
 	<cffunction name="setResponse" access="public" returnType="boolean">
 		<cfargument name="response" type="any" required="true" hint="obj of response from carrier" > 
 		

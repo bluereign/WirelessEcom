@@ -122,7 +122,7 @@
 	</cffunction>
 	
 	<cffunction name="getRatePlan" returnType="query" access="public">
-		<cfif isdefined("variables.instance.ratePlan") >
+		<cfif isdefined("variables.instance.ratePlan") and isQuery(variables.instance.ratePlan) >
 			<cfreturn variables.instance.ratePlan />
 		<cfelse>
 			<cfreturn QueryNew("") />
