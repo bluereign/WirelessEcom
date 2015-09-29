@@ -7546,7 +7546,7 @@ body {
   font-size: 0rem;
 }
 .head .nav-pills .complete a:before {
-  background: url('/assetes/common/images/ui/device_builder_checkmark.png') no-repeat center top;
+  background: url('/assets/common/images/ui/device_builder_checkmark.png') no-repeat center top;
   color: #fff;
   content: '';
   display: block;
@@ -7932,7 +7932,7 @@ form .right:first-child {
   float: right;
 }
 .accessories .product.sale:before {
-  background: url('/images/ex-sale-tag.png') top left;
+  background: url('/assets/costco/images/ex-sale-tag.png') top left;
   content: ' ';
   display: block;
   height: 49px;
@@ -7943,6 +7943,15 @@ form .right:first-child {
 }
 .accessories .product.sale .price {
   color: #ff0000;
+}
+.accessories .product .promo-tag {
+  position: absolute;
+  background-color: #518f30;
+  display: block;
+  padding: 2px 5px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bolder;
 }
 .accessories .product .callout {
   display: none;
@@ -8038,6 +8047,9 @@ form .right:first-child {
 .filters .product .price {
   font-size: 16px;
   font-size: 1rem;
+}
+.payment-protection .seperator {
+  border-top: solid 1px #b3b3b3;
 }
 .plans {
   border: 1px solid #b3b3b3;
