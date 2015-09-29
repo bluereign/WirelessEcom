@@ -12,9 +12,14 @@
 		Carrier API Entry Points (alphabetical order)
 	----------------------------------------------------------------------------------------------------->
 
-	<cffunction name="account" output="false" access="public" returntype="any">		
-		<cfset var args = passthruArgs(argumentCollection = arguments ) />
-		<cfreturn carrierObject(arguments.carrierId).account(argumentCollection = args) />		
+	<cffunction name="account" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.beginTicks = getTickCount() />
+		<cfset local.accountResp =  carrierObject(arguments.carrierId).account(argumentCollection = local.args) />	
+		<cfset local.endTicks = getTickCount() />
+		<cfset local.accountResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfreturn local.accountResp />	
 	</cffunction>		
 	
 	<!---<cffunction name="upgradeEligibility" output="false" access="public" returntype="any">		

@@ -3,6 +3,7 @@
 <a href="<cfoutput>#event.buildLink('testFullApi.account_input')#</cfoutput>"><button class="btn btn-default"  type="button">Do Another Lookup</button></a><br/><br/>
 <h2>
 <br/>getHttpStatusCode() = #rc.respObj.getHttpStatusCode()#
+<br/>getTicks() = #rc.respObj.getTicks()#ms (#rc.respObj.getTicks()/1000# secs)
 <br/>getHttpStatus() = #rc.respObj.getHttpStatus()#
 <br/>getResult() = #rc.respObj.getResult()#
 <br/>getResultDetail() = #rc.respObj.getResultDetail()#
