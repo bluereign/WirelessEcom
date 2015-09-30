@@ -15,7 +15,7 @@
         <input type="hidden" name="pid" value="#rc.pid#" />
         <input type="hidden" name="finance" value="#rc.finance#" />
         <input type="hidden" name="nextAction" value="#rc.nextAction#" />
-        <div class="pull-right">
+        <div class="right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
@@ -39,7 +39,7 @@
           <input type="text" class="form-control" id="inputPin" name="inputPin" value="<cfif isDefined('rc.inputPin')>#rc.inputPin#</cfif>">
           <a href="##" data-toggle="tooltip" title="#prc.inputPinTooltipTitle#" id="inputPinToolTip">Where do I get this?</a>
         </div>
-        <div class="pull-right">
+        <div class="right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btn-block">Continue</button>
         </div>

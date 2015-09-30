@@ -1,3 +1,4 @@
+<!--- <cfdump var="#prc.subscriber#"> --->
 <cfoutput>
   <div class="col-md-12">
 
@@ -43,13 +44,18 @@
                   </option>
                 </cfif>
               </select>
-              CARRIER is requiring a down payment
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" value="1" checked disabled="1">
-                  <a href="##">I Agree to the required CARRIER down payment of:</a> $0.00
-                </label>
-              </div>
+              <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
+                CARRIER is requiring a down payment
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="1" name="approveDownPayment" id="approveDownPayment">
+                    <a href="##">I Agree to the required CARRIER down payment of:</a> #dollarFormat(prc.subscriber.downPayment)#
+                  </label>
+                </div>
+              <!--- <cfelse>#rc.plan# --->
+              </cfif>
+
+                
             </label>
           </div>
           <div class="radio">

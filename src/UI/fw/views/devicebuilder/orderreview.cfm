@@ -8,7 +8,7 @@
           <h1>Cart</h1>
         </header>
         <form>
-          <div class="pull-right">
+          <div class="right">
             <cfif prc.showAddAnotherDeviceButton>
               <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
             </cfif>
@@ -228,7 +228,7 @@
         </div>
       </div>
       </div>
-      <div class="pull-right">
+      <div class="right">
         <a href="##">ADD ANOTHER DEVICE</a>
         <button type="submit" class="btn btn-primary">Checkout Now</button>
       </div>

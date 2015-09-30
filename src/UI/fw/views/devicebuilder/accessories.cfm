@@ -7,7 +7,7 @@
         <p>When an accessory is selected you will see it added to Your Order.</p>
       </header>
       <form action="#prc.nextStep#" method="post">
-        <div class="pull-right">
+        <div class="right">
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#">
           </cfif>
@@ -106,7 +106,7 @@
           </div>
         </div>
 
-        <div class="pull-right">
+        <div class="right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btn-block">Continue</button>
         </div>

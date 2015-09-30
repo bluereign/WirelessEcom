@@ -8,7 +8,7 @@
       </header>
       <!--- <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave"> --->
         <form action="#prc.nextStep#">
-        <div class="pull-right">
+        <div class="right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
@@ -81,7 +81,7 @@
         </div>
         <!--- /Accordion --->
 
-        <div class="pull-right">
+        <div class="right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btn-block">Continue</button>
         </div>
