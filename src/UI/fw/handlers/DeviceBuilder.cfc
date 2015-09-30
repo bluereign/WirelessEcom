@@ -234,7 +234,13 @@
         if (structKeyExists(prc,"subscriber")) {
           prc.subscriber.OfferCategory = IIF(prc.productData.carrierId eq prc.carrierIdAtt, DE(prc.OfferCategoryAtt), DE(prc.OfferCategoryVzw));
           prc.subscriber.MinimumCommitment = listLast(rc.finance, '-');
-          prc.subscriber.downPayment = prc.subscriber.getUpgradeDownPaymentPercent(prc.subscriber.OfferCategory,prc.subscriber.MinimumCommitment);
+          prc.subscriber.downPaymentPercent = prc.subscriber.getUpgradeDownPaymentPercent(prc.subscriber.OfferCategory,prc.subscriber.MinimumCommitment);
+          
+          // TEST: seed with 10% downpayment:
+          prc.subscriber.downPaymentPercent = 10;
+          prc.subscriber.downPayment = prc.subscriber.downPaymentPercent * prc.productData.FinancedFullRetailPrice / 100;
+
+          
         }
       }
       // <end selected plan

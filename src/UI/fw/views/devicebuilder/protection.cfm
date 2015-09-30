@@ -18,7 +18,14 @@
             <input type="hidden" name="plan" value="#rc.plan#">
           </cfif>
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary">Continue</button>
+          <!--- <button type="submit" class="btn btn-primary">Continue</button> --->
+          <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
+            <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
+              disabled
+            </cfif>
+            >
+            Continue
+          </button>
         </div>
 
         <section>
@@ -184,7 +191,13 @@
 
         <div class="right">
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary">Continue</button>
+          <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
+            <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
+              disabled
+            </cfif>
+            >
+            Continue
+          </button>
         </div>
 
       </form>
@@ -198,12 +211,13 @@
       <p>†Legal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
     </div>
   </div>
-<script type="text/javascript">
-  function onChangeHandler(form,paymentoption) {
-    form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
-    form.paymentoption.value=paymentoption;
-    form.submit();
-  }
-</script>
+
+  <script type="text/javascript">
+    function onChangeHandler(form,paymentoption) {
+      form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
+      form.paymentoption.value=paymentoption;
+      form.submit();
+    }
+  </script>
 
 </cfoutput>
