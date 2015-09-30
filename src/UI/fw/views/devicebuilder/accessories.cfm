@@ -8,13 +8,15 @@
       </header>
       <form action="#prc.nextStep#" method="post">
         <div class="right">
+          <input type="hidden" name="finance" value="#rc.finance#">
+          <input type="hidden" name="type" value="#rc.type#" />
+          <input type="hidden" name="pid" value="#rc.pid#" />
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#">
           </cfif>
           <cfif structKeyExists(rc,"plan")>
             <input type="hidden" name="plan" value="#rc.plan#">
           </cfif>
-          <input type="hidden" name="finance" value="#rc.finance#">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>

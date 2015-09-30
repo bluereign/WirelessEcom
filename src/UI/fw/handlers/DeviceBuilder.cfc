@@ -28,7 +28,7 @@
     <cfset var nextAction = "" />
     <cfset var prevAction = "" />
     <cfset var argsPlan = {} />
-    
+    <!--- <cfdump var="#rc#"><cfabort> --->
     <cfscript>
       // KEEP THIS NEXT LINE INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
@@ -193,7 +193,8 @@
           // don't overwrite a nextAction value that has been manually passed in (via Form, etc.):
           rc.nextAction = "devicebuilder.#nextAction#";
         }
-        prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+        // prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+        prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/';
       } else {
         prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       }
@@ -239,8 +240,6 @@
           // TEST: seed with 10% downpayment:
           prc.subscriber.downPaymentPercent = 10;
           prc.subscriber.downPayment = prc.subscriber.downPaymentPercent * prc.productData.FinancedFullRetailPrice / 100;
-
-          
         }
       }
       // <end selected plan
@@ -305,6 +304,7 @@
           if (structKeyExists(prc,"subscriber") and structKeyExists(prc.subscriber,"downPayment") and prc.subscriber.downPayment gt 0) {
             prc.tallyboxFinanceMonthlyDueToday = prc.subscriber.downPayment;
           } else {
+            // prc.subscriber.downPayment = 1000;
             prc.tallyboxFinanceMonthlyDueToday = 0;
           }
           
@@ -536,6 +536,7 @@
     <cfset var argsPlan = {} />
 
     <cfscript>
+      prc.nextStep = event.buildLink('devicebuilder.protection');
       if (structKeyExists(rc,"plan")) {
         argsPlan.idList = rc.plan;
         prc.planInfo = PlanService.getPlans(argumentCollection=argsPlan);
@@ -553,6 +554,10 @@
     <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
 
     <cfscript>
+      if (!structKeyExists(rc, "isDownPaymentApproved")) {
+        rc.isDownPaymentApproved = 0;
+      }
+
       prc.qWarranty = application.model.Warranty.getByDeviceId(rc.pid);
 
       if (prc.productData.carrierId eq prc.carrierIdAtt) {

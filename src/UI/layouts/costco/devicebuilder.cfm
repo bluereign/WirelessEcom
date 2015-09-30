@@ -111,7 +111,7 @@
   <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
     <script>
       
-      $('##approveDownPayment').click(function() {
+      $('##isDownPaymentApproved').click(function() {
           var $this = $(this);
           // $this will contain a reference to the checkbox   
           if ($this.is(':checked')) {

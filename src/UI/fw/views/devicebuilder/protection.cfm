@@ -11,6 +11,8 @@
 
       <form action="#prc.nextStep#" name="protectionForm" id="protectionForm" method="post">
         <div class="right">
+          <input type="hidden" name="type" value="#rc.type#" />
+          <input type="hidden" name="pid" value="#rc.pid#" />
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#">
           </cfif>
@@ -20,7 +22,7 @@
           <a href="#prc.prevStep#">BACK</a>
           <!--- <button type="submit" class="btn btn-primary">Continue</button> --->
           <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
-            <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
+            <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
               disabled
             </cfif>
             >
@@ -55,7 +57,7 @@
                 CARRIER is requiring a down payment
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" value="1" name="approveDownPayment" id="approveDownPayment">
+                    <input type="checkbox" value="1" name="isDownPaymentApproved" id="isDownPaymentApproved" <cfif rc.isDownPaymentApproved>checked</cfif> >
                     <a href="##">I Agree to the required CARRIER down payment of:</a> #dollarFormat(prc.subscriber.downPayment)#
                   </label>
                 </div>
@@ -192,7 +194,7 @@
         <div class="right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
-            <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
+            <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
               disabled
             </cfif>
             >

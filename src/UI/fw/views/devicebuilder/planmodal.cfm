@@ -1,20 +1,3 @@
-<cfif !structKeyExists(rc,"plan")>
-  <cfset prc.DetailTitle = "rc.plan does not exist" />
-  <cfset prc.DataLimitGB = "0" />
-  <cfset prc.SummaryDescription = "No plan selected" />
-<cfelseif structKeyExists(prc,"planInfo")>
-  <cfset prc.DetailTitle = prc.planInfo.DetailTitle />
-  <cfset prc.DataLimitGB = prc.planInfo.DataLimitGB />
-  <cfset prc.SummaryDescription = prc.planInfo.SummaryDescription />
-  <cfset prc.MonthlyFee = prc.planInfo.MonthlyFee />
-  <cfset prc.DetailDescription = prc.planInfo.DetailDescription />
-</cfif>
-
-<cfparam name="prc.DetailTitle" default="Plan Modal Title" />
-<cfparam name="prc.DataLimitGB" default="" />
-<cfparam name="prc.SummaryDescription" default="Please close this modal and then refresh your page" />
-<cfparam name="prc.MonthlyFee" default="0" />
-
 <cfoutput>
     <input type="hidden" name="plan" value="#rc.plan#">
     <div class="modal-header">
@@ -24,20 +7,27 @@
     <div class="modal-body">
       <div class="plans">
         <div class="info">
-          <h3 style="height:40px"><span>#prc.DetailTitle#</span></h3>
+          <h3 style="height:40px"><span>#prc.planInfo.DetailTitle#</span></h3>
           <ul>
-            <li class="large"><span>#prc.DataLimitGB#GB</span></li>
+            <li class="large"><span>#prc.planInfo.DataLimitGB#GB</span></li>
           </ul>
-          <p>#prc.SummaryDescription#</p>
-          <p>#prc.DetailDescription#</p>
-          <div class="price">#dollarFormat(prc.MonthlyFee)#/month</div>
+          <p>#prc.planInfo.SummaryDescription#</p>
+          <p>#prc.planInfo.DetailDescription#</p>
+          <div class="price">#dollarFormat(prc.planInfo.MonthlyFee)#/month</div>
         </div>
       </div>
     </div>
     
     <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <a href="#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/plan/#rc.plan#" type="button" class="btn btn-primary">Select Package</a>
+      <form action="#prc.nextStep#" method="post">
+        <input type="hidden" name="plan" value="#rc.plan#" />
+        <input type="hidden" name="pid" value="#rc.pid#" />
+        <input type="hidden" name="type" value="#rc.type#" />
+        <input type="hidden" name="finance" value="#rc.finance#" />
+        <input type="hidden" name="line" value="#rc.line#" />
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary" type="submit">Select Package</button>
+      </form>
     </div>
 
 </cfoutput>
