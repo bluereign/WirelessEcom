@@ -1,4 +1,4 @@
-<!--- <cfdump var="#prc.subscriber#"> --->
+<!--- <cfdump var="#rc#"> --->
 <cfoutput>
   <div class="col-md-12">
 
@@ -20,7 +20,6 @@
             <input type="hidden" name="plan" value="#rc.plan#">
           </cfif>
           <a href="#prc.prevStep#">BACK</a>
-          <!--- <button type="submit" class="btn btn-primary">Continue</button> --->
           <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
             <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
               disabled
@@ -61,7 +60,6 @@
                     <a href="##">I Agree to the required CARRIER down payment of:</a> #dollarFormat(prc.subscriber.downPayment)#
                   </label>
                 </div>
-              <!--- <cfelse>#rc.plan# --->
               </cfif>
 
                 
@@ -153,12 +151,14 @@
 
                     <a type="button" data-toggle="modal" data-target="##featureModal" href="#event.buildLink('devicebuilder.featuremodal')#/pid/#rc.pid#/type/#rc.type#/fid/#serviceLabels.productId#">
                       #trim(serviceLabels.label)#
+                      <!--- (#serviceLabels.productId#) --->
                     </a>
-                    <cfif rc.paymentoption is 'financed' and (len(serviceLabels.FinancedPrice))><!---Is a financed phone with a Financed Price--->
+                    #dollarFormat(serviceLabels.monthlyFee)#/mo
+                    <!--- <cfif rc.paymentoption is 'financed' and (len(serviceLabels.FinancedPrice))>
                       #dollarFormat(serviceLabels.FinancedPrice)#/mo
                     <cfelse>
                       #dollarFormat(serviceLabels.monthlyFee)#/mo
-                    </cfif>
+                    </cfif> --->
                   </label>
                 </div>
                 <cfset prc.i = (prc.i + 1) />

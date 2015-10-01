@@ -108,8 +108,8 @@
                 <cfif arrayLen(prc.aSelectedServices)>
                   <cfloop index="i" from="1" to="#arrayLen(prc.aSelectedServices)#">
                     <tr>
-                      <td>#prc.aSelectedServices[i].Title# (#prc.aSelectedServices[i].productId#)</td>
-                      <td class="price">#dollarFormat(prc.aSelectedServices[i].price)#</td>
+                      <td>#prc.aSelectedServices[i].Title# <!--- (#prc.aSelectedServices[i].productId#) ---></td>
+                      <td class="price">#dollarFormat(prc.aSelectedServices[i].price)#/mo</td>
                     </tr>                  
                   </cfloop>
                 <cfelse>
@@ -120,7 +120,7 @@
                 </cfif>
                 <tr>
                   <td>#prc.warrantyInfo.SummaryTitle#</td>
-                  <td class="price">#dollarFormat(prc.warrantyInfo.Price)#</td>
+                  <td class="price">#dollarFormat(prc.warrantyInfo.Price)#/mo</td>
                 </tr>
               </table>
             </div>
@@ -153,7 +153,7 @@
         </div>
         <div class="row">
           <div class="col-xs-4">
-            <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" />
+            <!--- <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" /> --->
           </div>
           <div class="col-xs-12">
             <div class="table-responsive">

@@ -42,6 +42,10 @@
       opacity:0.7 !important;
   }
   </style>
+  <!--- You can clean code by including the devicebuilder.min.js file here and moving the js scripts below into their respective views.  However, load time will be increased. --->
+  <!---
+  <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
+  --->
 </head>
 
 <body id="#event.getCurrentAction()#">
@@ -64,7 +68,9 @@
 
   #renderView('devicebuilder/pagefooter')#
 
-<script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
+
+  <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
+
 
 <cfif prc.includeTooltip>
   <!--- Tooltip bootstrap js was ommited from devicebuilder.min.js.  Override required js: --->
@@ -81,6 +87,7 @@
   #renderView('devicebuilder/carrierloginValidate')#
 </cfif>
 
+
 <!--- zipModal, planModal --->
 <cfif listFindNoCase("devicebuilder.plans", event.getCurrentEvent())>
   #renderView('devicebuilder/zipmodal')#
@@ -93,16 +100,16 @@
 <!--- <end zipModal, planModal --->
 
 
-<!--- <protectionModal --->
+<!--- <protection view protectionModal --->
 <cfif listFindNoCase("devicebuilder.protection", event.getCurrentEvent())>
   <div class="modal fade" id="protectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="modal-dialog modal-lg"> 
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+      </div>
+    </div>
   </div>
   <div class="modal fade" id="featureModal" tabindex="-2" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="modal-dialog modal-lg"> 
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
       </div>
     </div>
@@ -110,7 +117,6 @@
 
   <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
     <script>
-      
       $('##isDownPaymentApproved').click(function() {
           var $this = $(this);
           // $this will contain a reference to the checkbox   
@@ -126,16 +132,56 @@
   </cfif>
 
 </cfif>
-<!--- <end protectionModal --->
+<!--- <end protection view protectionModal --->
+
+
+<!--- <accessories view --->
+<cfif listFindNoCase("devicebuilder.accessories", event.getCurrentEvent())>
+
+  <div class="modal fade device-detail" id="accessoryModal" tabindex="-1" role="dialog" aria-labeledby="deviceDetailModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      $('.product')
+        .on('mouseover', function() {
+          $(this).addClass('hover');
+        })
+        .on('mouseout', function() {
+          $(this).removeClass('hover');
+        })
+        .find('.info-wrap').on('mouseover', function(e) {
+          e.stopPropagation();
+        });
+
+      $('')
+    });
+
+    function onChangeHandler(form) {
+      form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
+      form.paymentoption.value=paymentoption;
+      form.submit();
+    }
+
+  </script>
+</cfif>
+<!--- <end accessories view --->
 
 
 <!--- clear data from Bootstrap 3 modals to load dynamic data --->
 <script>
-  $('body').on('hidden.bs.modal', '.modal', function () {
-    $(this).removeData('bs.modal');
+  $(function() {
+    $('body').on('hidden.bs.modal', '.modal', function () {
+      $(this).removeData('bs.modal');
+    });
   });
 </script>
 <!--- <end clear bootstrap data --->
+
 
 </body>
 </html>

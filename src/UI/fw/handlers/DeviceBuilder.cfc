@@ -8,7 +8,7 @@
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
-  <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal" />
+  <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal,accessorymodal" />
 
   <!--- TODO:  If the following lists are only needed in the preHandler, move to prc scope: --->
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
@@ -237,8 +237,13 @@
           prc.subscriber.MinimumCommitment = listLast(rc.finance, '-');
           prc.subscriber.downPaymentPercent = prc.subscriber.getUpgradeDownPaymentPercent(prc.subscriber.OfferCategory,prc.subscriber.MinimumCommitment);
           
-          // TEST: seed with 10% downpayment:
-          prc.subscriber.downPaymentPercent = 10;
+          // TEST TESTING ONLY, DEBUGGING: seed with 10% downpayment:
+          if (prc.subscriber.downPaymentPercent lt 1 and rc.paymentoption is 'financed') {
+            prc.subscriber.downPaymentPercent = 10;
+          }
+          // <end test testing debugging
+
+
           prc.subscriber.downPayment = prc.subscriber.downPaymentPercent * prc.productData.FinancedFullRetailPrice / 100;
         }
       }
@@ -284,12 +289,18 @@
           thisServiceQry = application.model.feature.getByProductID(productID = listGetAt(prc.selectedServices,i));
           thisService.productId = thisServiceQry.productId;
           thisService.price = thisServiceQry.price;
+          // thisService.FinancedPrice = thisServiceQry.FinancedPrice;
           thisService.Title = thisServiceQry.Title;
           arrayAppend(prc.aSelectedServices, thisService);
 
         }
       }      
       // <end selected services
+
+
+      // <ACCESSORIES
+      
+      // <end accessories
 
 
       // <TALLY BOX
@@ -639,6 +650,25 @@
       prc.CatalogService = application.model.Catalog;
       prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories( event.getValue('pid', '') );
     </cfscript>
+  </cffunction>
+
+
+  <cffunction name="accessorymodal" returntype="void" output="false" hint="Plan modal">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+
+    <cfscript>
+      if (structKeyExists(rc,"aid")) {
+        // prc.accessoryInfo = application.model.Accessory.getByFilter(idList = 25713);
+        prc.accessoryInfo = application.model.Accessory.getByFilter(idList = rc.aid);
+        prc.stcPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(valueList(prc.accessoryInfo.accessoryGuid));
+        prc.accessoryImages = application.model.imageManager.getImagesForProducts(prc.accessoryInfo.accessoryGuid, true);
+      }
+      event.noLayout();
+    </cfscript>
+    <!--- <cfdump var="#prc.accessoryInfo#"><cfdump var="#prc.stcPrimaryImages#"><cfabort> --->
+    <!--- <cfdump var="#prc.accessoryImages#"><cfabort> --->
   </cffunction>
 
 
