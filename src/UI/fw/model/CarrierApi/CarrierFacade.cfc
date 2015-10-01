@@ -21,6 +21,16 @@
 		<cfset local.accountResp.setTicks( local.endTicks - local.beginTicks) />
 		<cfreturn local.accountResp />	
 	</cffunction>		
+
+	<cffunction name="areaCode" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.beginTicks = getTickCount() />
+		<cfset local.AreaCodeResp =  carrierObject(arguments.carrierId).areaCode(argumentCollection = local.args) />	
+		<cfset local.endTicks = getTickCount() />
+		<cfreturn local.areaCodeResp />
+	</cffunction>	
+	
 	
 	<!---<cffunction name="upgradeEligibility" output="false" access="public" returntype="any">		
 		<cfset var args = passthruArgs(argumentCollection = arguments ) />
@@ -52,6 +62,24 @@
 		</cfloop>
 		
 		<cfreturn args />
+		
+	</cffunction>
+	
+	<!---
+		For get calls converts args into a query string	
+	--->
+	<cffunction name="argsList" access="private" returnType="string">
+
+		<cfset var arglist = "" />
+		
+		<cfloop collection="#arguments#" item="theArg">
+			<cfif len(arglist)>
+				<cfset arglist = arglist & "&" />
+			</cfif>
+			<cfset arglist = arglist & #theArg# & "=" & arguments[theArg] />
+		</cfloop>		
+		
+		<cfreturn arglist />
 		
 	</cffunction>
 

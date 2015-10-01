@@ -33,6 +33,25 @@
 		<cfreturn local.carrierResponse />
 	</cffunction>
 	
+	<cffunction name="areaCode" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttAreaCodeCarrierResponse">
+		<cfset var local = structNew() />	
+		<cfhttp url="#variables.CarrierServiceURL#/areaCode?#argslist(argumentCollection=arguments)#" method="Get" result="local.cfhttp">
+		</cfhttp>
+		<!--- create the carrier response --->
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttAreaCodeCarrierResponse').init() />
+		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+
+		<cfset local.resp = local.carrierResponse.getResponse() />
+		<cfif structKeyExists(local.resp,"ResponseStatusMessage") and len(local.resp.ResponseStatusMessage) and local.resp.ResponseStatusMessage is not "null">
+			<cfset local.carrierResponse.setResult(false) />
+			<cfset local.carrierResponse.setResultDetail(local.resp.ResponseStatusMessage) />
+		<cfelse>			
+			<cfset local.carrierResponse.setResult(true) />
+			<cfset local.carrierResponse.setResultDetail("Success") />
+		</cfif>
+		<cfreturn local.carrierResponse />
+	</cffunction>
+	
 	<!---<cffunction name="upgradeEligibility" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
 		<cfhttp url="#variables.CarrierServiceURL#/UpgradeEligibility?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>		
 		<cfreturn processResults(cfhttp) />		
