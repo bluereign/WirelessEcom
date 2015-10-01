@@ -1,7 +1,7 @@
 <cfcomponent displayname="ATT Carrier Response" hint="Contains response from carrier info" output="false" extends="fw.model.CarrierApi.Att.AttCarrierResponse">
 
 
-	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.att.AttCarrierResponse">		
+	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.att.AttAccountCarrierResponse">		
 		<cfset super.init() />
 		<cfset variables.instance.subscribers = arraynew(1) />
 		<cfreturn this />		
