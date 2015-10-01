@@ -13,10 +13,12 @@
       </div>
       <div class="wrap">
         <div class="col-xs-8">
-          $xx.xx
+          <!--- $xx.xx --->
+          #dollarFormat(prc.tallyboxDueNow)#
         </div>
         <div class="col-xs-8">
-          $xx.xx
+          <!--- $xx.xx --->
+          #dollarFormat(prc.tallyboxDueMonthly)#
         </div>
       </div>
     </div>

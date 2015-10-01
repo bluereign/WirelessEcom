@@ -1,3 +1,4 @@
+<!--- <cfdump var="#prc.subscriber#"> --->
 <cfoutput>
   <div class="col-md-12">
 
@@ -10,6 +11,8 @@
 
       <form action="#prc.nextStep#" name="protectionForm" id="protectionForm" method="post">
         <div class="right">
+          <input type="hidden" name="type" value="#rc.type#" />
+          <input type="hidden" name="pid" value="#rc.pid#" />
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#">
           </cfif>
@@ -17,7 +20,14 @@
             <input type="hidden" name="plan" value="#rc.plan#">
           </cfif>
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary">Continue</button>
+          <!--- <button type="submit" class="btn btn-primary">Continue</button> --->
+          <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
+            <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
+              disabled
+            </cfif>
+            >
+            Continue
+          </button>
         </div>
 
         <section>
@@ -43,13 +53,18 @@
                   </option>
                 </cfif>
               </select>
-              CARRIER is requiring a down payment
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" value="1" checked disabled="1">
-                  <a href="##">I Agree to the required CARRIER down payment of:</a> $0.00
-                </label>
-              </div>
+              <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
+                CARRIER is requiring a down payment
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="1" name="isDownPaymentApproved" id="isDownPaymentApproved" <cfif rc.isDownPaymentApproved>checked</cfif> >
+                    <a href="##">I Agree to the required CARRIER down payment of:</a> #dollarFormat(prc.subscriber.downPayment)#
+                  </label>
+                </div>
+              <!--- <cfelse>#rc.plan# --->
+              </cfif>
+
+                
             </label>
           </div>
           <div class="radio">
@@ -178,7 +193,13 @@
 
         <div class="right">
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary">Continue</button>
+          <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
+            <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
+              disabled
+            </cfif>
+            >
+            Continue
+          </button>
         </div>
 
       </form>
@@ -192,12 +213,13 @@
       <p>†Legal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
     </div>
   </div>
-<script type="text/javascript">
-  function onChangeHandler(form,paymentoption) {
-    form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
-    form.paymentoption.value=paymentoption;
-    form.submit();
-  }
-</script>
+
+  <script type="text/javascript">
+    function onChangeHandler(form,paymentoption) {
+      form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
+      form.paymentoption.value=paymentoption;
+      form.submit();
+    }
+  </script>
 
 </cfoutput>

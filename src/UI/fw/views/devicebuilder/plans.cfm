@@ -1,16 +1,17 @@
 <!--- <cfdump var="#rc#"> --->
+<!--- <cfdump var="#prc.planDataExisting#"> --->
 <cfparam name="prc.activetab" default="individual" />
 <cfparam name="prc.existingPlanEligible" default="false" />
 
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
+      <input type="hidden" name="finance" value="#rc.finance#">
+      <input type="hidden" name="type" value="#rc.type#" />
+      <input type="hidden" name="pid" value="#rc.pid#" />
       <!--- http://local.fullapi.costco.wa/devicebuilder/protection/pid/27671/type/new/ --->
       <cfif structKeyExists(rc,"paymentoption")>
         <input type="hidden" name="paymentoption" value="#rc.paymentoption#">
-      </cfif>
-      <cfif structKeyExists(rc,"paymentoption")>
-        <input type="hidden" name="finance" value="#rc.finance#">
       </cfif>
       <cfif structKeyExists(rc,"line")>
         <input type="hidden" name="line" value="#rc.line#">
@@ -55,25 +56,39 @@
           <cfif structKeyExists(session,"carrierObj") and structKeyExists(prc,"planDataExisting") >
             <div role="tabpanel" class="tab-pane <cfif prc.activetab is 'existing'>active</cfif>" id="existing">
               <div class="carousel" id="existingCarousel">
-
-              <cfloop query="prc.planDataExisting">
+              <cfif prc.planDataExisting.recordcount>
+                <cfloop query="prc.planDataExisting">
+                  <div class="info">
+                    <a href="##">
+                      <h3 style="height:40px"><span>#prc.planDataExisting.DetailTitle# - Existing</span></h3>
+                      <ul>
+                        <li class="large"><span>#prc.planDataExisting.DataLimitGB# GB</span></li>
+                      </ul>
+                      <div style="align:center;padding:20px;">#prc.planDataExisting.SummaryDescription#</div>
+                      <div class="price">#dollarFormat(prc.planDataExisting.MonthlyFee)#</div>
+                      <cfif prc.existingPlanEligible>
+                        <button class="btn btn-dark-gray btn-block" name="plan" value="#prc.planDataExisting.productid#">Select Package</button>
+                        <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataExisting.productid#/finance/#rc.finance#/line/#rc.line#" >Plan Details</div>
+                      <cfelse>
+                        <button class="btn btn-secondary btn-block" disabled="disabled">Unavailable for this device</button>
+                      </cfif>
+                    </a>
+                  </div>
+                </cfloop>
+              <cfelse>
                 <div class="info">
                   <a href="##">
-                    <h3 style="height:40px"><span>#prc.planDataExisting.DetailTitle# - Existing</span></h3>
+                  <h3 style="height:40px"><span>Your Existing Plan - Existing</span></h3>
                     <ul>
-                      <li class="large"><span>#prc.planDataExisting.DataLimitGB# GB</span></li>
-                    </ul>
-                    <div style="align:center;padding:20px;">#prc.planDataExisting.SummaryDescription#</div>
-                    <div class="price">#dollarFormat(prc.planDataExisting.MonthlyFee)#</div>
-                    <cfif prc.existingPlanEligible>
-                      <button class="btn btn-dark-gray btn-block" name="plan" value="#prc.planDataExisting.productid#">Select Package</button>
-                      <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataExisting.productid#" >Plan Details</div>
-                    <cfelse>
+                      <li class="large"><span>Unknown GB</span></li>
+                      <!--- <div style="align:center;padding:20px;">Description - unavailable</div> --->
+                      <div class="price">Price - unavailable</div>
                       <button class="btn btn-secondary btn-block" disabled="disabled">Unavailable for this device</button>
-                    </cfif>
+                    </ul>
                   </a>
                 </div>
-              </cfloop>
+              </cfif>
+
 
               </div>
             </div> <!--- tab-pane --->
@@ -95,7 +110,7 @@
                     <div style="align:center;padding:20px;">#prc.planData.SummaryDescription#</div>
                     <div class="price">$#int(prc.planData.MonthlyFee)#<!--- #dollarFormat(prc.planData.MonthlyFee)# ---></div>
                     <button class="btn btn-secondary btn-block" name="plan" value="#prc.planData.productid#">Select Package</button>
-                    <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planData.productid#" >Plan Details</div>
+                    <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planData.productid#/finance/#rc.finance#/line/#rc.line#" >Plan Details</div>
                   </a>
                 </div>
               </cfloop>
@@ -118,7 +133,7 @@
                       <div style="align:center;padding:20px;">#prc.planDataShared.SummaryDescription#</div>
                       <div class="price">$#int(prc.planDataShared.MonthlyFee)#<!--- #dollarFormat(prc.planDataShared.MonthlyFee)# ---></div>
                       <button class="btn btn-secondary btn-block" name="plan" value="#prc.planDataShared.productid#">Select Package</button>
-                      <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataShared.productid#" >Plan Details</div>
+                      <div class="details-link" data-toggle="modal" data-target="##planModal" href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataShared.productid#/finance/#rc.finance#/line/#rc.line#" >Plan Details</div>
                     </a>
                   </div>
                 </cfloop>

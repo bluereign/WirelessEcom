@@ -10,12 +10,13 @@
 
   <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal" />
 
+  <!--- TODO:  If the following lists are only needed in the preHandler, move to prc scope: --->
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
   <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting,orderreview" />
   <cfset listActivationTypes = "financed-24,financed-18,financed-12,new,upgrade,addaline" /> <!--- TODO: determine what to do with new, upgrade, addaline  --->
 
-  <!--- preHandler --->
+
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
     <cfargument name="event">
     <cfargument name="rc">
@@ -27,19 +28,22 @@
     <cfset var nextAction = "" />
     <cfset var prevAction = "" />
     <cfset var argsPlan = {} />
-    
+    <!--- <cfdump var="#rc#"><cfabort> --->
     <cfscript>
       // KEEP THIS NEXT LINE INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
 
+      // <CARRIER CONSTANTS
       prc.carrierIdAtt = 109;
       prc.carrierGuidAtt = "83d7a62e-e62f-4e37-a421-3d5711182fb0";
+      prc.OfferCategoryAtt = "NE";
       prc.carrierIdVzw = 42;
       prc.carrierGuidVzw = "263a472d-74b1-494d-be1e-ad135dfefc43";
-
+      prc.OfferCategoryVzw = "VZ";
 
       prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/";
       prc.AssetPaths = variables.AssetPaths;
+      // <end carrier constants
 
 
       // <FINANCE PLAN CHECK
@@ -189,7 +193,8 @@
           // don't overwrite a nextAction value that has been manually passed in (via Form, etc.):
           rc.nextAction = "devicebuilder.#nextAction#";
         }
-        prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+        // prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
+        prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/';
       } else {
         prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       }
@@ -224,16 +229,20 @@
         argsPlan.carrierId = prc.productData.carrierId;
         argsPlan.zipCode = session.cart.getZipcode();
         argsPlan.idList = rc.plan;
-        prc.planInfo = PlanService.getPlans(argumentCollection=argsPlan);
+        prc.planInfo = PlanService.getPlans(argumentCollection = argsPlan);
+
+        // get down payment of plan for this subscriber:
+        if (structKeyExists(prc,"subscriber")) {
+          prc.subscriber.OfferCategory = IIF(prc.productData.carrierId eq prc.carrierIdAtt, DE(prc.OfferCategoryAtt), DE(prc.OfferCategoryVzw));
+          prc.subscriber.MinimumCommitment = listLast(rc.finance, '-');
+          prc.subscriber.downPaymentPercent = prc.subscriber.getUpgradeDownPaymentPercent(prc.subscriber.OfferCategory,prc.subscriber.MinimumCommitment);
+          
+          // TEST: seed with 10% downpayment:
+          prc.subscriber.downPaymentPercent = 10;
+          prc.subscriber.downPayment = prc.subscriber.downPaymentPercent * prc.productData.FinancedFullRetailPrice / 100;
+        }
       }
       // <end selected plan
-
-
-
-      // <CARRIER LOGO
-
-      // <end carrier logo
-
 
 
       // <SELECTED SERVICES
@@ -261,6 +270,7 @@
         }
       }
 
+
       // convert to array with productId, price, label for Tallybox
       // prc.aSelectedServices = ListToArray(prc.selectedServices);
       i = 0;
@@ -278,20 +288,25 @@
           arrayAppend(prc.aSelectedServices, thisService);
 
         }
-        
       }      
       // <end selected services
 
 
-
       // <TALLY BOX
       prc.financeproductname = prc.productService.getFinanceProductName(carrierid=#prc.productData.CarrierId#);
+      prc.tallyboxDueNow = 0;
+      prc.tallyboxDueMonthly = 0;
 
       // Payment Options: financed, fullretail
       switch(rc.paymentoption) {
         case "financed":
           
-          prc.tallyboxFinanceMonthlyDueToday = 0;
+          if (structKeyExists(prc,"subscriber") and structKeyExists(prc.subscriber,"downPayment") and prc.subscriber.downPayment gt 0) {
+            prc.tallyboxFinanceMonthlyDueToday = prc.subscriber.downPayment;
+          } else {
+            // prc.subscriber.downPayment = 1000;
+            prc.tallyboxFinanceMonthlyDueToday = 0;
+          }
           
           // AT&T carrierId = 109, VZW carrierId = 42
           if ( prc.productData.CarrierId eq prc.carrierIdAtt ) {
@@ -331,14 +346,12 @@
         default:
           break;
       }
-
-
+      prc.tallyboxDueMonthly = prc.tallyboxDueMonthly + prc.tallyboxFinanceMonthlyDueAmount;
+      prc.tallyboxDueNow = prc.tallyboxDueNow + prc.tallyboxFinanceMonthlyDueToday;
       // <end tally box
 
 
-      // <LAYOUT
       event.setLayout('devicebuilder');
-      // <end layout
     </cfscript>
   </cffunction>
 
@@ -434,7 +447,9 @@
           rc.respObj = carrierFacade.Account(argumentCollection = prc.argsAccount);
           rc.message = rc.respObj.getHttpStatus();
 
-          if (rc.respObj.getResult() is 'true') {
+          if (rc.respObj.getResult() is 'true' or rc.respObj.getResult() is 'false') {
+          // TODO: replace the previous line with the next line when the CarrierFacade login is working properly again.
+          // if (rc.respObj.getResult() is 'true') {
             session.carrierObj = rc.respObj;
             session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
             session.cart.setCarrierId(session.carrierObj.getCarrierId());
@@ -511,11 +526,6 @@
         <cfset rc.plan = qryExistingAvailable.productId />
       </cfif>
     </cfif>
-
-
-    <!--- debugging: --->
-    <!--- <cfset prc.planDataShared = queryNew("id") /> --->
-    <!--- <cfdump var="#prc.planDataShared#"><cfabort> --->
   </cffunction>
 
 
@@ -526,14 +536,13 @@
     <cfset var argsPlan = {} />
 
     <cfscript>
+      prc.nextStep = event.buildLink('devicebuilder.protection');
       if (structKeyExists(rc,"plan")) {
         argsPlan.idList = rc.plan;
         prc.planInfo = PlanService.getPlans(argumentCollection=argsPlan);
       }
       event.noLayout();
     </cfscript>
-    <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
-
   </cffunction>
 
 
@@ -545,6 +554,10 @@
     <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
 
     <cfscript>
+      if (!structKeyExists(rc, "isDownPaymentApproved")) {
+        rc.isDownPaymentApproved = 0;
+      }
+
       prc.qWarranty = application.model.Warranty.getByDeviceId(rc.pid);
 
       if (prc.productData.carrierId eq prc.carrierIdAtt) {
@@ -584,8 +597,8 @@
     <!--- <cfdump var="#rc#"><cfabort> --->
     <!--- <cfdump var="#prc.productData#"><cfabort> --->
     <!--- <cfdump var="#prc.deviceMinimumRequiredServices#"><cfabort> --->
-
   </cffunction>
+
 
   <cffunction name="protectionmodal" returntype="void" output="false" hint="Plan modal">
     <cfargument name="event">
@@ -598,8 +611,6 @@
       }
       event.noLayout();
     </cfscript>
-    <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
-
   </cffunction>
 
 
@@ -614,8 +625,6 @@
       }
       event.noLayout();
     </cfscript>
-    <!--- <cfdump var="#prc.featureInfo#"><cfabort> --->
-
   </cffunction>
 
 
@@ -640,7 +649,6 @@
 
     <cfscript>
       prc.includeTooltip = true;
-      // event.setView("devicebuilder/numberporting");
     </cfscript>
   </cffunction>
 

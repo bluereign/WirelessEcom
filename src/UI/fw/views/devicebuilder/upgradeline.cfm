@@ -3,6 +3,8 @@
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
       <input type="hidden" name="finance" value="#rc.finance#">
+      <input type="hidden" name="type" value="#rc.type#" />
+      <input type="hidden" name="pid" value="#rc.pid#" />
       <cfif structKeyExists(rc,"line")>
         <input type="hidden" name="line" value="#rc.line#">
       </cfif>
@@ -14,11 +16,11 @@
         <div class="row">
           <cfloop index="i" from="1" to="#arrayLen(prc.subscribers)#">
             <!--- TESTING ONLY: ensure that there is at least one eligible number for upgrade --->
-            <cfif i eq 1>
+            <!--- <cfif i eq 1>
               <cfset prc.subscribers[i].isEligible = 1 />
             <cfelse>
               <cfset prc.subscribers[i].isEligible = prc.subscribers[i].getIsEligible() />
-            </cfif>
+            </cfif> --->
             <!--- format phonenumber --->
             <!--- step 1: remove special characters (if any) --->
             <cfset prc.subscribers[i].phoneNumber = reReplace(prc.subscribers[i].getNumber(),"[{}\(\)\^$&%##!@=<>:;,~`'\'\*\?\/\+\|\[\\\\]|\]|\-",'','all') />
@@ -32,7 +34,7 @@
 				<div class="manufacturer">apple</div>
                 <div class="model info ">iPhone 5</div>
                 <div class="phone info">#prc.subscribers[i].phoneNumber#</div>
-                <cfif prc.subscribers[i].isEligible>
+                <cfif prc.subscribers[i].getIsEligible()>
                   <button class="btn btn-sm btn-primary" name="line" value="#i#">Upgrade Line</button>
                 <cfelse>
                   <button class="btn btn-sm btn-primary" disabled="disabled">
