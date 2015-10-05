@@ -1,5 +1,4 @@
 <cfoutput>
-    <!--- <input type="hidden" name="wid" value="#rc.wid#"> --->
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title">Carrier Mobile Protection Pack</h4>

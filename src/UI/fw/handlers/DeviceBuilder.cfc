@@ -8,7 +8,8 @@
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
-  <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal,accessorymodal" />
+  <cfset this.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/" />
+  <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal,accessorymodal,clearcart" /> <!--- clearcart (?)--->
 
   <!--- TODO:  If the following lists are only needed in the preHandler, move to prc scope: --->
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
@@ -36,14 +37,39 @@
       // <CARRIER CONSTANTS
       prc.carrierIdAtt = 109;
       prc.carrierGuidAtt = "83d7a62e-e62f-4e37-a421-3d5711182fb0";
-      prc.OfferCategoryAtt = "NE";
+      prc.offerCategoryAtt = "NE";
       prc.carrierIdVzw = 42;
       prc.carrierGuidVzw = "263a472d-74b1-494d-be1e-ad135dfefc43";
-      prc.OfferCategoryVzw = "VZ";
+      prc.offerCategoryVzw = "VZ";
 
-      prc.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/";
+      prc.resultStr = "";
+
+      prc.browseDevicesUrl = this.browseDevicesUrl;
       prc.AssetPaths = variables.AssetPaths;
       // <end carrier constants
+
+      // INSTANTIATE SESSION.CART
+      if (!structKeyExists(session,"cart")) {
+        session.cart = createObject('component','cfc.model.cart').init();
+      }
+      if (!structKeyExists(session,"cartHelper")) {
+        session.cartHelper = createObject('component','cfc.model.carthelper').init();
+      }
+      
+      
+      // CARTLINENUMBER:
+      prc.cartLinesCount = arrayLen(session.cart.getLines());
+      // TODO: Pass it as rc scope hidden form field
+      if (!structKeyExists(rc,"cartLineNumber")) {
+        rc.cartLineNumber = prc.cartLinesCount + 1;
+      }
+
+      // DEBUG/TEST
+      // rc.cartLineNumber = 1;
+
+      // prc.getCurrentLineData = session.cart.getCurrentLineData();
+
+      // <end instantiate session.cart
 
 
       // <FINANCE PLAN CHECK
@@ -103,7 +129,7 @@
       // <end auth check
 
 
-      // <PRODUCT CHECK
+      // <PRODUCT/DEVICE CHECK
       // return customer to Browse all phones (no filter) if a product id is not found in the URL (or form field):
       if (!structKeyExists(rc,"pid") OR !isNumeric(rc.pid)) {
         relocate( prc.browseDevicesUrl );
@@ -121,8 +147,7 @@
       if (!structKeyExists(prc,"productImages")) {
        prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
       }
-      // end product check
-      
+
 
       // <NAVIATION
       switch(rc.type) {
@@ -132,6 +157,7 @@
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
           prc.tallyboxHeader = "Upgrading";
           prc.cartTypeId = 2;
+          prc.activationType = "upgrade";
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];
@@ -139,6 +165,7 @@
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
           prc.tallyboxHeader = "Add a Line";
           prc.cartTypeId = 3;
+          prc.activationType = "addaline";
           break;
         case "new":
           prc.navItemsAction = ["plans","protection","accessories","numberporting","orderreview"];
@@ -146,6 +173,7 @@
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
           prc.tallyboxHeader = "New Customer (" & session.cart.getZipcode() & ")";
           prc.cartTypeId = 1;
+          prc.activationType = "new";
           break;
         case "upgradex":
           prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
@@ -153,6 +181,7 @@
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgradex/';
           prc.tallyboxHeader = "Upgrading";
           prc.cartTypeId = 2;
+          prc.activationType = "upgrade";
           break;
         case "addalinex":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
@@ -160,6 +189,7 @@
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/addalinex/';
           prc.tallyboxHeader = "Add a Line";
           prc.cartTypeId = 3;
+          prc.activationType = "addaline";
           break;
         case "newx":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
@@ -167,6 +197,7 @@
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/pid/' & rc.pid & '/type/newx/';
           prc.tallyboxHeader = "New Customer";
           prc.cartTypeId = 1;
+          prc.activationType = "new";
           break;
       }
 
@@ -233,9 +264,9 @@
 
         // get down payment of plan for this subscriber:
         if (structKeyExists(prc,"subscriber")) {
-          prc.subscriber.OfferCategory = IIF(prc.productData.carrierId eq prc.carrierIdAtt, DE(prc.OfferCategoryAtt), DE(prc.OfferCategoryVzw));
-          prc.subscriber.MinimumCommitment = listLast(rc.finance, '-');
-          prc.subscriber.downPaymentPercent = prc.subscriber.getUpgradeDownPaymentPercent(prc.subscriber.OfferCategory,prc.subscriber.MinimumCommitment);
+          prc.subscriber.offerCategory = IIF(prc.productData.carrierId eq prc.carrierIdAtt, DE(prc.offerCategoryAtt), DE(prc.offerCategoryVzw));
+          prc.subscriber.minimumCommitment = listLast(rc.finance, '-');
+          prc.subscriber.downPaymentPercent = prc.subscriber.getUpgradeDownPaymentPercent(prc.subscriber.offerCategory,prc.subscriber.minimumCommitment);
           
           // TEST TESTING ONLY, DEBUGGING: seed with 10% downpayment:
           if (prc.subscriber.downPaymentPercent lt 1 and rc.paymentoption is 'financed') {
@@ -251,13 +282,12 @@
 
 
       // <SELECTED SERVICES
-      if ( !structKeyExists(prc,"selectedServices")  ) {
+      if ( !structKeyExists(prc,"selectedServices") ) {
         prc.selectedServices = "";
       }
-      if ( !structKeyExists(prc,"aSelectedServices")  ) {
+      if ( !structKeyExists(prc,"aSelectedServices") ) {
         prc.aSelectedServices = [];
       }
-
 
       // handle form fields from Payment, Protection and Services:
       if ( structKeyExists(rc, "FieldNames") and findNoCase("chk_features_",rc.FieldNames) ) {
@@ -274,7 +304,6 @@
           }
         }
       }
-
 
       // convert to array with productId, price, label for Tallybox
       // prc.aSelectedServices = ListToArray(prc.selectedServices);
@@ -301,6 +330,54 @@
       // <ACCESSORIES
       
       // <end accessories
+      
+
+      // <CART 
+      // if device has not been added to this rc.cartLineNumber in the cart, ensure that it is.  Note: there are multiple entry points to the DeviceBuilder.
+      prc.cartArgs = {
+        productType = "phone:" & prc.activationType,
+        product_id = rc.pid,
+        qty = 1,
+        price = prc.productData.FinancedFullRetailPrice,
+        cartLineNumber = rc.cartLineNumber
+      };
+
+      prc.resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+
+      // if plan has not been added to this cart cartLineNumber, add it.
+      if ( structKeyExists(prc,"planInfo") ) {
+        prc.cartArgs = {
+          productType = "plan",
+          product_id = prc.planInfo.productId,
+          qty = 1,
+          cartLineNumber = rc.cartLineNumber
+        };
+        prc.resultStr = prc.resultStr & "<br>" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+      }
+      
+      // services:
+      if ( listLen(prc.selectedServices) ) {
+        prc.cartArgs = {
+          productType = "plan",
+          product_id = prc.planInfo.productId & ":" & prc.selectedServices,
+          qty = 1,
+          cartLineNumber = rc.cartLineNumber
+        };
+        prc.resultStr = prc.resultStr & "<br>" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+      }
+
+      // warranty: rc.wid
+      if ( structKeyExists(prc,"wid") and isNumeric(prc.wid) and prc.wid gt 0 and structKeyExists(prc,"warrantyInfo") ) {
+        prc.cartArgs = {
+          productType = "warranty",
+          product_id = rc.wid,
+          qty = 1,
+          cartLineNumber = rc.cartLineNumber
+        };
+        prc.resultStr = prc.resultStr & "<br>" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+      }
+      // <end cart
+      
 
 
       // <TALLY BOX
@@ -437,7 +514,7 @@
         rc.carrierResponseMessage = "There was an issue with the values you entered.  Please double check each value and then try again.";
         setNextEvent(
           event="devicebuilder.carrierLogin",
-          persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+          persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
       }
       // /simple validation
 
@@ -474,12 +551,13 @@
             // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
             setNextEvent(
               event="#rc.nextAction#",
-              persist="type,pid,finance");
+              persist="type,pid,finance,cartLineNumber");
+            
           } else {
             rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
             setNextEvent(
               event="devicebuilder.carrierLogin",
-              persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+              persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
           }
           break;
         }
@@ -489,7 +567,7 @@
           rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T or Verizon device.  Please try again with an AT&T or Verizon device. (carrierId: #prc.productData.carrierId#)";
           setNextEvent(
             event="devicebuilder.carrierLogin",
-            persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin");
+            persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
         }
       };
     </cfscript>
@@ -710,21 +788,24 @@
 
       // remove carrierObj from session: 
       carrierObjExists = structdelete(session, 'carrierObj', true);
+      session.cart = createObject('component','cfc.model.cart').init();
       
       // TODO: Remove the following 2 lines after testing to comply with case 195
       // remove zipCode from session:
       // carrierObjExists = structdelete(session, 'zipCode', true);
 
       // create warningMessage
-      flash.put("warningMessage","Your cart has been cleared. <a href='#prc.browseDevicesUrl#'>Click here to go to Browse Devices.</a>");
+      flash.put("warningMessage","Your cart has been cleared. <a href='#this.browseDevicesUrl#'>Click here to go to Browse Devices.</a>");
       flash.put("showNav", false);
       flash.put("showAddAnotherDeviceButton", false);
       flash.put("showCheckoutNowButton", false);
       flash.put("showClearCartLink", false);
 
+      // event.setView("orderreview");
+      
       setNextEvent(
         event="devicebuilder.orderreview",
-        persist="type,pid"
+        persist="type,pid,finance,line,plan"
         );
       
     </cfscript>

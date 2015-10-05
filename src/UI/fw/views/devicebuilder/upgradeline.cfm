@@ -2,11 +2,12 @@
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
-      <input type="hidden" name="finance" value="#rc.finance#">
+      <input type="hidden" name="finance" value="#rc.finance#" />
       <input type="hidden" name="type" value="#rc.type#" />
       <input type="hidden" name="pid" value="#rc.pid#" />
+      <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
       <cfif structKeyExists(rc,"line")>
-        <input type="hidden" name="line" value="#rc.line#">
+        <input type="hidden" name="line" value="#rc.line#" />
       </cfif>
       <section class="content">
         <header class="main-header">

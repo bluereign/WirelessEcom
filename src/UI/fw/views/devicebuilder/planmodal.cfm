@@ -1,5 +1,4 @@
 <cfoutput>
-    <input type="hidden" name="plan" value="#rc.plan#">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title">Plan Details</h4>
@@ -25,6 +24,7 @@
         <input type="hidden" name="type" value="#rc.type#" />
         <input type="hidden" name="finance" value="#rc.finance#" />
         <input type="hidden" name="line" value="#rc.line#" />
+        <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button class="btn btn-primary" type="submit">Select Package</button>
       </form>

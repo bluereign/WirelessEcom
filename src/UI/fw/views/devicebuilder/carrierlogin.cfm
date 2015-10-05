@@ -1,5 +1,6 @@
 <cfoutput>
-
+  <!--- There are #arraylen(prc.cartlines)# line(s). --->
+  
   <div class="col-md-12">
     <section class="content">
       <header class="main-header">
@@ -14,6 +15,7 @@
         <input type="hidden" name="type" value="#rc.type#" />
         <input type="hidden" name="pid" value="#rc.pid#" />
         <input type="hidden" name="finance" value="#rc.finance#" />
+        <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
         <input type="hidden" name="nextAction" value="#rc.nextAction#" />
         <div class="right">
           <a href="#prc.prevStep#">BACK</a>

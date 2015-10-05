@@ -13,11 +13,12 @@
         <div class="right">
           <input type="hidden" name="type" value="#rc.type#" />
           <input type="hidden" name="pid" value="#rc.pid#" />
+          <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
           <cfif structKeyExists(rc,"line")>
-            <input type="hidden" name="line" value="#rc.line#">
+            <input type="hidden" name="line" value="#rc.line#" />
           </cfif>
           <cfif structKeyExists(rc,"plan")>
-            <input type="hidden" name="plan" value="#rc.plan#">
+            <input type="hidden" name="plan" value="#rc.plan#" />
           </cfif>
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
@@ -57,7 +58,7 @@
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" value="1" name="isDownPaymentApproved" id="isDownPaymentApproved" <cfif rc.isDownPaymentApproved>checked</cfif> >
-                    <a href="##">I Agree to the required CARRIER down payment of:</a> #dollarFormat(prc.subscriber.downPayment)#
+                    <!--- <a href="##"> --->I Agree to the required CARRIER down payment of:<!--- </a> ---> #dollarFormat(prc.subscriber.downPayment)#
                   </label>
                 </div>
               </cfif>
@@ -76,6 +77,7 @@
         
         <section class="seperator">
 
+          <hr />
           <h4>Device Protection Options</h4>
           <!--- <a href="##">Help me choose a Protection Plan</a> --->
           <cfloop query="prc.qWarranty">
@@ -103,7 +105,8 @@
 
         <section class="seperator">
 
-          <h4>Additional Service</h4>
+          <hr />
+          <h4 id="h4AdditionalServices" style="display: none;">Additional Service</h4>
 
           <cfset prc.serviceCounter = 0>
           <cfloop query="prc.groupLabels">
@@ -220,6 +223,7 @@
       form.paymentoption.value=paymentoption;
       form.submit();
     }
+    
   </script>
 
 </cfoutput>

@@ -43,9 +43,11 @@
   }
   </style>
   <!--- You can clean code by including the devicebuilder.min.js file here and moving the js scripts below into their respective views.  However, load time will be increased. --->
+  
   <!---
   <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
   --->
+  
 </head>
 
 <body id="#event.getCurrentAction()#">
@@ -58,6 +60,16 @@
     <cfelse>
       <br /><br /><br /><br />
     </cfif>
+    
+<!--- DEBUGGING / TEST --->
+    <!--- <cfif structKeyExists(prc,"resultStr")>
+      #prc.resultStr#
+    </cfif>
+    <cfif structKeyExists(prc,"selectedServices")>
+      <cfdump var="#prc.selectedServices#">
+    </cfif> --->
+<!--- end debugging / test --->
+
     <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
       #renderView()#
       <cfif prc.includeTallyBox>
@@ -69,7 +81,9 @@
   #renderView('devicebuilder/pagefooter')#
 
 
+  
   <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
+  
 
 
 <cfif prc.includeTooltip>
@@ -131,6 +145,14 @@
     </script>
   </cfif>
 
+  <cfif prc.serviceCounter gt 0>
+    <script>
+      $(function() {
+        $('##h4AdditionalServices').show();
+      });
+    </script>
+  </cfif>
+
 </cfif>
 <!--- <end protection view protectionModal --->
 
@@ -157,8 +179,6 @@
         .find('.info-wrap').on('mouseover', function(e) {
           e.stopPropagation();
         });
-
-      $('')
     });
 
     function onChangeHandler(form) {

@@ -1,3 +1,4 @@
+<cfdump var="#rc#"><br>
 <cfoutput>
   prc.productData.carrierId: #prc.productData.carrierId#
   <br>
