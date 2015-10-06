@@ -28,8 +28,7 @@
     <cfset var prevNavIndex = "" />
     <cfset var nextAction = "" />
     <cfset var prevAction = "" />
-    <cfset var argsPlan = {} />
-    <!--- <cfdump var="#rc#"><cfabort> --->
+
     <cfscript>
       // KEEP THIS NEXT LINE INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
@@ -261,10 +260,13 @@
 
       // <SELECTED PLAN
       if (structKeyExists(rc,"plan") and isNumeric(rc.plan)) {
-        argsPlan.carrierId = prc.productData.carrierId;
-        argsPlan.zipCode = session.cart.getZipcode();
-        argsPlan.idList = rc.plan;
-        prc.planInfo = PlanService.getPlans(argumentCollection = argsPlan);
+        
+        prc.planArgs = {
+          carrierId = prc.productData.carrierId,
+          zipCode = session.cart.getZipcode(),
+          idList = rc.plan
+        };
+        prc.planInfo = PlanService.getPlans(argumentCollection = prc.planArgs);
 
         // get down payment of plan for this subscriber:
         if (structKeyExists(prc,"subscriber")) {
@@ -299,8 +301,7 @@
         i = 0;
         Fields = ListToArray(rc.FieldNames);
         FieldName = "";
-        l = arrayLen(Fields);
-        for (i = 1; i lte l; i++) {
+        for (i = 1; i lte arrayLen(Fields); i++) {
           FieldName = Fields[i];
           if ( findNoCase("chk_features_",FieldName) ) {
             prc.selectedServices = listAppend(prc.selectedServices, XmlFormat(rc[FieldName]) );
@@ -379,14 +380,7 @@
 
       // <ACCESSORIES
 
-      if (!structKeyExists(rc,"selectedAccessories")) {
-        rc.selectedAccessories = "";
-      }
-
       if ( structKeyExists(rc,"addaccessory") ) {
-        if ( !listFindNoCase(rc.selectedAccessories, rc.addaccessory) ) {
-          rc.selectedAccessories = listAppend(rc.selectedAccessories, rc.addaccessory);
-        }
         if ( ! (structKeyExists(rc,"accessoryqty") and isValid("integer", rc.accessoryqty)) ) {
           rc.accessoryqty = 1;
         }
@@ -400,16 +394,29 @@
       }
 
       if ( structKeyExists(rc,"removeaccessory") ) {
-        prc.removeaccessoryindex = listFindNoCase(rc.selectedAccessories, rc.removeaccessory);
-        if (prc.removeaccessoryindex) {
-          rc.selectedAccessories = listDeleteAt(rc.selectedAccessories, prc.removeaccessoryindex);
-          prc.cartArgs = {
-            line = rc.cartLineNumber,
-            productid = removeaccessory
-          };
-          prc.resultStr = prc.resultStr & " accessory:" & application.model.CartHelper.removeAccessory(argumentCollection = prc.cartArgs); 
+        prc.cartArgs = {
+          line = rc.cartLineNumber,
+          productid = removeaccessory
+        };
+        prc.resultStr = prc.resultStr & " removeaccessory:" & application.model.CartHelper.removeAccessory(argumentCollection = prc.cartArgs);
+      }
+
+      // get cartline accessories
+      prc.cartArgs = {
+          line = rc.cartLineNumber,
+          type = "accessory"
+        };
+      prc.aAccessories = session.cartHelper.lineGetAccessoriesByType(argumentCollection = prc.cartArgs);
+      prc.selectedAccessories = "";
+      if (arrayLen(prc.aAccessories)) {
+        for (prc.iAccessory = 1; prc.iAccessory lte arrayLen(prc.aAccessories); prc.iAccessory++) {
+          prc.thisAccessory = prc.aAccessories[prc.iAccessory];
+          prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID());
+          prc.selectedAccessories = listAppend(prc.selectedAccessories, prc.selectedAccessory.productId);
         }
       }
+      
+
       // <end accessories
       
 
@@ -559,7 +566,7 @@
         // AT&T carrierId = 109, VZW carrierId = 42
         case 109: case 42: {
           rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
-          prc.argsAccount = {
+          prc.accountArgs = {
             carrierId = prc.productData.carrierId,
             SubscriberNumber = rc.PhoneNumber,
             ZipCode = rc.inputZip,
@@ -568,7 +575,7 @@
           };
 
           // for testing purposes/development (carrierloginpost.cfm):
-          rc.respObj = carrierFacade.Account(argumentCollection = prc.argsAccount);
+          rc.respObj = carrierFacade.Account(argumentCollection = prc.accountArgs);
           rc.message = rc.respObj.getHttpStatus();
 
           if (rc.respObj.getResult() is 'true' or rc.respObj.getResult() is 'false') {
@@ -627,16 +634,17 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var argsPlan = {} />
 
     <cfscript>
     // TODO: if type is 'upgrade', make sure a line is selected.  If rc.line does not exist, then send back to 'upgradealine'.
 
-      argsPlan.carrierId = prc.productData.carrierId;
-      argsPlan.zipCode = session.cart.getZipcode();
+      prc.planArgs = {
+        carrierId = prc.productData.carrierId,
+        zipCode = session.cart.getZipcode()
+      };
       
-      prc.planData = PlanService.getPlans(argumentCollection=argsPlan);
-      prc.planDataShared = PlanService.getSharedPlans(argumentCollection=argsPlan);
+      prc.planData = PlanService.getPlans(argumentCollection = prc.planArgs);
+      prc.planDataShared = PlanService.getSharedPlans(argumentCollection = prc.planArgs);
     </cfscript>
 
     <!--- If an existing plan's productId exists, then see if it is eligible (i.e. in the Individual or Shared plans queries) --->
@@ -658,13 +666,14 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var argsPlan = {} />
 
     <cfscript>
       prc.nextStep = event.buildLink('devicebuilder.protection');
       if (structKeyExists(rc,"plan")) {
-        argsPlan.idList = rc.plan;
-        prc.planInfo = PlanService.getPlans(argumentCollection=argsPlan);
+        prc.planArgs = {
+          idList = rc.plan
+        };
+        prc.planInfo = PlanService.getPlans(argumentCollection = prc.planArgs);
       }
       event.noLayout();
     </cfscript>
@@ -675,8 +684,6 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var argsServices = {} />
-    <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
 
     <cfscript>
       if (!structKeyExists(rc, "isDownPaymentApproved")) {
@@ -685,43 +692,20 @@
 
       prc.qWarranty = application.model.Warranty.getByDeviceId(rc.pid);
 
+      prc.servicesArgs = {
+        type = "O",
+        deviceGuid = prc.productData.productGuid,
+        HasSharedPlan = session.cart.getHasSharedPlan()
+      };
+
       if (prc.productData.carrierId eq prc.carrierIdAtt) {
-        argsServices.carrierId = prc.carrierGuidAtt;
+        prc.servicesArgs.carrierId = prc.carrierGuidAtt;
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
-        argsServices.carrierId = prc.carrierGuidVzw;
+        prc.servicesArgs.carrierId = prc.carrierGuidVzw;
       }
 
-      argsServices.type = "O";
-      argsServices.deviceGuid = prc.productData.productGuid;
-      argsServices.HasSharedPlan = session.cart.getHasSharedPlan();
-
-      prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = argsServices);
-
-
-      // debugging:
-      
-      // *** Definitely will need this:application.model.serviceManager.getDeviceMinimumRequiredServices(productId=prc.productData.productId)
-      // prc.deviceMinimumRequiredServices = application.model.serviceManager.getDeviceMinimumRequiredServices(productId=prc.productData.productId);
-
-      // prc.deviceServices = application.model.serviceManager.getDeviceServices(productId=prc.productData.productId);
-      // prc.devicePlanMinimumRequiredServices = application.model.serviceManager.getDevicePlanMinimumRequiredServices(DeviceId=prc.productData.productId,PlanId=rc.plan);
-      // prc.verifyRequiredServiceSelections = application.model.serviceManager.verifyRequiredServiceSelections(ratePlanProductId=rc.plan,deviceProductId=prc.productData.productId,selectedServiceProductIds='');
-
-      // argsServices = {};
-      // argsServices.carrierId=prc.productData.carrierId;
-      // argsServices.active=1;
-      // prc.getServices = application.model.serviceManager.getServices(argsServices);
-      // prc.getRequiredServicesByCartType = application.model.serviceManager.getRequiredServicesByCartType(cartTypeId=1,carriedId=prc.productData.carrierId);
-      // prc.getDefaultServices = application.model.serviceManager.getDefaultServices(RateplanGuid=,DeviceGuid=prc.productData.deviceGuid);
-
-      // <end debugging
-
+      prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = prc.servicesArgs);
     </cfscript>
-
-    <!--- TODO: If rc.plan does not exist, then send back to "plans" --->
-    <!--- <cfdump var="#rc#"><cfabort> --->
-    <!--- <cfdump var="#prc.productData#"><cfabort> --->
-    <!--- <cfdump var="#prc.deviceMinimumRequiredServices#"><cfabort> --->
   </cffunction>
 
 

@@ -1,5 +1,5 @@
 <cfoutput>
-  rc.selectedAccessories: #rc.selectedAccessories#
+  <!--- prc.resultStr: #prc.resultStr# --->
   <div class="col-md-12">
     <section class="content accessories">
       <header class="main-header">
@@ -16,7 +16,6 @@
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#" />
           </cfif>
-          <input type="hidden" name="selectedAccessories" value="#rc.selectedAccessories#" />
 
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
@@ -41,14 +40,14 @@
                     <div class="info-wrap">
                       <div class="info">#prc.qAccessory.summaryTitle[prc.qAccessory.currentRow]#</div>
                       <div class="price">#dollarFormat(prc.qAccessory.price_retail[prc.qAccessory.currentRow])#</div>
-                      <cfif listFindNoCase(rc.selectedAccessories, prc.qAccessory.productId[prc.qAccessory.currentRow])>
+                      <cfif listFindNoCase(prc.selectedAccessories, prc.qAccessory.productId[prc.qAccessory.currentRow])>
                         <button type="submit" class="btn btn-remove btnRemoveFromCart" name="removeaccessory" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="removeacc_#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Remove</button>
                       <cfelse>
                         <button type="submit" class="btn btnAddToCart" name="addaccessory" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="accessory_#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Add to Cart</button>
                       </cfif>
                     </div>
                     <div class="callout">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##accessoryModal"  href="#event.buildLink('devicebuilder.accessorymodal')#/pid/#rc.pid#/type/#rc.type#/aid/#prc.qAccessory.productId[prc.qAccessory.currentRow]#/finance/#rc.finance#/plan/#rc.plan#/cartLineNumber/#rc.cartLineNumber#<cfif structKeyExists(rc,"line")>/line/#line#/</cfif>selectedAccessories/#rc.selectedAccessories#">Quick View</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##accessoryModal"  href="#event.buildLink('devicebuilder.accessorymodal')#/pid/#rc.pid#/type/#rc.type#/aid/#prc.qAccessory.productId[prc.qAccessory.currentRow]#/finance/#rc.finance#/plan/#rc.plan#/cartLineNumber/#rc.cartLineNumber#<cfif structKeyExists(rc,"line")>/line/#line#/</cfif>">Quick View</button>
                     </div>
 
                     
