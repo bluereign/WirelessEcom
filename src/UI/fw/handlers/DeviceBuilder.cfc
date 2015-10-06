@@ -410,33 +410,6 @@
           prc.resultStr = prc.resultStr & " accessory:" & application.model.CartHelper.removeAccessory(argumentCollection = prc.cartArgs); 
         }
       }
-    
-
-      // if ( structKeyExists(rc, "FieldNames") and findNoCase("accessory_",rc.FieldNames) ) {
-      //   i = 0;
-      //   Fields = ListToArray(rc.FieldNames);
-      //   FieldName = "";
-      //   l = arrayLen(Fields);
-      //   for (i = 1; i lte l; i++) {
-      //     FieldName = Fields[i];
-      //     if ( findNoCase("accessory_",FieldName) ) {
-      //       if ( !listFindNoCase(rc.selectedAccessories, XmlFormat(rc[FieldName])) ) {
-      //         rc.selectedAccessories = listAppend(rc.selectedAccessories, XmlFormat(rc[FieldName]) );
-      //       }
-      //       if ( ! (structKeyExists(rc,"qty") and isValid("integer", rc.qty)) ) {
-      //         rc.qty = 1;
-      //       }
-      //       prc.cartArgs = {
-      //         productType = "accessory",
-      //         product_id = XmlFormat(rc[FieldName]),
-      //         qty = rc.qty,
-      //         cartLineNumber = rc.cartLineNumber
-      //       };
-      //       prc.resultStr = prc.resultStr & " accessory:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
-      //     }
-      //   }
-      // }
-
       // <end accessories
       
 
@@ -553,10 +526,9 @@
     <cfparam name="rc.inputZip" default="" />
     <cfparam name="rc.inputSSN" default="" />
     <cfparam name="rc.inputPin" default="" />
-    <!--- <cfdump var="#rc.nextAction#"><cfabort> --->
 
     <cfscript>
-      // simple server-side validation
+      // SIMPLE SERVER-SIDE VALIDATION
       // AND len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
       if ( 
           !(
@@ -580,7 +552,7 @@
           event="devicebuilder.carrierLogin",
           persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
       }
-      // /simple validation
+      // <end simple validation
 
 
       switch (prc.productData.carrierId) {
@@ -802,15 +774,12 @@
 
     <cfscript>
       if (structKeyExists(rc,"aid")) {
-        // prc.accessoryInfo = application.model.Accessory.getByFilter(idList = 25713);
         prc.accessoryInfo = application.model.Accessory.getByFilter(idList = rc.aid);
         prc.stcPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(valueList(prc.accessoryInfo.accessoryGuid));
         prc.accessoryImages = application.model.imageManager.getImagesForProducts(prc.accessoryInfo.accessoryGuid, true);
       }
       event.noLayout();
     </cfscript>
-    <!--- <cfdump var="#prc.accessoryInfo#"><cfdump var="#prc.stcPrimaryImages#"><cfabort> --->
-    <!--- <cfdump var="#prc.accessoryImages#"><cfabort> --->
   </cffunction>
 
 
@@ -848,10 +817,11 @@
     <cfset var carrierObjExists = false />
 
     <cfscript>
-      // TODO: Remove all items in the cart.
 
       // remove carrierObj from session: 
       carrierObjExists = structdelete(session, 'carrierObj', true);
+
+      // reinitialize the cart
       session.cart = createObject('component','cfc.model.cart').init();
       
       // TODO: Remove the following 2 lines after testing to comply with case 195

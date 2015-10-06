@@ -84,7 +84,7 @@
             <!--- prc.qWarranty: active, contractTerm (months), deductible, deviceid, gersSku, longDescription, metaDescription, metaKeywords, price, productId, shortDescription, summaryTitle, UPC,   --->
             <cfset prc.thisURL = '/index.cfm/go/shop/do/warrantyDetails/cartCurrentLine/1/productId/#prc.qWarranty.ProductId#' />
             <div class="radio">
-              <label for="AddProtectionPlan_#prc.qWarranty.productId#">
+              <label for="warrantyoption_#prc.qWarranty.productId#">
                 <input type="radio" name="wid" id="warrantyoption_#prc.qWarranty.productId#" value="#prc.qWarranty.productId#" onchange="onChangeHandler(this.form,this.form.paymentoption.value)"  <cfif rc.wid eq prc.qWarranty.productId>checked</cfif> >
                 <a type="button" data-toggle="modal" data-target="##protectionModal" href="#event.buildLink('devicebuilder.protectionmodal')#/pid/#rc.pid#/type/#rc.type#/wid/#prc.qWarranty.productId#">
                   #prc.qWarranty.SummaryTitle#
