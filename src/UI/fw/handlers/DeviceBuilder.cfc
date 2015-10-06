@@ -58,14 +58,18 @@
       
       
       // CARTLINENUMBER:
-      prc.cartLinesCount = arrayLen(session.cart.getLines());
-      // TODO: Pass it as rc scope hidden form field
-      if (!structKeyExists(rc,"cartLineNumber")) {
-        rc.cartLineNumber = prc.cartLinesCount + 1;
+
+      // if customer is new, cartLineNumber is always 1:
+      
+      if ( listFindNoCase("new,newx", rc.type) ) {
+        rc.cartLineNumber = 1;
       }
 
-      // DEBUG/TEST
-      // rc.cartLineNumber = 1;
+      // if cartLineNumber is unknown, use the arrayLen of session cart lines
+      if (!structKeyExists(rc, "cartLineNumber")) {
+        prc.cartLinesCount = arrayLen(session.cart.getLines());
+        rc.cartLineNumber = prc.cartLinesCount + 1;
+      }
 
       // prc.getCurrentLineData = session.cart.getCurrentLineData();
 
@@ -248,7 +252,7 @@
           prc.subscriber.phoneNumber3 = right(prc.subscriber.phoneNumber, 4);
           prc.subscriber.phoneNumber = "(#prc.subscriber.phoneNumber1#) #prc.subscriber.phoneNumber2#-#prc.subscriber.phoneNumber3#";
 
-          prc.tallyboxHeader = "Upgrading " & prc.subscriber.phoneNumber;
+          prc.tallyboxHeader = "Configuring " & prc.subscriber.phoneNumber;
         }
         // TODO: Else if page is 'plans' and type is 'upgrade', send redirect the logged in user to the upgradeline page here...
       }
@@ -296,8 +300,7 @@
         Fields = ListToArray(rc.FieldNames);
         FieldName = "";
         l = arrayLen(Fields);
-        for (i = 1; i lte l; i++)  // you also can use i++ instead
-        {
+        for (i = 1; i lte l; i++) {
           FieldName = Fields[i];
           if ( findNoCase("chk_features_",FieldName) ) {
             prc.selectedServices = listAppend(prc.selectedServices, XmlFormat(rc[FieldName]) );
@@ -321,15 +324,11 @@
           // thisService.FinancedPrice = thisServiceQry.FinancedPrice;
           thisService.Title = thisServiceQry.Title;
           arrayAppend(prc.aSelectedServices, thisService);
-
         }
       }      
       // <end selected services
 
 
-      // <ACCESSORIES
-      
-      // <end accessories
       
 
       // <CART 
@@ -352,7 +351,7 @@
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & "<br>" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        prc.resultStr = prc.resultStr & " plan: " & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
       }
       
       // services:
@@ -363,19 +362,84 @@
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & "<br>" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        prc.resultStr = prc.resultStr & " services:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
       }
 
       // warranty: rc.wid
-      if ( structKeyExists(prc,"wid") and isNumeric(prc.wid) and prc.wid gt 0 and structKeyExists(prc,"warrantyInfo") ) {
+      if ( structKeyExists(rc,"wid") and isNumeric(rc.wid) and rc.wid gt 0 and structKeyExists(prc,"warrantyInfo") ) {
         prc.cartArgs = {
           productType = "warranty",
           product_id = rc.wid,
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & "<br>" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        prc.resultStr = prc.resultStr & " warranty:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
       }
+      
+
+      // <ACCESSORIES
+
+      if (!structKeyExists(rc,"selectedAccessories")) {
+        rc.selectedAccessories = "";
+      }
+
+      if ( structKeyExists(rc,"addaccessory") ) {
+        if ( !listFindNoCase(rc.selectedAccessories, rc.addaccessory) ) {
+          rc.selectedAccessories = listAppend(rc.selectedAccessories, rc.addaccessory);
+        }
+        if ( ! (structKeyExists(rc,"accessoryqty") and isValid("integer", rc.accessoryqty)) ) {
+          rc.accessoryqty = 1;
+        }
+        prc.cartArgs = {
+          productType = "accessory",
+          product_id = addaccessory,
+          qty = rc.accessoryqty,
+          cartLineNumber = rc.cartLineNumber
+        };
+        prc.resultStr = prc.resultStr & " accessory:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+      }
+
+      if ( structKeyExists(rc,"removeaccessory") ) {
+        prc.removeaccessoryindex = listFindNoCase(rc.selectedAccessories, rc.removeaccessory);
+        if (prc.removeaccessoryindex) {
+          rc.selectedAccessories = listDeleteAt(rc.selectedAccessories, prc.removeaccessoryindex);
+          prc.cartArgs = {
+            line = rc.cartLineNumber,
+            productid = removeaccessory
+          };
+          prc.resultStr = prc.resultStr & " accessory:" & application.model.CartHelper.removeAccessory(argumentCollection = prc.cartArgs); 
+        }
+      }
+    
+
+      // if ( structKeyExists(rc, "FieldNames") and findNoCase("accessory_",rc.FieldNames) ) {
+      //   i = 0;
+      //   Fields = ListToArray(rc.FieldNames);
+      //   FieldName = "";
+      //   l = arrayLen(Fields);
+      //   for (i = 1; i lte l; i++) {
+      //     FieldName = Fields[i];
+      //     if ( findNoCase("accessory_",FieldName) ) {
+      //       if ( !listFindNoCase(rc.selectedAccessories, XmlFormat(rc[FieldName])) ) {
+      //         rc.selectedAccessories = listAppend(rc.selectedAccessories, XmlFormat(rc[FieldName]) );
+      //       }
+      //       if ( ! (structKeyExists(rc,"qty") and isValid("integer", rc.qty)) ) {
+      //         rc.qty = 1;
+      //       }
+      //       prc.cartArgs = {
+      //         productType = "accessory",
+      //         product_id = XmlFormat(rc[FieldName]),
+      //         qty = rc.qty,
+      //         cartLineNumber = rc.cartLineNumber
+      //       };
+      //       prc.resultStr = prc.resultStr & " accessory:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+      //     }
+      //   }
+      // }
+
+      // <end accessories
+      
+
       // <end cart
       
 
@@ -552,7 +616,7 @@
             setNextEvent(
               event="#rc.nextAction#",
               persist="type,pid,finance,cartLineNumber");
-            
+
           } else {
             rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
             setNextEvent(
@@ -726,7 +790,7 @@
 
     <cfscript>
       prc.CatalogService = application.model.Catalog;
-      prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories( event.getValue('pid', '') );
+      prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories(rc.pid);
     </cfscript>
   </cffunction>
 

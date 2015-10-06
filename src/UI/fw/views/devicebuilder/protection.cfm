@@ -219,7 +219,8 @@
 
   <script type="text/javascript">
     function onChangeHandler(form,paymentoption) {
-      form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
+      // form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
+      form.action='#event.buildLink('devicebuilder.protection')#';
       form.paymentoption.value=paymentoption;
       form.submit();
     }
