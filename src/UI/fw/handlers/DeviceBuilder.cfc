@@ -29,6 +29,8 @@
     <cfset var nextAction = "" />
     <cfset var prevAction = "" />
 
+    <!--- <cfdump var="#rc#"><cfabort> --->
+
     <cfscript>
       // KEEP THIS NEXT LINE INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
@@ -60,9 +62,13 @@
 
       // if customer is new, cartLineNumber is always 1:
       
-      if ( listFindNoCase("new,newx", rc.type) ) {
+      if ( listFindNoCase("new,newx,addaline,addalinex", rc.type) ) {
         rc.cartLineNumber = 1;
       }
+      // else if ( listFindNoCase("upgrade,upgradex", rc.type) ) {
+      //   rc.cartLineNumber = rc.line;
+      //   }
+      // }
 
       // if cartLineNumber is unknown, use the arrayLen of session cart lines
       if (!structKeyExists(rc, "cartLineNumber")) {
@@ -288,6 +294,9 @@
 
 
       // <SELECTED SERVICES
+      if ( structKeyExists(rc,"selectedServices") ) {
+        prc.selectedServices = rc.selectedServices;
+      }
       if ( !structKeyExists(prc,"selectedServices") ) {
         prc.selectedServices = "";
       }
@@ -330,8 +339,6 @@
       // <end selected services
 
 
-      
-
       // <CART 
       // if device has not been added to this rc.cartLineNumber in the cart, ensure that it is.  Note: there are multiple entry points to the DeviceBuilder.
       prc.cartArgs = {
@@ -365,6 +372,7 @@
         };
         prc.resultStr = prc.resultStr & " services:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
       }
+
 
       // warranty: rc.wid
       if ( structKeyExists(rc,"wid") and isNumeric(rc.wid) and rc.wid gt 0 and structKeyExists(prc,"warrantyInfo") ) {
@@ -415,13 +423,10 @@
           prc.selectedAccessories = listAppend(prc.selectedAccessories, prc.selectedAccessory.productId);
         }
       }
-      
-
       // <end accessories
       
-
       // <end cart
-      
+
 
 
       // <TALLY BOX
@@ -521,7 +526,7 @@
   </cffunction>
 
 
-  <cffunction name="carrierLoginPost" returntype="void" output="false" hint="Carrier Login page">
+  <cffunction name="carrierLoginPost" returntype="void" output="false" hint="Carrier Login">
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
@@ -558,6 +563,7 @@
         setNextEvent(
           event="devicebuilder.carrierLogin",
           persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
+        // cartLineNumber
       }
       // <end simple validation
 
@@ -786,6 +792,26 @@
     <cfparam name="prc.showAddAnotherDeviceButton" default="true" />
     <cfparam name="prc.showCheckoutnowButton" default="true" />
     <cfparam name="prc.showClearCartLink" default="true" />
+
+
+    <!--- Remove empty cart lines --->
+    <cfset application.model.CartHelper.removeEmptyCartLines() />
+    
+    <!--- TODO:  apply rebates logic from cfc/model/LineService.cfc --->
+
+    <!--- TODO: apply cart logic in cfc/view/Cart.cfc's "view" function --->
+    <cfif application.model.cartHelper.hasSelectedFeatures()>
+      <cfset prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
+    </cfif>
+
+    <cfset session.cart.updateAllPrices() />
+    <cfset session.cart.updateAllDiscounts() />
+    <cfset session.cart.updateAllTaxes() />
+
+    <cfset prc.cartLines = session.cart.getLines() />
+
+
+
 
     <cfscript>
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart') & '/pid/' & rc.pid & '/type/' & rc.type & '/';

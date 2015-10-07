@@ -46,6 +46,13 @@
               <cfif structKeyExists(rc,"line")>
                 <input type="hidden" name="line" value="#rc.line#" />
               </cfif>
+              <cfif structKeyExists(prc,"selectedServices")>
+                <input type="hidden" name="selectedServices" value="#prc.selectedServices#">  
+              </cfif>
+              <cfif structKeyExists(rc,"wid")>
+                <input type="hidden" name="wid" value="#rc.wid#">
+              </cfif>
+
               <input type="hidden" name="addaccessory" value="#prc.accessoryInfo.productId#" />
 
               <div class="form-group form-inline">

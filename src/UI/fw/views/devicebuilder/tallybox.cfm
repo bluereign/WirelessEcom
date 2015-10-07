@@ -137,7 +137,7 @@
             <div class="table-responsive">
               <table class="table">
 
-                <cfif arrayLen(prc.aAccessories)>
+                <cfif structKeyExists(prc,"aAccessories") and arrayLen(prc.aAccessories)>
                   <cfloop from="1" to="#arrayLen(prc.aAccessories)#" index="prc.iAccessory">
                     <cfset prc.thisAccessory = prc.aAccessories[prc.iAccessory] />
                     <cfset prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID()) />
