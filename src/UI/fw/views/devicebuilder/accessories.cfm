@@ -1,4 +1,5 @@
 <cfoutput>
+  <!--- prc.resultStr: #prc.resultStr# --->
   <div class="col-md-12">
     <section class="content accessories">
       <header class="main-header">
@@ -15,6 +16,7 @@
           <cfif structKeyExists(rc,"line")>
             <input type="hidden" name="line" value="#rc.line#" />
           </cfif>
+
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
@@ -22,7 +24,6 @@
         <section class="featured">
           <!--- <h4>Featured Accessories for Your Device</h4> --->
           <div class="row">
-            
             <cfif prc.qAccessory.RecordCount>
               <cfloop query="prc.qAccessory">
                 <cfset local.stcFeeAccessoryPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(valueList(prc.qAccessory.accessoryGuid)) />
@@ -39,13 +40,16 @@
                     <div class="info-wrap">
                       <div class="info">#prc.qAccessory.summaryTitle[prc.qAccessory.currentRow]#</div>
                       <div class="price">#dollarFormat(prc.qAccessory.price_retail[prc.qAccessory.currentRow])#</div>
-                      <button type="button" class="btn btnAddToCart" id="add_#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Add to Cart</button>
-                      <!--- <button type="button" class="btn btn-remove">Remove</button> --->
+                      <cfif listFindNoCase(prc.selectedAccessories, prc.qAccessory.productId[prc.qAccessory.currentRow])>
+                        <button type="submit" class="btn btn-remove btnRemoveFromCart" name="removeaccessory" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="removeacc_#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Remove</button>
+                      <cfelse>
+                        <button type="submit" class="btn btnAddToCart" name="addaccessory" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="accessory_#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Add to Cart</button>
+                      </cfif>
                     </div>
                     <div class="callout">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##accessoryModal"  href="#event.buildLink('devicebuilder.accessorymodal')#/pid/#rc.pid#/type/#rc.type#/aid/#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Quick View</button>
-                        <!--- <button type="button" class="btn btn-primary" onclick="alert('addToCart accessory pid: #prc.qAccessory.productId[prc.qAccessory.currentRow]#', '#prc.qAccessory.productId[prc.qAccessory.currentRow]#', 1);return false;">Quick View</button> --->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##accessoryModal"  href="#event.buildLink('devicebuilder.accessorymodal')#/pid/#rc.pid#/type/#rc.type#/aid/#prc.qAccessory.productId[prc.qAccessory.currentRow]#/finance/#rc.finance#/plan/#rc.plan#/cartLineNumber/#rc.cartLineNumber#<cfif structKeyExists(rc,"line")>/line/#line#/</cfif>">Quick View</button>
                     </div>
+
                     
                   </div>
                 </div>

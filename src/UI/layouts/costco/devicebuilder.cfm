@@ -179,14 +179,21 @@
         .find('.info-wrap').on('mouseover', function(e) {
           e.stopPropagation();
         });
+
+      $('.btnAddToCart')
+        .on('click', function() {
+          // console.log('this.id: ' + this.id);
+          this.form.action='#event.buildLink('devicebuilder.accessories')#';
+          this.form.submit();
+        });
+
+      $('.btnRemoveFromCart')
+        .on('click', function() {
+          this.form.action='#event.buildLink('devicebuilder.accessories')#';
+          this.form.submit();
+        });
+
     });
-
-    function onChangeHandler(form) {
-      form.action='#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/';
-      form.paymentoption.value=paymentoption;
-      form.submit();
-    }
-
   </script>
 </cfif>
 <!--- <end accessories view --->

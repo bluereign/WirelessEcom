@@ -28,8 +28,7 @@
     <cfset var prevNavIndex = "" />
     <cfset var nextAction = "" />
     <cfset var prevAction = "" />
-    <cfset var argsPlan = {} />
-    <!--- <cfdump var="#rc#"><cfabort> --->
+
     <cfscript>
       // KEEP THIS NEXT LINE INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
@@ -58,14 +57,18 @@
       
       
       // CARTLINENUMBER:
-      prc.cartLinesCount = arrayLen(session.cart.getLines());
-      // TODO: Pass it as rc scope hidden form field
-      if (!structKeyExists(rc,"cartLineNumber")) {
-        rc.cartLineNumber = prc.cartLinesCount + 1;
+
+      // if customer is new, cartLineNumber is always 1:
+      
+      if ( listFindNoCase("new,newx", rc.type) ) {
+        rc.cartLineNumber = 1;
       }
 
-      // DEBUG/TEST
-      // rc.cartLineNumber = 1;
+      // if cartLineNumber is unknown, use the arrayLen of session cart lines
+      if (!structKeyExists(rc, "cartLineNumber")) {
+        prc.cartLinesCount = arrayLen(session.cart.getLines());
+        rc.cartLineNumber = prc.cartLinesCount + 1;
+      }
 
       // prc.getCurrentLineData = session.cart.getCurrentLineData();
 
@@ -248,7 +251,7 @@
           prc.subscriber.phoneNumber3 = right(prc.subscriber.phoneNumber, 4);
           prc.subscriber.phoneNumber = "(#prc.subscriber.phoneNumber1#) #prc.subscriber.phoneNumber2#-#prc.subscriber.phoneNumber3#";
 
-          prc.tallyboxHeader = "Upgrading " & prc.subscriber.phoneNumber;
+          prc.tallyboxHeader = "Configuring " & prc.subscriber.phoneNumber;
         }
         // TODO: Else if page is 'plans' and type is 'upgrade', send redirect the logged in user to the upgradeline page here...
       }
@@ -257,10 +260,13 @@
 
       // <SELECTED PLAN
       if (structKeyExists(rc,"plan") and isNumeric(rc.plan)) {
-        argsPlan.carrierId = prc.productData.carrierId;
-        argsPlan.zipCode = session.cart.getZipcode();
-        argsPlan.idList = rc.plan;
-        prc.planInfo = PlanService.getPlans(argumentCollection = argsPlan);
+        
+        prc.planArgs = {
+          carrierId = prc.productData.carrierId,
+          zipCode = session.cart.getZipcode(),
+          idList = rc.plan
+        };
+        prc.planInfo = PlanService.getPlans(argumentCollection = prc.planArgs);
 
         // get down payment of plan for this subscriber:
         if (structKeyExists(prc,"subscriber")) {
@@ -295,9 +301,7 @@
         i = 0;
         Fields = ListToArray(rc.FieldNames);
         FieldName = "";
-        l = arrayLen(Fields);
-        for (i = 1; i lte l; i++)  // you also can use i++ instead
-        {
+        for (i = 1; i lte arrayLen(Fields); i++) {
           FieldName = Fields[i];
           if ( findNoCase("chk_features_",FieldName) ) {
             prc.selectedServices = listAppend(prc.selectedServices, XmlFormat(rc[FieldName]) );
@@ -321,15 +325,11 @@
           // thisService.FinancedPrice = thisServiceQry.FinancedPrice;
           thisService.Title = thisServiceQry.Title;
           arrayAppend(prc.aSelectedServices, thisService);
-
         }
       }      
       // <end selected services
 
 
-      // <ACCESSORIES
-      
-      // <end accessories
       
 
       // <CART 
@@ -352,7 +352,7 @@
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & "<br>" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        prc.resultStr = prc.resultStr & " plan: " & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
       }
       
       // services:
@@ -363,19 +363,63 @@
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & "<br>" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        prc.resultStr = prc.resultStr & " services:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
       }
 
       // warranty: rc.wid
-      if ( structKeyExists(prc,"wid") and isNumeric(prc.wid) and prc.wid gt 0 and structKeyExists(prc,"warrantyInfo") ) {
+      if ( structKeyExists(rc,"wid") and isNumeric(rc.wid) and rc.wid gt 0 and structKeyExists(prc,"warrantyInfo") ) {
         prc.cartArgs = {
           productType = "warranty",
           product_id = rc.wid,
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & "<br>" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        prc.resultStr = prc.resultStr & " warranty:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
       }
+      
+
+      // <ACCESSORIES
+
+      if ( structKeyExists(rc,"addaccessory") ) {
+        if ( ! (structKeyExists(rc,"accessoryqty") and isValid("integer", rc.accessoryqty)) ) {
+          rc.accessoryqty = 1;
+        }
+        prc.cartArgs = {
+          productType = "accessory",
+          product_id = addaccessory,
+          qty = rc.accessoryqty,
+          cartLineNumber = rc.cartLineNumber
+        };
+        prc.resultStr = prc.resultStr & " accessory:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+      }
+
+      if ( structKeyExists(rc,"removeaccessory") ) {
+        prc.cartArgs = {
+          line = rc.cartLineNumber,
+          productid = removeaccessory
+        };
+        prc.resultStr = prc.resultStr & " removeaccessory:" & application.model.CartHelper.removeAccessory(argumentCollection = prc.cartArgs);
+      }
+
+      // get cartline accessories
+      prc.cartArgs = {
+          line = rc.cartLineNumber,
+          type = "accessory"
+        };
+      prc.aAccessories = session.cartHelper.lineGetAccessoriesByType(argumentCollection = prc.cartArgs);
+      prc.selectedAccessories = "";
+      if (arrayLen(prc.aAccessories)) {
+        for (prc.iAccessory = 1; prc.iAccessory lte arrayLen(prc.aAccessories); prc.iAccessory++) {
+          prc.thisAccessory = prc.aAccessories[prc.iAccessory];
+          prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID());
+          prc.selectedAccessories = listAppend(prc.selectedAccessories, prc.selectedAccessory.productId);
+        }
+      }
+      
+
+      // <end accessories
+      
+
       // <end cart
       
 
@@ -489,10 +533,9 @@
     <cfparam name="rc.inputZip" default="" />
     <cfparam name="rc.inputSSN" default="" />
     <cfparam name="rc.inputPin" default="" />
-    <!--- <cfdump var="#rc.nextAction#"><cfabort> --->
 
     <cfscript>
-      // simple server-side validation
+      // SIMPLE SERVER-SIDE VALIDATION
       // AND len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
       if ( 
           !(
@@ -516,14 +559,14 @@
           event="devicebuilder.carrierLogin",
           persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
       }
-      // /simple validation
+      // <end simple validation
 
 
       switch (prc.productData.carrierId) {
         // AT&T carrierId = 109, VZW carrierId = 42
         case 109: case 42: {
           rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
-          prc.argsAccount = {
+          prc.accountArgs = {
             carrierId = prc.productData.carrierId,
             SubscriberNumber = rc.PhoneNumber,
             ZipCode = rc.inputZip,
@@ -532,7 +575,7 @@
           };
 
           // for testing purposes/development (carrierloginpost.cfm):
-          rc.respObj = carrierFacade.Account(argumentCollection = prc.argsAccount);
+          rc.respObj = carrierFacade.Account(argumentCollection = prc.accountArgs);
           rc.message = rc.respObj.getHttpStatus();
 
           if (rc.respObj.getResult() is 'true' or rc.respObj.getResult() is 'false') {
@@ -552,7 +595,7 @@
             setNextEvent(
               event="#rc.nextAction#",
               persist="type,pid,finance,cartLineNumber");
-            
+
           } else {
             rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
             setNextEvent(
@@ -591,16 +634,17 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var argsPlan = {} />
 
     <cfscript>
     // TODO: if type is 'upgrade', make sure a line is selected.  If rc.line does not exist, then send back to 'upgradealine'.
 
-      argsPlan.carrierId = prc.productData.carrierId;
-      argsPlan.zipCode = session.cart.getZipcode();
+      prc.planArgs = {
+        carrierId = prc.productData.carrierId,
+        zipCode = session.cart.getZipcode()
+      };
       
-      prc.planData = PlanService.getPlans(argumentCollection=argsPlan);
-      prc.planDataShared = PlanService.getSharedPlans(argumentCollection=argsPlan);
+      prc.planData = PlanService.getPlans(argumentCollection = prc.planArgs);
+      prc.planDataShared = PlanService.getSharedPlans(argumentCollection = prc.planArgs);
     </cfscript>
 
     <!--- If an existing plan's productId exists, then see if it is eligible (i.e. in the Individual or Shared plans queries) --->
@@ -622,13 +666,14 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var argsPlan = {} />
 
     <cfscript>
       prc.nextStep = event.buildLink('devicebuilder.protection');
       if (structKeyExists(rc,"plan")) {
-        argsPlan.idList = rc.plan;
-        prc.planInfo = PlanService.getPlans(argumentCollection=argsPlan);
+        prc.planArgs = {
+          idList = rc.plan
+        };
+        prc.planInfo = PlanService.getPlans(argumentCollection = prc.planArgs);
       }
       event.noLayout();
     </cfscript>
@@ -639,8 +684,6 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var argsServices = {} />
-    <!--- <cfdump var="#prc.planInfo#"><cfabort> --->
 
     <cfscript>
       if (!structKeyExists(rc, "isDownPaymentApproved")) {
@@ -649,43 +692,20 @@
 
       prc.qWarranty = application.model.Warranty.getByDeviceId(rc.pid);
 
+      prc.servicesArgs = {
+        type = "O",
+        deviceGuid = prc.productData.productGuid,
+        HasSharedPlan = session.cart.getHasSharedPlan()
+      };
+
       if (prc.productData.carrierId eq prc.carrierIdAtt) {
-        argsServices.carrierId = prc.carrierGuidAtt;
+        prc.servicesArgs.carrierId = prc.carrierGuidAtt;
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
-        argsServices.carrierId = prc.carrierGuidVzw;
+        prc.servicesArgs.carrierId = prc.carrierGuidVzw;
       }
 
-      argsServices.type = "O";
-      argsServices.deviceGuid = prc.productData.productGuid;
-      argsServices.HasSharedPlan = session.cart.getHasSharedPlan();
-
-      prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = argsServices);
-
-
-      // debugging:
-      
-      // *** Definitely will need this:application.model.serviceManager.getDeviceMinimumRequiredServices(productId=prc.productData.productId)
-      // prc.deviceMinimumRequiredServices = application.model.serviceManager.getDeviceMinimumRequiredServices(productId=prc.productData.productId);
-
-      // prc.deviceServices = application.model.serviceManager.getDeviceServices(productId=prc.productData.productId);
-      // prc.devicePlanMinimumRequiredServices = application.model.serviceManager.getDevicePlanMinimumRequiredServices(DeviceId=prc.productData.productId,PlanId=rc.plan);
-      // prc.verifyRequiredServiceSelections = application.model.serviceManager.verifyRequiredServiceSelections(ratePlanProductId=rc.plan,deviceProductId=prc.productData.productId,selectedServiceProductIds='');
-
-      // argsServices = {};
-      // argsServices.carrierId=prc.productData.carrierId;
-      // argsServices.active=1;
-      // prc.getServices = application.model.serviceManager.getServices(argsServices);
-      // prc.getRequiredServicesByCartType = application.model.serviceManager.getRequiredServicesByCartType(cartTypeId=1,carriedId=prc.productData.carrierId);
-      // prc.getDefaultServices = application.model.serviceManager.getDefaultServices(RateplanGuid=,DeviceGuid=prc.productData.deviceGuid);
-
-      // <end debugging
-
+      prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = prc.servicesArgs);
     </cfscript>
-
-    <!--- TODO: If rc.plan does not exist, then send back to "plans" --->
-    <!--- <cfdump var="#rc#"><cfabort> --->
-    <!--- <cfdump var="#prc.productData#"><cfabort> --->
-    <!--- <cfdump var="#prc.deviceMinimumRequiredServices#"><cfabort> --->
   </cffunction>
 
 
@@ -726,7 +746,7 @@
 
     <cfscript>
       prc.CatalogService = application.model.Catalog;
-      prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories( event.getValue('pid', '') );
+      prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories(rc.pid);
     </cfscript>
   </cffunction>
 
@@ -738,15 +758,12 @@
 
     <cfscript>
       if (structKeyExists(rc,"aid")) {
-        // prc.accessoryInfo = application.model.Accessory.getByFilter(idList = 25713);
         prc.accessoryInfo = application.model.Accessory.getByFilter(idList = rc.aid);
         prc.stcPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(valueList(prc.accessoryInfo.accessoryGuid));
         prc.accessoryImages = application.model.imageManager.getImagesForProducts(prc.accessoryInfo.accessoryGuid, true);
       }
       event.noLayout();
     </cfscript>
-    <!--- <cfdump var="#prc.accessoryInfo#"><cfdump var="#prc.stcPrimaryImages#"><cfabort> --->
-    <!--- <cfdump var="#prc.accessoryImages#"><cfabort> --->
   </cffunction>
 
 
@@ -784,10 +801,11 @@
     <cfset var carrierObjExists = false />
 
     <cfscript>
-      // TODO: Remove all items in the cart.
 
       // remove carrierObj from session: 
       carrierObjExists = structdelete(session, 'carrierObj', true);
+
+      // reinitialize the cart
       session.cart = createObject('component','cfc.model.cart').init();
       
       // TODO: Remove the following 2 lines after testing to comply with case 195

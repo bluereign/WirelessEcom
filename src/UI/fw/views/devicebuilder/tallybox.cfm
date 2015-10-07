@@ -75,7 +75,7 @@
                   - Existing
                 </cfif>
               <cfelse>
-                (Plan not yet selected)
+                No plan selected
               </cfif>
             </div>
             <div class="table-responsive">
@@ -114,13 +114,13 @@
                   </cfloop>
                 <cfelse>
                   <tr>
-                    <td>No services selected</td>
-                    <td class="price"></td>
+                    <td>No Services Selected</td>
+                    <td class="price">#dollarFormat(0)#/mo</td>
                   </tr>
                 </cfif>
                 <tr>
                   <td>#prc.warrantyInfo.SummaryTitle#</td>
-                  <td class="price">#dollarFormat(prc.warrantyInfo.Price)#/mo</td>
+                  <td class="price">#dollarFormat(prc.warrantyInfo.Price)#</td>
                 </tr>
               </table>
             </div>
@@ -131,29 +131,40 @@
           <!--- <div class="col-xs-4">
             <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" />
           </div> --->
+          <!--- <cfdump var="#session.cartHelper.lineGetAccessoriesByType(rc.cartLineNumber,"accessory")#"> --->
+          
           <div class="col-xs-16">
             <div class="table-responsive">
               <table class="table">
-                <!--- <cfif arrayLen(prc.aSelectedServices)>
-                  <cfloop index="i" from="1" to="#arrayLen(prc.aSelectedServices)#">
+
+                <cfif arrayLen(prc.aAccessories)>
+                  <cfloop from="1" to="#arrayLen(prc.aAccessories)#" index="prc.iAccessory">
+                    <cfset prc.thisAccessory = prc.aAccessories[prc.iAccessory] />
+                    <cfset prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID()) />
+                    <cfset prc.stcPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(prc.selectedAccessory.accessoryGuid) />
+                    <cfset prc.primaryImageSrc = application.view.imageManager.displayImage(imageGuid = prc.stcPrimaryImages[prc.selectedAccessory.accessoryGuid], height = 60, width = 60) />
+                    
+
+                    <!--- <cfdump var="#prc.selectedAccessory.summaryTitle#"> --->
                     <tr>
-                      <td>#prc.aSelectedServices[i].label# (#prc.aSelectedServices[i].productId#)</td>
-                      <td class="price">#dollarFormat(prc.aSelectedServices[i].MonthlyFee)#</td>
-                    </tr>                  
+                      <td><img src="#trim(prc.primaryImageSrc)#"  width="60" border="0" /></td>
+                      <td>#prc.selectedAccessory.summaryTitle#</td>
+                      <td class="price">#dollarFormat(prc.selectedAccessory.price)#</td>
+                    </tr>
                   </cfloop>
                 <cfelse>
                   <tr>
-                    <td>No services selected</td>
+                    <td>No Accessories Selected</td>
                     <td class="price"></td>
                   </tr>
-                </cfif> --->
+                </cfif>
               </table>
             </div>
           </div>
         </div>
-        <div class="row">
+        <!--- <div class="row">
           <div class="col-xs-4">
-            <!--- <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" /> --->
+            <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" />
           </div>
           <div class="col-xs-12">
             <div class="table-responsive">
@@ -165,7 +176,7 @@
               </table>
             </div>
           </div>
-        </div>
+        </div> --->
       </aside>
     </div>
   </div> <!--- <end tally box --->
