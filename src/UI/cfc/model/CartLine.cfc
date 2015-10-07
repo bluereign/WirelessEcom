@@ -18,6 +18,7 @@
 		<cfargument name="instantRebateAmount" type="numeric" required="false" default="0" />
 		<cfargument name="planIDCount" type="numeric" required="false" default="1" /> <!--- Num of previous lines (in cart) with the same plan ID (running total) --->
 		<cfargument name="cartLineActivationType" type="string" required="false" default="" />
+		<cfargument name="subscriberIndex" type="numeric" required="false" default="0" />
 		
 		<cfscript>
 			variables.instance = {};
@@ -38,12 +39,17 @@
 			setInstantRebateAmount(arguments.instantRebateAmount);
 			setPlanIDCount(arguments.planIDCount);
 			setCartLineActivationType(arguments.cartLineActivationType);
+			setSubscriberIndex(arguments.subscriberIndex);
 		</cfscript>
 		
 		<cfreturn this />
 	</cffunction>
 
 	<!--- getters --->
+
+	<cffunction name="getSubscriberIndex" returntype="numeric" output="false">
+		<cfreturn variables.instance.subscriberIndex>
+	</cffunction>
 
 	<cffunction name="getAlias" returntype="string" output="false">
 		<cfreturn variables.instance.alias>
@@ -110,6 +116,11 @@
 	</cffunction>
 
 	<!--- setters --->
+
+	<cffunction name="setSubscriberIndex" returntype="void">
+		<cfargument name="subscriberIndex" type="numeric" required="true">
+		<cfset variables.instance.subscriberIndex = arguments.subscriberIndex>
+	</cffunction>
 
 	<cffunction name="setAlias" returntype="void">
 		<cfargument name="alias" type="string" required="true">

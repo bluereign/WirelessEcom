@@ -15,6 +15,22 @@
 	
 	</cffunction>
 	
+	<!--- Helper methods --->
+	<cffunction name="processResponse" returnType="Any" access="public">
+		<cfargument name="carrierResponse"	type="any" required="true" />
+		
+		<cfset var local = structNew() />
+		<cfset local.resp = arguments.carrierResponse.getResponse() />
+		<cfif structKeyExists(local.resp,"ResponseStatusMessage") and len(local.resp.ResponseStatusMessage) and local.resp.ResponseStatusMessage is not "null">
+			<cfset arguments.carrierResponse.setResult(false) />
+			<cfset arguments.carrierResponse.setResultDetail(local.resp.ResponseStatusMessage) />
+		<cfelse>			
+			<cfset arguments.carrierResponse.setResult(true) />
+			<cfset arguments.carrierResponse.setResultDetail("Success") />
+		</cfif>
+		<cfreturn arguments.carrierResponse />		
+	</cffunction>	
+	
 	
 	<!---
 		For get calls converts args into a query string	
