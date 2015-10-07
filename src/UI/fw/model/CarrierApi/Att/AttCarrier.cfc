@@ -18,11 +18,13 @@
 			<cfhttpparam type="header" name="Content-Type" value="application/json" />
     		<cfhttpparam type="body" value="#serializeJSonAddReferenceNumber(arguments)#">
 		</cfhttp>
+		
 		<!--- create the carrier response --->
 		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttAccountCarrierResponse').init() />
 		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+		<cfreturn processResponse(local.carrierResponse) />	
 
-		<cfset local.resp = local.carrierResponse.getResponse() />
+<!---		<cfset local.resp = local.carrierResponse.getResponse() />
 		<cfif structKeyExists(local.resp,"ResponseStatusMessage") and len(local.resp.ResponseStatusMessage) and local.resp.ResponseStatusMessage is not "null">
 			<cfset local.carrierResponse.setResult(false) />
 			<cfset local.carrierResponse.setResultDetail(local.resp.ResponseStatusMessage) />
@@ -30,18 +32,20 @@
 			<cfset local.carrierResponse.setResult(true) />
 			<cfset local.carrierResponse.setResultDetail("Success") />
 		</cfif>
-		<cfreturn local.carrierResponse />
+		<cfreturn local.carrierResponse />--->
 	</cffunction>
 	
 	<cffunction name="areaCode" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttAreaCodeCarrierResponse">
 		<cfset var local = structNew() />	
 		<cfhttp url="#variables.CarrierServiceURL#/areaCode?#argslist(argumentCollection=arguments)#" method="Get" result="local.cfhttp">
 		</cfhttp>
+		
 		<!--- create the carrier response --->
 		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttAreaCodeCarrierResponse').init() />
 		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+		<cfreturn processResponse(local.carrierResponse) />	
 
-		<cfset local.resp = local.carrierResponse.getResponse() />
+<!---		<cfset local.resp = local.carrierResponse.getResponse() />
 		<cfif structKeyExists(local.resp,"ResponseStatusMessage") and len(local.resp.ResponseStatusMessage) and local.resp.ResponseStatusMessage is not "null">
 			<cfset local.carrierResponse.setResult(false) />
 			<cfset local.carrierResponse.setResultDetail(local.resp.ResponseStatusMessage) />
@@ -49,23 +53,13 @@
 			<cfset local.carrierResponse.setResult(true) />
 			<cfset local.carrierResponse.setResultDetail("Success") />
 		</cfif>
-		<cfreturn local.carrierResponse />
+		<cfreturn local.carrierResponse />--->
 	</cffunction>
 	
-	<!---<cffunction name="upgradeEligibility" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
-		<cfhttp url="#variables.CarrierServiceURL#/UpgradeEligibility?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>		
-		<cfreturn processResults(cfhttp) />		
-	</cffunction>
-	
-	<cffunction name="areaCode" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttCarrierResponse">
-		<cfhttp url="#variables.CarrierServiceURL#/AttAreaCode?#argslist(argumentCollection=arguments)#" method="GET"></cfhttp>		
-		<cfreturn processResults(cfhttp) />		
-	</cffunction>--->
-
-
 	<!--- 
 		Look at the results of the call and set appropriate fields in the carrier response	
 	--->
+	
 	<cffunction name="processResults" returnType="Any" access="private">
 		<cfargument type="struct" name="cfhttpResult" required="true" /> 
 		<cfargument type="any" name="carrierResponse" required="true" /> 

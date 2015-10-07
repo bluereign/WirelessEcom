@@ -170,9 +170,6 @@
 			<cfreturn "not available" />
 		</cfif>
 	</cffunction>
-
-	
-	
 	
 	<!--- Methods that should be implemented in the derived object --->
 	
