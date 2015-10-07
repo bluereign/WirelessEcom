@@ -87,9 +87,12 @@ Result = #resultStr#
 <cfdump var="#args#">
 <cfset resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = args) />
 Result = #resultStr#
-
+<br/>Item count for #listgetat(accessoryids,accessoryIndex)# on line #cartLineNo# = #application.model.dBuilderCartFacade.getItemCount(cartLineNo,listgetat(accessoryids,accessoryIndex))#
+<br/>Now set the quantity to 2 regardless of how many were added
+<br/>application.model.dBuilderCartFacade.updateAccessoryQty(#cartLineNo#,#listgetat(accessoryids,accessoryIndex)#,2)
+<cfset application.model.dBuilderCartFacade.updateAccessoryQty(#cartLineNo#,#listgetat(accessoryids,accessoryIndex)#,2) />
+<br/>Item count for #listgetat(accessoryids,accessoryIndex)# on line #cartLineNo# = #application.model.dBuilderCartFacade.getItemCount(cartLineNo,listgetat(accessoryids,accessoryIndex))#
 <cfelse>
-
 <br/><br/>Decline Accessories for Line #cartlineno#
 <br/>Calling application.model.carthelper.declineAccessories(#cartLineNo#)
 <cfset application.model.carthelper.declineAccessories(#cartLineNo#) />

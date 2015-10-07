@@ -870,20 +870,37 @@
 		<cfargument name="product_id" type="string" /> <!--- this is a string because we might get integer or string data (e.g. plans) --->
 		<cfargument name="qty" type="string" default="1" />
 
+		<cfset var local = structNew() />
 
 		<!--- If the user is adding to 'other items'. --->
 		<cfif not arguments.cartLineNumber or arguments.cartLineNumber eq request.config.otherItemsLineNumber>
 		</cfif>
 		
-		<cfif arguments.cartLineNumber > 0 AND arguments.cartLineNumber LTE session.Carthelper.getNumberOfLines()>
-			<cfset local.cartItemQty = countItems(arguments.cartLineNo,arguments.product_id) />
+		<cfif arguments.cartLineNumber gt 0 AND arguments.cartLineNumber LTE session.Carthelper.getNumberOfLines()>
+			<cfset local.cartItemQty = getItemCount(arguments.cartLineNumber,arguments.product_id) />
 
-			<!--- if qty greater than current count, delete some items --->
-			<cfif arguments.qty gt local.cartItemQty >
-			</cfif>
-			
-			<!--- if qty less than current count, add some items --->
-			<cfif arguments.qty lt local.cartItemQty>
+			<cfif arguments.qty is not local.cartItemQty>
+
+				<!--- if qty less than current count, delete some items --->
+				<cfif arguments.qty lt local.cartItemQty >
+					<cfset local.deleteNo = local.cartItemQty - arguments.qty />
+					<cfloop from="1" to="#local.deleteNo#" index="local.i">
+						<cfset removeAccessory(arguments.cartLineNumber,arguments.product_Id) />
+					</cfloop>
+				</cfif>
+				
+				<!--- if qty more than current count, add some items --->
+				<cfif arguments.qty gt local.cartItemQty>
+					<cfset local.addNo = arguments.qty - local.cartItemQty />
+					<cfset local.args = { 
+						productType = "accessory",
+						product_id = "#arguments.product_Id#",
+						qty = #local.addNo#,
+						cartLineNumber = #arguments.cartLineNumber#
+					} />
+					<cfset addItem(argumentCollection = local.args) />
+				</cfif>
+
 			</cfif>
 			
 			<cfreturn "success" />
@@ -923,6 +940,15 @@
 		</cfif>
 		
 		<cfreturn -1 />
+	</cffunction>
+	
+	<cffunction name="removeAccessory" access="public" returntype="string">
+		<cfargument name="cartLineNo" type="numeric" required="true" />
+		<cfargument name="productId" type="string" required="true" />
+		
+		<cfset session.Carthelper.removeAccessory(arguments.cartLineNo, arguments.productId ) />
+	
+		<cfreturn "success" />
 	</cffunction>
 
 	<!--- Setters/Getters --->
