@@ -38,7 +38,6 @@
             <!--- Following logic refactored from cfc/view/Cart.cfc Line 233 through 1419 --->
             <cfloop from="1" to="#arrayLen(prc.cartLines)#" index="local.iCartLine">
               <cfset local.cartLine = prc.cartLines[local.iCartLine] />
-              <cfset local.imageUrls = [] />
               <cfset local.showAddServiceButton = false />
 
               <cfset local.selectedPhone = application.model.phone.getByFilter(idList = local.cartLine.getPhone().getProductID(), allowHidden = true) />
@@ -71,7 +70,6 @@
                   , width = 130
                 } />
               </cfif>
-              <!--- <cfset arrayAppend(local.imageUrls, imageDetail) /> --->
               
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
@@ -80,10 +78,11 @@
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#local.selectedPhone.summaryTitle#</h3>
                   <p>(XXX) XXX-XXXX<br>
+                    <!--- getSubscriberIndex() --->
                     Includes: something, something, something</p>
                 </div>
                 <div class="col-md-2 col-xs-16 quantity">1
-                  <!--- Add logic to allow for qty change for Accessories only --->
+                  <!--- //TODO: Add logic to allow for qty change for Accessories only --->
                   <!--- <select class="form-control">
                     <option>1</option>
                     <option>2</option>
@@ -91,11 +90,6 @@
                   <a href="##">Remove</a>
                 </div>
 
-                <!--- due monthly: --->
-                <!--- <div class="col-md-2 col-xs-16 monthly">$76.99 <span class="visible-xs-inline">Monthly</span></div>
-                <div class="col-md-2 col-xs-16 due">111<span class="visible-xs-inline">Due Today</span></div> --->
-
-                <!--- due today: --->
                 <div class="col-md-2 col-xs-16 monthly">
                   #dollarFormat(local.cartline.getPrices().getMonthly())#
                   <span class="visible-xs-inline">Monthly</span>
@@ -106,12 +100,12 @@
                 </div>
 
                 <cfif session.cart.getUpgradeType() neq 'equipment-only' && not session.cart.getPrePaid() && session.cart.getAddALineType() neq 'family' && session.cart.getActivationType() neq 'nocontract'>  
-                  <!--- <cfif local.cartLine.getPlan().hasBeenSelected()></cfif> better have happened or something went wrong --->
-                  <cfset local.selectedPlan = application.model.plan.getByFilter(idList = local.cartLine.getPlan().getProductID()) />
-                  <cfset local.deviceGuidList = listAppend(local.deviceGuidList, local.selectedPlan.productGuid) />
+                  <cfif local.cartLine.getPlan().hasBeenSelected()>
+                    <cfset local.selectedPlan = application.model.plan.getByFilter(idList = local.cartLine.getPlan().getProductID()) />
+                    <cfset local.deviceGuidList = listAppend(local.deviceGuidList, local.selectedPlan.productGuid) />
+                  </cfif>
                 </cfif>
 
-                <!--- <cfdump var="#local.selectedPlan#"> --->
                 <div class="col-md-2 col-xs-16"></div>
                 <div class="col-md-14 col-xs-16">
 
@@ -157,7 +151,6 @@
                             } />
                           </cfif>
 
-                          <cfset arrayAppend(local.imageUrls, imageDetail) />
                           <div class="col-md-12 col-xs-11">Accessory: #local.selectedPlan.carrierName# - #local.selectedAccessory.summaryTitle#</div>
                           <div class="col-md-4 col-xs-5"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>FREE</cfif></div>
                         </cfloop>
@@ -200,9 +193,9 @@
                             <div class="col-md-4 col-xs-5">(#dollarFormat(local.activationFee)# - see details below <sup class="cartReview"><a href="##footnote4">4</a></sup>)</div>  <!--- from cfc/view/Cart.cfc line 477 --->
                           </cfif>
 
-                        </cfif> <!--- CONTAINS 'upgrade' --->
+                        </cfif> <!--- end CONTAINS 'upgrade' --->
                         
-                      </cfif>
+                      </cfif> <!--- end local.cartLine.getPlan().hasBeenSelected() --->
 
                       <!--- Services --->
                       <cfset local.lineFeatures = local.cartLine.getFeatures() />
@@ -250,7 +243,6 @@
                               , width = 75
                             } />
                           </cfif>
-                          <cfset arrayAppend(local.imageUrls, imageDetail) />
 
                           <div class="col-md-12 col-xs-11">Accessory: #local.selectedAccessory.summaryTitle#</div>
                           <div class="col-md-4 col-xs-5">#dollarFormat(local.selectedAccessories[local.iAccessory].getPrices().getDueToday())#</div>
@@ -268,7 +260,7 @@
                         <div class="col-md-4 col-xs-5">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
                       <cfelse>
                         <div class="col-md-12 col-xs-11">No protection plan selected for this line yet.</div>
-                        <div class="col-md-4 col-xs-5"></div>
+                        <div class="col-md-4 col-xs-5">$0.00</div>
                       </cfif>
 
 
@@ -300,6 +292,8 @@
         </form>
       </section>
     </div>
+
+
     <div class="col-md-4">
       <cfif prc.showClearCartLink>
         <a href="#prc.clearCartAction#" class="clear">Clear Entire Cart</a>

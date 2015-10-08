@@ -1,5 +1,4 @@
 <cfoutput>
-  <!--- prc.productData: <cfdump var="#prc.productData#"> --->
   <!--- <Tally Box --->
   <div class="col-md-4">
     <div class="row totals">
@@ -12,14 +11,13 @@
         </div>
       </div>
       <div class="wrap">
-        <div class="col-xs-8">
-          <!--- $xx.xx --->
-          #dollarFormat(prc.tallyboxDueNow)#
-        </div>
-        <div class="col-xs-8">
-          <!--- $xx.xx --->
-          #dollarFormat(prc.tallyboxDueMonthly)#
-        </div>
+        <cfif arrayLen(prc.cartlines)>
+          <div class="col-xs-8">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getDueToday())#</div>
+          <div class="col-xs-8">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getMonthly())#</div>
+        <cfelse>
+          <div class="col-xs-8">#dollarFormat(prc.tallyboxDueNow)#</div>
+          <div class="col-xs-8">#dollarFormat(prc.tallyboxDueMonthly)#</div>          
+        </cfif>
       </div>
     </div>
     <div class="row">

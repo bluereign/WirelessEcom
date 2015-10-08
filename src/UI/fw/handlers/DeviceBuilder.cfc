@@ -59,6 +59,7 @@
       
       
       // CARTLINENUMBER:
+      prc.cartLines = session.cart.getLines();
 
       // if customer is new, cartLineNumber is always 1:
       
@@ -72,7 +73,7 @@
 
       // if cartLineNumber is unknown, use the arrayLen of session cart lines
       if (!structKeyExists(rc, "cartLineNumber")) {
-        prc.cartLinesCount = arrayLen(session.cart.getLines());
+        prc.cartLinesCount = arrayLen(prc.cartLines);
         rc.cartLineNumber = prc.cartLinesCount + 1;
       }
 
@@ -349,6 +350,10 @@
         cartLineNumber = rc.cartLineNumber
       };
 
+      if ( structKeyExists(rc,"line") and isValid("integer",rc.line) and rc.line gt 0) {
+        prc.cartArgs.subscriberIndex = rc.line;
+      }
+
       prc.resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
 
       // if plan has not been added to this cart cartLineNumber, add it.
@@ -401,12 +406,21 @@
         prc.resultStr = prc.resultStr & " accessory:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
       }
 
+      // if ( structKeyExists(rc,"removeaccessory") ) {
+      //   prc.cartArgs = {
+      //     line = rc.cartLineNumber,
+      //     productid = removeaccessory
+      //   };
+      //   prc.resultStr = prc.resultStr & " removeaccessory:" & application.model.CartHelper.removeAccessory(argumentCollection = prc.cartArgs);
+      // }
+
       if ( structKeyExists(rc,"removeaccessory") ) {
         prc.cartArgs = {
-          line = rc.cartLineNumber,
-          productid = removeaccessory
+          cartLineNumber = rc.cartLineNumber,
+          product_id = removeaccessory,
+          qty = 0
         };
-        prc.resultStr = prc.resultStr & " removeaccessory:" & application.model.CartHelper.removeAccessory(argumentCollection = prc.cartArgs);
+        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = prc.cartArgs);
       }
 
       // get cartline accessories
@@ -490,6 +504,14 @@
 
       event.setLayout('devicebuilder');
     </cfscript>
+
+    <!--- update cart totals: --->
+    <cfif application.model.cartHelper.hasSelectedFeatures()>
+      <cfset prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
+    </cfif>
+    <cfset session.cart.updateAllPrices() />
+    <cfset session.cart.updateAllDiscounts() />
+    <cfset session.cart.updateAllTaxes() />
   </cffunction>
 
   
@@ -795,20 +817,18 @@
 
 
     <!--- Remove empty cart lines --->
-    <cfset application.model.CartHelper.removeEmptyCartLines() />
+    <!--- <cfset application.model.CartHelper.removeEmptyCartLines() /> --->
     
     <!--- TODO:  apply rebates logic from cfc/model/LineService.cfc --->
 
     <!--- TODO: apply cart logic in cfc/view/Cart.cfc's "view" function --->
-    <cfif application.model.cartHelper.hasSelectedFeatures()>
+    <!--- <cfif application.model.cartHelper.hasSelectedFeatures()>
       <cfset prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
     </cfif>
 
     <cfset session.cart.updateAllPrices() />
     <cfset session.cart.updateAllDiscounts() />
-    <cfset session.cart.updateAllTaxes() />
-
-    <cfset prc.cartLines = session.cart.getLines() />
+    <cfset session.cart.updateAllTaxes() /> --->
 
 
 
