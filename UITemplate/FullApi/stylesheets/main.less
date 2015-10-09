@@ -190,6 +190,13 @@ form {
         text-transform:capitalize;
     }
 
+	.btn {
+		&.btn-primary {
+			&[disabled] {
+				font-weight:bold;
+			}
+		}
+	}
 }
 
 #existing .info {
@@ -202,6 +209,12 @@ form {
 	clear: both;
 	.text-size(12);
 	padding: 10px 20px;
+}
+
+aside {
+	&.details{
+		margin-bottom:15px;
+	}
 }
 
 
