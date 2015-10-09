@@ -86,6 +86,12 @@
 			color: @default-text;
 			opacity: .8;
 		}
+		&:hover,
+		&:focus {
+			.gradient(lighten(@primary-button, 0%), @primary-button, @primary-button);
+			border-color: transparent;
+		color: #fff;
+		}
 	}
 
 	&.btn-dark-gray {
