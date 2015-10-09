@@ -47,6 +47,8 @@
 
       prc.browseDevicesUrl = this.browseDevicesUrl;
       prc.AssetPaths = variables.AssetPaths;
+
+      prc.stringUtil = stringUtil;
       // <end carrier constants
 
       // INSTANTIATE SESSION.CART
@@ -251,12 +253,8 @@
           // you can't get the RatePlan without having selected a "line" (i.e. subscriber):
           prc.planDataExisting = prc.subscriber.getRatePlan();
           prc.activetab = "existing";
-          // TODO: Wrap the following in a phone number formatting function:
-          prc.subscriber.phoneNumber = reReplace(prc.subscriber.getNumber(),"[{}\(\)\^$&%##!@=<>:;,~`'\'\*\?\/\+\|\[\\\\]|\]|\-",'','all');
-          prc.subscriber.phoneNumber1 = left(prc.subscriber.phoneNumber, 3);
-          prc.subscriber.phoneNumber2 = mid(prc.subscriber.phoneNumber, 4, 3);
-          prc.subscriber.phoneNumber3 = right(prc.subscriber.phoneNumber, 4);
-          prc.subscriber.phoneNumber = "(#prc.subscriber.phoneNumber1#) #prc.subscriber.phoneNumber2#-#prc.subscriber.phoneNumber3#";
+
+          prc.subscriber.phoneNumber = stringUtil.formatPhoneNumber(trim(prc.subscriber.getNumber()));
 
           prc.tallyboxHeader = "Configuring " & prc.subscriber.phoneNumber;
         }
@@ -286,7 +284,6 @@
             prc.subscriber.downPaymentPercent = 10;
           }
           // <end test testing debugging
-
 
           prc.subscriber.downPayment = prc.subscriber.downPaymentPercent * prc.productData.FinancedFullRetailPrice / 100;
         }
@@ -834,6 +831,8 @@
 
 
     <cfscript>
+      prc.subscribers = session.carrierObj.getSubscribers();
+      
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       prc.includeTallyBox = false;
     </cfscript>

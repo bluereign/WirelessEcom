@@ -1,4 +1,3 @@
-<!--- <cfdump var="#rc#"> --->
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
@@ -15,20 +14,18 @@
           <p>Choose a line to Upgrade or Add a New Line for this device.</p>
         </header>
         <div class="row">
+          
           <cfloop index="i" from="1" to="#arrayLen(prc.subscribers)#">
-            <!--- TESTING ONLY: ensure that there is at least one eligible number for upgrade --->
+            <!--- DEBUGGING ONLY: ensure that there is at least one eligible number for upgrade --->
             <!--- <cfif i eq 1>
               <cfset prc.subscribers[i].isEligible = 1 />
             <cfelse>
               <cfset prc.subscribers[i].isEligible = prc.subscribers[i].getIsEligible() />
             </cfif> --->
-            <!--- format phonenumber --->
-            <!--- step 1: remove special characters (if any) --->
-            <cfset prc.subscribers[i].phoneNumber = reReplace(prc.subscribers[i].getNumber(),"[{}\(\)\^$&%##!@=<>:;,~`'\'\*\?\/\+\|\[\\\\]|\]|\-",'','all') />
-            <cfset prc.subscribers[i].phoneNumber1 = left(prc.subscribers[i].phoneNumber, 3) />
-            <cfset prc.subscribers[i].phoneNumber2 = mid(prc.subscribers[i].phoneNumber, 4, 3) />
-            <cfset prc.subscribers[i].phoneNumber3 = right(prc.subscribers[i].phoneNumber, 4) />
-            <cfset prc.subscribers[i].phoneNumber = "(#prc.subscribers[i].phoneNumber1#) #prc.subscribers[i].phoneNumber2#-#prc.subscribers[i].phoneNumber3#" />
+            <!--- end debug --->
+
+            <cfset prc.subscribers[i].phoneNumber = prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[i].getNumber())) />
+
             <div class="col-md-4 col-sm-3 col-xs-8">
               <div class="product">
                 <img src="#prc.productImages[1].imagesrc#" alt="#prc.productImages[1].imageAlt#" />
@@ -43,14 +40,11 @@
                       Eligible #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
                     </cfif>
                   </button>
-                  <!--- <cfif isDate(prc.subscribers[i].getEligibilityDate())>
-                    <br />
-                    Date Eligible: #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
-                  </cfif> --->
                 </cfif>
               </div>
             </div>
           </cfloop>
+
       </section>
     </form>
   </div>

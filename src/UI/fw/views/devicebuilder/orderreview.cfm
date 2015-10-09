@@ -70,15 +70,18 @@
                   , width = 130
                 } />
               </cfif>
-              
+
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
                   <img src="#imageDetail.src#" alt="#imageDetail.alt#" />
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#local.selectedPhone.summaryTitle#</h3>
-                  <p>(XXX) XXX-XXXX<br>
-                    <!--- getSubscriberIndex() --->
+                  <p>
+                  <cfif rc.type is 'upgrade'>
+                    #prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber()))#
+                  </cfif>
+                  <br>
                     Includes: something, something, something</p>
                 </div>
                 <div class="col-md-2 col-xs-16 quantity">1

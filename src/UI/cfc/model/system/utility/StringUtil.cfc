@@ -103,5 +103,27 @@
 		<cfargument name="type" type="string" required="false" default="StringUtilities" />
 		<cfthrow message="#arguments.message#" type="#arguments.type#" />
 	</cffunction>
+
+	<cffunction name="formatPhoneNumber" output="false" access="public" returntype="string">
+		<cfargument name="phoneNumber" type="string" required="true" />
+		<cfset var formattedPhoneNumber = ""/>
+		<cfset var phoneNumber1 = ""/>
+		<cfset var phoneNumber2 = ""/>
+		<cfset var phoneNumber3 = ""/>
+
+		<cfscript>
+			formattedPhoneNumber = reReplace(arguments.phoneNumber,"[{}\(\)\^$&%##!@=<>:;,~`'\'\*\?\/\+\|\[\\\\]|\]|\-",'','all');
+			if ( len(formattedPhoneNumber eq 10) ) {
+				phoneNumber1 = left(formattedPhoneNumber, 3);
+				phoneNumber2 = mid(formattedPhoneNumber, 4, 3);
+				phoneNumber3 = right(formattedPhoneNumber, 4);
+				formattedPhoneNumber = "(#phoneNumber1#) #phoneNumber2#-#phoneNumber3#";
+			} else {
+				formattedPhoneNumber = "Not Valid.";
+			}
+		</cfscript>
+
+		<cfreturn formattedPhoneNumber />
+	</cffunction>
 	
 </cfcomponent>
