@@ -12,8 +12,11 @@
       </div>
       <div class="wrap">
         <cfif arrayLen(prc.cartlines)>
-          <div class="col-xs-8">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getDueToday())#</div>
-          <div class="col-xs-8">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getMonthly())#</div>
+          <div class="col-xs-8">#dollarFormat(session.cart.getPrices().getDueToday())#</div>
+          <div class="col-xs-8">#dollarFormat(session.cart.getPrices().getMonthly())#</div>
+          <!--- KEEP: These two commented out lines below would show the totals associated with This Device rather than the entire cart --->
+          <!--- <div class="col-xs-8">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getDueToday())#</div> --->
+          <!--- <div class="col-xs-8">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getMonthly())#</div> --->
         <cfelse>
           <div class="col-xs-8">#dollarFormat(prc.tallyboxDueNow)#</div>
           <div class="col-xs-8">#dollarFormat(prc.tallyboxDueMonthly)#</div>          
