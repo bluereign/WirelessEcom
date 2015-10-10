@@ -98,6 +98,18 @@
 		    <pattern>^CostcoVfd\.Ecom-dev-test-1\.enterprise\.corp</pattern>
 		    <pattern>^AafesVfd\.Ecom-dev-test-1\.enterprise\.corp</pattern>
 		    <pattern>^PagemasterVfd\.Ecom-dev-test-1\.enterprise\.corp</pattern>
+			<pattern>^Costco\.ecom\-dev\-test\-2\.enterprise\.corp</pattern>
+		    <pattern>^Aafes\.Ecom-dev-test-2\.enterprise\.corp</pattern>
+		    <pattern>^Pagemaster\.Ecom-dev-test-2\.enterprise\.corp</pattern>
+		    <pattern>^CostcoVfd\.Ecom-dev-test-2\.enterprise\.corp</pattern>
+		    <pattern>^AafesVfd\.Ecom-dev-test-2\.enterprise\.corp</pattern>
+		    <pattern>^PagemasterVfd\.Ecom-dev-test-2\.enterprise\.corp</pattern>
+			<pattern>^Costco\.ecom\-dev\-test\-3\.enterprise\.corp</pattern>
+		    <pattern>^Aafes\.Ecom-dev-test-3\.enterprise\.corp</pattern>
+		    <pattern>^Pagemaster\.Ecom-dev-test-3\.enterprise\.corp</pattern>
+		    <pattern>^CostcoVfd\.Ecom-dev-test-3\.enterprise\.corp</pattern>
+		    <pattern>^AafesVfd\.Ecom-dev-test-3\.enterprise\.corp</pattern>
+		    <pattern>^PagemasterVfd\.Ecom-dev-test-3\.enterprise\.corp</pattern>
 		</patterns>
 		<config>
 

@@ -56,7 +56,7 @@
 			</tr>
             <tr>
             	<td colspan="4">
-                	<div style="padding-top:5px;">
+                	<div style="padding-top:12px;">
 						<cfhttp url='http://#CGI.HTTP_HOST#/Content-asp/ShowContent.aspx?l=e6d68f7a-1b6b-40fe-b287-d1af044b3dbb'>
 						<cfoutput>#cfhttp.filecontent#</cfoutput>
 					</div>

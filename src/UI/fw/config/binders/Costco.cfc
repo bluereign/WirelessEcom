@@ -131,7 +131,7 @@
 			OfferFinancedDevices = true,
 			DirectToRedesignDetailsPage = true,		//Temp for 6.5.0 release
 			DefaultProductSort = 'Popular',
-			TMORedirectEnabled = true ,
+			TMORedirectEnabled = false ,
 			PresaleVerbiage = 'Presale',
 			WA2GOurl = 'http://wa2gopilot.wirelessadvocates.llc/'
 			// SearchIndexMethod = "GetAll" // method within cfc.model.product.cfm to use when creating the solr search index. GetAll=All Products. GetSearchable=excludes out of stock
@@ -270,15 +270,15 @@
 		// Note that domain name isn't used so don't worry about how we have IP addresses in there. We pass it in but it is not used
 		switch(environment) {
 	    case "development":
-	         analyticsID = "UA-61932436-1";
+	         analyticsID = "UA-20996841-3";
 	         analyticsDomainName = "local.costco.wa";
 	         break;
 	    case "test":
-	         analyticsID = "UA-61908522-1";
+	         analyticsID = "UA-20996841-2";
 	         analyticsDomainName = "10.7.0.80";
 	         break;
 	    case "stage":
-	         analyticsID = "UA-61908522-1";
+	         analyticsID = "UA-20996841-2";
 	         analyticsDomainName = "10.7.0.80";
 	         break;
 	    case "production":
@@ -292,7 +292,7 @@
 			.to("cfc.model.system.analytics.GoogleAnalytics")
 			.initArg(name="GoogleAnalyticsId", value=analyticsID)
 			.initArg(name="DomainName", value=analyticsDomainName)
-			.initArg(name="UseUniversalAnalytics", value=false)			
+			.initArg(name="UseUniversalAnalytics", value=true)			
 			.asSingleton();
 		map("MercentAnalyticsTracker")
 			.to("cfc.model.system.analytics.Mercent")

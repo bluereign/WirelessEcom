@@ -132,6 +132,61 @@
     	<cfset variables.instance["dateOfBirthRequired"] = arguments.theVar />    
     </cffunction>
     
+   	<cffunction name="changePassword">
+		<cfargument name="username" type="String">
+		<cfargument name="code" type="String">
+		<cfargument name="password" type="String">
+
+		<cfset var local = structNew()>
+		<cfset local.ret = ""/>
+
+		<cfquery name="setunlockstring" datasource="#application.dsn.wirelessAdvocates#">
+		UPDATE users
+		SET ssn = NULL,
+			password = <cfqueryparam value="#hashPassword(ARGUMENTS.password)#" cfsqltype="cf_sql_varchar">
+		WHERE username = <cfqueryparam value="#ARGUMENTS.username#" cfsqltype="cf_sql_varchar">
+			AND ssn = <cfqueryparam value="#ARGUMENTS.code#" cfsqltype="cf_sql_varchar">
+		</cfquery>
+
+		<cfreturn true>
+	</cffunction>
+
+	<cffunction name="updatePassword">
+		<cfargument name="username" type="String">
+		<cfargument name="password" type="String">
+
+		<cfset var local = structNew()>
+		<cfset local.ret = ""/>
+
+		<cfquery name="local.setunlockstring" datasource="#application.dsn.wirelessAdvocates#">
+			UPDATE users
+			SET password = <cfqueryparam value="#hashPassword(ARGUMENTS.password)#" cfsqltype="cf_sql_varchar">
+			WHERE username = <cfqueryparam value="#ARGUMENTS.username#" cfsqltype="cf_sql_varchar">
+		</cfquery>
+
+		<cfreturn true>
+	</cffunction>
+	
+	<cffunction name="updateAuthenticationId" returnType="boolean">
+		<cfargument name="userid" type="numeric" />
+		<cfargument name="authenticationId" type="string" />
+		<cfset UserService = application.wirebox.getInstance("UserService") />
+		
+		<!--- If authenticationId not already in use on another account add it to "this" account --->
+		<cfif userService.isUserByAuthenticationId(arguments.authenticationId) is false>
+			<cfquery name="local.setunlockstring" datasource="#application.dsn.wirelessAdvocates#">
+				UPDATE users
+				SET authenticationId = <cfqueryparam value="#arguments.authenticationid#" cfsqltype="cf_sql_varchar">
+				WHERE user_id = <cfqueryparam value="#ARGUMENTS.userid#" cfsqltype="cf_sql_integer">
+			</cfquery>
+		<cfreturn true />
+		<cfelse>
+			<cfreturn false /> <!--- authentication already in use, so not updated --->
+		</cfif>	
+		
+	</cffunction>	
+
+    
     <!--- Relationships --->
 		
 	<cffunction name="getBillingAddress" access="public" output="false" returntype="any">    
@@ -149,5 +204,28 @@
     	<cfargument name="theVar" required="true" />    
     	<cfset variables.instance["ShippingAddress"] = arguments.theVar />    
     </cffunction>
+    
+	<cfscript>
+		function hashPassword(password)	{
+			return hash(trim(password));
+		}
+
+		function getRandString(stringLength)	{
+			var tempAlphaList = 'a|b|c|d|e|f';
+			var tempNumList = '1|2|3|4|5|6|7|8|9|0';
+			var tempCompositeList = tempAlphaList & '|' & tempNumList;
+			var tempCharsInList = listLen(tempCompositeList, '|');
+			var tempCounter = 1;
+			var tempWorkingString = '';
+
+			while(tempCounter lte stringLength)	{
+				tempWorkingString = tempWorkingString & listGetAt(tempCompositeList, randRange(1, tempCharsInList), '|');
+				tempCounter = (tempCounter + 1);
+			}
+
+			return tempWorkingString;
+		}
+	</cfscript>    
+    
     
 </cfcomponent>

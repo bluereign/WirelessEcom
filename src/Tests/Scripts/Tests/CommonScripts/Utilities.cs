@@ -49,6 +49,25 @@ namespace SeleniumTests
             }
         }
         #endregion
+        #region ClearLogFolder()
+        public static void ClearLogFolder()
+        {
+            string logFolder = Environment.GetEnvironmentVariable("USERPROFILE") + "\\Documents\\logging";
+
+            try
+            {
+                string[] files = Directory.GetFiles(logFolder);
+
+                foreach (string file in files)
+                    File.Delete(file);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail();
+                Console.WriteLine(e.Message);
+            }
+        }
+        #endregion
         #region GetDate()
         public static string GetDate(int timeDiff)
         {
@@ -102,6 +121,30 @@ namespace SeleniumTests
             }
         }
         #endregion
+        #region CheckForProblemsOnPage()
+        public static string CheckForProblemsOnPage()
+        {
+            try
+            {
+                if (Utilities.IsElementPresent(By.Id("progressLabel")))
+                    Log(Globals._Driver.FindElement(By.Id("progressLabel")).Text);
+
+                string messageContent = Globals._Driver.FindElement(By.XPath("//div[@id='mainContent']/div/div")).Text;
+
+                if (messageContent.ToLower().Contains("error") || messageContent.ToLower().Contains("technical difficulties"))
+                {
+                    Log(messageContent);
+                    Assert.Fail(messageContent);
+                }
+
+                return messageContent;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        #endregion
         #region GetSettings()
         public static void GetSettings(string locationOfSettingsFile)
         {
@@ -125,37 +168,71 @@ namespace SeleniumTests
                 string timeoutOverride = testCase.GetAttribute("timeoutHalfSeconds");
                 if (timeoutOverride != "")
                     Globals._DefaultTimeoutValue = Convert.ToInt32(timeoutOverride);
-                Globals._TestCaseName = testCase.GetAttribute("name");
-                Globals._BaseURL = testCase.GetAttribute("baseUrl");
-                Globals._CustomerFirstName = name.GetAttribute("firstName");
-                Globals._CustomerLastName = name.GetAttribute("lastName");
-                Globals._CustomerStreetAddress = home.GetAttribute("streetAddress");
-                Globals._CustomerCity = home.GetAttribute("city");
-                Globals._CustomerState = home.GetAttribute("state");
-                Globals._CustomerZipCode = home.GetAttribute("zipCode");
-                Globals._CustomerMobileNumber = contact.GetAttribute("mobileNumber");
-                Globals._RetainNumber = contact.GetAttribute("retainNumber");
-                Globals._CustomerEmail = contact.GetAttribute("email");
-                Globals._CustomerCreditCard = financial.GetAttribute("cardNumber");
-                Globals._CustomerCcExpirationMonth = financial.GetAttribute("expireMonth");
-                Globals._CustomerCcExpirationYear = financial.GetAttribute("expireYear");
-                Globals._CustomerCcCvv = financial.GetAttribute("cvv");
-                Globals._CustomerLast4Ssn = personal.GetAttribute("last4Ssn");
-                Globals._CustomerAccountPassword = personal.GetAttribute("accountPassword");
-                Globals._DeviceId = device.GetAttribute("id");
-                Globals._DeviceName = device.GetAttribute("name");
-                Globals._CarrierPassword = carrier.GetAttribute("password");
-                Globals._CarrierZipCode = carrier.GetAttribute("zipCode");
-                Globals._AdminUsername = admin.GetAttribute("omtUsername");
-                Globals._AdminPassword = admin.GetAttribute("omtPassword");
-                Globals._Imei = line.GetAttribute("imei");
-                Globals._Sim = line.GetAttribute("sim");
-                Globals._RemoveLine = Convert.ToBoolean(line.GetAttribute("removeLine"));
-                Globals._ActivateLineInOmt = Convert.ToBoolean(testCase.GetAttribute("activateDevice"));
-                Globals._ServerName = database.GetAttribute("serverName");
-                Globals._DatabaseName = database.GetAttribute("databaseName");
-                Globals._DatabaseUsername = database.GetAttribute("username");
-                Globals._DatabasePassword = database.GetAttribute("password");
+                if (testCase != null)
+                {
+                    Globals._TestCaseName = testCase.GetAttribute("name");
+                    Globals._BaseURL = testCase.GetAttribute("baseUrl");
+                }
+                if (name != null)
+                {
+                    Globals._CustomerFirstName = name.GetAttribute("firstName");
+                    Globals._CustomerLastName = name.GetAttribute("lastName");
+                }
+                if (home != null)
+                {
+                    Globals._CustomerStreetAddress = home.GetAttribute("streetAddress");
+                    Globals._CustomerCity = home.GetAttribute("city");
+                    Globals._CustomerState = home.GetAttribute("state");
+                    Globals._CustomerZipCode = home.GetAttribute("zipCode");
+                }
+                if (contact != null)
+                {
+                    Globals._CustomerMobileNumber = contact.GetAttribute("mobileNumber");
+                    Globals._RetainNumber = contact.GetAttribute("retainNumber");
+                    Globals._CustomerEmail = contact.GetAttribute("email");
+                }
+                if (financial != null)
+                {
+                    Globals._CustomerCreditCard = financial.GetAttribute("cardNumber");
+                    Globals._CustomerCcExpirationMonth = financial.GetAttribute("expireMonth");
+                    Globals._CustomerCcExpirationYear = financial.GetAttribute("expireYear");
+                    Globals._CustomerCcCvv = financial.GetAttribute("cvv");
+                }
+                if (personal != null)
+                {
+                    Globals._CustomerLast4Ssn = personal.GetAttribute("last4Ssn");
+                    Globals._CustomerAccountPassword = personal.GetAttribute("accountPassword");
+                }
+                if (device != null)
+                {
+                    Globals._DeviceId = device.GetAttribute("id");
+                    Globals._DeviceName = device.GetAttribute("name");
+                }
+                if (carrier != null)
+                {
+                    Globals._CarrierPassword = carrier.GetAttribute("password");
+                    Globals._CarrierZipCode = carrier.GetAttribute("zipCode");
+                }
+                if (admin != null)
+                {
+                    Globals._AdminUsername = admin.GetAttribute("omtUsername");
+                    Globals._AdminPassword = admin.GetAttribute("omtPassword");
+                }
+                if (line != null)
+                {
+                    Globals._Imei = line.GetAttribute("imei");
+                    Globals._Sim = line.GetAttribute("sim");
+                    Globals._RemoveLine = Convert.ToBoolean(line.GetAttribute("removeLine"));
+                }
+                if (testCase != null)
+                    Globals._ActivateLineInOmt = Convert.ToBoolean(testCase.GetAttribute("activateDevice"));
+                if (database != null)
+                {
+                    Globals._ServerName = database.GetAttribute("serverName");
+                    Globals._DatabaseName = database.GetAttribute("databaseName");
+                    Globals._DatabaseUsername = database.GetAttribute("username");
+                    Globals._DatabasePassword = database.GetAttribute("password");
+                }
 
                 string browser = testCase.GetAttribute("browser");
                 switch(browser.ToLower())
@@ -212,14 +289,28 @@ namespace SeleniumTests
             return driver;
         }
         #endregion
+        #region IsElementEnabled()
+        public static bool IsElementEnabled(By by)
+        {
+            Log("++ IsElementEnabled");
+            try
+            {
+                return Globals._Driver.FindElement(by).Enabled;
+            }
+            catch (NoSuchElementException e)
+            {
+                Log("- " + e.Message);
+                return false;
+            }
+        }
+        #endregion
         #region IsElementPresent()
         public static bool IsElementPresent(By by)
         {
             Log("++ IsElementPresent");
             try
             {
-                Globals._Driver.FindElement(by);
-                return true;
+                return Globals._Driver.FindElement(by).Displayed;
             }
             catch (NoSuchElementException e)
             {
@@ -292,6 +383,20 @@ namespace SeleniumTests
         public static void Log(string message)
         {
             Log(message, false);
+        }
+        #endregion
+        #region RandNumberGenerator()
+        public static int RandNumberGenerator(int digits)
+        {
+            if (digits > 9)
+                digits = 9;
+
+            string randomNumber = null;
+
+            for (int i = 0; i < digits; i++)
+                randomNumber += Globals._RandomNumberGenerator.Next(1, 9);
+
+            return Convert.ToInt32(randomNumber);
         }
         #endregion
         #region Screenshot()
@@ -413,6 +518,7 @@ namespace SeleniumTests
 
                 Thread.Sleep(500);
             }
+
             Log("- Unable to find " + element);
             return false;
         }

@@ -177,8 +177,8 @@
 			//Price display string for financed prices range
 			if (prc.productData.FinancedMonthlyPrice12 eq prc.productData.FinancedMonthlyPrice18 && prc.productData.FinancedMonthlyPrice18 eq prc.productData.FinancedMonthlyPrice24)
 				prc.FinancedPriceRangeDisplay = "#DollarFormat(prc.productData.FinancedMonthlyPrice12)#"; // All financed types share the same price
-			else if ( ListFind("42,299", prc.productData.CarrierId))
-				prc.FinancedPriceRangeDisplay = "#DollarFormat(prc.productData.FinancedMonthlyPrice24)#"; // Sprint and Verizon currently only have 24 month plans
+			else if ( ListFind("42,299,128", prc.productData.CarrierId))
+				prc.FinancedPriceRangeDisplay = "#DollarFormat(prc.productData.FinancedMonthlyPrice24)#"; // Sprint and Verizon and TMO currently only have 24 month plans
 			else
 			{
 				prc.financedPrices = ListToArray("#prc.productData.FinancedMonthlyPrice12#,#prc.productData.FinancedMonthlyPrice18#,#prc.productData.FinancedMonthlyPrice24#");

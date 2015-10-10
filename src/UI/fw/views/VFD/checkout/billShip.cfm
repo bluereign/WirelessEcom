@@ -215,7 +215,7 @@ Maintain data for when leaving page and returning
 
 					<li>
 						<label for="txtBillingAddress1">Address 1 <strong>*</strong></label>
-						<input id="txtBillingAddress1" name="billAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress1'))#" />
+						<input id="txtBillingAddress1" name="billAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress1'))#" maxlength="30" />
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress1'))#
 					</li>
 
@@ -306,6 +306,15 @@ Maintain data for when leaving page and returning
 					<cfelse>
 						<input type="hidden" name="selMilitaryBase" value=""/>
 					</cfif>
+					<!--- Handling ability override address validation --->
+					<cfif structKeyExists(request, 'validator') and request.validator.hasMessages()>
+						<li class="full">
+							<input type="checkbox" id="overrideAddress" name="overrideAddress" value="1"<cfif 'session.checkout.billShipForm.overrideAddress' eq 1> checked="checked"</cfif>/>
+							<label class="check" for="overrideAddress" style="font-weight:bold;color:red">
+								There is an error with the address.  Click checkbox to override
+							</label>
+						</li>
+					</cfif>
 				</ol>
 			</fieldset>
 		</div>
@@ -345,12 +354,12 @@ Maintain data for when leaving page and returning
 						</li>
 						<li>
 							<label for="txtShippingAddress1">Address 1 <strong>*</strong></label>
-							<input id="txtShippingAddress1" name="shipAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress1'))#" />
+							<input id="txtShippingAddress1" name="shipAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress1'))#" maxlength="30" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress1'))#
 						</li>
 						<li>
 							<label for="txtShippingAddress2">Address 2</label>
-							<input id="txtShippingAddress2" name="shipAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress2'))#" />
+							<input id="txtShippingAddress2" name="shipAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress2'))#" maxlength="30" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress2Error'))#
 						</li>
 						<li>
@@ -434,7 +443,6 @@ Maintain data for when leaving page and returning
 		</cfif>
 		<br/>
 		<br/>
-	
 </form>
 </cfoutput>
 <hr size="2" Color="#0a94d6">
