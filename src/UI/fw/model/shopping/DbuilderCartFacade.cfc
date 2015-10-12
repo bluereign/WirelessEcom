@@ -21,7 +21,6 @@
 		<cfreturn this>
 	</cffunction>
 	
-
 	<cffunction name="addItem" access="public" returntype="string">
 		<cfargument name="order_id" type="numeric" default="0" /> <!--- the order/cart id - 0 indicates we don't have one yet --->
 		<cfargument name="line_id" type="numeric" default="0" /> <!--- this will be used to determine to which line an item is being added (this should be an OrdersWireless.ow_id value) - 0 indicates we don't have one yet --->
@@ -33,6 +32,10 @@
 		<cfargument name="price" default="0" />
 		<cfargument name="phoneType" default="" type="string" />
 		<cfargument name="subscriberIndex" default="" type="string" />
+		<cfargument name="mandatoryDownPmtPct" type="numeric" required="false" default="0" />
+		<cfargument name="optionalDownPmtPct" type="numeric" required="false" default="0" />
+		<cfargument name="mandatoryDownPmtAmt" type="numeric" required="false" default="0.00" />
+		<cfargument name="optionalDownPmtAmt" type="numeric" required="false" default="0.00" />
 
 		<cfset var local = structNew() />
 		<cfset local.p =  structNew() />
@@ -43,8 +46,6 @@
 
 		<cfset arguments.product_id = trim(arguments.product_id) />
 		<!---<cfset request.layoutFile = 'noLayout' />--->
-		
-		
 
 		<!--- TODO: Pull out Activation type from the product type variable --->
 		<cfif arguments.productType contains ':'>
@@ -84,7 +85,7 @@
 			<cfreturn "not available" />
 		</cfif>
 
-		<cfif listFindNoCase(' ,tablet,dataCardAndNetbook,prepaid', arguments.productType)>
+		<cfif listFindNoCase('phone,tablet,dataCardAndNetbook,prepaid', arguments.productType)>
 			<cfset local.p.phoneType = local.p.activationType />
 			<cfset arguments.product_id = listFirst(arguments.product_id, ':') />
 
@@ -269,6 +270,11 @@
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().setGersSKU(application.model.OrderDetail.getGersSkuByProductId(arguments.product_id)) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setDueToday(local.p.price) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setCOGS(application.model.product.getCOGS(arguments.product_id)) />
+							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMandatoryDownPmtPct(arguments.mandatoryDownPmtPct) />
+							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMandatoryDownPmtAmt(arguments.mandatoryDownPmtAmt) />
+							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setOptionalDownPmtPct(arguments.optionalDownPmtPct) />
+							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setOptionalDownPmtAmt(argumentsoptionalDownPmtAmt) />
+							
 							
 							<cfif local.p.activationType contains 'financed'>
 								<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setRetailPrice(application.model[arguments.productType].getPriceByProductIDAndMode(productId = arguments.product_id, mode = 'financed')) />
@@ -503,6 +509,10 @@
 				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setDueToday(arguments.price) />
 				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setCOGS(application.model.product.getCOGS(arguments.product_id)) />
 				<cfset local.cartLines[arguments.cartLineNumber].setCartLineActivationType(local.p.activationType) />
+				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMandatoryDownPmtPct(arguments.mandatoryDownPmtPct) />
+				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMandatoryDownPmtAmt(arguments.mandatoryDownPmtAmt) />
+				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setOptionalDownPmtPct(arguments.optionalDownPmtPct) />
+				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setOptionalDownPmtAmt(arguments.optionalDownPmtAmt) />
 				
 				<cfif local.p.activationType contains 'financed'>
 					<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setRetailPrice(application.model[arguments.productType].getPriceByProductIDAndMode(productId = arguments.product_id, mode = 'financed')) />
@@ -909,6 +919,35 @@
 		
 		<cfreturn "Invalid cartLineNumber" />
 	
+	</cffunction>
+	
+	<cffunction name="getAccessoryIds" returntype="string">
+		<cfargument name="cartLineNo" type="numeric" required="true" />
+		
+		<cfset var lines = session.cart.getLines() />
+		<cfset var otherItems = session.cart.getOtherItems() />
+		<cfset var local = structNew() />
+		<cfset local.idList = ""/>
+		
+		<cfif arguments.cartLineNo LTE arraylen(lines) >
+			<cfset local.lineAccessories = lines[arguments.cartLineNo].getAccessories() />
+			<cfloop array="#local.lineAccessories#" index="a">
+				<cfif listFindNoCase(local.idList,a.getProductId()) is 0>
+					<cfset local.idList = listAppend(local.idList,a.getProductId()) />
+				</cfif>
+			</cfloop>
+		<cfelse>
+			<cfloop array="#otherItems#" index="a">
+				<cfif( a.getType() is "accessory" ) >
+					<cfif listFindNoCase(local.idList,a.getProductId()) is 0>
+						<cfset local.idList = listAppend(local.idList,a.getProductId()) />
+					</cfif>
+				</cfif>
+			</cfloop>				
+		</cfif>
+		
+		<cfreturn local.idList /> 
+		
 	</cffunction>
 	
 	<cffunction name="getItemCount" access="public" returntype="numeric">

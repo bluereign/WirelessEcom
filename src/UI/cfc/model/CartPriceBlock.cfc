@@ -8,6 +8,10 @@
 		<cfargument name="retailPrice" type="numeric" required="false" default="0" />
 		<cfargument name="discountTotal" type="numeric" required="false" default="0" />
 		<cfargument name="promotionCodes" type="struct" required="false" default="#structNew()#" />
+		<cfargument name="mandatoryDownPmtPct" type="numeric" required="false" default="0" />
+		<cfargument name="optionalDownPmtPct" type="numeric" required="false" default="0" />
+		<cfargument name="mandatoryDownPmtAmt" type="numeric" required="false" default="0.00" />
+		<cfargument name="optionalDownPmtAmt" type="numeric" required="false" default="0.00" />
 
 		<cfset variables.instance = structNew() />
 		<cfset setDueToday(arguments.dueToday) />
@@ -17,9 +21,31 @@
 		<cfset setRetailPrice(arguments.retailPrice) />
 		<cfset setDiscountTotal(arguments.discountTotal) />
 		<cfset setPromotionCodes(arguments.promotionCodes) />
+		<cfset setMandatoryDownPmtPct(arguments.mandatoryDownPmtPct) />
+		<cfset setOptionalDownPmtPct(arguments.optionalDownPmtPct) />
+		<cfset setMandatoryDownPmtAmt(arguments.mandatoryDownPmtAmt) />
+		<cfset setOptionalDownPmtAmt(arguments.optionalDownPmtAmt) />
 
 		<cfreturn this />
 	</cffunction>
+
+	<cffunction name="getMandatoryDownPmtPct" access="public" returntype="numeric" output="false">
+		<cfreturn variables.instance.MandatoryDownPmtPct />
+	</cffunction>
+	
+	<cffunction name="getOptionalDownPmtPct" access="public" returntype="numeric" output="false">
+		<cfreturn variables.instance.OptionalDownPmtPct />
+	</cffunction>
+
+	<cffunction name="getMandatoryDownPmtAmt" access="public" returntype="numeric" output="false">
+		<cfreturn variables.instance.MandatoryDownPmtAmt />
+	</cffunction>
+	
+	<cffunction name="getOptionalDownPmtAmt" access="public" returntype="numeric" output="false">
+		<cfreturn variables.instance.OptionalDownPmtAmt />
+	</cffunction>
+
+
 
 	<cffunction name="getDueToday" access="public" returntype="numeric" output="false">
 		<cfreturn variables.instance.dueToday />
@@ -81,6 +107,28 @@
 		<cfset variables.instance.discountTotal = arguments.discountTotal />
 	</cffunction>
 
+	<cffunction name="setMandatoryDownPmtPct" access="public" returntype="void" output="false">
+		<cfargument name="MandatoryDownPmtPct" type="numeric" required="true" />
+		<cfset variables.instance.MandatoryDownPmtPct = arguments.MandatoryDownPmtPct />
+	</cffunction>
+	
+	<cffunction name="setOptionalDownPmtPct" access="public" returntype="void" output="false">
+		<cfargument name="OptionalDownPmtPct" type="numeric" required="true" />
+		<cfset variables.instance.OptionalDownPmtPct = arguments.OptionalDownPmtPct/>
+	</cffunction>
+
+	<cffunction name="setMandatoryDownPmtAmt" access="public" returntype="void" output="false">
+		<cfargument name="MandatoryDownPmtAmt" type="numeric" required="true" />
+		<cfset variables.instance.MandatoryDownPmtAmt = arguments.MandatoryDownPmtAmt />
+	</cffunction>
+	
+	<cffunction name="setOptionalDownPmtAmt" access="public" returntype="void" output="false">
+		<cfargument name="OptionalDownPmtAmt" type="numeric" required="true" />
+		<cfset variables.instance.OptionalDownPmtAmt = arguments.OptionalDownPmtAmt/>
+	</cffunction>
+
+	
+
 	<cffunction name="getPromotionCodes" access="public" output="false" returntype="struct">    
     	<cfreturn variables.instance["promotionCodes"]/>    
     </cffunction>    
@@ -125,6 +173,11 @@
 		</cfscript>
 		
 	</cffunction>
+
+	<cffunction name="getDownPaymentAmount" access="public" returntype="numeric" output="false">
+		<cfreturn getMandatoryDownPmtAmt()+getOptionalDownPmtAmt() />
+	</cffunction>
+
 
 	<cffunction name="dump" access="public" output="true" return="void">
 		<cfargument name="abort" type="boolean" default="false" />

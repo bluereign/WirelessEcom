@@ -36,6 +36,7 @@
 		<cfargument name="Rebate" type="numeric" required="false" default="0" />
 		<cfargument name="DiscountTotal" type="numeric" required="false" default="0" />
 		<cfargument name="PurchaseType" type="string" required="false" default="" />
+		<cfargument name="DownPaymentReceived" type="numeric" required="false" default="0.00" />
 		
 		<!--- run setters --->
 		<cfset setOrderDetailId(arguments.OrderDetailId) />
@@ -65,6 +66,7 @@
 		<cfset setRebate(arguments.Rebate) />
 		<cfset setDiscountTotal(arguments.DiscountTotal) />
 		<cfset setPurchaseType(arguments.PurchaseType) />
+		<cfset setDownPaymentReceived(arguments.DownPaymentReceived) />
 
 		<cfset setIsDirty(arguments.IsDirty) /> <!--- TRV: this should ALWAYS be the last setter called in this init method --->
 			
@@ -72,6 +74,8 @@
  	</cffunction>
 
 	<!--- PUBLIC FUNCTIONS --->
+
+
 
 	<cffunction name="setMemento" access="public" returntype="cfc.model.OrderDetail" output="false">
 		<cfargument name="memento" type="struct" required="yes"/>
@@ -146,6 +150,7 @@
 			,	Rebate
 			,	DiscountTotal
 			,	PurchaseType
+			,	DownPaymentReceived
 			FROM
 				SalesOrder.OrderDetail
 			WHERE
@@ -179,6 +184,7 @@
 				if (len(trim(local.qLoad.Rebate))) this.setRebate(local.qLoad.Rebate);
 				if (len(trim(local.qLoad.DiscountTotal))) this.setDiscountTotal(local.qLoad.DiscountTotal);	
 				if (len(trim(local.qLoad.PurchaseType))) this.setPurchaseType(local.qLoad.PurchaseType);
+				if (len(trim(local.qLoad.DownPaymentReceived))) this.setDownPaymentReceived(local.qLoad.DownPaymentReceived);
 			}
 			else
 			{
@@ -229,6 +235,7 @@
 				,	RmaReason
 				,	Rebate
 				,	PurchaseType
+				,	DownPaymentReceived
 				) VALUES (
 					<cfif len(trim(this.getOrderDetailType()))><cfqueryparam cfsqltype="cf_sql_varchar" value="#this.getOrderDetailType()#"><cfelse>NULL</cfif>
 				,	<cfif len(trim(this.getOrderId()))><cfqueryparam cfsqltype="cf_sql_integer" value="#this.getOrderId()#"><cfelse>NULL</cfif>
@@ -253,6 +260,7 @@
 				,	<cfif len(trim(this.getRmaReason()))><cfqueryparam cfsqltype="cf_sql_varchar" value="#this.getRmaReason()#"><cfelse>NULL</cfif>
 				,	<cfqueryparam cfsqltype="cf_sql_money" value="#decimalFormat(this.getRebate())#" null="#!len(getRebate())#" /> 	
 				,	<cfif len(trim(this.getPurchaseType()))><cfqueryparam cfsqltype="cf_sql_varchar" value="#this.getPurchaseType()#"><cfelse>NULL</cfif>		
+				,	<cfif len(trim(this.getDownPaymentReceived()))><cfqueryparam cfsqltype="cf_sql_varchar" value="#this.getDownPaymentReceived()#"><cfelse>NULL</cfif>		
 				)
 			</cfquery>
 			<cfset this.setOrderDetailId(local.saveResult.identitycol)>
@@ -282,6 +290,7 @@
 				,	RmaReason = <cfif len(trim(this.getRmaReason()))><cfqueryparam cfsqltype="cf_sql_varchar" value="#this.getRmaReason()#"><cfelse>NULL</cfif>
 				,	Rebate = <cfqueryparam cfsqltype="cf_sql_money" value="#decimalFormat(this.getRebate())#" null="#!len(getRebate())#" />
 				,	PurchaseType = <cfif len(trim(this.getPurchaseType()))><cfqueryparam cfsqltype="cf_sql_varchar" value="#this.getPurchaseType()#"><cfelse>NULL</cfif>
+				,	DownPaymentReceived = <cfif len(trim(this.getDownPaymentReceived()))><cfqueryparam cfsqltype="cf_sql_varchar" value="#this.getDownPaymentReceived()#"><cfelse>NULL</cfif>
 				WHERE
 					OrderDetailId = <cfqueryparam cfsqltype="cf_sql_integer" value="#this.getOrderDetailId()#">
 			</cfquery>
@@ -313,6 +322,10 @@
 		<cfif not local.dProduct.recordCount>
 			<cfset local.dProduct = application.model.PrePaid.getByFilter( idList=local.d.getProductId(), allowHidden = true) />
 		</cfif>
+		
+		<!--- get the downpayment --->
+		<cfset local.prices = arguments.cartLine.getPrices() />
+		<cfset local.downPaymentReceived = local.prices.getDownPaymentAmount() /> 
 
 		<cfif local.dProduct.recordCount>
 			<!--- populate the object --->
@@ -1046,6 +1059,15 @@
     	<cfset variables.instance["discountTotal"] = arguments.theVar />    
     </cffunction>
     
+ 	<cffunction name="setDownpaymentReceived" access="public" output="false" returntype="void">    
+    	<cfargument name="theVar" required="true" />    
+    	<cfset variables.instance["downPaymentReceived"] = arguments.theVar />
+		<cfset this.setIsDirty(true) />    
+    </cffunction>	
+	<cffunction name="getDownPaymentReceived" access="public" output="false" returntype="numeric">    
+    	<cfreturn variables.instance["downPaymentReceived"]/>    
+    </cffunction>
+   
     <cffunction name="setPurchaseType" access="public" returntype="void" output="false">
 		<cfargument name="PurchaseType" type="string" required="true" />
 		<cfset variables.instance.PurchaseType = arguments.PurchaseType />
