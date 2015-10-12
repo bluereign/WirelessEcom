@@ -927,7 +927,7 @@
 			<cfif structKeyExists(local.ratePlans,"1") and isNumeric(local.ratePlans.1)>
 				<cfset local.planDetail = application.model.plan.getDetail(local.ratePlans.1) />
 			<cfelse>
-				<cfset local.planDetail = QueryNew() />
+				<cfset local.planDetail = "" />
 			</cfif>		
 		<cfreturn local.planDetail />
 	</cffunction>
