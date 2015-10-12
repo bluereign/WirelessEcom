@@ -921,6 +921,16 @@
 	
 	</cffunction>
 
+	<cffunction name="getPlan" returntype="query">
+		<cfset var local = structNew() />
+			<cfset local.ratePlans = session.carthelper.getSelectedPlans() />
+			<cfif structKeyExists(local.ratePlans,"1") and isNumeric(local.ratePlans.1)>
+				<cfset local.planDetail = application.model.plan.getDetail(local.ratePlans.1) />
+			<cfelse>
+				<cfset local.planDetail = QueryNew() />
+			</cfif>		
+		<cfreturn local.planDetail />
+	</cffunction>
 	
 	<cffunction name="getAccessories" returntype="array">
 		<cfargument name="cartLineNo" type="numeric" required="true" />

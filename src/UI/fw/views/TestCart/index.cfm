@@ -48,11 +48,13 @@ Result = #resultStr#
 	qty = 1,
 	cartLineNumber = #cartLineNo#
 } />	
-<br/><br/>Add the Plan for Line #cartlineno#
-<br/>Calling application.model.dBuilderCartFacade.addItem(argumentCollection = args)
-<cfdump var="#args#">
-<cfset resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = args) />
-Result = #resultStr#
+<cfif cartLineNo is 1>
+	<br/><br/>Add the Plan for Line #cartlineno#
+	<br/>Calling application.model.dBuilderCartFacade.addItem(argumentCollection = args)
+	<cfdump var="#args#">
+	<cfset resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = args) />
+	Result = #resultStr#
+</cfif>
 
 <cfset args = { 
 	productType = "plan",
@@ -141,6 +143,11 @@ Result = #resultStr#
 <br/><br/>CartHelper:
 <br/>session.carthelper.getLineWarrantyProductId(1) = #session.carthelper.getLineWarrantyProductId(1)#	
 </cfloop>
+
+<hr/>
+Get the Rate Plan for the cart:
+<br/>application.model.dBuilderCartFacade.getPlan() = <cfdump var="#application.model.dBuilderCartFacade.getPlan()#" />
+
 
 <hr/>
 Loop thru lines and display accessory counts per line
