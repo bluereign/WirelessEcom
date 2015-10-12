@@ -920,6 +920,68 @@
 		<cfreturn "Invalid cartLineNumber" />
 	
 	</cffunction>
+
+	
+	<cffunction name="getAccessories" returntype="array">
+		<cfargument name="cartLineNo" type="numeric" required="true" />
+		
+		<cfset var lines = session.cart.getLines() />
+		<cfset var otherItems = session.cart.getOtherItems() />
+		<cfset var local = structNew() />
+		<cfset local.accessories = arrayNew(1)/>
+		<cfset local.idList = "" />
+		
+		<cfif arguments.cartLineNo LTE arraylen(lines) >
+			<cfset local.lineAccessories = lines[arguments.cartLineNo].getAccessories() />
+			<cfloop array="#local.lineAccessories#" index="local.a">
+				<cfif listFindNoCase(local.idList,local.a.getProductId()) is 0>
+					<cfset local.thisAccessory = application.model.accessory.getDetail(local.a.getProductId()) />
+					<cfset local.idList = listAppend(local.idList,local.a.getProductId()) />
+					<cfset local.accessory = structNew() />
+					<cfset local.accessory.GersSku = local.thisAccessory.GersSku />
+					<cfset local.accessory.pageTitle = local.thisAccessory.pageTitle />
+					<cfset local.accessory.summaryTitle = local.thisAccessory.summaryTitle />
+					<cfset local.accessory.detailTitle = local.thisAccessory.detailTitle />
+					<cfset local.accessory.summaryDescription = local.thisAccessory.summaryDescription />
+					<cfset local.accessory.detailDescription = local.thisAccessory.detailDescription />
+					<cfset local.accessory.price_Retail = decimalformat(local.thisAccessory.Price_Retail) />
+					<cfset local.accessory.manufacturerName = local.thisAccessory.manufacturerName />
+					<cfset local.accessory.QtyOnHand = local.thisAccessory.QtyOnHand />
+					<cfset local.accessory.productid = local.a.getProductId() />
+					<cfset local.accessory.qty = getItemCount(arguments.cartLineNo,local.a.getProductId()) />
+					<cfset local.accessory.cartPriceBlock = local.a.getPrices() />
+					<cfset arrayAppend(local.accessories,local.accessory) />
+				</cfif>
+			</cfloop>
+		<cfelse>
+			<cfloop array="#otherItems#" index="local.a">
+				<cfif( local.a.getType() is "accessory" ) >
+					<cfif listFindNoCase(local.idList,local.a.getProductId()) is 0>
+						<cfset local.thisAccessory = application.model.accessory.getDetail(local.a.getProductId()) />
+						<cfset local.idList = listAppend(local.idList,local.a.getProductId()) />
+						<cfset local.accessory = structNew() />
+						<cfset local.accessory.GersSku = local.thisAccessory.GersSku />
+						<cfset local.accessory.pageTitle = local.thisAccessory.pageTitle />
+						<cfset local.accessory.summaryTitle = local.thisAccessory.summaryTitle />
+						<cfset local.accessory.detailTitle = local.thisAccessory.detailTitle />
+						<cfset local.accessory.summaryDescription = local.thisAccessory.summaryDescription />
+						<cfset local.accessory.detailDescription = local.thisAccessory.detailDescription />
+						<cfset local.accessory.price_Retail = decimalFormat(local.thisAccessory.Price_Retail) />
+						<cfset local.accessory.manufacturerName = local.thisAccessory.manufacturerName />
+						<cfset local.accessory.QtyOnHand = local.thisAccessory.QtyOnHand />
+						<cfset local.accessory.productid = local.a.getProductId() />
+						<cfset local.accessory.qty = getItemCount(arguments.cartLineNo,local.a.getProductId()) />
+						<cfset local.accessory.cartPriceBlock = local.a.getPrices() />
+						<cfset arrayAppend(local.accessories,local.accessory) />
+						<cfset arrayAppend(local.accessories,local.accessory) />
+					</cfif>
+				</cfif>
+			</cfloop>				
+		</cfif>
+		
+		<cfreturn local.accessories /> 
+		
+	</cffunction>
 	
 	<cffunction name="getAccessoryIds" returntype="string">
 		<cfargument name="cartLineNo" type="numeric" required="true" />

@@ -159,6 +159,12 @@ Get a list of all accessory product_ids for each line:
 </cfloop>
 <br/>application.model.dBuilderCartFacade.getAccessoryIds(999) = #application.model.dBuilderCartFacade.getAccessoryIds(999)#
 
+<hr/>
+Get an array of accessory info for each line:
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+<br/>application.model.dBuilderCartFacade.getAccessories(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getAccessories(ln)#"/>
+</cfloop>
+<br/>application.model.dBuilderCartFacade.getAccessories(999) = <cfdump var="#application.model.dBuilderCartFacade.getAccessories(999)#"/>
 
 <hr/>
 <cfset randlineNo = randRange(1,session.Carthelper.getNumberOfLines()) />
