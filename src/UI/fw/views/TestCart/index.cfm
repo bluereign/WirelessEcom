@@ -144,6 +144,14 @@ Result = #resultStr#
 <br/>session.carthelper.getLineWarrantyProductId(1) = #session.carthelper.getLineWarrantyProductId(1)#	
 </cfloop>
 
+
+<hr/>
+Get the Phone for each line in the cart:
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+<br/>application.model.dBuilderCartFacade.getDevice(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getDevice(ln)#" />
+<br/>#application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()#
+</cfloop>
+
 <hr/>
 Get the Rate Plan for the cart:
 <br/>application.model.dBuilderCartFacade.getPlan() = <cfdump var="#application.model.dBuilderCartFacade.getPlan()#" />
