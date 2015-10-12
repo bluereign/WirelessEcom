@@ -17,7 +17,10 @@
 <br/>
 <!---<cfset CartLineNo = 1 />--->
 
-<cfset phoneids = "27716,27665,27674" />
+<cfset phoneids = "27671,27665,27674" />
+<cfset phonePrices = "799.99,199.00,299,98" />
+<cfset phoneMandatoryDownPaymentPct = "10,15,5" />
+<cfset phoneOptionalDownPaymentPct = "0,0,10" />
 <cfset accessoryids = "515,10099,25766,4212,26626,45144" />
 
 <cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">
@@ -26,9 +29,13 @@
 	productType = "phone:new",
 	product_id = "#listgetat(phoneids,cartLineNo)#",
 	qty = 1,
-	price = 197.99,
+	price = "#listgetat(phoneprices,cartLineNo)#",
 	cartLineNumber = #cartLineNo#,
-	subscriberIndex = #cartLineNo#
+	subscriberIndex = #cartLineNo#,
+	mandatoryDownPmtPct = "#listgetat(phoneMandatoryDownPaymentPct,cartLineNo)#",
+	mandatoryDownPmtAmt = #decimalformat(listgetat(phoneMandatoryDownPaymentPct,cartLineNo)/100 * listgetat(phoneprices,cartLineNo))#,
+	optionalDownPmtPct = "#listgetat(phoneOptionalDownPaymentPct,cartLineNo)#",
+	optionalDownPmtAmt = #listgetat(phoneOptionalDownPaymentPct,cartLineNo)#/100 * #listgetat(phoneprices,cartLineNo)#
 } />
 <br/>Add the Phone for Line #cartlineno#
 <br/>Calling application.model.dBuilderCartFacade.addItem(argumentCollection = args)
@@ -128,7 +135,7 @@ Result = #resultStr#
 <br>cl.getPhone().getGersSku() = #cl.getphone().getGersSku()#
 <br>cl.getPhone().getTitle() = #cl.getphone().getTitle()#
 <br>cl.getPhone().dump() = #cl.getphone().dump()#
-<br>cl.etPhone().getPrices().dump() = #cl.getphone().getPrices().dump()#
+<br>cl.getPhone().getPrices().dump() = #cl.getphone().getPrices().dump()#
 <br>cl.getActivationFee().dump() = #cl.getActivationFee().dump()#
 <br>cl.getPhone().dump() = #cl.getphone().dump()#
 <br/><br/>CartHelper:
@@ -145,9 +152,12 @@ Loop thru lines and display accessory counts per line
 	</cfloop>		
 </cfloop>		
 
-
-
-
+<hr/>
+Get a list of all accessory product_ids for each line:
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+<br/>application.model.dBuilderCartFacade.getAccessoryIds(#ln#) = #application.model.dBuilderCartFacade.getAccessoryIds(ln)#
+</cfloop>
+<br/>application.model.dBuilderCartFacade.getAccessoryIds(999) = #application.model.dBuilderCartFacade.getAccessoryIds(999)#
 
 
 <hr/>
