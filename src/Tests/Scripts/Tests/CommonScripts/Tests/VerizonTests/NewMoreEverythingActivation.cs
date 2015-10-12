@@ -104,9 +104,9 @@ namespace SeleniumTests
             string orderNumber = Utilities.GetOrderNumber();
 
             // Activate the line in OMT
-            if (Globals._ActivateLineInOmt)
-                Actors.ActivateLine(Globals._AdminUsername, Globals._AdminUsername, orderNumber,
-                    Globals._Imei, Globals._Sim, Convert.ToBoolean(Globals._RemoveLine));
+            //if (Globals._ActivateLineInOmt)
+            //    Actors.ActivateLine(Globals._AdminUsername, Globals._AdminUsername, orderNumber,
+            //        Globals._Imei, Globals._Sim, Convert.ToBoolean(Globals._RemoveLine));
         }
         #endregion
     }

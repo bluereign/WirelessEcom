@@ -61,7 +61,7 @@
 				<br/>
 				<div>
 					<cfif (structKeyExists(session, "vfd")) and (len(session.VFD.employeeNumber))>
-						<span style="font-size:medium;font-weight:bold;float:right">Logged in Associate ID : #session.vfd.employeeNumber#</span>
+						<span style="font-size:medium;font-weight:bold;float:right">Logged in Associate ID : #session.vfd.employeeNumber#</span><span style="font-size:medium;font-weight:bold;float:left"> IP : #cgi.local_addr# </span>
 					</cfif>
 				</div>
 				<br/>

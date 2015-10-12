@@ -14,14 +14,12 @@ namespace TestAutomation.PageObjects
     public class BrowsePhonesPage : BasePage
     {
         public IList<DeviceUIControl> Devices { get; set; }
-        public IDictionary<int, DeviceUIControl> DevicePairs { get; set; }
-        int ProductCount = 0;
-        IWebElement ProductList;
-        public IList<IWebElement> Products { get; set; }
 
-        IWebElement DeviceLogoElement;
-        IWebElement ProductTitleElement;
-        IWebElement ProductPriceElement;
+        public IDictionary<int, DeviceUIControl> DevicePairs { get; set; }
+
+        public static int ProductCount { get; set; }
+
+        public IList<IWebElement> Products { get; set; }
 
         public BrowsePhonesPage(IWebDriver webDriver) : base(webDriver)
         {
@@ -63,11 +61,14 @@ namespace TestAutomation.PageObjects
             DevicePairs = new Dictionary<int, DeviceUIControl>();
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id(BrowsePhonesUI.ProductListId)));
-            ProductList = Driver.FindElement(By.Id(BrowsePhonesUI.ProductListId));
+            IWebElement ProductList = Driver.FindElement(By.Id(BrowsePhonesUI.ProductListId));
             Products = ProductList.FindElements(By.TagName("li"));
             ProductCount = Products.Count;
-
             Console.WriteLine("Product Count: " + ProductCount);
+
+            IWebElement DeviceLogoElement;
+            IWebElement ProductTitleElement;
+            IWebElement ProductPriceElement;
 
             for(int index = 1; index <= ProductCount; index++)
             {
@@ -82,14 +83,12 @@ namespace TestAutomation.PageObjects
                 Devices.Add(device);
             }
         }
-
-        public BaseDeviceDetailsPage SelectAPhone(string carrierName, string productTitle)
+        
+        public IDeviceDetails SelectPhone(string carrierName, string productTitle)
         {           
             int count = 0; //expecting at most 1 device
             int matchingIndex = 0;
             string devicePageUrl = "";
-
-            Actions Moves = new Actions(Driver);
 
             if (ProductCount <= 0)
             {
@@ -140,7 +139,20 @@ namespace TestAutomation.PageObjects
                 return null;
             }
 
-            return new BaseDeviceDetailsPage(Driver, devicePageUrl);
+            switch (carrierName)
+            {
+                case AttCarrierName:
+                    return new AttDeviceDetailsPage(Driver, devicePageUrl, AttCarrierName, productTitle);
+                case VerizonCarrierName:
+                    return new VerizonDeviceDetailsPage(Driver, devicePageUrl, VerizonCarrierName, productTitle);
+                case TMobileCarrierName:
+                    return new TMobileDeviceDetailsPage(Driver, devicePageUrl, TMobileCarrierName, productTitle);
+                case SprintCarrierName:
+                    return new SprintDeviceDetailsPage(Driver, devicePageUrl, SprintCarrierName, productTitle);
+                default:
+                    Console.WriteLine("Invalid Carrier Name specified");
+                    return null;
+            }
         }
         
         public void PrintDeviceList()
@@ -161,7 +173,71 @@ namespace TestAutomation.PageObjects
             }
         }
 
-        public string GetCarrierName(int deviceIndex, IWebElement deviceLogoElement)
+        IWebElement GetDeviceWebElement(int deviceIndex)
+        {
+            IWebElement deviceWebElement;
+            string divXPath1 = BrowsePhonesUI.GetDeviceXPath1(deviceIndex);
+            string divXPath2 = BrowsePhonesUI.GetDeviceXPath2(deviceIndex);
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(divXPath1)));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(divXPath2)));
+            deviceWebElement = Driver.FindElement(By.XPath(divXPath1));
+            IWebElement element2 = Driver.FindElement(By.XPath(divXPath2));
+
+            return deviceWebElement;
+        }
+
+        string GetDevicePageUrl(int deviceIndex)
+        {
+            string devicePageUrl;
+            IWebElement element = GetDeviceWebElement(deviceIndex);
+            string hrefAttribute = element.GetAttribute("onclick").Split('=')[1].Trim('\'').Trim();
+            devicePageUrl = BasePageUI.HomePageUrl + hrefAttribute;
+            Console.WriteLine();
+            Console.WriteLine("Device Details Page Url: " + devicePageUrl);
+
+            return devicePageUrl;
+        }
+
+        void SelectPhone(int deviceIndex)
+        {
+            IWebElement element = GetDeviceWebElement(deviceIndex);
+            element.Click();
+        }
+
+        public void ShowButtonsDisplayStatus()
+        {
+            string devicePageUrl;
+            string carrierName;
+
+            if (ProductCount <= 0)
+            {
+                Console.WriteLine("No Devices found");
+                return;
+            }
+
+            for (int deviceIndex = 1; deviceIndex <= ProductCount; deviceIndex++)
+            {
+                carrierName = DevicePairs[deviceIndex].CarrierName;
+                devicePageUrl = GetDevicePageUrl(deviceIndex);
+                Driver.Navigate().GoToUrl(devicePageUrl);
+
+                IWebElement pricingTypeRoot = Driver.FindElement(By.XPath(CommonDeviceDetailsUI.PricingTypeRootXPath));
+                IList<IWebElement> pricingTypes = pricingTypeRoot.FindElements(By.TagName("button"));
+
+                foreach (IWebElement element in pricingTypes)
+                {
+
+                    Console.WriteLine("Type: " + element.GetAttribute("type"));
+                    Console.WriteLine("Id: " + element.GetAttribute("id"));
+                    Console.WriteLine("Text: " + element.Text);
+                }
+
+                new BrowsePhonesPage(Driver, carrierName);
+            }
+        }
+
+        string GetCarrierName(int deviceIndex, IWebElement deviceLogoElement)
         {
             string attributeValue = deviceLogoElement.GetAttribute("Class");
             string logoAttributeValue = attributeValue.Replace(BrowsePhonesUI.DeviceLogoClassName, "").Trim();
@@ -187,21 +263,21 @@ namespace TestAutomation.PageObjects
             }
         }
 
-        public string GetProductTitle(int deviceIndex, IWebElement productTitleElement)
+        string GetProductTitle(int deviceIndex, IWebElement productTitleElement)
         {
             string productTitle = productTitleElement.Text;
 
             return productTitle;
         }
 
-        public string GetProductPrice(int deviceIndex, IWebElement productPriceElement)
+        string GetProductPrice(int deviceIndex, IWebElement productPriceElement)
         {
             string productPrice = productPriceElement.Text;
 
             return productPrice;
         }
 
-        public bool IsOutOfStock(int deviceIndex)//Cannot retrieve the img element at this time!
+        bool IsOutOfStock(int deviceIndex)//Cannot retrieve the img element at this time!
         {
             return false;
         }

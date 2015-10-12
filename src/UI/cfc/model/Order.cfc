@@ -1373,6 +1373,50 @@
 
 		<cfreturn qOrders />
 	</cffunction>
+	
+	<cffunction name="getDDOrderReprints" output="false" access="public" returntype="query">
+		<cfargument name="searchCriteria" type="struct" required="true" />
+		<cfset var channelConfig = application.wirebox.getInstance("ChannelConfig") />
+		<cfset var qOrders = '' />
+
+		<cfquery name="qOrders" datasource="#application.dsn.wirelessAdvocates#">
+			SELECT o.orderid
+			, o.orderDate
+			, o.KioskId
+			, k.KioskId AS KioskNumber
+			, o.AssociateId
+			, o.Status
+			, o.GERSStatus
+			, ISNULL(wa.FirstName,'')+' '+ISNULL(wa.LastName,'') AS CustomerName
+			, ISNULL(e.FirstName,'')+' '+ISNULL(e.LastName,'') AS EmployeeName
+			, ISNULL(os.OrderStatus,'')+','+ISNULL(os2.OrderStatus,'') AS CombinedStatus
+			FROM [salesorder].[order] o
+			INNER JOIN [salesorder].[wirelessAccount] wa ON o.orderid = wa.orderid
+			LEFT OUTER JOIN [webcommission].[Employees] e ON o.AssociateId = e.EmployeeId
+			LEFT OUTER JOIN [webcommission].[Kiosks] k ON o.KioskId = k.KioskId
+			LEFT OUTER JOIN (SELECT OrderStatusId, OrderType, OrderStatus
+				FROM salesorder.OrderStatus
+				WHERE OrderType = 'WA') os ON o.Status = os.OrderStatusId
+			LEFT OUTER JOIN (SELECT OrderStatusId, OrderType, OrderStatus
+				FROM salesorder.OrderStatus
+				WHERE OrderType = 'GERS') os2 ON o.GERSStatus = os2.OrderStatusId
+			WHERE o.ScenarioId = 2
+				<cfif searchCriteria.KioskId is not "">
+					AND o.KioskId = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchCriteria.KioskId#">
+				</cfif>				
+				<!---Search based on date range --->
+				<cfif searchCriteria.orderDateFrom is not "" AND searchCriteria.orderDateTo is not "">
+					AND o.orderdate between '#searchCriteria.orderDateFrom#' and DATEADD(day,1,'#searchCriteria.orderDateTo#')
+				<cfelseif searchCriteria.orderDateFrom is not "">
+					AND o.orderDate >=  '#searchCriteria.orderDateFrom#'
+				<cfelseif searchCriteria.orderDateTo is not "">
+					AND o.orderDate <= DATEADD(day,1,'#searchCriteria.orderDateTo#')
+				</cfif>			
+			ORDER BY o.orderDate DESC, o.OrderId
+		</cfquery>
+
+		<cfreturn qOrders />
+	</cffunction>
 
 	<cffunction name="getOrderActivationLines"  output="false" access="public" returntype="query">
 		<cfargument name="orderId" type="numeric" required="true" />
@@ -1545,16 +1589,17 @@
 
 		<cfquery name="qActivations" datasource="#application.dsn.wirelessAdvocates#">
 			SELECT
-				OrderId
-				, OrderDate
-				, EmailAddress
-				, ActivationType
-				, CarrierId
-				, CompanyName
-				, CheckoutReferenceNumber
-				, CurrentAcctNumber
-				, PhantomInventoryCount
-				, OrderAssistanceUsed
+				aw.OrderId
+				, aw.OrderDate
+				, aw.EmailAddress
+				, aw.ActivationType
+				, aw.CarrierId
+				, aw.CompanyName
+				, aw.CheckoutReferenceNumber
+				, aw.CurrentAcctNumber
+				, aw.PhantomInventoryCount
+				, aw.OrderAssistanceUsed
+				, o.ScenarioID
 				, CASE
 					WHEN ActivationStatus IS NULL THEN 'Ready'
 					WHEN ActivationStatus = 0 THEN 'Ready'
@@ -1567,8 +1612,9 @@
 					WHEN ActivationStatus = 7 THEN 'Canceled'
 					ELSE ''
 				  END ActivationStatusDescription					
-			FROM salesOrder.ActivationsWaiting
-			ORDER BY OrderDate, OrderId ASC
+			FROM [salesOrder].[ActivationsWaiting] AS aw
+			INNER JOIN [salesorder].[order]  AS o ON aw.orderid = o.orderid
+			ORDER BY aw.OrderDate, aw.OrderId ASC
 		</cfquery>
 
 		<cfreturn qActivations />
@@ -1667,7 +1713,8 @@
 			INNER JOIN	dbo.Users AS u WITH (NOLOCK) ON u.User_ID = o.UserId
 			LEFT JOIN	catalog.company AS c WITH (NOLOCK) ON c.carrierId = o.carrierId
 				WHERE od.RMANumber is null or len(od.RMANumber) = 0
-			ORDER BY OrderId desc		</cfquery>
+			ORDER BY OrderId desc		
+		</cfquery>
 
 		<cfreturn qDDReturns />
 	</cffunction>
@@ -2258,6 +2305,43 @@
 			return totalDiscount;
 		</cfscript>
 	</cffunction>
+	
+	<cffunction name="getKioskNumber" access="public" returntype="numeric" output="false">
+		<cfargument name="GersID" type="string" default="YJ" required="true" />
+		
+		<cfset var local = structNew()>
+		<cfset local.KioskNum = 0 >
+            <cfquery name="local.getKioskNum" datasource="#application.dsn.wirelessAdvocates#">
+                SELECT KioskId
+                FROM webcommission.Kiosks
+                WHERE GERS = <cfqueryparam value="#trim(arguments.GersID)#" cfsqltype="cf_sql_varchar" />
+            </cfquery>
+            <cfif local.getKioskNum.recordCount gt 0>
+            	<cfset local.KioskNum = local.getKioskNum.KioskId>
+            	<cfreturn local.KioskNum>
+            <cfelse>
+            	<cfreturn local.KioskNum>
+            </cfif>
+    </cffunction>
+    
+    <cffunction name="getEmployeeName" access="public" returntype="string" output="false">
+    	<cfargument name="employeeID" type="numeric" default="0" required="true" />
+    	
+		<cfset var local = structNew()>
+		<cfset local.employeeName = "NA" >
+            <cfquery name="local.getEmployeeName" datasource="#application.dsn.wirelessAdvocates#">
+                SELECT FirstName
+                ,LastName
+                FROM webcommission.Employees
+                WHERE EmployeeID = <cfqueryparam value="#trim(arguments.employeeID)#" cfsqltype="cf_sql_integer" />
+            </cfquery>
+            <cfif local.getEmployeeName.recordCount gt 0>
+            	<cfset local.employeeName = local.getEmployeeName.FirstName&" "&local.getEmployeeName.LastName >
+            	<cfreturn local.employeeName>
+            <cfelse>
+            	<cfreturn local.employeeName>
+            </cfif>
+    </cffunction>
 	
 	<cffunction name="getPromotionCodeList" access="public" output="false" returntype="string" hint="Returns list of codes applied to this order.">    
 		<cfreturn getPromotionService().getCodeListForOrder( orderID = getOrderID() )>

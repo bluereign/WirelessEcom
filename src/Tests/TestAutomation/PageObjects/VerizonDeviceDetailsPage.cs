@@ -12,8 +12,22 @@ namespace TestAutomation.PageObjects
 {
     public class VerizonDeviceDetailsPage : BaseDeviceDetailsPage
     {
-        public VerizonDeviceDetailsPage(IWebDriver Driver, string DevicePageUrl) : base(Driver, DevicePageUrl)
-        { }
+        public VerizonDeviceDetailsPage(IWebDriver Driver, string DevicePageUrl, string CarrierName, string ProductTitle) : base(Driver, DevicePageUrl, VerizonCarrierName, ProductTitle)
+        {
+        }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+
+        public VerizonRedirectDialog LearnMore()
+        {
+            base.FinanceLearnMore();
+
+            return new VerizonRedirectDialog(Driver);
+        }
+
+        
     }
 }

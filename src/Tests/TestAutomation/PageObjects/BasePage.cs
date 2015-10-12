@@ -30,8 +30,6 @@ namespace TestAutomation.PageObjects
 
         public static IWebDriver Driver { get; set; }
 
-        //public string UserName { get; set; }
-
         Actions Moves;
         public IAction MouseOverPhonesMenu;
 

@@ -127,6 +127,9 @@
 							<form id="DDReturns" action="#event.buildLink('ddadmin.start')#" method="post" >
 						          <button class="btn btn-primary" style="width: 400px;" type="submit">Process Direct Delivery Returns</button>
 							</form>
+							<form id="DDReprint" action="#event.buildLink('OmtVFD.searchOrders')#" method="post" >
+						          <button class="btn btn-primary" style="width: 300px;" type="submit">View Past Orders</button>
+							</form>
 						</div>
 					</div>		
 				</div>

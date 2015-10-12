@@ -382,6 +382,15 @@
 							<div class="msg-box-informational" style="clear:both;">
 								Please select Services for your Plan below.
 							</div>
+							<cfif (arguments.planData.carrierID eq 299) AND (session.cart.getActivationType() contains 'finance')>
+							<!---<cfif (arguments.planData.carrierID eq 299) and (request.p.ActivationType contains 'financed')>--->
+								<div class="msg-box-informational" style="clear:both;">
+									*For data packages 8GB and higher, you may see a $10 discount<br/>
+									 on your line access fee from Sprint.  In certain cases for your <br/>
+									 higher data packages your line access fee may be waived.<br/>
+									 Contact Sprint for more details.
+								</div>
+							</cfif>
 						</cfif>
 						<cfif listFindNoCase(request.lstAvailablePlanIds, arguments.planData.productId[arguments.planData.currentRow])>
 							<div id="prodSpecs" class="prodSpecs">

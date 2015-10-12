@@ -12,6 +12,7 @@ namespace SeleniumTests
         [TestInitialize]
         public void SetupTest()
         {
+            Utilities.ClearLogFolder();
             /* ==================================================================
              * ==   Must get the settings file before generating the log file. ==
              * ================================================================== */
@@ -45,8 +46,8 @@ namespace SeleniumTests
             Actors.NavigateToSite(Globals._BaseURL + "/index.cfm/go/shop/do/browsePhones");
 
             // Select phone
-            if (!Actors.SelectPhone(Globals._DeviceId, Globals._DeviceName))
-                Actors.ClearCart();
+            Actors.ClearCart();
+            Actors.SelectPhone(Globals._DeviceId, Globals._DeviceName);
 
             // Add phone to cart
             Actors.AddDeviceToCart(Globals._CustomerZipCode, Actors._AccountType.upgradePhoneKeepCurrentPlanMoreEverything);

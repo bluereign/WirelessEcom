@@ -10,6 +10,6 @@
     <Contact mobileNumber="6023901157" email="jcardon@wirelessadvocates.com" />
     <CreditCard cardNumber="5472063333333330" expireMonth="12" expireYear="15" cvv="123" />
   </CustomerInfo>
-  <Device id="10239" name="samsung-galaxy-s-4-16gb-black-mist" />
+  <Device id="25704" name="samsung-galaxy-s-5-16gb-white" />
   <Carrier zipCode="85302" password="HELLO" />
 </TestCase>

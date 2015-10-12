@@ -32,7 +32,7 @@
 	</cfif>
 
 	<cfif cgi.server_port neq 443 and not request.config.disableSSL>
-		<cflocation url="https://#cgi.server_name##cgi.path_info#" addtoken="false" />
+		<cflocation url="https://#cgi.HTTP_HOST##cgi.path_info#" addtoken="false" />
 	</cfif>
 
 	<cfif not structKeyExists(session, 'currentUser')>
@@ -181,6 +181,10 @@
 		
 		<cfset local = structNew() />
 			<cfset local.isByPassOn = false />
+			
+			<!---<cfif isDefined('request.p.overrideAddress') and (request.p.overrideAddress eq 1)><!--- Override Address is checked --->
+				<cfset local.isByPassOn = false />
+			</cfif>--->
 
 			<cfif len(trim(session.currentUser.getUserID())) && application.model.user.isUserOrderAssistanceOn(trim(session.currentUser.getUserID()))>
 				<cfset local.isByPassOn = true />
@@ -423,43 +427,44 @@
 					
 					<cfset local.billingResult = application.model.addressValidation.validateAddress(application.model.checkoutHelper.getBillingAddress(), 'Billing', application.model.checkoutHelper.getReferenceNumber(), local.billingCarrier, request.p.resultCode, session.cart.getZipCode(), application.model.checkoutHelper.getCarrierConversationId() ) />
 					<cfset application.model.checkoutHelper.setBillingResult(local.billingResult) />
-
-					<cfswitch expression="#trim(local.billingResult.getResultCode())#">
-						<!--- Address failed third party address validation and returned alternates. --->
-						<cfcase value="AV001">
-							<cfset request.validator.addMessage('errorAV001', 'Your billing address could not be validated, but some alternatives are available. Select an alternative address or review and resubmit your billing address.') />
-						</cfcase>
-
-						<!---  Address failed third party address verification and no matching addresses are available. --->
-						<cfcase value="AV002">
-							<cfset request.validator.addMessage('errorAV002', 'The billing address provided could not be validated. Please review and resubmit.') />
-						</cfcase>
-
-						<!---  Address verified. --->
-						<cfcase value="AV003">
-							<!--- Do Nothing --->
-						</cfcase>
-
-						<!--- Address failed carrier address verification. --->
-						<cfcase value="AV004">
-							<cfset request.validator.AddMessage('errorAV004', 'The billing address provided could not be validated. Please review and resubmit.') />
-						</cfcase>
-
-						<!--- Invalid Request, Unable to Connect to Carrier Service, Service Timeout --->
-						<cfcase value="AV010|AV011|AV012" delimiters="|">
-							<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
-						</cfcase>
-
-						<cfcase value="AV999">
-							<cflocation url="/index.cfm/go/checkout/do/error/?code=AV999" addtoken="false" />
-						</cfcase>
-
-						<cfdefaultcase>
-							<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
-						</cfdefaultcase>
-					</cfswitch>
+					
+					<cfif !isDefined('request.p.overrideAddress')><!--- Override Address is not checked --->		
+						<cfswitch expression="#trim(local.billingResult.getResultCode())#">
+							<!--- Address failed third party address validation and returned alternates. --->
+							<cfcase value="AV001">
+								<cfset request.validator.addMessage('errorAV001', 'Your billing address could not be validated, but some alternatives are available. Select an alternative address or review and resubmit your billing address.') />
+							</cfcase>
+	
+							<!---  Address failed third party address verification and no matching addresses are available. --->
+							<cfcase value="AV002">
+								<cfset request.validator.addMessage('errorAV002', 'The billing address provided could not be validated. Please review and resubmit.') />
+							</cfcase>
+	
+							<!---  Address verified. --->
+							<cfcase value="AV003">
+								<!--- Do Nothing --->
+							</cfcase>
+	
+							<!--- Address failed carrier address verification. --->
+							<cfcase value="AV004">
+								<cfset request.validator.AddMessage('errorAV004', 'The billing address provided could not be validated. Please review and resubmit.') />
+							</cfcase>
+	
+							<!--- Invalid Request, Unable to Connect to Carrier Service, Service Timeout --->
+							<cfcase value="AV010|AV011|AV012" delimiters="|">
+								<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
+							</cfcase>
+	
+							<cfcase value="AV999">
+								<cflocation url="/index.cfm/go/checkout/do/error/?code=AV999" addtoken="false" />
+							</cfcase>
+	
+							<cfdefaultcase>
+								<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
+							</cfdefaultcase>
+						</cfswitch>
+					</cfif>
 				</cfif>
-
 				<!--- If it is prepaid, set the dob. --->
 				<cfif application.model.checkoutHelper.isPrepaidOrder()>
 					<cfset application.model.checkoutHelper.setPrepaidDOB(request.p.dob) />
@@ -469,75 +474,79 @@
 					<cfif request.config.allowAPOFPO AND listFindNoCase("APO,FPO",request.p.shipCity)>
 						<cfset uspsObj = application.wirebox.getInstance("Usps")>
 						<cfset local.resultCode = uspsObj.AddressValidate(Address2 = request.p.shipaddress1,City = request.p.shipCity ,State = request.p.shipState,zip5=request.p.shipzip)>
-
-						<cfswitch expression="#local.resultCode#">
-
-							<!--- Address failed third party address validation and returned alternates. --->
-							<cfcase value="USPS001">
-								<cfset request.validator.addMessage('errorAV001', 'Your shipping address could not be validated, but some alternatives are available. Select an alternative address or review and resubmit your shipping address.') />
-							</cfcase>
-
-							<!--- Address failed third party address verification and no matching addresses are available. --->
-							<cfcase value="USPS002">
-								<cfset request.validator.addMessage('errorAV002', 'The shipping address provided could not be validated. Please review and resubmit.') />
-							</cfcase>
-
-							<!--- Address verified --->
-							<cfcase value="USPS003">
-								<!--- Do Nothing --->
-							</cfcase>
-
-							<!--- Address failed carrier address verification. --->
-							<cfcase value="USPS004">
-								<!--- Does not apply to shipping validation. --->
-							</cfcase>
-
-							<!--- Invalid Request, Unable to Connect to Carrier Service, Service Timeout --->
-							<cfcase value="USPS010|USPS011|USPS012" delimiters="|">
-								<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
-							</cfcase>
-
-							<cfdefaultcase>
-								<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
-							</cfdefaultcase>
-						</cfswitch>
+						
+						<cfif !isDefined('request.p.overrideAddress')><!--- Override Address is not checked --->
+							<cfswitch expression="#local.resultCode#">
+	
+								<!--- Address failed third party address validation and returned alternates. --->
+								<cfcase value="USPS001">
+									<cfset request.validator.addMessage('errorAV001', 'Your shipping address could not be validated, but some alternatives are available. Select an alternative address or review and resubmit your shipping address.') />
+								</cfcase>
+	
+								<!--- Address failed third party address verification and no matching addresses are available. --->
+								<cfcase value="USPS002">
+									<cfset request.validator.addMessage('errorAV002', 'The shipping address provided could not be validated. Please review and resubmit.') />
+								</cfcase>
+	
+								<!--- Address verified --->
+								<cfcase value="USPS003">
+									<!--- Do Nothing --->
+								</cfcase>
+	
+								<!--- Address failed carrier address verification. --->
+								<cfcase value="USPS004">
+									<!--- Does not apply to shipping validation. --->
+								</cfcase>
+	
+								<!--- Invalid Request, Unable to Connect to Carrier Service, Service Timeout --->
+								<cfcase value="USPS010|USPS011|USPS012" delimiters="|">
+									<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
+								</cfcase>
+	
+								<cfdefaultcase>
+									<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
+								</cfdefaultcase>
+							</cfswitch>
+						</cfif>
 
 					<cfelse>
 						<!--- Call the carrier / shipping validation services. --->
 						<cfset local.shippingResult = application.model.addressValidation.validateAddress(application.model.checkoutHelper.getShippingAddress(), 'Shipping', application.model.checkoutHelper.getReferenceNumber(), local.billingCarrier, request.p.resultCode, session.cart.getZipCode(), application.model.checkoutHelper.getCarrierConversationId() ) />
 						<cfset application.model.checkoutHelper.setShippingResult(local.shippingResult) />
-
-						<cfswitch expression="#trim(local.shippingResult.getResultCode())#">
-
-							<!--- Address failed third party address validation and returned alternates. --->
-							<cfcase value="AV001">
-								<cfset request.validator.addMessage('errorAV001', 'Your shipping address could not be validated, but some alternatives are available. Select an alternative address or review and resubmit your shipping address.') />
-							</cfcase>
-
-							<!--- Address failed third party address verification and no matching addresses are available. --->
-							<cfcase value="AV002">
-								<cfset request.validator.addMessage('errorAV002', 'The shipping address provided could not be validated. Please review and resubmit.') />
-							</cfcase>
-
-							<!--- Address verified --->
-							<cfcase value="AV003">
-								<!--- Do Nothing --->
-							</cfcase>
-
-							<!--- Address failed carrier address verification. --->
-							<cfcase value="AV004">
-								<!--- Does not apply to shipping validation. --->
-							</cfcase>
-
-							<!--- Invalid Request, Unable to Connect to Carrier Service, Service Timeout --->
-							<cfcase value="AV010|AV011|AV012" delimiters="|">
-								<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
-							</cfcase>
-
-							<cfdefaultcase>
-								<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
-							</cfdefaultcase>
-						</cfswitch>
+						
+						<cfif !isDefined('request.p.overrideAddress')><!--- Override Address is not checked --->
+							<cfswitch expression="#trim(local.shippingResult.getResultCode())#">
+	
+								<!--- Address failed third party address validation and returned alternates. --->
+								<cfcase value="AV001">
+									<cfset request.validator.addMessage('errorAV001', 'Your shipping address could not be validated, but some alternatives are available. Select an alternative address or review and resubmit your shipping address.') />
+								</cfcase>
+	
+								<!--- Address failed third party address verification and no matching addresses are available. --->
+								<cfcase value="AV002">
+									<cfset request.validator.addMessage('errorAV002', 'The shipping address provided could not be validated. Please review and resubmit.') />
+								</cfcase>
+	
+								<!--- Address verified --->
+								<cfcase value="AV003">
+									<!--- Do Nothing --->
+								</cfcase>
+	
+								<!--- Address failed carrier address verification. --->
+								<cfcase value="AV004">
+									<!--- Does not apply to shipping validation. --->
+								</cfcase>
+	
+								<!--- Invalid Request, Unable to Connect to Carrier Service, Service Timeout --->
+								<cfcase value="AV010|AV011|AV012" delimiters="|">
+									<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
+								</cfcase>
+	
+								<cfdefaultcase>
+									<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
+								</cfdefaultcase>
+							</cfswitch>
+						</cfif>
 					</cfif>
 				</cfif>
 			</cfif>
@@ -665,8 +674,8 @@
 		<!--- Put VFD specific settings in order object --->
 		<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
 			<cfset order.setScenarioId(2) />
-			<cfset order.setKioskId(application.model.VFD.getKioskNumber()) />
-			<cfset order.setAssociateId(application.model.VFD.getEmployeeNumber()) />
+			<cfset order.setKioskId(session.VFD.kioskNumber) />
+			<cfset order.setAssociateId(session.VFD.employeeNumber) />
 		</cfif>
 		
 		<cfif len(trim(session.cart.getKioskEmployeeNumber()))>
@@ -771,8 +780,16 @@
 							<cfset	local.mappedActivationType = cartlines[i].getCartLineActivationType()>
 							<cfset	local.ratePlanLength = 0>
 				</cfif>	
-			 	 
-			 	 
+				<cfif application.model.checkoutHelper.getCarrier() eq 128>
+				 	<cfset local.lineFeatures = cartlines[i].getFeatures()/>
+				 	<!---<cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">--->
+					<cfset local.thisFeatureID = local.lineFeatures[1].getProductID()/>
+					<cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID)/>
+					<!---</cfloop>--->
+					<!---<cfdump var="#local.thisFeature.ProductID#">
+					<cfabort>--->
+				</cfif>
+					
 			 	 <cfif cartlines[i].getCartLineActivationType() is 'nocontract'>
 				 	<cfset CommissionSku = application.model.CheckoutHelper.GetNoActivationRateplanSKU( 
 							application.model.checkoutHelper.getCarrier()
@@ -790,27 +807,49 @@
 							<cfset CommissionSkuTitle = "Prepaid sale" />
 				</cfif>
 			 	<cfif cartlines[i].getCartLineActivationType() contains 'upgrade'>
-					<cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
-							application.model.checkoutHelper.getCarrier()
-							, cartlines[i].getPhone().getGersSKU()
-							, cartlines[i].getPhone().getDeviceServiceType()
-							, local.mappedActivationType
-							, i <!--- line number --->
-							, local.ratePlanLength
-							) />
-					<cfset CommissionSkuTitle = "Keep current rateplan" />
+					<cfif application.model.checkoutHelper.getCarrier() neq 128>
+						<cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
+								application.model.checkoutHelper.getCarrier()
+								, cartlines[i].getPhone().getGersSKU()
+								, cartlines[i].getPhone().getDeviceServiceType()
+								, local.mappedActivationType
+								, i <!--- line number --->
+								, local.ratePlanLength
+								) />
+						<cfset CommissionSkuTitle = "Keep current rateplan" />
+					<cfelse>
+						<cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
+								application.model.checkoutHelper.getCarrier()
+								, cartlines[i].getPhone().getGersSKU()
+								, local.thisFeature.ProductID
+								, cartlines[i].getPhone().getDeviceServiceType()
+								, local.mappedActivationType
+								) />
+						<cfset CommissionSkuTitle = "Keep current rateplan" />
+					</cfif>
 				</cfif>
 				  
 				<cfif cartlines[i].getCartLineActivationType() contains 'addaline'>
-				 	 <cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
-							application.model.checkoutHelper.getCarrier()
-							, cartlines[i].getPhone().getGersSKU()
-							, cartlines[i].getPhone().getDeviceServiceType()
-							, local.mappedActivationType
-							, i <!--- line number --->
-							, local.ratePlanLength
-							) />
-					<cfset CommissionSkuTitle = "Add a line to current rateplan" />
+				 	<cfif application.model.checkoutHelper.getCarrier() neq 128>
+					 	 <cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
+								application.model.checkoutHelper.getCarrier()
+								, cartlines[i].getPhone().getGersSKU()
+								, cartlines[i].getPhone().getDeviceServiceType()
+								, local.mappedActivationType
+								, i <!--- line number --->
+								, local.ratePlanLength
+								) />
+						<cfset CommissionSkuTitle = "Add a line to current rateplan" />
+					<cfelse>
+						<cfset CommissionSku = application.model.CheckoutHelper.GetDataCommissionSku( 
+								application.model.checkoutHelper.getCarrier()
+								, cartlines[i].getPhone().getGersSKU()
+								, local.thisFeature.ProductID
+								, cartlines[i].getPhone().getDeviceServiceType()
+								, local.mappedActivationType
+								) />
+						<cfset CommissionSkuTitle = "Add a line to current rateplan" />
+					</cfif>
 				</cfif>
 			 	 
 			 	<cfscript> 
@@ -1587,7 +1626,9 @@
 	<cffunction name="exitVFD" returntype="void" output="false" >
 		<cfargument name="event">
 		
-		<cfset structClear(session.VFD) />
+		<cfset session.VFD.access = false/>
+		<cfset Session.VFD.kioskNumber= 0/>
+		<cfset Session.VFD.employeeNumber = 0/>
 		<cfset application.model.checkoutHelper.clearCart() />
 		<cfset application.model.checkoutHelper.clearCheckOut() />
 		<cfset session.userID = 0 />

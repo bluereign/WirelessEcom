@@ -19,7 +19,8 @@ namespace SeleniumTests
         public enum _VerizonServicePlans {vzwMedium3GB, vzwLarge6GB, vzwXLarge12GB, vzw20GB, vzw25GB, vzw30GB, vzw40GB,
             vzw50GB, vzw60GB, vzw80GB,  vzw100GB,}
         public enum _Services { vzwMoreEverythingSmartphoneMonthlyLineAccess, vzwMoreEverythingSmartphoneMonthlyLineAccessRingbackTones,
-        vzwMoreEverythingSmartphoneMonthlyLineAccessRingbackTonesVisualVoiceMail, vzwRequiredServiceFor3GAnd4GSmartphones }
+        vzwMoreEverythingSmartphoneMonthlyLineAccessRingbackTonesVisualVoiceMail, vzwRequiredServiceFor3GAnd4GSmartphones,
+            TheVerizonPlanSmartphoneLineAccess }
         public enum _CarrierName { verizon, sprint, tmobile, att }
 
         // Generic Actions
@@ -35,7 +36,7 @@ namespace SeleniumTests
             UpdateOrderStatusToShowPaymentCompleted(Globals._ServerName, Globals._DatabaseName, orderId);
 
             // Begin the activation process
-            Utilities.Log("++ ActivateLine");
+            Utilities.Log("** ActivateLine");
 
             // Open a new tab in the browser
             Globals._Driver.Navigate().GoToUrl("about:blank");
@@ -68,7 +69,7 @@ namespace SeleniumTests
                 imeiOnPage = imeiOnPage.Remove(0, 5);
                 string simOnPage = Globals._Driver.FindElement(By.XPath("//div[@id='tabs-2']/div/div/div[2]/div[2]/div[3]")).Text;
                 simOnPage = simOnPage.Remove(0, 5);
-                Utilities.Log("+ ime: " + Globals._Imei + ", imeiOnPage: " + imeiOnPage + ", sim: " + Globals._Sim + ", simOnPage: " + simOnPage);
+                Utilities.Log("+ imei: " + Globals._Imei + ", imeiOnPage: " + imeiOnPage + ", sim: " + Globals._Sim + ", simOnPage: " + simOnPage);
                 if (imeiOnPage != imei)
                     Assert.Fail("IMEI does not match, original: " + imei + ", imeiOnPage: " + imeiOnPage);
                 if (simOnPage != sim)
@@ -94,11 +95,16 @@ namespace SeleniumTests
                 Assert.IsTrue(Utilities.WaitForElement("autoActivationSubmit", SeleniumTests._By.id, Globals._DefaultTimeoutValue));
                 Globals._Driver.FindElement(By.Id("autoActivationSubmit")).Click();
 
+                // Wait for a period of time to give time for the service to respond
+                //System.Threading.Thread.Sleep(10000);
+
                 // Get the result message
                 Assert.IsTrue(Utilities.WaitForElement("//div[@id='mid-col']/div/div/div/a/div", SeleniumTests._By.xPath, 240));
-                //string result = Globals._Driver.FindElement(By.CssSelector("css=div.message-sticky")).Text;
                 string result = Globals._Driver.FindElement(By.XPath("//div[@id='mid-col']/div/div/div/a/div")).Text;
                 Utilities.Log("+ Result of device activation:\r\n" + result);
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -114,7 +120,7 @@ namespace SeleniumTests
         #region AddDeviceToCart()
         public static bool AddDeviceToCart(string zipCode, _AccountType accountType)
         {
-            Utilities.Log("++ AddDeviceToCart");
+            Utilities.Log("** AddDeviceToCart");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("Add to Cart", SeleniumTests._By.linkText, Globals._DefaultTimeoutValue));
@@ -147,6 +153,9 @@ namespace SeleniumTests
                         break;
                 }
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -159,7 +168,7 @@ namespace SeleniumTests
         }
         private static bool AddALineStep2()
         {
-            Utilities.Log("++ AddALineStep2");
+            Utilities.Log("** AddALineStep2");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("aalFamily", _By.id, Globals._DefaultTimeoutValue));
@@ -179,7 +188,7 @@ namespace SeleniumTests
         }
         private static bool UpgradeDeviceStep2()
         {
-            Utilities.Log("++ UpgradeDeviceStep2");
+            Utilities.Log("** UpgradeDeviceStep2");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("upgradeType", SeleniumTests._By.name, Globals._DefaultTimeoutValue));
@@ -202,12 +211,12 @@ namespace SeleniumTests
         #region AcceptAgreementTerms()
         public static bool AcceptAgreementTerms(_AgreementType agreement)
         {
-            Utilities.Log("++ AggreeTerms");
+            Utilities.Log("** AggreeTerms");
             try
             {
                 if (agreement == _AgreementType.agreeToContractExtension)
                 {
-                    Utilities.Log("++ agreeToContractExtension");
+                    Utilities.Log("** agreeToContractExtension");
                     Assert.IsTrue(Utilities.WaitForElement("agreeToContractExtension", SeleniumTests._By.name, Globals._DefaultTimeoutValue));
                     Globals._Driver.FindElement(By.Name("agreeToContractExtension")).Click();
                 }
@@ -221,6 +230,9 @@ namespace SeleniumTests
                 Globals._Driver.FindElement(By.Name("agreeToCarrierTermsAndConditions")).Click();
                 Globals._Driver.FindElement(By.Name("agreeToCustomerLetter")).Click();
                 Globals._Driver.FindElement(By.LinkText("Continue")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -236,12 +248,15 @@ namespace SeleniumTests
         #region AcknowledgeCompletionOfOrder()
         public static bool AcknowledgeCompletionOfOrder()
         {
-            Utilities.Log("++ AcknowledgeCompletionOfOrder");
+            Utilities.Log("** AcknowledgeCompletionOfOrder");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("input[type=\"submit\"]", SeleniumTests._By.cssSelector, 10));
 
                 Globals._Driver.FindElement(By.CssSelector("input[type=\"submit\"]")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -258,11 +273,9 @@ namespace SeleniumTests
         public static bool BillingAndShipping(string emailAddress, string password, string firstName, string lasstName,
             string streetAddress, string city, string state, string zipCode)
         {
-            Utilities.Log("++ BillingAndShipping");
+            Utilities.Log("** BillingAndShipping");
             try
             {
-                Assert.IsTrue(Utilities.WaitForElement("emailAddress", SeleniumTests._By.name, Globals._DefaultTimeoutValue));
-
                 // If the email address field is enabled and visible, proceed to type it in the field
                 if (Utilities.IsElementPresent(By.Name("emailAddress")))
                 {
@@ -293,20 +306,26 @@ namespace SeleniumTests
                     }
                 }
 
+                System.Threading.Thread.Sleep(2000);    // Sometimes it's a little slow to show the password field.  As a result, some of the password characters get eaten
                 // If the Password field is visible, proceed to type it in the field
-                Assert.IsTrue(Utilities.WaitForElement("existingUserPassword", SeleniumTests._By.name, Globals._DefaultTimeoutValue));
-                try
-                {
-                    System.Threading.Thread.Sleep(1000);    // Sometimes it's a little slow to show the password field.  As a result, some of the password characters get eaten
-                    Utilities.Log("+ type " + password);
-                    Assert.IsFalse(!Globals._Driver.FindElement(By.Name("existingUserPassword")).Displayed);
-                    Globals._Driver.FindElement(By.Name("existingUserPassword")).Clear();
-                    Globals._Driver.FindElement(By.Name("existingUserPassword")).SendKeys(password);
-                    Globals._Driver.FindElement(By.LinkText("Ok")).Click();
-                }
-                catch (Exception)
-                {
-                    // Otherwise raise an exception and move on
+                if (Utilities.IsElementPresent(By.Name("existingUserPassword")))
+                    {
+                    try
+                    {
+                        // Sometimes a label appears stating the following "Checking your email address against our database.  Please wait.
+                        while (Utilities.IsElementPresent(By.Id("progressLabel")))
+                            System.Threading.Thread.Sleep(500);
+
+                        Utilities.Log("+ type " + password);
+                        Assert.IsFalse(!Globals._Driver.FindElement(By.Name("existingUserPassword")).Displayed);
+                        Globals._Driver.FindElement(By.Name("existingUserPassword")).Clear();
+                        Globals._Driver.FindElement(By.Name("existingUserPassword")).SendKeys(password);
+                        Globals._Driver.FindElement(By.LinkText("Ok")).Click();
+                    }
+                    catch (Exception)
+                    {
+                        // Otherwise raise an exception and move on
+                    }
                 }
 
                 // Populate the remaining fields
@@ -341,6 +360,9 @@ namespace SeleniumTests
                 Globals._Driver.FindElement(By.Id("txtBillingEvePhone")).SendKeys(contactPhoneAreaCode + "-788-1235");
                 Globals._Driver.FindElement(By.LinkText("Continue")).Click();
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -355,7 +377,7 @@ namespace SeleniumTests
         #region CardholderInfo()
         public static bool CardholderInfo(string cardNumber, string expireMonth, string expireYr, string cvv)
         {
-            Utilities.Log("++ CardholderInfo");
+            Utilities.Log("** CardholderInfo");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("process", SeleniumTests._By.name, Globals._DefaultTimeoutValue));
@@ -376,6 +398,9 @@ namespace SeleniumTests
                 Globals._Driver.FindElement(By.Id("CVV2")).SendKeys(cvv);
                 Globals._Driver.FindElement(By.Name("process")).Click();
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -390,7 +415,7 @@ namespace SeleniumTests
         #region CarrierApplication()
         public static bool CarrierApplication(string last4Ssn, string state)
         {
-            Utilities.Log("++ CarrierApplication");
+            Utilities.Log("** CarrierApplication");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("txtDOB", _By.id, Globals._DefaultTimeoutValue));
@@ -401,8 +426,9 @@ namespace SeleniumTests
                 Utilities.Log("+ type 555-55-" + last4Ssn);
                 Globals._Driver.FindElement(By.Id("txtSSN")).SendKeys("555-55-" + last4Ssn);
                 Globals._Driver.FindElement(By.Id("txtDriver")).Clear();
-                Utilities.Log("+ type 19028347129");
-                Globals._Driver.FindElement(By.Id("txtDriver")).SendKeys("19028347129");    // we just need to sent a random set of numbers
+                string randomNumber = Utilities.RandNumberGenerator(9).ToString();
+                Utilities.Log("+ type " + randomNumber);
+                Globals._Driver.FindElement(By.Id("txtDriver")).SendKeys(randomNumber);    // we just need to send a random set of numbers
                 Globals._Driver.FindElement(By.Id("txtDLExp")).Clear();
                 string date = Utilities.GetDate(1);
                 Utilities.Log("+ type " + date);
@@ -412,6 +438,9 @@ namespace SeleniumTests
                 Utilities.WaitForElement("Continue", _By.linkText, Globals._DefaultTimeoutValue);
                 Utilities.Log("+ click Continue");
                 Globals._Driver.FindElement(By.LinkText("Continue")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -427,7 +456,7 @@ namespace SeleniumTests
         #region CartContinue()
         private static bool ProceedToNextStep(string zipCode)
         {
-            Utilities.Log("++ ProceedToNextStep");
+            Utilities.Log("** ProceedToNextStep");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("zipCode", SeleniumTests._By.name, Globals._DefaultTimeoutValue));
@@ -435,6 +464,9 @@ namespace SeleniumTests
                 Globals._Driver.FindElement(By.Name("zipCode")).Clear();
                 Globals._Driver.FindElement(By.Name("zipCode")).SendKeys(zipCode);
                 Globals._Driver.FindElement(By.CssSelector("div.button-container > a.ActionButton > span")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -450,10 +482,13 @@ namespace SeleniumTests
         #region CertRecovery
         public static bool CertRecovery()
         {
-            Utilities.Log("++ CertRecovery");
+            Utilities.Log("** CertRecovery");
             try
             {
                 Globals._Driver.Navigate().GoToUrl("javascript:document.getElementById('overridelink').click()");
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -468,7 +503,7 @@ namespace SeleniumTests
         #region ChoosServicePlan()
         public static bool ChooseServicePlan(_VerizonServicePlans servicePlan)
         {
-            Utilities.Log("++ ChooseServicePlan");
+            Utilities.Log("** ChooseServicePlan");
 
             try
             {
@@ -528,6 +563,9 @@ namespace SeleniumTests
                         break;
                 }
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -542,7 +580,7 @@ namespace SeleniumTests
         #region ClearCart()
         public static bool ClearCart()
         {
-            Utilities.Log("++ ClearCart");
+            Utilities.Log("** ClearCart");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("lnkMyCart", SeleniumTests._By.id, Globals._DefaultTimeoutValue));
@@ -552,6 +590,10 @@ namespace SeleniumTests
                 Globals._Driver.FindElement(By.XPath("//a[contains(text(),'Clear Cart')]")).Click();
                 Assert.IsTrue(Regex.IsMatch(Utilities.CloseAlertAndGetItsText(), "^Are you sure you want to clear your cart[\\s\\S]$"));
                 Globals._Driver.FindElement(By.LinkText("Close Cart")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -569,7 +611,7 @@ namespace SeleniumTests
             // Sample server name: 10.7.0.22
             // Sample database name: COSTCO.TEST
 
-            Utilities.Log("++ GetCheckoutReferenceNumber");
+            Utilities.Log("** GetCheckoutReferenceNumber");
             try
             {
                 string credentials = "";
@@ -602,6 +644,9 @@ namespace SeleniumTests
                     //conn.Close(); leave the connection open for the next call
                 }
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -619,7 +664,7 @@ namespace SeleniumTests
             // Sample server name: 10.7.0.22
             // Sample database name: COSTCO.TEST
 
-            Utilities.Log("++ GetOrderDetailId");
+            Utilities.Log("** GetOrderDetailId");
             try
             {
                 string credentials = "";
@@ -655,6 +700,9 @@ namespace SeleniumTests
                     //conn.Close();  Leave the database open for the next call
                 }
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return orderDetailId;
             }
             catch(Exception e)
@@ -669,11 +717,15 @@ namespace SeleniumTests
         #region NavigateToSite()
         public static bool NavigateToSite(string url)
         {
-            Utilities.Log("++ NavigateToSite: " + url);
+            Utilities.Log("** NavigateToSite: " + url);
             try
             {
                 Globals._Driver.Navigate().GoToUrl(url);
                 Assert.IsTrue(Utilities.WaitForElement("lnkMyCart", SeleniumTests._By.id, 60));
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -696,6 +748,9 @@ namespace SeleniumTests
                 Globals._Driver.FindElement(By.Id("newNumber_1")).Click();
                 Globals._Driver.FindElement(By.LinkText("Continue")).Click();
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -709,7 +764,7 @@ namespace SeleniumTests
         }
         public static bool RetainCurrentMobileNumber(string currentNumber, string existingCarrier, string existingCarrierAccountNumber, string existingCarrierPin)
         {
-            Utilities.Log("++ KeepCurrentNumber");
+            Utilities.Log("** KeepCurrentNumber");
 
             // Add dashes if they don't already exist so the data can be parsed
             if (!currentNumber.Contains("-") && currentNumber != "")
@@ -763,11 +818,14 @@ namespace SeleniumTests
         #region ProceedToCheckout()
         public static bool ProceedToCheckout()
         {
-            Utilities.Log("++ ProceedToCheckout");
+            Utilities.Log("** ProceedToCheckout");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("a.ActionButton > span", SeleniumTests._By.cssSelector, Globals._DefaultTimeoutValue));
                 Globals._Driver.FindElement(By.CssSelector("a.ActionButton > span")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -783,11 +841,14 @@ namespace SeleniumTests
         #region ReviewCart()
         public static bool ReviewCart()
         {
-            Utilities.Log("++ ReviewCart");
+            Utilities.Log("** ReviewCart");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("Cart Review", SeleniumTests._By.linkText, Globals._DefaultTimeoutValue));
                 Globals._Driver.FindElement(By.LinkText("Cart Review")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -803,12 +864,16 @@ namespace SeleniumTests
         #region ReviewOrder()
         public static bool ReviewOrder()
         {
-            Utilities.Log("++ ReviewOrder");
+            Utilities.Log("** ReviewOrder");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("Continue", SeleniumTests._By.linkText, Globals._DefaultTimeoutValue));
 
                 Globals._Driver.FindElement(By.LinkText("Continue")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -823,7 +888,7 @@ namespace SeleniumTests
         #region ReviewPayment()
         public static bool ReviewPayment(string name, string streetAddress, string city, string state, string zipCode, string phone, string email)
         {
-            Utilities.Log("++ ReviewPayment");
+            Utilities.Log("** ReviewPayment");
 
             try
             {
@@ -851,6 +916,9 @@ namespace SeleniumTests
                 //Globals._Driver.FindElement(By.LinkText("Continue")).Click();
                 Globals._Driver.FindElement(By.Name("process")).Click();
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -865,13 +933,16 @@ namespace SeleniumTests
         #region SelectDeviceAccessories()
         public static bool SelectDeviceAccessories(_DeviceAccessories deviceType)
         {
-            Utilities.Log("++ SelectDeviceAccessories");
+            Utilities.Log("** SelectDeviceAccessories");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("No Thanks", SeleniumTests._By.linkText, Globals._DefaultTimeoutValue));
 
                 if (deviceType == _DeviceAccessories.none)
                     Globals._Driver.FindElement(By.LinkText("No Thanks")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -887,13 +958,10 @@ namespace SeleniumTests
         #region SelectPhone()
         public static bool SelectPhone(string phoneId, string phoneName)
         {
-            Utilities.Log("++ SelectPhone");
+            Utilities.Log("** SelectPhone");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("(//div[@onclick=\"window.location.href ='/" + phoneId + "/" + phoneName + "'\"])[2]", SeleniumTests._By.xPath, Globals._DefaultTimeoutValue));
-
-                //Globals._Driver.FindElement(By.Id("filterOption_3")).Click();
-                //Globals._Driver.FindElement(By.Id("filterOption_6")).Click();
                 Globals._Driver.FindElement(By.XPath("(//div[@onclick=\"window.location.href ='/" + phoneId + "/" + phoneName + "'\"])[2]")).Click();
                 if (Utilities.WaitForElement("Add to Cart", SeleniumTests._By.linkText, Globals._DefaultTimeoutValue))
                     return true;
@@ -912,7 +980,7 @@ namespace SeleniumTests
         #region SelectProtectionPlan()
         public static bool SelectProtectionPlan(_ProtectionPlanType planType)
         {
-            Utilities.Log("++ SelectProtectionPlan");
+            Utilities.Log("** SelectProtectionPlan");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("AddProtectionPlan", SeleniumTests._By.name, Globals._DefaultTimeoutValue));
@@ -932,6 +1000,9 @@ namespace SeleniumTests
                         break;
                 }
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch(Exception e)
@@ -943,10 +1014,10 @@ namespace SeleniumTests
             }
         }
         #endregion
-        #region SelectServices()
+        #region SelectDeviceServices()
         public static bool SelectDeviceServices(_Services service)
         {
-            Utilities.Log("++ SelectDeviceServices");
+            Utilities.Log("** SelectDeviceServices");
             string serviceLinkText = "Select Services for this ";
 
             // The link in the cart will vary depending on the plan selected and scenario being executed.  Here we
@@ -981,6 +1052,10 @@ namespace SeleniumTests
                         Globals._Driver.FindElement(By.Id("chk_features_453")).Click();
                         Globals._Driver.FindElement(By.Id("chk_features_481")).Click();
                         break;
+                    case _Services.TheVerizonPlanSmartphoneLineAccess:
+                        Assert.IsTrue(Utilities.WaitForElement("chk_features_46598", _By.id, Globals._DefaultTimeoutValue));
+                        Globals._Driver.FindElement(By.Id("chk_features_46598")).Click();
+                        break;
                     default:
                         Assert.IsTrue(Utilities.WaitForElement("chk_features_5324", _By.id, Globals._DefaultTimeoutValue));
                         Globals._Driver.FindElement(By.Id("chk_features_5324")).Click();
@@ -988,6 +1063,9 @@ namespace SeleniumTests
                 }
 
                 Globals._Driver.FindElement(By.LinkText("Add Selected Services")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -1006,7 +1084,7 @@ namespace SeleniumTests
             // Sample server name: 10.7.0.22
             // Sample database name: COSTCO.TEST
 
-            Utilities.Log("++ UpdateOrderStatusToShowPaymentCompleted");
+            Utilities.Log("** UpdateOrderStatusToShowPaymentCompleted");
             try
             {
                 string credentials = "";
@@ -1034,6 +1112,9 @@ namespace SeleniumTests
                     conn.Close();   // Close the connection now that we're finished with it
                 }
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -1051,7 +1132,7 @@ namespace SeleniumTests
             // Sample server name: 10.7.0.22
             // Sample database name: COSTCO.TEST
 
-            Utilities.Log("++ UpdateDeviceWithImeiAndSim");
+            Utilities.Log("** UpdateDeviceWithImeiAndSim");
             try
             {
                 string credentials = "";
@@ -1080,6 +1161,9 @@ namespace SeleniumTests
                     //conn.Close();  leave the connection open for the next call
                 }
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -1094,7 +1178,7 @@ namespace SeleniumTests
         #region VerizonAccountLookup()
         public static bool VerizonAccountLookup(string mdn, string last4Ssn, string zipCode, string password)
         {
-            Utilities.Log("++ Checkout");
+            Utilities.Log("** Checkout");
 
             // Add dashes if they don't already exist so the data can be parsed
             if (!mdn.Contains("-"))
@@ -1130,6 +1214,9 @@ namespace SeleniumTests
                 Globals._Driver.FindElement(By.Id("accountPassword")).SendKeys(password);
                 Globals._Driver.FindElement(By.LinkText("Continue")).Click();
 
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
+
                 return true;
             }
             catch (Exception e)
@@ -1146,12 +1233,15 @@ namespace SeleniumTests
         #region ddSignInToDirectDelivery()
         public static bool ddSignInToDirectDelivery()
         {
-            Utilities.Log("++ SelectPhone");
+            Utilities.Log("** SelectPhone");
             try
             {
                 Assert.IsTrue(Utilities.WaitForElement("loginButton", SeleniumTests._By.id, Globals._DefaultTimeoutValue));
 
                 Globals._Driver.FindElement(By.Id("loginButton")).Click();
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }
@@ -1167,7 +1257,7 @@ namespace SeleniumTests
         #region ddSelectCarrier()
         public static bool ddSelectCarrier(_CarrierName carrier)
         {
-            Utilities.Log("++ SelectPhone");
+            Utilities.Log("** SelectPhone");
             try
             {
                 switch (carrier)
@@ -1189,6 +1279,9 @@ namespace SeleniumTests
                         Globals._Driver.FindElement(By.CssSelector("a[alt=\"Shop for Verizon Wireless Phones\"] > div.carrier-box > img")).Click();
                         break;
                 }
+
+                // Check for errors on the page
+                Utilities.CheckForProblemsOnPage();
 
                 return true;
             }

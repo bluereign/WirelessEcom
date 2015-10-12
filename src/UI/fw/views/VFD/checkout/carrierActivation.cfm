@@ -141,7 +141,12 @@
 	
 	<cfset local.cartLines = session.cart.getLines()/>
 	<cfset local.hasActivationItems = application.model.CartHelper.cartContainsActivationItems() />
-
+	
+	<cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
+	<cfset order = createObject('component', 'cfc.model.order').init() />
+	<cfset order.load(session.checkout.OrderId) />
+	<cfoutput>#googleAnalyticsTracker.tagOrderConfirmation(order)#</cfoutput>
+	
 	<form id="carrierActivation" name="carrierActivation" class="cmxform" action=""
 	      method="post">
 	<input type="hidden" id="numberOfDevices" name="numberOfDevices" value="#arrayLen(variables.cartLines)#" />
