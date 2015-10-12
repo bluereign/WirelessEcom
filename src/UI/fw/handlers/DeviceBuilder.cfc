@@ -15,7 +15,7 @@
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
   <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting,orderreview" />
-  <cfset listActivationTypes = "financed-24,financed-18,financed-12,new,upgrade,addaline" /> <!--- TODO: determine what to do with new, upgrade, addaline  --->
+  <cfset listActivationTypes = "financed-24,financed-18,financed-12" /> <!--- TODO: determine what to do with new, upgrade, addaline  --->
 
 
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
@@ -29,10 +29,11 @@
     <cfset var nextAction = "" />
     <cfset var prevAction = "" />
 
-    <!--- <cfdump var="#rc#"><cfabort> --->
+    <cfset var planArgs = {} />
+    <cfset var cartArgs = {} />
 
     <cfscript>
-      // KEEP THIS NEXT LINE INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
+      // DEBUGGING: KEEP THIS NEXT LINE INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
 
       // <CARRIER CONSTANTS
@@ -43,35 +44,30 @@
       prc.carrierGuidVzw = "263a472d-74b1-494d-be1e-ad135dfefc43";
       prc.offerCategoryVzw = "VZ";
 
-      prc.resultStr = "";
-
       prc.browseDevicesUrl = this.browseDevicesUrl;
       prc.AssetPaths = variables.AssetPaths;
 
       prc.stringUtil = stringUtil;
       // <end carrier constants
 
-      // INSTANTIATE SESSION.CART
+
+      // <CHECK CART INSTANTIATED
       if (!structKeyExists(session,"cart")) {
         session.cart = createObject('component','cfc.model.cart').init();
       }
       if (!structKeyExists(session,"cartHelper")) {
         session.cartHelper = createObject('component','cfc.model.carthelper').init();
       }
-      
-      
-      // CARTLINENUMBER:
+      // <end check cart instantiated
+
+
+      // <CARTLINENUMBER:
       prc.cartLines = session.cart.getLines();
 
       // if customer is new, cartLineNumber is always 1:
-      
       if ( listFindNoCase("new,newx,addaline,addalinex", rc.type) ) {
         rc.cartLineNumber = 1;
       }
-      // else if ( listFindNoCase("upgrade,upgradex", rc.type) ) {
-      //   rc.cartLineNumber = rc.line;
-      //   }
-      // }
 
       // if cartLineNumber is unknown, use the arrayLen of session cart lines
       if (!structKeyExists(rc, "cartLineNumber")) {
@@ -88,7 +84,8 @@
       if ( !structKeyExists(rc,"finance") OR !len(trim(rc.finance)) OR !listFindNoCase(listActivationTypes,rc.finance) ) {
         relocate( prc.browseDevicesUrl );
       }
-      
+
+
       // param available in CF9
       if ( !structKeyExists(rc,"paymentoption") OR !len(trim(rc.paymentoption)) ) {
         rc.paymentoption = "financed"; //financed, fullretail
@@ -159,6 +156,7 @@
       if (!structKeyExists(prc,"productImages")) {
        prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
       }
+      // <end product device check
 
 
       // <NAVIATION
@@ -236,7 +234,6 @@
           // don't overwrite a nextAction value that has been manually passed in (via Form, etc.):
           rc.nextAction = "devicebuilder.#nextAction#";
         }
-        // prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
         prc.nextStep = event.buildLink('devicebuilder.#nextAction#') & '/';
       } else {
         prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
@@ -260,18 +257,19 @@
         }
         // TODO: Else if page is 'plans' and type is 'upgrade', send redirect the logged in user to the upgradeline page here...
       }
-      // <end selected line
+      // <end selected line and subscribers
 
 
       // <SELECTED PLAN
       if (structKeyExists(rc,"plan") and isNumeric(rc.plan)) {
         
-        prc.planArgs = {
+        planArgs = {
           carrierId = prc.productData.carrierId,
           zipCode = session.cart.getZipcode(),
           idList = rc.plan
         };
-        prc.planInfo = PlanService.getPlans(argumentCollection = prc.planArgs);
+        prc.planInfo = PlanService.getPlans(argumentCollection = planArgs);
+        
 
         // get down payment of plan for this subscriber:
         if (structKeyExists(prc,"subscriber")) {
@@ -279,10 +277,11 @@
           prc.subscriber.minimumCommitment = listLast(rc.finance, '-');
           prc.subscriber.downPaymentPercent = prc.subscriber.getUpgradeDownPaymentPercent(prc.subscriber.offerCategory,prc.subscriber.minimumCommitment);
           
+          // KEEP THIS:
           // TEST TESTING ONLY, DEBUGGING: seed with 10% downpayment:
-          if (prc.subscriber.downPaymentPercent lt 1 and rc.paymentoption is 'financed') {
-            prc.subscriber.downPaymentPercent = 10;
-          }
+          // if (prc.subscriber.downPaymentPercent lt 1 and rc.paymentoption is 'financed') {
+          //   prc.subscriber.downPaymentPercent = 10;
+          // }
           // <end test testing debugging
 
           prc.subscriber.downPayment = prc.subscriber.downPaymentPercent * prc.productData.FinancedFullRetailPrice / 100;
@@ -323,8 +322,6 @@
 
       for (i = 1; i lte l; i++) {
         thisService = structNew();
-        // thisService.productId = listGetAt(prc.selectedServices,i);
-        // thisServiceQry = application.model.serviceManager.getServiceByProductId(productId = listGetAt(prc.selectedServices,i));
         if ( isNumeric(listGetAt(prc.selectedServices,i)) ) { // is not '' or 'nothanks'
           thisServiceQry = application.model.feature.getByProductID(productID = listGetAt(prc.selectedServices,i));
           thisService.productId = thisServiceQry.productId;
@@ -339,8 +336,20 @@
 
       // <CART 
       // if device has not been added to this rc.cartLineNumber in the cart, ensure that it is.  Note: there are multiple entry points to the DeviceBuilder.
-      prc.cartArgs = {
-        productType = "phone:" & prc.activationType,
+      
+      // FINANCE AND CARTTYPEID:
+      
+      if ( structKeyExists(rc,"paymentoption") and rc.paymentoption is 'fullretail' ) {
+        prc.cartLineActivationType = prc.activationType;
+      } else {
+        prc.cartLineActivationType = rc.finance & "-" & prc.activationType;
+      }
+
+      session.cart.setActivationType(prc.cartLineActivationType);
+      // <end finance and carttypeid
+
+      cartArgs = {
+        productType = "phone:" & prc.cartLineActivationType,
         product_id = rc.pid,
         qty = 1,
         price = prc.productData.FinancedFullRetailPrice,
@@ -348,84 +357,87 @@
       };
 
       if ( structKeyExists(rc,"line") and isValid("integer",rc.line) and rc.line gt 0) {
-        prc.cartArgs.subscriberIndex = rc.line;
+        cartArgs.subscriberIndex = rc.line;
       }
 
-      prc.resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+      application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
 
       // if plan has not been added to this cart cartLineNumber, add it.
       if ( structKeyExists(prc,"planInfo") ) {
-        prc.cartArgs = {
+        cartArgs = {
           productType = "plan",
           product_id = prc.planInfo.productId,
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & " plan: " & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
       
       // services:
       if ( listLen(prc.selectedServices) ) {
-        prc.cartArgs = {
+        cartArgs = {
           productType = "plan",
           product_id = prc.planInfo.productId & ":" & prc.selectedServices,
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & " services:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
 
       // warranty: rc.wid
       if ( structKeyExists(rc,"wid") and isNumeric(rc.wid) and rc.wid gt 0 and structKeyExists(prc,"warrantyInfo") ) {
-        prc.cartArgs = {
+        cartArgs = {
           productType = "warranty",
           product_id = rc.wid,
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & " warranty:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+
+      } else if ( structKeyExists(rc,"wid") and rc.wid eq 0 ) {
+        application.model.cartHelper.removeWarranty(line = rc.cartLineNumber);
       }
-      
+    
+            
 
       // <ACCESSORIES
-
       if ( structKeyExists(rc,"addaccessory") ) {
         if ( ! (structKeyExists(rc,"accessoryqty") and isValid("integer", rc.accessoryqty)) ) {
           rc.accessoryqty = 1;
         }
-        prc.cartArgs = {
+        cartArgs = {
           productType = "accessory",
           product_id = addaccessory,
           qty = rc.accessoryqty,
           cartLineNumber = rc.cartLineNumber
         };
-        prc.resultStr = prc.resultStr & " accessory:" & application.model.dBuilderCartFacade.addItem(argumentCollection = prc.cartArgs);
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
       // if ( structKeyExists(rc,"removeaccessory") ) {
-      //   prc.cartArgs = {
+      //   cartArgs = {
       //     line = rc.cartLineNumber,
       //     productid = removeaccessory
       //   };
-      //   prc.resultStr = prc.resultStr & " removeaccessory:" & application.model.CartHelper.removeAccessory(argumentCollection = prc.cartArgs);
+      //   application.model.CartHelper.removeAccessory(argumentCollection = cartArgs);
       // }
 
       if ( structKeyExists(rc,"removeaccessory") ) {
-        prc.cartArgs = {
+        cartArgs = {
           cartLineNumber = rc.cartLineNumber,
           product_id = removeaccessory,
           qty = 0
         };
-        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = prc.cartArgs);
+        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
 
       // get cartline accessories
-      prc.cartArgs = {
+      cartArgs = {
           line = rc.cartLineNumber,
           type = "accessory"
         };
-      prc.aAccessories = session.cartHelper.lineGetAccessoriesByType(argumentCollection = prc.cartArgs);
+      prc.aAccessories = session.cartHelper.lineGetAccessoriesByType(argumentCollection = cartArgs);
       prc.selectedAccessories = "";
       if (arrayLen(prc.aAccessories)) {
         for (prc.iAccessory = 1; prc.iAccessory lte arrayLen(prc.aAccessories); prc.iAccessory++) {
@@ -435,9 +447,7 @@
         }
       }
       // <end accessories
-      
       // <end cart
-
 
 
       // <TALLY BOX
@@ -496,19 +506,57 @@
       }
       prc.tallyboxDueMonthly = prc.tallyboxDueMonthly + prc.tallyboxFinanceMonthlyDueAmount;
       prc.tallyboxDueNow = prc.tallyboxDueNow + prc.tallyboxFinanceMonthlyDueToday;
+
+      
+      // Started applying Cart Logic.  However, shouldn't be necessary since passing rc.pid, rc.type, etc.
+      if ( structKeyExists(prc,"cartLines") and arrayLen(prc.cartLines) ) {
+        
+        prc.cartLine = prc.cartLines[rc.cartLineNumber];
+
+        prc.selectedPhone = application.model.phone.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+        if ( !prc.selectedPhone.recordCount ) {
+          prc.selectedPhone = application.model.tablet.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+        }
+        if ( !prc.selectedPhone.recordCount ) {
+          prc.selectedPhone = application.model.dataCardAndNetbook.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+        }
+        if ( !prc.selectedPhone.recordCount ) {
+          prc.selectedPhone = application.model.prePaid.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+        }
+        if ( !prc.selectedPhone.recordCount ) {
+          prc.selectedPhone = application.model.prePaid.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+        }
+        
+        prc.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(prc.selectedPhone.deviceGuid);
+
+        if ( prc.cartLine.getPlan().hasBeenSelected() ) {
+          prc.selectedPlan = application.model.plan.getByFilter(idList = prc.cartLine.getPlan().getProductID());
+        }
+
+        prc.thisLineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
+
+        prc.lineFeatures = prc.cartLine.getFeatures();
+      
+      }
       // <end tally box
+
+
+      
+
+      
+      // UPDATE CART TOTALS:
+      if ( application.model.cartHelper.hasSelectedFeatures() ) {
+        prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices();
+      }
+      session.cart.updateAllPrices();
+      session.cart.updateAllDiscounts();
+      session.cart.updateAllTaxes();
+      application.model.CartHelper.removeEmptyCartLines();
+      // <end update cart totals
 
 
       event.setLayout('devicebuilder');
     </cfscript>
-
-    <!--- update cart totals: --->
-    <cfif application.model.cartHelper.hasSelectedFeatures()>
-      <cfset prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
-    </cfif>
-    <cfset session.cart.updateAllPrices() />
-    <cfset session.cart.updateAllDiscounts() />
-    <cfset session.cart.updateAllTaxes() />
   </cffunction>
 
   
@@ -549,6 +597,7 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var accountArgs = {} />
 
     <cfparam name="rc.carrierResponseMessage" default="" />
     <cfparam name="rc.inputPhone1" default="" />
@@ -591,7 +640,7 @@
         // AT&T carrierId = 109, VZW carrierId = 42
         case 109: case 42: {
           rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
-          prc.accountArgs = {
+          accountArgs = {
             carrierId = prc.productData.carrierId,
             SubscriberNumber = rc.PhoneNumber,
             ZipCode = rc.inputZip,
@@ -600,7 +649,7 @@
           };
 
           // for testing purposes/development (carrierloginpost.cfm):
-          rc.respObj = carrierFacade.Account(argumentCollection = prc.accountArgs);
+          rc.respObj = carrierFacade.Account(argumentCollection = accountArgs);
           rc.message = rc.respObj.getHttpStatus();
 
           if (rc.respObj.getResult() is 'true' or rc.respObj.getResult() is 'false') {
@@ -659,17 +708,18 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var planArgs = {} />
 
     <cfscript>
     // TODO: if type is 'upgrade', make sure a line is selected.  If rc.line does not exist, then send back to 'upgradealine'.
 
-      prc.planArgs = {
+      planArgs = {
         carrierId = prc.productData.carrierId,
         zipCode = session.cart.getZipcode()
       };
       
-      prc.planData = PlanService.getPlans(argumentCollection = prc.planArgs);
-      prc.planDataShared = PlanService.getSharedPlans(argumentCollection = prc.planArgs);
+      prc.planData = PlanService.getPlans(argumentCollection = planArgs);
+      prc.planDataShared = PlanService.getSharedPlans(argumentCollection = planArgs);
     </cfscript>
 
     <!--- If an existing plan's productId exists, then see if it is eligible (i.e. in the Individual or Shared plans queries) --->
@@ -691,14 +741,15 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var planArgs = {} />
 
     <cfscript>
       prc.nextStep = event.buildLink('devicebuilder.protection');
       if (structKeyExists(rc,"plan")) {
-        prc.planArgs = {
+        planArgs = {
           idList = rc.plan
         };
-        prc.planInfo = PlanService.getPlans(argumentCollection = prc.planArgs);
+        prc.planInfo = PlanService.getPlans(argumentCollection = planArgs);
       }
       event.noLayout();
     </cfscript>
@@ -709,6 +760,7 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var servicesArgs = {} />
 
     <cfscript>
       if (!structKeyExists(rc, "isDownPaymentApproved")) {
@@ -717,19 +769,19 @@
 
       prc.qWarranty = application.model.Warranty.getByDeviceId(rc.pid);
 
-      prc.servicesArgs = {
+      servicesArgs = {
         type = "O",
         deviceGuid = prc.productData.productGuid,
         HasSharedPlan = session.cart.getHasSharedPlan()
       };
 
       if (prc.productData.carrierId eq prc.carrierIdAtt) {
-        prc.servicesArgs.carrierId = prc.carrierGuidAtt;
+        servicesArgs.carrierId = prc.carrierGuidAtt;
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
-        prc.servicesArgs.carrierId = prc.carrierGuidVzw;
+        servicesArgs.carrierId = prc.carrierGuidVzw;
       }
 
-      prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = prc.servicesArgs);
+      prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = servicesArgs);
     </cfscript>
   </cffunction>
 
@@ -815,24 +867,10 @@
 
     <!--- Remove empty cart lines --->
     <!--- <cfset application.model.CartHelper.removeEmptyCartLines() /> --->
-    
     <!--- TODO:  apply rebates logic from cfc/model/LineService.cfc --->
-
-    <!--- TODO: apply cart logic in cfc/view/Cart.cfc's "view" function --->
-    <!--- <cfif application.model.cartHelper.hasSelectedFeatures()>
-      <cfset prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
-    </cfif>
-
-    <cfset session.cart.updateAllPrices() />
-    <cfset session.cart.updateAllDiscounts() />
-    <cfset session.cart.updateAllTaxes() /> --->
-
-
-
-
     <cfscript>
       prc.subscribers = session.carrierObj.getSubscribers();
-      
+
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       prc.includeTallyBox = false;
     </cfscript>

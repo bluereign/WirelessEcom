@@ -1,5 +1,4 @@
 <cfoutput>
-  <!--- There are #arraylen(prc.cartlines)# line(s). --->
   
   <div class="col-md-12">
     <section class="content">
