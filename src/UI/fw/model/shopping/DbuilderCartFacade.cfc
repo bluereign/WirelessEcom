@@ -1025,7 +1025,7 @@
 	<cffunction name="getDevice" returntype="struct" >
 		<cfargument name="cartLineNo" type="numeric" required="true" />
 
-		<cfset local = structNew() />
+		<cfset var local = structNew() />
 		<cfset local.cartLines = session.cart.getLines() />
 		<cfset local.cartLine = local.cartLines[arguments.cartLineNo] />
 		<cfset local.device = structNew() />
@@ -1037,11 +1037,11 @@
 		<cfset local.device.monthlyFinanceTotal = 0/>
 		<cfif local.cartline.getCartLineActivationType() contains 'financed'><!---Add financed price to Monthly --->
 			<cfif local.cartline.getCartLineActivationType() contains '12'>
-				<cfset local.device.monthlyFinanceTotal = local.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice12() />
+				<cfset local.device.monthlyFinanceTotal = local.device.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice12() />
 			<cfelseif local.cartline.getCartLineActivationType() contains '18'>
-				<cfset local.device.monthlyFinanceTotal = local.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice18() />
+				<cfset local.device.monthlyFinanceTotal = local.device.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice18() />
 			<cfelseif local.cartline.getCartLineActivationType() contains '24'>
-				<cfset local.device.monthlyFinanceTotal = local.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice24() />
+				<cfset local.device.monthlyFinanceTotal = local.device.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice24() />
 			</cfif>
 		</cfif>	
 		

@@ -26,7 +26,8 @@
 <cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">
 <hr/>		
 <cfset args = { 
-	productType = "phone:new",
+	<!---productType = "phone:new",--->
+	productType = "phone:financed-12-new",
 	product_id = "#listgetat(phoneids,cartLineNo)#",
 	qty = 1,
 	price = "#listgetat(phoneprices,cartLineNo)#",
@@ -149,6 +150,7 @@ Result = #resultStr#
 Get the Phone for each line in the cart:
 <cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
 <br/>application.model.dBuilderCartFacade.getDevice(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getDevice(ln)#" />
+<br/>application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()
 <br/>#application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()#
 </cfloop>
 
