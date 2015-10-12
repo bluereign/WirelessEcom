@@ -11,10 +11,16 @@
 <cfoutput>
 <style type="text/css">
 
+.productDetails{
+}
+
 .bootstrap div.container{
 	max-width:760px;
 }
 
+.bootstrap .row{
+	margin-bottom:20px;
+}
 	
 .bootstrap ul.thumbs li{
 	display: inline;
@@ -567,7 +573,7 @@ $j(document).ready(function($j) {
 <div class="container nonmodal-container">
 <div class="row">
 	<div class="col-md-4">
-		<cfif prc.productData.CarrierId eq 128>
+		<cfif (channelConfig.getTmoRedirectEnabled()) AND (prc.productData.CarrierId eq 128)>
 			<img id="prodDetailImg" src="#prc.productData.imageurl#" border="0" width="280"/>			
 		<cfelse>	
 		<a href="#prc.productImages[1].imageHref#" id="prodDetailImgHref" data-lightbox="device-image-set" title="#prc.productImages[1].imageAlt#">
@@ -596,7 +602,7 @@ $j(document).ready(function($j) {
 		
 		
 			
-		<cfif prc.productData.CarrierId neq 128>
+		<cfif !channelConfig.getTmoRedirectEnabled()>
 		<p>&raquo; Get a Better View</p>
 
 		<div class="thumbsDiv">
@@ -819,10 +825,16 @@ $j(document).ready(function($j) {
 				<!--- Price point not available if zero dollars --->
 				<cfif prc.productData.FinancedMonthlyPrice24 neq 0>
 					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#24" data-activation-type="financed-24">
-						<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>24</cfif></div>
+						<cfif prc.productData.CarrierId eq 128>
+							<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109> (EIP)</cfif></div>
+						<cfelse>
+							<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>24</cfif></div>
+						</cfif>
 						
-						<cfif prc.productData.CarrierId eq 42>
+						<cfif (prc.productData.CarrierId eq 42)>
 							<div style="float:right;"><span class="priceBlockHeaderSmall">$0 Down #dollarFormat(prc.productData.FinancedMonthlyPrice24)#/mo*</div>
+						<cfelseif (prc.productData.CarrierId eq 128)>
+							<div style="float:right;"><span class="priceBlockHeaderSmall">#dollarFormat(prc.productData.FinancedMonthlyPrice24)#/mo</div>
 						<cfelse>
 							<div style="float:right;"><span class="priceBlockHeaderSmall">Due Monthly for <cfif prc.productData.CarrierId eq 109>30<cfelse>24</cfif> Months</span> #dollarFormat(prc.productData.FinancedMonthlyPrice24)#</div>
 						</cfif>
@@ -831,7 +843,7 @@ $j(document).ready(function($j) {
 						<table class="table">
 							<tr class="border-none"> 
 								<td>
-								<cfif prc.productData.CarrierId eq 42>
+								<cfif (prc.productData.CarrierId eq 42) OR (prc.productData.CarrierId eq 128)>
 									Full Retail Price
 								<cfelse>
 									Regular Price
@@ -844,6 +856,13 @@ $j(document).ready(function($j) {
 								<tr class="border-none"> 
 									<td>
 									Monthly Device Payment
+									</td>
+									<td class="alignright">#dollarFormat(prc.productData.FinancedMonthlyPrice24)# for 24 months, 0% APR</td>
+								</tr>
+							<cfelseif prc.productData.CarrierId eq 128>
+								<tr class="border-none"> 
+									<td>
+									EIP Monthly Device Payment
 									</td>
 									<td class="alignright">#dollarFormat(prc.productData.FinancedMonthlyPrice24)# for 24 months, 0% APR</td>
 								</tr>
@@ -913,7 +932,7 @@ $j(document).ready(function($j) {
 						All Verizon logos and names are trademarks and property of Verizon Wireless. For more information on coverage, 
 						<a href="http://verizonwireless.com/4GLTE" target="_blank">verizonwireless.com/4GLTE</a>. LTE is a trademark of ETSI.
 					<cfelseif prc.productData.CarrierId eq 128>
-						tmo
+						<!---tmo--->
 					<cfelseif prc.productData.CarrierId eq 299>
 						*Pricing for well-qualified buyer. Req. Installment agmt, 0% APR &amp; qualifying service plan. Credit check req. 
 						Other customers may qualify for different down payment & monthly payment terms.				

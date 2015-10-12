@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <TestCase name="vzwUpgradeKeepExistingPlan" browser="ie" baseUrl="http://Costco.Ecom-dev-test-1.enterprise.corp" 
-          timeoutHalfSeconds="20" activateDevice="false">
+          timeoutHalfSeconds="20" activateDevice="true">
   <Admin omtUsername="jcardon@wirelessadvocates.com" omtPassword="jcardon1">
-    <Line imei="99000064090007" sim="89148000002007068791" removeLine="false" />
+    <Line imei="99000064090006" sim="89148000002007067579" removeLine="true" />
     <Database serverName="10.7.0.22" databaseName="COSTCO.TEST" username="" password="" />
   </Admin>
-  <CustomerInfo last4Ssn="1440" accountPassword="jcardon1">
+  <CustomerInfo last4Ssn="5700" accountPassword="jcardon1">
     <Name firstName="Test" lastName="Script" />
     <Home streetAddress="134 Pine St." city="Abilene" state="Texas" zipCode="79601" />
-    <Contact mobileNumber="7323729415" email="jcardon@wirelessadvocates.com" />
+    <Contact mobileNumber="4127350609" email="jcardon@wirelessadvocates.com" />
     <CreditCard cardNumber="4005554444444403" expireMonth="12" expireYear="15" cvv="123" />
   </CustomerInfo>
-  <Device id="10239" name="samsung-galaxy-s-4-16gb-black-mist" />
-  <Carrier zipCode="77110" password="HELLO" />
+  <Device id="25704" name="samsung-galaxy-s-5-16gb-white" />
+  <Carrier zipCode="15057" password="HELLO" />
 </TestCase>

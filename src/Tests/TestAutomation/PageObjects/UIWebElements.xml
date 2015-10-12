@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<BasePageUI>
+	</BasePageUI>
+	
+	<CommonDeviceDetailsUI>
+	</CommonDeviceDetailsUI>
+	
+	<AttDeviceDetailsUI>
+	</AttDeviceDetailsUI>
+	
+	<VerizonDeviceDetailsUI>
+	</VerizonDeviceDetailsUI>
+	
+	<TMobileDeviceDetailsUI>
+	</TMobileDeviceDetailsUI>
+	
+	<SprintDeviceDetailsUI>
+	</SprintDeviceDetailsUI>
+	
+	<BrowsePhonesUI>
+	</BrowsePhonesUI>
+	
+	<ComparePhonesUI>
+	</ComparePhonesUI>
+	
+	<BrowsePlansUI>
+	</BrowsePlansUI>
+	
+	
+	
+</root>

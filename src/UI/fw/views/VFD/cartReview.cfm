@@ -995,6 +995,13 @@
 												<cfelse>
 													#dollarFormat(local.lineFeatures[local.iFeature].getPrices().getMonthly())#
 												</cfif>
+												<cfif (local.cartline.getCartLineActivationType() CONTAINS 'finance') and (session.cart.getCarrierId() eq 299)>
+													<sup class="cartReview">
+														<a href="##footnote4" style="font-size:8px">
+															7
+														</a>
+													</sup>
+												</cfif>
 											</td>
 											<td style="text-align:right">
 												--
@@ -1551,7 +1558,6 @@
 				                            charges, discounts or credits. The actual amounts billed by your 
 				carrier will vary based upon your usage.
 				                        </span>--->
-				<br/>
 				<cfif session.cart.hasCart() and (session.cart.getAddALineType() is 'Ind' or session.cart.getAddALineType() 
 				      is 'Family')>
 					<span class="note">
@@ -1562,6 +1568,18 @@
 						</sup>
 						Add-a-line charge varies based on current plan and service selections. New 2 year agreement 
 						may be required on all lines.
+					</span>
+					<br/>
+				</cfif>
+				<cfif (session.cart.getCarrierId() eq 299) AND (local.cartline.getCartLineActivationType() CONTAINS 'finance')>
+					<span class="note">
+						<sup class="cartReview">
+							<a name="footnote7" style="font-size:8px">
+								7
+							</a>
+						</sup>
+						For data packages 8GB and higher, you may see a $10 discount on your line access fee from Sprint.  
+						In certain cases  for your higher data packages your line access fee may be waived.  Contact Sprint for more details.
 					</span>
 					<br/>
 				</cfif>

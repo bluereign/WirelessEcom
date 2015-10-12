@@ -381,13 +381,13 @@
 
 					<li>
 						<label for="txtBillingAddress1">Address 1 <strong>*</strong></label>
-						<input id="txtBillingAddress1" name="billAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress1'))#" />
+						<input id="txtBillingAddress1" name="billAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress1'))#" maxlength="30"/>
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress1'))#
 					</li>
 
 					<li>
 						<label for="txtBillingAddress2">Address 2</label>
-						<input id="txtBillingAddress2" name="billAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress2'))#" />
+						<input id="txtBillingAddress2" name="billAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress2'))#" maxlength="30"/>
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress2Error'))#
 					</li>
 
@@ -493,12 +493,12 @@
 						</li>
 						<li>
 							<label for="txtShippingAddress1">Address 1 <strong>*</strong></label>
-							<input id="txtShippingAddress1" name="shipAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress1'))#" />
+							<input id="txtShippingAddress1" name="shipAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress1'))#" maxlength="30" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress1'))#
 						</li>
 						<li>
 							<label for="txtShippingAddress2">Address 2</label>
-							<input id="txtShippingAddress2" name="shipAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress2'))#" />
+							<input id="txtShippingAddress2" name="shipAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress2'))#" maxlength="30"/>
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress2Error'))#
 						</li>
 						<li>

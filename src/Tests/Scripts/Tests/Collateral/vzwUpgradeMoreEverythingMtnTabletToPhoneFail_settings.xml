@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<TestCase name="vzwUpgradeMoreEverythingMtnTabletToPhoneFail" browser="ie" baseUrl="http://Costco.Ecom-dev-test-1.enterprise.corp" 
+          timeoutHalfSeconds="20" activateDevice="false">
+  <CustomerInfo last4Ssn="7920" accountPassword="jcardon1">
+    <Home zipCode="79601" />
+    <Contact mobileNumber="8145584044" />
+  </CustomerInfo>
+  <Device id="25704" name="samsung-galaxy-s-5-16gb-white" />
+  <Carrier zipCode="16735" password="HELLO" />
+</TestCase>

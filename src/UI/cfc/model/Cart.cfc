@@ -77,8 +77,7 @@
 			
 			<cfset local.linePrices = createObject('component', 'cfc.model.cartPriceBlock').init() />
 			<cfset cartLineActivationType = local.aLines[local.i].getCartLineActivationType() />
-			<cfif local.phone.hasBeenSelected() and cartLineActivationType contains 'financed'> 
-				
+			<cfif local.phone.hasBeenSelected() and cartLineActivationType contains 'financed'> 				
 				
 				<cfset local.linePrices.setDueToday(0) />
 				<cfset local.linePrices.setFirstBill(0) />

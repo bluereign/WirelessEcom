@@ -11,10 +11,11 @@ namespace SeleniumTests
         [TestInitialize]
         public void SetupTest()
         {
+            Utilities.ClearLogFolder();
             /* ==================================================================
              * ==   Must get the settings file before generating the log file. ==
              * ================================================================== */
-            Utilities.GetSettings("D:\\source\\WA_Costco\\src\\Tests\\Scripts\\Tests\\Collateral\\AlpUpgradeKeepExistingPlan_settings.xml");
+            Utilities.GetSettings("D:\\source\\WA_Costco\\src\\Tests\\Scripts\\Tests\\Collateral\\vzwAlpUpgradeKeepExistingPlan_settings.xml");
             Utilities.Log("+++ Begin test", true);
             Globals._Driver = Utilities.InitializeDriver();
             Globals._VerificationErrors = new StringBuilder();
@@ -41,11 +42,11 @@ namespace SeleniumTests
         public void VzwAlpUpgradeKeepExistingPlan()
         {
             // Navigate to the site
-            Actors.NavigateToSite(Globals._BaseURL);
+            Actors.NavigateToSite(Globals._BaseURL + "/index.cfm/go/shop/do/browsePhones");
 
             // Select phone
-            if (!Actors.SelectPhone(Globals._DeviceId, Globals._DeviceName))
-                Actors.ClearCart();
+            Actors.ClearCart();
+            Actors.SelectPhone(Globals._DeviceId, Globals._DeviceName);
 
             // Add phone to cart
             Actors.AddDeviceToCart(Globals._CustomerZipCode, Actors._AccountType.upgradePhoneKeepCurrentPlanMoreEverything);
@@ -88,7 +89,12 @@ namespace SeleniumTests
                 Actors.CertRecovery();
 
             // Log the order number
-            Utilities.GetOrderNumber();
+            string orderNumber = Utilities.GetOrderNumber();
+
+            // Activate the line in OMT
+            if (Globals._ActivateLineInOmt)
+                Actors.ActivateLine(Globals._AdminUsername, Globals._AdminUsername, orderNumber,
+                    Globals._Imei, Globals._Sim, Convert.ToBoolean(Globals._RemoveLine));
         }
         #endregion
     }

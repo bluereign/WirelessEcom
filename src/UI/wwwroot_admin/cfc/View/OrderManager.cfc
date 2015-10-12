@@ -371,6 +371,19 @@
 					<div>
 						<strong>Order Date:</strong> #dateFormat(arguments.order.getOrderDate(), "mm/dd/yyyy")# #timeFormat(arguments.order.getOrderDate(), "hh:mm:ss tt")#
 					</div>
+					<div>
+						<strong>Order Scenario:</strong> <cfif arguments.order.getScenarioId() eq 1>ECOM<cfelseif arguments.order.getScenarioId() eq 2>DD<cfelse>Unknown</cfif>
+					</div>
+					
+					<cfif arguments.order.getScenarioId() eq 2>
+							<div>
+							<strong>Kiosk ##:</strong>#arguments.order.getKioskNumber(arguments.order.getKioskID())#
+						</div>
+						<div>
+							<strong>Employee:</strong>#arguments.order.getEmployeeName(arguments.order.getAssociateID())#
+						</div>
+					</cfif>
+					
 					<!--- Show Campaign Info if Available --->
 					<cfif arguments.order.getCampaignId() is not 0>
 					<div>
@@ -417,7 +430,12 @@
 						</div>
 					</cfif>
 					<div>
-						<strong>GERS ID:</strong>#Trim(application.model.util.convertToGersId( arguments.order.getUserId() ))#
+						<strong>GERS ID:</strong>
+							<cfif arguments.order.getScenarioId() eq 2>
+								DD#RemoveChars(Trim(arguments.order.getUserId()),2,1)#<!---Using DD version of customer ID --->
+							<cfelse>
+								#Trim(application.model.util.convertToGersId( arguments.order.getUserId() ))#
+							</cfif>
 					</div>
 					<div>
 						<strong>Order Assistance:</strong> #YesNoFormat(arguments.order.getOrderAssistanceUsed())#
@@ -2017,6 +2035,7 @@
 									<th>Current Account ##</th>
 									<th>Order<br />Assisted?</th>
 									<th>Activation<br />Status</th>
+									<th>Scenario</th>
 		                        </tr>
 		                    </thead>
 		                    <tbody>
@@ -2029,6 +2048,7 @@
 										<td>#CurrentAcctNumber#</td>
 										<td>#YesNoFormat( OrderAssistanceUsed )#</td>
 										<td>#ActivationStatusDescription#</td>
+										<td><cfif scenarioID eq 1>ECOM<cfelseif scenarioID eq 2>DD<cfelse>Unknown</cfif></td>
 		                            </tr>
 		  						</cfloop>
 		                    </tbody>

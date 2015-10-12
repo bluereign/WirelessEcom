@@ -666,6 +666,36 @@
 
 		<cfreturn activationStatusName />
 	</cffunction>
+	
+	<cffunction name="getWirelessLineByOrder" output="false" access="public" returntype="query">
+		<cfargument name="orderId" type="numeric" required="true" />
+		<cfset var channelConfig = application.wirebox.getInstance("ChannelConfig") />
+		<cfset var qWirelesslines = '' />
+
+		<cfquery name="qWirelesslines" datasource="#application.dsn.wirelessAdvocates#">
+			SELECT o.orderid
+				, wl.IMEI
+				, wl.SIM
+				, wa.FirstName
+				, wa.LastName
+				, wl.CurrentMDN
+				, o.orderDate
+				, wl.WirelessLineId
+				, wl.NewMDN
+				, od.PurchaseType
+				,o.CarrierId
+			FROM [salesorder].[order] o
+			INNER JOIN [salesorder].[orderdetail] od ON o.orderid = od.orderid
+			INNER JOIN [salesorder].[wirelessAccount] wa ON o.orderid = wa.orderid
+			LEFT OUTER JOIN [salesorder].[wirelessLine] wl ON od.orderDetailId = wl.orderDetailId
+			WHERE o.ScenarioId = 2
+			AND WirelessLineId IS NOT NULL 
+			AND o.OrderID = <cfqueryparam value="#arguments.orderId#" cfsqltype="cf_sql_integer" />
+			ORDER BY WirelessLineId
+		</cfquery>
+
+		<cfreturn qWirelesslines />
+	</cffunction>
 
 	<!--- ACCESSORS --->
 

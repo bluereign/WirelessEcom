@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using OpenQA.Selenium;
 
 namespace SeleniumTests
@@ -42,5 +43,8 @@ namespace SeleniumTests
 
         // Variable used to determine if a line should be removed and activated in OMT
         public static bool _RemoveLine, _ActivateLineInOmt;
+
+        // Instantiate this here to prevent the same random number from being generated in a tight loop
+        public static Random _RandomNumberGenerator = new Random();
     }
 }

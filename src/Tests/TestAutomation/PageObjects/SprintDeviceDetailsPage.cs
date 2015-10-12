@@ -12,7 +12,13 @@ namespace TestAutomation.PageObjects
 {
     public class SprintDeviceDetailsPage : BaseDeviceDetailsPage
     {
-        public SprintDeviceDetailsPage(IWebDriver Driver, string DevicePageUrl) : base(Driver, DevicePageUrl)
-        { }
+        public SprintDeviceDetailsPage(IWebDriver Driver, string DevicePageUrl, string CarrierName, string ProductTitle) : base(Driver, DevicePageUrl, SprintCarrierName, ProductTitle)
+        {
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
     }
 }

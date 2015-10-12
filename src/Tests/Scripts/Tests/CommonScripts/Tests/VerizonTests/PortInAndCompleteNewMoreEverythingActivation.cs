@@ -11,6 +11,7 @@ namespace SeleniumTests
         [TestInitialize]
         public void SetupTest()
         {
+            Utilities.ClearLogFolder();
             /* ==================================================================
              * ==   Must get the settings file before generating the log file. ==
              * ================================================================== */
@@ -54,7 +55,7 @@ namespace SeleniumTests
             Actors.ChooseServicePlan(Actors._VerizonServicePlans.vzwMedium3GB);
 
             // Cart - services
-            Actors.SelectDeviceServices(Actors._Services.vzwMoreEverythingSmartphoneMonthlyLineAccess);
+            Actors.SelectDeviceServices(Actors._Services.TheVerizonPlanSmartphoneLineAccess);
 
             // Select protection plan
             Actors.SelectProtectionPlan(Actors._ProtectionPlanType.none);
@@ -68,8 +69,8 @@ namespace SeleniumTests
 
             // Keep current number and provide previous carrier information
             Actors.RetainCurrentMobileNumber(Globals._RetainNumber, "Sprint",
-                /* random account number */ "928347978",
-                /* 6 digit random pin for Sprint */ "785398");
+                /* random account number */ Utilities.RandNumberGenerator(9).ToString(),
+                /* 6 digit random pin for Sprint */ Utilities.RandNumberGenerator(6).ToString());
 
             // Billing and Shipping
             Actors.BillingAndShipping(Globals._CustomerEmail, Globals._CustomerAccountPassword, Globals._CustomerFirstName,
