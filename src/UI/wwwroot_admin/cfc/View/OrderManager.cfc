@@ -828,6 +828,7 @@
 										Online Discount: <span>#DollarFormat( lines[i].getLineDevice().getRetailPrice() - lines[i].getLineDevice().getNetPrice() )#</span><br />
 										Net Price: <span>#DollarFormat( lines[i].getLineDevice().getNetPrice() )#</span ><br />
 										Tax: <span>#DollarFormat( lines[i].getLineDevice().getTaxes() )#</span><br />
+										Down Payment Received: <span>#DollarFormat( lines[i].getLineDevice().getDownPaymentReceived() )#</span><br />
 										Total: <span>#DollarFormat( lines[i].getLineDevice().getNetPrice() + lines[i].getLineDevice().getTaxes() )#</span><br />
 									</div>
 								</div>
