@@ -582,7 +582,9 @@
       //     persist="type,pid");
       // }
 
-      switch(rc.type) {
+      // switch(rc.type) {
+
+      switch(prc.customerType) {
         case "upgrade":
           prc.inputSSNTooltipTitle = "Enter the last 4 numbers of the primary account holder's or authorized user's social security number to access account information to verify which phone numbers are eligible for upgrade.";
           break;

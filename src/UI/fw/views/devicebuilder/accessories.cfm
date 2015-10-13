@@ -7,18 +7,7 @@
       </header>
       <form action="#prc.nextStep#" name="accessoryForm" id="accessoryForm" method="post">
         <div class="right">
-          <!--- <input type="hidden" name="finance" value="#rc.finance#" />
-          <input type="hidden" name="type" value="#rc.type#" />
-          <input type="hidden" name="pid" value="#rc.pid#" />
-          <input type="hidden" name="plan" value="#rc.plan#" /> --->
-          <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />          
-          <!--- <cfif structKeyExists(rc,"line")>
-            <input type="hidden" name="line" value="#rc.line#" />
-          </cfif>
-          <cfif structKeyExists(prc,"selectedServices")>
-            <input type="hidden" name="selectedServices" value="#prc.selectedServices#">  
-          </cfif> --->
-
+          <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
