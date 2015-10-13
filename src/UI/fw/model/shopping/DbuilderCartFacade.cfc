@@ -921,7 +921,7 @@
 	
 	</cffunction>
 
-	<cffunction name="getPlan" returntype="query">
+	<cffunction name="getPlan" returntype="any">
 		<cfset var local = structNew() />
 			<cfset local.ratePlans = session.carthelper.getSelectedPlans() />
 			<cfif structKeyExists(local.ratePlans,"1") and isNumeric(local.ratePlans.1)>

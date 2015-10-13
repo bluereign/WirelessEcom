@@ -1076,6 +1076,26 @@
 
 		<cfreturn local.total>
 	</cffunction>
+	
+	<cffunction name="getDownPayment" access="public" output="false" returntype="numeric">
+		<cfset var local = structNew()>
+		<cfset local.total = 0>
+
+		<cfquery name="local.qDownPayment" datasource="#application.dsn.wirelessAdvocates#">
+			SELECT
+				SUM(od.DownPaymentReceived) as sumDownPayment
+			FROM
+				SalesOrder.OrderDetail od
+			WHERE
+				od.OrderId = <cfqueryparam cfsqltype="cf_sql_integer" value="#this.getOrderId()#">
+		</cfquery>
+
+		<cfif len(trim(local.qDownPayment.sumDownPayment))>
+			<cfset local.total = local.qDownPayment.sumDownPayment>
+		</cfif>
+
+		<cfreturn local.total>
+	</cffunction>
 
 	<cffunction name="hardReserveAllHardGoods" access="public" output="false" returntype="boolean">
 		<cfset var local = structNew()>

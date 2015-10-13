@@ -324,8 +324,7 @@
 		</cfif>
 		
 		<!--- get the downpayment --->
-		<cfset local.prices = arguments.cartLine.getPrices() />
-		<cfset local.downPaymentReceived = local.prices.getDownPaymentAmount() /> 
+		<cfset this.setDownPaymentReceived(local.d.getprices().getDownPaymentAmount()) /> 
 
 		<cfif local.dProduct.recordCount>
 			<!--- populate the object --->
