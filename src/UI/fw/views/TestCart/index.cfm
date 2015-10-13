@@ -26,8 +26,8 @@
 <cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">
 <hr/>		
 <cfset args = { 
-	<!---productType = "phone:new",--->
-	productType = "phone:financed-12-new",
+	productType = "phone:new",
+	<!---productType = "phone:financed-12-new",--->
 	product_id = "#listgetat(phoneids,cartLineNo)#",
 	qty = 1,
 	price = "#listgetat(phoneprices,cartLineNo)#",

@@ -474,6 +474,10 @@
 						<strong>Taxes:</strong> #dollarFormat( arguments.order.getTaxTotal() )#
 					</div>
 					<div>
+						<strong>Down Payment:</strong> #dollarFormat( arguments.order.getDownPayment() )#
+					</div>
+
+					<div>
 						<strong>"Due Today" Total:</strong> #dollarFormat( arguments.order.getSubTotal() + arguments.order.getShipCost() + arguments.order.getTaxTotal() - arguments.order.getOrderDiscountTotal() )# (includes Taxes & Shipping)
 					</div>
 					<div>
