@@ -35,6 +35,7 @@
     <cfscript>
       // DEBUGGING: KEEP THIS NEXT LINE INCASE YOU NEED TO CLEAR CARRIER RESPONSE OBJECT AGAIN AFTER API CHANGES
       // carrierObjExists = structdelete(session, 'carrierObj', true);
+      // session.cart = createObject('component','cfc.model.cart').init();
 
       // <CARRIER CONSTANTS
       prc.carrierIdAtt = 109;
@@ -78,6 +79,35 @@
       // prc.getCurrentLineData = session.cart.getCurrentLineData();
 
       // <end instantiate session.cart
+
+      // GET CARTLINE:
+      // set rc.pid, rc.finance, rc.wid, 
+      // if line number returns a phone id, then set pid to the phone's product id.
+
+
+      // prc.cartLine = prc.cartLines[rc.cartLineNumber];
+      // prc.pid = prc.cartLine.getPhone().getProductID();
+      // if ( isNumeric(prc.pid) and prc.pid gt 0 ) {
+      //   rc.pid = prc.pid;
+      // }
+      
+      // prc.cartPlan = application.model.dBuilderCartFacade.getPlan();
+      // if (prc.cartPlan.recordCount and isValid("integer", prc.cartPlan.productId) and prc.cartPlan.productId gt 0) {
+      //   rc.plan = prc.cartPlan.productId;
+      // }
+
+      // TODO: 
+      // encapsulate each of these in 'if' clauses so they don't overwrite form variables OR differentiate between rc and prc.`
+      // get wid/warranty from cartLine
+
+      // get services from cartLine
+
+      // getActivationType from cartLine
+
+      // getDevice(cartLineNumber)
+
+      
+
 
 
       // <FINANCE PLAN CHECK
@@ -697,7 +727,7 @@
     <cfargument name="prc">
 
     <cfscript>
-      prc.subscribers = session.carrierObj.getSubscribers();
+      // prc.subscribers = session.carrierObj.getSubscribers();
       prc.addalineStep = event.buildLink('devicebuilder.transfer') & '/pid/' & rc.pid & '/type/addaline/';     
       prc.includeTooltip = true;
     </cfscript>
@@ -869,11 +899,12 @@
     <!--- <cfset application.model.CartHelper.removeEmptyCartLines() /> --->
     <!--- TODO:  apply rebates logic from cfc/model/LineService.cfc --->
     <cfscript>
-      prc.subscribers = session.carrierObj.getSubscribers();
-
+      // prc.subscribers = session.carrierObj.getSubscribers();
+      prc.cartPlan = application.model.dBuilderCartFacade.getPlan();
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart') & '/pid/' & rc.pid & '/type/' & rc.type & '/';
       prc.includeTallyBox = false;
     </cfscript>
+    <!--- <cfdump var="#prc.cartPlan#"><cfabort> --->
   </cffunction>
 
 

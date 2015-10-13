@@ -44,9 +44,7 @@
   </style>
   <!--- You can clean code by including the devicebuilder.min.js file here and moving the js scripts below into their respective views.  However, load time will be increased. --->
   
-  <!---
   <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
-  --->
   
 </head>
 
@@ -81,9 +79,9 @@
   #renderView('devicebuilder/pagefooter')#
 
 
-  
+  <!---
   <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
-  
+  --->
 
 
 <cfif prc.includeTooltip>
@@ -208,6 +206,7 @@
   });
 </script>
 <!--- <end clear bootstrap data --->
+
 
 
 </body>

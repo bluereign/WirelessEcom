@@ -1,3 +1,28 @@
+<!--- Adding style here and jQuery at the bottom as the javascript file provided by front-end developer is minified. --->
+<style>
+.cart .device-details {
+  font-size: 12px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.cart .device-details:after {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid #00aeef;
+  content: ' ';
+  display: inline-block;
+  margin: 10px 0 0 10px;
+}
+.cart .device-details.collapsed:after {
+  border-bottom: none;
+  border-top: 8px solid #00aeef;
+  content: ' ';
+  margin-top: 0;
+}
+</style>
+
 <cfparam name="local.deviceGuidList" type="string" default="" />
 
 <cfif application.model.cartHelper.hasSelectedFeatures()>
@@ -32,6 +57,53 @@
                 <div class="col-md-2">Due Today</div>
               </div>
             </div>
+
+            <!--- plan --->
+            <cfif prc.cartPlan.recordcount>
+              <div class="row">
+                <div class="col-md-2 col-xs-6 item">
+                  <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
+                  <a href="#event.buildLink('devicebuilder.plans')#/pid/#rc.pid#/type/upgrade/cartLineNumber/#rc.cartLineNumber#">Edit Plan</a>
+                </div>
+                <div class="col-md-8 col-xs-10 data">
+                  <h3>#prc.cartPlan.companyName# #prc.cartPlan.planName#</h3>
+                    Includes: SquareTrade Prod Line Access Fee</p>
+                </div>
+                <div class="col-md-2 col-xs-16 quantity">1</div>
+                <div class="col-md-2 col-xs-16 monthly">#dollarFormat(prc.cartPlan.monthlyFee)# <span class="visible-xs-inline">Monthly</span></div>
+                <div class="col-md-2 col-xs-16 due"> <span class="visible-xs-inline">Due Today</span></div>
+
+                <div class="col-md-2 col-xs-16"></div>
+                <div class="col-md-14 col-xs-16">
+
+                  <div class="row">
+                    <div class="collapse" id="plan-details">
+                      <!--- <div class="col-md-16 col-xs-16">#prc.cartPlan.companyName# #prc.cartPlan.planName#</div>
+                      <div class="col-md-16 col-xs-16">Data Limit: #prc.cartPlan.data_limit#</div>
+                      <div class="col-md-16 col-xs-16">Additional Data Usage: #prc.cartPlan.additional_data_usage#</div>
+                      <div class="col-md-16 col-xs-16">Maximum Lines: #prc.cartPlan.maxLines#</div> --->
+                      <div class="col-md-12 col-xs-11">#prc.cartPlan.companyName# #prc.cartPlan.planName#</div>
+                      <div class="col-md-4 col-xs-5">#dollarFormat(prc.cartPlan.monthlyFee)#/mo</div>
+
+                      <div class="col-md-12 col-xs-11">Data Limit:</div>
+                      <div class="col-md-4 col-xs-5">#prc.cartPlan.data_limit#</div>
+
+                      <!--- <div class="col-md-12 col-xs-11">Additional Data Usage:</div>
+                      <div class="col-md-4 col-xs-5">#prc.cartPlan.additional_data_usage#</div> --->
+
+                      <div class="col-md-12 col-xs-11">Maximum Lines:</div>
+                      <div class="col-md-4 col-xs-5">#prc.cartPlan.maxLines#</div>
+                    </div>
+                  </div>
+                  <a role="button"
+                    class="plan-details collapsed"
+                    data-toggle="collapse"
+                    href="##plan-details"
+                    aria-expanded="false"
+                    aria-controls="plan-details">Show Plan Details</a>
+                </div>
+              </div>
+            </cfif>
 
 
 
@@ -78,7 +150,7 @@
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#local.selectedPhone.summaryTitle#</h3>
                   <p>
-                  <cfif rc.type is 'upgrade'>
+                  <cfif rc.type is 'upgrade' and structKeyExists(prc,"subscribers")>
                     <!--- #prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber()))# --->
                     <!--- <cfdump var="#prc.subscribers[local.cartLine.getSubscriberIndex()]#"> --->
                     <!--- local.cartLine.getSubscriberIndex(): #local.cartLine.getSubscriberIndex()# --->
@@ -117,7 +189,7 @@
 
                   <!--- <PLAN DETAILS --->
                   <div class="row">
-                    <div class="collapse" id="plandetails#local.iCartLine#">
+                    <div class="collapse" id="devicedetails#local.iCartLine#">
                       
                       <!--- Device or line item --->
                       <div class="col-md-12 col-xs-11">#local.selectedPhone.summaryTitle# #local.cartline.getCartLineActivationType()#</div>
@@ -171,7 +243,8 @@
                         <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />  <!--- from cfc/view/Cart.cfc line 441 --->
                         <!---- Upgrades do not have the activation fee waived --->
                         
-                        <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+                        <!--- PLAN: No longer need as the plan will be first line item in Order Review. --->
+                        <!--- <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
                           <cfset local.upgradeFee = local.carrierObj.getUpgradeFee( session.cart.getCarrierID() )>
                           <div class="col-md-12 col-xs-11">
                             Plan: #local.selectedPlan.carrierName# - #local.selectedPlan.summaryTitle#
@@ -199,10 +272,11 @@
                               Plan: #local.selectedPlan.carrierName# - #local.selectedPlan.summaryTitle#
                               <br/>Activation Fee
                             </div>
-                            <div class="col-md-4 col-xs-5">(#dollarFormat(local.activationFee)# - see details below <sup class="cartReview"><a href="##footnote4">4</a></sup>)</div>  <!--- from cfc/view/Cart.cfc line 477 --->
+                            <div class="col-md-4 col-xs-5">(#dollarFormat(local.activationFee)# - see details below <sup class="cartReview"><a href="##footnote4">4</a></sup>)</div>  
                           </cfif>
 
-                        </cfif> <!--- end CONTAINS 'upgrade' --->
+                        </cfif> --->
+                        <!--- end CONTAINS 'upgrade' --->
                         
                       </cfif> <!--- end local.cartLine.getPlan().hasBeenSelected() --->
 
@@ -284,13 +358,13 @@
                     </div>
                   </div>
 
-                  <!--- <end plan details --->
+                  <!--- <end device details --->
                   <a role="button"
-                    class="plan-details collapsed"
+                    class="device-details collapsed"
                     data-toggle="collapse"
-                    href="##plandetails#local.iCartLine#"
+                    href="##devicedetails#local.iCartLine#"
                     aria-expanded="false"
-                    aria-controls="plandetails#local.iCartLine#">Show Plan Details</a>
+                    aria-controls="devicedetails#local.iCartLine#">Show Device Details</a>
                 </div>
               </div>
 
@@ -354,7 +428,7 @@
                           <div class="col-md-14 col-xs-16">
 
                             <div class="row">
-                              <div class="collapse" id="plan-details-pp#local.iAccessory#">
+                              <div class="collapse" id="prepaid-details#local.iAccessory#">
                                 <div class="col-md-12 col-xs-11">Prepaid Phone: #local.selectedAccessory.summaryTitle#</div>
                                 <div class="col-md-4 col-xs-5">#dollarFormat(local.selectedAccessories[local.iAccessory].getPrices().getDueToday())#</div>
                               </div>
@@ -363,9 +437,9 @@
                             <a role="button"
                               class="plan-details collapsed"
                               data-toggle="collapse"
-                              href="##plan-details2"
+                              href="##prepaid-details#local.iAccessory#"
                               aria-expanded="false"
-                              aria-controls="plan-details-pp#local.iAccessory#">Show Plan Details</a>
+                              aria-controls="prepaid-details#local.iAccessory#">Show Details</a>
                           </div>
 
                         </div>
@@ -632,3 +706,21 @@
 </div>
 
 </cfoutput>
+
+<script>
+  function showHideTextDevice(text) {
+    var SHOW_TEXT = 'Show Device Details',
+    HIDE_TEXT = 'Hide Device Details';
+
+    return  text === SHOW_TEXT ? HIDE_TEXT : SHOW_TEXT;
+  }
+
+  $(function() {
+    // Swap text on Show/Hide Cart Details
+    $('.device-details').on('click', function() {
+      var $this = $(this);
+
+      $(this).text(showHideTextDevice($this.text()));
+    });
+  });
+</script>
