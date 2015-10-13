@@ -1,5 +1,4 @@
 <cfoutput>
-  <!--- prc.resultStr: #prc.resultStr# --->
   <div class="col-md-12">
     <section class="content accessories">
       <header class="main-header">
@@ -18,9 +17,6 @@
           </cfif>
           <cfif structKeyExists(prc,"selectedServices")>
             <input type="hidden" name="selectedServices" value="#prc.selectedServices#">  
-          </cfif>
-          <cfif structKeyExists(rc,"wid")>
-            <input type="hidden" name="wid" value="#rc.wid#">
           </cfif>
 
           <a href="#prc.prevStep#">BACK</a>

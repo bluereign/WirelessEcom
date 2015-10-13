@@ -1,36 +1,38 @@
 <cfoutput>
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title">Carrier Mobile Protection Pack</h4>
-      <p>#prc.warrantyInfo.SummaryTitle#</p>
-    </div>
-    <div class="modal-body">
-      <div class="plans">
-        <div class="info">
-          <h3 style="height:40px"><span>#prc.warrantyInfo.SummaryTitle#</span></h3>
-          <p>#prc.warrantyInfo.ShortDescription#</p>
-          <p>#prc.warrantyInfo.LongDescription#</p>
-          <div class="price">#dollarFormat(prc.warrantyInfo.Price)#/month</div>
-        </div>
+
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Carrier Mobile Protection Pack</h4>
+    <p>#prc.warrantyInfo.SummaryTitle#</p>
+  </div>
+  <div class="modal-body">
+    <div class="plans">
+      <div class="info">
+        <h3 style="height:40px"><span>#prc.warrantyInfo.SummaryTitle#</span></h3>
+        <p>#prc.warrantyInfo.ShortDescription#</p>
+        <p>#prc.warrantyInfo.LongDescription#</p>
+        <div class="price">#dollarFormat(prc.warrantyInfo.Price)#/month</div>
       </div>
     </div>
-    
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <a href="##" type="button" class="btn btn-primary" name="btnAddWarranty" id="btnAddWarranty" value="#rc.wid#">Add to Cart</a>
-    </div>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <a href="##" type="button" class="btn btn-primary" name="btnAddWarranty" id="btnAddWarranty" value="#rc.wid#">Add to Cart</a>
+  </div>
 
-    <script>
-      $('##btnAddWarranty').click(function() {
-          var thisvalue = $(this).attr("value");
-          // console.log($("##warrantyoption_"+thisvalue));
-          $("##warrantyoption_"+thisvalue).prop("checked",true);
-          $('##protectionModal').modal('hide');
+  <script>
+    $('##btnAddWarranty').click(function() {
+        var thisvalue = $(this).attr("value");
+        // console.log($("##warrantyoption_"+thisvalue));
+        $("##warrantyoption_"+thisvalue).prop("checked",true);
+        $('##protectionModal').modal('hide');
 
-          // temp: submit the form:
-          var form = $("##protectionForm");
-          form.attr('action', '#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/');
-          form.submit();
-        });
-    </script>
+        // temp: submit the form:
+        var form = $("##protectionForm");
+        form.attr('action', '#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/');
+        form.submit();
+      });
+  </script>
+  
 </cfoutput>

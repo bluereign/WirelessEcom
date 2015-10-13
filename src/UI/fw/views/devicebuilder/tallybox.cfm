@@ -23,6 +23,7 @@
         </cfif>
       </div>
     </div>
+
     <div class="row">
       <aside class="details">
         <h3>#prc.tallyboxHeader#</h3>
@@ -31,7 +32,13 @@
             <img class="img-responsive" id="prodDetailImg" src="#prc.productImages[1].imagesrc#" border="0" width="50" alt="#prc.productImages[1].imageAlt#"/>
           </div>
           <div class="col-xs-12">
-            <div class="name">#prc.productData.summaryTitle#</div>
+            <div class="name">
+              <cfif structKeyExists(prc,"selectedPhone")>
+                #prc.selectedPhone.summaryTitle#
+              <cfelse>
+                #prc.productData.summaryTitle#
+              </cfif>
+            </div>
             <div class="table-responsive">
               <table class="table">
                 <thead>
@@ -43,13 +50,39 @@
                 </tr>
                 <tr>
                   <td>Regular Price</td>
-                  <td class="price">#dollarFormat(prc.productData.FinancedFullRetailPrice)#</td>
+                  <td class="price">                    
+                    <cfif structKeyExists(prc,"selectedPhone")>
+                      #dollarFormat(prc.selectedPhone.price_retail)#
+                    <cfelse>
+                      #dollarFormat(prc.productData.FinancedFullRetailPrice)#
+                    </cfif>
+                  </td>
                 </tr>
+
+                <cfif structKeyExists(prc,"selectedPhone") and structKeyExists(prc,"cartLine") and session.cart.getActivationType() DOES NOT CONTAIN "financed">
+                  <tr>
+                    <td>Online Discount</td>
+                    <td class="price">-#dollarFormat(val(prc.selectedPhone.price_retail) - val(prc.cartLine.getPhone().getPrices().getDueToday()))#</td>
+                  </tr>
+                </cfif>
+
+                <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getPlan().hasBeenSelected() and structKeyExists(prc,"thisLineBundledAccessories") and arrayLen(prc.thisLineBundledAccessories)>
+                  <cfloop from="1" to="#arrayLen(prc.thisLineBundledAccessories)#" index="local.iAccessory">
+                    <cfset local.thisAccessory = prc.thisLineBundledAccessories[local.iAccessory] />
+                    <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
+                    <tr>
+                      <td>Accessory: #prc.selectedPlan.carrierName# - #local.selectedAccessory.summaryTitle#</td>
+                      <td class="price"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>FREE</cfif></td>
+                    </tr>
+                  </cfloop>
+                </cfif>
+
                 <tr>
                   <td>Due Today*</td>
                   <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueToday)# <cfif rc.paymentoption is 'financed'>Down</cfif></td> <!--- hard code from detail_new.cfm --->
                 </tr>
-               <!---  <tr>
+                <!--- Note: it will be difficult to display the Line Access Fee here as it's part of the lineFeatures array --->
+                <!--- <tr>
                   <td>Line Access Fee</td>
                   <td class="price">$xx.xx ?</td>
                 </tr> --->
@@ -100,13 +133,12 @@
         </div>
         <h4>Protection &amp; Services</h4>
         <div class="row">
-          <!--- <div class="col-xs-4">
-            <img src="images/ex-sidebar-protection.jpg" alt="protection picture" />
-          </div> --->
           <div class="col-xs-16">
             <div class="table-responsive">
               <table class="table">
-                <cfif arrayLen(prc.aSelectedServices)>
+                
+                <!--- todo: remove the following lines as well as the aSelectedServices stuff and rc.selectedServices where unnecessary --->
+                <!--- <cfif arrayLen(prc.aSelectedServices)>
                   <cfloop index="i" from="1" to="#arrayLen(prc.aSelectedServices)#">
                     <tr>
                       <td>#prc.aSelectedServices[i].Title# <!--- (#prc.aSelectedServices[i].productId#) ---></td>
@@ -118,21 +150,50 @@
                     <td>No Services Selected</td>
                     <td class="price">#dollarFormat(0)#/mo</td>
                   </tr>
+                </cfif> --->
+
+                <cfif structKeyExists(prc,"lineFeatures")>
+                  <cfloop from="1" to="#arrayLen(prc.lineFeatures)#" index="local.iFeature">
+                    <cfset local.thisFeatureID = prc.lineFeatures[local.iFeature].getProductID() />
+                    <cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID) />
+                    <cfset local.thisServiceRecommended = false />
+                    <tr>
+                      <td>#local.thisFeature.summaryTitle#</td>
+                      <td class="price">#dollarFormat(prc.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</td>
+                    </tr>
+                  </cfloop>
+                <cfelse>
+                  <tr>
+                    <td>No Services Selected</td>
+                    <td class="price">#dollarFormat(0)#/mo</td>
+                  </tr>
                 </cfif>
-                <tr>
+
+                <!--- Device Protection Warranty: --->
+                <!--- <tr>
                   <td>#prc.warrantyInfo.SummaryTitle#</td>
                   <td class="price">#dollarFormat(prc.warrantyInfo.Price)#</td>
-                </tr>
+                </tr> --->
+
+                <!--- Line warranty --->
+                <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getWarranty().hasBeenSelected()>
+                  <tr>
+                    <td>Warranty: #prc.cartLine.getWarranty().getTitle()#</td>
+                    <td class="price">#dollarFormat(prc.cartLine.getWarranty().getPrices().getDueToday())#</td>
+                  </tr>
+                <cfelse>
+                  <tr>
+                    <td>No Protection Plan Selected</td>
+                    <td class="price">$0.00</td>
+                  </tr>
+                </cfif>
+
               </table>
             </div>
           </div>
         </div>
         <h4>Accessories</h4>
         <div class="row">
-          <!--- <div class="col-xs-4">
-            <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" />
-          </div> --->
-          <!--- <cfdump var="#session.cartHelper.lineGetAccessoriesByType(rc.cartLineNumber,"accessory")#"> --->
           
           <div class="col-xs-16">
             <div class="table-responsive">
@@ -144,9 +205,6 @@
                     <cfset prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID()) />
                     <cfset prc.stcPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(prc.selectedAccessory.accessoryGuid) />
                     <cfset prc.primaryImageSrc = application.view.imageManager.displayImage(imageGuid = prc.stcPrimaryImages[prc.selectedAccessory.accessoryGuid], height = 60, width = 60) />
-                    
-
-                    <!--- <cfdump var="#prc.selectedAccessory.summaryTitle#"> --->
                     <tr>
                       <td><img src="#trim(prc.primaryImageSrc)#"  width="60" border="0" /></td>
                       <td>#prc.selectedAccessory.summaryTitle#</td>
@@ -163,21 +221,6 @@
             </div>
           </div>
         </div>
-        <!--- <div class="row">
-          <div class="col-xs-4">
-            <img src="images/ex-sidebar-accessories.jpg" alt="accessories picture" />
-          </div>
-          <div class="col-xs-12">
-            <div class="table-responsive">
-              <table class="table">
-                <tr>
-                  <td>Costco Membership Benefits</td>
-                  <td class="price">FREE</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div> --->
       </aside>
     </div>
   </div> <!--- <end tally box --->

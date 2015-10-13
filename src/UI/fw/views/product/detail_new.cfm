@@ -469,8 +469,10 @@ $j(document).ready(function($j) {
 		};
 
 		// devicebuilder
+		// update hidden input to pass finance/CartType
 		// console.log($j(this).attr('data-activation-type'));
 		$j("input[name='finance']").val(actType);
+		// alert(actType);
 
 	 });
 

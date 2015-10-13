@@ -26,7 +26,8 @@
 <cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">
 <hr/>		
 <cfset args = { 
-	productType = "phone:new",
+	<!---productType = "phone:new",--->
+	productType = "phone:financed-12-new",
 	product_id = "#listgetat(phoneids,cartLineNo)#",
 	qty = 1,
 	price = "#listgetat(phoneprices,cartLineNo)#",
@@ -48,11 +49,13 @@ Result = #resultStr#
 	qty = 1,
 	cartLineNumber = #cartLineNo#
 } />	
-<br/><br/>Add the Plan for Line #cartlineno#
-<br/>Calling application.model.dBuilderCartFacade.addItem(argumentCollection = args)
-<cfdump var="#args#">
-<cfset resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = args) />
-Result = #resultStr#
+<cfif cartLineNo is 1>
+	<br/><br/>Add the Plan for Line #cartlineno#
+	<br/>Calling application.model.dBuilderCartFacade.addItem(argumentCollection = args)
+	<cfdump var="#args#">
+	<cfset resultStr = application.model.dBuilderCartFacade.addItem(argumentCollection = args) />
+	Result = #resultStr#
+</cfif>
 
 <cfset args = { 
 	productType = "plan",
@@ -142,6 +145,20 @@ Result = #resultStr#
 <br/>session.carthelper.getLineWarrantyProductId(1) = #session.carthelper.getLineWarrantyProductId(1)#	
 </cfloop>
 
+
+<hr/>
+Get the Phone for each line in the cart:
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+<br/>application.model.dBuilderCartFacade.getDevice(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getDevice(ln)#" />
+<br/>application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()
+<br/>#application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()#
+</cfloop>
+
+<hr/>
+Get the Rate Plan for the cart:
+<br/>application.model.dBuilderCartFacade.getPlan() = <cfdump var="#application.model.dBuilderCartFacade.getPlan()#" />
+
+
 <hr/>
 Loop thru lines and display accessory counts per line
 <cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
@@ -159,6 +176,12 @@ Get a list of all accessory product_ids for each line:
 </cfloop>
 <br/>application.model.dBuilderCartFacade.getAccessoryIds(999) = #application.model.dBuilderCartFacade.getAccessoryIds(999)#
 
+<hr/>
+Get an array of accessory info for each line:
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+<br/>application.model.dBuilderCartFacade.getAccessories(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getAccessories(ln)#"/>
+</cfloop>
+<br/>application.model.dBuilderCartFacade.getAccessories(999) = <cfdump var="#application.model.dBuilderCartFacade.getAccessories(999)#"/>
 
 <hr/>
 <cfset randlineNo = randRange(1,session.Carthelper.getNumberOfLines()) />
