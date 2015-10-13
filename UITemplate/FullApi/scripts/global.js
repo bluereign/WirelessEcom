@@ -17,7 +17,8 @@ function toggleDiv(divToHide, divToShow) {
 }
 
 function buildSlider(div) {
-
+   
+    
 		var	$this = $(div),
 			children = $this.children('.info'),
 			featuredChildIndex = $this.find('.featured').index(),
@@ -25,7 +26,7 @@ function buildSlider(div) {
 			options = {
 				dots: false,
 				infinite: false,
-				initialSlide: featuredChildIndex - 1,
+				initialSlide: (featuredChildIndex >= 0 ? featuredChildIndex : 1) - 1,
 				speed: 300,
 				slidesToShow: 3,
 				slidesToScroll: 1,
@@ -89,8 +90,17 @@ $(document).ready(function() {
 		}
 	});
 
+	$('.plans #choose-a-new-plan').on('click', function () {
+	    $('#plan-options').show();
+	    $('.plan-chooser .plan-seperator').hide();
+	    $('#choose-a-new-plan').hide();
+	    $carousel.each(function (index, el) {
+	        $carousel[index].slick.setPosition();
+	    });
+	});
+
 	$('.nav-tabs').on('shown.bs.tab', function (e, index) {
-		$carousel.each(function(index, el){
+        $carousel.each(function(index, el){
 			$carousel[index].slick.setPosition();
 		});
 	});
