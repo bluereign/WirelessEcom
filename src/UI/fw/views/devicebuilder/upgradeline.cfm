@@ -1,13 +1,13 @@
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
-      <input type="hidden" name="finance" value="#rc.finance#" />
+      <!--- <input type="hidden" name="finance" value="#rc.finance#" />
       <input type="hidden" name="type" value="#rc.type#" />
-      <input type="hidden" name="pid" value="#rc.pid#" />
+      <input type="hidden" name="pid" value="#rc.pid#" /> --->
       <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
-      <cfif structKeyExists(rc,"line")>
+      <!--- <cfif structKeyExists(rc,"line")>
         <input type="hidden" name="line" value="#rc.line#" />
-      </cfif>
+      </cfif> --->
       <section class="content">
         <header class="main-header">
           <h1>Upgrade or Add a Line</h1>
@@ -28,12 +28,12 @@
 
             <div class="col-md-4 col-sm-3 col-xs-8">
               <div class="product">
-                <img src="#prc.productImages[1].imagesrc#" alt="#prc.productImages[1].imageAlt#" />
-				<div class="manufacturer">apple</div>
-                <div class="model info ">iPhone 5</div>
+                <!--- <img src="#prc.productImages[1].imagesrc#" alt="#prc.productImages[1].imageAlt#" /> --->
+				<!--- <div class="manufacturer">apple</div> --->
+                <!--- <div class="model info ">iPhone 5</div> --->
                 <div class="phone info">#prc.subscribers[i].phoneNumber#</div>
                 <cfif prc.subscribers[i].getIsEligible()>
-                  <button class="btn btn-sm btn-primary" name="line" value="#i#">Upgrade Line</button>
+                  <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade Line</button>
                 <cfelse>
                   <button class="btn btn-sm btn-primary" disabled="disabled">
                     <cfif isDate(prc.subscribers[i].getEligibilityDate()) and dateCompare(prc.subscribers[i].getEligibilityDate(),now()) gte 0>

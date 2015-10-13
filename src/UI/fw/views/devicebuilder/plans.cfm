@@ -4,16 +4,16 @@
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
-      <input type="hidden" name="finance" value="#rc.finance#" />
+      <!--- <input type="hidden" name="finance" value="#rc.finance#" />
       <input type="hidden" name="type" value="#rc.type#" />
-      <input type="hidden" name="pid" value="#rc.pid#" />
+      <input type="hidden" name="pid" value="#rc.pid#" /> --->
       <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
-      <cfif structKeyExists(rc,"paymentoption")>
+      <!--- <cfif structKeyExists(rc,"paymentoption")>
         <input type="hidden" name="paymentoption" value="#rc.paymentoption#" />
       </cfif>
       <cfif structKeyExists(rc,"line")>
         <input type="hidden" name="line" value="#rc.line#" />
-      </cfif>
+      </cfif> --->
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
@@ -65,9 +65,9 @@
                       <div style="align:center;padding:20px;">#prc.planDataExisting.SummaryDescription#</div>
                       <div class="price">#dollarFormat(prc.planDataExisting.MonthlyFee)#</div>
                       <cfif prc.existingPlanEligible>
-                        <button class="btn btn-dark-gray btn-block" name="plan" value="#prc.planDataExisting.productid#">Select Package</button>
+                        <button class="btn btn-dark-gray btn-block" name="planid" value="#prc.planDataExisting.productid#">Select Package</button>
                         <div class="details-link" data-toggle="modal" data-target="##planModal" 
-                          href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataExisting.productid#/finance/#rc.finance#/line/#rc.line#/cartLineNumber/#rc.cartLineNumber#" >Plan Details</div>
+                          href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planDataExisting.productid#/cartLineNumber/#rc.cartLineNumber#" >Plan Details</div>
                       <cfelse>
                         <button class="btn btn-secondary btn-block" disabled="disabled">Unavailable for this device</button>
                       </cfif>
@@ -108,9 +108,9 @@
                     </ul>
 					#prc.planData.SummaryDescription#
                     <div class="price">$#int(prc.planData.MonthlyFee)#<!--- #dollarFormat(prc.planData.MonthlyFee)# ---></div>
-                    <button class="btn btn-primary btn-block" name="plan" value="#prc.planData.productid#">Select Package</button>
+                    <button class="btn btn-primary btn-block" name="planid" value="#prc.planData.productid#">Select Package</button>
                     <div class="details-link" data-toggle="modal" data-target="##planModal" 
-                      href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planData.productid#/finance/#rc.finance#<cfif structKeyExists(rc,"line")>/line/#rc.line#</cfif>/cartLineNumber/#rc.cartLineNumber#" >Plan Details</div>
+                      href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#/cartLineNumber/#rc.cartLineNumber#">Plan Details</div>
                   </a>
                 </div>
               </cfloop>
@@ -132,9 +132,9 @@
                       </ul>
 					  #prc.planDataShared.SummaryDescription#
                       <div class="price">$#int(prc.planDataShared.MonthlyFee)#<!--- #dollarFormat(prc.planDataShared.MonthlyFee)# ---></div>
-                      <button class="btn btn-primary btn-block" name="plan" value="#prc.planDataShared.productid#">Select Package</button>
+                      <button class="btn btn-primary btn-block" name="planid" value="#prc.planDataShared.productid#">Select Package</button>
                       <div class="details-link" data-toggle="modal" data-target="##planModal" 
-                        href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataShared.productid#/finance/#rc.finance#<cfif structKeyExists(rc,"line")>/line/#rc.line#</cfif>/cartLineNumber/#rc.cartLineNumber#" >Plan Details</div>
+                        href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#/cartLineNumber/#rc.cartLineNumber#">Plan Details</div>
                     </a>
                   </div>
                 </cfloop>
