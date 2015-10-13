@@ -1022,6 +1022,32 @@
 		
 	</cffunction>
 	
+	<cffunction name="getDevice" returntype="struct" >
+		<cfargument name="cartLineNo" type="numeric" required="true" />
+
+		<cfset var local = structNew() />
+		<cfset local.cartLines = session.cart.getLines() />
+		<cfset local.cartLine = local.cartLines[arguments.cartLineNo] />
+		<cfset local.device = structNew() />
+		<cfset local.device.cartItem = local.cartLine.getPhone() />
+
+		<cfset local.device.productDetail = CreateObject('component', 'cfc.model.Product').init() /> 
+		<cfset local.device.productDetail.getProduct(productId=local.cartLine.getPhone().getProductID()) />
+
+		<cfset local.device.monthlyFinanceTotal = 0/>
+		<cfif local.cartline.getCartLineActivationType() contains 'financed'><!---Add financed price to Monthly --->
+			<cfif local.cartline.getCartLineActivationType() contains '12'>
+				<cfset local.device.monthlyFinanceTotal = local.device.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice12() />
+			<cfelseif local.cartline.getCartLineActivationType() contains '18'>
+				<cfset local.device.monthlyFinanceTotal = local.device.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice18() />
+			<cfelseif local.cartline.getCartLineActivationType() contains '24'>
+				<cfset local.device.monthlyFinanceTotal = local.device.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice24() />
+			</cfif>
+		</cfif>	
+		
+		<cfreturn local.device />
+	</cffunction>
+	
 	<cffunction name="getItemCount" access="public" returntype="numeric">
 		<cfargument name="cartLineNo" type="numeric" required="true" />
 		<cfargument name="productId" type="string" required="true" />
@@ -1052,6 +1078,27 @@
 		
 		<cfreturn -1 />
 	</cffunction>
+	
+	
+	<cffunction name="getWarranty" returntype="query" >
+		<cfargument name="cartLineNo" type="numeric" required="true" />
+	
+		<cfset var local = structNew() />
+		<cfset local.warrantyId = application.model.carthelper.getLineWarrantyProductId(arguments.cartLineNo) />
+		
+		<cfset local.warranty = CreateObject('component', 'cfc.model.Warranty').init() /> 
+		<cfreturn local.warranty.getById(local.warrantyId) />
+	
+	</cffunction>
+	
+	<cffunction name="getFeatures" returntype="query" >
+		<cfargument name="cartLineNo" type="numeric" required="true" />
+	
+		<cfset var local = structNew() />
+		<cfset local.featureIds = application.model.carthelper.getLineSelectedFeatures(arguments.cartLineNo) />		
+		<cfreturn  application.model.Feature.getByProductId(local.featureIds) />
+	</cffunction>
+	
 	
 	<cffunction name="removeAccessory" access="public" returntype="string">
 		<cfargument name="cartLineNo" type="numeric" required="true" />

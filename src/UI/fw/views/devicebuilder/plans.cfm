@@ -17,7 +17,7 @@
       <section class="content">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
-          <p>Pick a Plan and the amount of Data you will use per month. <!--- ( ZIP: #session.cart.getZipcode()# ) --->
+          <p>Pick a Plan and the amount of Data you will use per month.</p> <!--- ( ZIP: #session.cart.getZipcode()# ) --->
           <!--- DEBUG: --->
           <!--- Launch Zip Modal button for testing --->
           <!--- <cfif rc.type is 'new'>
@@ -58,7 +58,7 @@
                 <cfloop query="prc.planDataExisting">
                   <div class="info">
                     <a href="##">
-                      <h3 style="height:40px"><span>#prc.planDataExisting.DetailTitle# - Existing</span></h3>
+                      <h3><span>#prc.planDataExisting.DetailTitle# - Existing</span></h3>
                       <ul>
                         <li class="large"><span>#prc.planDataExisting.DataLimitGB# GB</span></li>
                       </ul>
@@ -77,13 +77,13 @@
               <cfelse>
                 <div class="info">
                   <a href="##">
-                  <h3 style="height:40px"><span>Your Existing Plan - Existing</span></h3>
+                  <h3><span>Your Existing Plan - Existing</span></h3>
                     <ul>
                       <li class="large"><span>Unknown GB</span></li>
-                      <!--- <div style="align:center;padding:20px;">Description - unavailable</div> --->
-                      <div class="price">Price - unavailable</div>
-                      <button class="btn btn-secondary btn-block" disabled="disabled">Unavailable for this device</button>
-                    </ul>
+					</ul>
+					<!--- <div style="align:center;padding:20px;">Description - unavailable</div> --->
+					<div class="price">Price - unavailable</div>
+					<button class="btn btn-primary btn-block" disabled="disabled">Unavailable for this device</button>
                   </a>
                 </div>
               </cfif>
@@ -102,13 +102,13 @@
                   <!--- <a data-toggle="modal" data-target="##planModal"  href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#" >
                   Launch Modal</a> --->
                   <a href="##">
-                    <h3 style="height:40px"><span>#prc.planData.DetailTitle#</span></h3>
+                    <h3><span>#prc.planData.DetailTitle#</span></h3>
                     <ul>
                       <li class="large"><span>#prc.planData.DataLimitGB#GB</span></li>
                     </ul>
-                    <div style="align:center;padding:20px;">#prc.planData.SummaryDescription#</div>
+					#prc.planData.SummaryDescription#
                     <div class="price">$#int(prc.planData.MonthlyFee)#<!--- #dollarFormat(prc.planData.MonthlyFee)# ---></div>
-                    <button class="btn btn-secondary btn-block" name="plan" value="#prc.planData.productid#">Select Package</button>
+                    <button class="btn btn-primary btn-block" name="plan" value="#prc.planData.productid#">Select Package</button>
                     <div class="details-link" data-toggle="modal" data-target="##planModal" 
                       href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planData.productid#/finance/#rc.finance#<cfif structKeyExists(rc,"line")>/line/#rc.line#</cfif>/cartLineNumber/#rc.cartLineNumber#" >Plan Details</div>
                   </a>
@@ -126,13 +126,13 @@
                 <cfloop query="prc.planDataShared">
                   <div class="info">
                     <a href="##">
-                      <h3 style="height:40px"><span>#prc.planDataShared.DetailTitle#</span></h3>
+                      <h3><span>#prc.planDataShared.DetailTitle#</span></h3>
                       <ul>
                         <li class="large"><span>#prc.planDataShared.DataLimitGB#GB</span></li>
                       </ul>
-                      <div style="align:center;padding:20px;">#prc.planDataShared.SummaryDescription#</div>
+					  #prc.planDataShared.SummaryDescription#
                       <div class="price">$#int(prc.planDataShared.MonthlyFee)#<!--- #dollarFormat(prc.planDataShared.MonthlyFee)# ---></div>
-                      <button class="btn btn-secondary btn-block" name="plan" value="#prc.planDataShared.productid#">Select Package</button>
+                      <button class="btn btn-primary btn-block" name="plan" value="#prc.planDataShared.productid#">Select Package</button>
                       <div class="details-link" data-toggle="modal" data-target="##planModal" 
                         href="#event.buildLink('devicebuilder.planmodal')#/pid/#rc.pid#/type/#rc.type#/plan/#prc.planDataShared.productid#/finance/#rc.finance#<cfif structKeyExists(rc,"line")>/line/#rc.line#</cfif>/cartLineNumber/#rc.cartLineNumber#" >Plan Details</div>
                     </a>

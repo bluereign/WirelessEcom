@@ -26,7 +26,8 @@
 <cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">
 <hr/>		
 <cfset args = { 
-	productType = "phone:new",
+	<!---productType = "phone:new",--->
+	productType = "phone:financed-12-new",
 	product_id = "#listgetat(phoneids,cartLineNo)#",
 	qty = 1,
 	price = "#listgetat(phoneprices,cartLineNo)#",
@@ -144,6 +145,15 @@ Result = #resultStr#
 <br/>session.carthelper.getLineWarrantyProductId(1) = #session.carthelper.getLineWarrantyProductId(1)#	
 </cfloop>
 
+
+<hr/>
+Get the Phone for each line in the cart:
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+<br/>application.model.dBuilderCartFacade.getDevice(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getDevice(ln)#" />
+<br/>application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()
+<br/>#application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()#
+</cfloop>
+
 <hr/>
 Get the Rate Plan for the cart:
 <br/>application.model.dBuilderCartFacade.getPlan() = <cfdump var="#application.model.dBuilderCartFacade.getPlan()#" />
@@ -165,6 +175,20 @@ Get a list of all accessory product_ids for each line:
 <br/>application.model.dBuilderCartFacade.getAccessoryIds(#ln#) = #application.model.dBuilderCartFacade.getAccessoryIds(ln)#
 </cfloop>
 <br/>application.model.dBuilderCartFacade.getAccessoryIds(999) = #application.model.dBuilderCartFacade.getAccessoryIds(999)#
+
+<hr/>Get the Warranty for each line
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+application.model.dBuilderCartFacade.getWarranty(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getWarranty(ln)#" />
+</cfloop>
+
+<hr/>Get theFeatures for each line
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+application.model.dBuilderCartFacade.getFeatures(#ln#) = 
+<cfset features = #application.model.dBuilderCartFacade.getFeatures(ln)# />
+<cfdump var="#features#" />
+</cfloop>
+
+
 
 <hr/>
 Get an array of accessory info for each line:
