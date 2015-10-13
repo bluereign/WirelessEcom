@@ -112,49 +112,6 @@
 <!--- <end zipModal, planModal --->
 
 
-<!--- <protection view protectionModal --->
-<cfif listFindNoCase("devicebuilder.protection", event.getCurrentEvent())>
-  <div class="modal fade" id="protectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="featureModal" tabindex="-2" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      </div>
-    </div>
-  </div>
-
-  <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
-    <script>
-      $('##isDownPaymentApproved').click(function() {
-          var $this = $(this);
-          // $this will contain a reference to the checkbox   
-          if ($this.is(':checked')) {
-              // the checkbox was checked 
-              $('.btnContinue').prop('disabled', false);
-          } else {
-              // the checkbox was unchecked
-              $('.btnContinue').prop('disabled', true);
-          }
-      });
-    </script>
-  </cfif>
-
-  <cfif prc.serviceCounter gt 0>
-    <script>
-      $(function() {
-        $('##h4AdditionalServices').show();
-      });
-    </script>
-  </cfif>
-
-</cfif>
-<!--- <end protection view protectionModal --->
-
-
 <!--- <accessories view --->
 <cfif listFindNoCase("devicebuilder.accessories", event.getCurrentEvent())>
 

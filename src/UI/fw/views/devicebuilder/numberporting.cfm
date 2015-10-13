@@ -8,9 +8,9 @@
       </header>
       <!--- <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave"> --->
         <form action="#prc.nextStep#">
-          <input type="hidden" name="finance" value="#rc.finance#" />
+          <!--- <input type="hidden" name="finance" value="#rc.finance#" />
           <input type="hidden" name="type" value="#rc.type#" />
-          <input type="hidden" name="pid" value="#rc.pid#" />
+          <input type="hidden" name="pid" value="#rc.pid#" /> --->
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
 
           <div class="right">

@@ -23,16 +23,16 @@
 
   <script>
     $('##btnAddWarranty').click(function() {
-        var thisvalue = $(this).attr("value");
-        // console.log($("##warrantyoption_"+thisvalue));
-        $("##warrantyoption_"+thisvalue).prop("checked",true);
-        $('##protectionModal').modal('hide');
+      var thisvalue = $(this).attr("value");
+      // console.log($("##warrantyoption_"+thisvalue));
+      $("##warrantyoption_"+thisvalue).prop("checked",true);
+      $('##protectionModal').modal('hide');
 
-        // temp: submit the form:
-        var form = $("##protectionForm");
-        form.attr('action', '#event.buildLink('devicebuilder.protection')#/pid/#rc.pid#/type/#rc.type#/');
-        form.submit();
-      });
+      // temp: submit the form:
+      var form = $("##protectionForm");
+      form.attr('action', '#event.buildLink('devicebuilder.protection')#');
+      form.submit();
+    });
   </script>
   
 </cfoutput>

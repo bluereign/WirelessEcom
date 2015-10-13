@@ -8,6 +8,12 @@
 
       <div>
         <p>session.cart.getActivationType(): #session.cart.getActivationType()#<br></p>
+        <br>
+        <cfif structKeyExists(application.model,"dBuilderCartFacade")>
+          <p>application.model.dBuilderCartFacade.getPlan(): <cfdump var="#application.model.dBuilderCartFacade.getPlan()#">
+          <br>
+        </cfif>
+        clearcart: <a href="#event.buildLink('devicebuilder.clearcart')#">Clear</a>
       </div>
 
     </section>

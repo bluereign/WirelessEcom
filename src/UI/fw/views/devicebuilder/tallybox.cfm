@@ -79,7 +79,8 @@
 
                 <tr>
                   <td>Due Today*</td>
-                  <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueToday)# <cfif rc.paymentoption is 'financed'>Down</cfif></td> <!--- hard code from detail_new.cfm --->
+                  <td class="price">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getDueToday())#</td>
+                  <!--- <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueToday)# <cfif prc.paymentoption is 'financed'>Down</cfif></td> <!--- hard code from detail_new.cfm ---> --->
                 </tr>
                 <!--- Note: it will be difficult to display the Line Access Fee here as it's part of the lineFeatures array --->
                 <!--- <tr>
@@ -102,14 +103,10 @@
           </div>
           <div class="col-xs-12">
             <div class="name">
-              <!--- MORE Everything<br> Talk, Text, and Data --->
-              <cfif structKeyExists(prc,"planInfo")>
-                #prc.planInfo.DetailTitle#
-                <cfif isDefined("prc.planDataExisting.productId") and prc.planDataExisting.productId eq prc.planInfo.productId>
-                  - Existing
-                </cfif>
+              <cfif isQuery(prc.cartPlan) and  prc.cartPlan.recordcount>
+                #prc.cartPlan.carrierName# #prc.cartPlan.detailTitle#
               <cfelse>
-                No plan selected
+                No Plan Selected
               </cfif>
             </div>
             <div class="table-responsive">
@@ -176,7 +173,18 @@
                 </tr> --->
 
                 <!--- Line warranty --->
-                <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getWarranty().hasBeenSelected()>
+                <cfif prc.warranty.recordcount>
+                  <tr>
+                    <td>Warranty: #prc.warranty.summaryTitle#</td>
+                    <td class="price">#dollarFormat(prc.warranty.price)#</td>
+                  </tr>
+                <cfelse>
+                  <tr>
+                    <td>No Protection Plan Selected</td>
+                    <td class="price">$0.00</td>
+                  </tr>
+                </cfif>
+                <!--- <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getWarranty().hasBeenSelected()>
                   <tr>
                     <td>Warranty: #prc.cartLine.getWarranty().getTitle()#</td>
                     <td class="price">#dollarFormat(prc.cartLine.getWarranty().getPrices().getDueToday())#</td>
@@ -186,7 +194,7 @@
                     <td>No Protection Plan Selected</td>
                     <td class="price">$0.00</td>
                   </tr>
-                </cfif>
+                </cfif> --->
 
               </table>
             </div>

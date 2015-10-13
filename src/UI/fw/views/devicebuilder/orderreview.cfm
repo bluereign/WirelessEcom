@@ -63,7 +63,7 @@
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
                   <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
-                  <a href="#event.buildLink('devicebuilder.plans')#/pid/#rc.pid#/type/upgrade/cartLineNumber/#rc.cartLineNumber#">Edit Plan</a>
+                  <a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/#rc.cartLineNumber#">Edit Plan</a>
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#prc.cartPlan.companyName# #prc.cartPlan.planName#</h3>
@@ -150,11 +150,14 @@
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#local.selectedPhone.summaryTitle#</h3>
                   <p>
-                  <cfif rc.type is 'upgrade' and structKeyExists(prc,"subscribers")>
+                  <cfif prc.customerType is 'upgrade' and structKeyExists(prc,"subscribers")>
                     <!--- #prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber()))# --->
                     <!--- <cfdump var="#prc.subscribers[local.cartLine.getSubscriberIndex()]#"> --->
                     <!--- local.cartLine.getSubscriberIndex(): #local.cartLine.getSubscriberIndex()# --->
-                    #prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber()))#
+                    
+                    <cfif local.cartLine.getSubscriberIndex() gt 0>
+                      #prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber()))#
+                    </cfif>
                   </cfif>
                   <br>
                     Includes: something, something, something</p>

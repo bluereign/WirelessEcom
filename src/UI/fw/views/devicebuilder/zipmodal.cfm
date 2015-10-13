@@ -13,8 +13,8 @@
           <div class="row">
             <div class="col-md-6 col-md-offset-2">
               <form id="zipCodeForm" action="#event.buildLink('devicebuilder.plans')#" method="post">
-                <input type="hidden" name="type" value="#rc.type#" />
-                <input type="hidden" name="pid" value="#rc.pid#" />
+                <!--- <input type="hidden" name="type" value="#rc.type#" />
+                <input type="hidden" name="pid" value="#rc.pid#" /> --->
                 <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
                 <div class="form-group zip">
                   <label for="inputZip"><h4>ZIP Code</h4></label>
