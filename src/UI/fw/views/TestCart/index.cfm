@@ -176,6 +176,20 @@ Get a list of all accessory product_ids for each line:
 </cfloop>
 <br/>application.model.dBuilderCartFacade.getAccessoryIds(999) = #application.model.dBuilderCartFacade.getAccessoryIds(999)#
 
+<hr/>Get the Warranty for each line
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+application.model.dBuilderCartFacade.getWarranty(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getWarranty(ln)#" />
+</cfloop>
+
+<hr/>Get theFeatures for each line
+<cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
+application.model.dBuilderCartFacade.getFeatures(#ln#) = 
+<cfset features = #application.model.dBuilderCartFacade.getFeatures(ln)# />
+<cfdump var="#features#" />
+</cfloop>
+
+
+
 <hr/>
 Get an array of accessory info for each line:
 <cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
