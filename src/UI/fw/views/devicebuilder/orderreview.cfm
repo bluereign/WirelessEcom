@@ -59,7 +59,7 @@
             </div>
 
             <!--- plan --->
-            <cfif prc.cartPlan.recordcount>
+            <cfif isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
                   <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
@@ -235,7 +235,7 @@
                             } />
                           </cfif>
 
-                          <div class="col-md-12 col-xs-11">Accessory: #local.selectedPlan.carrierName# - #local.selectedAccessory.summaryTitle#</div>
+                          <div class="col-md-12 col-xs-11">Accessory: #prc.productData.carrierName# - #local.selectedAccessory.summaryTitle#</div>
                           <div class="col-md-4 col-xs-5"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>FREE</cfif></div>
                         </cfloop>
                       </cfif>

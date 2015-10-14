@@ -280,12 +280,14 @@
 
       // add services to cart
       if ( listLen(prc.selectedServices) ) {
+        
         cartArgs = {
           productType = "plan",
           product_id = prc.cartPlan.productId & ":" & prc.selectedServices,
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
+
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
       // <end selected services
