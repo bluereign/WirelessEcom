@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="stylesheets/aafes-global.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container topBar">
+	<header class="col-md-16 header">
+		<div class="content row">
+            <div class="col-md-8 linksLeft">
+                <!--<a href="/index.cfm/go/shop/do/upgrade-checker?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=UpgradeChecker">Upgrade Checker</a>
+                <a href="/index.cfm/go/content/do/storeLocator/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=StoreLocator" target="_blank">Store Locator</a>
+                <a href="http://www.aafes.com?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=ReturnToExchangeMall">Return to the Exchange Mall</a>-->
+            </div>
+            <div class="col-md-8 linksRight">
+                <!--<a href="#?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=Cart" onClick="viewCart(); return false;" id="lnkMyCart"><span></span>Your Cart</a>-->
+                <a href="/index.cfm/go/myAccount/do/view/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=SignInToAccount">Sign into Your Account</a><!-- id="lnkMyAccount"-->
+            </div>
+		</div>
+	</header>
+</div>
+
+<div class="container">
+    <div class="aafesHeader">
+        <div class="col-md-8">
+            <div class="headerLogo">
+                <a href="/" id="WAlogo"><img src="http://10.7.0.140/assets/aafes/images/X_mobile_center_logo.png" alt="Exchange Mobile Center" title="" /></a>
+                <!--<a href="/" id="WAlogo"><img src="/assets/aafes/images/X_mobile_center_logo.png" alt="Exchange Mobile Center" title="" /></a>-->
+            </div>
+		</div>
+        <div class="col-md-8">
+            <form action="/index.cfm/go/search/do/search/" method="get">
+                <div id="search" class="searchBox">
+                    <div id="search-form-container">
+                        <input type="submit" value="" class="searchGo" />
+                        <input type="text" id="q" name="q" value="" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>        
+    <div class="navigation" role="navigation" >
+        <div class="top-nav">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav nav-tabs">
+                    <li role="presentation"><a href="/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=ReturnToShopping">Return to Shopping</a></li>
+                    <li role="presentation"><a href="#?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=MilitaryDiscount" onclick="viewMilitaryWindow('MilitaryDiscount', 'Military Discount')" col="Military Discounts">Military Discounts</a></li>
+                    <li role="presentation"><a href="#?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=MilitaryDeployment" onclick="viewMilitaryWindow('MilitaryDeployment', 'Military Deployment')" col="Military Deployment">Military Deployment</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+	<div class="head">
+		<ul class="nav nav-pills nav-justified">
+			<li role="presentation" class="active"><a href="aafes-upgrade-login.html"><span>1</span>Carrier Login</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-add-line.html"><span>2</span>Upgrade/Add a Line</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-plan-data.html"><span>3</span>Plans and Data</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-payment-protection.html"><span>4</span>Protection &amp; Services</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-accessories.html"><span>5</span>Accessories</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-cart.html"><span>6</span>Order Review</a></li>
+		</ul>
+	</div>
+	<div class="row main">
+		<div class="col-md-12">
+			<section class="content">
+				<header class="main-header">
+					<h1>Carrier Account Login</h1>
+					<p>The primary Account Holder's information is used to verify status and line availability.</p>
+				</header>
+				<img alt="" src="/images/Trustwave.gif" alt="Trustwave" class="trustwave">
+				<form>
+					<div class="right">
+						<a href="#">BACK</a>
+						<button type="submit" class="btn btn-primary">Continue</button>
+					</div>
+					<div class="form-group form-inline phone">
+						<label for="inputPhone1">Phone Number to Upgrade</label>
+						( <input type="text" class="form-control" id="inputPhone1"> )
+						<input type="text" class="form-control" id="inputPhone2"> -
+						<input type="text" class="form-control" id="inputPhone3">
+					</div>
+					<div class="form-group form-inline zip">
+						<label for="inputZip">Billing ZIP Code</label>
+						<input type="text" class="form-control" id="inputZip">
+					</div>
+					<div class="form-group form-inline ssn">
+						<label for="inputSSN">Last for Digits for Social Security Number</label>
+						<input type="text" class="form-control" id="inputSSN">
+						<a href="#">Who's SSN do I use?</a>
+					</div>
+					<div class="form-group form-inline pin">
+						<label for="inputPin">Carrier Account Passcode/PIN</label>
+						<input type="text" class="form-control" id="inputPin">
+						<a href="#">Where do I get this?</a>
+					</div>
+					<div class="right">
+						<a href="#">BACK</a>
+						<button type="submit" class="btn btn-primary btn-block">Continue</button>
+					</div>
+				</form>
+			</section>
+		</div>
+		<div class="col-md-4">
+	<div class="row totals">
+		<div class="wrap head">
+			<div class="col-xs-8">
+				Due Now
+			</div>
+			<div class="col-xs-8">
+				Monthly
+			</div>
+		</div>
+		<div class="wrap">
+			<div class="col-xs-8">
+				$0.00
+			</div>
+			<div class="col-xs-8">
+				$66.67
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<aside class="details">
+			<h3>Your Costco Member Benefit</h3>
+			<div class="row">
+				<div class="col-xs-4">
+					<img src="/images/ex-sidebar-accessories.jpg" alt="accessories picture" />
+				</div>
+				<div class="col-xs-12">
+					<div class="table-responsive">
+						<table class="table">
+							<tr>
+								<td>Costco Membership Benefits</td>
+								<td class="price">FREE</td>
+							</tr>
+							<tr>
+								<td>Includes: Car Charger, Mobile Device Mount</td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-4">
+					<img src="/images/costcocash.jpg" alt="accessories picture" />
+				</div>
+				<div class="col-xs-12">
+					<div class="table-responsive">
+						<table class="table">
+							<tr>
+								<td>$200 Costco Cash Rebate</td>
+								<td class="price">FREE</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</aside>
+	</div>
+	<div class="row">
+		<aside class="details">
+			<h3>Upgrading Line 1</h3>
+			<div class="row">
+				<div class="col-xs-4">
+					<img src="/images/ex-sidebar-phone.jpg" alt="device picture" />
+				</div>
+				<div class="col-xs-12">
+					<div class="name">Manufacturer Name, Device Name &amp; Model, Memory, Color, etc.</div>
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<th colspan="2">Carrier Financing Name</th>
+							</thead>
+							<tr>
+								<td>Due Monthly for XX Months</td>
+								<td class="price">$21.67/mo*</td>
+							</tr>
+							<tr>
+								<td>Regular Price</td>
+								<td class="price">$###.##</td>
+							</tr>
+							<tr>
+								<td>Due Today*</td>
+								<td class="price">$0.00 Down</td>
+							</tr>
+							<tr>
+								<td>Line Access Fee</td>
+								<td class="price">$45.00</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<h4>Carrier Plan</h4>
+			<div class="row">
+				<div class="col-xs-4">
+					<img src="/images/ex-sidebar-carrier.jpg" alt="carrier plan picture" />
+				</div>
+				<div class="col-xs-12">
+					<div class="name">MORE Everything<br> Talk, Text, and Data</div>
+					<div class="table-responsive">
+						<table class="table">
+							<tr>
+								<td>Due Monthly for 24 Months Regular Price Due Today*<br>Line Access Free</td>
+								<td class="price">$0.00</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<h4>Protection &amp; Services</h4>
+			<div class="row">
+				<div class="col-xs-4">
+					<img src="/images/ex-sidebar-protection.jpg" alt="protection picture" />
+				</div>
+				<div class="col-xs-12">
+					<div class="table-responsive">
+						<table class="table">
+							<tr>
+								<td>Not selected</td>
+								<td class="price">$0.00</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<h4>Accessories</h4>
+			<div class="row">
+				<div class="col-xs-4">
+					<img src="/images/ex-featured-accessories2.jpg" alt="accessories picture" />
+				</div>
+				<div class="col-xs-12">
+					<div class="table-responsive">
+						<table class="table">
+							<tr>
+								<td>Blue Case</td>
+								<td class="price">$19.99</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</aside>
+	</div>
+</div>
+	</div>
+</div>
+<footer class="container-fluid footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<!--<img alt="" src="/images/Trustwave.gif" alt="Trustwave" class="trustwave">-->
+				<img alt="" src="http://10.7.0.140/assets/aafes/images/trustwave_logo_IS.png" alt="Trustwave" class="trustwave">
+			</div>
+			<div class="col-md-8">
+				<div class="footer-links">
+					<ul>
+						<li><a href="/index.cfm/go/content/do/FAQ">FAQ</a></li>
+						<li><a href="/index.cfm/go/content/do/terms">Site Terms and Conditions</a></li>
+						<li><a href="/index.cfm/go/content/do/shipping">Shipping Policy</a></li>
+						<li><a href="/index.cfm/go/content/do/returns">Return Policy</a></li>
+						<li><a href="/index.cfm/go/content/do/serviceAgreement">Carrier Terms and Conditions</a></li>
+						<li><a href="/index.cfm/go/content/do/customerService">Customer Service</a></li>
+						<li><a href="/index.cfm/go/content/do/rebateCenter">Rebate Center</a></li>
+						<li><a href="/index.cfm/go/content/do/aboutus/">About Us</a></li>
+						<li><a href="/index.cfm/go/content/do/howShop">How to Shop</a></li>
+						<li><a href="/index.cfm/go/content/do/privacy/">Privacy Policy</a></li>
+						<li><a href="/index.cfm/go/content/do/sitemap">Site Map</a></li>
+					</ul>
+					<div class="copyright">
+						&copy; Wireless Advocates, LLC 2004 - 2015. All Rights Reserved.
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<a href="/index.cfm/go/content/do/aboutus/" class="wireless">
+					<!--<img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="/images/WirelessAdvocates_poweredBy_2.gif">-->
+					<img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="http://10.7.0.140/assets/aafes/images/WA_logo_trans.png">
+				</a>
+			</div>
+		</div>
+	</div>
+</footer>
+<script src="scripts/all.min.js"></script>
+</body>
+</html>

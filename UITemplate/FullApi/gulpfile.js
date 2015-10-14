@@ -36,6 +36,11 @@ gulp.task('html', function () {
 });
 
 gulp.task('build-less', function(){
+	gulp.src('stylesheets/aafes-global.less')
+		.pipe(less())
+		.pipe(gulp.dest('app/stylesheets'))
+		.pipe(connect.reload());
+		
 	return gulp.src('stylesheets/global.less')
 		.pipe(less())
 		.pipe(gulp.dest('app/stylesheets'))
