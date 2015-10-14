@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="stylesheets/aafes-global.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container topBar">
+	<header class="col-md-16 header">
+		<div class="content row">
+            <div class="col-md-8 linksLeft">
+                <!--<a href="/index.cfm/go/shop/do/upgrade-checker?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=UpgradeChecker">Upgrade Checker</a>
+                <a href="/index.cfm/go/content/do/storeLocator/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=StoreLocator" target="_blank">Store Locator</a>
+                <a href="http://www.aafes.com?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=ReturnToExchangeMall">Return to the Exchange Mall</a>-->
+            </div>
+            <div class="col-md-8 linksRight">
+                <!--<a href="#?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=Cart" onClick="viewCart(); return false;" id="lnkMyCart"><span></span>Your Cart</a>-->
+                <a href="/index.cfm/go/myAccount/do/view/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=SignInToAccount">Sign into Your Account</a><!-- id="lnkMyAccount"-->
+            </div>
+		</div>
+	</header>
+</div>
+
+<div class="container">
+    <div class="aafesHeader">
+        <div class="col-md-8">
+            <div class="headerLogo">
+                <a href="/" id="WAlogo"><img src="http://10.7.0.140/assets/aafes/images/X_mobile_center_logo.png" alt="Exchange Mobile Center" title="" /></a>
+                <!--<a href="/" id="WAlogo"><img src="/assets/aafes/images/X_mobile_center_logo.png" alt="Exchange Mobile Center" title="" /></a>-->
+            </div>
+		</div>
+        <div class="col-md-8">
+            <form action="/index.cfm/go/search/do/search/" method="get">
+                <div id="search" class="searchBox">
+                    <div id="search-form-container">
+                        <input type="submit" value="" class="searchGo" />
+                        <input type="text" id="q" name="q" value="" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>        
+    <div class="navigation" role="navigation" >
+        <div class="top-nav">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav nav-tabs">
+                    <li role="presentation"><a href="/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=ReturnToShopping">Return to Shopping</a></li>
+                    <li role="presentation"><a href="#?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=MilitaryDiscount" onclick="viewMilitaryWindow('MilitaryDiscount', 'Military Discount')" col="Military Discounts">Military Discounts</a></li>
+                    <li role="presentation"><a href="#?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=MilitaryDeployment" onclick="viewMilitaryWindow('MilitaryDeployment', 'Military Deployment')" col="Military Deployment">Military Deployment</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+	<div class="row main new">
+		<div class="col-md-12 col-md-offset-2">
+			<div class="row">
+				<div class="col-md-6 device">
+					<img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=180px&w=180&h=280" alt="device picture" />
+				</div>
+				<div class="col-md-10">
+					<img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=180px&w=180&h=60" alt="device picture" class="brand" />
+					<h1>Apple iPhone 6 64GB Space Gray</h1>
+					<p>&raquo; Get a better view</p>
+					<ul>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=4060&w=40&h=60" alt="device picture" /></li>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=4060&w=40&h=60" alt="device picture" /></li>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=4060&w=40&h=60" alt="device picture" /></li>
+					</ul>
+					<h3>Rebates and Specials</h3>
+					<!-- Add class .has-error to form-group for input error state -->
+<a href="#" data-toggle="modal" data-target=".verizon-customer-type">Click here for the Customer Type Modal</a>
+<div class="modal fade verizon-customer-type" tabindex="-1" role="dialog" aria-labeledby="verizonCustomerModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="verizonCustomerModalLabel">Verizon Wireless Customer Type?</h4>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-md-12">
+					<h4>Please choose from one of the options below.</h4>
+				</div>
+			 	<div class="col-md-8">
+		 		<div class="option">
+			 		<strong>Existing Verizon customer?</strong>
+			 		<p>If you're already a Verizon Wireless customer, you can Upgrade or Add a Line on your account.</p>
+			 		<button class="btn btn-primary btn-lg">Upgrade</button>
+			 		<button class="btn btn-lg">Add a Line</button>
+		 		</div>
+			 	</div>
+			 	<div class="col-md-8">
+				 	<div class="option" id="new-customer1">
+				 		<strong>New Verizon customer?</strong>
+				 		<p>If you're not already a Verizon customer, continue here.</p>
+				 		<button class="btn btn-lg center-block">New to Verizon</button>
+				 	</div>
+				 	<div class="option" id="new-customer2">
+				 		<strong>New Verizon customer?</strong>
+				 		<p>Please enter the zip codewhere you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
+					 	<div class="row">
+					 	<div class="col-md-12 col-md-offset-2">
+						 	<div class="form-group zip">
+								<label for="inputZip">ZIP Code</label>
+								<input type="text" class="form-control" id="inputZip">
+							</div>
+							<button type="button" class="btn btn-lg btn-block">See Plans</button>
+						</div>
+						</div>
+				 	</div>
+			 	</div>
+		 	</div>
+		 </div>
+		</div>
+	</div>
+</div>
+					<br>
+<a href="#" data-toggle="modal" data-target=".device-detail">Click here here for the device pop-up</a>
+<div class="modal fade device-detail" tabindex="-1" role="dialog" aria-labeledby="deviceDetailModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+			 	<div class="col-md-6">
+			 		<div class="device-main">
+						<img src="/images/ex-featured-accessories.jpg" alt="something" />
+					</div>
+					<div class="row">
+						<div class="col-md-5">
+							<a href="#" class="device-thumb">
+								<img src="/images/ex-featured-accessories.jpg" data-full-src="/images/ex-featured-accessories.jpg" alt="something" />
+							</a>
+						</div>
+						<div class="col-md-5">
+							<a href="#" class="device-thumb">
+								<img src="/images/ex-featured-accessories2.jpg" data-full-src="/images/ex-featured-accessories2.jpg" alt="something" />
+							</a>
+						</div>
+						<div class="col-md-5">
+							<a href="#" class="device-thumb">
+								<img src="/images/ex-featured-accessories.jpg" data-full-src="/images/ex-featured-accessories.jpg" alt="something" />
+							</a>
+						</div>
+					</div>
+			 	</div>
+			 	<div class="col-md-10">
+				 	<h4 id="deviceDetailModalLabel">ZAGG iPhone 6 Glass Screen Protector</h4>
+				 	<div class="description">High tempered glass provides ultimate clarity for the iPhone 6 device</div>
+				 	<ul>
+						<li>Protective: Made of fortified tempered glass it delivers unprecedented scratch protection.</li>
+						<li>Crystal Clear: HIgh-grade tempered glass provides ultimate clarity.</li>
+						<li>Guaranteed: InvisibleShield Glass is so good, it comes with a lifetime guarantee.</li>
+				 	</ul>
+					<div class="row">
+					 	<div class="col-md-8">
+					 		<div class="form-group form-inline">
+					 			<label for="inputQuantity">Quantity</label>
+								<select class="form-control" id="inputQuantity">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+					 	</div>
+					 	<div class="col-md-8 price">Price: <strong>$9.99</strong></div>
+
+				 	</div>
+				 	<button type="submit" class="btn btn-primary right">Continue</button>
+				 	<button class="btn btn-gray right" data-dismiss="modal" aria-label="Close">No Thanks</button>
+			 	</div>
+		 	</div>
+		 </div>
+		</div>
+	</div>
+</div>
+				</div>
+				<div class="col-md-16 pricing">
+					<h2>Choose Your Pricing and See the Savings</h2>
+					<div class="row">
+						<div class="col-md-4">
+							<button class="btn btn-large btn-gray btn-block" data-toggle="collapse" data-parent="#accordion"  href="#collapseOne" aria-controls="collapseOne">2 Year Contract</button>
+							<button class="btn btn-large btn-block" data-toggle="collapse" data-parent="#accordion"  href="#collapseTwo" aria-controls="collapseTwo">Verizon Monthly $21.67</button>
+							<button class="btn btn-large btn-gray btn-block" data-toggle="collapse" data-parent="#accordion"  href="#collapseThree" aria-controls="collapseThree">Full Price</button>
+						</div>
+						<div class="col-md-12">
+							<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+								<div class="panel panel-default">
+									<div class="panel-heading callout" role="tab" id="headingOne">
+										<h4 class="panel-title">
+											<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+												<div class="row">
+													<div class="col-xs-8">New</div>
+													<div class="col-xs-8">$227.99</div>
+												</div>
+											</a>
+										</h4>
+									</div>
+									<div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+										<div class="panel-body">
+											..
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading callout active" role="tab" id="headingTwo">
+										<h4 class="panel-title">
+											<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+												<div class="row">
+													<div class="col-xs-8">Verizon Monthly</div>
+													<div class="col-xs-8">$0 Down $21.67/mo</div>
+												</div>
+											</a>
+										</h4>
+									</div>
+									<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+										<div class="panel-body">
+											<table class="table table-responsive">
+												<tbody>
+													<tr>
+														<td>Full Retail Price</td>
+														<td>$749.99</td>
+													</tr>
+													<tr>
+														<td>Monthly Device Payment</td>
+														<td>$31.25 for 24 months. 0% APR</td>
+													</tr>
+													<tr>
+														<td>Due Today *</td>
+														<td>$0.00 Down</td>
+													</tr>
+												</tbody>
+											</table>
+											<p class="disclaimer">Something</p>
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading callout" role="tab" id="headingThree">
+										<h4 class="panel-title">
+											<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+												<div class="row">
+													<div class="col-xs-8">Full Retail Price</div>
+													<div class="col-xs-8">$749.99</div>
+												</div>
+											</a>
+										</h4>
+									</div>
+									<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+										<div class="panel-body">
+											<table class="table table-responsive">
+												<tbody>
+													<tr>
+														<td>Full Retail Price</td>
+														<td>$749.99</td>
+													</tr>
+													<tr>
+														<td>Monthly Device Payment</td>
+														<td>$31.25 for 24 months. 0% APR</td>
+													</tr>
+													<tr>
+														<td>Due Today *</td>
+														<td>$0.00 Down</td>
+													</tr>
+												</tbody>
+											</table>
+											<p class="disclaimer">Something</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-8">» Available Online Only</div>
+							<div class="col-md-8">
+								<button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-16 benefits">
+					<h3>Costco Membership Benefits</h3>
+					<ul class="pictures">
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=50px&w=50&h=50" alt="device picture" /></li>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=50px&w=50&h=50" alt="device picture" /></li>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=50px&w=50&h=50" alt="device picture" /></li>
+					</ul>
+					<ul>
+						<li><strong>FREE</strong> Shipping and Easy Returns</li>
+						<li><strong>FREE</strong> Accessories Bonus Pack** including a dock and car charger</li>
+						<li>**Contents of bonus pack vary by device. Also available in warehouse.</li>
+					</ul>
+
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab">Overview</a></li>
+						<li role="presentation"><a href="#specifications" aria-controls="specifications" role="tab" data-toggle="tab">Specifications</a></li>
+						<li role="presentation"><a href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab">Accessories</a></li>
+					</ul>
+
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="overview">...</div>
+						<div role="tabpanel" class="tab-pane" id="specifications">...</div>
+						<div role="tabpanel" class="tab-pane" id="accessories">...</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="container-fluid footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<!--<img alt="" src="/images/Trustwave.gif" alt="Trustwave" class="trustwave">-->
+				<img alt="" src="http://10.7.0.140/assets/aafes/images/trustwave_logo_IS.png" alt="Trustwave" class="trustwave">
+			</div>
+			<div class="col-md-8">
+				<div class="footer-links">
+					<ul>
+						<li><a href="/index.cfm/go/content/do/FAQ">FAQ</a></li>
+						<li><a href="/index.cfm/go/content/do/terms">Site Terms and Conditions</a></li>
+						<li><a href="/index.cfm/go/content/do/shipping">Shipping Policy</a></li>
+						<li><a href="/index.cfm/go/content/do/returns">Return Policy</a></li>
+						<li><a href="/index.cfm/go/content/do/serviceAgreement">Carrier Terms and Conditions</a></li>
+						<li><a href="/index.cfm/go/content/do/customerService">Customer Service</a></li>
+						<li><a href="/index.cfm/go/content/do/rebateCenter">Rebate Center</a></li>
+						<li><a href="/index.cfm/go/content/do/aboutus/">About Us</a></li>
+						<li><a href="/index.cfm/go/content/do/howShop">How to Shop</a></li>
+						<li><a href="/index.cfm/go/content/do/privacy/">Privacy Policy</a></li>
+						<li><a href="/index.cfm/go/content/do/sitemap">Site Map</a></li>
+					</ul>
+					<div class="copyright">
+						&copy; Wireless Advocates, LLC 2004 - 2015. All Rights Reserved.
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<a href="/index.cfm/go/content/do/aboutus/" class="wireless">
+					<!--<img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="/images/WirelessAdvocates_poweredBy_2.gif">-->
+					<img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="http://10.7.0.140/assets/aafes/images/WA_logo_trans.png">
+				</a>
+			</div>
+		</div>
+	</div>
+</footer>
+<script src="scripts/all.min.js"></script>
+</body>
+</html>

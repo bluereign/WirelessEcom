@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="stylesheets/aafes-global.css" rel="stylesheet" />
+</head>
+<body>
+@@include('./views/aafes-header.html')
+@@include('./views/primary-nav.html')
+<div class="container">
+	<div class="head">
+		<ul class="nav nav-pills nav-justified">
+			<li role="presentation" class="complete hidden-xs"><a href="aafes-upgrade-login.html"><span>1</span>Carrier Login</a></li>
+			<li role="presentation" class="complete hidden-xs"><a href="aafes-upgrade-add-line.html"><span>2</span>Upgrade/Add a Line</a></li>
+			<li role="presentation" class="active"><a href="aafes-upgrade-plan-data.html"><span>3</span>Plans and Data</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-payment-protection.html"><span>4</span>Protection &amp; Services</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-accessories.html"><span>5</span>Accessories</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-cart.html"><span>6</span>Order Review</a></li>
+		</ul>
+	</div>
+	<div class="row main">
+		<div class="col-md-12">
+            <section class="content plans">
+                <header class="main-header">
+                    <h1>Pick Your Plan and Data</h1>
+                    <p>Pick a Plan and the amount of Data you will use per month.</p>
+                </header>
+                <div class="plan-chooser">
+                    <button class="btn btn-primary btn-block keep-your-existing-plan" id="keep-your-existing-plan">Keep Your Existing Plan</button>
+                    <span class="plan-seperator">OR</span>
+                    <button class="btn btn-secondary btn-block" id="choose-a-new-plan">Choose A New Plan</button>
+                </div>
+                <div id="plan-options" style="display:none;">
+                    <div class="plan-seperator">OR</div>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation">
+                            <a href="#individual" aria-controls="individual" role="tab" data-toggle="tab">Shop Individual Plans</a>
+                        </li>
+                        <li role="presentation" class="active">
+                            <a href="#shared" aria-controls="shared" role="tab" data-toggle="tab">Shop Shared Plans</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#shared2" aria-controls="shared2" role="tab" data-toggle="tab">Shop Shared Plans2</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content plans-carousel">
+                        <div role="tabpanel" class="tab-pane" id="individual">
+                            <div class="carousel" id="individualCarousel">
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>1GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$50</div>
+                                        <button class="btn btn-primary btn-block" disabled="disabled">Unavailable for this device</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>1GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$50</div>
+                                        <button class="btn btn-primary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="shared">
+                            <div class="carousel" id="sharedCarousel">
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>1GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$50</div>
+                                        <button class="btn btn-primary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>1GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$50</div>
+                                        <button class="btn btn-primary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>1GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$50</div>
+                                        <button class="btn btn-primary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="shared2">
+                            <div class="carousel" id="shared2Carousel">
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>1GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$50</div>
+                                        <button class="btn btn-secondary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>1GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$50</div>
+                                        <button class="btn btn-secondary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>1GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$50</div>
+                                        <button class="btn btn-secondary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+                                <div class="info featured">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>3GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$65</div>
+                                        <button class="btn btn-secondary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>5GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$80</div>
+                                        <button class="btn btn-secondary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <a href="#">
+                                        <h3><span>MORE Everything</span> Talk, Text and Data</h3>
+                                        <ul>
+                                            <li class="large"><span>5GB</span></li>
+                                            <li>Unlimited Talk &amp; Text</li>
+                                            <li>FREE Mobile Hotspot</li>
+                                            <li>Smartphone - $40</li>
+                                        </ul>
+                                        <div class="price">$80</div>
+                                        <button class="btn btn-secondary btn-block">Select Package</button>
+                                        <div class="details-link">Plan Details</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @@include('./views/legal.html')
+            </section>
+
+		</div>
+		@@include('./views/sidebar.html')
+	</div>
+</div>
+@@include('./views/aafes-footer.html')
+<script src="scripts/all.min.js"></script>
+    
+</body>
+</html>
