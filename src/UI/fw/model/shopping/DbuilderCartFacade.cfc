@@ -948,6 +948,7 @@
 					<cfset local.thisAccessory = application.model.accessory.getDetail(local.a.getProductId()) />
 					<cfset local.idList = listAppend(local.idList,local.a.getProductId()) />
 					<cfset local.accessory = structNew() />
+					<cfset local.accessory.AccessoryGuid = local.thisAccessory.AccessoryGuid />
 					<cfset local.accessory.GersSku = local.thisAccessory.GersSku />
 					<cfset local.accessory.pageTitle = local.thisAccessory.pageTitle />
 					<cfset local.accessory.summaryTitle = local.thisAccessory.summaryTitle />
