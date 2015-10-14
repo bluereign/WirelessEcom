@@ -203,7 +203,8 @@
           prc.financed = rc.financed;
           prc.activationType = rc.financed & "-" & prc.customerType;
         } else if ( rc.paymentoption is 'fullretail') {
-          prc.activationType = rc.paymentoption & "-" & prc.customerType;
+          // prc.activationType = rc.paymentoption & "-" & prc.customerType;
+          prc.activationType = prc.customerType;
         }
 
         session.cart.setActivationType(prc.activationType);
@@ -336,7 +337,7 @@
       if (structKeyExists(session,"carrierObj")) {
         prc.subscribers = session.carrierObj.getSubscribers();
         prc.subscriberIndex = prc.cartLine.getSubscriberIndex();
-        if ( isValid("integer", prc.subscriberIndex) and arrayLen(prc.subscribers) gte prc.subscriberIndex ) {
+        if ( isValid("integer", prc.subscriberIndex) and prc.subscriberIndex gt 0 and arrayLen(prc.subscribers) gte prc.subscriberIndex ) {
           prc.subscriber = prc.subscribers[prc.subscriberIndex];
           prc.planDataExisting = prc.subscriber.getRatePlan();
           prc.activetab = "existing";
@@ -514,13 +515,11 @@
       prc.tallyboxDueMonthly = prc.tallyboxDueMonthly + prc.tallyboxFinanceMonthlyDueAmount;
       prc.tallyboxDueNow = prc.tallyboxDueNow + prc.tallyboxFinanceMonthlyDueToday;
 
-      
-      // Started applying Cart Logic.  However, shouldn't be necessary since passing rc.pid, rc.type, etc.
+      // GET CART DETAILS FOR DISPLAY:
       if ( structKeyExists(prc,"cartLines") and arrayLen(prc.cartLines) gte rc.cartLineNumber ) {
-        
         prc.cartLine = prc.cartLines[rc.cartLineNumber];
-
         prc.selectedPhone = application.model.phone.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+        
         if ( !prc.selectedPhone.recordCount ) {
           prc.selectedPhone = application.model.tablet.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
         }
@@ -541,8 +540,13 @@
         }
 
         prc.thisLineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
-
         prc.lineFeatures = prc.cartLine.getFeatures();
+        prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
+
+
+        // getAccessories and Qty:
+
+
       
       }
       // <end tally box
@@ -871,7 +875,6 @@
     <cfparam name="prc.showAddAnotherDeviceButton" default="true" />
     <cfparam name="prc.showCheckoutnowButton" default="true" />
     <cfparam name="prc.showClearCartLink" default="true" />
-
 
     <!--- Remove empty cart lines --->
     <!--- <cfset application.model.CartHelper.removeEmptyCartLines() /> --->
