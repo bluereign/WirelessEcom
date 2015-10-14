@@ -14,7 +14,7 @@
       <cfif structKeyExists(rc,"line")>
         <input type="hidden" name="line" value="#rc.line#" />
       </cfif> --->
-      <section class="content">
+      <section class="content plans">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
           <p>Pick a Plan and the amount of Data you will use per month.</p> <!--- ( ZIP: #session.cart.getZipcode()# ) --->
@@ -25,30 +25,37 @@
           </cfif> --->
           <!--- <a data-toggle="modal" href="##planModal" class="btn btn-primary btn-sm">Plan modal</a></p> --->
         </header>
-        <ul class="nav nav-tabs">
-          
-          <!--- EXISTING --->
-          <cfif structKeyExists(session,"carrierObj") and structKeyExists(prc,"planDataExisting") >
-            <li role="presentation" <cfif prc.activetab is 'existing'>class="active"</cfif> >
-              <a href="##existing" aria-controls="shared" role="tab" data-toggle="tab">Existing Plans</a>
-            </li>
-          </cfif>
-          
-          <!--- INDIVIDUAL --->
-          <li role="presentation" <cfif prc.activetab is 'individual'>class="active"</cfif> >
-            <a href="##individual" aria-controls="individual" role="tab" data-toggle="tab">Individual Plans</a>
-          </li>
-          
-          <!--- SHARED --->
-          <cfif prc.planDataShared.recordcount>
-            <li role="presentation">
-              <a href="##shared" aria-controls="shared" role="tab" data-toggle="tab">Shared Plans</a>
-            </li>
-          </cfif>
+		<div class="plan-chooser">
+			<button class="btn btn-primary btn-block keep-your-existing-plan" id="keep-your-existing-plan">Keep Your Existing Plan</button>
+			<span class="plan-seperator">OR</span>
+			<button class="btn btn-secondary btn-block" id="choose-a-new-plan">Choose A New Plan</button>
+		</div>
+		<div id="plan-options" style="display:none;">
+			<div class="plan-seperator">OR</div>
+			<ul class="nav nav-tabs">
+			  
+			  <!--- EXISTING --->
+			  <cfif structKeyExists(session,"carrierObj") and structKeyExists(prc,"planDataExisting") >
+				<li role="presentation" <cfif prc.activetab is 'existing'>class="active"</cfif> >
+				  <a href="##existing" aria-controls="shared" role="tab" data-toggle="tab">Existing Plans</a>
+				</li>
+			  </cfif>
+			  
+			  <!--- INDIVIDUAL --->
+			  <li role="presentation" <cfif prc.activetab is 'individual'>class="active"</cfif> >
+				<a href="##individual" aria-controls="individual" role="tab" data-toggle="tab">Individual Plans</a>
+			  </li>
+			  
+			  <!--- SHARED --->
+			  <cfif prc.planDataShared.recordcount>
+				<li role="presentation">
+				  <a href="##shared" aria-controls="shared" role="tab" data-toggle="tab">Shared Plans</a>
+				</li>
+			  </cfif>
 
-        </ul>
-
-        <div class="tab-content plans">
+			</ul>
+		
+			<div class="tab-content plans">
           
           <!--- EXISTING --->
           <cfif structKeyExists(session,"carrierObj") and structKeyExists(prc,"planDataExisting") >
@@ -151,7 +158,8 @@
         </div>
       </section>
     </form>
-  </div>
+		</div>
+ </div>
 
 
 
