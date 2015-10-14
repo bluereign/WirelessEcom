@@ -299,13 +299,21 @@
         if ( ! (structKeyExists(rc,"accessoryqty") and isValid("integer", rc.accessoryqty)) ) {
           rc.accessoryqty = 1;
         }
+        // cartArgs = {
+        //   productType = "accessory",
+        //   product_id = addaccessory,
+        //   qty = rc.accessoryqty,
+        //   cartLineNumber = rc.cartLineNumber
+        // };
+        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+
         cartArgs = {
-          productType = "accessory",
+          cartLineNumber = rc.cartLineNumber,
           product_id = addaccessory,
-          qty = rc.accessoryqty,
-          cartLineNumber = rc.cartLineNumber
+          qty = rc.accessoryqty
         };
-        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
+        
       }
 
       if ( structKeyExists(rc,"removeaccessory") ) {
@@ -541,9 +549,10 @@
           prc.selectedPlan = application.model.plan.getByFilter(idList = prc.cartLine.getPlan().getProductID());
         }
 
-        prc.thisLineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
+        prc.lineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
         prc.lineFeatures = prc.cartLine.getFeatures();
         prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
+        
 
 
         // getAccessories and Qty:
@@ -883,6 +892,7 @@
     <!--- TODO:  apply rebates logic from cfc/model/LineService.cfc --->
     <cfscript>
       // prc.subscribers = session.carrierObj.getSubscribers();
+      prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart');
       prc.includeTallyBox = false;
     </cfscript>

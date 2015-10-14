@@ -726,12 +726,12 @@
 									</tr>
 								</cfif>
 							
-								<cfset local.thisLineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line=local.iCartLine, 
+								<cfset local.lineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line=local.iCartLine, 
 								                                                                                                type='bundled')/>
 							
-								<cfif arrayLen(local.thisLineBundledAccessories)>
-									<cfloop from="1" to="#arrayLen(local.thisLineBundledAccessories)#" index="local.iAccessory">
-										<cfset local.thisAccessory = local.thisLineBundledAccessories[local.iAccessory]/>
+								<cfif arrayLen(local.lineBundledAccessories)>
+									<cfloop from="1" to="#arrayLen(local.lineBundledAccessories)#" index="local.iAccessory">
+										<cfset local.thisAccessory = local.lineBundledAccessories[local.iAccessory]/>
 										<cfset local.selectedAccessory = application.model.accessory.getByFilter(idList=local.thisAccessory.getProductID())/>
 										<cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(local.selectedAccessory.accessoryGuid)/>
 										<cfset local.deviceGuidList = listAppend(local.deviceGuidList, 

@@ -67,9 +67,9 @@
                   </tr>
                 </cfif>
 
-                <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getPlan().hasBeenSelected() and structKeyExists(prc,"thisLineBundledAccessories") and arrayLen(prc.thisLineBundledAccessories)>
-                  <cfloop from="1" to="#arrayLen(prc.thisLineBundledAccessories)#" index="local.iAccessory">
-                    <cfset local.thisAccessory = prc.thisLineBundledAccessories[local.iAccessory] />
+                <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getPlan().hasBeenSelected() and structKeyExists(prc,"lineBundledAccessories") and arrayLen(prc.lineBundledAccessories)>
+                  <cfloop from="1" to="#arrayLen(prc.lineBundledAccessories)#" index="local.iAccessory">
+                    <cfset local.thisAccessory = prc.lineBundledAccessories[local.iAccessory] />
                     <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
                     <tr>
                       <td>Accessory: #prc.selectedPlan.carrierName# - #local.selectedAccessory.summaryTitle#</td>
