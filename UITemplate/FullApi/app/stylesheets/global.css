@@ -7080,19 +7080,6 @@ button.close {
   background-image: linear-gradient(top, #70c342, #599f33);
   background-repeat: repeat-x;
 }
-.btn.btn-primary[disabled] {
-  background-color: #ffffff;
-  background-image: -moz-linear-gradient(top, #ffffff, #ffffff);
-  background-image: -ms-linear-gradient(top, #ffffff, #ffffff);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#ffffff));
-  background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
-  background-image: -o-linear-gradient(top, #ffffff, #ffffff);
-  background-image: linear-gradient(top, #ffffff, #ffffff);
-  background-repeat: repeat-x;
-  border-color: transparent;
-  color: #6b6b6b;
-  opacity: .8;
-}
 .btn.btn-primary:hover,
 .btn.btn-primary:focus {
   background-color: #599f33;
