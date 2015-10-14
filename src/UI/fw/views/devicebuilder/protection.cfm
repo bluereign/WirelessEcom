@@ -55,8 +55,7 @@
               </cfif>                
             </label>
           </div>
-            
-          <!--- <cfdump var="#prc.productData#"> --->
+          
           <div class="radio">
             <label>
               <input type="radio" name="paymentoption" value="fullretail" <cfif prc.paymentoption is 'fullretail'>checked</cfif> onchange="onChangeHandler(this.form,'fullretail')">
@@ -100,11 +99,23 @@
           <hr />
           <h4 id="h4AdditionalServices" style="display: none;">Additional Service</h4>
 
+
           <cfset prc.serviceCounter = 0>
           <cfloop query="prc.groupLabels">
-            
-            <cfset serviceLabels = application.model.serviceManager.getServiceMasterLabelsByGroup(groupGUID = prc.groupLabels.ServiceMasterGroupGuid, rateplanId = prc.cartPlan.productGuid, deviceId = prc.productData.productGuid, showActiveOnly = true, cartTypeId = prc.cartTypeId) />
 
+            <cfset local.servicesArgs = {
+              groupGUID = prc.groupLabels.ServiceMasterGroupGuid,
+              deviceId = prc.productData.productGuid,
+              showActiveOnly = true,
+              cartTypeId = prc.cartTypeId
+              } />
+            
+            <cfif len(prc.cartPlan)>
+              <cfset local.serviceArgs.rateplanId = prc.cartPlan.productGuid />
+            </cfif>
+            
+            <cfset serviceLabels = application.model.serviceManager.getServiceMasterLabelsByGroup( argumentCollection = local.servicesArgs ) />
+            
             <cfset prc.groupInputType = 'checkbox' />
             <cfset prc.hasNoneOption = false />
             <cfset prc.defaultIndex = 0 />
