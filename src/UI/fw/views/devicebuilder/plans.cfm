@@ -25,22 +25,22 @@
           </cfif> --->
           <!--- <a data-toggle="modal" href="##planModal" class="btn btn-primary btn-sm">Plan modal</a></p> --->
         </header>
+		
+		<cfif structKeyExists(session,"carrierObj")>
 		<div class="plan-chooser">
 			<button class="btn btn-primary btn-block keep-your-existing-plan" id="keep-your-existing-plan">Keep Your Existing Plan</button>
 			<span class="plan-seperator">OR</span>
 			<button class="btn btn-secondary btn-block" id="choose-a-new-plan">Choose A New Plan</button>
 		</div>
-		<div id="plan-options" style="display:none;">
-			<div class="plan-seperator">OR</div>
+		</cfif>
+		
+		<cfif structKeyExists(session,"carrierObj") and structKeyExists(prc,"planDataExisting") >
+			<div id="plan-options" style="display:none;">
+				<div class="plan-seperator">OR</div>
+		<cfelse>
+			<div id="plan-options">
+		</cfif>
 			<ul class="nav nav-tabs">
-			  
-			  <!--- EXISTING --->
-			  <cfif structKeyExists(session,"carrierObj") and structKeyExists(prc,"planDataExisting") >
-				<li role="presentation" <cfif prc.activetab is 'existing'>class="active"</cfif> >
-				  <a href="##existing" aria-controls="shared" role="tab" data-toggle="tab">Existing Plans</a>
-				</li>
-			  </cfif>
-			  
 			  <!--- INDIVIDUAL --->
 			  <li role="presentation" <cfif prc.activetab is 'individual'>class="active"</cfif> >
 				<a href="##individual" aria-controls="individual" role="tab" data-toggle="tab">Individual Plans</a>
@@ -55,50 +55,7 @@
 
 			</ul>
 		
-			<div class="tab-content plans">
-          
-          <!--- EXISTING --->
-          <cfif structKeyExists(session,"carrierObj") and structKeyExists(prc,"planDataExisting") >
-            <div role="tabpanel" class="tab-pane <cfif prc.activetab is 'existing'>active</cfif>" id="existing">
-              <div class="carousel" id="existingCarousel">
-              <cfif prc.planDataExisting.recordcount>
-                <cfloop query="prc.planDataExisting">
-                  <div class="info">
-                    <a href="##">
-                      <h3><span>#prc.planDataExisting.DetailTitle# - Existing</span></h3>
-                      <ul>
-                        <li class="large"><span>#prc.planDataExisting.DataLimitGB# GB</span></li>
-                      </ul>
-                      <div style="align:center;padding:20px;">#prc.planDataExisting.SummaryDescription#</div>
-                      <div class="price">#dollarFormat(prc.planDataExisting.MonthlyFee)#</div>
-                      <cfif prc.existingPlanEligible>
-                        <button class="btn btn-dark-gray btn-block" name="planid" value="#prc.planDataExisting.productid#">Select Package</button>
-                        <div class="details-link" data-toggle="modal" data-target="##planModal" 
-                          href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planDataExisting.productid#/cartLineNumber/#rc.cartLineNumber#" >Plan Details</div>
-                      <cfelse>
-                        <button class="btn btn-secondary btn-block" disabled="disabled">Unavailable for this device</button>
-                      </cfif>
-                    </a>
-                  </div>
-                </cfloop>
-              <cfelse>
-                <div class="info">
-                  <a href="##">
-                  <h3><span>Your Existing Plan - Existing</span></h3>
-                    <ul>
-                      <li class="large"><span>Unknown GB</span></li>
-					</ul>
-					<!--- <div style="align:center;padding:20px;">Description - unavailable</div> --->
-					<div class="price">Price - unavailable</div>
-					<button class="btn btn-primary btn-block" disabled="disabled">Unavailable for this device</button>
-                  </a>
-                </div>
-              </cfif>
-
-
-              </div>
-            </div> <!--- tab-pane --->
-          </cfif>
+			<div class="tab-content plans-carousel">
           
           <!--- INDIVIDUAL --->
           <div role="tabpanel" class="tab-pane <cfif prc.activetab is 'individual'>active</cfif>" id="individual">
@@ -151,6 +108,7 @@
           </cfif>
 
         </div> <!--- tab-content plans --->
+		</div>
         <div class="legal">
           <p>Legal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
           <p>**Legal Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
@@ -158,7 +116,7 @@
         </div>
       </section>
     </form>
-		</div>
+		
  </div>
 
 

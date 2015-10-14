@@ -90,7 +90,8 @@ $(document).ready(function() {
 		}
 	});
 
-	$('.plans #choose-a-new-plan').on('click', function () {
+	$('.plans #choose-a-new-plan').on('click', function (e) {
+	    e.preventDefault();
 	    $('#plan-options').show();
 	    $('.plan-chooser .plan-seperator').hide();
 	    $('#choose-a-new-plan').hide();
