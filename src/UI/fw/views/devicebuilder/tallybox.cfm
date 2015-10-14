@@ -1,3 +1,4 @@
+<cfparam name="prc.tallyBoxHeader" default="Upgrading" />
 <cfoutput>
   <!--- <Tally Box --->
   <div class="col-md-4">
