@@ -213,7 +213,7 @@
                     <tr>
                       <td>
                         <!--- <cfdump var="#prc.lineAccessories[i]#"> --->
-                        #prc.lineAccessories[i].detailTitle# x #prc.lineAccessories[i].qty#
+                        #prc.lineAccessories[i].detailTitle# <cfif prc.lineAccessories[i].qty gt 1>x #prc.lineAccessories[i].qty#</cfif>
                       </td>
                       <td class="price">
                         #dollarFormat(prc.lineAccessories[i].price_subTotal)#

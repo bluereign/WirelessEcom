@@ -242,45 +242,8 @@
 
                       <!--- Plan --->
                       <cfif local.cartLine.getPlan().hasBeenSelected()>
-                        
                         <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />  <!--- from cfc/view/Cart.cfc line 441 --->
                         <!---- Upgrades do not have the activation fee waived --->
-                        
-                        <!--- PLAN: No longer need as the plan will be first line item in Order Review. --->
-                        <!--- <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
-                          <cfset local.upgradeFee = local.carrierObj.getUpgradeFee( session.cart.getCarrierID() )>
-                          <div class="col-md-12 col-xs-11">
-                            Plan: #local.selectedPlan.carrierName# - #local.selectedPlan.summaryTitle#
-                            <br/><em>Upgrade Fee of <cfif local.upgradeFee>$#local.upgradeFee#<cfelse>$18.00</cfif> * </em>
-                          </div>
-                          <div class="col-md-4 col-xs-5">
-                            #dollarFormat(local.selectedPlan.planPrice)#/mo
-                            <br/>&nbsp;*
-                          </div>
-
-                        <cfelse>
-
-                          <cfset local.activationFee = local.carrierObj.getActivationFee( session.cart.getCarrierID() )>
-                          <cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>
-                            <div class="col-md-12 col-xs-11">
-                              Plan: #local.selectedPlan.carrierName# - #local.selectedPlan.summaryTitle#
-                              <br/><em>Free Activation Fee
-                              <span class="activationFeeDisclaimer">(<a href="##" class="activationFeeExplanation" onclick="viewActivationFeeInWindow('activationFeeWindow', 'Activation Fee Details', '/index.cfm/go/cart/do/explainActivationFee/carrierId/#session.cart.getCarrierId()#');return false;">#dollarFormat(local.cartLine.getActivationFee().getPrices().getFirstBill())#</a> refunded by <cfif isDefined('local.selectedPlan.carrierID') and local.selectedPlan.carrierID eq 42>Wireless Advocates, LLC<cfelse>your carrier</cfif> - see details below <sup class="cartReview"><a href="##footnote4">4</a></sup>)</span></em>
-                            </div>
-                            <div class="col-md-4 col-xs-5">
-                              #dollarFormat(local.selectedPlan.planPrice)#/mo
-                            <br/>$0.00</div>
-                          <cfelse>
-                            <div class="col-md-12 col-xs-11">
-                              Plan: #local.selectedPlan.carrierName# - #local.selectedPlan.summaryTitle#
-                              <br/>Activation Fee
-                            </div>
-                            <div class="col-md-4 col-xs-5">(#dollarFormat(local.activationFee)# - see details below <sup class="cartReview"><a href="##footnote4">4</a></sup>)</div>  
-                          </cfif>
-
-                        </cfif> --->
-                        <!--- end CONTAINS 'upgrade' --->
-                        
                       </cfif> <!--- end local.cartLine.getPlan().hasBeenSelected() --->
 
                       <!--- Services --->
@@ -308,7 +271,6 @@
 
 
                       <!--- Line Accessories --->
-                      
                       <cfset local.lineAccessories = application.model.dBuilderCartFacade.getAccessories(local.iCartLine) />
               
                       <cfif isArray(local.lineAccessories) and arrayLen(local.lineAccessories)>
@@ -320,38 +282,6 @@
                         <div class="col-md-12 col-xs-11">No accessories selected for this device</div>
                         <div class="col-md-4 col-xs-5">&nbsp;</div>
                       </cfif>
-
-
-                      <!--- from cfc/view/Cart.cfc line 705 --->
-                      <!--- <cfif arrayLen(local.cartLine.getAccessories())>
-                        <cfset local.selectedAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = local.iCartLine, type = 'accessory') />
-                        <cfloop from="1" to="#arrayLen(local.selectedAccessories)#" index="local.iAccessory">
-                          <cfset local.thisAccessory = local.selectedAccessories[local.iAccessory] />
-                          <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
-                          <cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(local.selectedAccessory.accessoryGuid) />
-                          <cfset local.deviceGuidList = listAppend(local.deviceGuidList, local.selectedAccessory.accessoryGuid) />
-
-                          <cfif structKeyExists(local.stcPrimaryImage, local.selectedAccessory.accessoryGuid)>
-                            <cfset imageDetail = {
-                                src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[local.selectedAccessory.accessoryGuid], height = 0, width = 75)
-                                , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
-                                , width = 75
-                            } />
-                          <cfelse>
-                            <cfset imageDetail = {
-                              src = '#getAssetPaths().common#images/catalog/noimage.jpg'
-                              , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
-                              , width = 75
-                            } />
-                          </cfif>
-
-                          <div class="col-md-12 col-xs-11">Accessory: #local.selectedAccessory.summaryTitle#</div>
-                          <div class="col-md-4 col-xs-5">#dollarFormat(local.selectedAccessories[local.iAccessory].getPrices().getDueToday())#</div>
-                        </cfloop>
-                      <cfelse>
-                        <div class="col-md-12 col-xs-11">No accessories selected for this device</div>
-                        <div class="col-md-4 col-xs-5">&nbsp;</div>
-                      </cfif> --->
 
 
                       <!--- Line warranty --->
@@ -388,6 +318,7 @@
 
             </cfloop>
 
+
             <!--- <ADDITIONAL ITEMS --->
             <cfset local.selectedAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = request.config.otherItemsLineNumber, type = 'accessory') />
             <cfset local.thisPrepaids = application.model.cartHelper.lineGetAccessoriesByType(line = request.config.otherItemsLineNumber, type = 'prepaid') />
@@ -400,6 +331,7 @@
               <cfset local.total_dueToday_other = 0 />
               <cfset local.total_firstBill_other = 0 />
               <cfset local.total_monthly_other = 0 />
+
 
 
               <!--- Prepaid --->
@@ -468,18 +400,19 @@
               </cfif>
 
 
-<!--- <cfdump var="#prc.additionalAccessories#"><cfabort> --->
+
               <!--- Accessories --->
               <cfif arrayLen(prc.additionalAccessories)>
                 <cfloop from="1" to="#arrayLen(prc.additionalAccessories)#" index="i">
-                  <!--- <cfset imageDetail = {
-                      src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[local.selectedAccessory.accessoryGuid], height = 0, width = 130)
-                      , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
-                      , width = 75
-                  } /> --->
+                      <cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(prc.additionalAccessories[i].accessoryGuid) />
+                      <cfset local.imageDetail = {
+                            src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[prc.additionalAccessories[i].accessoryGuid], height = 0, width = 130)
+                            , alt = htmlEditFormat(prc.additionalAccessories[i].detailTitle)
+                            , width = 75
+                        } />
                   <div class="row">
                     <div class="col-md-2 col-xs-6 item">
-                      <!--- <img src="#imageDetail.src#" alt="#imageDetail.alt#" /> --->
+                      <img src="#local.imageDetail.src#" alt="#local.imageDetail.alt#" />
                     </div>
                     <div class="col-md-8 col-xs-10 data">
                       <h3>#prc.additionalAccessories[i].detailTitle#</h3>
@@ -491,66 +424,6 @@
                   </div>
                 </cfloop>
               </cfif>
-
-
-
-              <cfif arrayLen(local.selectedAccessories) gt 0>
-                <cfloop from="1" to="#arrayLen(local.selectedAccessories)#" index="local.iAccessory">
-                  <cfset local.thisAccessory = local.selectedAccessories[local.iAccessory] />
-
-                  <cfif local.thisAccessory.getType() is 'accessory'>
-                    <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
-                    <cfset local.deviceGuidList = listAppend(local.deviceGuidList, local.selectedAccessory.accessoryGuid) />
-                    <cfif local.selectedAccessory.recordCount>
-                      <cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(local.selectedAccessory.accessoryGuid) />
-
-                      <cfif structKeyExists(local.stcPrimaryImage, local.selectedAccessory.accessoryGuid)>
-                        <cfset imageDetail = {
-                            src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[local.selectedAccessory.accessoryGuid], height = 0, width = 130)
-                            , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
-                            , width = 75
-                        } />
-                      <cfelse>
-                        <cfset imageDetail = {
-                          src = '#getAssetPaths().common#images/catalog/noimage.jpg'
-                          , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
-                          , width = 75
-                        } />
-                      </cfif>
-                      <cfset arrayAppend(local.imageUrls, imageDetail) />
-
-                      <!--- <cfset local.linkDetails = getLink(lineNumber = request.config.otherItemsLineNumber, do = 'accessoryDetails', productID = local.selectedAccessory.product_id) /> --->
-                      <cfset local.total_dueToday_other = (local.total_dueToday_other + local.thisAccessory.getPrices().getDueToday()) />
-
-                      <div class="row">
-                        <div class="col-md-2 col-xs-6 item">
-                          <img src="#imageDetail.src#" alt="#imageDetail.alt#" />
-                        </div>
-                        <div class="col-md-8 col-xs-10 data">
-                          <h3>#local.selectedAccessory.summaryTitle#</h3>
-                        </div>
-                        <div class="col-md-2 col-xs-16 quantity">1 <a href="##">Remove</a>
-                        </div>
-                        <div class="col-md-2 col-xs-16 monthly"> <span class="visible-xs-inline">Monthly</span></div>
-                        <div class="col-md-2 col-xs-16 due">#dollarFormat(local.thisAccessory.getPrices().getDueToday())# <span class="visible-xs-inline">Due Today</span></div>
-                      </div>
-
-                      
-                    </cfif>
-                  </cfif>
-                </cfloop>
-              <cfelse>
-                <!---
-                **
-                * Provide add more accessories option.
-                **
-                --->
-              </cfif>
-
-      
-              
-
-
 
 
           </cfif>
