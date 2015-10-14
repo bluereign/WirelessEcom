@@ -308,7 +308,22 @@
 
 
                       <!--- Line Accessories --->
-                      <cfif arrayLen(local.cartLine.getAccessories())>  <!--- from cfc/view/Cart.cfc line 705 --->
+                      
+                      <cfset local.lineAccessories = application.model.dBuilderCartFacade.getAccessories(local.iCartLine) />
+              
+                      <cfif isArray(local.lineAccessories) and arrayLen(local.lineAccessories)>
+                        <cfloop from="1" to="#arrayLen(local.lineAccessories)#" index="i">
+                          <div class="col-md-12 col-xs-11">Accessory: #local.lineAccessories[i].detailTitle# <cfif local.lineAccessories[i].qty gt 1> x #local.lineAccessories[i].qty#</cfif></div>
+                          <div class="col-md-4 col-xs-5">#dollarFormat(local.lineAccessories[i].price_subTotal)#</div>
+                        </cfloop>
+                      <cfelse>
+                        <div class="col-md-12 col-xs-11">No accessories selected for this device</div>
+                        <div class="col-md-4 col-xs-5">&nbsp;</div>
+                      </cfif>
+
+
+                      <!--- from cfc/view/Cart.cfc line 705 --->
+                      <!--- <cfif arrayLen(local.cartLine.getAccessories())>
                         <cfset local.selectedAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = local.iCartLine, type = 'accessory') />
                         <cfloop from="1" to="#arrayLen(local.selectedAccessories)#" index="local.iAccessory">
                           <cfset local.thisAccessory = local.selectedAccessories[local.iAccessory] />
@@ -336,7 +351,7 @@
                       <cfelse>
                         <div class="col-md-12 col-xs-11">No accessories selected for this device</div>
                         <div class="col-md-4 col-xs-5">&nbsp;</div>
-                      </cfif>
+                      </cfif> --->
 
 
                       <!--- Line warranty --->
@@ -453,8 +468,32 @@
               </cfif>
 
 
-
+<!--- <cfdump var="#prc.additionalAccessories#"><cfabort> --->
               <!--- Accessories --->
+              <cfif arrayLen(prc.additionalAccessories)>
+                <cfloop from="1" to="#arrayLen(prc.additionalAccessories)#" index="i">
+                  <!--- <cfset imageDetail = {
+                      src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[local.selectedAccessory.accessoryGuid], height = 0, width = 130)
+                      , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
+                      , width = 75
+                  } /> --->
+                  <div class="row">
+                    <div class="col-md-2 col-xs-6 item">
+                      <!--- <img src="#imageDetail.src#" alt="#imageDetail.alt#" /> --->
+                    </div>
+                    <div class="col-md-8 col-xs-10 data">
+                      <h3>#prc.additionalAccessories[i].detailTitle#</h3>
+                    </div>
+                    <div class="col-md-2 col-xs-16 quantity">#prc.additionalAccessories[i].qty# <a href="##">Remove</a>
+                    </div>
+                    <div class="col-md-2 col-xs-16 monthly"> <span class="visible-xs-inline">Monthly</span></div>
+                    <div class="col-md-2 col-xs-16 due">#dollarFormat(prc.additionalAccessories[i].price_subTotal)# <span class="visible-xs-inline">Due Today</span></div>
+                  </div>
+                </cfloop>
+              </cfif>
+
+
+
               <cfif arrayLen(local.selectedAccessories) gt 0>
                 <cfloop from="1" to="#arrayLen(local.selectedAccessories)#" index="local.iAccessory">
                   <cfset local.thisAccessory = local.selectedAccessories[local.iAccessory] />
