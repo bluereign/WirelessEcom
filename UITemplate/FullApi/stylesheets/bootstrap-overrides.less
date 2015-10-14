@@ -81,12 +81,20 @@
 		.green-gradient;
 
 		&[disabled] {
+			.gradient(#fff, #fff, #fff);
+			border-color: transparent;
+			color: @default-text;
+			opacity: .8;
 		}
 		&:hover,
 		&:focus {
 			.gradient(lighten(@primary-button, 0%), @primary-button, @primary-button);
 			border-color: transparent;
-		color: #fff;
+		    color: #fff;
+            &[disabled] {
+			    .gradient(#fff, #fff, #fff);
+		        color: @default-text;
+            }
 		}
 	}
 
