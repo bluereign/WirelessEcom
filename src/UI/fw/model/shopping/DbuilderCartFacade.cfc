@@ -1029,7 +1029,12 @@
 		<cfset local.cartLines = session.cart.getLines() />
 		<cfset local.cartLine = local.cartLines[arguments.cartLineNo] />
 		<cfset local.device = structNew() />
+		<cfif local.cartLine.getPhone().getProductID() is 0>
+			<cfreturn local.device />
+		</cfif>
 		<cfset local.device.cartItem = local.cartLine.getPhone() />
+		
+		
 
 		<cfset local.device.productDetail = CreateObject('component', 'cfc.model.Product').init() /> 
 		<cfset local.device.productDetail.getProduct(productId=local.cartLine.getPhone().getProductID()) />
@@ -1091,12 +1096,16 @@
 	
 	</cffunction>
 	
-	<cffunction name="getFeatures" returntype="query" >
+	<cffunction name="getFeatures" returntype="any" >
 		<cfargument name="cartLineNo" type="numeric" required="true" />
 	
 		<cfset var local = structNew() />
 		<cfset local.featureIds = application.model.carthelper.getLineSelectedFeatures(arguments.cartLineNo) />		
-		<cfreturn  application.model.Feature.getByProductId(local.featureIds) />
+		<cfif listLen(local.featureIds)>
+			<cfreturn  application.model.Feature.getByProductId(local.featureIds) />
+		<cfelse>
+			<cfreturn "">
+		</cfif>
 	</cffunction>
 	
 	

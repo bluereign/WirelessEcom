@@ -21,7 +21,7 @@
 <cfset phonePrices = "799.99,199.00,299,98" />
 <cfset phoneMandatoryDownPaymentPct = "10,15,5" />
 <cfset phoneOptionalDownPaymentPct = "0,0,10" />
-<cfset accessoryids = "515,10099,25766,4212,26626,45144" />
+<cfset accessoryids = "515,25766,4212,26626,26721" />
 
 <cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">
 <hr/>		
@@ -149,9 +149,11 @@ Result = #resultStr#
 <hr/>
 Get the Phone for each line in the cart:
 <cfloop from="1" to ="#session.Carthelper.getNumberOfLines()#" index="ln">
-<br/>application.model.dBuilderCartFacade.getDevice(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getDevice(ln)#" />
-<br/>application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()
-<br/>#application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()#
+	<cfif not structIsEmpty(application.model.dBuilderCartFacade.getDevice(ln))>
+		<br/>application.model.dBuilderCartFacade.getDevice(#ln#) = <cfdump var="#application.model.dBuilderCartFacade.getDevice(ln)#" />
+		<br/>application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()
+		<br/>#application.model.dBuilderCartFacade.getDevice(ln).cartItem.dump()#
+	</cfif>
 </cfloop>
 
 <hr/>
