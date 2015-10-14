@@ -154,6 +154,36 @@
 <!--- <end accessories view --->
 
 
+<cfif listFindNoCase("devicebuilder.orderreview", event.getCurrentEvent())>
+  <script>
+    function showHideTextDevice(text) {
+      var SHOW_TEXT = 'Show Device Details',
+      HIDE_TEXT = 'Hide Device Details';
+
+      return  text === SHOW_TEXT ? HIDE_TEXT : SHOW_TEXT;
+    }
+
+    $(function() {
+      // Swap text on Show/Hide Cart Details
+      $('.device-details').on('click', function() {
+        var $this = $(this);
+
+        $(this).text(showHideTextDevice($this.text()));
+      });
+
+      // add OnChange to the select
+      $('.accessoryqty').on('change', function() {
+        var thisid = $(this).attr('id');
+        var thisqty = $(this).val();
+        $('##addaccessory').val(thisid);
+        $('##accessoryqty').val(thisqty);
+        $('##formCheckout').submit();
+      });
+    });
+  </script>
+
+</cfif>
+
 <!--- clear data from Bootstrap 3 modals to load dynamic data --->
 <script>
   $(function() {

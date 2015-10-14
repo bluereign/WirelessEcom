@@ -886,7 +886,8 @@
 		<cfif not arguments.cartLineNumber or arguments.cartLineNumber eq request.config.otherItemsLineNumber>
 		</cfif>
 		
-		<cfif arguments.cartLineNumber gt 0 AND arguments.cartLineNumber LTE session.Carthelper.getNumberOfLines()>
+		<cfif arguments.cartLineNumber gt 0 AND (arguments.cartLineNumber LTE session.Carthelper.getNumberOfLines() OR arguments.cartLineNumber eq request.config.otherItemsLineNumber)>
+
 			<cfset local.cartItemQty = getItemCount(arguments.cartLineNumber,arguments.product_id) />
 
 			<cfif arguments.qty is not local.cartItemQty>

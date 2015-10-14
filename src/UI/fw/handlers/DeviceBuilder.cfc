@@ -129,40 +129,47 @@
       }
       
       prc.cartLines = session.cart.getLines();
-      
-      if (arrayLen(prc.cartLines)) {
-        prc.cartLine = prc.cartLines[rc.cartLineNumber];
-        prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
-      } else {
-        relocate( prc.browseDevicesUrl );
-      }
-      
-      
-
-      // GET CARTLINE DEVICE INFO
-      // Phone details and images:
-      // FIRST NEED TO PULL DEVICE FROM CARTLINE
-      if (!structKeyExists(prc,"productData")) {
-        prc.productData = application.model.phone.getByFilter(idList = prc.device.getProductId(), allowHidden = true);
-      }
+      prc.customerType = listLast(session.cart.getActivationType(), '-');
       if (!structKeyExists(prc,"productService")) {
         prc.productService = application.wirebox.getInstance( "ProductService" );
       }
-      if (!structKeyExists(prc,"productImages")) {
-       prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
+
+      
+
+      // if not adding an accessory from the order review page
+      if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
+
+        if (arrayLen(prc.cartLines)) {
+          prc.cartLine = prc.cartLines[rc.cartLineNumber];
+          prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+        } else {
+          relocate( prc.browseDevicesUrl );
+        }
+
+        // GET CARTLINE DEVICE INFO
+        // Phone details and images:
+        // FIRST NEED TO PULL DEVICE FROM CARTLINE
+        if (!structKeyExists(prc,"productData")) {
+          prc.productData = application.model.phone.getByFilter(idList = prc.device.getProductId(), allowHidden = true);
+        }
+        if (!structKeyExists(prc,"productImages")) {
+         prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
+        }
+
+
+        // UPDATE CUSTOMER TYPE FROM CART LINE ACTIVATION TYPE (FOR NAVIGATION, ETC):
+        // financed-24-upgrade
+        
+
+        if (prc.cartLine.getCartLineActivationType() contains 'financed-') {
+          prc.financed = left(prc.cartLine.getCartLineActivationType(), 11);
+        } else {
+          prc.financed = "fullretail";
+        }
+
+
       }
 
-
-
-      // UPDATE CUSTOMER TYPE FROM CART LINE ACTIVATION TYPE (FOR NAVIGATION, ETC):
-      // financed-24-upgrade
-      prc.customerType = listLast(session.cart.getActivationType(), '-');
-
-      if (prc.cartLine.getCartLineActivationType() contains 'financed-') {
-        prc.financed = left(prc.cartLine.getCartLineActivationType(), 11);
-      } else {
-        prc.financed = "fullretail";
-      }
 
 
 
@@ -294,29 +301,33 @@
 
 
 
+  
       // <ACCESSORIES
-      if ( structKeyExists(rc,"addaccessory") ) {
+      if ( structKeyExists(rc,"addaccessory") and len(trim(rc.addaccessory)) ) {
         if ( ! (structKeyExists(rc,"accessoryqty") and isValid("integer", rc.accessoryqty)) ) {
           rc.accessoryqty = 1;
         }
-        // cartArgs = {
-        //   productType = "accessory",
-        //   product_id = addaccessory,
-        //   qty = rc.accessoryqty,
-        //   cartLineNumber = rc.cartLineNumber
-        // };
-        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
 
         cartArgs = {
           cartLineNumber = rc.cartLineNumber,
           product_id = addaccessory,
           qty = rc.accessoryqty
         };
-        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
 
+        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
 
-      if ( structKeyExists(rc,"removeaccessory") ) {
+      // DEBUG:
+      // cartArgs = {
+      //   cartLineNumber = request.config.otherItemsLineNumber,
+      //   product_id = 26626,
+      //   qty = 3
+      // };
+
+      // rc.response = application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
+      // end debug
+
+      if ( structKeyExists(rc,"removeaccessory")  and len(trim(rc.removeaccessory)) ) {
         cartArgs = {
           cartLineNumber = rc.cartLineNumber,
           product_id = removeaccessory,
@@ -343,23 +354,37 @@
 
 
 
-      // <SELECTED LINE AND SUBSCRIBERS
-      if (structKeyExists(session,"carrierObj")) {
-        prc.subscribers = session.carrierObj.getSubscribers();
-        prc.subscriberIndex = prc.cartLine.getSubscriberIndex();
-        if ( isValid("integer", prc.subscriberIndex) and prc.subscriberIndex gt 0 and arrayLen(prc.subscribers) gte prc.subscriberIndex ) {
-          prc.subscriber = prc.subscribers[prc.subscriberIndex];
-          prc.planDataExisting = prc.subscriber.getRatePlan();
-          prc.activetab = "existing";
-          prc.subscriber.phoneNumber = stringUtil.formatPhoneNumber(trim(prc.subscriber.getNumber()));
-          prc.tallyboxHeader = "Configuring " & prc.subscriber.phoneNumber;
-        } else {
-          prc.tallyboxHeader = "Upgrading";
+      // if not adding an accessory from the order review
+      if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
+        // <SELECTED LINE AND SUBSCRIBERS
+        if (structKeyExists(session,"carrierObj")) {
+          prc.subscribers = session.carrierObj.getSubscribers();
+          prc.subscriberIndex = prc.cartLine.getSubscriberIndex();
+          if ( isValid("integer", prc.subscriberIndex) and prc.subscriberIndex gt 0 and arrayLen(prc.subscribers) gte prc.subscriberIndex ) {
+            prc.subscriber = prc.subscribers[prc.subscriberIndex];
+            prc.planDataExisting = prc.subscriber.getRatePlan();
+            prc.activetab = "existing";
+            prc.subscriber.phoneNumber = stringUtil.formatPhoneNumber(trim(prc.subscriber.getNumber()));
+            prc.tallyboxHeader = "Configuring " & prc.subscriber.phoneNumber;
+          } else {
+            prc.tallyboxHeader = "Upgrading";
+          }
         }
+        // <end selected line and subscribers
+
+
+
+        // <AUTH CHECK
+        // if customer type requires authentication on this action, send them to carrierlogin:
+        if (  listFindNoCase(listActionsRequireLogin, event.getCurrentAction()) and listFindNoCase(listCustomerTypesRequireLogin, prc.customerType) and !structKeyExists(session, "carrierObj")  ) {
+          setNextEvent(
+            event="devicebuilder.carrierLogin",
+            persist="cartLineNumber");
+        }
+        // <end auth check
       }
-      // <end selected line and subscribers
 
-
+      
 
       // <DOWN PAYMENT FOR THIS SUBSCRIBER:
       if (structKeyExists(prc,"subscriber")) {
@@ -383,17 +408,6 @@
         session.cart.setZipcode(listFirst(event.getValue('inputZip'), '-'));
       }
       // <end zip check
-
-
-
-      // <AUTH CHECK
-      // if customer type requires authentication on this action, send them to carrierlogin:
-      if (  listFindNoCase(listActionsRequireLogin, event.getCurrentAction()) and listFindNoCase(listCustomerTypesRequireLogin, prc.customerType) and !structKeyExists(session, "carrierObj")  ) {
-        setNextEvent(
-          event="devicebuilder.carrierLogin",
-          persist="cartLineNumber");
-      }
-      // <end auth check
 
 
 
@@ -467,97 +481,95 @@
       // <end Navigation
 
 
+      // Omit TallyBox logic If updating an accessory from orderreview
+      if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
+        // <TALLY BOX
+        prc.financeproductname = prc.productService.getFinanceProductName(carrierid=#prc.productData.CarrierId#);
+        prc.tallyboxDueNow = 0;
+        prc.tallyboxDueMonthly = 0;
 
-      // <TALLY BOX
-      prc.financeproductname = prc.productService.getFinanceProductName(carrierid=#prc.productData.CarrierId#);
-      prc.tallyboxDueNow = 0;
-      prc.tallyboxDueMonthly = 0;
+        // Payment Options: financed, fullretail
+        switch(prc.paymentoption) {
+          case "financed":
+            
+            if (structKeyExists(prc,"subscriber") and structKeyExists(prc.subscriber,"downPayment") and prc.subscriber.downPayment gt 0) {
+              prc.tallyboxFinanceMonthlyDueToday = prc.subscriber.downPayment;
+            } else {
+              // prc.subscriber.downPayment = 1000;
+              prc.tallyboxFinanceMonthlyDueToday = 0;
+            }
+            
+            // AT&T carrierId = 109, VZW carrierId = 42
+            if ( prc.productData.CarrierId eq prc.carrierIdAtt ) {
 
-      // Payment Options: financed, fullretail
-      switch(prc.paymentoption) {
-        case "financed":
-          
-          if (structKeyExists(prc,"subscriber") and structKeyExists(prc.subscriber,"downPayment") and prc.subscriber.downPayment gt 0) {
-            prc.tallyboxFinanceMonthlyDueToday = prc.subscriber.downPayment;
-          } else {
-            // prc.subscriber.downPayment = 1000;
-            prc.tallyboxFinanceMonthlyDueToday = 0;
-          }
-          
-          // AT&T carrierId = 109, VZW carrierId = 42
-          if ( prc.productData.CarrierId eq prc.carrierIdAtt ) {
+              switch(prc.financed) {
+                case "financed-24":
+                  prc.tallyboxFinanceTitle = prc.financeproductname & " 24";
+                  prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 30 Months";
+                  prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+                  break;
+                case "financed-18":
+                  prc.tallyboxFinanceTitle = prc.financeproductname & " 18";
+                  prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
+                  prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice18;
+                  break;
+                case "financed-12":
+                  prc.tallyboxFinanceTitle = prc.financeproductname & " 12";
+                  prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 20 Months";
+                  prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice12;
+                  break;
+              }
 
-            switch(prc.financed) {
-              case "financed-24":
-                prc.tallyboxFinanceTitle = prc.financeproductname & " 24";
-                prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 30 Months";
-                prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
-                break;
-              case "financed-18":
-                prc.tallyboxFinanceTitle = prc.financeproductname & " 18";
-                prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
-                prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice18;
-                break;
-              case "financed-12":
-                prc.tallyboxFinanceTitle = prc.financeproductname & " 12";
-                prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 20 Months";
-                prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice12;
-                break;
+            } else {
+              prc.tallyboxFinanceTitle = prc.financeproductname;
+              prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
+              prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
             }
 
-          } else {
-            prc.tallyboxFinanceTitle = prc.financeproductname;
-            prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
-            prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+            break;
+          
+          case "fullretail":
+            prc.tallyboxFinanceMonthlyDueToday = prc.productData.FinancedFullRetailPrice;
+            prc.tallyboxFinanceTitle = "Full Retail";
+            prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
+            prc.tallyboxFinanceMonthlyDueAmount = 0;
+            break;
+          default:
+            break;
+        }
+        prc.tallyboxDueMonthly = prc.tallyboxDueMonthly + prc.tallyboxFinanceMonthlyDueAmount;
+        prc.tallyboxDueNow = prc.tallyboxDueNow + prc.tallyboxFinanceMonthlyDueToday;
+
+        // GET CART DETAILS FOR DISPLAY:
+        if ( structKeyExists(prc,"cartLines") and arrayLen(prc.cartLines) gte rc.cartLineNumber ) {
+          prc.cartLine = prc.cartLines[rc.cartLineNumber];
+          prc.selectedPhone = application.model.phone.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+          
+          if ( !prc.selectedPhone.recordCount ) {
+            prc.selectedPhone = application.model.tablet.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+          }
+          if ( !prc.selectedPhone.recordCount ) {
+            prc.selectedPhone = application.model.dataCardAndNetbook.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+          }
+          if ( !prc.selectedPhone.recordCount ) {
+            prc.selectedPhone = application.model.prePaid.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+          }
+          if ( !prc.selectedPhone.recordCount ) {
+            prc.selectedPhone = application.model.prePaid.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
+          }
+          
+          prc.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(prc.selectedPhone.deviceGuid);
+
+          if ( prc.cartLine.getPlan().hasBeenSelected() ) {
+            prc.selectedPlan = application.model.plan.getByFilter(idList = prc.cartLine.getPlan().getProductID());
           }
 
-          break;
-        
-        case "fullretail":
-          prc.tallyboxFinanceMonthlyDueToday = prc.productData.FinancedFullRetailPrice;
-          prc.tallyboxFinanceTitle = "Full Retail";
-          prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
-          prc.tallyboxFinanceMonthlyDueAmount = 0;
-          break;
-        default:
-          break;
+          prc.lineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
+          prc.lineFeatures = prc.cartLine.getFeatures();
+          prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
+        }
+        // <end tally box
       }
-      prc.tallyboxDueMonthly = prc.tallyboxDueMonthly + prc.tallyboxFinanceMonthlyDueAmount;
-      prc.tallyboxDueNow = prc.tallyboxDueNow + prc.tallyboxFinanceMonthlyDueToday;
-
-      // GET CART DETAILS FOR DISPLAY:
-      if ( structKeyExists(prc,"cartLines") and arrayLen(prc.cartLines) gte rc.cartLineNumber ) {
-        prc.cartLine = prc.cartLines[rc.cartLineNumber];
-        prc.selectedPhone = application.model.phone.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
-        
-        if ( !prc.selectedPhone.recordCount ) {
-          prc.selectedPhone = application.model.tablet.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
-        }
-        if ( !prc.selectedPhone.recordCount ) {
-          prc.selectedPhone = application.model.dataCardAndNetbook.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
-        }
-        if ( !prc.selectedPhone.recordCount ) {
-          prc.selectedPhone = application.model.prePaid.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
-        }
-        if ( !prc.selectedPhone.recordCount ) {
-          prc.selectedPhone = application.model.prePaid.getByFilter(idList = prc.cartLine.getPhone().getProductID(), allowHidden = true);
-        }
-        
-        prc.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(prc.selectedPhone.deviceGuid);
-
-        if ( prc.cartLine.getPlan().hasBeenSelected() ) {
-          prc.selectedPlan = application.model.plan.getByFilter(idList = prc.cartLine.getPlan().getProductID());
-        }
-
-        prc.lineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
-        prc.lineFeatures = prc.cartLine.getFeatures();
-        prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
-        
-
-
-      
-      }
-      // <end tally box
       
 
       

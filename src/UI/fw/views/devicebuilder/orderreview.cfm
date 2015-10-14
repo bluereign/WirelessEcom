@@ -38,7 +38,7 @@
         <header class="main-header">
           <h1>Cart</h1>
         </header>
-        <form>
+        <form id="formCheckout" action="#event.buildLink('devicebuilder.orderreview')#" method="post">
           <div class="right">
             <cfif prc.showAddAnotherDeviceButton>
               <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
@@ -63,7 +63,7 @@
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
                   <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
-                  <a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/#rc.cartLineNumber#">Edit Plan</a>
+                  <a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/1">Edit Plan</a>
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#prc.cartPlan.companyName# #prc.cartPlan.planName#</h3>
@@ -137,15 +137,16 @@
                 } />
               <cfelse>
                 <cfset imageDetail = {
-                  src = '#getAssetPaths().common#images/catalog/noimage.jpg'
-                  , alt = htmlEditFormat(local.selectedPhone.summaryTitle)
-                  , width = 130
+                  src = '#prc.assetPaths.common#images/catalog/noimage.jpg',
+                  alt = htmlEditFormat(local.selectedPhone.summaryTitle),
+                  width = 130
                 } />
               </cfif>
 
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
                   <img src="#imageDetail.src#" alt="#imageDetail.alt#" />
+                  <a href="#event.buildLink('devicebuilder.protection')#/cartLineNumber/#local.iCartLine#">Edit Options</a>
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#local.selectedPhone.summaryTitle#</h3>
@@ -235,7 +236,7 @@
                             } />
                           </cfif>
 
-                          <div class="col-md-12 col-xs-11">Accessory: #prc.productData.carrierName# - #local.selectedAccessory.summaryTitle#</div>
+                          <div class="col-md-12 col-xs-11">Accessory: #local.selectedPhone.carriername# - #local.selectedAccessory.summaryTitle#</div>
                           <div class="col-md-4 col-xs-5"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>FREE</cfif></div>
                         </cfloop>
                       </cfif>
@@ -335,7 +336,7 @@
 
 
               <!--- Prepaid --->
-              <cfif arrayLen(local.thisPrepaids)>
+              <!--- <cfif arrayLen(local.thisPrepaids)>
 
                 <cfset local.selectedOtherItems = session.cart.getOtherItems() />
 
@@ -397,18 +398,22 @@
                     </cfif>
                   </cfif>
                 </cfloop>
-              </cfif>
+              </cfif> --->
 
 
 
               <!--- Accessories --->
+              <input type="hidden" id="addaccessory" name="addaccessory" value="" />
+              <input type="hidden" id="accessoryqty" name="accessoryqty" value="" />
+              <input type="hidden" name="cartLineNumber" value="#request.config.otherItemsLineNumber#" />
+
               <cfif arrayLen(prc.additionalAccessories)>
                 <cfloop from="1" to="#arrayLen(prc.additionalAccessories)#" index="i">
                       <cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(prc.additionalAccessories[i].accessoryGuid) />
                       <cfset local.imageDetail = {
-                            src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[prc.additionalAccessories[i].accessoryGuid], height = 0, width = 130)
-                            , alt = htmlEditFormat(prc.additionalAccessories[i].detailTitle)
-                            , width = 75
+                            src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[prc.additionalAccessories[i].accessoryGuid], height = 0, width = 130),
+                            alt = htmlEditFormat(prc.additionalAccessories[i].detailTitle),
+                            width = 75
                         } />
                   <div class="row">
                     <div class="col-md-2 col-xs-6 item">
@@ -417,7 +422,20 @@
                     <div class="col-md-8 col-xs-10 data">
                       <h3>#prc.additionalAccessories[i].detailTitle#</h3>
                     </div>
-                    <div class="col-md-2 col-xs-16 quantity">#prc.additionalAccessories[i].qty# <a href="##">Remove</a>
+                    <div class="col-md-2 col-xs-16 quantity">
+                      <select name="accessoryqty#prc.additionalAccessories[i].productId#" id="#prc.additionalAccessories[i].productId#" class="form-control accessoryqty">
+                        <option <cfif prc.additionalAccessories[i].qty eq 1>selected</cfif>>1</option>
+                        <option <cfif prc.additionalAccessories[i].qty eq 2>selected</cfif>>2</option>
+                        <option <cfif prc.additionalAccessories[i].qty eq 3>selected</cfif>>3</option>
+                        <option <cfif prc.additionalAccessories[i].qty eq 4>selected</cfif>>4</option>
+                        <option <cfif prc.additionalAccessories[i].qty eq 5>selected</cfif>>5</option>
+                        <option <cfif prc.additionalAccessories[i].qty eq 6>selected</cfif>>6</option>
+                        <option <cfif prc.additionalAccessories[i].qty eq 7>selected</cfif>>7</option>
+                        <option <cfif prc.additionalAccessories[i].qty eq 8>selected</cfif>>8</option>
+                        <option <cfif prc.additionalAccessories[i].qty eq 9>selected</cfif>>9</option>
+                        <option <cfif prc.additionalAccessories[i].qty eq 10>selected</cfif>>10</option>
+                      </select>
+                      <a href="##">Remove</a>
                     </div>
                     <div class="col-md-2 col-xs-16 monthly"> <span class="visible-xs-inline">Monthly</span></div>
                     <div class="col-md-2 col-xs-16 due">#dollarFormat(prc.additionalAccessories[i].price_subTotal)# <span class="visible-xs-inline">Due Today</span></div>
@@ -468,7 +486,9 @@
   <div class="row summary">
     <div class="col-md-12">
 
-      <div class="col-md-16 promo">
+      <!--- PROMO CODE --->
+      <!--- Don't delete.  Will be implemented sometime in the future --->
+      <!--- <div class="col-md-16 promo">
         <div class="form-inline">
           <div class="form-group">
             <label for="promoInputName">Promotional Code</label>
@@ -476,7 +496,9 @@
           </div>
           <button type="submit" class="btn btn-default btn-sm">Apply</button>
         </div>
-      </div>
+      </div> --->
+
+
       <div class="row">
       <div class="col-md-10 col-md-offset-6">
         <div class="table-wrap">
@@ -571,11 +593,12 @@
           </cfif>
           <!--- <end rebates --->
 
-          <tr>
+          <!--- PROMO CODE (will get added at some point in the future) --->
+          <!--- <tr>
             <td>Discount Code: XXXXX</td>
             <td></td>
             <td>$XX.XX</td>
-          </tr>
+          </tr> --->
           </tbody>
           <tfoot>
           <tr>
@@ -621,21 +644,3 @@
 </div>
 
 </cfoutput>
-
-<script>
-  function showHideTextDevice(text) {
-    var SHOW_TEXT = 'Show Device Details',
-    HIDE_TEXT = 'Hide Device Details';
-
-    return  text === SHOW_TEXT ? HIDE_TEXT : SHOW_TEXT;
-  }
-
-  $(function() {
-    // Swap text on Show/Hide Cart Details
-    $('.device-details').on('click', function() {
-      var $this = $(this);
-
-      $(this).text(showHideTextDevice($this.text()));
-    });
-  });
-</script>
