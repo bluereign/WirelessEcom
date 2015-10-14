@@ -208,7 +208,27 @@
             <div class="table-responsive">
               <table class="table">
 
-                <cfif structKeyExists(prc,"aAccessories") and arrayLen(prc.aAccessories)>
+                <cfif structKeyExists(prc,"lineAccessories") and isArray(prc.lineAccessories)>
+                  <cfloop from="1" to="#arrayLen(prc.lineAccessories)#" index="i">
+                    <tr>
+                      <td>
+                        <!--- <cfdump var="#prc.lineAccessories[i]#"> --->
+                        #prc.lineAccessories[i].detailTitle# x #prc.lineAccessories[i].qty#
+                      </td>
+                      <td class="price">
+                        #dollarFormat(prc.lineAccessories[i].price_subTotal)#
+                      </td>
+                    </tr>                    
+                  </cfloop>
+
+                  
+                <cfelse>
+                  <tr>
+                    <td>No Accessories Selected</td>
+                    <td class="price"></td>
+                  </tr>
+                </cfif>
+                <!--- <cfif structKeyExists(prc,"aAccessories") and arrayLen(prc.aAccessories)>
                   <cfloop from="1" to="#arrayLen(prc.aAccessories)#" index="prc.iAccessory">
                     <cfset prc.thisAccessory = prc.aAccessories[prc.iAccessory] />
                     <cfset prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID()) />
@@ -225,7 +245,7 @@
                     <td>No Accessories Selected</td>
                     <td class="price"></td>
                   </tr>
-                </cfif>
+                </cfif> --->
               </table>
             </div>
           </div>

@@ -959,6 +959,7 @@
 					<cfset local.accessory.QtyOnHand = local.thisAccessory.QtyOnHand />
 					<cfset local.accessory.productid = local.a.getProductId() />
 					<cfset local.accessory.qty = getItemCount(arguments.cartLineNo,local.a.getProductId()) />
+					<cfset local.accessory.price_subTotal = decimalFormat(local.accessory.qty * local.thisAccessory.Price_Retail) />
 					<cfset local.accessory.cartPriceBlock = local.a.getPrices() />
 					<cfset arrayAppend(local.accessories,local.accessory) />
 				</cfif>
@@ -981,8 +982,8 @@
 						<cfset local.accessory.QtyOnHand = local.thisAccessory.QtyOnHand />
 						<cfset local.accessory.productid = local.a.getProductId() />
 						<cfset local.accessory.qty = getItemCount(arguments.cartLineNo,local.a.getProductId()) />
+						<cfset local.accessory.price_subTotal = decimalFormat(local.accessory.qty * local.thisAccessory.Price_Retail) />
 						<cfset local.accessory.cartPriceBlock = local.a.getPrices() />
-						<cfset arrayAppend(local.accessories,local.accessory) />
 						<cfset arrayAppend(local.accessories,local.accessory) />
 					</cfif>
 				</cfif>

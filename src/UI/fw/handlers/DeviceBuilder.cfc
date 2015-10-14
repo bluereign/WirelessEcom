@@ -313,7 +313,7 @@
           qty = rc.accessoryqty
         };
         application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
-        
+
       }
 
       if ( structKeyExists(rc,"removeaccessory") ) {
@@ -553,9 +553,6 @@
         prc.lineFeatures = prc.cartLine.getFeatures();
         prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
         
-
-
-        // getAccessories and Qty:
 
 
       
