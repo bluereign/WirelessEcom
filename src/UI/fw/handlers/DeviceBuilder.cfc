@@ -354,6 +354,25 @@
 
 
 
+      // ORDER REVIEW: Remove Phone
+      if ( structKeyExists(rc,"removephone") and len(trim(rc.removephone)) and isValid("integer",rc.removephone) and arrayLen(prc.cartLines) ) {
+        // prc.removeCartLine = prc.cartLines[rc.removephone];
+        // application.model.cartHelper.removePhone(line = rc.removephone);
+        // application.model.cartHelper.removeAllLineFeatures(line = rc.removephone);
+        // application.model.cartHelper.removeLineBundledAccessories(lineNumber = rc.removephone);
+        // application.model.cartHelper.removeWarranty(line = rc.removephone);
+        // prc.removeCartLine.setAccessories(accessories=arrayNew(1));
+        
+        application.model.cartHelper.deleteLine(lineNumber = rc.removephone);
+
+        application.model.cartHelper.removeEmptyCartLines();
+
+        // since that cartLineNumber does not exist, change active cartLineNumber to 999:
+        rc.cartLineNumber = request.config.otherItemsLineNumber;
+      }
+
+
+
       // if not adding an accessory from the order review
       if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
         // <SELECTED LINE AND SUBSCRIBERS
@@ -402,7 +421,7 @@
       // <ZIP CHECK
       // if user has authenticated into carrier, make sure that the session zip is the carrier response object zip (unless they have logged out with Clear Entire Cart).
       // else if inputZip exists and is valid, then set session.zipCode (ONLY IF the user has not authenticated with a carrier login).
-      if ( structKeyExists(session,"carrierObj") ) {
+      if ( structKeyExists(session,"carrierObj") and len(trim( session.carrierObj.getAddress().getZipCode() ) ) ) {
         session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
       } else if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip'))  ) {
         session.cart.setZipcode(listFirst(event.getValue('inputZip'), '-'));
@@ -454,6 +473,11 @@
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/newx/';
           // prc.tallyboxHeader = "New Customer";
           prc.cartTypeId = 1;
+          break;
+        default:
+          prc.navItemsAction = [];
+          prc.navItemsText = [];
+          prc.addxStep = prc.browseDevicesUrl;
           break;
       }
 
@@ -901,6 +925,10 @@
     <!--- TODO:  apply rebates logic from cfc/model/LineService.cfc --->
     <cfscript>
       // prc.subscribers = session.carrierObj.getSubscribers();
+      // don't show top nav if cart is empty
+      if (!arrayLen(prc.cartLines)) {
+        prc.showNav = false;
+      }
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart');
       prc.includeTallyBox = false;
@@ -916,15 +944,19 @@
 
     <cfscript>
 
+      // first store the zipcode in prc.scope.
+      prc.zipcode = session.cart.getZipcode();
+
       // remove carrierObj from session: 
       carrierObjExists = structdelete(session, 'carrierObj', true);
 
       // reinitialize the cart
       session.cart = createObject('component','cfc.model.cart').init();
-      
-      // TODO: Remove the following 2 lines after testing to comply with case 195
-      // remove zipCode from session:
-      // carrierObjExists = structdelete(session, 'zipCode', true);
+
+      // reset the session zipcode
+      session.cart.setZipcode(prc.zipcode);
+
+      rc.cartLineNumber = request.config.otherItemsLineNumber;
 
       // create warningMessage
       flash.put("warningMessage","Your cart has been cleared. <a href='#this.browseDevicesUrl#'>Click here to go to Browse Devices.</a>");
@@ -937,7 +969,7 @@
       
       setNextEvent(
         event="devicebuilder.orderreview",
-        persist="type,pid,finance,line,plan"
+        persist="zipcode,cartLineNumber"
         );
       
     </cfscript>
