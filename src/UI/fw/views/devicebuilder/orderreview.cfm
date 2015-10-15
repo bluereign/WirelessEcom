@@ -240,18 +240,26 @@
                       <div class="collapse" id="devicedetails#local.iCartLine#">
                         
                         <!--- Device or line item --->
-                        <div class="col-md-12 col-xs-11">#local.selectedPhone.summaryTitle# #local.cartline.getCartLineActivationType()#</div>
-                        <div class="col-md-4 col-xs-5">
+                        <div class="col-md-10">#local.selectedPhone.summaryTitle# #local.cartline.getCartLineActivationType()#</div>
+                        <div class="col-md-3">
+						<cfif session.cart.getActivationType() contains "financed">
+                            $xx.xx
+                          <cfelse>
+							&nbsp;
+						  </cfif>
+						</div>
+						<div class="col-md-3">
                           <cfif session.cart.getActivationType() contains "financed">
-                            $0.00
+                            Not $0 Always
                           <cfelse>
                             #dollarFormat(local.selectedPhone.price_retail)#
                             <!--- #session.cart.getActivationType()#  --->
                           </cfif>
                         </div>
                         <cfif session.cart.getActivationType() DOES NOT CONTAIN "financed">
-                          <div class="col-md-12 col-xs-11">Online Discount</div>
-                          <div class="col-md-4 col-xs-5">
+                          <div class="col-md-10">Online Discount</div>
+                          <div class="col-md-3">&nbsp;</div>
+						  <div class="col-md-3">
                             -#dollarFormat(val(local.selectedPhone.price_retail) - val(local.cartLine.getPhone().getPrices().getDueToday()))#
                           </div>
                         </cfif>
@@ -278,8 +286,9 @@
                               } />
                             </cfif>
 
-                            <div class="col-md-12 col-xs-11">Accessory: #local.selectedPhone.carriername# - #local.selectedAccessory.summaryTitle#</div>
-                            <div class="col-md-4 col-xs-5"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>FREE</cfif></div>
+                            <div class="col-md-10">Accessory: #local.selectedPhone.carriername# - #local.selectedAccessory.summaryTitle#</div>
+							<div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>FREE</cfif></div>
                           </cfloop>
                         </cfif>
 
@@ -306,39 +315,45 @@
                             </cfloop>
                           </cfif>
 
-                          <div class="col-md-12 col-xs-11">#local.thisFeature.summaryTitle#<cfif local.thisServiceRecommended AND NOT local.thisFeature.hidemessage> - Best Value</cfif></div>
-                          <div class="col-md-4 col-xs-5">#dollarFormat(local.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</div>
+                          <div class="col-md-10">#local.thisFeature.summaryTitle#<cfif local.thisServiceRecommended AND NOT local.thisFeature.hidemessage> - Best Value</cfif></div>
+                          <div class="col-md-3">#dollarFormat(local.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</div>
+						  <div class="col-md-3">&nbsp;</div>
                         </cfloop>
 
 
                         <!--- Line Accessories --->
                         <cfif isArray(local.lineAccessories) and arrayLen(local.lineAccessories)>
                           <cfloop from="1" to="#arrayLen(local.lineAccessories)#" index="i">
-                            <div class="col-md-12 col-xs-11">Accessory: #local.lineAccessories[i].detailTitle# <cfif local.lineAccessories[i].qty gt 1> x #local.lineAccessories[i].qty#</cfif></div>
-                            <div class="col-md-4 col-xs-5">#dollarFormat(local.lineAccessories[i].price_subTotal)#</div>
+                            <div class="col-md-10">Accessory: #local.lineAccessories[i].detailTitle# <cfif local.lineAccessories[i].qty gt 1> x #local.lineAccessories[i].qty#</cfif></div>
+                            <div class="col-md-3">&nbsp;</div>
+							<div class="col-md-3">#dollarFormat(local.lineAccessories[i].price_subTotal)#</div>
                           </cfloop>
                         <cfelse>
-                          <div class="col-md-12 col-xs-11">No accessories selected for this device</div>
-                          <div class="col-md-4 col-xs-5">&nbsp;</div>
+                          <div class="col-md-10">No accessories selected for this device</div>
+                          <div class="col-md-3">&nbsp;</div>
+						  <div class="col-md-3">&nbsp;</div>
                         </cfif>
 
 
                         <!--- Line warranty --->
                         <cfif local.cartLine.getWarranty().hasBeenSelected()>
                           <!--- <cfset local.selectedWarranty = application.model.Warranty.getById( local.cartLine.getWarranty().getProductId() ) /> --->
-                          <div class="col-md-12 col-xs-11">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
-                          <div class="col-md-4 col-xs-5">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
+                          <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
+                          <div class="col-md-3">&nbsp;</div>
+						  <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
                         <cfelse>
-                          <div class="col-md-12 col-xs-11">No protection plan selected</div>
-                          <div class="col-md-4 col-xs-5">$0.00</div>
+                          <div class="col-md-10">No protection plan selected</div>
+						  <div class="col-md-3">&nbsp;</div>
+                          <div class="col-md-3">$0.00</div>
                         </cfif>
 
 
                         <!--- Instant MIR --->
                         <cfif local.cartLine.getInstantRebateAmount() gt 0>
                           <cfset local.cartLine.getPrices().setDueToday( local.cartLine.getPrices().getDueToday() - local.cartLine.getInstantRebateAmount() )>
-                          <div class="col-md-12 col-xs-11">Instant Rebate: <span class="callout">You qualified to convert the mail-in rebate to an instant online rebate!</span></div>
-                          <div class="col-md-4 col-xs-5">-#dollarFormat(local.cartLine.getInstantRebateAmount())#</div>
+                          <div class="col-md-10">Instant Rebate: <span class="callout">You qualified to convert the mail-in rebate to an instant online rebate!</span></div>
+                          <div class="col-md-3">&nbsp;</div>
+						  <div class="col-md-3">-#dollarFormat(local.cartLine.getInstantRebateAmount())#</div>
                         </cfif>
 
 
