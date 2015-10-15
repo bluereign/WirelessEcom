@@ -32,6 +32,7 @@
   <cfset qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
 </cfif>
 
+
 <cfoutput>
     <div class="col-md-12">
       <section class="content">
@@ -80,16 +81,18 @@
               </div>
             </cfif>
 
+<!--- <cfdump var="#prc.cartPlan#"> --->
             <!--- plan --->
             <cfif isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
                   <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
-                  <a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/1">Edit Plan</a>
+                  <a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/1">Edit Plan</a><br /><br />
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#prc.cartPlan.companyName# #prc.cartPlan.planName#</h3>
-                    Includes: something, something, something</p>
+                    <p>Includes: #reReplaceNoCase(prc.cartPlan.summaryDescription, "<.*?>","","all")#</p>
+                    <!--- <p>Includes: Data limit of #prc.cartPlan.data_limit#, #prc.cartPlan.maxLines# Maximum Lines</p> --->
                 </div>
                 <div class="col-md-2 col-xs-16 quantity">1</div>
                 <div class="col-md-2 col-xs-16 monthly">#dollarFormat(prc.cartPlan.monthlyFee)# <span class="visible-xs-inline">Monthly</span></div>
@@ -429,7 +432,7 @@
                   <cfset local.imageDetail = {
                         src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[prc.additionalAccessories[i].accessoryGuid], height = 0, width = 130),
                         alt = htmlEditFormat(prc.additionalAccessories[i].detailTitle),
-                        width = 75
+                        width = 130
                     } />
                   <div class="row">
                     <div class="col-md-2 col-xs-6 item">
