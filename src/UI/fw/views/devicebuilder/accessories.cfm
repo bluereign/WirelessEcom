@@ -1,4 +1,3 @@
-<!--- <cfdump var="#prc.lineAccessories#"> --->
 <cfoutput>
   <div class="col-md-12">
     <section class="content accessories">

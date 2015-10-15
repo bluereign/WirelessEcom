@@ -25,13 +25,9 @@
 
 <cfparam name="local.deviceGuidList" type="string" default="" />
 
-<!--- <cfparam name="prc.deviceDueTodayDiff" default="0" /> --->
-<!--- <cfparam name="prc.deviceDueMonthlyDiff" default="0" /> --->
-
 <cfif application.model.cartHelper.hasSelectedFeatures()>
   <cfset qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
 </cfif>
-
 
 <cfoutput>
     <div class="col-md-12">
@@ -59,9 +55,6 @@
           </div>
           <div class="content">
             
-            
-
-
             <div class="row hidden-xs">
               <div class="head">
                 <div class="col-md-2">Item</div>
@@ -72,7 +65,6 @@
               </div>
             </div>
 
-
             <cfif !isQuery(prc.cartPlan) and !arrayLen(prc.cartLines) and !arrayLen(prc.additionalAccessories)>
               <div class="row">
                 <div class="col-md-16 col-xs-16 item">
@@ -80,7 +72,6 @@
                 </div>
               </div>
             </cfif>
-
 
             <!--- plan --->
             <cfif isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
@@ -266,7 +257,6 @@
                         </cfif>
 
                         <!--- Bundled Accessories --->
-                        
                         <cfif arrayLen(local.lineBundledAccessories)> <!--- from cfc/view/Cart.cfc line 339 --->
                           <cfloop from="1" to="#arrayLen(local.lineBundledAccessories)#" index="local.iAccessory">
                             <cfset local.thisAccessory = local.lineBundledAccessories[local.iAccessory] />
@@ -297,7 +287,7 @@
                         <cfif local.cartLine.getPlan().hasBeenSelected()>
                           <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />  <!--- from cfc/view/Cart.cfc line 441 --->
                           <!---- Upgrades do not have the activation fee waived --->
-                        </cfif> <!--- end local.cartLine.getPlan().hasBeenSelected() --->
+                        </cfif>
 
                         <!--- Services --->
                         <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">
@@ -503,12 +493,6 @@
         <a href="#prc.browseDevicesUrl#" class="clear">Browse Devices</a>
       </cfif>
       
-      <!--- 
-      //TODO:
-        The link "Clear Entire Cart" needs to 
-          - drop carrierObj (but not ZipCode) from the session
-          - clear any devices, plans, accessories, etc. that the user has added to their cart view the devicebuilder.
-       --->
       <div class="sidebar">
         <h4>Have Questions?</h4>
         <ul>
