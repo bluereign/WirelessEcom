@@ -1,3 +1,5 @@
+<cfset cartQty = application.model.dBuilderCartFacade.getItemCount(cartLineNo = rc.cartLineNumber, productId = prc.accessoryInfo.productId) />
+
 <cfoutput>
 
   <div class="modal-header">
@@ -27,7 +29,7 @@
           </div>
         </cfif>
       </div>
-      
+
       <div class="col-md-10">
         <h4 id="deviceDetailModalLabel">#prc.accessoryInfo.SummaryTitle#</h4>
         <div class="description">#prc.accessoryInfo.SummaryDescription#</div>
@@ -43,12 +45,9 @@
               <div class="form-group form-inline">
                 <label for="accessoryqty">Quantity</label>
                 <select class="form-control" name="accessoryqty" id="accessoryqty">
-                  <!--- todo: get accessory quantity on hand.  Loop from 1 to quantity on hand to generate the qty options. --->
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                  <cfloop from="1" to="#prc.accessoryInfo.qtyOnHand#" index="iqty">
+                    <option value="#iqty#" <cfif iqty eq cartQty>selected</cfif> >#iqty#</option>
+                  </cfloop>
                 </select>
               </div>
 

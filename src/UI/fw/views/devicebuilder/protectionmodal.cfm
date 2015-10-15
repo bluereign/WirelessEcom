@@ -24,7 +24,6 @@
   <script>
     $('##btnAddWarranty').click(function() {
       var thisvalue = $(this).attr("value");
-      // console.log($("##warrantyoption_"+thisvalue));
       $("##warrantyoption_"+thisvalue).prop("checked",true);
       $('##protectionModal').modal('hide');
 
