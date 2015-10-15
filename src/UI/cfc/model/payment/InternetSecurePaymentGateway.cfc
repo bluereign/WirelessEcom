@@ -210,15 +210,10 @@
 					<input type="hidden" name="xxxSendCustomerEmailReceipt" value="#local.sendCustomerEmailReceipt#" />
 					<input type="hidden" name="xxxSendMerchantEmailReceipt" value="#local.sendMerchantEmailReceipt#" />
 					<cfif not arguments.shouldCapture>
-						<cfif !channelConfig.getVFDEnabled()>
-							<input type="hidden" name="xxxTransType" value="22" />
-						<cfelse>
+						<input type="hidden" name="xxxTransType" value="22" />
 							<cfif local.totalPrice lte 0 >
 								<input type="hidden" name="xxxTransType" value="22" /><!---zero dollar transactions get auth --->
-							<cfelse>
-								<input type="hidden" name="xxxTransType" value="00" /><!--- Direct Delivery transactions should automatically be captured --->
 							</cfif>
-						</cfif>
 					</cfif>					
 					<input type="hidden" name="Products" value="Price::Qty::Code::Description::Flags|#local.totalPrice#::#local.qty#::WA1::#trim(local.activeDescription)#<cfif not arguments.disableTestMode>::{TEST<cfif arguments.testModeType is 'decline'>D</cfif>}</cfif>" />
 				<cfelse>

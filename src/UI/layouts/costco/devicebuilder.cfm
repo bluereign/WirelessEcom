@@ -171,7 +171,7 @@
         $(this).text(showHideTextDevice($this.text()));
       });
 
-      // add OnChange to the select
+      // add OnChange to the accessory qty select
       $('.accessoryqty').on('change', function() {
         var thisid = $(this).attr('id');
         var thisqty = $(this).val();
@@ -179,6 +179,22 @@
         $('##accessoryqty').val(thisqty);
         $('##formCheckout').submit();
       });
+
+      // add OnClick to the accessory remove link
+      $('.removeaccessory').on('click', function() {
+        var thisid = $(this).data('removeaccessory');
+        $('##removeaccessory').val(thisid);
+        $('##formCheckout').submit();
+      });
+
+      // add OnClick to the phone remove link
+      $('.removephone').on('click', function() {
+        var thisid = $(this).data('removephone');
+        $('##removephone').val(thisid);
+        $('##formCheckout').submit();
+      });
+
+
     });
   </script>
 

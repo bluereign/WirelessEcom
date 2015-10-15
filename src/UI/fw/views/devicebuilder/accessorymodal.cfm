@@ -43,6 +43,7 @@
               <div class="form-group form-inline">
                 <label for="accessoryqty">Quantity</label>
                 <select class="form-control" name="accessoryqty" id="accessoryqty">
+                  <!--- todo: get accessory quantity on hand.  Loop from 1 to quantity on hand to generate the qty options. --->
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>

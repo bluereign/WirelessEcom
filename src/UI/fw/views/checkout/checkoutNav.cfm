@@ -1,4 +1,5 @@
 <cfoutput>
+  <!--- <Navigation --->
   <div class="head">
     <ul class="nav nav-pills nav-justified">
       <cfloop index="i" from="1" to="#arrayLen(prc.navItemsAction)#">
@@ -8,22 +9,24 @@
         <cfelse>
           <cfset prc.isCurrent = false>
         </cfif>
-
         <cfif i lt listFindNoCase(arrayToList(prc.navItemsAction), event.getCurrentAction())>
-
           <cfset prc.isComplete = true>
-          <!--- Set cartLineNumber to '1' if coming from Order Summary page (and cartLineNumber is 999) --->
-          <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/cartLineNumber/' & IIF(rc.cartLineNumber eq request.config.otherItemsLineNumber, 1, DE(rc.cartLineNumber) ) & '/'>
-
+          <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/finance/' & rc.finance & '/'>
+          <cfif structKeyExists(rc,"line")>
+            <cfset prc.navUrl = prc.navUrl & 'line/' & rc.line & '/'>
+          </cfif>
+          <cfif structKeyExists(rc,"plan")>
+            <cfset prc.navUrl = prc.navUrl & 'plan/' & rc.plan & '/'>
+          </cfif>
         <cfelse>
-          
           <cfset prc.isComplete = false>
-<!--- DONE: change this before production to disabled URL when item is not complete --->
+
+<!--- change this before production to disabled URL when item is not complete --->
 <!--- UNCOMMENT THIS NEXT LINE: --->
-          <cfset prc.navUrl = 'javascript: void(0)'>
+          <!--- <cfset request.navUrl = 'javascript: void(0)'> --->
 
 <!--- COMMENT OUT THIS NEXT LINE: --->
-          <!--- <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/cartLineNumber/' & rc.cartLineNumber & '/'> --->
+          <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/pid/' & rc.pid & '/type/' & rc.type & '/finance/' & rc.finance & '/'>
 
         </cfif>
         
@@ -38,5 +41,5 @@
         </li>
       </cfloop>
     </ul>
-  </div>
+  </div> <!--- <end navigation --->
 </cfoutput>
