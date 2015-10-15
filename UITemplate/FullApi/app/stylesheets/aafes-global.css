@@ -8292,12 +8292,12 @@ aside.details {
 .cart .content > .row {
   margin: 0;
 }
-.cart .content .collapse .col-md-12,
-.cart .content .collapse .col-md-4 {
+.cart .content .collapse .col-md-10,
+.cart .content .collapse .col-md-3 {
   border-bottom: 1px solid #b3b3b3;
   padding: 10px 15px;
 }
-.cart .content .collapse .col-md-4 {
+.cart .content .collapse .col-md-3 {
   padding-right: 20px;
   text-align: right;
 }
@@ -8360,7 +8360,7 @@ aside.details {
   font-size: 1rem;
 }
 .cart .content .due {
-  padding-right: 20px;
+  padding-right: 15px;
   text-align: right;
 }
 .cart .content .quantity a {
