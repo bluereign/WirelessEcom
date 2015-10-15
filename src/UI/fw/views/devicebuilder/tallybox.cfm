@@ -1,6 +1,5 @@
 <cfparam name="prc.tallyBoxHeader" default="Upgrading" />
 <cfoutput>
-  <!--- <Tally Box --->
   <div class="col-md-4">
     <div class="row totals">
       <div class="wrap head">
@@ -209,6 +208,7 @@
               <table class="table">
 
                 <cfif structKeyExists(prc,"lineAccessories") and isArray(prc.lineAccessories)>
+
                   <cfloop from="1" to="#arrayLen(prc.lineAccessories)#" index="i">
                     <tr>
                       <td>
@@ -220,37 +220,21 @@
                       </td>
                     </tr>                    
                   </cfloop>
-
                   
                 <cfelse>
+
                   <tr>
                     <td>No Accessories Selected</td>
                     <td class="price"></td>
                   </tr>
+
                 </cfif>
-                <!--- <cfif structKeyExists(prc,"aAccessories") and arrayLen(prc.aAccessories)>
-                  <cfloop from="1" to="#arrayLen(prc.aAccessories)#" index="prc.iAccessory">
-                    <cfset prc.thisAccessory = prc.aAccessories[prc.iAccessory] />
-                    <cfset prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID()) />
-                    <cfset prc.stcPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(prc.selectedAccessory.accessoryGuid) />
-                    <cfset prc.primaryImageSrc = application.view.imageManager.displayImage(imageGuid = prc.stcPrimaryImages[prc.selectedAccessory.accessoryGuid], height = 60, width = 60) />
-                    <tr>
-                      <td><img src="#trim(prc.primaryImageSrc)#"  width="60" border="0" /></td>
-                      <td>#prc.selectedAccessory.summaryTitle#</td>
-                      <td class="price">#dollarFormat(prc.selectedAccessory.price)#</td>
-                    </tr>
-                  </cfloop>
-                <cfelse>
-                  <tr>
-                    <td>No Accessories Selected</td>
-                    <td class="price"></td>
-                  </tr>
-                </cfif> --->
+
               </table>
             </div>
           </div>
         </div>
       </aside>
     </div>
-  </div> <!--- <end tally box --->
+  </div>
 </cfoutput>
