@@ -34,7 +34,7 @@
         </div>
         <div class="form-group form-inline pin">
           <label for="inputPin">Carrier Account Passcode/PIN</label>
-          <input type="text" class="form-control" id="inputPin" name="inputPin" value="<cfif isDefined('rc.inputPin')>#rc.inputPin#</cfif>" />
+          <input type="text" class="form-control" id="inputPin" name="inputPin" value="<cfif isDefined('rc.inputPin')>#rc.inputPin#</cfif>" maxlength="20" />
           <a href="##" data-toggle="tooltip" title="#prc.inputPinTooltipTitle#" id="inputPinToolTip">Where do I get this?</a>
         </div>
         <div class="right">
