@@ -425,12 +425,12 @@
 
               <cfif arrayLen(prc.additionalAccessories)>
                 <cfloop from="1" to="#arrayLen(prc.additionalAccessories)#" index="i">
-                      <cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(prc.additionalAccessories[i].accessoryGuid) />
-                      <cfset local.imageDetail = {
-                            src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[prc.additionalAccessories[i].accessoryGuid], height = 0, width = 130),
-                            alt = htmlEditFormat(prc.additionalAccessories[i].detailTitle),
-                            width = 75
-                        } />
+                  <cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(prc.additionalAccessories[i].accessoryGuid) />
+                  <cfset local.imageDetail = {
+                        src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[prc.additionalAccessories[i].accessoryGuid], height = 0, width = 130),
+                        alt = htmlEditFormat(prc.additionalAccessories[i].detailTitle),
+                        width = 75
+                    } />
                   <div class="row">
                     <div class="col-md-2 col-xs-6 item">
                       <img src="#local.imageDetail.src#" alt="#local.imageDetail.alt#" />
@@ -440,17 +440,9 @@
                     </div>
                     <div class="col-md-2 col-xs-16 quantity">
                       <select name="accessoryqty#prc.additionalAccessories[i].productId#" id="#prc.additionalAccessories[i].productId#" class="form-control accessoryqty">
-                        <!--- todo: get accessory quantity on hand.  Loop from 1 to quantity on hand to generate the qty options. --->
-                        <option <cfif prc.additionalAccessories[i].qty eq 1>selected</cfif>>1</option>
-                        <option <cfif prc.additionalAccessories[i].qty eq 2>selected</cfif>>2</option>
-                        <option <cfif prc.additionalAccessories[i].qty eq 3>selected</cfif>>3</option>
-                        <option <cfif prc.additionalAccessories[i].qty eq 4>selected</cfif>>4</option>
-                        <option <cfif prc.additionalAccessories[i].qty eq 5>selected</cfif>>5</option>
-                        <option <cfif prc.additionalAccessories[i].qty eq 6>selected</cfif>>6</option>
-                        <option <cfif prc.additionalAccessories[i].qty eq 7>selected</cfif>>7</option>
-                        <option <cfif prc.additionalAccessories[i].qty eq 8>selected</cfif>>8</option>
-                        <option <cfif prc.additionalAccessories[i].qty eq 9>selected</cfif>>9</option>
-                        <option <cfif prc.additionalAccessories[i].qty eq 10>selected</cfif>>10</option>
+                        <cfloop from="1" to="#prc.additionalAccessories[i].qtyOnHand#" index="iqty">
+                          <option value="#iqty#" <cfif prc.additionalAccessories[i].qty eq iqty>selected</cfif> >#iqty#</option>
+                        </cfloop>
                       </select>
                       <a href="##" data-removeaccessory="#prc.additionalAccessories[i].productid#" class="removeaccessory">Remove</a>
                     </div>
