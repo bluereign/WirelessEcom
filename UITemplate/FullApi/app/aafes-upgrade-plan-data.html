@@ -1,70 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<link href="stylesheets/global.css" rel="stylesheet" />
+	<link href="stylesheets/aafes-global.css" rel="stylesheet" />
 </head>
 <body>
-<div class="container">
-	<header class="header">
+<div class="container topBar">
+	<header class="col-md-16 header">
 		<div class="content row">
-			<div class="col-md-4">
-				<a href="http://www.costco.com" class="logo"><img src="/images/costco_logosm.gif" alt="Costco.Com" title="Return to Costco.com"></a>
-			</div>
-			<div class="col-md-8">
-				
-			</div>
-			<div class="col-md-4 account">
-				<ul>
-					<li><a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a></li>
-					<li class="cart"><a href="#">Your Cart</a></li>
-				</ul>
-				<div class="form-group form-inline search">
-					<label for="inputSearch">Search</label>
-					<input type="text" class="form-control" id="inputSearch">
-					<button type="submit" class="btn-search">Search</button>
-				</div>
-			</div>
+            <div class="col-md-8 linksLeft">
+                <!--<a href="/index.cfm/go/shop/do/upgrade-checker?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=UpgradeChecker">Upgrade Checker</a>
+                <a href="/index.cfm/go/content/do/storeLocator/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=StoreLocator" target="_blank">Store Locator</a>
+                <a href="http://www.aafes.com?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=ReturnToExchangeMall">Return to the Exchange Mall</a>-->
+            </div>
+            <div class="col-md-8 linksRight">
+                <!--<a href="#?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=Cart" onClick="viewCart(); return false;" id="lnkMyCart"><span></span>Your Cart</a>-->
+                <a href="/index.cfm/go/myAccount/do/view/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=SignInToAccount">Sign into Your Account</a><!-- id="lnkMyAccount"-->
+            </div>
 		</div>
 	</header>
 </div>
-<div class="container-fluid top-nav">
-	<div class="container">
-		<nav class="navbar navbar-static-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-				</div>
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse fade" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav nav-tabs">
-						<li role="presentation"><a href="#">Home</a></li>
-						<li role="presentation"><a href="#">Hot Deals</a></li>
-						<li role="presentation" class="active"><a href="#">Phones</a></li>
-						<li role="presentation"><a href="#">Mobile Hotspot</a></li>
-						<li role="presentation"><a href="#">Accessories</a></li>
-						<li role="presentation"><a href="#">Check Upgrade Eligibility</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div>
+<div class="container">
+    <div class="aafesHeader">
+        <div class="col-md-8">
+            <div class="headerLogo">
+                <a href="/" id="WAlogo"><img src="http://10.7.0.140/assets/aafes/images/X_mobile_center_logo.png" alt="Exchange Mobile Center" title="" /></a>
+                <!--<a href="/" id="WAlogo"><img src="/assets/aafes/images/X_mobile_center_logo.png" alt="Exchange Mobile Center" title="" /></a>-->
+            </div>
+		</div>
+        <div class="col-md-8">
+            <form action="/index.cfm/go/search/do/search/" method="get">
+                <div id="search" class="searchBox">
+                    <div id="search-form-container">
+                        <input type="submit" value="" class="searchGo" />
+                        <input type="text" id="q" name="q" value="" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>        
+    <div class="navigation" role="navigation" >
+        <div class="top-nav">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav nav-tabs">
+                    <li role="presentation"><a href="/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=ReturnToShopping">Return to Shopping</a></li>
+                    <li role="presentation"><a href="#?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=MilitaryDiscount" onclick="viewMilitaryWindow('MilitaryDiscount', 'Military Discount')" col="Military Discounts">Military Discounts</a></li>
+                    <li role="presentation"><a href="#?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=MilitaryDeployment" onclick="viewMilitaryWindow('MilitaryDeployment', 'Military Deployment')" col="Military Deployment">Military Deployment</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
 <div class="container">
 	<div class="head">
 		<ul class="nav nav-pills nav-justified">
-			<li role="presentation" class="complete hidden-xs"><a href="upgrade-login.html"><span>1</span>Carrier Login</a></li>
-			<li role="presentation" class="complete hidden-xs"><a href="upgrade-add-line.html"><span>2</span>Upgrade/Add a Line</a></li>
-			<li role="presentation" class="active"><a href="upgrade-plan-data.html"><span>3</span>Plans and Data</a></li>
-			<li role="presentation" class="hidden-xs"><a href="upgrade-payment-protection.html"><span>4</span>Protection &amp; Services</a></li>
-			<li role="presentation" class="hidden-xs"><a href="upgrade-accessories.html"><span>5</span>Accessories</a></li>
-			<li role="presentation" class="hidden-xs"><a href="upgrade-cart.html"><span>6</span>Order Review</a></li>
+			<li role="presentation" class="complete hidden-xs"><a href="aafes-upgrade-login.html"><span>1</span>Carrier Login</a></li>
+			<li role="presentation" class="complete hidden-xs"><a href="aafes-upgrade-add-line.html"><span>2</span>Upgrade/Add a Line</a></li>
+			<li role="presentation" class="active"><a href="aafes-upgrade-plan-data.html"><span>3</span>Plans and Data</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-payment-protection.html"><span>4</span>Protection &amp; Services</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-accessories.html"><span>5</span>Accessories</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-cart.html"><span>6</span>Order Review</a></li>
 		</ul>
 	</div>
 	<div class="row main">
@@ -105,7 +104,7 @@
                                             <li>Smartphone - $40</li>
                                         </ul>
                                         <div class="price">$50</div>
-                                        <button class="btn btn-secondary btn-block" disabled="disabled">Unavailable for this device</button>
+                                        <button class="btn btn-primary btn-block" disabled="disabled">Unavailable for this device</button>
                                         <div class="details-link">Plan Details</div>
                                     </a>
                                 </div>
@@ -423,7 +422,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
-				<img alt="" src="/images/Trustwave.gif" alt="Trustwave" class="trustwave">
+				<!--<img alt="" src="/images/Trustwave.gif" alt="Trustwave" class="trustwave">-->
+				<img alt="" src="http://10.7.0.140/assets/aafes/images/trustwave_logo_IS.png" alt="Trustwave" class="trustwave">
 			</div>
 			<div class="col-md-8">
 				<div class="footer-links">
@@ -438,7 +438,6 @@
 						<li><a href="/index.cfm/go/content/do/aboutus/">About Us</a></li>
 						<li><a href="/index.cfm/go/content/do/howShop">How to Shop</a></li>
 						<li><a href="/index.cfm/go/content/do/privacy/">Privacy Policy</a></li>
-						<li><a href="/index.cfm/go/content/do/supplychain">Supply Chain Disclosure</a></li>
 						<li><a href="/index.cfm/go/content/do/sitemap">Site Map</a></li>
 					</ul>
 					<div class="copyright">
@@ -448,7 +447,8 @@
 			</div>
 			<div class="col-md-4">
 				<a href="/index.cfm/go/content/do/aboutus/" class="wireless">
-					<img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="/images/WirelessAdvocates_poweredBy_2.gif">
+					<!--<img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="/images/WirelessAdvocates_poweredBy_2.gif">-->
+					<img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="http://10.7.0.140/assets/aafes/images/WA_logo_trans.png">
 				</a>
 			</div>
 		</div>

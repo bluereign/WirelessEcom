@@ -4,26 +4,11 @@
 <cfoutput>
   <div class="col-md-12">
     <form action="#prc.nextStep#" method="post">
-      <!--- <input type="hidden" name="finance" value="#rc.finance#" />
-      <input type="hidden" name="type" value="#rc.type#" />
-      <input type="hidden" name="pid" value="#rc.pid#" /> --->
       <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
-      <!--- <cfif structKeyExists(rc,"paymentoption")>
-        <input type="hidden" name="paymentoption" value="#rc.paymentoption#" />
-      </cfif>
-      <cfif structKeyExists(rc,"line")>
-        <input type="hidden" name="line" value="#rc.line#" />
-      </cfif> --->
       <section class="content plans">
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
           <p>Pick a Plan and the amount of Data you will use per month.</p> <!--- ( ZIP: #session.cart.getZipcode()# ) --->
-          <!--- DEBUG: --->
-          <!--- Launch Zip Modal button for testing --->
-          <!--- <cfif rc.type is 'new'>
-            <a data-toggle="modal" href="##zipModal" class="btn btn-primary btn-sm">Zip modal</a></p>
-          </cfif> --->
-          <!--- <a data-toggle="modal" href="##planModal" class="btn btn-primary btn-sm">Plan modal</a></p> --->
         </header>
 		
 		<cfif structKeyExists(session,"carrierObj")>
@@ -63,15 +48,13 @@
               
               <cfloop query="prc.planData">
                 <div class="info">
-                  <!--- <a data-toggle="modal" data-target="##planModal"  href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#" >
-                  Launch Modal</a> --->
                   <a href="##">
                     <h3><span>#prc.planData.DetailTitle#</span></h3>
                     <ul>
                       <li class="large"><span>#prc.planData.DataLimitGB#GB</span></li>
                     </ul>
 					#prc.planData.SummaryDescription#
-                    <div class="price">$#int(prc.planData.MonthlyFee)#<!--- #dollarFormat(prc.planData.MonthlyFee)# ---></div>
+                    <div class="price">$#int(prc.planData.MonthlyFee)#</div>
                     <button class="btn btn-primary btn-block" name="planid" value="#prc.planData.productid#">Select Package</button>
                     <div class="details-link" data-toggle="modal" data-target="##planModal" 
                       href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#/cartLineNumber/#rc.cartLineNumber#">Plan Details</div>
@@ -95,7 +78,7 @@
                         <li class="large"><span>#prc.planDataShared.DataLimitGB#GB</span></li>
                       </ul>
 					  #prc.planDataShared.SummaryDescription#
-                      <div class="price">$#int(prc.planDataShared.MonthlyFee)#<!--- #dollarFormat(prc.planDataShared.MonthlyFee)# ---></div>
+                      <div class="price">$#int(prc.planDataShared.MonthlyFee)#</div>
                       <button class="btn btn-primary btn-block" name="planid" value="#prc.planDataShared.productid#">Select Package</button>
                       <div class="details-link" data-toggle="modal" data-target="##planModal" 
                         href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#/cartLineNumber/#rc.cartLineNumber#">Plan Details</div>
@@ -123,25 +106,3 @@
 
 
 </cfoutput>
-
-
-<!--- <DEBUG --->
-                  <!--- <cfif structKeyExists(session,"carrierObj")>
-                    <cfdump var="#session.carrierObj#">
-                  </cfif>
-                  <!--- <cfdump var="#prc.planData#"> --->
-                  <cfdump var="#session.cart.getCurrentLineData#">
-
-                  <b>DEBUG INFO:</b> 
-                  <br>
-                  application.model.CartHelper.zipcodeEntered(): #application.model.CartHelper.zipcodeEntered()#
-                  <br>
-                  isStruct(session.cart): #isStruct(session.cart)#
-                  <br>
-                  <b>end debug info...</b>
-                  <hr> --->
-<!--- <cfdump var="#prc.subscriber.getRatePlan()#">
-<br>
-<cfdump var="#prc.planData#"> --->
-<!--- <cfdump var="#prc.subscriber.getNumber()#"> --->
-<!--- <end debug --->

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="stylesheets/aafes-global.css" rel="stylesheet" />
+</head>
+<body>
+@@include('./views/aafes-header.html')
+@@include('./views/primary-nav.html')
+<div class="container">
+	<div class="row main new">
+		<div class="col-md-12 col-md-offset-2">
+			<div class="row">
+				<div class="col-md-6 device">
+					<img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=180px&w=180&h=280" alt="device picture" />
+				</div>
+				<div class="col-md-10">
+					<img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=180px&w=180&h=60" alt="device picture" class="brand" />
+					<h1>Apple iPhone 6 64GB Space Gray</h1>
+					<p>&raquo; Get a better view</p>
+					<ul>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=4060&w=40&h=60" alt="device picture" /></li>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=4060&w=40&h=60" alt="device picture" /></li>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=4060&w=40&h=60" alt="device picture" /></li>
+					</ul>
+					<h3>Rebates and Specials</h3>
+					@@include('./views/modal-zipcode.html')
+					@@include('./views/modal-device-details.html')
+				</div>
+				<div class="col-md-16 pricing">
+					<h2>Choose Your Pricing and See the Savings</h2>
+					<div class="row">
+						<div class="col-md-4">
+							<button class="btn btn-large btn-gray btn-block" data-toggle="collapse" data-parent="#accordion"  href="#collapseOne" aria-controls="collapseOne">2 Year Contract</button>
+							<button class="btn btn-large btn-block" data-toggle="collapse" data-parent="#accordion"  href="#collapseTwo" aria-controls="collapseTwo">Verizon Monthly $21.67</button>
+							<button class="btn btn-large btn-gray btn-block" data-toggle="collapse" data-parent="#accordion"  href="#collapseThree" aria-controls="collapseThree">Full Price</button>
+						</div>
+						<div class="col-md-12">
+							<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+								<div class="panel panel-default">
+									<div class="panel-heading callout" role="tab" id="headingOne">
+										<h4 class="panel-title">
+											<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+												<div class="row">
+													<div class="col-xs-8">New</div>
+													<div class="col-xs-8">$227.99</div>
+												</div>
+											</a>
+										</h4>
+									</div>
+									<div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+										<div class="panel-body">
+											..
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading callout active" role="tab" id="headingTwo">
+										<h4 class="panel-title">
+											<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+												<div class="row">
+													<div class="col-xs-8">Verizon Monthly</div>
+													<div class="col-xs-8">$0 Down $21.67/mo</div>
+												</div>
+											</a>
+										</h4>
+									</div>
+									<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+										<div class="panel-body">
+											<table class="table table-responsive">
+												<tbody>
+													<tr>
+														<td>Full Retail Price</td>
+														<td>$749.99</td>
+													</tr>
+													<tr>
+														<td>Monthly Device Payment</td>
+														<td>$31.25 for 24 months. 0% APR</td>
+													</tr>
+													<tr>
+														<td>Due Today *</td>
+														<td>$0.00 Down</td>
+													</tr>
+												</tbody>
+											</table>
+											<p class="disclaimer">Something</p>
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading callout" role="tab" id="headingThree">
+										<h4 class="panel-title">
+											<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+												<div class="row">
+													<div class="col-xs-8">Full Retail Price</div>
+													<div class="col-xs-8">$749.99</div>
+												</div>
+											</a>
+										</h4>
+									</div>
+									<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+										<div class="panel-body">
+											<table class="table table-responsive">
+												<tbody>
+													<tr>
+														<td>Full Retail Price</td>
+														<td>$749.99</td>
+													</tr>
+													<tr>
+														<td>Monthly Device Payment</td>
+														<td>$31.25 for 24 months. 0% APR</td>
+													</tr>
+													<tr>
+														<td>Due Today *</td>
+														<td>$0.00 Down</td>
+													</tr>
+												</tbody>
+											</table>
+											<p class="disclaimer">Something</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-8">» Available Online Only</div>
+							<div class="col-md-8">
+								<button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-16 benefits">
+					<h3>Costco Membership Benefits</h3>
+					<ul class="pictures">
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=50px&w=50&h=50" alt="device picture" /></li>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=50px&w=50&h=50" alt="device picture" /></li>
+						<li><img src="https://placeholdit.imgix.net/~text?txtsize=14&txt=50px&w=50&h=50" alt="device picture" /></li>
+					</ul>
+					<ul>
+						<li><strong>FREE</strong> Shipping and Easy Returns</li>
+						<li><strong>FREE</strong> Accessories Bonus Pack** including a dock and car charger</li>
+						<li>**Contents of bonus pack vary by device. Also available in warehouse.</li>
+					</ul>
+
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab">Overview</a></li>
+						<li role="presentation"><a href="#specifications" aria-controls="specifications" role="tab" data-toggle="tab">Specifications</a></li>
+						<li role="presentation"><a href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab">Accessories</a></li>
+					</ul>
+
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="overview">...</div>
+						<div role="tabpanel" class="tab-pane" id="specifications">...</div>
+						<div role="tabpanel" class="tab-pane" id="accessories">...</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@@include('./views/aafes-footer.html')
+<script src="scripts/all.min.js"></script>
+</body>
+</html>

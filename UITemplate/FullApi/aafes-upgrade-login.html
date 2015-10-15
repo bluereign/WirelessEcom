@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="stylesheets/aafes-global.css" rel="stylesheet" />
+</head>
+<body>
+@@include('./views/aafes-header.html')
+@@include('./views/primary-nav.html')
+<div class="container">
+	<div class="head">
+		<ul class="nav nav-pills nav-justified">
+			<li role="presentation" class="active"><a href="aafes-upgrade-login.html"><span>1</span>Carrier Login</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-add-line.html"><span>2</span>Upgrade/Add a Line</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-plan-data.html"><span>3</span>Plans and Data</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-payment-protection.html"><span>4</span>Protection &amp; Services</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-accessories.html"><span>5</span>Accessories</a></li>
+			<li role="presentation" class="hidden-xs"><a href="aafes-upgrade-cart.html"><span>6</span>Order Review</a></li>
+		</ul>
+	</div>
+	<div class="row main">
+		<div class="col-md-12">
+			<section class="content">
+				<header class="main-header">
+					<h1>Carrier Account Login</h1>
+					<p>The primary Account Holder's information is used to verify status and line availability.</p>
+				</header>
+				<img alt="" src="/images/Trustwave.gif" alt="Trustwave" class="trustwave">
+				<form>
+					<div class="right">
+						<a href="#">BACK</a>
+						<button type="submit" class="btn btn-primary">Continue</button>
+					</div>
+					<div class="form-group form-inline phone">
+						<label for="inputPhone1">Phone Number to Upgrade</label>
+						( <input type="text" class="form-control" id="inputPhone1"> )
+						<input type="text" class="form-control" id="inputPhone2"> -
+						<input type="text" class="form-control" id="inputPhone3">
+					</div>
+					<div class="form-group form-inline zip">
+						<label for="inputZip">Billing ZIP Code</label>
+						<input type="text" class="form-control" id="inputZip">
+					</div>
+					<div class="form-group form-inline ssn">
+						<label for="inputSSN">Last for Digits for Social Security Number</label>
+						<input type="text" class="form-control" id="inputSSN">
+						<a href="#">Who's SSN do I use?</a>
+					</div>
+					<div class="form-group form-inline pin">
+						<label for="inputPin">Carrier Account Passcode/PIN</label>
+						<input type="text" class="form-control" id="inputPin">
+						<a href="#">Where do I get this?</a>
+					</div>
+					<div class="right">
+						<a href="#">BACK</a>
+						<button type="submit" class="btn btn-primary btn-block">Continue</button>
+					</div>
+				</form>
+			</section>
+		</div>
+		@@include('./views/sidebar.html')
+	</div>
+</div>
+@@include('./views/aafes-footer.html')
+<script src="scripts/all.min.js"></script>
+</body>
+</html>
