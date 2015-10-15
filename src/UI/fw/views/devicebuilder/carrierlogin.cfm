@@ -29,12 +29,12 @@
         </div>
         <div class="form-group form-inline ssn">
           <label for="inputSSN">Last 4 Digits of Social Security Number</label>
-          <input type="text" class="form-control" id="inputSSN" name="inputSSN" value="<cfif isDefined('rc.inputSSN')>#rc.inputSSN#</cfif>" maxlength="4" />
+          <input type="password" class="form-control" id="inputSSN" name="inputSSN" value="<cfif isDefined('rc.inputSSN')>#rc.inputSSN#</cfif>" maxlength="4" />
           <a href="##" data-toggle="tooltip" title="#prc.inputSSNTooltipTitle#" id="inputSSNToolTip">Who's SSN do I use?</a>
         </div>
         <div class="form-group form-inline pin">
           <label for="inputPin">Carrier Account Passcode/PIN</label>
-          <input type="text" class="form-control" id="inputPin" name="inputPin" value="<cfif isDefined('rc.inputPin')>#rc.inputPin#</cfif>" maxlength="20" />
+          <input type="password" class="form-control" id="inputPin" name="inputPin" value="<cfif isDefined('rc.inputPin')>#rc.inputPin#</cfif>" maxlength="20" />
           <a href="##" data-toggle="tooltip" title="#prc.inputPinTooltipTitle#" id="inputPinToolTip">Where do I get this?</a>
         </div>
         <div class="right">
