@@ -172,7 +172,6 @@
 
 
 
-
       // UPDATE CARTLINE WITH SUBSCRIBER INDEX:
       if ( structKeyExists(rc,"subscriberIndex") ) {
         prc.cartLine.setSubscriberIndex(rc.subscriberIndex);
@@ -180,6 +179,14 @@
         prc.cartLines = session.cart.getLines();
         prc.cartLine = prc.cartLines[rc.cartLineNumber];
         prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+
+        // set the session zipcode to the subscriber zipcide:
+        prc.subscribers = session.carrierObj.getSubscribers();
+        prc.subscriber = prc.subscribers[rc.subscriberIndex];
+        prc.subscriberZipcode = listFirst(prc.subscriber.getAddress().getZipCode(), '-');
+        if ( isValid("zipcode",prc.subscriberZipcode) ) {
+          session.cart.setZipcode(prc.subscriberZipcode);
+        }
       }
 
 
@@ -301,7 +308,6 @@
 
 
 
-  
       // <ACCESSORIES
       if ( structKeyExists(rc,"addaccessory") and len(trim(rc.addaccessory)) ) {
         if ( ! (structKeyExists(rc,"accessoryqty") and isValid("integer", rc.accessoryqty)) ) {
@@ -766,7 +772,7 @@
     <cfset var planArgs = {} />
 
     <cfscript>
-    // TODO: if type is 'upgrade', make sure a line is selected.  If rc.line does not exist, then send back to 'upgradealine'.
+    // TODO: if type is 'upgrade', make sure a line is selected.  If subscriber has not been selected, then send back to 'upgradealine'.
 
       planArgs = {
         carrierId = prc.productData.carrierId,
