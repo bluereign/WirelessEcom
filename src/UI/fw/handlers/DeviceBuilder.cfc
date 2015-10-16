@@ -442,7 +442,7 @@
       switch(prc.customerType) {
         case "upgrade":
           
-          if ( structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
+          if ( rc.cartLineNumber gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
             prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
           prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
           } else {
@@ -947,7 +947,12 @@
     <!--- <cfset application.model.CartHelper.removeEmptyCartLines() /> --->
     <!--- TODO:  apply rebates logic from cfc/model/LineService.cfc --->
     <cfscript>
-      // prc.subscribers = session.carrierObj.getSubscribers();
+      // case 394: If the customer has logged into a carrier account or there is a plan tied to their cart then an option to add another device should show in the cart:
+      if ( ( structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) )  or isQuery(prc.cartPlan)  ) {
+        prc.showAddAnotherDeviceButton = true;
+      } else {
+        prc.showAddAnotherDeviceButton = false;
+      }
       // don't show top nav if cart is empty
       if (!arrayLen(prc.cartLines)) {
         prc.showNav = false;
