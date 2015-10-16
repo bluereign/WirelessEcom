@@ -11,12 +11,14 @@
         <div class="col-md-4 account">
           <ul>
             <li><a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a></li>
-            <li class="cart"><a href="##">Your Cart</a></li>
+            <li class="cart"><a href="#event.buildLink('devicebuilder.orderreview')#">Your Cart</a></li>
           </ul>
           <div class="form-group form-inline search">
-            <label for="inputSearch">Search</label>
-            <input type="text" class="form-control" id="inputSearch">
-            <button type="submit" class="btn-search">Search</button>
+            <form action="/index.cfm/go/search/do/search/" method="get">
+              <label for="inputSearch">Search</label>
+              <input type="text" name="q" class="form-control" id="inputSearch">
+              <button type="submit" class="btn-search">Search</button>
+            </form>
           </div>
         </div>
       </div>
