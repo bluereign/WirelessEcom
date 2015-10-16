@@ -519,8 +519,8 @@
         <h4>Our Signature Promise</h4>
         <ul>
           <li><a href="/index.cfm/go/content/do/shipping">Free UPS ground shipping</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ#return_phone">90 day return policy</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ#return_phone">Return in store</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">90 day return policy</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">Return in store</a></li>
         </ul>
       </div>
     </div>
