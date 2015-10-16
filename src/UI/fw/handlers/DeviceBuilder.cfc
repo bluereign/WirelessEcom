@@ -180,7 +180,8 @@
         prc.cartLine = prc.cartLines[rc.cartLineNumber];
         prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
 
-        // set the session zipcode to the subscriber zipcide:
+        // Set the session zipcode to the subscriber zipcide:
+        // ... and because CF 8 doesn't allow functionReturnsArray()[index]:
         prc.subscribers = session.carrierObj.getSubscribers();
         prc.subscriber = prc.subscribers[rc.subscriberIndex];
         prc.subscriberZipcode = listFirst(prc.subscriber.getAddress().getZipCode(), '-');
@@ -436,12 +437,28 @@
 
 
 
+  
       // <NAVIATION
       switch(prc.customerType) {
         case "upgrade":
-          prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
-          prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
-          prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/type/upgradex/';
+          
+          if ( structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
+            prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
+          prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
+          } else {
+            prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
+            prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          }
+
+          // prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/type/upgradex/';
+          prc.addxStep = prc.browseDevicesUrl;
+
+          if ( session.cart.getCarrierId() eq prc.carrierIdAtt ) {
+            prc.addxStep = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,1,32/";
+          } else if ( session.cart.getCarrierId() eq prc.carrierIdVzw ) {
+            prc.addxStep = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,3,32/";
+          }
+          
           // prc.tallyboxHeader = "Upgrading";
           prc.cartTypeId = 2;
           break;
@@ -514,7 +531,7 @@
       // Omit TallyBox logic If updating an accessory from orderreview
       if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
         // <TALLY BOX
-        prc.financeproductname = prc.productService.getFinanceProductName(carrierid=#prc.productData.CarrierId#);
+        prc.financeproductname = prc.productService.getFinanceProductName(carrierid = prc.productData.CarrierId);
         prc.tallyboxDueNow = 0;
         prc.tallyboxDueMonthly = 0;
 

@@ -661,7 +661,7 @@
       </div>
       </div>
       <div class="right">
-        <a href="##">ADD ANOTHER DEVICE</a>
+        <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
         <button type="submit" class="btn btn-primary">Checkout Now</button>
       </div>
     </div>
