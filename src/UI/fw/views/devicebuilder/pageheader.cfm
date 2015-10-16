@@ -14,11 +14,11 @@
             <li class="cart"><a href="#event.buildLink('devicebuilder.orderreview')#">Your Cart</a></li>
           </ul>
           <div class="form-group form-inline search">
-            <form action="/index.cfm/go/search/do/search/" method="get">
+            <!--- <form action="/index.cfm/go/search/do/search/" method="get"> --->
               <label for="inputSearch">Search</label>
               <input type="text" name="q" class="form-control" id="inputSearch">
               <button type="submit" class="btn-search">Search</button>
-            </form>
+            <!--- </form> --->
           </div>
         </div>
       </div>
