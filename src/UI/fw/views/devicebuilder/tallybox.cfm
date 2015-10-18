@@ -113,14 +113,11 @@
               <table class="table">
                 <tr>
                   <td>
-                    <!--- Due Monthly for 24 Months Regular Price Due Today*<br>Line Access Free --->
-
+                    Due Monthly
                   </td>
                   <td class="price">
-                    <cfif structKeyExists(prc,"planInfo")>
-                      #dollarFormat(prc.planInfo.MonthlyFee)#/mo
-                    <cfelse>
-
+                    <cfif isQuery(prc.cartPlan) and  prc.cartPlan.recordcount>
+                      #dollarFormat(prc.cartPlan.MonthlyFee)#/mo
                     </cfif>
                   </td>
                 </tr>
@@ -133,22 +130,8 @@
           <div class="col-xs-16">
             <div class="table-responsive">
               <table class="table">
-                
-                <!--- todo: remove the following lines as well as the aSelectedServices stuff and rc.selectedServices where unnecessary --->
-                <!--- <cfif arrayLen(prc.aSelectedServices)>
-                  <cfloop index="i" from="1" to="#arrayLen(prc.aSelectedServices)#">
-                    <tr>
-                      <td>#prc.aSelectedServices[i].Title# <!--- (#prc.aSelectedServices[i].productId#) ---></td>
-                      <td class="price">#dollarFormat(prc.aSelectedServices[i].price)#/mo</td>
-                    </tr>                  
-                  </cfloop>
-                <cfelse>
-                  <tr>
-                    <td>No Services Selected</td>
-                    <td class="price">#dollarFormat(0)#/mo</td>
-                  </tr>
-                </cfif> --->
 
+                <!--- Line Features/Services --->
                 <cfif structKeyExists(prc,"lineFeatures")>
                   <cfloop from="1" to="#arrayLen(prc.lineFeatures)#" index="local.iFeature">
                     <cfset local.thisFeatureID = prc.lineFeatures[local.iFeature].getProductID() />
@@ -165,12 +148,6 @@
                     <td class="price">#dollarFormat(0)#/mo</td>
                   </tr>
                 </cfif>
-
-                <!--- Device Protection Warranty: --->
-                <!--- <tr>
-                  <td>#prc.warrantyInfo.SummaryTitle#</td>
-                  <td class="price">#dollarFormat(prc.warrantyInfo.Price)#</td>
-                </tr> --->
 
                 <!--- Line warranty --->
                 <cfif prc.warranty.recordcount>
@@ -212,7 +189,6 @@
                   <cfloop from="1" to="#arrayLen(prc.lineAccessories)#" index="i">
                     <tr>
                       <td>
-                        <!--- <cfdump var="#prc.lineAccessories[i]#"> --->
                         #prc.lineAccessories[i].detailTitle# <cfif prc.lineAccessories[i].qty gt 1>x #prc.lineAccessories[i].qty#</cfif>
                       </td>
                       <td class="price">
