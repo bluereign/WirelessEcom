@@ -260,6 +260,16 @@
       // <SELECTED SERVICES
       if ( structKeyExists(rc,"selectedServices") ) {
         prc.selectedServices = rc.selectedServices;
+      } else if ( structKeyExists(prc,"cartLine") and listFindNoCase("devicebuilder.protection", event.getCurrentEvent()) ) {
+        // load prc.selectedServices from session.cartLine
+        prc.selectedServices = "";
+        prc.lineFeatures = prc.cartLine.getFeatures();
+
+        for (i = 1; i lte arrayLen(prc.lineFeatures); i++) {
+          local.thisFeatureID = prc.lineFeatures[i].getProductID();
+          prc.selectedServices = listAppend(prc.selectedServices, local.thisFeatureID );
+        }
+
       }
       if ( !structKeyExists(prc,"selectedServices") ) {
         prc.selectedServices = "";
@@ -1001,6 +1011,18 @@
         );
       
     </cfscript>
+  </cffunction>
+
+
+  <cffunction name="tallybox" returntype="void" output="false">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+
+    <cfscript>
+      event.noLayout();
+    </cfscript>
+
   </cffunction>
 
 

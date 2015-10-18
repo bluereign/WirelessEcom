@@ -241,9 +241,14 @@
 
   <script type="text/javascript">
     function onChangeHandler(form,paymentoption) {
-      form.action='#event.buildLink('devicebuilder.protection')#';
+      // form.action='#event.buildLink('devicebuilder.protection')#';
       form.paymentoption.value=paymentoption;
-      form.submit();
+      // form.submit();
+      // Post
+      $.post('#event.buildLink('devicebuilder.tallybox')#', $('##protectionForm').serialize(), function(data){
+        $('##myTallybox').html( data )
+      });
+      // {cartLineNumber:#rc.cartLineNumber#, paymentoption: paymentoption, financed: form.financed.value, warrantyid: form.warrantyid.value}
     }    
   </script>
 

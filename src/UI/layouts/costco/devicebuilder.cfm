@@ -71,7 +71,17 @@
     <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
       #renderView()#
       <cfif prc.includeTallyBox>
+        <div id="myTallybox">
         #renderView('devicebuilder/tallybox')#
+        </div>
+        
+        <!--- load div content using ajax call: --->
+        <script type="text/javascript">
+        $(function(){
+          $("##myTallybox").load('#event.buildLink('devicebuilder.tallybox')#?cartLineNumber=#rc.cartLineNumber#');
+        });
+        </script>
+
       </cfif>
     </div>
   </div>

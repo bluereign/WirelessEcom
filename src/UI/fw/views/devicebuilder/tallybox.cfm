@@ -1,3 +1,4 @@
+<!--- #event.isAjax()# --->
 <cfparam name="prc.tallyBoxHeader" default="Upgrading" />
 <cfoutput>
   <div class="col-md-4">
@@ -23,7 +24,7 @@
         </cfif>
       </div>
     </div>
-
+<!--- <cfdump var="#prc.lineFeatures#"> --->
     <div class="row">
       <aside class="details">
         <h3>#prc.tallyboxHeader#</h3>
