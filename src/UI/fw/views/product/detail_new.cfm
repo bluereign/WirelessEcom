@@ -1001,10 +1001,16 @@ $j(document).ready(function($j) {
 
 			<div class="col-md-6">
 				
-				<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only --->
+				<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only if qty on hand is greater than 0 --->
+				<!---  and prc.productData.qtyOnHand gt 0 --->
 				<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase("109,42",prc.productData.CarrierId)>
 
-					<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
+					<cfif prc.productData.qtyOnHand gt 0>
+						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>				
+					<cfelse>
+						<a class="DisabledButton" href="##" onclick="alert('#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockAlertText()#');return false;"><span>#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockButtonText()#</span></a>
+					</cfif>
+
 				
 				<cfelse>
 

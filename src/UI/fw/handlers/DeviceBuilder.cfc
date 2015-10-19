@@ -88,8 +88,8 @@
         if (!structKeyExists(prc,"productData")) {
           prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
         }
-        // return customer to Browse all phones if product id is not found in the database:
-        if (!isNumeric(prc.productData.productId)) {
+        // return customer to Browse all phones if product id is not found in the database or there are no qty on hand:
+        if ( !isNumeric(prc.productData.productId) or prc.productData.qtyOnHand lt 1 ) {
           relocate( prc.browseDevicesUrl  );
         }
         
