@@ -386,6 +386,9 @@
 
         // since that cartLineNumber does not exist, change active cartLineNumber to 999:
         rc.cartLineNumber = request.config.otherItemsLineNumber;
+
+        // update prc.cartlines:
+        prc.cartLines = session.cart.getLines();
       }
 
 
