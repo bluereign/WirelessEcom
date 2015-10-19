@@ -27,10 +27,14 @@
       $("##warrantyoption_"+thisvalue).prop("checked",true);
       $('##protectionModal').modal('hide');
 
+      $.post('#event.buildLink('devicebuilder.tallybox')#', $('##protectionForm').serialize(), function(data){
+        $('##myTallybox').html( data )
+      });
+
       // temp: submit the form:
-      var form = $("##protectionForm");
-      form.attr('action', '#event.buildLink('devicebuilder.protection')#');
-      form.submit();
+      // var form = $("##protectionForm");
+      // form.attr('action', '#event.buildLink('devicebuilder.protection')#');
+      // form.submit();
     });
   </script>
   

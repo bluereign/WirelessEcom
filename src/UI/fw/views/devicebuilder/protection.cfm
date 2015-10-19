@@ -226,19 +226,6 @@
 
   </div>
 
-  <div class="modal fade" id="protectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="featureModal" tabindex="-2" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      </div>
-    </div>
-  </div>
-
   <script type="text/javascript">
     function onChangeHandler(form,paymentoption) {
       // form.action='#event.buildLink('devicebuilder.protection')#';
