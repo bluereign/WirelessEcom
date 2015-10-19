@@ -27,8 +27,10 @@
           <div class="radio">
             <label>
               <input type="radio" name="paymentoption" value="financed" <cfif prc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
-              <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')"><!--- temporary form post until ajax functionality built --->
-                <cfif prc.productData.CarrierId eq 109>
+              
+              <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
+                
+                <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')">
                   <option value="financed-24" <cfif prc.financed is 'financed-24'>selected</cfif> >
                     #prc.financeproductname# 24: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 30 Months
                   </option>
@@ -38,12 +40,33 @@
                   <option value="financed-12" <cfif prc.financed is 'financed-12'>selected</cfif> >
                     #prc.financeproductname# 12: #dollarFormat(prc.productData.FinancedMonthlyPrice12)# Due Monthly for 20 Months
                   </option>
-                <cfelseif prc.productData.CarrierId eq 42>
+                </select>
+
+              <cfelseif prc.productData.CarrierId eq prc.carrierIdVzw>
+                
+                <input type="hidden" name="financed" value="financed-24">
+                #prc.financeproductname#: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 24 Months
+                
+              </cfif>
+
+              <!--- <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')">
+                <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
+                  <option value="financed-24" <cfif prc.financed is 'financed-24'>selected</cfif> >
+                    #prc.financeproductname# 24: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 30 Months
+                  </option>
+                  <option value="financed-18" <cfif prc.financed is 'financed-18'>selected</cfif> >
+                    #prc.financeproductname# 18: #dollarFormat(prc.productData.FinancedMonthlyPrice18)# Due Monthly for 24 Months
+                  </option>
+                  <option value="financed-12" <cfif prc.financed is 'financed-12'>selected</cfif> >
+                    #prc.financeproductname# 12: #dollarFormat(prc.productData.FinancedMonthlyPrice12)# Due Monthly for 20 Months
+                  </option>
+                <cfelseif prc.productData.CarrierId eq prc.carrierIdVzw>
                   <option value="financed-24" <cfif prc.financed is 'financed-24'>selected</cfif> >
                     #prc.financeproductname#: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 24 Months
                   </option>
                 </cfif>
-              </select>
+              </select> --->
+
               <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
                 CARRIER is requiring a down payment
                 <div class="checkbox">
@@ -56,15 +79,35 @@
             </label>
           </div>
           
-          <div class="radio">
-            <label>
-              <input type="radio" name="paymentoption" value="fullretail" <cfif prc.paymentoption is 'fullretail'>checked</cfif> onchange="onChangeHandler(this.form,'fullretail')">
-              <!--- Full Retail Price #dollarFormat(prc.productData.FinancedFullRetailPrice)# --->
-              Upgrade Price #dollarFormat(prc.productData.price_upgrade)#
-            </label>
-          </div>
+          
+
+          <cfif prc.productData.carrierId eq prc.carrierIdVzw and prc.productData.price_new NEQ 9999>
+            <div class="radio">
+              <label>
+                <input type="radio" name="paymentoption" value="2yearcontract" <cfif prc.paymentoption is '2yearcontract'>checked</cfif> onchange="onChangeHandler(this.form,'2yearcontract')">
+                2-Year Contract Upgrade Price 
+                <cfif val(prc.productData.upgradePriceAfterRebate)>
+                  <!--- has a new price after rebate --->
+                  <cfset prc.priceModifier.upgradePriceRebateAmount = prc.productData.price_upgrade - prc.productData.upgradePriceAfterRebate />
+                  #prc.priceModifier.upgradePriceRebateAmount#
+                <cfelse>
+                  #dollarFormat(prc.productData.price_upgrade)#
+                </cfif>
+              </label>
+            </div>
+          <cfelse>
+            <!--- For some reason, the upgrade price is the same as the 2-year contract upgrade price.  Adding it to an 'else' clause for now --->
+            <div class="radio">
+              <label>
+                <input type="radio" name="paymentoption" value="fullretail" <cfif prc.paymentoption is 'fullretail'>checked</cfif> onchange="onChangeHandler(this.form,'fullretail')">
+                <!--- Full Retail Price #dollarFormat(prc.productData.FinancedFullRetailPrice)# --->
+                Upgrade Price #dollarFormat(prc.productData.price_upgrade)#
+              </label>
+            </div>
+          </cfif>
 
         </section>
+
         
         <section class="seperator">
 

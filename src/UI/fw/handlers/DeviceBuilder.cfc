@@ -214,11 +214,13 @@
       // update finance plan if rc.paymentoption exists (i.e. finance plan has changed):
       if ( structKeyExists(rc,"paymentoption") ) {
 
-        if ( rc.paymentoption is 'financed') {
+        if ( rc.paymentoption is 'financed' ) {
           prc.financed = rc.financed;
           prc.activationType = rc.financed & "-" & prc.customerType;
-        } else if ( rc.paymentoption is 'fullretail') {
+        } else if ( rc.paymentoption is 'fullretail' ) {
           // prc.activationType = rc.paymentoption & "-" & prc.customerType;
+          prc.activationType = prc.customerType;
+        } else if ( rc.paymentoption is '2yearcontract' ) {
           prc.activationType = prc.customerType;
         }
 
@@ -228,7 +230,14 @@
       }
 
       if ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) ) {
-        prc.paymentoption = "financed"; //financed, fullretail
+        
+        if ( prc.cartLine.getCartLineActivationType() contains 'financed' ) {
+          prc.paymentoption = "financed";
+        } else {
+         //financed, fullretail, 2yearcontract
+         prc.paymentoption = IIF(prc.productData.carrierId eq prc.carrierIdAtt, DE("fullretail"), DE("2yearcontract"));
+        }
+
       }
 
       // update Device Protection Options (warranty)
@@ -594,6 +603,14 @@
             prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
             prc.tallyboxFinanceMonthlyDueAmount = 0;
             break;
+
+          case "2yearcontract":
+            prc.tallyboxFinanceMonthlyDueToday = prc.productData.price_upgrade;
+            prc.tallyboxFinanceTitle = "2 Year Contract";
+            prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
+            prc.tallyboxFinanceMonthlyDueAmount = 0;
+            break;
+
           default:
             break;
         }
