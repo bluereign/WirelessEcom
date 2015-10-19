@@ -110,20 +110,20 @@
                 No Plan Selected
               </cfif>
             </div>
-            <div class="table-responsive">
-              <table class="table">
-                <tr>
-                  <td>
-                    Due Monthly
-                  </td>
-                  <td class="price">
-                    <cfif isQuery(prc.cartPlan) and  prc.cartPlan.recordcount>
+            <cfif isQuery(prc.cartPlan) and  prc.cartPlan.recordcount>
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <td>
+                      Due Monthly
+                    </td>
+                    <td class="price">
                       #dollarFormat(prc.cartPlan.MonthlyFee)#/mo
-                    </cfif>
-                  </td>
-                </tr>
-              </table>
-            </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </cfif>
           </div>
         </div>
         <h4>Protection &amp; Services</h4>

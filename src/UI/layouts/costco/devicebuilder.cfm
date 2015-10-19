@@ -121,7 +121,7 @@
 </cfif>
 <!--- <end zipModal, planModal --->
 
-
+<!--- <protection and services view/modals --->
 <cfif listFindNoCase("devicebuilder.protection",event.getCurrentEvent())>
   <div class="modal fade" id="protectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
     <div class="modal-dialog modal-lg">
@@ -162,17 +162,24 @@
 
       $('.btnAddToCart')
         .on('click', function() {
-          // console.log('this.id: ' + this.id);
-          this.form.action='#event.buildLink('devicebuilder.accessories')#';
-          this.form.submit();
-        });
 
-      $('.btnRemoveFromCart')
-        .on('click', function() {
-          this.form.action='#event.buildLink('devicebuilder.accessories')#';
-          this.form.submit();
-        });
+          if ( $(this).data('fn') === 'add' ) {
+            $(this).data('fn', 'remove');
+            $(this).text('Remove');
+            $(this).addClass('btn-remove');
+            $.post('#event.buildLink('devicebuilder.tallybox')#', {cartLineNumber: #rc.cartLineNumber#, addaccessory: this.value}, function(data){
+              $('##myTallybox').html( data )
+            });
 
+          } else {
+            $(this).data('fn', 'add');
+            $(this).text('Add to Cart');
+            $(this).removeClass('btn-remove');
+            $.post('#event.buildLink('devicebuilder.tallybox')#', {cartLineNumber: #rc.cartLineNumber#, removeaccessory: this.value}, function(data){
+              $('##myTallybox').html( data )
+            });
+          }
+        });
     });
   </script>
 </cfif>

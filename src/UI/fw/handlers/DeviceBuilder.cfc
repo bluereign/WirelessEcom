@@ -319,7 +319,7 @@
 
 
 
-      // <ACCESSORIES
+      // <ACCESSORIES - add accessory
       if ( structKeyExists(rc,"addaccessory") and len(trim(rc.addaccessory)) ) {
         if ( ! (structKeyExists(rc,"accessoryqty") and isValid("integer", rc.accessoryqty)) ) {
           rc.accessoryqty = 1;

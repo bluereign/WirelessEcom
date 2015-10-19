@@ -8,6 +8,9 @@
       <form action="#prc.nextStep#" name="accessoryForm" id="accessoryForm" method="post">
         <div class="right">
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
+          <input type="hidden" name="addaccessory" id="addaccessoryid" value="" />
+          <input type="hidden" name="removeaccessory" id="removeaccessoryid" value="" />
+
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>
@@ -32,9 +35,9 @@
                       <div class="info">#prc.qAccessory.summaryTitle[prc.qAccessory.currentRow]#</div>
                       <div class="price">#dollarFormat(prc.qAccessory.price_retail[prc.qAccessory.currentRow])#</div>
                       <cfif listFindNoCase(prc.selectedAccessories, prc.qAccessory.productId[prc.qAccessory.currentRow])>
-                        <button type="submit" class="btn btn-remove btnRemoveFromCart" name="removeaccessory" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="removeacc_#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Remove</button>
+                        <button type="button" class="btn btn-remove btnAddToCart" name="btnRemoveFromCart" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="removeacc_#prc.qAccessory.productId[prc.qAccessory.currentRow]#" data-fn="remove">Remove</button>
                       <cfelse>
-                        <button type="submit" class="btn btnAddToCart" name="addaccessory" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="accessory_#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Add to Cart</button>
+                        <button type="button" class="btn btnAddToCart" name="btnAddToCart" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="accessory_#prc.qAccessory.productId[prc.qAccessory.currentRow]#" data-fn="add">Add to Cart</button>
                       </cfif>
                     </div>
                     <div class="callout">
