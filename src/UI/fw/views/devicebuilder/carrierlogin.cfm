@@ -4,7 +4,7 @@
     <section class="content">
       <header class="main-header">
         <h1>Carrier Account Login</h1>
-        <p>The primary Account Holder's information is used to verify status and line availability.(carrierId: #prc.productData.carrierId#)</p>
+        <p>The primary Account Holder's information is used to verify status and line availability. <!--- (carrierId: #prc.productData.carrierId#) ---></p>
       </header>
       <cfif len(rc.carrierResponseMessage)>
         <p class="alert bg-danger" role="alert">#rc.carrierResponseMessage#</p>

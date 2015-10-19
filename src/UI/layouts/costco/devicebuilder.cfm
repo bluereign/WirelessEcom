@@ -58,15 +58,6 @@
     <cfelse>
       <br /><br /><br /><br />
     </cfif>
-    
-<!--- DEBUGGING / TEST --->
-    <!--- <cfif structKeyExists(prc,"resultStr")>
-      #prc.resultStr#
-    </cfif>
-    <cfif structKeyExists(prc,"selectedServices")>
-      <cfdump var="#prc.selectedServices#">
-    </cfif> --->
-<!--- end debugging / test --->
 
     <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
       #renderView()#
@@ -75,12 +66,12 @@
         #renderView('devicebuilder/tallybox')#
         </div>
         
-        <!--- load div content using ajax call: --->
+        <!--- to load div content using ajax call:
         <script type="text/javascript">
         $(function(){
           $("##myTallybox").load('#event.buildLink('devicebuilder.tallybox')#?cartLineNumber=#rc.cartLineNumber#');
         });
-        </script>
+        </script> --->
 
       </cfif>
     </div>

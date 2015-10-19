@@ -8,9 +8,6 @@
       <form action="#prc.nextStep#" name="accessoryForm" id="accessoryForm" method="post">
         <div class="right">
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
-          <input type="hidden" name="addaccessory" id="addaccessoryid" value="" />
-          <input type="hidden" name="removeaccessory" id="removeaccessoryid" value="" />
-
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
         </div>

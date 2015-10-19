@@ -93,21 +93,20 @@
 
                   <div class="row">
                     <div class="collapse" id="plan-details">
-                      <!--- <div class="col-md-16 col-xs-16">#prc.cartPlan.companyName# #prc.cartPlan.planName#</div>
+                      <div class="col-md-12 col-xs-11">#prc.cartPlan.companyName# #prc.cartPlan.planName#</div>
+                      <div class="col-md-4 col-xs-5">#dollarFormat(prc.cartPlan.monthlyFee)#/mo</div>
+                      <div class="col-md-12 col-xs-11">Data Limit:</div>
+                      <div class="col-md-4 col-xs-5">#prc.cartPlan.data_limit#</div>
+                      <div class="col-md-12 col-xs-11">Maximum Lines:</div>
+                      <div class="col-md-4 col-xs-5">#prc.cartPlan.maxLines#</div>
+
+                      <!--- <div class="col-md-12 col-xs-11">Additional Data Usage:</div>
+                      <div class="col-md-4 col-xs-5">#prc.cartPlan.additional_data_usage#</div>
+                      <div class="col-md-16 col-xs-16">#prc.cartPlan.companyName# #prc.cartPlan.planName#</div>
                       <div class="col-md-16 col-xs-16">Data Limit: #prc.cartPlan.data_limit#</div>
                       <div class="col-md-16 col-xs-16">Additional Data Usage: #prc.cartPlan.additional_data_usage#</div>
                       <div class="col-md-16 col-xs-16">Maximum Lines: #prc.cartPlan.maxLines#</div> --->
-                      <div class="col-md-12 col-xs-11">#prc.cartPlan.companyName# #prc.cartPlan.planName#</div>
-                      <div class="col-md-4 col-xs-5">#dollarFormat(prc.cartPlan.monthlyFee)#/mo</div>
 
-                      <div class="col-md-12 col-xs-11">Data Limit:</div>
-                      <div class="col-md-4 col-xs-5">#prc.cartPlan.data_limit#</div>
-
-                      <!--- <div class="col-md-12 col-xs-11">Additional Data Usage:</div>
-                      <div class="col-md-4 col-xs-5">#prc.cartPlan.additional_data_usage#</div> --->
-
-                      <div class="col-md-12 col-xs-11">Maximum Lines:</div>
-                      <div class="col-md-4 col-xs-5">#prc.cartPlan.maxLines#</div>
                     </div>
                   </div>
                   <a role="button"
@@ -199,7 +198,7 @@
                 <div class="row">
                   <div class="col-md-2 col-xs-6 item">
                     <img src="#imageDetail.src#" alt="#imageDetail.alt#" /><br />
-                    <a href="#event.buildLink('devicebuilder.protection')#/cartLineNumber/#local.iCartLine#">Edit Options</a>
+                    <a href="#event.buildLink('devicebuilder.protection')#/cartLineNumber/#local.iCartLine#">Edit Options</a><br />
                   </div>
                   <div class="col-md-8 col-xs-10 data">
                     <h3>#local.selectedPhone.summaryTitle#</h3>
