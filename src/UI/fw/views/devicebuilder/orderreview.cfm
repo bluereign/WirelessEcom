@@ -168,13 +168,14 @@
                 <!--- Get Device Summary Description --->
                 <cfset local.deviceDescription = "" />
 
-                <cfif arrayLen(local.lineBundledAccessories)> <!--- from cfc/view/Cart.cfc line 339 --->
+                 <!--- from cfc/view/Cart.cfc line 339 --->
+                <!--- <cfif arrayLen(local.lineBundledAccessories)>
                   <cfloop from="1" to="#arrayLen(local.lineBundledAccessories)#" index="local.iAccessory">
                     <cfset local.thisAccessory = local.lineBundledAccessories[local.iAccessory] />
                     <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
                     <cfset local.deviceDescription = listAppend(local.deviceDescription,local.selectedAccessory.summaryTitle) />
                   </cfloop>
-                </cfif>
+                </cfif> --->
                 <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">
                   <cfset local.thisFeatureID = local.lineFeatures[local.iFeature].getProductID() />
                   <cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID) />
@@ -263,7 +264,7 @@
                           </div>
                         </cfif>
 
-                        <!--- Bundled Accessories --->
+                        <!--- Bundled Accessories
                         <cfif arrayLen(local.lineBundledAccessories)> <!--- from cfc/view/Cart.cfc line 339 --->
                           <cfloop from="1" to="#arrayLen(local.lineBundledAccessories)#" index="local.iAccessory">
                             <cfset local.thisAccessory = local.lineBundledAccessories[local.iAccessory] />
@@ -289,7 +290,7 @@
 							<div class="col-md-3">&nbsp;</div>
                             <div class="col-md-3"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>FREE</cfif></div>
                           </cfloop>
-                        </cfif>
+                        </cfif> --->
 
                         <!--- Plan --->
                         <cfif local.cartLine.getPlan().hasBeenSelected()>
