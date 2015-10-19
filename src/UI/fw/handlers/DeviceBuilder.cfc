@@ -229,7 +229,7 @@
         prc.paymentoption = rc.paymentoption;
       }
 
-      if ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) ) {
+      if (  structKeyExists(prc,"cartLine") and  ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) )  ) {
         
         if ( prc.cartLine.getCartLineActivationType() contains 'financed' ) {
           prc.paymentoption = "financed";
