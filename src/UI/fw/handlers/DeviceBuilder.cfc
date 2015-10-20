@@ -13,7 +13,7 @@
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
   <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting,orderreview" />
-  <cfset listActivationTypes = "financed-24,financed-18,financed-12" /> <!--- TODO: determine what to do with new, upgrade, addaline  --->
+  <cfset listActivationTypes = "financed-24,financed-18,financed-12,upgrade" /> <!--- upgrade=2-year contract. TODO: determine what to do with new, upgrade, addaline  --->
 
 
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
@@ -73,6 +73,8 @@
           relocate( prc.browseDevicesUrl );
         }
 
+        
+
         // 2. validate the type.
         // Make sure customer type exists.  If it does not, set it to upgrade.
         if ( !listFindNoCase(listCustomerTypes,rc.type) ) {
@@ -94,7 +96,11 @@
         }
         
         // 4. set cart and cartLine activationType (eg  financed-24-new).
-        prc.activationType = rc.finance & "-" & rc.type;
+        if (rc.finance is 'upgrade') {
+          prc.activationType = "upgrade";
+        } else {
+          prc.activationType = rc.finance & "-" & rc.type;
+        }
         session.cart.setActivationType(prc.activationType);
 
         // 5. set the cartLineNumber
@@ -203,7 +209,9 @@
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
-
+      // if ( structKeyExists(rc,"HasExistingPlan")  ) {
+      //   session.DBuilderCart.setHasExistingPlan(rc.HasExistingPlan);
+      // }
 
       // GET PLAN FROM CART
       prc.cartPlan = application.model.dBuilderCartFacade.getPlan();
