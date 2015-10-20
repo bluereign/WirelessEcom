@@ -7,96 +7,114 @@
 	<cfset campaign = campaignService.getCampaignBySubdomain( campaignService.getCurrentSubdomain() ) />
 </cfif>
 
-
-<!--- If there is only one payment gateway for this channel, submit this form to the gateway with the necessary fields --->
-<!---<cfif !GatewayRegistry.hasMultipleRegistered()>
-	<cfinclude template="/views/checkout/paymentGatewayInclude.cfm" />
-</cfif>--->
-
-<!--- Display Pre-Payment Gateway Messaging --->
-<!---<cfif ChannelConfig.getDisplayPrePaymentGatewayPage()>
-	<cfset formAction = '/index.cfm/go/checkout/do/processCarrierTerms'>
-</cfif>--->
-
 <cfoutput><script type="text/javascript" src="#assetpaths.common#scripts/libs/jquery.validate.min.js"></script></cfoutput> 
-
 <style>
 	.modal-body {
-    max-height:900px; 
-    overflow-y: auto;
+    height:650px;
+    width:100%; 
 }
 .bootstrap .modal-custom{
-	width:700px
-	max-height:900px; 
     overflow-y: auto;
 }
 </style>
 <script type="text/javascript">
 	jQuery(document).ready( function($) {
 		var $j = jQuery.noConflict();
-		$j('#app').validate({
+		$('#app').validate({
 			rules : {
 				agreeToContract : "required",
 				agreeToContractExtension : "required",
+				agreeToDevicePaymentPlan : "required",
+				agreeToDevicePaymentPresented: "required",
 				agreeToCarrierTermsAndConditions : "required",
-				agreeToCustomerLetter: "required",
-				agreeToUpgradeDiscount: "required"
+				agreeToCustomerLetter: "required"
 			},
 			messages : {
 				agreeToContract : "You must agree to the contract to proceed.",
 				agreeToContractExtension : "You must agree to the contract extension to proceed.",
+				agreeToDevicePaymentPlan : "You must agree to the device payment plan to proceed.",
+				agreeToDevicePaymentPresented: "You must acknowledge presentation of documents to proceed.",
 				agreeToCarrierTermsAndConditions : "You must agree to the carrier terms and conditions to proceed.",
-				agreeToCustomerLetter : "You must agree to the customer letter to proceed.",
-				agreeToUpgradeDiscount: "You must agree to the upgrade discount notification."
+				agreeToCustomerLetter : "You must agree to the customer letter to proceed."
 			},
 			errorPlacement : function(error, element) {
 				error.insertAfter(element.next('a'));
-			},
-			errorElement : "div"
+			}
 		})
-		$j('.continue').click( function() {
-			
-			if ($j('#app').valid()) {
+		$('.continue').click( function() {
+			if ($('#app').valid()) {
 				showProgress('Processing Terms & Conditions.');
 							
-				if ($j('#agreeToSmsOptIn').attr('checked'))
-				{
-					$j.ajax({
-						url: "/ajax/CheckoutHelper.cfc?method=optInForSmsMessage",
-						type: "POST",
-						async: false,
-						success: function(result){
-							//console.log(result);
-						},
-						error: function(jqXHR, textStatus, errorThrown) {
-							//console.log(textStatus, errorThrown);
-						}
-					});
-				}
-				
 				$('#app').submit();
 			}
 		})
 		
-	})
-</script>
-<script>
-      var cnt=0,webpageArray = [
-        "http://cnn.com/",
-        "http://msn.com/", 
-        "http://google.com/",
-      ]; 
+		$('#agreeToContractDoc').click( function() {
+			$('#docClicked').val("agreeToContract");
+			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+		})
+		
+		$('#agreeToContractExtension').click( function() {
+			$('#docClicked').val("agreeToContractExtension");
+			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/att/ATT_Customer_Letter_05_19_14.pdf');
+			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/att/ATT_Customer_Letter_05_19_14.pdf');
+			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/att/ATT_Customer_Letter_05_19_14.pdf');
+		})
+		
+		$('#agreeToDevicePaymentPlan').click( function() {
+			$('#docClicked').val("agreeToDevicePaymentPlan");
+			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+		})
+		
+		$('#agreeToCarrierTermsAndConditions').click( function() {
+			$('#docClicked').val("agreeToCarrierTermsAndConditions");
+			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf');
+			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf');
+			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf');
+		})
+		
+		$('#agreeToCustomerLetter').click( function() {
+			$('#docClicked').val("agreeToCustomerLetter");
+			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+		})
+		
+		$('#agreeButton').click( function() {
+			var checkName = $('#docClicked').val();
+			if($('input[type="checkbox"][name="'+ checkName +'"]').attr('Checked','false')){
+				$('input[type="checkbox"][name="'+ checkName +'"]').attr('Checked','Checked');
+			}
+		})
+		
+		$('#printButton').click( function() {
+			var ms_ie = false;
+   			var ua = window.navigator.userAgent;
+    		var old_ie = ua.indexOf('MSIE ');
+    		var new_ie = ua.indexOf('Trident/');
 
-      function loadNextPage(dir) {   
-        cnt+=dir;
-        if (cnt<0) cnt=webpageArray.length-1; // wrap
-        else if (cnt>= webpageArray.length) cnt=0; // wrap
-        var iframe = document.getElementById("pdfView"); 
-        iframe.src = webpageArray[cnt]; 
-        return false; // mandatory!
-      } 
-    </script>
+    		if ((old_ie > -1) || (new_ie > -1)) {
+        		ms_ie = true;
+   			 }
+    		if ( ms_ie ) {
+    			var iframe = document.getElementById('confirmationPrint');
+        		iframe.contentWindow.document.execCommand('print', false, null);
+    		}
+    		else {
+    			parent.document.getElementById('confirmationPrint').contentWindow.print();
+    		}
+		})
+
+	});
+	
+</script>
 <cfoutput>
+	<input type="hidden" id="carrierID" value="#session.cart.getCarrierId()#">
+	<input type="hidden" id="docClicked" value="none">
 	<div class="bootstrap">
 	<h1>#carrierName# Agreements</h1>
 	<p>Click the links below to review the #carrierName# Terms &amp; Agreements</p>
@@ -106,58 +124,76 @@
 			<a class="continue" href="##">Continue</a>
 		</span>
 	</div>
+	
 	<hr class="blueline" />
-	<p>After reviewing the following sections, check the corresponding box to agree and continue.</p>
+	
+		<p>
+			After reviewing the following Terms & Conditions, check the corresponding boxes to agree to the #carrierName# and Costco Terms and Conditions. 
+			Once all the Terms & Conditions are accepted, you can then Continue checking out.
+		</p>
 	<form id="app" name="carrierApplication" method="post" action="#formAction#">
-
 		<p>
 			<cfif session.cart.getActivationType() CONTAINS "New" or session.cart.getActivationType() CONTAINS "addaline" >
-			<!---<input type="checkbox" name="agreeToContract" /> <a href="##" onclick="ColdFusion.Window.show('ContractAgreement')">2-Year Contract Agreement</a>--->
-			<input type="checkbox" name="agreeToContract" /> <a href="##" onclick="return loadNextPage(-1)">2-Year Contract Agreement</a>
+				<a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">Terms & Conditions of the #carrierName# Two Year Customer Agreement</a><br/>
+				<p>
+					<input type="checkbox" name="agreeToContract" /><a></a>
+					I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
+					LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
+					AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
+				</p>
 			<cfelse>
-			<input type="checkbox" name="agreeToContractExtension" /> <a href="##" onclick="ColdFusion.Window.show('ContractExtension')">2-Year Contract Extension</a>
+				<a href="##" id="agreeToContractExtension" data-toggle="modal" data-target="##carrierDocModal">Terms & Conditions of the #carrierName# Two Year Customer Extension</a><br/>
+				<p>
+					<input type="checkbox" name="agreeToContractExtension" /><a></a> 
+					I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
+					LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
+					AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
+				</p>
 			</cfif>
 		</p>
-		
-		<!--- AT&T Upgrade Disclaimer --->
-		<cfif application.model.checkoutHelper.getCarrier() eq 109 && session.cart.getActivationType() CONTAINS "Upgrade">
-			<p>
-				<input type="checkbox" name="agreeToUpgradeDiscount" /> <a href="##" onclick="ColdFusion.Window.show('UpgradeDiscountAgreement')">Upgrade Discount Notification</a>
-			</p>
-		</cfif>
-		
 		<p>
-			<input type="checkbox" name="agreeToCarrierTermsAndConditions" /> <a href="#application.model.checkoutHelper.getCarrierTermsFile()#" target="_blank" onclick="window.open('CarrierTerms'); return false;">Carrier Terms &amp; Conditions</a>
+			<a href="##" id="agreeToDevicePaymentPlan" data-toggle="modal" data-target="##carrierDocModal">Terms & Conditions of the #carrierName# Device Payment Plan</a>
+			<p>
+				<input type="checkbox" name="agreeToDevicePaymentPlan" /><a></a>
+				I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, 
+				SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
+			</p>
 		</p>
-		
-		<cfif channelConfig.getDisplayCarrierCustomerLetter()>
-			<p>
-				<input type="checkbox" name="agreeToCustomerLetter" /> <a href="#application.model.CheckoutHelper.getCarrierCustomerLetterFile()#" target="_blank" onclick="ColdFusion.Window.show('CustomerLetter'); return false;">#channelConfig.getDisplayName()# Customer Letter</a>
-			</p>
-		</cfif>
-		
-		<cfif channelConfig.getDisplaySmsOptIn() && IsDefined('campaign')>
-			<p>
-				<input id="agreeToSmsOptIn" type="checkbox" name="agreeToSmsOptIn" /> <a href="##" target="_blank" onclick="ColdFusion.Window.show('SmsOptIn'); return false;"> Yes, please send me the #campaign.getCompanyName()# mobile app for free via SMS. Message and data rates may apply.</a>
-			</p>
-		</cfif>		
-		
-		<!---<cfif !GatewayRegistry.hasMultipleRegistered() >
-		    <!--- form fields that are passed to payment gateway --->
-		    <cfoutput>#formFields#</cfoutput>
-		</cfif>--->
+		<p>
+			NOTICE TO BUYER: This is a retail installment sale agreement, not a lease. Do not accept if it contains blank spaces. You have a right to a copy of 
+			this agreement; keep it to protect your rights. You may pay off the full amount at any time. Please review the entire agreement, including the 
+			additional Notice to Buyer provisions, before accepting.
+		</p>
+		<p>
+			<input type="checkbox" name="agreeToDevicePaymentPresented" /><a></a>
+			I acknowledge that Wireless Advocates has on this date presented me with the above completed Retail Installment Sale Agreement/Notice to Buyer 
+			(the "Agreement") and I have read the Agreement. I agree to all terms and conditions and understand that if I do not accept these terms, my order 
+			will be cancelled and the device will not be shipped.
+		</p>
+		<p>
+			<a href="##" id="agreeToCarrierTermsAndConditions" data-toggle="modal" data-target="##carrierDocModal">#carrierName# Terms &amp; Conditions</a><br/>
+			<input type="checkbox" name="agreeToCarrierTermsAndConditions" /><a></a> 
+			I HAVE READ AND AGREED TO THE #UCase(carrierName)# TERMS AND CONDITIONS FOR SERVICE AGREEMENT
+		</p>
+		<p>
+			<a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">Terms &amp; Conditions of the Costco Wireless Customer Letter</a><br/>
+			<input type="checkbox" name="agreeToCustomerLetter" /><a></a>
+			I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER
+		</p>
 		<br />
+		
 		<hr class="bottom-break" />
+		
 		<div class="formControl">
 				<a class="backBtn" href="##">Previous</a>
 			<span class="btn btn-primary">
 				<a class="continue" href="##">Continue</a>
 			</span>
 		</div>
-		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="##myModal">Open Modal</button>
-		<a data-toggle="modal" data-target="##myModal">Open Modal</a>
+		<!---<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="##myModal">Open Modal</button>
+		<a data-toggle="modal" data-target="##carrierDocModal">Open Modal</a>--->
 	<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="carrierDocModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -167,70 +203,20 @@
         <h4 class="modal-title">#carrierName# Header</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
-        <iframe src="#event.buildLink('checkoutBD/carrierAgreement')#" width=100% height=100% id="pdfView">
-		</iframe>
+		<object id="carrierDoc" name="carrierDoc"  data="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" style="width:100%;height:100%">
+        	<embed id="carrierDocEmbed" name="carrierDocEmbed" src="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" />
+    	</object>
       </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      	<button type="button" class="btn btn-default">Print Terms & Conditions</button>
-        <button type="button" class="btn btn-default">Agree</button>
+      	<button type="button" id="printButton" class="btn btn-default" data-dismiss="modal">Print Terms & Conditions</button>
+        <button type="button" id="agreeButton" class="btn btn-default" data-dismiss="modal">Agree</button>
       </div>
     </div>
 
   </div>
 </div>
-	</form>
-	
-	<div style="display:none">
-		<cfwindow name="ContractAgreement" modal="true" center="true" resizable="false">
-			<h1>2-Year Contract Agreement</h1>
-			<p>Content - By clicking the checkbox, you are agreeing to a contract for 24 months from the date of purchase on completion of this order process.</p>
-		</cfwindow>
-	</div>
-	
-	<div style="display:none">
-		<cfwindow name="UpgradeDiscountAgreement" modal="true" center="true" resizable="false">
-			<h1>Upgrade Discount Notification</h1>		
-			<!--- Modified on 10/02/2014 by Denard Springle (denard.springle@cfwebtools.com) --->
-			<!--- Track #: 6804 - Costco.com: remove a sentence from a pop up - Online Compliance required by AT&T [ Commented out the line requested by legal ] --->
-			<!---<p>Some customers have a monthly discount which was applied to their Mobile Share Value account by AT&T in February 2014.</p>--->
-			<!--- END EDITS on 10/02/2014 by Denard Springle --->
-			<p>By upgrading to a 2 year wireless contract you will no longer be eligible for the Mobile Share Value monthly discounts of $15 on plans lower than 10GB, or $25 on 10GB or higher plans.</p>
-		</cfwindow>
-	</div>	
-	
-	<div style="display:none">
-		<cfwindow name="ContractExtension" modal="true" center="true" resizable="false">
-			<h1>2-Year Contract Extension</h1>
-			<p>By clicking the checkbox, you are agreeing to extend your contract for 24 months from the date of purchase on completion of this order process.</p>
-		</cfwindow>
-	</div>
-	
-	<div style="display:none">
-		<cfwindow name="CarrierTerms" title="#carrierName# Terms and Conditions" modal="true" center="true" resizable="true" width="900" height="650">
-			<iframe src="#application.model.checkoutHelper.getCarrierTermsFile()#" width="870" height="595"></iframe>
-		</cfwindow>
-	</div>
-	
-	<cfif channelConfig.getDisplayCarrierCustomerLetter()>
-		<div style="display:none">
-			<cfwindow name="CustomerLetter" title="#channelConfig.getDisplayName()# Customer Letter" center="true" resizable="true" width="900" height="650">
-				<iframe src="#application.model.checkoutHelper.getCarrierCustomerLetterFile()#" width="870" height="595"></iframe>
-			</cfwindow>
-		</div>
-	</cfif>
-	
-	<cfif channelConfig.getDisplaySmsOptIn() && IsDefined('campaign')>
-		<div style="display:none">
-			<cfwindow name="SmsOptIn" modal="true" center="true" resizable="false">
-				<h1>#campaign.getCompanyName()# Mobile App</h1>
-				<p>By providing your mobile phone number, you are agreeing to receive 1 text message providing you with information regarding this promotion.  The message will come from Wireless Advocates on short code 99222 and may be sent via automatic telephone dialing system. Message and data rates may apply.  You are not required to sign the agreement as a condition of purchasing any property, goods or services. You may opt out at any time by texting STOP to 99222. By sending STOP to 99222, you agree to one additional confirmation message stating that you've opted out and will no longer receive messages from Wireless Advocates. To get help, text HELP to 99222.</p> 
-				<p>Get additional support or help by calling #channelConfig.getCustomerCarePhone()#.  You must be the mobile phone account holder or have permission from the account holder to use this service. You must be 18 years or older or have permission from a parent/guardian. For complete Terms and Conditions, go <a href="/index.cfm/go/content/do/terms" target="_blank">here</a>. To view our Privacy Policy go <a href="/index.cfm/go/content/do/privacy/" target="_blank">here</a>. </p>
-			</cfwindow>
-		</div>
-	</cfif>
-	
+</form>
 	<!---<cfset rebateText = application.view.product.ReplaceRebate( '%CarrierRebate1% %CarrierRebate2% %CarrierSkuRebate1% %CarrierSkuRebate2%', prc.productData.carrierId, prc.productData.gersSku) />--->
 	<!---<cfif trim(rebateText) is not "">
 		<br />
@@ -240,4 +226,7 @@
 		<span class="rebate-callout">#rebateText#</span><br />
 	</cfif>--->
 </div>
+<iframe src="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" style="display: none" 
+	        id="confirmationPrint">
+</iframe>
 </cfoutput>
