@@ -83,6 +83,9 @@
                   <td class="price">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getDueToday())#</td>
                   <!--- <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueToday)# <cfif prc.paymentoption is 'financed'>Down</cfif></td> <!--- hard code from detail_new.cfm ---> --->
                 </tr>
+                <tr>
+                  <td colspan="2">* Final amount due not known until credit check is complete.</td>
+                </tr>
                 <!--- Note: it will be difficult to display the Line Access Fee here as it's part of the lineFeatures array --->
                 <!--- <tr>
                   <td>Line Access Fee</td>
