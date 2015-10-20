@@ -886,7 +886,7 @@
 		<cfif not arguments.cartLineNumber or arguments.cartLineNumber eq request.config.otherItemsLineNumber>
 		</cfif>
 		
-		<cfif arguments.cartLineNumber gt 0 AND (arguments.cartLineNumber LTE session.Carthelper.getNumberOfLines() OR arguments.cartLineNumber eq request.config.otherItemsLineNumber)>
+		<cfif arguments.cartLineNumber gt 0 AND (arguments.cartLineNumber LTE application.model.Carthelper.getNumberOfLines() OR arguments.cartLineNumber eq request.config.otherItemsLineNumber)>
 
 			<cfset local.cartItemQty = getItemCount(arguments.cartLineNumber,arguments.product_id) />
 
@@ -1072,7 +1072,7 @@
 		</cfif>
 		
 		<!--- do for line items --->
-		<cfif arguments.cartLineNo GT 0 AND arguments.cartLineNo LTE session.Carthelper.getNumberOfLines()>
+		<cfif arguments.cartLineNo GT 0 AND arguments.cartLineNo LTE application.model.Carthelper.getNumberOfLines()>
 			<cfset local.clines = session.cart.getLines() />
 			<cfset local.cl = local.clines[arguments.cartLineNo] />
 			<!---<cfloop array="#session.cart.getLines()#" index="cl">--->
@@ -1112,8 +1112,8 @@
 		</cfif>
 	</cffunction>
 	
-	<cffunction name="getSubscriberIndices" returnType="list" access="public">		
-		<cfset local = structNew() />
+	<cffunction name="getSubscriberIndices" returnType="any" access="public">		
+		<cfset var local = structNew() />
 		<cfset local.clines = session.cart.getLines() />
 		<cfset local.subscriberIndices = "" />
 		<cfloop array="#local.clines#" index="local.cl">
@@ -1127,7 +1127,7 @@
 		<cfargument name="cartLineNo" type="numeric" required="true" />
 		<cfargument name="productId" type="string" required="true" />
 		
-		<cfset session.Carthelper.removeAccessory(arguments.cartLineNo, arguments.productId ) />
+		<cfset application.model.Carthelper.removeAccessory(arguments.cartLineNo, arguments.productId ) />
 	
 		<cfreturn "success" />
 	</cffunction>

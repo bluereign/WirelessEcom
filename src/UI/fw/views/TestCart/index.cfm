@@ -26,8 +26,8 @@
 <cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">
 <hr/>		
 <cfset args = { 
-	productType = "phone:new",
-	<!---productType = "phone:financed-12-new",--->
+	<!---productType = "phone:new",--->
+	productType = "phone:financed-12-new",
 	product_id = "#listgetat(phoneids,cartLineNo)#",
 	qty = 1,
 	price = "#listgetat(phoneprices,cartLineNo)#",
@@ -145,6 +145,9 @@ Result = #resultStr#
 <br/>session.carthelper.getLineWarrantyProductId(1) = #session.carthelper.getLineWarrantyProductId(1)#	
 </cfloop>
 
+<hr/>
+Get the list of subscriber indices from the cart
+<br/>application.model.dBuilderCartFacade.getSubscriberIndices() = #application.model.dBuilderCartFacade.getSubscriberIndices()#
 
 <hr/>
 Get the Phone for each line in the cart:

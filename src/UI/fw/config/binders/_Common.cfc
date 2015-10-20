@@ -105,6 +105,27 @@
 			.to("fw.model.carrierApi.Mock.MockCarrier")
 			.asSingleton();	
 			
+		map("CarrierHelper")
+			.to("fw.model.carrierApi.CarrierHelper")
+			.asSingleton();	
+			
+		map("AttCarrierHelper")
+			.to("fw.model.carrierApi.Att.AttCarrierHelper")
+			.initArg(name="ServiceURL", value=getProperty("Att_Carrier_Api_BaseUrl"))
+			.asSingleton();	
+			
+		map("VzwCarrierHelper")
+			.to("fw.model.carrierApi.Verizon.VzwCarrierHelper")
+			.initArg(name="ServiceURL", value=getProperty("Vzw_Carrier_Api_BaseUrl"))
+			.asSingleton();	
+			
+		map("MockCarrierHelper")
+			.to("fw.model.carrierApi.Mock.MockCarrierHelper")
+			.initArg(name="ServiceURL", value=getProperty("ATT_Carrier_Api_BaseUrl"))
+			.asSingleton();	
+		
+		
+			
 	// Device Builder Shopping Cart		
 		
 		map("dBuilderCart")

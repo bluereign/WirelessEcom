@@ -31,6 +31,16 @@
 		<cfreturn local.areaCodeResp />
 	</cffunction>	
 	
+	<cffunction name="financeAgreement" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.beginTicks = getTickCount() />
+		<cfset local.FinanceAgreementRequestResp =  carrierObject(arguments.carrierId).FinanceAgreement(argumentCollection = local.args) />	
+		<cfset local.endTicks = getTickCount() />
+		<cfreturn local.FinanceAgreementRequestResp />
+	</cffunction>
+
+	
 	
 	<!---<cffunction name="upgradeEligibility" output="false" access="public" returntype="any">		
 		<cfset var args = passthruArgs(argumentCollection = arguments ) />
@@ -45,8 +55,7 @@
 	<!--------------------------------------------------------------------------------------------------
 		Helper Functions		
 	 --------------------------------------------------------------------------------------------------->
-	
-	
+
 	<!---
 		Receives an argument collection and returns collection minus args on the excludedArgsList		
 	 --->
