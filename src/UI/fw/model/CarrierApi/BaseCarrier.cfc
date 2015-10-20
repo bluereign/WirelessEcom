@@ -50,8 +50,7 @@
 		
 		<!--- Fix floats that should be integers --->
 		<cfset jsonized = replaceNocase(jsonized,'.0,',',',"ALL") />
-		<cfset jsonized = replaceNocase(jsonized,'.0}','}',"ALL") />
-		
+		<cfset jsonized = replaceNocase(jsonized,'.0}','}',"ALL") />		
 		
 		<cfreturn jsonized />
 	

@@ -16,7 +16,7 @@
 		<cfset var local = structNew() />
 		<cfset local.far = structNew() />
 		<cfset local.far.OrderItems = arrayNew(1) />
-
+		
 		<cfif structkeyExists(session,"cart")>
 			<cfset local.cartLines = session.cart.getLines() />
 			<cfset local.LineNo = 0 />
@@ -27,6 +27,10 @@
 				<cfset local.orderItem.SubscriberNumber = getSubscriberNumberInfo(argumentCollection=arguments) />
 				<cfset local.orderItem.Subscriber = arguments.accountRespObj.getAccount().Subscribers[arguments.subscriberIndex] />
 				<cfset local.orderItem.DeviceInfo = getDeviceInfo(local.lineNo) />
+				<cfset local.deviceDetail = getDeviceDetail(local.lineNo) />
+				<cfset local.orderItem.ContractTerm = local.deviceDetail.contractTerm />
+				<cfset local.orderItem.MSRP = local.deviceDetail.MSRP />
+				<cfset local.orderItem.DownPayment = local.deviceDetail.DownPayment />
 				<cfset arrayAppend(local.far.OrderItems,local.orderItem) />
 			</cfloop>	
 			
@@ -48,7 +52,20 @@
 		<cfset local.deviceInfo.Identifier = local.device.productDetail.getItemId() />
 		<cfset local.deviceInfo.Category =  local.device.productDetail.getImeiType() />
 		<cfreturn local.deviceInfo />		
-	</cffunction>	
+	</cffunction>
+		
+	<cffunction name="getDeviceDetail" access="private" returnType="struct">
+		<cfargument name="cartLineNo" type="numeric" required="true" />
+		<cfset var local = structNew() />
+		<cfset local.cartLines = session.cart.getLines() />
+		<cfset local.cartLine = local.cartLines[arguments.cartLineNo] />
+		<cfset local.deviceDetail = structNew()/>
+		<cfset local.device = application.model.dBuilderCartFacade.getDevice(arguments.cartLineNo) />
+		<cfset local.deviceDetail.contractTerm = local.device.contractMonths />
+		<cfset local.deviceDetail.MSRP = local.device.productDetail.getRetailPrice() />
+		<cfset local.deviceDetail.DownPayment = local.cartLine.getPhone().getPrices().getDownPaymentAmount() /> 
+		<cfreturn local.deviceDetail />
+	</cffunction>
 	
 	<cffunction name="getSubscriberNumberInfo" access="private" returnType="struct">
 		<cfset var local = structNew() />

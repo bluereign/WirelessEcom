@@ -1042,13 +1042,17 @@
 		<cfset local.device.productDetail.getProduct(productId=local.cartLine.getPhone().getProductID()) />
 
 		<cfset local.device.monthlyFinanceTotal = 0/>
+		<cfset local.device.contractMonths = 0/>
 		<cfif local.cartline.getCartLineActivationType() contains 'financed'><!---Add financed price to Monthly --->
 			<cfif local.cartline.getCartLineActivationType() contains '12'>
 				<cfset local.device.monthlyFinanceTotal = local.device.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice12() />
+				<cfset local.device.contractMonths = 20 />
 			<cfelseif local.cartline.getCartLineActivationType() contains '18'>
 				<cfset local.device.monthlyFinanceTotal = local.device.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice18() />
+				<cfset local.device.contractMonths = 24 />
 			<cfelseif local.cartline.getCartLineActivationType() contains '24'>
 				<cfset local.device.monthlyFinanceTotal = local.device.monthlyFinanceTotal + local.device.productDetail.getFinancedMonthlyPrice24() />
+				<cfset local.device.contractMonths = 30 />
 			</cfif>
 		</cfif>	
 		
