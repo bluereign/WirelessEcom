@@ -1,3 +1,4 @@
+<!--- <cfdump var="#rc#"> --->
 <cfoutput>
   <div class="col-md-12">
 
@@ -89,21 +90,23 @@
                 <cfif val(prc.productData.upgradePriceAfterRebate)>
                   <!--- has a new price after rebate --->
                   <cfset prc.priceModifier.upgradePriceRebateAmount = prc.productData.price_upgrade - prc.productData.upgradePriceAfterRebate />
-                  #prc.priceModifier.upgradePriceRebateAmount#
+                  #dollarFormat(prc.productData.upgradePriceAfterRebate)#
+                  <!--- (after #dollarFormat(prc.priceModifier.upgradePriceRebateAmount)# rebate) --->
+                  <!--- (#dollarformat(prc.productData.price_upgrade)# -  #dollarFormat(prc.priceModifier.upgradePriceRebateAmount)#) --->
                 <cfelse>
                   #dollarFormat(prc.productData.price_upgrade)#
                 </cfif>
               </label>
             </div>
-          <cfelse>
+          <!--- <cfelse> --->
             <!--- For some reason, the upgrade price is the same as the 2-year contract upgrade price.  Adding it to an 'else' clause for now --->
-            <div class="radio">
-              <label>
-                <input type="radio" name="paymentoption" value="fullretail" <cfif prc.paymentoption is 'fullretail'>checked</cfif> onchange="onChangeHandler(this.form,'fullretail')">
+            <!--- <div class="radio"> --->
+              <!--- <label> --->
+                <!--- <input type="radio" name="paymentoption" value="fullretail" <cfif prc.paymentoption is 'fullretail'>checked</cfif> onchange="onChangeHandler(this.form,'fullretail')"> --->
                 <!--- Full Retail Price #dollarFormat(prc.productData.FinancedFullRetailPrice)# --->
-                Upgrade Price #dollarFormat(prc.productData.price_upgrade)#
-              </label>
-            </div>
+                <!--- Upgrade Price #dollarFormat(prc.productData.price_upgrade)# --->
+              <!--- </label> --->
+            <!--- </div> --->
           </cfif>
 
         </section>
