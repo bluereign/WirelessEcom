@@ -1,4 +1,3 @@
-<!--- <cfdump var="#prc.lineAccessories#"> --->
 <cfoutput>
   <div class="col-md-12">
     <section class="content accessories">
@@ -14,7 +13,7 @@
         </div>
         
         <section class="featured">
-          <!--- <h4>Featured Accessories for Your Device</h4> --->
+
           <div class="row">
             <cfif prc.qAccessory.RecordCount>
               <cfloop query="prc.qAccessory">
@@ -33,9 +32,9 @@
                       <div class="info">#prc.qAccessory.summaryTitle[prc.qAccessory.currentRow]#</div>
                       <div class="price">#dollarFormat(prc.qAccessory.price_retail[prc.qAccessory.currentRow])#</div>
                       <cfif listFindNoCase(prc.selectedAccessories, prc.qAccessory.productId[prc.qAccessory.currentRow])>
-                        <button type="submit" class="btn btn-remove btnRemoveFromCart" name="removeaccessory" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="removeacc_#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Remove</button>
+                        <button type="button" class="btn btn-remove btnAddToCart" name="btnRemoveFromCart" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="removeacc_#prc.qAccessory.productId[prc.qAccessory.currentRow]#" data-fn="remove">Remove</button>
                       <cfelse>
-                        <button type="submit" class="btn btnAddToCart" name="addaccessory" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="accessory_#prc.qAccessory.productId[prc.qAccessory.currentRow]#">Add to Cart</button>
+                        <button type="button" class="btn btnAddToCart" name="btnAddToCart" value="#prc.qAccessory.productId[prc.qAccessory.currentRow]#" id="accessory_#prc.qAccessory.productId[prc.qAccessory.currentRow]#" data-fn="add">Add to Cart</button>
                       </cfif>
                     </div>
                     <div class="callout">
@@ -53,63 +52,6 @@
 
           </div>
         </section>
-        
-
-        <!--- <ul class="nav nav-tabs">
-          <li role="presentation" class="active">
-            <a href="##all" aria-controls="all" role="tab" data-toggle="tab">All Accessories</a>
-          </li>
-          <li role="presentation">
-            <a href="##cases" aria-controls="cases" role="tab" data-toggle="tab">Cases</a>
-          </li>
-          <li role="presentation">
-            <a href="##screen" aria-controls="screen" role="tab" data-toggle="tab">Screen Protectors</a>
-          </li>
-          <li role="presentation">
-            <a href="##onsale" aria-controls="onsale" role="tab" data-toggle="tab">On Sale Now</a>
-          </li>
-          <li role="presentation">
-            <a href="##custom" aria-controls="screen" role="tab" data-toggle="tab">Custom</a>
-          </li>
-        </ul>
-
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="all">
-            <cfif prc.qAccessory.RecordCount>
-              <cfloop query="prc.qAccessory">
-                <cfset local.stcFeeAccessoryPrimaryImages = application.model.imageManager.getPrimaryImagesForProducts(valueList(prc.qAccessory.accessoryGuid)) />
-                <div class="col-lg-4 col-xs-8">
-                  <div class="product clearfix">
-                    <cfif structKeyExists(local.stcFeeAccessoryPrimaryImages, prc.qAccessory.accessoryGuid[prc.qAccessory.currentRow])>
-                      <img src="#application.view.imageManager.displayImage(imageGuid = local.stcFeeAccessoryPrimaryImages[prc.qAccessory.accessoryGuid[prc.qAccessory.currentRow]], height=100, width=0)#" alt="#htmlEditFormat(prc.qAccessory.summaryTitle[prc.qAccessory.currentRow])#" height="100" border="0" />
-                    <cfelse>
-                      <img src="#prc.assetPaths.common#images/catalog/noimage.jpg" height=100 border="0" alt="#htmlEditFormat(prc.qAccessory.summaryTitle[prc.qAccessory.currentRow])#" />
-                    </cfif>
-                    <div class="info" style="height:80px;">
-                      #prc.qAccessory.summaryTitle[prc.qAccessory.currentRow]#
-                    </div>
-                    <div class="price">
-                      #dollarFormat(prc.qAccessory.price_retail[prc.qAccessory.currentRow])#
-                    </div>
-                    <a type="button" class="btn btn-sm" onclick="alert('addToCart accessory pid: #prc.qAccessory.productId[prc.qAccessory.currentRow]#', '#prc.qAccessory.productId[prc.qAccessory.currentRow]#', 1);return false;" href="##"><span style="color:white">Add to Cart</span></a>
-                  </div>
-                </div>
-              </cfloop>
-            </cfif>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="cases">
-            ...
-          </div>
-          <div role="tabpanel" class="tab-pane" id="screen">
-            ...
-          </div>
-          <div role="tabpanel" class="tab-pane" id="onsale">
-            ...
-          </div>
-          <div role="tabpanel" class="tab-pane" id="custom">
-            ...
-          </div>
-        </div> --->
 
         <div class="right">
           <a href="#prc.prevStep#">BACK</a>

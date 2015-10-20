@@ -11,7 +11,7 @@
         <h3 style="height:40px"><span>#prc.warrantyInfo.SummaryTitle#</span></h3>
         <p>#prc.warrantyInfo.ShortDescription#</p>
         <p>#prc.warrantyInfo.LongDescription#</p>
-        <div class="price">#dollarFormat(prc.warrantyInfo.Price)#/month</div>
+        <div class="price">#dollarFormat(prc.warrantyInfo.Price)#</div>
       </div>
     </div>
   </div>
@@ -24,14 +24,17 @@
   <script>
     $('##btnAddWarranty').click(function() {
       var thisvalue = $(this).attr("value");
-      // console.log($("##warrantyoption_"+thisvalue));
       $("##warrantyoption_"+thisvalue).prop("checked",true);
       $('##protectionModal').modal('hide');
 
+      $.post('#event.buildLink('devicebuilder.tallybox')#', $('##protectionForm').serialize(), function(data){
+        $('##myTallybox').html( data )
+      });
+
       // temp: submit the form:
-      var form = $("##protectionForm");
-      form.attr('action', '#event.buildLink('devicebuilder.protection')#');
-      form.submit();
+      // var form = $("##protectionForm");
+      // form.attr('action', '#event.buildLink('devicebuilder.protection')#');
+      // form.submit();
     });
   </script>
   

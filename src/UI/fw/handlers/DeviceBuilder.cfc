@@ -13,7 +13,7 @@
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
   <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting,orderreview" />
-  <cfset listActivationTypes = "financed-24,financed-18,financed-12" /> <!--- TODO: determine what to do with new, upgrade, addaline  --->
+  <cfset listActivationTypes = "financed-24,financed-18,financed-12,upgrade" /> <!--- upgrade=2-year contract. TODO: determine what to do with new, upgrade, addaline  --->
 
 
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
@@ -73,6 +73,8 @@
           relocate( prc.browseDevicesUrl );
         }
 
+        
+
         // 2. validate the type.
         // Make sure customer type exists.  If it does not, set it to upgrade.
         if ( !listFindNoCase(listCustomerTypes,rc.type) ) {
@@ -88,13 +90,17 @@
         if (!structKeyExists(prc,"productData")) {
           prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
         }
-        // return customer to Browse all phones if product id is not found in the database:
-        if (!isNumeric(prc.productData.productId)) {
+        // return customer to Browse all phones if product id is not found in the database or there are no qty on hand:
+        if ( !isNumeric(prc.productData.productId) or prc.productData.qtyOnHand lt 1 ) {
           relocate( prc.browseDevicesUrl  );
         }
         
         // 4. set cart and cartLine activationType (eg  financed-24-new).
-        prc.activationType = rc.finance & "-" & rc.type;
+        if (rc.finance is 'upgrade') {
+          prc.activationType = "upgrade";
+        } else {
+          prc.activationType = rc.finance & "-" & rc.type;
+        }
         session.cart.setActivationType(prc.activationType);
 
         // 5. set the cartLineNumber
@@ -172,7 +178,6 @@
 
 
 
-
       // UPDATE CARTLINE WITH SUBSCRIBER INDEX:
       if ( structKeyExists(rc,"subscriberIndex") ) {
         prc.cartLine.setSubscriberIndex(rc.subscriberIndex);
@@ -180,6 +185,15 @@
         prc.cartLines = session.cart.getLines();
         prc.cartLine = prc.cartLines[rc.cartLineNumber];
         prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+
+        // Set the session zipcode to the subscriber zipcide:
+        // ... and because CF 8 doesn't allow functionReturnsArray()[index]:
+        prc.subscribers = session.carrierObj.getSubscribers();
+        prc.subscriber = prc.subscribers[rc.subscriberIndex];
+        prc.subscriberZipcode = listFirst(prc.subscriber.getAddress().getZipCode(), '-');
+        if ( isValid("zipcode",prc.subscriberZipcode) ) {
+          session.cart.setZipcode(prc.subscriberZipcode);
+        }
       }
 
 
@@ -195,7 +209,10 @@
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
-
+      if ( structKeyExists(rc,"HasExistingPlan")  ) {
+        // session.DBuilderCart.setHasExistingPlan(rc.HasExistingPlan);
+        session.cart.HasExistingPlan = rc.HasExistingPlan;
+      }
 
       // GET PLAN FROM CART
       prc.cartPlan = application.model.dBuilderCartFacade.getPlan();
@@ -206,11 +223,13 @@
       // update finance plan if rc.paymentoption exists (i.e. finance plan has changed):
       if ( structKeyExists(rc,"paymentoption") ) {
 
-        if ( rc.paymentoption is 'financed') {
+        if ( rc.paymentoption is 'financed' ) {
           prc.financed = rc.financed;
           prc.activationType = rc.financed & "-" & prc.customerType;
-        } else if ( rc.paymentoption is 'fullretail') {
+        } else if ( rc.paymentoption is 'fullretail' ) {
           // prc.activationType = rc.paymentoption & "-" & prc.customerType;
+          prc.activationType = prc.customerType;
+        } else if ( rc.paymentoption is '2yearcontract' ) {
           prc.activationType = prc.customerType;
         }
 
@@ -219,8 +238,15 @@
         prc.paymentoption = rc.paymentoption;
       }
 
-      if ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) ) {
-        prc.paymentoption = "financed"; //financed, fullretail
+      if (  structKeyExists(prc,"cartLine") and  ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) )  ) {
+        
+        if ( prc.cartLine.getCartLineActivationType() contains 'financed' ) {
+          prc.paymentoption = "financed";
+        } else {
+         //financed, fullretail, 2yearcontract
+         prc.paymentoption = IIF(prc.productData.carrierId eq prc.carrierIdAtt, DE("fullretail"), DE("2yearcontract"));
+        }
+
       }
 
       // update Device Protection Options (warranty)
@@ -252,6 +278,16 @@
       // <SELECTED SERVICES
       if ( structKeyExists(rc,"selectedServices") ) {
         prc.selectedServices = rc.selectedServices;
+      } else if ( structKeyExists(prc,"cartLine") and listFindNoCase("devicebuilder.protection", event.getCurrentEvent()) ) {
+        // load prc.selectedServices from session.cartLine
+        prc.selectedServices = "";
+        prc.lineFeatures = prc.cartLine.getFeatures();
+
+        for (i = 1; i lte arrayLen(prc.lineFeatures); i++) {
+          local.thisFeatureID = prc.lineFeatures[i].getProductID();
+          prc.selectedServices = listAppend(prc.selectedServices, local.thisFeatureID );
+        }
+
       }
       if ( !structKeyExists(prc,"selectedServices") ) {
         prc.selectedServices = "";
@@ -301,8 +337,7 @@
 
 
 
-  
-      // <ACCESSORIES
+      // <ACCESSORIES - add accessory
       if ( structKeyExists(rc,"addaccessory") and len(trim(rc.addaccessory)) ) {
         if ( ! (structKeyExists(rc,"accessoryqty") and isValid("integer", rc.accessoryqty)) ) {
           rc.accessoryqty = 1;
@@ -354,6 +389,28 @@
 
 
 
+      // ORDER REVIEW: Remove Phone
+      if ( structKeyExists(rc,"removephone") and len(trim(rc.removephone)) and isValid("integer",rc.removephone) and arrayLen(prc.cartLines) ) {
+        // prc.removeCartLine = prc.cartLines[rc.removephone];
+        // application.model.cartHelper.removePhone(line = rc.removephone);
+        // application.model.cartHelper.removeAllLineFeatures(line = rc.removephone);
+        // application.model.cartHelper.removeLineBundledAccessories(lineNumber = rc.removephone);
+        // application.model.cartHelper.removeWarranty(line = rc.removephone);
+        // prc.removeCartLine.setAccessories(accessories=arrayNew(1));
+        
+        application.model.cartHelper.deleteLine(lineNumber = rc.removephone);
+
+        application.model.cartHelper.removeEmptyCartLines();
+
+        // since that cartLineNumber does not exist, change active cartLineNumber to 999:
+        rc.cartLineNumber = request.config.otherItemsLineNumber;
+
+        // update prc.cartlines:
+        prc.cartLines = session.cart.getLines();
+      }
+
+
+
       // if not adding an accessory from the order review
       if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
         // <SELECTED LINE AND SUBSCRIBERS
@@ -402,7 +459,7 @@
       // <ZIP CHECK
       // if user has authenticated into carrier, make sure that the session zip is the carrier response object zip (unless they have logged out with Clear Entire Cart).
       // else if inputZip exists and is valid, then set session.zipCode (ONLY IF the user has not authenticated with a carrier login).
-      if ( structKeyExists(session,"carrierObj") ) {
+      if ( structKeyExists(session,"carrierObj") and len(trim( session.carrierObj.getAddress().getZipCode() ) ) ) {
         session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
       } else if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip'))  ) {
         session.cart.setZipcode(listFirst(event.getValue('inputZip'), '-'));
@@ -411,12 +468,28 @@
 
 
 
+  
       // <NAVIATION
       switch(prc.customerType) {
         case "upgrade":
-          prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
-          prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
-          prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/type/upgradex/';
+          
+          if ( rc.cartLineNumber gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
+            prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
+          prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
+          } else {
+            prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
+            prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+          }
+
+          // prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/type/upgradex/';
+          prc.addxStep = prc.browseDevicesUrl;
+
+          if ( session.cart.getCarrierId() eq prc.carrierIdAtt ) {
+            prc.addxStep = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,1,32/";
+          } else if ( session.cart.getCarrierId() eq prc.carrierIdVzw ) {
+            prc.addxStep = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,3,32/";
+          }
+          
           // prc.tallyboxHeader = "Upgrading";
           prc.cartTypeId = 2;
           break;
@@ -455,6 +528,11 @@
           // prc.tallyboxHeader = "New Customer";
           prc.cartTypeId = 1;
           break;
+        default:
+          prc.navItemsAction = [];
+          prc.navItemsText = [];
+          prc.addxStep = prc.browseDevicesUrl;
+          break;
       }
 
       thisNavIndex = listFindNoCase(arrayToList(prc.navItemsAction), event.getCurrentAction());
@@ -484,7 +562,7 @@
       // Omit TallyBox logic If updating an accessory from orderreview
       if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
         // <TALLY BOX
-        prc.financeproductname = prc.productService.getFinanceProductName(carrierid=#prc.productData.CarrierId#);
+        prc.financeproductname = prc.productService.getFinanceProductName(carrierid = prc.productData.CarrierId);
         prc.tallyboxDueNow = 0;
         prc.tallyboxDueMonthly = 0;
 
@@ -534,6 +612,14 @@
             prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
             prc.tallyboxFinanceMonthlyDueAmount = 0;
             break;
+
+          case "2yearcontract":
+            prc.tallyboxFinanceMonthlyDueToday = prc.productData.price_upgrade;
+            prc.tallyboxFinanceTitle = "2 Year Contract";
+            prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
+            prc.tallyboxFinanceMonthlyDueAmount = 0;
+            break;
+
           default:
             break;
         }
@@ -742,7 +828,7 @@
     <cfset var planArgs = {} />
 
     <cfscript>
-    // TODO: if type is 'upgrade', make sure a line is selected.  If rc.line does not exist, then send back to 'upgradealine'.
+    // TODO: if type is 'upgrade', make sure a line is selected.  If subscriber has not been selected, then send back to 'upgradealine'.
 
       planArgs = {
         carrierId = prc.productData.carrierId,
@@ -900,7 +986,16 @@
     <!--- <cfset application.model.CartHelper.removeEmptyCartLines() /> --->
     <!--- TODO:  apply rebates logic from cfc/model/LineService.cfc --->
     <cfscript>
-      // prc.subscribers = session.carrierObj.getSubscribers();
+      // case 394: If the customer has logged into a carrier account or there is a plan tied to their cart then an option to add another device should show in the cart:
+      if ( ( structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) )  or isQuery(prc.cartPlan)  ) {
+        prc.showAddAnotherDeviceButton = true;
+      } else {
+        prc.showAddAnotherDeviceButton = false;
+      }
+      // don't show top nav if cart is empty
+      if (!arrayLen(prc.cartLines)) {
+        prc.showNav = false;
+      }
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart');
       prc.includeTallyBox = false;
@@ -916,15 +1011,19 @@
 
     <cfscript>
 
+      // first store the zipcode in prc.scope.
+      prc.zipcode = session.cart.getZipcode();
+
       // remove carrierObj from session: 
       carrierObjExists = structdelete(session, 'carrierObj', true);
 
       // reinitialize the cart
       session.cart = createObject('component','cfc.model.cart').init();
-      
-      // TODO: Remove the following 2 lines after testing to comply with case 195
-      // remove zipCode from session:
-      // carrierObjExists = structdelete(session, 'zipCode', true);
+
+      // reset the session zipcode
+      session.cart.setZipcode(prc.zipcode);
+
+      rc.cartLineNumber = request.config.otherItemsLineNumber;
 
       // create warningMessage
       flash.put("warningMessage","Your cart has been cleared. <a href='#this.browseDevicesUrl#'>Click here to go to Browse Devices.</a>");
@@ -937,10 +1036,22 @@
       
       setNextEvent(
         event="devicebuilder.orderreview",
-        persist="type,pid,finance,line,plan"
+        persist="zipcode,cartLineNumber"
         );
       
     </cfscript>
+  </cffunction>
+
+
+  <cffunction name="tallybox" returntype="void" output="false">
+    <cfargument name="event">
+    <cfargument name="rc">
+    <cfargument name="prc">
+
+    <cfscript>
+      event.noLayout();
+    </cfscript>
+
   </cffunction>
 
 

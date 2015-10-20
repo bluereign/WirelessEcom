@@ -21,10 +21,6 @@
   <div class="modal-footer">
     <form action="#prc.nextStep#" method="post">
       <input type="hidden" name="planid" value="#rc.plan#" />
-      <!--- <input type="hidden" name="pid" value="#rc.pid#" />
-      <input type="hidden" name="type" value="#rc.type#" />
-      <input type="hidden" name="finance" value="#rc.finance#" />
-      <input type="hidden" name="line" value="#rc.line#" /> --->
       <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       <button class="btn btn-primary" type="submit">Select Package</button>

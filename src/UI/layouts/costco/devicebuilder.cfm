@@ -58,20 +58,21 @@
     <cfelse>
       <br /><br /><br /><br />
     </cfif>
-    
-<!--- DEBUGGING / TEST --->
-    <!--- <cfif structKeyExists(prc,"resultStr")>
-      #prc.resultStr#
-    </cfif>
-    <cfif structKeyExists(prc,"selectedServices")>
-      <cfdump var="#prc.selectedServices#">
-    </cfif> --->
-<!--- end debugging / test --->
 
     <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
       #renderView()#
       <cfif prc.includeTallyBox>
+        <div id="myTallybox">
         #renderView('devicebuilder/tallybox')#
+        </div>
+        
+        <!--- to load div content using ajax call:
+        <script type="text/javascript">
+        $(function(){
+          $("##myTallybox").load('#event.buildLink('devicebuilder.tallybox')#?cartLineNumber=#rc.cartLineNumber#');
+        });
+        </script> --->
+
       </cfif>
     </div>
   </div>
@@ -111,6 +112,21 @@
 </cfif>
 <!--- <end zipModal, planModal --->
 
+<!--- <protection and services view/modals --->
+<cfif listFindNoCase("devicebuilder.protection",event.getCurrentEvent())>
+  <div class="modal fade" id="protectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="featureModal" tabindex="-2" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+</cfif>
 
 <!--- <accessories view --->
 <cfif listFindNoCase("devicebuilder.accessories", event.getCurrentEvent())>
@@ -137,17 +153,24 @@
 
       $('.btnAddToCart')
         .on('click', function() {
-          // console.log('this.id: ' + this.id);
-          this.form.action='#event.buildLink('devicebuilder.accessories')#';
-          this.form.submit();
-        });
 
-      $('.btnRemoveFromCart')
-        .on('click', function() {
-          this.form.action='#event.buildLink('devicebuilder.accessories')#';
-          this.form.submit();
-        });
+          if ( $(this).data('fn') === 'add' ) {
+            $(this).data('fn', 'remove');
+            $(this).text('Remove');
+            $(this).addClass('btn-remove');
+            $.post('#event.buildLink('devicebuilder.tallybox')#', {cartLineNumber: #rc.cartLineNumber#, addaccessory: this.value}, function(data){
+              $('##myTallybox').html( data )
+            });
 
+          } else {
+            $(this).data('fn', 'add');
+            $(this).text('Add to Cart');
+            $(this).removeClass('btn-remove');
+            $.post('#event.buildLink('devicebuilder.tallybox')#', {cartLineNumber: #rc.cartLineNumber#, removeaccessory: this.value}, function(data){
+              $('##myTallybox').html( data )
+            });
+          }
+        });
     });
   </script>
 </cfif>
@@ -171,7 +194,7 @@
         $(this).text(showHideTextDevice($this.text()));
       });
 
-      // add OnChange to the select
+      // add OnChange to the accessory qty select
       $('.accessoryqty').on('change', function() {
         var thisid = $(this).attr('id');
         var thisqty = $(this).val();
@@ -179,6 +202,22 @@
         $('##accessoryqty').val(thisqty);
         $('##formCheckout').submit();
       });
+
+      // add OnClick to the accessory remove link
+      $('.removeaccessory').on('click', function() {
+        var thisid = $(this).data('removeaccessory');
+        $('##removeaccessory').val(thisid);
+        $('##formCheckout').submit();
+      });
+
+      // add OnClick to the phone remove link
+      $('.removephone').on('click', function() {
+        var thisid = $(this).data('removephone');
+        $('##removephone').val(thisid);
+        $('##formCheckout').submit();
+      });
+
+
     });
   </script>
 

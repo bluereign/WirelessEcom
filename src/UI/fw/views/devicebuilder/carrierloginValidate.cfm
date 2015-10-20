@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-  $('form').validate({
+  $('##carrierLoginForm').validate({
       groups: {
         phonenumber: "inputPhone1 inputPhone2 inputPhone3"
       },
