@@ -146,7 +146,7 @@
 			, p.QtyOnHand
 			, p.DefaultSortRank
 			<cfif variables.indexedViewName is "dn_Phones">
-				, p.Buyurl, p.imageURL, p.RealQtyOnHand
+				, p.Buyurl, p.imageURL, p.RealQtyOnHand, p.ImeiType, p.ItemId
 			<cfelse>
 			, null as BuyURL, null as imageURL
 			</cfif>
@@ -312,6 +312,11 @@
 			, p.UPC
 			, p.QtyOnHand
 			, p.DefaultSortRank
+			<cfif variables.indexedViewName is "dn_Phones">
+				, p.Buyurl, p.imageURL, p.RealQtyOnHand, p.ImeiType, p.ItemId
+			<cfelse>
+			, null as BuyURL, null as imageURL
+			</cfif>
 		FROM catalog.#variables.indexedViewName# p
 		<cfif arguments.bActiveOnly>
 			INNER JOIN catalog.Product prod WITH (NOLOCK)

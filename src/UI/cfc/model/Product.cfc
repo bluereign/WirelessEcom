@@ -22,6 +22,9 @@
 				p.GersSku,
 				p.Active,   
                 pt.ProductType,
+                dnPhones.ManufacturerName,
+                dnPhones.ItemId,
+                dnPhones.IMEIType,
                 IsNull((select top 1 gp.Price  from catalog.GersPrice gp where gp.GersSku = p.gerssku and PriceGroupCode = 'ECP' order by StartDate desc),0) as price,
                 case
                     when pt.ProductType = 'Device' then d.Name
@@ -79,6 +82,9 @@
 		</cfquery>
 
     	<cfif local.qGetProduct.RecordCount gt 0>
+			<cfset variables.instance.ManufacturerName = local.qGetProduct.ManufacturerName>
+			<cfset variables.instance.ImeiType = local.qGetProduct.ImeiType>
+			<cfset variables.instance.ItemId = local.qGetProduct.ItemId>
         	<cfset variables.instance.Title = local.qGetProduct.Title>
             <cfset variables.instance.Type = local.qGetProduct.ProductType>
           	<cfset variables.instance.GERSSKU = local.qGetProduct.GERSSKU>
@@ -237,6 +243,15 @@
 		<cfreturn local.cogs>
 	</cffunction>
 
+	<cffunction name="getManufacturerName" access="public" output="false" returntype="string">
+    	<cfreturn variables.instance.ManufacturerName />
+    </cffunction>
+	<cffunction name="getItemId" access="public" output="false" returntype="string">
+    	<cfreturn variables.instance.ItemId />
+    </cffunction>
+	<cffunction name="getImeiType" access="public" output="false" returntype="string">
+    	<cfreturn variables.instance.ImeiType />
+    </cffunction>
 
 	<cffunction name="getTitle" access="public" output="false" returntype="string">
     	<cfreturn variables.instance.Title />

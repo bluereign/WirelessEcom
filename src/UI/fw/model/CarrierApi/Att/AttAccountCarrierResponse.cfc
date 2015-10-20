@@ -25,6 +25,16 @@
 		</cfif>
 	</cffunction>
 	
+	<cffunction name="getAccount" access="public" returnType="struct">
+		<cfset var resp = getResponse() />
+		<cfif isdefined("resp.account") >
+			<cfreturn resp.account />
+		<cfelse>
+			<cfreturn structNew() />
+		</cfif>
+		
+	</cffunction>	
+	
 	<cffunction name="getAddress" access="public" returnType="cfc.model.address">
 		<cfargument name="rawAddress" type="any" required="false" default="structNew()" />
 		<cfset var local = structNew() />	

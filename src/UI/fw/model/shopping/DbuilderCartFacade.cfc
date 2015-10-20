@@ -886,7 +886,7 @@
 		<cfif not arguments.cartLineNumber or arguments.cartLineNumber eq request.config.otherItemsLineNumber>
 		</cfif>
 		
-		<cfif arguments.cartLineNumber gt 0 AND (arguments.cartLineNumber LTE session.Carthelper.getNumberOfLines() OR arguments.cartLineNumber eq request.config.otherItemsLineNumber)>
+		<cfif arguments.cartLineNumber gt 0 AND (arguments.cartLineNumber LTE application.model.Carthelper.getNumberOfLines() OR arguments.cartLineNumber eq request.config.otherItemsLineNumber)>
 
 			<cfset local.cartItemQty = getItemCount(arguments.cartLineNumber,arguments.product_id) />
 
@@ -1007,16 +1007,16 @@
 		
 		<cfif arguments.cartLineNo LTE arraylen(lines) >
 			<cfset local.lineAccessories = lines[arguments.cartLineNo].getAccessories() />
-			<cfloop array="#local.lineAccessories#" index="a">
-				<cfif listFindNoCase(local.idList,a.getProductId()) is 0>
-					<cfset local.idList = listAppend(local.idList,a.getProductId()) />
+			<cfloop array="#local.lineAccessories#" index="local.a">
+				<cfif listFindNoCase(local.idList,local.a.getProductId()) is 0>
+					<cfset local.idList = listAppend(local.idList,local.a.getProductId()) />
 				</cfif>
 			</cfloop>
 		<cfelse>
-			<cfloop array="#otherItems#" index="a">
-				<cfif( a.getType() is "accessory" ) >
-					<cfif listFindNoCase(local.idList,a.getProductId()) is 0>
-						<cfset local.idList = listAppend(local.idList,a.getProductId()) />
+			<cfloop array="#otherItems#" index="local.a">
+				<cfif( local.a.getType() is "accessory" ) >
+					<cfif listFindNoCase(local.idList,local.a.getProductId()) is 0>
+						<cfset local.idList = listAppend(local.idList,local.a.getProductId()) />
 					</cfif>
 				</cfif>
 			</cfloop>				
@@ -1036,9 +1036,7 @@
 		<cfif local.cartLine.getPhone().getProductID() is 0>
 			<cfreturn local.device />
 		</cfif>
-		<cfset local.device.cartItem = local.cartLine.getPhone() />
-		
-		
+		<cfset local.device.cartItem = local.cartLine.getPhone() />		
 
 		<cfset local.device.productDetail = CreateObject('component', 'cfc.model.Product').init() /> 
 		<cfset local.device.productDetail.getProduct(productId=local.cartLine.getPhone().getProductID()) />
@@ -1060,29 +1058,31 @@
 	<cffunction name="getItemCount" access="public" returntype="numeric">
 		<cfargument name="cartLineNo" type="numeric" required="true" />
 		<cfargument name="productId" type="string" required="true" />
-		<cfset var itemCount = 0 />
+		<cfset var local = structNew() />
+		<cfset local.itemCount = 0 />
+		
 		<!--- do for other items --->
 		<cfif not arguments.cartLineNo or arguments.cartLineNo eq request.config.otherItemsLineNumber>
-			<cfloop array="#session.cart.getOtherItems()#" index="a">
-				<cfif a.getProductid() is arguments.productid>
-					<cfset itemCount = itemCount+1 />
+			<cfloop array="#session.cart.getOtherItems()#" index="local.a">
+				<cfif local.a.getProductid() is arguments.productid>
+					<cfset local.itemCount = local.itemCount+1 />
 				</cfif>
 			</cfloop>
-			<cfreturn itemCount />	
+			<cfreturn local.itemCount />	
 		</cfif>
 		
 		<!--- do for line items --->
-		<cfif arguments.cartLineNo GT 0 AND arguments.cartLineNo LTE session.Carthelper.getNumberOfLines()>
-			<cfset clines = session.cart.getLines() />
-			<cfset cl = clines[arguments.cartLineNo] />
+		<cfif arguments.cartLineNo GT 0 AND arguments.cartLineNo LTE application.model.Carthelper.getNumberOfLines()>
+			<cfset local.clines = session.cart.getLines() />
+			<cfset local.cl = local.clines[arguments.cartLineNo] />
 			<!---<cfloop array="#session.cart.getLines()#" index="cl">--->
-				<cfloop array="#cl.getAccessories()#" index="a">
-					<cfif a.getProductid() is arguments.productid>
-						<cfset itemCount = itemCount+1 />
+				<cfloop array="#local.cl.getAccessories()#" index="local.a">
+					<cfif local.a.getProductid() is arguments.productid>
+						<cfset local.itemCount = local.itemCount+1 />
 					</cfif>
 				</cfloop>
 			<!---</cfloop>--->	
-			<cfreturn itemCount />	
+			<cfreturn local.itemCount />	
 		</cfif>
 		
 		<cfreturn -1 />
@@ -1112,16 +1112,28 @@
 		</cfif>
 	</cffunction>
 	
+	<cffunction name="getSubscriberIndices" returnType="any" access="public">		
+		<cfset var local = structNew() />
+		<cfset local.clines = session.cart.getLines() />
+		<cfset local.subscriberIndices = "" />
+		<cfloop array="#local.clines#" index="local.cl">
+			<cfset local.subscriberIndices = ListAppend(local.subscriberIndices,local.cl.getSubscriberIndex())	/>
+		</cfloop>			
+		<cfreturn local.subscriberIndices />
+	</cffunction>
+	
 	
 	<cffunction name="removeAccessory" access="public" returntype="string">
 		<cfargument name="cartLineNo" type="numeric" required="true" />
 		<cfargument name="productId" type="string" required="true" />
 		
-		<cfset session.Carthelper.removeAccessory(arguments.cartLineNo, arguments.productId ) />
+		<cfset application.model.Carthelper.removeAccessory(arguments.cartLineNo, arguments.productId ) />
 	
 		<cfreturn "success" />
 	</cffunction>
 
+	
+	
 	<!--- Setters/Getters --->
 		
 	<cffunction name="setCart" returnType="void" access="public">
@@ -1136,5 +1148,7 @@
 			<cfreturn "" />
 		</cfif>
 	</cffunction>
+	
+	
 	
 </cfcomponent>
