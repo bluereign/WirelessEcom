@@ -11,7 +11,7 @@
         <h3 style="height:40px"><span>#prc.warrantyInfo.SummaryTitle#</span></h3>
         <p>#prc.warrantyInfo.ShortDescription#</p>
         <p>#prc.warrantyInfo.LongDescription#</p>
-        <div class="price">#dollarFormat(prc.warrantyInfo.Price)#/month</div>
+        <div class="price">#dollarFormat(prc.warrantyInfo.Price)#</div>
       </div>
     </div>
   </div>
