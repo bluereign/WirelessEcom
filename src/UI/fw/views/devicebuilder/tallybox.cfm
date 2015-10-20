@@ -106,6 +106,8 @@
             <div class="name">
               <cfif isQuery(prc.cartPlan) and  prc.cartPlan.recordcount>
                 #prc.cartPlan.carrierName# #prc.cartPlan.detailTitle#
+              <cfelseif structKeyExists(session.cart,"HasExistingPlan") and session.cart.HasExistingPlan>
+                Keeping Existing Plan
               <cfelse>
                 No Plan Selected
               </cfif>

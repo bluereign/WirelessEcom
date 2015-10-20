@@ -209,9 +209,10 @@
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
-      // if ( structKeyExists(rc,"HasExistingPlan")  ) {
-      //   session.DBuilderCart.setHasExistingPlan(rc.HasExistingPlan);
-      // }
+      if ( structKeyExists(rc,"HasExistingPlan")  ) {
+        // session.DBuilderCart.setHasExistingPlan(rc.HasExistingPlan);
+        session.cart.HasExistingPlan = rc.HasExistingPlan;
+      }
 
       // GET PLAN FROM CART
       prc.cartPlan = application.model.dBuilderCartFacade.getPlan();
