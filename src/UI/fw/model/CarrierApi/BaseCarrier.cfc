@@ -10,7 +10,7 @@
 		<cfset var local = structNew() />
 		<cfset var jsonized = "" />
 		
-		<cfset stringFields = "SubscriberNumber,SecurityId,ZipCode,AccountIdentifier,ActiveLines,CanBeReachedPhone,HomePhone,WorkPhone,Imei,Sim,Sku,Number,ServiceArea,AreaCode" />
+		<cfset stringFields = "SubscriberNumber,SecurityId,ZipCode,AccountIdentifier,ActiveLines,CanBeReachedPhone,HomePhone,WorkPhone,Imei,Sim,Sku,Number,ServiceArea,AreaCode,ZipExtension,Zip" />
 		<cfset UppercaseFields = "ACCOUNT,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT" />
 		<cfset FixedcaseFields = "Account,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat" />
 		<cfset stringDelimiter = "@x@y@z@" />
@@ -44,6 +44,14 @@
 			<cfset local.uIndex = local.uIndex+1 />
 			<cfset jsonized = replace(jsonized,local.u,listgetat(FixedcaseFields,local.uIndex),"ALL") />	
 		</cfloop>	
+		
+		<!--- Fix quoted nulls --->
+		<cfset jsonized = replaceNocase(jsonized,'"null"','null',"ALL") />
+		
+		<!--- Fix floats that should be integers --->
+		<cfset jsonized = replaceNocase(jsonized,'.0,',',',"ALL") />
+		<cfset jsonized = replaceNocase(jsonized,'.0}','}',"ALL") />
+		
 		
 		<cfreturn jsonized />
 	
