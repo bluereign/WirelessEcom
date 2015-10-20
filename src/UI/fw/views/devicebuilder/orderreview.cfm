@@ -41,8 +41,6 @@
         
         <form id="formCheckout" action="#event.buildLink('devicebuilder.orderreview')#" method="post">
           
-          <input type="hidden" name="cartLineNumber" value="#request.config.otherItemsLineNumber#" />
-
           <div class="right">
             <cfif prc.showAddAnotherDeviceButton>
               <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
@@ -53,6 +51,10 @@
               <button type="submit" class="btn btn-primary">Checkout Now</button>
             </cfif>
           </div>
+
+          <!--- placement of this hidden field in the HTML can interfere with CSS for some reason: --->
+          <input type="hidden" name="cartLineNumber" value="#request.config.otherItemsLineNumber#" />
+
           <div class="content">
             
             <div class="row hidden-xs">
