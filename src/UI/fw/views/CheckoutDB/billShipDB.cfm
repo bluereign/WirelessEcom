@@ -302,8 +302,8 @@
 			<p>If you are adding a line to your existing account you must be the account holder.</p>
 		</cfif>
 	</div>
-	<div class="right" style="Width:30%;float:right">
-		<a href="##" onclick="window.location.href='/index.cfm/go/checkout/do/wirelessAccountForm/'">Back</a>
+	<div class="formControl">
+		<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Back</a>
 		<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('#billShip').submit()" style="color:#fff">Continue</a></span>
 	</div>
 </div>
@@ -664,7 +664,7 @@
 </cfoutput>
 
 <div class="formControl">
-	<a href="##" onclick="window.location.href='/index.cfm/go/checkout/do/wirelessAccountForm/'">Back</a>
+	<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Back</a>
 	<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('#billShip').submit()" style="color:#fff">Continue</a></span>
 </div>
 
