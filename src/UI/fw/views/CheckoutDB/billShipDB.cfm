@@ -618,12 +618,13 @@
 							<select name="shipping" id="shippingCostSelect" style="font-size:12px">
 								<cfloop query="local.qShipMethods">
 									<option price="#DefaultFixedCost#" displayprice="#dollarFormat(DefaultFixedCost)#" 
-									        value="#ShipMethodId#">
-										#DisplayName# 
+									        value="#ShipMethodId#" <cfif isDefined('session.checkout.shippingMethod') AND (trim(local.qShipMethods.ShipMethodId) eq trim(session.checkout.shippingMethod.getShipMethodId()))>selected</cfif>>
+										#DisplayName#
 										(
 										#dollarFormat(DefaultFixedCost)#
 										)
 									</option>
+									
 								</cfloop>
 							</select>
 						</cfif>

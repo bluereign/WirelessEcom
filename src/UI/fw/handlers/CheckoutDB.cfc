@@ -655,6 +655,17 @@
 	            </cfif>
 				<!--- Save shipping selection to session --->
 				<cfset session.checkout.shippingMethod = request.p.shipping>
+				<!--- Do Shipping stuff --->
+				<cfset local.selectedShippingMethod = createObject('component', 'cfc.model.shipMethod').init() />
+				<!---<cfset local.selectedShippingMethod = application.model.CheckoutHelper.getShippingMethod() />--->
+				<cfset local.selectedShippingMethod.load(request.p.shipping) />
+				<cfset application.model.CheckoutHelper.setShippingMethod(local.selectedShippingMethod) />
+	
+				<cfif ChannelConfig.getOfferShippingPromo() && application.model.CartHelper.isCartEligibleForPromoShipping()>
+					<cfset session.cart.getShipping().setDueToday( application.model.checkoutHelper.getShippingMethod().getPromoPrice() ) />
+				<cfelse>
+					<cfset session.cart.getShipping().setDueToday( application.model.checkoutHelper.getShippingMethod().getDefaultFixedCost() ) />
+				</cfif>
 				
 	            <cfset application.model.checkoutHelper.markStepCompleted('billShip') />
 	            

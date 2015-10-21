@@ -119,7 +119,7 @@
 	<h1>#carrierName# Agreements</h1>
 	<p>Click the links below to review the #carrierName# Terms &amp; Agreements</p>
 	<div class="formControl">
-			<a class="backBtn" href="##">Previous</a>
+			<a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Previous</a>
 		<span class="btn btn-primary">
 			<a class="continue" href="##">Continue</a>
 		</span>
@@ -185,7 +185,7 @@
 		<hr class="bottom-break" />
 		
 		<div class="formControl">
-				<a class="backBtn" href="##">Previous</a>
+				<a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Previous</a>
 			<span class="btn btn-primary">
 				<a class="continue" href="##">Continue</a>
 			</span>

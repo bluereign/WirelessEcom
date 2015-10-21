@@ -446,7 +446,7 @@
           <tr>
             <td>Shipping</td>
             <td></td>
-            <td>#request.config.CartReviewShippingDisplayName#</td>
+            <td>#dollarFormat(session.checkout.shippingMethod.getDefaultFixedCost())#</td>
           </tr>
           <tr>
             <td>Est. Tax</td>
