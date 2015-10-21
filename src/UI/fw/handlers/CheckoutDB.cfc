@@ -737,8 +737,6 @@
 	    <cfargument name="rc">
 	    <cfargument name="prc">
 		
-		<cfset application.model.checkoutHelper.markStepCompleted('orderReview') />
-		
 		<cfset request.p = Event.getCollection()/>
 
 		<cfset application.model.checkoutHelper.markStepCompleted('orderReview') />
@@ -748,9 +746,9 @@
 		<cfset variables.order.populateFromCart(session.cart) />
 		<cfset variables.order.populateFromCheckoutHelper() />
 
-		<cfif session.currentUser.getUserID() NEQ "" AND application.model.user.isUserOrderAssistanceOn( session.currentUser.getUserID() )>
+		<!---<cfif session.currentUser.getUserID() NEQ "" AND application.model.user.isUserOrderAssistanceOn( session.currentUser.getUserID() )>
 			<cfset order.setOrderAssistanceUsed( true ) />
-		</cfif>
+		</cfif>--->
 		
 		<cfset variables.order.save() />	
 		
@@ -921,7 +919,7 @@
 		* If wireless order, continue to coverage confirmation.
 		**
 		--->
-		<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
+		<!---<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
 			<cfif GatewayRegistry.hasMultipleRegistered()>
 				<cfset event.setLayout('checkoutVFD') />
 				<cfset event.setView('VFD/checkout/paymentOptions') />
@@ -938,12 +936,12 @@
 			<cfelse>
 				<cfinclude template="/views/checkout/dsp_payment.cfm" />
 			</cfif>
-		</cfif>
+		</cfif>--->
 		
 		<cfset setNextEvent('checkoutDB/payment') />
 	</cffunction>
 	
-	/*<cffunction name="orderConfirmation" returntype="void" output="false" hint="">
+	<!---<cffunction name="orderConfirmation" returntype="void" output="false" hint="">
 		<cfargument name="event">
 		<cfset application.model.checkoutHelper.setCurrentStep('review') />
 		<cfset session.cart.updateCartItemTaxes() />
@@ -958,9 +956,9 @@
 		<cfelse>
 			<cfinclude template="/views/checkout/dsp_orderConfirmation.cfm" />
 		</cfif>
-	</cffunction>*/
+	</cffunction>--->
 	
-	<cffunction name="processOrderConfirmation" returntype="void" output="false" hint="">
+	<!---<cffunction name="processOrderConfirmation" returntype="void" output="false" hint="">
 		<cfargument name="event">
 		<cfargument name="prc">
 		
@@ -1193,7 +1191,12 @@
 			</cfif>
 		</cfif>
 		
-	</cffunction>
+	</cffunction>--->
+	
+	
+	
+	
+
 	
 	<cffunction name="payment" returntype="void" output="false" hint="">
 		<cfargument name="event">
