@@ -1,5 +1,5 @@
 <!--- Going to have to add Carrier Application for when we are doing addaline and new phones --->
-<cfset prc.navItemsAction = ["billShip", "agreements", "review", "payment", "thanks"]>
+<cfset prc.navItemsAction = ["billShip", "carrierAgreements", "orderReview", "payment", "thanks"]>
 <cfset prc.navItemsText = ["Shipping and Billing", "Agreements", "Review", "Payment", "Thanks"]>
 
 <cfoutput>

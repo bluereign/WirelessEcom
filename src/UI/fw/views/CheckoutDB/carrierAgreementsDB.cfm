@@ -131,7 +131,7 @@
 			After reviewing the following Terms & Conditions, check the corresponding boxes to agree to the #carrierName# and Costco Terms and Conditions. 
 			Once all the Terms & Conditions are accepted, you can then Continue checking out.
 		</p>
-	<form id="app" name="carrierApplication" method="post" action="#formAction#">
+	<form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
 		<p>
 			<cfif session.cart.getActivationType() CONTAINS "New" or session.cart.getActivationType() CONTAINS "addaline" >
 				<a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">Terms & Conditions of the #carrierName# Two Year Customer Agreement</a><br/>
@@ -209,7 +209,7 @@
       </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      	<button type="button" id="printButton" class="btn btn-default" data-dismiss="modal">Print Terms & Conditions</button>
+      	<button type="button" id="printButton" class="btn btn-default">Print Terms & Conditions</button>
         <button type="button" id="agreeButton" class="btn btn-default" data-dismiss="modal">Agree</button>
       </div>
     </div>
