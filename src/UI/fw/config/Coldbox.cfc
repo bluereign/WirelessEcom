@@ -216,6 +216,7 @@ Optional Methods
 			"^local\.vfd.\costco\.com",
 			"^local\.vfd.\aafes\.com",
       "^local\.fullapi\.costco\.wa",
+      		"^local\.fullapi\.wa",
 			
 			//DEV AT&T Next Branches
 			"^local\.costco\.attnext\.wa",
