@@ -15,8 +15,8 @@
 <div style="margin-top:25px;">
 	<br/>financeAgreementRequest:
 	<cfdump var="#rc.financeAgreementRequest#" expand="false" />
-	<br/>financeAgreementRequest (JSON):
-	<cfdump var="#rc.financeAgreementRequestJSON#" expand="false" />
+	<br/>financeAgreementRequest (JSON):<br/>
+	<div><cfdump var="#rc.financeAgreementRequestJSON#" expand="false" /></div>
 	<br/>accountRespObj:
 	<cfdump var="#rc.accountRespObj.getResponse()#" expand="false" />
 	<br/>financeAgreementRespObj:

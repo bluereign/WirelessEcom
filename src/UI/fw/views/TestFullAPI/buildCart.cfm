@@ -5,15 +5,21 @@
 <cfset phoneOptionalDownPaymentPct = "0,0,10" />
 <cfset accessoryids = "515,25766,4212,26626,26721" />
 
+<cfquery name="qPhones" datasource="wirelessadvocates" >
+	select * from catalog.dn_phones where imeitype is not null and itemid is not null	
+</cfquery>	
+
+
 <!---<cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">--->
 <cfloop from="1" To="1" index="cartLineNo">
-<hr/>		
+<hr/>
+<cfset rindex = randrange(1,qPhones.recordcount) />		
 <cfset args = { 
 	<!---productType = "phone:new",--->
-	productType = "phone:financed-12-new",
-	product_id = "#listgetat(phoneids,cartLineNo)#",
+	productType = "phone:financed-12-upgrade",
+	product_id = "#listgetat(valuelist(qphones.productid),rindex)#",
 	qty = 1,
-	price = "#listgetat(phoneprices,cartLineNo)#",
+	price = "#listgetat(valuelist(qphones.price_retail),rindex)#",
 	cartLineNumber = #cartLineNo#,
 	subscriberIndex = #cartLineNo#,
 	mandatoryDownPmtPct = "#listgetat(phoneMandatoryDownPaymentPct,cartLineNo)#",
