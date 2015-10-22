@@ -39,7 +39,7 @@
           <h1>Cart</h1>
         </header>
         
-        <form id="formCheckout" action="#event.buildLink('checkoutDB/billship')#" method="post">
+        <form id="formCheckout" action="/index.cfm/go/checkout/do/billship/" method="post">
           
           <div class="right">
             <cfif prc.showAddAnotherDeviceButton>
