@@ -7916,10 +7916,12 @@ aside.details {
 .bs-callout-success h4 {
   color: #5cb85c;
 }
-.bs-callout-danger {
+.bs-callout-danger,
+.bs-callout-error {
   border-left-color: #ce4844;
 }
-.bs-callout-danger h4 {
+.bs-callout-danger h4,
+.bs-callout-error h4 {
   color: #ce4844;
 }
 .bs-callout-warning {
@@ -8281,14 +8283,24 @@ aside.details {
 .cart .content > .row {
   margin: 0;
 }
+.cart .content .collapse {
+  padding-top: 10px;
+}
 .cart .content .collapse .col-md-10,
 .cart .content .collapse .col-md-3 {
-  border-bottom: 1px solid #b3b3b3;
   padding: 10px 15px;
 }
 .cart .content .collapse .col-md-3 {
   padding-right: 20px;
   text-align: right;
+}
+.cart .content .collapse .row {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #b3b3b3;
+}
+.cart .content .bs-callout a {
+  display: inline;
 }
 .cart .content a {
   display: block;
