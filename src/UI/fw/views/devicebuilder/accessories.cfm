@@ -53,10 +53,12 @@
           </div>
         </section>
 
-        <div class="right">
-          <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary btn-block">Continue</button>
-        </div>
+        <cfif prc.qAccessory.RecordCount>
+          <div class="right">
+            <a href="#prc.prevStep#">BACK</a>
+            <button type="submit" class="btn btn-primary btn-block">Continue</button>
+          </div>
+        </cfif>
       </form>
     </section>
   </div>
