@@ -1195,13 +1195,13 @@ $j(document).ready(function($j) {
 								<div class="col-xs-6">
 									<form action="#rc.upgradeURL#" method="post">
 										<input type="hidden" name="finance" value="">
-										<button type="submit" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</button>
+										<button id="btn-carrierUpgrade" type="submit" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</button>
 									</form>
 								</div>
 								<div class="col-xs-6">
 									<form action="#rc.addalineURL#" method="post">
 										<input type="hidden" name="finance" value="">
-										<button type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</button>
+										<button id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</button>
 									</form>
 
 								</div>
