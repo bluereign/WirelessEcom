@@ -168,7 +168,7 @@
 			<cfset this.setServiceType('service')> <!--- TODO - not sure what value to populate this with --->
 			<cfset this.setServiceId(local.s.getProductId())>
 			<cfset this.setCarrierServiceId(local.sProduct.CarrierBillCode)> 
-			<cfif (cartLine.getCartLineActivationType() contains 'finance') AND (len(local.sProduct.FinancedPrice))>
+			<cfif (cartLine.getCartLineActivationType() contains 'finance') AND (isDefined('local.sProduct.FinancedPrice') and len(local.sProduct.FinancedPrice))>
 				<cfset this.setMonthlyFee(local.sProduct.FinancedPrice)>
 			<cfelse>
 				<cfset this.setMonthlyFee(local.sProduct.price)>

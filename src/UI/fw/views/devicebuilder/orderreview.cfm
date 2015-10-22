@@ -39,7 +39,7 @@
           <h1>Cart</h1>
         </header>
         
-        <form id="formCheckout" action="#event.buildLink('devicebuilder.orderreview')#" method="post">
+        <form id="formCheckout" action="#event.buildLink('checkoutDB/billship')#" method="post">
           
           <div class="right">
             <cfif prc.showAddAnotherDeviceButton>
@@ -48,7 +48,7 @@
               <a href="#prc.browseDevicesUrl#">BROWSE DEVICES</a>
             </cfif>
             <cfif prc.showCheckoutnowButton>
-              <button type="submit" class="btn btn-primary">Checkout Now</button>
+              <button type="submit" class="btn btn-primary" >Checkout Now</button>
             </cfif>
           </div>
 

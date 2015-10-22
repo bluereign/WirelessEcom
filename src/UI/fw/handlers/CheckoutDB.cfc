@@ -382,8 +382,8 @@
 
 			<cfif not local.isByPassOn>
 				<!--- Handle PO validation on billing address --->
-				<cfset local.poBoxRegEx = "[PO.]*\s?B(ox)?.*\d+">
-
+				<cfset local.poBoxRegEx = "^(?:Post (?:Office )?|P[. ]?O\.? )?Box ">
+					
 				<cfif application.model.checkoutHelper.isWirelessOrder()>
 					<cfif REFindNoCase(local.poBoxRegEx,request.p.billAddress1)>
 						<cfset request.validator.addMessage('billAddress1', 'In order to process your order please provide an address that is not a P.O. Box address.') />
@@ -655,13 +655,23 @@
 	            </cfif>
 				<!--- Save shipping selection to session --->
 				<cfset session.checkout.shippingMethod = request.p.shipping>
+				<!--- Do Shipping stuff --->
+				<cfset local.selectedShippingMethod = createObject('component', 'cfc.model.shipMethod').init() />
+				<!---<cfset local.selectedShippingMethod = application.model.CheckoutHelper.getShippingMethod() />--->
+				<cfset local.selectedShippingMethod.load(request.p.shipping) />
+				<cfset application.model.CheckoutHelper.setShippingMethod(local.selectedShippingMethod) />
+	
+				<cfif ChannelConfig.getOfferShippingPromo() && application.model.CartHelper.isCartEligibleForPromoShipping()>
+					<cfset session.cart.getShipping().setDueToday( application.model.checkoutHelper.getShippingMethod().getPromoPrice() ) />
+				<cfelse>
+					<cfset session.cart.getShipping().setDueToday( application.model.checkoutHelper.getShippingMethod().getDefaultFixedCost() ) />
+				</cfif>
 				
 	            <cfset application.model.checkoutHelper.markStepCompleted('billShip') />
 	            
 	            <cfif application.model.checkoutHelper.isWirelessOrder()>
 	            	<!--- If this is a new line, credit check. --->
-	            	<!---<cflocation url="/index.cfm/go/checkout/do/creditCheck/" addtoken="false" />--->
-	            	<!--- Since we are only doing upgrades, continue to Carrier Agreements --->
+	
 	            	<cfset setNextEvent('checkoutDB/carrierAgreements') />
 	            <cfelse>
 	            	<!--- Otherwise, time to go to the Review. --->
@@ -669,30 +679,269 @@
 	            	<!---For development only, go to carrierAgreements --->
 	            	<cfset setNextEvent('checkoutDB/carrierAgreements') />
 	            	
-	            	<!---<cflocation url="/index.cfm/go/checkout/do/orderConfirmation/" addtoken="false" />--->
 	            </cfif>
 			</cfif>
 	</cffunction>
 	
 	<cffunction name="carrierAgreements" returntype="void" output="false" hint="">
 		<cfargument name="event">
-		<cfset application.model.checkoutHelper.setCurrentStep('review') />
 
 		<cfset event.setLayout('checkoutDB') />
 		<cfset event.setView('CheckoutDB/carrierAgreementsDB') />
 	</cffunction>
 	
+	<cffunction name="processCarrierAgreements" returntype="void" output="false" hint="">
+		<cfargument name="event">
+
+		<cfset application.model.checkoutHelper.markStepCompleted('carrierAgreements') />
+		
+		<cfset setNextEvent('checkoutDB/orderReview') />
+	</cffunction>
+	
 	<cffunction name="orderReview" returntype="void" output="false" hint="">
 		<cfargument name="event">
-    	<cfargument name="rc">
-    	<cfargument name="prc">
-		<!---<cfset application.model.checkoutHelper.setCurrentStep('review') />--->
-
-		<cfset event.setLayout('checkoutDB') />
+	    <cfargument name="rc">
+	    <cfargument name="prc">
+	    <cfset var prevAction = "" />
+	    <cfparam name="prc.showAddAnotherDeviceButton" default="true" />
+	    <cfparam name="prc.showCheckoutnowButton" default="true" />
+	    <cfparam name="prc.showClearCartLink" default="true" />
+	    
+	   <!--- MES FIX UP --->
+	    <cfscript>
+	    if (session.cart.getCarrierId() eq 109) {
+              session.carrierObj.carrierLogo = "#assetPaths.channel#images/carrierLogos/att_logo_25.png";
+            } else if (session.cart.getCarrierId() eq 42) {
+              session.carrierObj.carrierLogo = "#assetPaths.channel#images/carrierLogos/verizon_logo_25.png";
+            }
+		</cfscript>
+	       // GET PLAN FROM CART
+      	<cfset prc.cartPlan = application.model.dBuilderCartFacade.getPlan()/>
+		<cfset prc.showAddAnotherDeviceButton = false/>
+		<cfset prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber)/>
+		/*<cfset prc.clearCartAction = event.buildLink('devicebuilder.clearcart')/>*/
+		<cfset prc.includeTallyBox = false/>
+		<cfset prc.cartLines = session.cart.getLines()/>
+		<cfset prc.customerType = listLast(session.cart.getActivationType(), '-')/>
+		
+		
+		<cfset session.cart.updateCartItemTaxes() />
+		<cfset session.cart.updateAllTaxes() />
+		
+		<cfset event.setLayout('checkoutReviewDB') />
 		<cfset event.setView('CheckoutDB/orderReviewDB') />
 	</cffunction>
 	
-	<cffunction name="orderConfirmation" returntype="void" output="false" hint="">
+	<cffunction name="processOrderReview" returntype="void" output="false" hint="">
+		<cfargument name="event">
+	    <cfargument name="rc">
+	    <cfargument name="prc">
+		
+		<cfset request.p = Event.getCollection()/>
+
+		<cfset application.model.checkoutHelper.markStepCompleted('orderReview') />
+
+		<cfset order = createObject('component', 'cfc.model.order').init() />	
+		
+		<cfset variables.order.populateFromCart(session.cart) />
+		<cfset variables.order.populateFromCheckoutHelper() />
+
+		<!---<cfif session.currentUser.getUserID() NEQ "" AND application.model.user.isUserOrderAssistanceOn( session.currentUser.getUserID() )>
+			<cfset order.setOrderAssistanceUsed( true ) />
+		</cfif>--->
+		
+		<cfset variables.order.save() />	
+		
+		<cfif session.cart.hasPromotions()>
+			<cfset PromotionService.applyPromotion( cart = session.cart, orderID = order.getOrderID(), userID = session.userID )>
+			<cfset order.load(order.getOrderId())>
+		</cfif>
+		
+		<cfset application.model.checkoutHelper.setOrderId(order.getOrderId()) />
+
+		<!--- Store credit check application info for Verizon --->
+		<cfif application.model.checkoutHelper.getCarrier() eq 42>
+			<cfset local.CreditCheckInfo = application.model.checkoutHelper.getCreditCheckInfo() />
+			<cfset local.CreditCheckInfo.save() />
+
+			<cfset variables.order.setCreditCheckKeyInfoId( local.CreditCheckInfo.getCreditCheckKeyInfoId() ) />
+			<cfset variables.order.save() />
+		</cfif>
+
+		<!--------------------------------------------------------------- 
+			Add special SKUs to make reports commission reports correct 
+		----------------------------------------------------------------->
+		<cfif ( session.cart.getActivationType() contains 'nocontract')
+		   or (session.cart.getActivationType() contains 'upgrade' and session.cart.getUpgradeType() eq 'equipment-only')
+		   or (session.cart.getActivationType() contains 'addaline' and session.cart.getAddaLineType() eq 'Family' )
+		   or application.model.checkoutHelper.isPrepaidOrder()	>
+			<!--- Temp for filling in rate plan length --->
+			<!---<cfset ratePlanLength = 24 />--->				
+			
+			<cfset cartLines = session.cart.getLines() />
+			<cfloop from="1" to="#arrayLen(order.getWirelessLines())#" index="i">	
+				
+				<cfset deviceActivationType =  cartlines[i].getCartLineActivationType()>
+				<!---<cfif deviceActivationType contains 'financed'>
+					<cfif deviceActivationType contains '12'>
+						<cfset ratePlanLength = 12 />
+					<cfelseif deviceActivationType contains '18' >
+						<cfset ratePlanLength = 18 />
+					<cfelse>
+						<cfset ratePlanLength = 24 />
+					</cfif>
+				<cfelse>
+					<cfset ratePlanLength = 24 />
+				</cfif>	--->	 	 
+			 	 
+			 	 <!---translate activation types--->
+				<cfset cartLineActivationType = cartlines[i].getCartLineActivationType() />
+				<cfif cartLineActivationType contains 'financed'>
+				<cfscript>
+					switch(cartLineActivationType)
+						{
+							case 'financed-12-new':
+								local.mappedActivationType = 'FNew';
+								local.ratePlanLength = 12;
+							break;	
+							case 'financed-12-upgrade':
+								local.mappedActivationType = 'FUpgrade';
+								local.ratePlanLength = 12;
+							break;							
+							
+							case 'financed-12-addaline':
+								local.mappedActivationType = 'FAddaline';
+								local.ratePlanLength = 12;
+							break;
+							case 'financed-18-new':
+								local.mappedActivationType = 'FNew';
+								local.ratePlanLength = 18;
+							break;	
+							case 'financed-18-upgrade':
+								local.mappedActivationType = 'FUpgrade';
+								local.ratePlanLength = 18;
+							break;							
+							
+							case 'financed-18-addaline':
+								local.mappedActivationType = 'FAddaline';
+								local.ratePlanLength = 18;
+							break;
+							case 'financed-24-new':
+								local.mappedActivationType = 'FNew';
+								local.ratePlanLength = 24;
+							break;	
+							case 'financed-24-upgrade':
+								local.mappedActivationType = 'FUpgrade';
+								local.ratePlanLength = 24;
+							break;							
+							case 'financed-24-addaline':
+								local.mappedActivationType = 'FAddaline';
+								local.ratePlanLength = 24;
+							break;											
+						}
+				</cfscript>	
+				<cfelse>
+							<cfset	local.mappedActivationType = cartlines[i].getCartLineActivationType()>
+							<cfset	local.ratePlanLength = 0>
+				</cfif>	
+			 	 
+			 	 
+			 	 <cfif cartlines[i].getCartLineActivationType() is 'nocontract'>
+				 	<cfset CommissionSku = application.model.CheckoutHelper.GetNoActivationRateplanSKU( 
+							application.model.checkoutHelper.getCarrier()
+							, cartlines[i].getPhone().getGersSKU()
+							, cartlines[i].getPhone().getDeviceServiceType()
+							) />
+					<cfset CommissionSkuTitle = "No activation sale" />
+				 </cfif>
+			 	 <cfif application.model.checkoutHelper.isPrepaidOrder()>
+				 	 <cfset CommissionSku = application.model.CheckoutHelper.GetPrepaidRateplanSKU( 
+							application.model.checkoutHelper.getCarrier()
+							, cartlines[i].getPhone().getGersSKU()
+							, cartlines[i].getPhone().getDeviceServiceType()
+							) />
+							<cfset CommissionSkuTitle = "Prepaid sale" />
+				</cfif>
+			 	<cfif cartlines[i].getCartLineActivationType() contains 'upgrade'>
+					<cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
+							application.model.checkoutHelper.getCarrier()
+							, cartlines[i].getPhone().getGersSKU()
+							, cartlines[i].getPhone().getDeviceServiceType()
+							, local.mappedActivationType
+							, i <!--- line number --->
+							, local.ratePlanLength
+							) />
+					<cfset CommissionSkuTitle = "Keep current rateplan" />
+				</cfif>
+				  
+				<cfif cartlines[i].getCartLineActivationType() contains 'addaline'>
+				 	 <cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
+							application.model.checkoutHelper.getCarrier()
+							, cartlines[i].getPhone().getGersSKU()
+							, cartlines[i].getPhone().getDeviceServiceType()
+							, local.mappedActivationType
+							, i <!--- line number --->
+							, local.ratePlanLength
+							) />
+					<cfset CommissionSkuTitle = "Add a line to current rateplan" />
+				</cfif>
+			 	 
+			 	<cfscript> 
+				 	noContract_orderDetail = createobject('component','cfc.model.OrderDetail').init();				
+					noContract_orderDetail.setGroupNumber(i);
+					noContract_orderDetail.setGroupName("Line " & i);
+					noContract_orderDetail.setOrderId(order.getOrderId());
+					noContract_orderDetail.setOrderDetailType( 'r' );
+					noContract_orderDetail.setGersSKU( CommissionSku );
+					noContract_orderDetail.setProductId( 0 );
+					noContract_orderDetail.setProductTitle(CommissionSkuTitle);
+					noContract_orderDetail.setQty(1);
+					noContract_orderDetail.setNetPrice(0);
+					noContract_orderDetail.save();
+				</cfscript>
+			</cfloop>
+		</cfif>
+
+
+	
+	
+		<cfif structKeyExists(session, 'cart') and structKeyExists(session.cart, 'orderRebateGuidList')>
+			<cfset rebates = createObject('component', 'cfc.model.rebates').init() />
+			<cfset rebates.assignOrderToRebates(orderId = variables.order.getOrderId(), rebateGuidList = trim(session.cart.orderRebateGuidList)) />
+		</cfif>
+
+		<cfset application.model.checkoutHelper.setOrderTotal(order.getOrderTotal()) />
+
+		
+		<cfset application.model.checkoutHelper.markStepCompleted('review') />
+		<!---
+		**
+		* If wireless order, continue to coverage confirmation.
+		**
+		--->
+		<!---<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
+			<cfif GatewayRegistry.hasMultipleRegistered()>
+				<cfset event.setLayout('checkoutVFD') />
+				<cfset event.setView('VFD/checkout/paymentOptions') />
+			<cfelse>
+				<cfset setNextEvent('CheckoutVFD.payment')>
+			</cfif>
+		<cfelse>
+			<cfif application.model.checkoutHelper.isPrepaidOrder()>
+				<cflocation url="/index.cfm/go/checkout/do/customerInfo/" addtoken="false" />
+			<cfelseif application.model.checkoutHelper.isWirelessOrder()>
+				<cflocation url="/index.cfm/go/checkout/do/carrierTerms/" addtoken="false" />
+			<cfelseif GatewayRegistry.hasMultipleRegistered()>
+				<cflocation url="/index.cfm/go/checkout/do/paymentOptions" addtoken="false" />
+			<cfelse>
+				<cfinclude template="/views/checkout/dsp_payment.cfm" />
+			</cfif>
+		</cfif>--->
+		
+		<cfset setNextEvent('checkoutDB/payment') />
+	</cffunction>
+	
+	<!---<cffunction name="orderConfirmation" returntype="void" output="false" hint="">
 		<cfargument name="event">
 		<cfset application.model.checkoutHelper.setCurrentStep('review') />
 		<cfset session.cart.updateCartItemTaxes() />
@@ -707,9 +956,9 @@
 		<cfelse>
 			<cfinclude template="/views/checkout/dsp_orderConfirmation.cfm" />
 		</cfif>
-	</cffunction>
+	</cffunction>--->
 	
-	<cffunction name="processOrderConfirmation" returntype="void" output="false" hint="">
+	<!---<cffunction name="processOrderConfirmation" returntype="void" output="false" hint="">
 		<cfargument name="event">
 		<cfargument name="prc">
 		
@@ -728,7 +977,7 @@
 			</cfif>
 		</cfif>
 
-		<cfset application.model.checkoutHelper.markStepCompleted('review') />
+		<cfset application.model.checkoutHelper.markStepCompleted('orderReview') />
 
 		<cfset order = createObject('component', 'cfc.model.order').init() />	
 		
@@ -942,21 +1191,18 @@
 			</cfif>
 		</cfif>
 		
-	</cffunction>
+	</cffunction>--->
+	
+	
+	
+	
+
 	
 	<cffunction name="payment" returntype="void" output="false" hint="">
 		<cfargument name="event">
-		<!--- Move this line to processOrderConfirmation at some point --->
-		
-		<cfset application.model.checkoutHelper.setCurrentStep('payment') />
 
-		<!--- VFD access check MES --->
-		<cfif channelConfig.getVfdEnabled()>
-				<cfset event.setLayout('checkoutVFD') />
-				<cfset event.setView('VFD/checkout/payment') />
-		<cfelse>
-			<cfinclude template="/views/checkout/dsp_orderConfirmation.cfm" />
-		</cfif>
+		<cfset event.setLayout('checkoutDB') />
+		<cfset event.setView('CheckoutDB/paymentBD') />
 	</cffunction>
 	
 	<!---
