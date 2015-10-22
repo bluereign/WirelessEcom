@@ -1029,21 +1029,26 @@ $j(document).ready(function($j) {
 					<div id="addtocart-nocontract" class="pull-right" style="display:none;">
 						<cfset prc.renderAddToCartArgs.PriceType = 'nocontract' />
 						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
-					</div>	
+					</div>
+
+					<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
+						<a class="ActionButton learnMoreBtn" href="javascript: return false;" data-toggle="modal" data-target="##financeModal" <cfif hide2yearpricing>style="width:460px;"</cfif>><span><cfif hide2yearpricing>#application.wirebox.getInstance('TextDisplayRenderer').getHide2YearFinancingButtonText()#<cfelse>Learn More</cfif></span></a>
+					</div>
 					
 					<cfif prc.channelConfig.GetVFDEnabled()>
-					<div id="addtocart-financed-12" class="pull-right" style="display:none;">
-						<cfset prc.renderAddToCartArgs.PriceType = 'financed-12-new-upgrade-addaline' />
-						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
-					</div>
-					<div id="addtocart-financed-18" class="pull-right" style="display:none;">
-						<cfset prc.renderAddToCartArgs.PriceType = 'financed-18-new-upgrade-addaline' />
-						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
-					</div>
-					<div id="addtocart-financed-24" class="pull-right" style="display:none;">
-						<cfset prc.renderAddToCartArgs.PriceType = 'financed-24-new-upgrade-addaline' />
-						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
-					</div>			
+					
+						<div id="addtocart-financed-12" class="pull-right" style="display:none;">
+							<cfset prc.renderAddToCartArgs.PriceType = 'financed-12-new-upgrade-addaline' />
+							#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+						</div>
+						<div id="addtocart-financed-18" class="pull-right" style="display:none;">
+							<cfset prc.renderAddToCartArgs.PriceType = 'financed-18-new-upgrade-addaline' />
+							#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+						</div>
+						<div id="addtocart-financed-24" class="pull-right" style="display:none;">
+							<cfset prc.renderAddToCartArgs.PriceType = 'financed-24-new-upgrade-addaline' />
+							#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+						</div>			
 					
 					<cfelse>
 
