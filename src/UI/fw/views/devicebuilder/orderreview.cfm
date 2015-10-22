@@ -48,7 +48,7 @@
               <a href="#prc.browseDevicesUrl#" >BROWSE DEVICES</a>
             </cfif>
             <cfif prc.showCheckoutnowButton>
-              <button type="submit" class="btn btn-primary" >Checkout Now</button>
+              <button type="submit" class="btn btn-primary">Checkout Now</button>
             </cfif>
           </div>
 
