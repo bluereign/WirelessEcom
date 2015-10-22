@@ -8299,7 +8299,7 @@ aside.details {
   padding: 0;
   border-bottom: 1px solid #b3b3b3;
 }
-.cart .content .bs-callout a {
+.cart .content .bs-callout h4 a {
   display: inline;
 }
 .cart .content a {
