@@ -45,7 +45,7 @@
             <cfif prc.showAddAnotherDeviceButton>
               <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
             <cfelse>
-              <a href="#prc.browseDevicesUrl#">BROWSE DEVICES</a>
+              <a href="#prc.browseDevicesUrl#" >BROWSE DEVICES</a>
             </cfif>
             <cfif prc.showCheckoutnowButton>
               <button type="submit" class="btn btn-primary">Checkout Now</button>
@@ -498,7 +498,7 @@
 
 
           </div>
-        </form>
+        <!--- </form> --->
       </section>
     </div>
 
@@ -506,8 +506,8 @@
     <div class="col-md-4">
       <cfif prc.showClearCartLink>
         <a href="#prc.clearCartAction#" class="clear">Clear Entire Cart</a>
-      <cfelse>
-        <a href="#prc.browseDevicesUrl#" class="clear">Browse Devices</a>
+      <!--- <cfelse>
+        <a href="#prc.browseDevicesUrl#" class="clear">Browse Devices</a> --->
       </cfif>
       
       <div class="sidebar">
@@ -663,10 +663,17 @@
       </div>
       </div>
       <div class="right">
-        <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
-        <button type="submit" class="btn btn-primary">Checkout Now</button>
+        <cfif prc.showAddAnotherDeviceButton>
+          <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
+        <cfelse>
+          <a href="#prc.browseDevicesUrl#">BROWSE DEVICES</a>
+        </cfif>
+        <cfif prc.showCheckoutnowButton>
+          <button type="submit" class="btn btn-primary">Checkout Now</button>
+        </cfif>
       </div>
     </div>
+    </form>
 
     <div class="col-md-12">
       <p class="legal">

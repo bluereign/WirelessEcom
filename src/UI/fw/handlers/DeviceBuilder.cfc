@@ -322,7 +322,7 @@
       }
 
       // add services to cart
-      if ( listLen(prc.selectedServices) ) {
+      if ( listLen(prc.selectedServices) and structKeyExists(prc,"cartPlan.productId") ) {
         
         cartArgs = {
           productType = "plan",
