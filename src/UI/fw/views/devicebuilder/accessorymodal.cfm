@@ -45,7 +45,7 @@
               <div class="form-group form-inline">
                 <label for="accessoryqty">Quantity</label>
                 <select class="form-control" name="accessoryqty" id="accessoryqty">
-                  <cfloop from="1" to="#prc.accessoryInfo.qtyOnHand#" index="iqty">
+                  <cfloop from="1" to="#IIF(prc.accessoryInfo.qtyOnHand lte 10, DE(prc.accessoryInfo.qtyOnHand), DE(10))#" index="iqty">
                     <option value="#iqty#" <cfif iqty eq cartQty>selected</cfif> >#iqty#</option>
                   </cfloop>
                 </select>

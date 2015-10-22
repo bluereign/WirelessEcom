@@ -481,7 +481,7 @@
                     </div>
                     <div class="col-md-2 col-xs-16 quantity">
                       <select name="accessoryqty#prc.additionalAccessories[i].productId#" id="#prc.additionalAccessories[i].productId#" class="form-control accessoryqty">
-                        <cfloop from="1" to="#prc.additionalAccessories[i].qtyOnHand#" index="iqty">
+                        <cfloop from="1" to="#IIF(prc.additionalAccessories[i].qtyOnHand lte 10, DE(prc.additionalAccessories[i].qtyOnHand), DE(10))#" index="iqty">
                           <option value="#iqty#" <cfif prc.additionalAccessories[i].qty eq iqty>selected</cfif> >#iqty#</option>
                         </cfloop>
                       </select>
