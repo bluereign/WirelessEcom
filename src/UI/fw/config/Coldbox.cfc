@@ -216,6 +216,7 @@ Optional Methods
 			"^local\.vfd.\costco\.com",
 			"^local\.vfd.\aafes\.com",
       "^local\.fullapi\.costco\.wa",
+      		"^local\.fullapi\.wa",
 			
 			//DEV AT&T Next Branches
 			"^local\.costco\.attnext\.wa",
@@ -397,7 +398,7 @@ Optional Methods
 		settings.filterQueryCacheSpan = CreateTimeSpan(0,0,0,0);		
 		
 		//Carrier FULL API
-	settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.test.ATT/V1/api";
+	settings.Att_Carrier_Api_BaseUrl = "http://DEV-ECOM-SBUS-1.enterprise.corp/AttCarrierService/api";
 	settings.Vzw_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.test.Verizon/V1/api";
 		
 	}

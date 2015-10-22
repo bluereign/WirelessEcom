@@ -302,8 +302,8 @@
 			<p>If you are adding a line to your existing account you must be the account holder.</p>
 		</cfif>
 	</div>
-	<div class="right" style="Width:30%;float:right">
-		<a href="##" onclick="window.location.href='/index.cfm/go/checkout/do/wirelessAccountForm/'">Back</a>
+	<div class="formControl">
+		<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Back</a>
 		<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('#billShip').submit()" style="color:#fff">Continue</a></span>
 	</div>
 </div>
@@ -618,12 +618,13 @@
 							<select name="shipping" id="shippingCostSelect" style="font-size:12px">
 								<cfloop query="local.qShipMethods">
 									<option price="#DefaultFixedCost#" displayprice="#dollarFormat(DefaultFixedCost)#" 
-									        value="#ShipMethodId#">
-										#DisplayName# 
+									        value="#ShipMethodId#" <cfif isDefined('session.checkout.shippingMethod') AND (trim(local.qShipMethods.ShipMethodId) eq trim(session.checkout.shippingMethod.getShipMethodId()))>selected</cfif>>
+										#DisplayName#
 										(
 										#dollarFormat(DefaultFixedCost)#
 										)
 									</option>
+									
 								</cfloop>
 							</select>
 						</cfif>
@@ -663,7 +664,7 @@
 </cfoutput>
 
 <div class="formControl">
-	<a href="##" onclick="window.location.href='/index.cfm/go/checkout/do/wirelessAccountForm/'">Back</a>
+	<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Back</a>
 	<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('#billShip').submit()" style="color:#fff">Continue</a></span>
 </div>
 
