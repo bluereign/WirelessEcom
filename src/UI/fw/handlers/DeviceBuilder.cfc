@@ -60,6 +60,9 @@
       if (!structKeyExists(session,"cartHelper")) {
         session.cartHelper = createObject('component','cfc.model.carthelper').init();
       }
+      if (!structKeyExists(session,"dBuilderCartFacade")) {
+        session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
+      }
       // <end check cart instantiated
 
 
@@ -123,7 +126,7 @@
           price = prc.productData.FinancedFullRetailPrice,
           cartLineNumber = rc.cartLineNumber
         };
-        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
       // <end add device to cart
 
@@ -147,7 +150,7 @@
 
         if (arrayLen(prc.cartLines)) {
           prc.cartLine = prc.cartLines[rc.cartLineNumber];
-          prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+          prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
         } else {
           relocate( prc.browseDevicesUrl );
         }
@@ -184,7 +187,7 @@
         // the refresh lines, etc.
         prc.cartLines = session.cart.getLines();
         prc.cartLine = prc.cartLines[rc.cartLineNumber];
-        prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+        prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
 
         // Set the session zipcode to the subscriber zipcide:
         // ... and because CF 8 doesn't allow functionReturnsArray()[index]:
@@ -206,7 +209,7 @@
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
       if ( structKeyExists(rc,"HasExistingPlan")  ) {
@@ -215,7 +218,7 @@
       }
 
       // GET PLAN FROM CART
-      prc.cartPlan = application.model.dBuilderCartFacade.getPlan();
+      prc.cartPlan = session.dBuilderCartFacade.getPlan();
 
 
 
@@ -259,15 +262,15 @@
             qty = 1,
             cartLineNumber = rc.cartLineNumber
           };
-          application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+          session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
         } else if (rc.warrantyid eq 0) {
           // if warrantyid exists and it is zero, then remove the cartline warranty.
-          application.model.cartHelper.removeWarranty(line = rc.cartLineNumber);
+          session.cartHelper.removeWarranty(line = rc.cartLineNumber);
         }
       }
 
       // now, get the cartline warranty.
-      prc.warranty = application.model.dBuilderCartFacade.getWarranty(rc.cartLineNumber);
+      prc.warranty = session.dBuilderCartFacade.getWarranty(rc.cartLineNumber);
       if (prc.warranty.recordcount) {
         prc.warrantyId = prc.warranty.productId;
       } else {
@@ -331,7 +334,7 @@
           cartLineNumber = rc.cartLineNumber
         };
 
-        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
       // <end selected services
 
@@ -349,7 +352,7 @@
           qty = rc.accessoryqty
         };
 
-        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
+        session.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
 
       // DEBUG:
@@ -368,7 +371,7 @@
           product_id = removeaccessory,
           qty = 0
         };
-        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
+        session.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
 
       // get cartline accessories
@@ -398,9 +401,9 @@
         // application.model.cartHelper.removeWarranty(line = rc.removephone);
         // prc.removeCartLine.setAccessories(accessories=arrayNew(1));
         
-        application.model.cartHelper.deleteLine(lineNumber = rc.removephone);
+        session.cartHelper.deleteLine(lineNumber = rc.removephone);
 
-        application.model.cartHelper.removeEmptyCartLines();
+        session.cartHelper.removeEmptyCartLines();
 
         // since that cartLineNumber does not exist, change active cartLineNumber to 999:
         rc.cartLineNumber = request.config.otherItemsLineNumber;
@@ -650,9 +653,9 @@
             prc.selectedPlan = application.model.plan.getByFilter(idList = prc.cartLine.getPlan().getProductID());
           }
 
-          prc.lineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
+          prc.lineBundledAccessories = session.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
           prc.lineFeatures = prc.cartLine.getFeatures();
-          prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
+          prc.lineAccessories = session.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
         }
         // <end tally box
       }
@@ -660,13 +663,13 @@
 
       
       // UPDATE CART TOTALS:
-      if ( application.model.cartHelper.hasSelectedFeatures() ) {
+      if ( session.cartHelper.hasSelectedFeatures() ) {
         prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices();
       }
       session.cart.updateAllPrices();
       session.cart.updateAllDiscounts();
       session.cart.updateAllTaxes();
-      application.model.CartHelper.removeEmptyCartLines();
+      session.CartHelper.removeEmptyCartLines();
       // <end update cart totals
 
 
@@ -996,7 +999,7 @@
       if (!arrayLen(prc.cartLines)) {
         prc.showNav = false;
       }
-      prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
+      prc.additionalAccessories = session.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart');
       prc.includeTallyBox = false;
     </cfscript>
