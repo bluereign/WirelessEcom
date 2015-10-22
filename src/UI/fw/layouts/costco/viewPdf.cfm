@@ -1,0 +1,1 @@
+<cfsetting enableCFoutputOnly="yes" /><cfoutput><cfcontent type="application/pdf" >#trim(renderView())#</cfoutput>

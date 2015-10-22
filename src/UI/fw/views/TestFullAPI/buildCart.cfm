@@ -6,7 +6,11 @@
 <cfset accessoryids = "515,25766,4212,26626,26721" />
 
 <cfquery name="qPhones" datasource="wirelessadvocates" >
-	select * from catalog.dn_phones where imeitype is not null and itemid is not null	
+	SELECT * FROM catalog.dn_phones 
+	WHERE imeitype is not null 
+	and itemid is not null 
+	and isAvailableOnline = 1
+	and qtyOnHand > 0
 </cfquery>	
 
 

@@ -75,5 +75,15 @@
 		<cfset local.sni.SubscriberNumber = local.subscriber.number />	
 		<cfreturn local.sni />			
 	</cffunction>	
+
+	<cffunction name="convertPdf" access="public" output="yes" returntype="void">
+		<cfargument name="pdfBinary" type="string" required="true" > 
+		
+		<cfcontent type="application/pdf"  > 
+		<cfoutput>#base64ToBinary(pdfBinary)#</cfoutput>
+
+	</cffunction>
+	
+	
 	
 </cfcomponent>	

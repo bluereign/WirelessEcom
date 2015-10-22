@@ -22,6 +22,15 @@
 	<br/>financeAgreementRespObj:
 	<cfdump var="#rc.financeAgreementRespObj.getResponse()#" expand="false" />
 </div>
+<br><Form action="#event.buildLink('testFullApi.FinanceAgreement')#" method="post">
+	<input type="hidden" name="pdfEncoded" value="#rc.financeAgreementRespObj.getResponse().FinanceAgreement#"/>
+	<input type="submit" value="View Finance Agreement PDF"></submit> 
+	</form>
 </h2>
+
+	<!---<cfif structKeyExists(rc.financeAgreementRespObj.getResponse(),"financeAgreement")>
+		<cfset chelper = createObject('component','fw.model.carrierApi.att.attCarrierHelper') />
+		<cfset chelper.convertPdf(rc.financeAgreementRespObj.getResponse().financeAgreement) />
+	</cfif>--->
 
 </cfoutput>
