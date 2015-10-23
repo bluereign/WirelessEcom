@@ -1735,12 +1735,6 @@
 		<cfif isDefined('session.scenario.scenarioType') >
 			<cfset variables.order.setScenarioId(listfind(application.scenarios,session.scenario.scenarioType)) />
 		</cfif>
-		<cfif isDefined('session.scenario.kioskId') >
-			<cfset variables.order.setKioskId(session.scenario.kioskId) />
-		</cfif>
-		<cfif isDefined('session.scenario.associateId') >
-			<cfset variables.order.setAssociateId(session.scenario.associateId) />
-		</cfif>
 
 		<cfif session.currentUser.getUserID() NEQ "" AND application.model.user.isUserOrderAssistanceOn( session.currentUser.getUserID() )>
 			<cfset order.setOrderAssistanceUsed( true ) />
@@ -1759,7 +1753,7 @@
 		
 		<cfset application.model.checkoutHelper.setOrderId(order.getOrderId()) />
 
-		<cfif application.model.checkouthelper.isUpgrade()>
+		<!---<cfif application.model.checkouthelper.isUpgrade()>
 			<cfset accountLookups = application.model.checkoutHelper.getCustomerLookupResult() />
 			<cfset request.p.wirelessLines = order.getWirelessLines() />
 
@@ -1861,9 +1855,9 @@
 					}
 				}
 			</cfscript>
-		</cfif>
+		</cfif>--->
 
-		<cfif application.model.checkouthelper.isAddALine()>
+		<!---<cfif application.model.checkouthelper.isAddALine()>
 			<cfset accountLookups = application.model.checkoutHelper.getCustomerLookupResult() />
 			<cfset request.p.wirelessLines = order.getWirelessLines() />
 
@@ -1880,17 +1874,17 @@
 
 				<cfset order.save() />
 			</cfif>
-		</cfif>
+		</cfif>--->
 
 
 		<!--- Store credit check application info for Verizon --->
-		<cfif application.model.checkoutHelper.getCarrier() eq 42>
+		<!---<cfif application.model.checkoutHelper.getCarrier() eq 42>
 			<cfset local.CreditCheckInfo = application.model.checkoutHelper.getCreditCheckInfo() />
 			<cfset local.CreditCheckInfo.save() />
 
 			<cfset variables.order.setCreditCheckKeyInfoId( local.CreditCheckInfo.getCreditCheckKeyInfoId() ) />
 			<cfset variables.order.save() />
-		</cfif>
+		</cfif>--->
 
 		<!--------------------------------------------------------------- 
 			Add special SKUs to make reports commission reports correct 

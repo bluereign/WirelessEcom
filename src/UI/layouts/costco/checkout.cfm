@@ -69,7 +69,7 @@
 						<h2>Checkout</h2>
 
 						<ul class="checkoutSteps">
-							<cfif application.model.checkoutHelper.isWirelessOrder()>
+							<!---<cfif application.model.checkoutHelper.isWirelessOrder()>
 								<cfif application.model.checkoutHelper.getCheckoutType() is 'new'>
 									<li class="<cfif application.model.checkoutHelper.isStepCompleted('lnp')>complete</cfif> <cfif application.model.checkoutHelper.getCurrentStep() is 'lnp'>active</cfif>">Keep Your Current Number?</li>
 								<cfelseif application.model.checkoutHelper.getCheckoutType() is 'add'>
@@ -81,7 +81,7 @@
 							</cfif>
 							<cfif application.model.checkoutHelper.isPrepaidOrder()>
 								<li class="<cfif application.model.checkoutHelper.isStepCompleted('areaCode')>complete</cfif> <cfif application.model.checkoutHelper.getCurrentStep() is 'areaCode'>active</cfif>">Request Area Code</li>
-							</cfif>
+							</cfif>--->
 							<li class="<cfif application.model.checkoutHelper.isStepCompleted('billShip')>complete</cfif> <cfif application.model.checkoutHelper.getCurrentStep() is 'billShip'>active</cfif>">Billing and Shipping</li>
 							<cfif application.model.checkoutHelper.isWirelessOrder()>
 								<cfif application.model.checkoutHelper.getCheckoutType() is 'new'>

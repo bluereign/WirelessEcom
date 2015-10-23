@@ -41,9 +41,9 @@
 		}
 
 		.collapse {
+            padding-top:10px;
 			.col-md-10,
 			.col-md-3 {
-				border-bottom: 1px solid @gray-light;
 				padding: 10px 15px;
 			}
 
@@ -51,9 +51,21 @@
 				padding-right: 20px;
 				text-align: right;
 			}
+
+            .row {
+                margin:0;
+                padding:0;
+                border-bottom: 1px solid @gray-light;
+            }
 		}
 
-
+        .bs-callout{
+            h4 {
+                a{
+                    display:inline;
+                }
+            }
+        }
 
 		a {
 			display: block;
