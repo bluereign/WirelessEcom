@@ -41,7 +41,7 @@
 	</cffunction>
 	
 	<!------------------------------------------------------------------------------------------------------- 
-		Based on Zip Code check to see the supported area codes for the carrier  
+		Request the Finance Agreement PDf  
 	-------------------------------------------------------------------------------------------------------->
 	<cffunction name="FinanceAgreement" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttFinanceAgreementCarrierResponse">
 		<cfset var local = structNew() />
@@ -76,7 +76,8 @@
 		
 		<!--- Copy the response or an empty object into the carrierResponse --->
 		<cfif isJson(arguments.cfhttpResult.fileContent)>			
-			<cfset carrierResponse.setResponse(deserializeJson(arguments.cfhttpResult.fileContent,true)) />
+			<cfset carrierResponse.setResponse(deserializeResponse(arguments.cfhttpResult.fileContent)) />
+				<!---<cfset carrierResponse.setResponse(deserializeJSON(arguments.cfhttpResult.fileContent,true)) />--->
 		<cfelse>
 			<cfset carrierResponse.setResponse(emptyObj) />
 		</cfif>
