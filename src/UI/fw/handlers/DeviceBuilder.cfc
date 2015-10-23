@@ -325,7 +325,7 @@
       }
 
       // add services to cart
-      if ( listLen(prc.selectedServices) ) {
+      if ( listLen(prc.selectedServices) and isQuery(prc.cartPlan) and prc.cartPlan.recordcount ) {
         
         cartArgs = {
           productType = "plan",
@@ -1022,6 +1022,8 @@
 
       // reinitialize the cart
       session.cart = createObject('component','cfc.model.cart').init();
+      session.cartHelper = createObject('component','cfc.model.carthelper').init();
+      session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
 
       // reset the session zipcode
       session.cart.setZipcode(prc.zipcode);
