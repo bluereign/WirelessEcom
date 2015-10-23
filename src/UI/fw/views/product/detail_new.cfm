@@ -882,7 +882,7 @@ $j(document).ready(function($j) {
 						<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>18</cfif></div>
 						<div style="float:right;"><span class="priceBlockHeaderSmall">Due Monthly for <cfif prc.productData.CarrierId eq 109>24<cfelse>18</cfif> Months</span> 	#dollarFormat(prc.productData.FinancedMonthlyPrice18)#</div>
 					</button>
-					<div  id="price-slide-#prc.financeproductname#12">
+					<div  id="price-slide-#prc.financeproductname#18">
 						<table class="table">
 							<tr class="border-none"> 
 								<td>Regular Price</td>
