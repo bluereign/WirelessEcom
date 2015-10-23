@@ -22,6 +22,8 @@
                   <button class="btn btn-sm btn-primary" disabled="disabled">
                     <cfif isDate(prc.subscribers[i].getEligibilityDate()) and dateCompare(prc.subscribers[i].getEligibilityDate(),now()) gte 0>
                       Eligible #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
+                    <cfelse>
+                      Ineligible
                     </cfif>
                   </button>
                 </cfif>
