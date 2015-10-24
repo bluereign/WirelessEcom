@@ -698,11 +698,56 @@
 	<cfreturn local.price>
 </cffunction>
 
+<cffunction name="getMonthlyPriceByProductIDAndMode" access="public" output="false" returntype="numeric">
+	<cfargument name="ProductID" type="numeric" required="true">
+	<cfargument name="mode" type="string" required="true">
+	<cfset var local = structNew()>
+	<cfset local.price = 0>
+	<cfset local.priceColumnName = '' />
+
+	<cfscript>
+		switch(arguments.mode)
+		{
+			case 'financed-12':
+				local.priceColumnName = 'FinancedMonthlyPrice12';
+				break;	
+			case 'financed-18':
+				local.priceColumnName = 'FinancedMonthlyPrice18';
+				break;	
+			case 'financed-24':
+				local.priceColumnName = 'FinancedMonthlyPrice24';
+				break;	
+			default:
+				throw('Invalid mode for monthly price - #arguments.mode#');
+				break;					
+		}
+	</cfscript>
+	
+	<cfquery name="local.qGetProductPrice" datasource="#application.dsn.wirelessAdvocates#">
+		SELECT #local.priceColumnName# as price
+		FROM catalog.#variables.indexedViewName#
+		WHERE ProductID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.ProductID#">
+	</cfquery>
+
+	<cfif local.qGetProductPrice.recordCount>
+		<cfset local.price = local.qGetProductPrice.price>
+	</cfif>
+
+	<cfreturn local.price>
+</cffunction>
+
+
 <!--- TODO: remove this later - just an interface method referenced by the controller --->
 <cffunction name="getPriceByPhoneIdAndMode" access="public" output="false" returntype="numeric">
 	<cfargument name="PhoneId" type="numeric" required="true">
 	<cfargument name="mode" type="string" required="true">
 	<cfreturn getPriceByProductIDAndMode(ProductId=arguments.PhoneId,mode=arguments.mode)>
+</cffunction>
+
+<cffunction name="getMonthlyPriceByPhoneIdAndMode" access="public" output="false" returntype="numeric">
+	<cfargument name="PhoneId" type="numeric" required="true">
+	<cfargument name="mode" type="string" required="true">
+	<cfreturn getMonthlyPriceByProductIDAndMode(ProductId=arguments.PhoneId,mode=arguments.mode)>
 </cffunction>
 
 <cffunction name="getDeviceGuidByProductID" access="public" returntype="string" output="false">
