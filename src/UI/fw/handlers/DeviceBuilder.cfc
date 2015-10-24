@@ -8,7 +8,7 @@
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
-  <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal,accessorymodal,clearcart" /> <!--- clearcart (?)--->
+  <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal,accessorymodal,clearcart,showcarttype" /> <!--- clearcart (?)--->
   <cfset this.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/" />
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
@@ -127,6 +127,7 @@
           cartLineNumber = rc.cartLineNumber
         };
         session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
       // <end add device to cart
 
@@ -210,6 +211,7 @@
           cartLineNumber = rc.cartLineNumber
         };
         session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
       if ( structKeyExists(rc,"HasExistingPlan")  ) {
@@ -263,6 +265,7 @@
             cartLineNumber = rc.cartLineNumber
           };
           session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+          // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
         } else if (rc.warrantyid eq 0) {
           // if warrantyid exists and it is zero, then remove the cartline warranty.
           session.cartHelper.removeWarranty(line = rc.cartLineNumber);
@@ -335,6 +338,7 @@
         };
 
         session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
       // <end selected services
 
@@ -353,18 +357,10 @@
         };
 
         session.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
+        // application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
 
-      // DEBUG:
-      // cartArgs = {
-      //   cartLineNumber = request.config.otherItemsLineNumber,
-      //   product_id = 26626,
-      //   qty = 3
-      // };
-
-      // rc.response = application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
-      // end debug
-
+      // <ACCESSORIES - remove accessory
       if ( structKeyExists(rc,"removeaccessory")  and len(trim(rc.removeaccessory)) ) {
         cartArgs = {
           cartLineNumber = rc.cartLineNumber,
@@ -667,9 +663,9 @@
         prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices();
       }
       session.cart.updateAllPrices();
-      session.cart.updateAllDiscounts();
-      session.cart.updateAllTaxes();
-      session.CartHelper.removeEmptyCartLines();
+      // session.cart.updateAllDiscounts();
+      // session.cart.updateAllTaxes();
+      // session.CartHelper.removeEmptyCartLines();
       // <end update cart totals
 
 
