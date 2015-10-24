@@ -36,6 +36,7 @@
 		<cfargument name="optionalDownPmtPct" type="numeric" required="false" default="0" />
 		<cfargument name="mandatoryDownPmtAmt" type="numeric" required="false" default="0.00" />
 		<cfargument name="optionalDownPmtAmt" type="numeric" required="false" default="0.00" />
+		<cfargument name="monthlyPayment" type="numeric" required="false" default="0.00" />
 
 		<cfset var local = structNew() />
 		<cfset local.p =  structNew() />
@@ -54,8 +55,10 @@
 
 			<cfif listFindNoCase('phone,tablet,dataCardAndNetbook,prepaid', arguments.productType)>
 				<cfset local.p.activationType = listGetAt(arguments.productType_orig, 2, ':') />
+				<cfset local.p.FinanceType = left(local.p.activationType,11) />
 			<cfelse>
 				<cfset local.p.activationType = 'new' />
+				<cfset local.p.financeType = "" />
 			</cfif>
 		</cfif>
 
@@ -91,8 +94,10 @@
 
 			<cfif local.p.phoneType contains 'financed'>			
 				<cfset local.p.price = application.model[arguments.productType].getPriceByPhoneIdAndMode(phoneID = arguments.product_id, mode = 'financed') />
+				<cfset local.p.monthlyprice = application.model[arguments.productType].getMonthlyPriceByPhoneIdAndMode(phoneID = arguments.product_id, mode = #local.p.financeType#) />
 			<cfelse>
 				<cfset local.p.price = application.model[arguments.productType].getPriceByPhoneIdAndMode(phoneID = arguments.product_id, mode = local.p.phoneType) />
+				<cfset local.p.monthlyprice = 0 />
 			</cfif>
 
 		</cfif>
@@ -269,6 +274,7 @@
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().setProductID(arguments.product_id) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().setGersSKU(application.model.OrderDetail.getGersSkuByProductId(arguments.product_id)) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setDueToday(local.p.price) />
+							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setDueToday(local.p.monthlyPrice) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setCOGS(application.model.product.getCOGS(arguments.product_id)) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMandatoryDownPmtPct(arguments.mandatoryDownPmtPct) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMandatoryDownPmtAmt(arguments.mandatoryDownPmtAmt) />
@@ -278,6 +284,7 @@
 							
 							<cfif local.p.activationType contains 'financed'>
 								<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setRetailPrice(application.model[arguments.productType].getPriceByProductIDAndMode(productId = arguments.product_id, mode = 'financed')) />
+								<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMonthly(application.model[arguments.productType].getMonthlyPriceByProductIDAndMode(productId = arguments.product_id, mode = loal.p.financeType)) />
 							<cfelse>
 								<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setRetailPrice(application.model[arguments.productType].getPriceByProductIDAndMode(productId = arguments.product_id, mode = 'retail')) />
 							</cfif>
@@ -516,6 +523,7 @@
 				
 				<cfif local.p.activationType contains 'financed'>
 					<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setRetailPrice(application.model[arguments.productType].getPriceByProductIDAndMode(productId = arguments.product_id, mode = 'financed')) />
+					<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMonthly(application.model[arguments.productType].getMonthlyPriceByProductIDAndMode(productId = arguments.product_id, mode = local.p.FinanceType)) />
 				<cfelse>
 					<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setRetailPrice(application.model[arguments.productType].getPriceByProductIDAndMode(productId = arguments.product_id, mode = 'retail')) />			
 				</cfif>

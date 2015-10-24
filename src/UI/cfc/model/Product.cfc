@@ -328,7 +328,29 @@
 
     <cffunction name="getFinancedMonthlyPrice24" access="public" output="false" returntype="numeric">
     	<cfreturn val(variables.instance.FinancedMonthlyPrice24) />
-    </cffunction>        
+    </cffunction>
+    
+    <cffunction name="getFinancedMonthlyPrice" access="public" output="false" returntype="numeric">
+		<cfargument name="cartActivationType" type="string" required="true"  > 
+		
+		<cfswitch expression="#left(arguments.cartActivationType,11)#">
+			<cfcase value="financed-12">
+				<cfreturn getFinancedMonthlyPrice12() />
+			</cfcase>
+			<cfcase value="financed-18">
+				<cfreturn getFinancedMonthlyPrice18() />
+			</cfcase>
+			<cfcase value="financed-24">
+				<cfreturn getFinancedMonthlyPrice24() />
+			</cfcase>
+			<cfdefaultcase>
+				<cfreturn 0 />
+			</cfdefaultcase>	
+		</cfswitch>
+		
+    </cffunction>
+    
+            
 
             
 	<cffunction name="getExchangableProducts" access="public" output="false" returntype="query">
