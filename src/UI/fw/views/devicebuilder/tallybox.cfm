@@ -49,7 +49,7 @@
                   <td>#prc.tallyboxFinanceMonthlyDueTitle#</td>
                   <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueAmount)#/mo*</td>
                 </tr>
-                <tr>
+                <!--- <tr>
                   <td>Regular Price</td>
                   <td class="price">                    
                     <cfif structKeyExists(prc,"selectedPhone")>
@@ -58,6 +58,10 @@
                       #dollarFormat(prc.productData.FinancedFullRetailPrice)#
                     </cfif>
                   </td>
+                </tr> --->
+                <tr>
+                  <td>Full Retail Price</td>
+                  <td class="price">#dollarFormat(prc.productData.FinancedFullRetailPrice)#</td>
                 </tr>
 
                 <cfif structKeyExists(prc,"selectedPhone") and structKeyExists(prc,"cartLine") and session.cart.getActivationType() DOES NOT CONTAIN "financed">

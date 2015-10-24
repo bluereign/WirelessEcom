@@ -882,7 +882,7 @@ $j(document).ready(function($j) {
 						<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>18</cfif></div>
 						<div style="float:right;"><span class="priceBlockHeaderSmall">Due Monthly for <cfif prc.productData.CarrierId eq 109>24<cfelse>18</cfif> Months</span> 	#dollarFormat(prc.productData.FinancedMonthlyPrice18)#</div>
 					</button>
-					<div  id="price-slide-#prc.financeproductname#12">
+					<div  id="price-slide-#prc.financeproductname#18">
 						<table class="table">
 							<tr class="border-none"> 
 								<td>Regular Price</td>
@@ -1006,7 +1006,7 @@ $j(document).ready(function($j) {
 				<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase("109,42",prc.productData.CarrierId)>
 
 					<cfif prc.productData.qtyOnHand gt 0>
-						<a class="ActionButton learnMoreBtn" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>				
+						<a class="ActionButton learnMoreBtn" href="##" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>				
 					<cfelse>
 						<a class="DisabledButton" href="##" onclick="alert('#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockAlertText()#');return false;"><span>#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockButtonText()#</span></a>
 					</cfif>
