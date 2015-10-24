@@ -1000,19 +1000,7 @@ $j(document).ready(function($j) {
 			</div>
 
 			<div class="col-md-6">
-				
-				<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only if qty on hand is greater than 0 --->
-				<!---  and prc.productData.qtyOnHand gt 0 --->
-				<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase("109,42",prc.productData.CarrierId)>
 
-					<cfif prc.productData.qtyOnHand gt 0>
-						<a class="ActionButton learnMoreBtn" href="##" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>				
-					<cfelse>
-						<a class="DisabledButton" href="##" onclick="alert('#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockAlertText()#');return false;"><span>#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockButtonText()#</span></a>
-					</cfif>
-
-				
-				<cfelse>
 
 					<div id="addtocart-new" class="pull-right" style="display:none;">
 						<cfset prc.renderAddToCartArgs.PriceType = 'new' />
@@ -1031,9 +1019,24 @@ $j(document).ready(function($j) {
 						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
 					</div>
 
-					<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
-						<a class="ActionButton learnMoreBtn" href="javascript: return false;" data-toggle="modal" data-target="##financeModal" <cfif hide2yearpricing>style="width:460px;"</cfif>><span><cfif hide2yearpricing>#application.wirebox.getInstance('TextDisplayRenderer').getHide2YearFinancingButtonText()#<cfelse>Learn More</cfif></span></a>
-					</div>
+					
+
+					<!--- devicebuilder --->
+					<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only if qty on hand is greater than 0  and prc.productData.qtyOnHand gt 0 --->
+					<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase("109,42",prc.productData.CarrierId)>
+						<cfif prc.productData.qtyOnHand gt 0>
+							<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
+								<a class="ActionButton learnMoreBtn" href="##" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
+							</div>
+						<cfelse>
+							<a class="DisabledButton" href="##" onclick="alert('#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockAlertText()#');return false;"><span>#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockButtonText()#</span></a>
+						</cfif>
+					<cfelse>
+						<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
+							<a class="ActionButton learnMoreBtn" href="javascript: return false;" data-toggle="modal" data-target="##financeModal" <cfif hide2yearpricing>style="width:460px;"</cfif>><span><cfif hide2yearpricing>#application.wirebox.getInstance('TextDisplayRenderer').getHide2YearFinancingButtonText()#<cfelse>Learn More</cfif></span></a>
+						</div>
+					</cfif>
+
 					
 					<cfif prc.channelConfig.GetVFDEnabled()>
 					
@@ -1058,8 +1061,6 @@ $j(document).ready(function($j) {
 						</div>
 
 					</cfif>
-					
-				</cfif>
 
 				
 			</div>
