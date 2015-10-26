@@ -50,7 +50,7 @@
 
 <body id="#event.getCurrentAction()#">
 
-  #renderView('devicebuilder/pageheader')#
+  #renderView('CheckoutDB/checkoutHeaderDB')#
 
   <div class="container nonmodal-container">
     <cfif prc.showNav>

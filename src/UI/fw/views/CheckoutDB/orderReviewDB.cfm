@@ -451,7 +451,7 @@
           <tr>
             <td>Est. Tax</td>
             <td></td>
-            <td>TBD</td>
+            <td>#dollarFormat(session.cart.getTaxes().getDueToday())#</td>
           </tr>
 
           <!--- <REBATES (have not been tested yet) --->

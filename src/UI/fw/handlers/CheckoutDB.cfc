@@ -1020,9 +1020,8 @@
 				<cfset order.save() />
 			</cfif>
 
-			<cfset application.model.checkoutHelper.markStepCompleted('WATC') />
 			<cfset application.model.checkoutHelper.markStepCompleted('payment') />
-
+			
 			<cfset setNextEvent('checkoutDB/thanks') />
 		<cfelse>
 			<!--- todo: replace with payment declined page --->
@@ -1034,11 +1033,35 @@
 		<cfargument name="event">
 	    <cfargument name="rc">
 	    <cfargument name="prc">
+	    <cfset var prevAction = "" />
+	    <cfparam name="prc.showAddAnotherDeviceButton" default="true" />
+	    <cfparam name="prc.showCheckoutnowButton" default="true" />
+	    <cfparam name="prc.showClearCartLink" default="true" />
+	    
+	    <cfset prc.showNav = false>
+	    
+	    <cfset application.model.checkoutHelper.markStepCompleted('thanks') />
+	    
+	   <!--- MES FIX UP --->
+	    <cfscript>
+	    if (session.cart.getCarrierId() eq 109) {
+              session.carrierObj.carrierLogo = "#assetPaths.channel#images/carrierLogos/att_logo_25.png";
+            } else if (session.cart.getCarrierId() eq 42) {
+              session.carrierObj.carrierLogo = "#assetPaths.channel#images/carrierLogos/verizon_logo_25.png";
+            }
+		</cfscript>
+	    <!---GET PLAN FROM CART--->
+      	<cfset prc.cartPlan = application.model.dBuilderCartFacade.getPlan()/>
+		<cfset prc.showAddAnotherDeviceButton = false/>
+		<cfset prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber)/>
+		<cfset prc.includeTallyBox = false/>
+		<cfset prc.cartLines = session.cart.getLines()/>
+		<cfset prc.customerType = listLast(session.cart.getActivationType(), '-')/>
 	    
 	    <!--- Redirect to account if session Order number is not present --->
-		<cfif !application.model.checkoutHelper.getOrderId()>
+		<!---<cfif !application.model.checkoutHelper.getOrderId()>
 			<cflocation url="/index.cfm/go/myAccount/do/view/" addtoken="false" />
-		</cfif>
+		</cfif>--->
 
 		<cfset order = createObject('component', 'cfc.model.order').init() />
 		<cfset order.load(application.model.checkoutHelper.getOrderId()) />
@@ -1046,28 +1069,28 @@
 		<cfset request.p.orderId = variables.order.getOrderId() />
 		<cfset request.p.email = variables.order.getEmailAddress() />
 
-		<cfif ChannelConfig.getTrackMercentAnalytics()>
+		<!---<cfif ChannelConfig.getTrackMercentAnalytics()>
 			<cfset mercentAnalyticsTracker = application.wirebox.getInstance("MercentAnalyticsTracker") />
 			<cfoutput>#mercentAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>
-		</cfif>
+		</cfif>--->
 
 		<!---<cfif request.config.enableAnalytics>--->
-			<cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
-			<cfoutput>#googleAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>
+			<!---<cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
+			<cfoutput>#googleAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>--->
 		<!---</cfif>--->
 		
 		<!--- If this is a VFD transaction proceed to Carrier Activation --->
-		<cfif channelConfig.getVfdEnabled()>
+		<!---<cfif channelConfig.getVfdEnabled()>
 			<cflocation url="/CheckoutVFD/preCarrierActivation/" addtoken="false"/>
-		</cfif>
+		</cfif>--->
 		
-		<cfinclude template="/views/checkout/dsp_thanks.cfm" />
+		<!---<cfinclude template="/views/checkout/dsp_thanks.cfm" />--->
 
-		<cfset application.model.checkoutHelper.clearCart() />
-		<cfset application.model.checkoutHelper.clearCheckOut() />
+		<!---<cfset application.model.checkoutHelper.clearCart() />
+		<cfset application.model.checkoutHelper.clearCheckOut() />--->
 		
-		<cfset event.setLayout('checkoutDB') />
-		<cfset event.setView('CheckoutDB/thanks') />
+		<cfset event.setLayout('checkoutReviewDB') />
+		<cfset event.setView('CheckoutDB/thanksDB') />
 	</cffunction>
 	
 	<cffunction name="customerservice" returntype="void" output="false" hint="">
