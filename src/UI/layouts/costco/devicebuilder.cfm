@@ -200,6 +200,7 @@
         var thisqty = $(this).val();
         $('##addaccessory').val(thisid);
         $('##accessoryqty').val(thisqty);
+        $('##formCheckout').attr('action', '#event.buildLink('devicebuilder.orderreview')#');
         $('##formCheckout').submit();
       });
 
@@ -207,6 +208,7 @@
       $('.removeaccessory').on('click', function() {
         var thisid = $(this).data('removeaccessory');
         $('##removeaccessory').val(thisid);
+        $('##formCheckout').attr('action', '#event.buildLink('devicebuilder.orderreview')#');
         $('##formCheckout').submit();
       });
 
@@ -214,6 +216,7 @@
       $('.removephone').on('click', function() {
         var thisid = $(this).data('removephone');
         $('##removephone').val(thisid);
+        $('##formCheckout').attr('action', '#event.buildLink('devicebuilder.orderreview')#');
         $('##formCheckout').submit();
       });
 
