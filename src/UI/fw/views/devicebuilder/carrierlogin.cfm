@@ -11,11 +11,12 @@
       </cfif>
       <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
       <form id="carrierLoginForm" action="#event.buildLink('devicebuilder.carrierLoginPost')#" method="post">
-        <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
-        <input type="hidden" name="nextAction" value="#rc.nextAction#" />
+        
         <div class="right">
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary">Continue</button>
+          <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
+          <input type="hidden" name="nextAction" value="#rc.nextAction#" />
         </div>
         <div class="form-group form-inline phone">
           <label for="inputPhone1">Phone Number to Upgrade</label>
