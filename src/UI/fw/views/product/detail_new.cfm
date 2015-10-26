@@ -476,6 +476,22 @@ $j(document).ready(function($j) {
 
 	 });
 
+	// devicebuilder:
+	// $('##btn-carrierAddaline').show();
+	// $('[data-toggle="tooltip"]').tooltip();
+	// $('[data-toggle="tooltip"]').tooltip().on("mouseenter", function () {
+	//         var $this = $(this),
+	//             tooltip = $this.next(".tooltip");
+	//         tooltip.find(".tooltip-inner").css({
+	//             backgroundColor: "##fff",
+	//             color: "##333",
+	//             borderColor: "##333",
+	//             borderWidth: "1px",
+	//             borderStyle: "solid"
+	//         });
+	//     });
+	// $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+
 
 	$j('##specifications-tab').on('shown.bs.tab', function (e) {
 	  
@@ -1202,8 +1218,9 @@ $j(document).ready(function($j) {
 								<div class="col-xs-6">
 									<form action="#rc.addalineURL#" method="post">
 										<input type="hidden" name="finance" value="">
-										<button id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;">Add a Line</button>
+										<a href="##" id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;" disabled="disabled" data-original-title="This is my tooltip" data-placement="left" data-toggle="tooltip">Add a Line</a>
 									</form>
+									<!--- <button type="button" class="btn btn-default" id="addLocHelp" data-container=".modal-body" data-toggle="popover" data-placement="bottom" data-html="true" data-trigger="hover" data-content="<p><strong>Home</strong> - Your base where you usually start your trips </p><p><strong>Billing</strong> - info used on BOL's, invoices if  you don't want to use the Home address </p><p><strong>Other</strong> - Any other base or business location </p>">popover</button> --->
 
 								</div>
 							</div>
@@ -1222,7 +1239,7 @@ $j(document).ready(function($j) {
 								<br />
 								<div class="row center-block">
 									<div class="col-xs-12">
-										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier">New to #prc.productData.carrierName#</a>
+										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" disabled="disabled">New to #prc.productData.carrierName#</a>
 									</div>
 								</div>
 							</div>
