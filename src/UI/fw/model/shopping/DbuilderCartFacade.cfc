@@ -61,12 +61,12 @@
 			<cfset local.p.phoneType = local.p.ActivationPriceOption />
 		</cfif>
 
-		<cfparam name="variables.p.featureIDs" default="" type="string" />
-		<cfset variables.p.changingPlanFeatures = false />
+		<cfparam name="local.p.featureIDs" default="" type="string" />
+		<cfset local.p.changingPlanFeatures = false />
 
 		<cfif arguments.product_id contains ':' and listLen(arguments.product_id, ':') gte 2>
-			<cfset variables.p.changingPlanFeatures = true />
-			<cfset variables.p.featureIDs = listChangeDelims(listGetAt(arguments.product_id, 2, ':'), ',', ',') />
+			<cfset local.p.changingPlanFeatures = true />
+			<cfset local.p.featureIDs = listChangeDelims(listGetAt(arguments.product_id, 2, ':'), ',', ',') />
 			<cfset arguments.product_id = listFirst(arguments.product_id, ':') />
 		<cfelseif arguments.product_id contains ':'>
 			<cfset arguments.product_id = listFirst(arguments.product_id, ':') />
@@ -200,11 +200,11 @@
 			<cfset session.cart.setAddALineType(local.p.addALineType) />
 			 
 
-			<cfif variables.carrierId eq 128 and session.cart.getAddALineType() is 'FAMILY'>
+			<cfif local.carrierId eq 128 and session.cart.getAddALineType() is 'FAMILY'>
 				<cfset session.cart.setHasUnlimitedPlan(local.p.hasUnlimitedPlan) />
 			</cfif>
 		
-			<cfif variables.carrierId eq 109 and session.cart.getAddALineType() is 'FAMILY'>
+			<cfif local.carrierId eq 109 and session.cart.getAddALineType() is 'FAMILY'>
 				<cfset session.cart.setHasSharedPlan(local.p.HasSharedPlan) />
 			</cfif>
 		</cfif>
@@ -364,7 +364,7 @@
 						<cfelseif arguments.productType is 'plan'>
 							<cfif not isNumeric(arguments.product_id)>
 								<cfset arguments.product_id = application.model.plan.getPlanIDByPlanStringIDAndZipcode(planStringID = arguments.product_id, zipCode = session.cart.getZipcode()) />
-								<cfset thisPlan = application.model.plan.getByFilter(idList = arguments.product_id) />
+								<cfset local.thisPlan = application.model.plan.getByFilter(idList = arguments.product_id) />
 							</cfif>
 
 							<cfif len(trim(arguments.product_id)) and isNumeric(arguments.product_id)>
@@ -388,10 +388,10 @@
 								<cfset session.prePaidFilterSelections.filterOptions = 0 />
 								<cfset session.prePaidFilterSelections.filterOptions = listAppend(session.prePaidFilterSelections.filterOptions, filterHelper.getFilterOptionId('prepaid', 'carrierID', local_plan.carrierID)) />
 
-								<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+								<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 									<cfset local.arrFeatures = arrayNew(1) />
 
-									<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
+									<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 										<cfif isNumeric(local.iFeature)>
 											<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
@@ -405,7 +405,7 @@
 
 								<cfset session.cart.setLines(local.cartlines) />
 
-								<cfif variables.thisPlan.planType eq 'family' || (variables.thisPlan.planType eq 'data' && variables.thisPlan.IsShared)>
+								<cfif local.thisPlan.planType eq 'family' || (local.thisPlan.planType eq 'data' && local.thisPlan.IsShared)>
 									<!--- Apply this plan selection to the entire cart, including any existing lines. --->
 									<cfset application.model.carthelper.setFamilyPlan(arguments.product_id) />
 								<cfelse>
@@ -416,10 +416,10 @@
 							
 						</cfif>
 
-						<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+						<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 							<cfset local.arrFeatures = arrayNew(1) />
 
-							<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
+							<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 								<cfif isNumeric(local.iFeature)>
 									<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
@@ -545,10 +545,10 @@
 					<cfset local.cartLines[arguments.cartLineNumber].setAccessories(local.thisLineAccessories) />
 				</cfif>
 
-				<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+				<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 					<cfset local.arrFeatures = arrayNew(1) />
 
-					<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
+					<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 						<cfif isNumeric(local.iFeature)>
 							<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
@@ -649,10 +649,10 @@
 				* ids and a device selected on this line.
 				**
 				--->
-				<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+				<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 					<cfset local.arrFeatures = arrayNew(1) />
 
-					<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
+					<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 						<cfif isNumeric(local.iFeature)>
 							<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
@@ -703,10 +703,10 @@
 					<cfset session.prePaidFilterSelections.filterOptions = 0 />
 					<cfset session.prePaidFilterSelections.filterOptions = listAppend(session.prePaidFilterSelections.filterOptions, filterHelper.getFilterOptionId('prepaid', 'carrierID', 'local_plan.carrierID')) />
 
-					<cfif len(trim(variables.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
+					<cfif len(trim(local.p.featureIDs)) and local.cartlines[arguments.cartLineNumber].getPhone().hasBeenSelected()>
 						<cfset local.arrFeatures = arrayNew(1) />
 
-						<cfloop list="#variables.p.featureIDs#" index="local.iFeature">
+						<cfloop list="#local.p.featureIDs#" index="local.iFeature">
 							<cfif isNumeric(local.iFeature)>
 								<cfset arrayAppend(local.arrFeatures, createObject('component', '#variables.cartItemcfc#').init()) />
 
@@ -718,9 +718,9 @@
 						<cfset local.cartLines[arguments.cartLineNumber].setFeatures(local.arrFeatures) />
 					</cfif>
 
-					<cfset thisPlan = application.model.plan.getByFilter(idList = local.p.product_id) />
+					<cfset local.thisPlan = application.model.plan.getByFilter(idList = local.p.product_id) />
 
-					<cfif variables.thisPlan.planType is 'family' || (variables.thisPlan.planType eq 'data' && variables.thisPlan.IsShared)>
+					<cfif local.thisPlan.planType is 'family' || (local.thisPlan.planType eq 'data' && local.thisPlan.IsShared)>
 						<cfset application.model.carthelper.setFamilyPlan(local.p.product_id) />
 					<cfelse>
 						<!--- Reset shared family plan --->
