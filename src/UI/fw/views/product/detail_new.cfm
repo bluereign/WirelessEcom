@@ -397,7 +397,6 @@ body.modal-open .nonmodal-container{
 /* <end devicebuilder modal */
 </style>
 
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 var $j = jQuery.noConflict();
