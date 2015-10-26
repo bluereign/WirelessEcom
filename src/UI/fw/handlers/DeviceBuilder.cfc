@@ -10,6 +10,8 @@
 
   <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal,accessorymodal,clearcart,showcarttype" /> <!--- clearcart (?)--->
   <cfset this.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/" />
+  <cfset this.browseDevicesUrlAtt = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,1,32/" />
+  <cfset this.browseDevicesUrlVzw = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,3,32/" />
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
   <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting" /> <!--- orderreview --->
@@ -45,7 +47,14 @@
       prc.carrierGuidVzw = "263a472d-74b1-494d-be1e-ad135dfefc43";
       prc.offerCategoryVzw = "VZ";
 
-      prc.browseDevicesUrl = this.browseDevicesUrl;
+      if ( session.cart.getCarrierId() eq prc.carrierIdAtt ) {
+        prc.browseDevicesUrl = this.browseDevicesUrlAtt;
+      } else if ( session.cart.getCarrierId() eq prc.carrierIdVzw ) {
+        prc.browseDevicesUrl = this.browseDevicesUrlVzw;
+      } else {
+        prc.browseDevicesUrl = this.browseDevicesUrl;
+      }
+      
       prc.AssetPaths = variables.AssetPaths;
 
       prc.stringUtil = stringUtil;
@@ -97,8 +106,28 @@
         if ( !isNumeric(prc.productData.productId) or prc.productData.qtyOnHand lt 1 ) {
           relocate( prc.browseDevicesUrl  );
         }
+
+        // 4. validate the CARRIER
+        // if the cart already has at least one device in it, then check to ensure that this new device belongs to the same carrier.  If it does not, send user to the orderreview page and display a warning message that they can't add a device of two different carriers to their cart.
+        // get the carrier id of first device in cart.
+        if ( arrayLen(session.cart.getLines()) and session.cart.getCarrierId() neq 0 and session.cart.getCarrierId() neq prc.productData.carrierId ) {
+          
+          if ( session.cart.getCarrierId() eq prc.carrierIdAtt ) {
+            prc.addxStep = this.browseDevicesUrlAtt;
+          } else if ( session.cart.getCarrierId() eq prc.carrierIdVzw ) {
+            prc.addxStep = this.browseDevicesUrlVzw;
+          }
+
+          flash.put("warningMessage","Your cart already has a device for a different carrier than the one you've selected.  You must first clear your cart.  <a href='#prc.addxStep#'>Click here to go to Browse Devices.</a>");
+          setNextEvent(
+            event="devicebuilder.orderreview",
+            persist=""
+            );
+        }
+
+
         
-        // 4. set cart and cartLine activationType (eg  financed-24-new).
+        // 5. set cart and cartLine activationType (eg  financed-24-new).
         if (rc.finance is 'upgrade') {
           prc.activationType = "upgrade";
         } else {
@@ -106,7 +135,7 @@
         }
         session.cart.setActivationType(prc.activationType);
 
-        // 5. set the cartLineNumber
+        // 6. set the cartLineNumber
         // if customer is new, cartLineNumber is always 1:
         if ( listFindNoCase("new,newx,addaline,addalinex", rc.type) ) {
           rc.cartLineNumber = 1;
@@ -118,7 +147,7 @@
           rc.cartLineNumber = prc.cartLinesCount + 1;
         }
 
-        // 6. add phone to cart.
+        // 7. add phone to cart.
         cartArgs = {
           productType = "phone:" & prc.activationType,
           product_id = rc.pid,
@@ -490,9 +519,9 @@
           prc.addxStep = prc.browseDevicesUrl;
 
           if ( session.cart.getCarrierId() eq prc.carrierIdAtt ) {
-            prc.addxStep = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,1,32/";
+            prc.addxStep = this.browseDevicesUrlAtt;
           } else if ( session.cart.getCarrierId() eq prc.carrierIdVzw ) {
-            prc.addxStep = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,3,32/";
+            prc.addxStep = this.browseDevicesUrlVzw;
           }
           
           // prc.tallyboxHeader = "Upgrading";
