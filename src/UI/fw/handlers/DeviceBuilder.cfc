@@ -12,7 +12,7 @@
   <cfset this.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/" />
   <cfset listCustomerTypes = "upgrade,addaline,new,upgradex,addalinex,newx" /> <!--- x short for 'multi' or 'another' --->
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
-  <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting,orderreview" />
+  <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting" /> <!--- orderreview --->
   <cfset listActivationTypes = "financed-24,financed-18,financed-12,upgrade" /> <!--- upgrade=2-year contract. TODO: determine what to do with new, upgrade, addaline  --->
 
 

@@ -397,6 +397,8 @@ body.modal-open .nonmodal-container{
 /* <end devicebuilder modal */
 </style>
 
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 var $j = jQuery.noConflict();
 	
@@ -468,7 +470,7 @@ $j(document).ready(function($j) {
 			$j("[class*='ActionButton']").show();
 		};
 
-		// devicebuilder
+		// devicebuilder:
 		// update hidden input to pass finance/CartType
 		// console.log($j(this).attr('data-activation-type'));
 		$j("input[name='finance']").val(actType);
@@ -477,6 +479,10 @@ $j(document).ready(function($j) {
 	 });
 
 	// devicebuilder:
+	// $('[data-toggle="tooltip"]').tooltip();
+	// $('[data-toggle="popover"]').popover();
+
+	// $('##btn-carrierAddaline').tooltip();
 	// $('##btn-carrierAddaline').show();
 	// $('[data-toggle="tooltip"]').tooltip();
 	// $('[data-toggle="tooltip"]').tooltip().on("mouseenter", function () {
@@ -1188,7 +1194,7 @@ $j(document).ready(function($j) {
 </cfif>
 <cfset rc.newURL = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/new/' />
 
-<div class="modal fade" id="customerTypeModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
+<div class="modal fade bootstrap" id="customerTypeModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
 	<div class="modal-dialog <cfif !structKeyExists(session,'carrierObj')>modal-lg</cfif>">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -1219,9 +1225,8 @@ $j(document).ready(function($j) {
 									<form action="#rc.addalineURL#" method="post">
 										<input type="hidden" name="finance" value="">
 										<a href="##" id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;" disabled="disabled" data-original-title="This is my tooltip" data-placement="left" data-toggle="tooltip">Add a Line</a>
+										<p style="text-align:center">(coming soon)</p>
 									</form>
-									<!--- <button type="button" class="btn btn-default" id="addLocHelp" data-container=".modal-body" data-toggle="popover" data-placement="bottom" data-html="true" data-trigger="hover" data-content="<p><strong>Home</strong> - Your base where you usually start your trips </p><p><strong>Billing</strong> - info used on BOL's, invoices if  you don't want to use the Home address </p><p><strong>Other</strong> - Any other base or business location </p>">popover</button> --->
-
 								</div>
 							</div>
 						</div>
@@ -1238,8 +1243,9 @@ $j(document).ready(function($j) {
 								<br />
 								<br />
 								<div class="row center-block">
-									<div class="col-xs-12">
+									<div class="col-xs-7">
 										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" disabled="disabled">New to #prc.productData.carrierName#</a>
+										<p style="text-align:center">(coming soon)</p>
 									</div>
 								</div>
 							</div>
@@ -1397,6 +1403,8 @@ $j(document).ready(function($j) {
 
 
 </cfif>
+
+
 </cfoutput>
 </div>
 
