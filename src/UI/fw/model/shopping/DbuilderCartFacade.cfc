@@ -1,10 +1,5 @@
 ﻿<cfcomponent output="false" displayname="dBuilderCartFacade" extends="fw.model.BaseService">
 
-	<cfproperty name="DBuilderCart" inject="id:DBuilderCart" />
-	<cfproperty name="DBuilderCartHelper" inject="id:DBuilderCartHelper" />
-	<cfproperty name="DBuilderCartItem" inject="id:DBuilderCartItem" />
-	<cfproperty name="DBuilderCartPriceBlock" inject="id:DBuilderCartPriceBlock" />
-
 	<cfset variables.InstantRebateService = application.wirebox.getInstance("InstantRebateService")>
 	<cfset variables.ChannelConfig = application.wirebox.getInstance("ChannelConfig") />
 	<cfset variables.filterHelper = application.wirebox.getInstance("FilterHelper") /> 
@@ -15,9 +10,7 @@
 	<cfset variables.carthelper = "carthelper" />
 	
 	<cffunction name="init" returntype="fw.model.shopping.dbuilderCartFacade" >
-		<!---<cfargument name="cart" type="cfc.model.cart" required="false" default="#session.cart#" />--->
 		<cfset variables.instance = StructNew() />
-		<!---<cfset setCart(arguments.cart) />--->
 		<cfreturn this>
 	</cffunction>
 	
@@ -289,10 +282,10 @@
 								<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setRetailPrice(application.model[arguments.productType].getPriceByProductIDAndMode(productId = arguments.product_id, mode = 'retail')) />
 							</cfif>
 							
-							<cfset cartLines[arguments.cartLineNumber].getPhone().setType('device') />
+							<cfset local.cartLines[arguments.cartLineNumber].getPhone().setType('device') />
 
 							<cfset session.cart.setCarrierId(application.model[arguments.productType].getCarrierIdByProductId(arguments.product_id)) />
-							<cfset cartLines[arguments.cartLineNumber].getPhone().setDeviceServiceType( application.model[arguments.productType].getDeviceServiceType( arguments.product_id, session.cart.getCarrierId() ) )/>
+							<cfset local.cartLines[arguments.cartLineNumber].getPhone().setDeviceServiceType( application.model[arguments.productType].getDeviceServiceType( arguments.product_id, session.cart.getCarrierId() ) )/>
 
 							<!--- Clear any other free accessories on this line. --->
 							<cfset apapplication.model.carthelper.clearLineFreeAccessories(lineNumber = arguments.cartLineNumber) />
@@ -311,7 +304,7 @@
 									<cfset arrayAppend(local.thisLineAccessories, local.thisFreeAccessory) />
 								</cfloop>
 
-								<cfset cartLines[arguments.cartLineNumber].setAccessories(local.thisLineAccessories) />
+								<cfset local.cartLines[arguments.cartLineNumber].setAccessories(local.thisLineAccessories) />
 							</cfif>
 
 							<cfset session.cart.setLines(local.cartlines) />
@@ -330,20 +323,20 @@
 
 							<!--- Add default plan & services --->
 							<cfif arguments.productType EQ 'phone'
-								AND NOT cartLines[arguments.cartLineNumber].getPlan().getProductId() AND
+								AND NOT local.cartLines[arguments.cartLineNumber].getPlan().getProductId() AND
 								( ( session.cart.getActivationType() CONTAINS 'new' AND NOT session.cart.getHasFamilyPlan() )
 								  OR ( session.cart.getActivationType() CONTAINS 'upgrade' AND session.cart.getUpgradeType() eq 'equipment+plan' )
 								  OR ( session.cart.getActivationType() CONTAINS 'addaline' AND session.cart.getAddALineType() eq 'ind') )>
 
-								<cfset application.model.carthelper.addDefaultPlanAndServices( cartLines[arguments.cartLineNumber], arguments.product_id ) />
+								<cfset application.model.carthelper.addDefaultPlanAndServices( local.cartLines[arguments.cartLineNumber], arguments.product_id ) />
 							</cfif>
 							<cfif arguments.productType EQ 'tablet'
-								AND NOT cartLines[arguments.cartLineNumber].getPlan().getProductId() AND
+								AND NOT local.cartLines[arguments.cartLineNumber].getPlan().getProductId() AND
 								( ( session.cart.getActivationType() CONTAINS 'new' AND NOT session.cart.getHasFamilyPlan() )
 								  OR ( session.cart.getActivationType() CONTAINS 'upgrade' AND session.cart.getUpgradeType() eq 'equipment+plan' )
 								  OR ( session.cart.getActivationType() CONTAINS 'addaline' AND session.cart.getAddALineType() eq 'ind') )>
 
-								<cfset application.model.carthelper.addDefaultPlanAndServices( cartLines[arguments.cartLineNumber], arguments.product_id ) />
+								<cfset application.model.carthelper.addDefaultPlanAndServices( local.cartLines[arguments.cartLineNumber], arguments.product_id ) />
 							</cfif>
 
 							<cfset session.phoneFilterSelections.filterOptions = 0 />
@@ -380,9 +373,9 @@
 								* Add this plan to the indicated line.
 								**
 								--->
-								<cfset cartLines[arguments.cartLineNumber].getPlan().setProductID(arguments.product_id) />
-								<cfset cartLines[arguments.cartLineNumber].getPlan().setType('rateplan') />
-								<cfset cartLines[arguments.cartLineNumber].setPlanType(application.model.plan.getPlanTypeByProductID(arguments.product_id)) />
+								<cfset local.cartLines[arguments.cartLineNumber].getPlan().setProductID(arguments.product_id) />
+								<cfset local.cartLines[arguments.cartLineNumber].getPlan().setType('rateplan') />
+								<cfset local.cartLines[arguments.cartLineNumber].setPlanType(application.model.plan.getPlanTypeByProductID(arguments.product_id)) />
 
 								<cfset session.cart.setCarrierId(application.model.product.getCarrierIdByProductId(arguments.product_id)) />
 								<cfset session.planFilterSelections.filterOptions = 0 />
@@ -407,7 +400,7 @@
 										</cfif>
 									</cfloop>
 
-									<cfset cartLines[arguments.cartLineNumber].setFeatures(local.arrFeatures) />
+									<cfset local.cartLines[arguments.cartLineNumber].setFeatures(local.arrFeatures) />
 								</cfif>
 
 								<cfset session.cart.setLines(local.cartlines) />
@@ -435,7 +428,7 @@
 								</cfif>
 							</cfloop>
 
-							<cfset cartLines[arguments.cartLineNumber].setFeatures(local.arrFeatures) />
+							<cfset local.cartLines[arguments.cartLineNumber].setFeatures(local.arrFeatures) />
 						</cfif>
 
 						<cfset session.cart.setLines(local.cartlines) />
