@@ -69,7 +69,7 @@
         $('p.alert-info').show().text("Carrier Login in progress.....");
         $('p.bg-danger').hide();
         $('button:submit').attr("disabled", true);
-        console.log('validation complete');
+        // console.log('validation complete');
         form.submit();
       }
   });
