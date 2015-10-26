@@ -7,8 +7,8 @@
       price = 299,
       cartLineNumber = rc.NewcartLineNumber
     };
-    session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
-    // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+    // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+    application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
     // session.cart.updateAllPrices();
     // session.cart.updateAllDiscounts();
     // session.cart.updateAllTaxes();

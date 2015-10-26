@@ -126,8 +126,8 @@
           price = prc.productData.FinancedFullRetailPrice,
           cartLineNumber = rc.cartLineNumber
         };
-        session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
-        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
       // <end add device to cart
 
@@ -151,7 +151,8 @@
 
         if (arrayLen(prc.cartLines)) {
           prc.cartLine = prc.cartLines[rc.cartLineNumber];
-          prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+          // prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+          prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
         } else {
           relocate( prc.browseDevicesUrl );
         }
@@ -188,7 +189,8 @@
         // the refresh lines, etc.
         prc.cartLines = session.cart.getLines();
         prc.cartLine = prc.cartLines[rc.cartLineNumber];
-        prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+        // prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+        prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
 
         // Set the session zipcode to the subscriber zipcide:
         // ... and because CF 8 doesn't allow functionReturnsArray()[index]:
@@ -210,8 +212,8 @@
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-        session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
-        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
       if ( structKeyExists(rc,"HasExistingPlan")  ) {
@@ -220,7 +222,8 @@
       }
 
       // GET PLAN FROM CART
-      prc.cartPlan = session.dBuilderCartFacade.getPlan();
+      // prc.cartPlan = session.dBuilderCartFacade.getPlan();
+      prc.cartPlan = application.model.dBuilderCartFacade.getPlan();
 
 
 
@@ -264,8 +267,8 @@
             qty = 1,
             cartLineNumber = rc.cartLineNumber
           };
-          session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
-          // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+          // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+          application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
         } else if (rc.warrantyid eq 0) {
           // if warrantyid exists and it is zero, then remove the cartline warranty.
           session.cartHelper.removeWarranty(line = rc.cartLineNumber);
@@ -273,7 +276,8 @@
       }
 
       // now, get the cartline warranty.
-      prc.warranty = session.dBuilderCartFacade.getWarranty(rc.cartLineNumber);
+      // prc.warranty = session.dBuilderCartFacade.getWarranty(rc.cartLineNumber);
+      prc.warranty = application.model.dBuilderCartFacade.getWarranty(rc.cartLineNumber);
       if (prc.warranty.recordcount) {
         prc.warrantyId = prc.warranty.productId;
       } else {
@@ -337,8 +341,8 @@
           cartLineNumber = rc.cartLineNumber
         };
 
-        session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
-        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
       // <end selected services
 
@@ -356,8 +360,8 @@
           qty = rc.accessoryqty
         };
 
-        session.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
-        // application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
+        // session.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
+        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
 
       // <ACCESSORIES - remove accessory
@@ -367,7 +371,8 @@
           product_id = removeaccessory,
           qty = 0
         };
-        session.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
+        // session.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
+        application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
 
       // get cartline accessories
@@ -651,7 +656,8 @@
 
           prc.lineBundledAccessories = session.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
           prc.lineFeatures = prc.cartLine.getFeatures();
-          prc.lineAccessories = session.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
+          // prc.lineAccessories = session.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
+          prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
         }
         // <end tally box
       }
@@ -995,7 +1001,8 @@
       if (!arrayLen(prc.cartLines)) {
         prc.showNav = false;
       }
-      prc.additionalAccessories = session.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
+      // prc.additionalAccessories = session.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
+      prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.clearCartAction = event.buildLink('devicebuilder.clearcart');
       prc.includeTallyBox = false;
     </cfscript>
