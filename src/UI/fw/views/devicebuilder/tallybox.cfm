@@ -4,12 +4,8 @@
   <div class="col-md-4">
     <div class="row totals">
       <div class="wrap head">
-        <div class="col-xs-8">
-          Due Now
-        </div>
-        <div class="col-xs-8">
-          Monthly
-        </div>
+        <div class="col-xs-8">Due Today</div>
+        <div class="col-xs-8">Monthly</div>
       </div>
       <div class="wrap">
         <cfif arrayLen(prc.cartlines)>

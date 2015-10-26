@@ -570,7 +570,7 @@
           <tr>
             <th></th>
             <th>Monthly Price</th>
-            <th>Due Now</th>
+            <th>Due Today</th>
           </tr>
           </thead>
           <tbody>
