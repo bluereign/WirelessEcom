@@ -424,7 +424,8 @@
           if ( isValid("integer", prc.subscriberIndex) and prc.subscriberIndex gt 0 and arrayLen(prc.subscribers) gte prc.subscriberIndex ) {
             prc.subscriber = prc.subscribers[prc.subscriberIndex];
             prc.planDataExisting = prc.subscriber.getRatePlan();
-            prc.activetab = "existing";
+            // prc.activetab = "existing";
+            // prc.activetab = "individual";
             prc.subscriber.phoneNumber = stringUtil.formatPhoneNumber(trim(prc.subscriber.getNumber()));
             prc.tallyboxHeader = "Configuring " & prc.subscriber.phoneNumber;
           } else {

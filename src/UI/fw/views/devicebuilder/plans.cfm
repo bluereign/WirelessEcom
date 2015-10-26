@@ -72,7 +72,7 @@
           
             <!--- SHARED --->
             <cfif prc.planDataShared.recordcount>
-              <div role="tabpanel" class="tab-pane" id="shared">
+              <div role="tabpanel" class="tab-pane <cfif prc.activetab is 'shared'>active</cfif>" id="shared">
                 <div class="carousel" id="sharedCarousel">
                   
                   <cfloop query="prc.planDataShared">
