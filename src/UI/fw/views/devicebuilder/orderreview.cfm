@@ -32,11 +32,13 @@
 <cfoutput>
     <div class="col-md-12">
       <section class="content">
+        
         <cfif structKeyExists(prc,"warningMessage")>
-				<div class="bs-callout bs-callout-error">
-                    <h4>#prc.warningMessage#</h4>
-                </div>
+          <div class="bs-callout bs-callout-error">
+            <h4>#prc.warningMessage#</h4>
+          </div>
         </cfif>
+        
         <header class="main-header">
           <h1>Cart</h1>
         </header>

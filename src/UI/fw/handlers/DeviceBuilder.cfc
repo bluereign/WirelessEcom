@@ -213,22 +213,42 @@
 
 
       // UPDATE CARTLINE WITH SUBSCRIBER INDEX:
-      if ( structKeyExists(rc,"subscriberIndex") ) {
-        prc.cartLine.setSubscriberIndex(rc.subscriberIndex);
-        // the refresh lines, etc.
-        prc.cartLines = session.cart.getLines();
-        prc.cartLine = prc.cartLines[rc.cartLineNumber];
-        // prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
-        prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
-
-        // Set the session zipcode to the subscriber zipcide:
-        // ... and because CF 8 doesn't allow functionReturnsArray()[index]:
-        prc.subscribers = session.carrierObj.getSubscribers();
-        prc.subscriber = prc.subscribers[rc.subscriberIndex];
-        prc.subscriberZipcode = listFirst(prc.subscriber.getAddress().getZipCode(), '-');
-        if ( isValid("zipcode",prc.subscriberZipcode) ) {
-          session.cart.setZipcode(prc.subscriberZipcode);
+      if ( structKeyExists(rc,"subscriberIndex") and isValid("integer",rc.subscriberIndex) ) {
+        
+        // check to ensure no other cartlines have been assigned this subcriber index:
+        local.isSubscriberIndexTaken = false;
+        for (j = 1; j lte arrayLen(prc.cartLines); j++) {
+          if ( prc.cartLines[j].getSubscriberIndex() eq rc.subscriberIndex ) {
+            local.isSubscriberIndexTaken = true;
+            break;
+          }
         }
+
+        if ( !local.isSubscriberIndexTaken ) {
+          prc.cartLine.setSubscriberIndex(rc.subscriberIndex);
+          // the refresh lines, etc.
+          prc.cartLines = session.cart.getLines();
+          prc.cartLine = prc.cartLines[rc.cartLineNumber];
+          // prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+          prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+
+          // Set the session zipcode to the subscriber zipcide:
+          // ... and because CF 8 doesn't allow functionReturnsArray()[index]:
+          prc.subscribers = session.carrierObj.getSubscribers();
+          prc.subscriber = prc.subscribers[rc.subscriberIndex];
+          prc.subscriberZipcode = listFirst(prc.subscriber.getAddress().getZipCode(), '-');
+          if ( isValid("zipcode",prc.subscriberZipcode) ) {
+            session.cart.setZipcode(prc.subscriberZipcode);
+          }
+        } else {
+          flash.put("warningMessage","Your cart already has a device assigned to this number.  You must first remove the other device from your cart.");
+          setNextEvent(
+            event="devicebuilder.upgradeline",
+            persist="cartLineNumber"
+            );
+        }
+        // TODO: Write an error message here and send back to devicebuilder.upgradeline
+
       }
 
 
