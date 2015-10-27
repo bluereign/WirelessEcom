@@ -1,21 +1,31 @@
 <cfoutput>
   <div class="col-md-12">
-    <form action="#prc.nextStep#" method="post">
-      <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
       <section class="content">
+
         <cfif structKeyExists(prc,"warningMessage")>
           <div class="bs-callout bs-callout-error">
             <h4>#prc.warningMessage#</h4>
           </div>
         </cfif>
+
         <header class="main-header">
           <h1>Upgrade or Add a Line</h1>
           <p>Choose a line to Upgrade or Add a New Line for this device.</p>
         </header>
+
+        <form action="#prc.nextStep#" method="post">
+
+        <cfif structKeyExists(prc,"cartLine") and isValid("integer",prc.cartLine.getSubscriberIndex()) and prc.cartLine.getSubscriberIndex() gt 0>
+          <div class="right">
+            <a href="#prc.prevStep#">BACK</a>
+            <button type="submit" class="btn btn-primary">Continue</button>
+            <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
+          </div>
+        </cfif>
+
         <div class="row">
           
           <cfloop index="i" from="1" to="#arrayLen(prc.subscribers)#">
-            
 
             <cfset prc.subscribers[i].phoneNumber = prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[i].getNumber())) />
 
@@ -34,7 +44,7 @@
                   </cfloop>
 
                   <cfif local.isSubscriberIndexTaken>
-                    <button class="btn btn-sm btn-primary" disabled="disabled">In Cart</button>
+                    <button class="btn btn-sm btn-primary" disabled="disabled"><cfif i eq prc.cartLine.getSubscriberIndex()>Selected<cfelse>In Cart</cfif></button>
                   <cfelse>
                     <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade Line</button>
                   </cfif>
@@ -55,6 +65,15 @@
             </div>
 
           </cfloop>
+
+
+          <cfif structKeyExists(prc,"cartLine") and isValid("integer",prc.cartLine.getSubscriberIndex()) and prc.cartLine.getSubscriberIndex() gt 0>
+            <div class="right">
+              <a href="#prc.prevStep#">BACK</a>
+              <button type="submit" class="btn btn-primary">Continue</button>
+            </div>
+          </cfif>
+          
 
       </section>
     </form>
