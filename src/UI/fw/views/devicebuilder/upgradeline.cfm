@@ -19,9 +19,9 @@
           <div class="right">
             <a href="#prc.prevStep#">BACK</a>
             <button type="submit" class="btn btn-primary">Continue</button>
-            <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
           </div>
         </cfif>
+        <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
 
         <div class="row">
           
