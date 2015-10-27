@@ -88,7 +88,7 @@
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#prc.cartPlan.companyName# #prc.cartPlan.planName#</h3>
-                    <p><!--- Includes:  --->#reReplaceNoCase(prc.cartPlan.summaryDescription, "<.*?>","","all")#</p>
+                    <p>#reReplaceNoCase(prc.cartPlan.summaryDescription, "<.*?>","","all")#</p>
                 </div>
                 <div class="col-md-2 col-xs-16 quantity">1</div>
                 <div class="col-md-2 col-xs-16 monthly">#dollarFormat(prc.cartPlan.monthlyFee)# <span class="visible-xs-inline">Monthly</span></div>
@@ -214,7 +214,7 @@
                         #prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber()))#
                       </cfif>
                       <br />
-                      Includes: #listChangeDelims(local.deviceDescription,", ")#
+                      #listChangeDelims(local.deviceDescription,", ")#
                     </p>
                   </div>
                   <input type="hidden" id="removephone" name="removephone" value="" />
