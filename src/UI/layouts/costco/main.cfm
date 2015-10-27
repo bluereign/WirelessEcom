@@ -2,6 +2,7 @@
 <cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
 <cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
 <cfset mercentAnalyticsTracker = application.wirebox.getInstance("MercentAnalyticsTracker") />
+<cfset listDeviceBuilderCarriers = "109,42" /> <!--- AT&T, VZW --->
 
 <cfparam name="request.currentTopNav" default="phones" type="string" />
 <cfparam name="request.title" default="Costco Wireless - Big Savings on Cell Phones - Offering Plans from Verizon Wireless, AT&T, T-Mobile, and Sprint." type="string" />
@@ -63,9 +64,7 @@
 										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Your Account</a>
 									</cfif>									
 								</cfif>
-								<cfset listDeviceBuilderCarriers = "109,42" />
-								<cfset cartCarrier = session.cart.getCarrierId()>
-								<cfif arrayLen(session.cart.getLines()) and listFindNoCase(listDeviceBuilderCarriers,cartCarrier) and session.cart.getActivationType() contains 'finance'>
+								<cfif arrayLen(session.cart.getLines()) and listFindNoCase(listDeviceBuilderCarriers,session.cart.getCarrierId()) and session.cart.getActivationType() contains 'finance'>
 									<a href="/devicebuilder/orderreview" id="lnkMyCart">Your Cart<cfif isDefined('session.cart') and isStruct(session.cart) and application.model.cartHelper.zipCodeEntered()><cfset cartZipCode = session.cart.getZipCode()> ( #trim(variables.cartZipCode)# )</cfif></a>
 								<cfelse>
 									<a href="##" onClick="viewCart(); return false;" id="lnkMyCart">Your Cart<cfif isDefined('session.cart') and isStruct(session.cart) and application.model.cartHelper.zipCodeEntered()><cfset cartZipCode = session.cart.getZipCode()> ( #trim(variables.cartZipCode)# )</cfif></a>
