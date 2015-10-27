@@ -9,8 +9,8 @@
 </cfif>
 
 <!--- devicebuilder --->
-<cfif session.cart.getActivationType() contains 'finance'>
-	<cfset hide2yearpricing = true>	
+<cfif arrayLen(session.cart.getLines()) and session.cart.getActivationType() contains 'finance'>
+	<cfset hide2yearpricing = true>
 </cfif>
 
 <cfoutput>

@@ -63,7 +63,13 @@
 										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Your Account</a>
 									</cfif>									
 								</cfif>
-								<a href="##" onClick="viewCart(); return false;" id="lnkMyCart">Your Cart<cfif isDefined('session.cart') and isStruct(session.cart) and application.model.cartHelper.zipCodeEntered()><cfset cartZipCode = session.cart.getZipCode()> ( #trim(variables.cartZipCode)# )</cfif></a>
+								<cfset listDeviceBuilderCarriers = "109,42" />
+								<cfset cartCarrier = session.cart.getCarrierId()>
+								<cfif arrayLen(session.cart.getLines()) and listFindNoCase(listDeviceBuilderCarriers,cartCarrier) and session.cart.getActivationType() contains 'finance'>
+									<a href="/devicebuilder/orderreview" id="lnkMyCart">Your Cart<cfif isDefined('session.cart') and isStruct(session.cart) and application.model.cartHelper.zipCodeEntered()><cfset cartZipCode = session.cart.getZipCode()> ( #trim(variables.cartZipCode)# )</cfif></a>
+								<cfelse>
+									<a href="##" onClick="viewCart(); return false;" id="lnkMyCart">Your Cart<cfif isDefined('session.cart') and isStruct(session.cart) and application.model.cartHelper.zipCodeEntered()><cfset cartZipCode = session.cart.getZipCode()> ( #trim(variables.cartZipCode)# )</cfif></a>
+								</cfif>
 							</div>
 							<div id="search-form-container">
 								<label for="q">Search</label>
