@@ -8,6 +8,11 @@
 	<cfset hide2yearpricing = true>
 </cfif>
 
+<!--- devicebuilder --->
+<cfif arrayLen(session.cart.getLines()) and session.cart.getActivationType() contains 'finance'>
+	<cfset hide2yearpricing = true>
+</cfif>
+
 <cfoutput>
 <style type="text/css">
 

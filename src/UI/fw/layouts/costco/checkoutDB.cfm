@@ -55,16 +55,7 @@
 		<cfelse>
 			<br /><br /><br /><br />
 		</cfif>
-	</div>
-	<div id="mainContent" style="padding:10px;">
-		<div class="shim">
-			<div class="main left">
-				<cfoutput>#renderView()#</cfoutput>
-			</div>
-			<div class="sidebar left">
-				#renderView('CheckoutDB/costcoQuestionsDB')#
-			</div>
-		</div>
+		<cfoutput>#renderView()#</cfoutput>
 	</div>
 	#renderView('devicebuilder/pagefooter')#
 <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>

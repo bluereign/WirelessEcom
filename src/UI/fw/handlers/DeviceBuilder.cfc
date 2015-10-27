@@ -118,7 +118,7 @@
             prc.addxStep = this.browseDevicesUrlVzw;
           }
 
-          flash.put("warningMessage","Your cart already has a device for a different carrier than the one you've selected.  You must first clear your cart.  <a href='#prc.addxStep#'>Click here to go to Browse Devices.</a>");
+          flash.put("warningMessage","Your cart already has a device for a different carrier than the one you've selected.  You must first clear your cart before selecting a device for a different carrier.  <a href='#prc.addxStep#'>Click here to go to Browse Devices.</a>");
           setNextEvent(
             event="devicebuilder.orderreview",
             persist=""
@@ -521,13 +521,12 @@
       // <end zip check
 
 
-
-  
+    
       // <NAVIATION
       switch(prc.customerType) {
         case "upgrade":
           
-          if ( rc.cartLineNumber gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
+          if ( arrayLen(prc.cartLines) gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
             prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
           prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
           } else {
@@ -610,6 +609,9 @@
       } else {
         prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       }
+
+      prc.clearCartAction = event.buildLink('devicebuilder.clearcart');
+
       // <end Navigation
 
 
@@ -1053,7 +1055,6 @@
       }
       // prc.additionalAccessories = session.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
-      prc.clearCartAction = event.buildLink('devicebuilder.clearcart');
       prc.includeTallyBox = false;
     </cfscript>
   </cffunction>

@@ -43,8 +43,9 @@
           <h1>Cart</h1>
         </header>
         
-        <form id="formCheckout" action="/index.cfm/go/checkout/do/billship/" method="post">
-          
+        <!---<form id="formCheckout" action="/index.cfm/go/checkout/do/billship/" method="post">--->
+          <form id="formCheckout" action="/CheckoutDB/billship" method="post">
+          	
           <div class="right">
             <cfif prc.showAddAnotherDeviceButton>
               <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
@@ -88,7 +89,7 @@
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#prc.cartPlan.companyName# #prc.cartPlan.planName#</h3>
-                    <p><!--- Includes:  --->#reReplaceNoCase(prc.cartPlan.summaryDescription, "<.*?>","","all")#</p>
+                    <p>#reReplaceNoCase(prc.cartPlan.summaryDescription, "<.*?>","","all")#</p>
                 </div>
                 <div class="col-md-2 col-xs-16 quantity">1</div>
                 <div class="col-md-2 col-xs-16 monthly">#dollarFormat(prc.cartPlan.monthlyFee)# <span class="visible-xs-inline">Monthly</span></div>
@@ -120,7 +121,7 @@
                     data-toggle="collapse"
                     href="##plan-details"
                     aria-expanded="false"
-                    aria-controls="plan-details">Show Plan Details</a>
+                    aria-controls="plan-details">Show Details</a>
                 </div>
               </div>
             </cfif>
@@ -214,7 +215,7 @@
                         #prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber()))#
                       </cfif>
                       <br />
-                      Includes: #listChangeDelims(local.deviceDescription,", ")#
+                      #listChangeDelims(local.deviceDescription,", ")#
                     </p>
                   </div>
                   <input type="hidden" id="removephone" name="removephone" value="" />
@@ -386,7 +387,7 @@
                       data-toggle="collapse"
                       href="##devicedetails#local.iCartLine#"
                       aria-expanded="false"
-                      aria-controls="devicedetails#local.iCartLine#">Show Device Details</a>
+                      aria-controls="devicedetails#local.iCartLine#">Show Details</a>
                   </div>
                 </div>
 

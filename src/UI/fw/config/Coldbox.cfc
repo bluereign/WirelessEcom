@@ -158,7 +158,7 @@ Optional Methods
 			
 			// Payments
 			asyncPayments = false,
-			paymentReturnpath = "/index.cfm/go/checkout/do/processPayment/",
+			paymentReturnpath = "/CheckoutDB/processPayment",
 			paymentReturnPathRequiresSSL = false,
 	
 			// InternetSecure

@@ -82,22 +82,22 @@
           
           
 
-          <cfif prc.productData.carrierId eq prc.carrierIdVzw and prc.productData.price_new NEQ 9999>
+          <!--- Remove 2-year contract price --->
+          <!--- <cfif prc.productData.carrierId eq prc.carrierIdVzw and prc.productData.price_new NEQ 9999>
+            
             <div class="radio">
               <label>
                 <input type="radio" name="paymentoption" value="2yearcontract" <cfif prc.paymentoption is '2yearcontract'>checked</cfif> onchange="onChangeHandler(this.form,'2yearcontract')">
                 2-Year Contract Upgrade Price 
                 <cfif val(prc.productData.upgradePriceAfterRebate)>
-                  <!--- has a new price after rebate --->
                   <cfset prc.priceModifier.upgradePriceRebateAmount = prc.productData.price_upgrade - prc.productData.upgradePriceAfterRebate />
                   #dollarFormat(prc.productData.upgradePriceAfterRebate)#
-                  <!--- (after #dollarFormat(prc.priceModifier.upgradePriceRebateAmount)# rebate) --->
-                  <!--- (#dollarformat(prc.productData.price_upgrade)# -  #dollarFormat(prc.priceModifier.upgradePriceRebateAmount)#) --->
                 <cfelse>
                   #dollarFormat(prc.productData.price_upgrade)#
                 </cfif>
               </label>
-            </div>
+            </div> --->
+
           <!--- <cfelse> --->
             <!--- For some reason, the upgrade price is the same as the 2-year contract upgrade price.  Adding it to an 'else' clause for now --->
             <!--- <div class="radio"> --->
@@ -107,7 +107,9 @@
                 <!--- Upgrade Price #dollarFormat(prc.productData.price_upgrade)# --->
               <!--- </label> --->
             <!--- </div> --->
-          </cfif>
+
+
+          <!--- </cfif> --->
 
         </section>
 

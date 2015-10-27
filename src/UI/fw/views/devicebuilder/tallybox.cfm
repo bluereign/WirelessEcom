@@ -1,7 +1,11 @@
 <!--- #event.isAjax()# --->
 <cfparam name="prc.tallyBoxHeader" default="Upgrading" />
+<cfparam name="prc.showClearCartLink" default="true" />
 <cfoutput>
   <div class="col-md-4">
+    <cfif prc.showClearCartLink>
+      <div class="pull-right"><a href="#prc.clearCartAction#" class="clear">Clear Entire Cart</a><br><br></div>
+    </cfif>
     <div class="row totals">
       <div class="wrap head">
         <div class="col-xs-8">Due Today</div>
