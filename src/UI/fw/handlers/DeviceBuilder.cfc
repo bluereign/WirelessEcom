@@ -118,7 +118,7 @@
             prc.addxStep = this.browseDevicesUrlVzw;
           }
 
-          flash.put("warningMessage","Your cart already has a device for a different carrier than the one you've selected.  You must first clear your cart.  <a href='#prc.addxStep#'>Click here to go to Browse Devices.</a>");
+          flash.put("warningMessage","Your cart already has a device for a different carrier than the one you've selected.  You must first clear your cart before selecting a device for a different carrier.  <a href='#prc.addxStep#'>Click here to go to Browse Devices.</a>");
           setNextEvent(
             event="devicebuilder.orderreview",
             persist=""
