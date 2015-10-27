@@ -27,12 +27,21 @@
 	<input type="hidden" name="pdfEncoded" value="#rc.financeAgreementRespObj.getResponse().FinanceAgreement#"/>
 	<input type="submit" value="View Finance Agreement PDF"></submit> 
 	</form>
-<br><Form action="#event.buildLink('testFullApi.CreateOrder')#" method="post">
-	<!---<input type="hidden" name="cart" value="#session.cart#"/>--->
+<br><Form action="#event.buildLink('testFullApi.CreateOrder')#" method="post" target="_blank">
 	<input type="submit" value="Create Order"></submit> 
 	</form>
 </h2>
 
+<br><Form action="#event.buildLink('testFullApi.SaveFinanceAgreement')#" method="post" target="_blank">
+	<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>
+	<input type="hidden" name="installmentPlanId" value="#trim(rc.financeAgreementRespObj.getResponse().AgreementItems[1].InstallmentPLanId)#" />
+	<input type="hidden" name="subscriberNumber" value="#trim(rc.subscriberNumber)#"/>
+	<input type="hidden" name="accountNumber" value="#trim(rc.AccountRespObj.getAccount().accountIdentifier)#"/>
+	<input type="hidden" name="nameOnAccount" value="#trim(rc.AccountRespObj.getAccount().primaryAccountHolder)#"/>
+	<input type="hidden" name="agreementEntry" value="#trim(rc.financeAgreementRespObj.getResponse().FinanceAgreement)#"/>
+	<input type="submit" value="Save the Finance Agreement"></submit> 
+	</form>
+</h2>
 
 
 	<!---<cfif structKeyExists(rc.financeAgreementRespObj.getResponse(),"financeAgreement")>

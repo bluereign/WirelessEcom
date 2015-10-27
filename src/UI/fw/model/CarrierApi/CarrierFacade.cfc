@@ -44,14 +44,14 @@
 		<cfset var local = structNew() />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.result =  carrierObject(arguments.carrierId).SaveFinanceAgreement(argumentCollection = local.args) />	
-		<cfreturn local.FinanceAgreementRequestResp />
+		<cfreturn local.result />
 	</cffunction>
 
-	<cffunction name="addressValidation" output="false" access="public" returntype="any">
+	<cffunction name="validateAddress" output="false" access="public" returntype="any">
 		<cfset var local = structNew() />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.beginTicks = getTickCount() />
-		<cfset local.AddressValidationResp =  carrierObject(arguments.carrierId).AddressValidation(argumentCollection = local.args) />	
+		<cfset local.AddressValidationResp =  carrierObject(arguments.carrierId).ValidateAddress(argumentCollection = local.args) />	
 		<cfset local.endTicks = getTickCount() />
 		<cfreturn local.AddressValidationResp />
 	</cffunction>
