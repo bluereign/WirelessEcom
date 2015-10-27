@@ -55,9 +55,7 @@
 		<cfelse>
 			<br /><br /><br /><br />
 		</cfif>
-	<div class="row main cart">
 		<cfoutput>#renderView()#</cfoutput>
-	</div>
 	</div>
 	#renderView('devicebuilder/pagefooter')#
 <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
