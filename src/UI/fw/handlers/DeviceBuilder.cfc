@@ -610,6 +610,9 @@
       } else {
         prc.nextStep = "/index.cfm/go/checkout/do/billShip/";
       }
+
+      prc.clearCartAction = event.buildLink('devicebuilder.clearcart');
+
       // <end Navigation
 
 
@@ -1053,7 +1056,6 @@
       }
       // prc.additionalAccessories = session.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
-      prc.clearCartAction = event.buildLink('devicebuilder.clearcart');
       prc.includeTallyBox = false;
     </cfscript>
   </cffunction>
