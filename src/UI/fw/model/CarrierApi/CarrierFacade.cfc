@@ -40,6 +40,22 @@
 		<cfreturn local.FinanceAgreementRequestResp />
 	</cffunction>
 
+	<cffunction name="saveFinanceAgreement" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.result =  carrierObject(arguments.carrierId).SaveFinanceAgreement(argumentCollection = local.args) />	
+		<cfreturn local.FinanceAgreementRequestResp />
+	</cffunction>
+
+	<cffunction name="addressValidation" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.beginTicks = getTickCount() />
+		<cfset local.AddressValidationResp =  carrierObject(arguments.carrierId).AddressValidation(argumentCollection = local.args) />	
+		<cfset local.endTicks = getTickCount() />
+		<cfreturn local.AddressValidationResp />
+	</cffunction>
+
 	<!---<cffunction name="upgradeEligibility" output="false" access="public" returntype="any">		
 		<cfset var args = passthruArgs(argumentCollection = arguments ) />
 		<cfreturn carrierObject(arguments.carrierId).upgradeEligibility(argumentCollection = args) />		

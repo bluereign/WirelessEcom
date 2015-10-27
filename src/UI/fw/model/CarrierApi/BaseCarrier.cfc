@@ -11,8 +11,8 @@
 		<cfset var jsonized = "" />
 		
 		<cfset stringFields = "SubscriberNumber,SecurityId,ZipCode,AccountIdentifier,ActiveLines,CanBeReachedPhone,HomePhone,WorkPhone,Imei,Sim,Sku,Number,ServiceArea,AreaCode,ZipExtension,Zip" />
-		<cfset UppercaseFields = "ACCOUNT,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT,MSRP,DOWNPAYMENT" />
-		<cfset FixedcaseFields = "Account,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat,Msrp,DownPayment" />
+		<cfset UppercaseFields = "ACCOUNT,ADDRESS,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT,MSRP,DOWNPAYMENT" />
+		<cfset FixedcaseFields = "Account,Address,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat,Msrp,DownPayment" />
 		<cfset stringDelimiter = "@x@y@z@" />
 		
 		<!---<cfset arguments = duplicate(arguments) />--->

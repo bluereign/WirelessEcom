@@ -7,6 +7,7 @@
 	
 	<h2>
 	<a href="#event.buildLink('testFullApi.account_input')#">Account</a>
+	<br/><a href="#event.buildLink('testFullApi.address_input')#">Address Validation</a>
 	<br/><a href="#event.buildLink('testFullApi.zip_input')#">Area Code Test</a>
 	<br/><a href="#event.buildLink('testFullApi.endToEnd_input')#">End To End Test</a>
 	</h2>

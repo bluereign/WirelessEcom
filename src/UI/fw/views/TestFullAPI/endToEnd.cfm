@@ -1,5 +1,6 @@
 <cfoutput>
 <h1>Welcome to the CarrierFacade End to End Test Page</h1>
+<cfset session.userid = 26007508 /><!--- Make shamilton@wirelessadvocate.com the user for the session (being lazy on my test) --->
 <a href="<cfoutput>#event.buildLink('testFullApi.endToEnd_input')#</cfoutput>"><button class="btn btn-default"  type="button">Do Another Lookup</button></a><br/><br/>
 <h2>
 <br/>getHttpStatusCode() = #rc.accountRespObj.getHttpStatusCode()#
@@ -22,11 +23,17 @@
 	<br/>financeAgreementRespObj:
 	<cfdump var="#rc.financeAgreementRespObj.getResponse()#" expand="false" />
 </div>
-<br><Form action="#event.buildLink('testFullApi.FinanceAgreement')#" method="post">
+<br><Form action="#event.buildLink('testFullApi.FinanceAgreement')#" method="post" target="_blank">
 	<input type="hidden" name="pdfEncoded" value="#rc.financeAgreementRespObj.getResponse().FinanceAgreement#"/>
 	<input type="submit" value="View Finance Agreement PDF"></submit> 
 	</form>
+<br><Form action="#event.buildLink('testFullApi.CreateOrder')#" method="post">
+	<!---<input type="hidden" name="cart" value="#session.cart#"/>--->
+	<input type="submit" value="Create Order"></submit> 
+	</form>
 </h2>
+
+
 
 	<!---<cfif structKeyExists(rc.financeAgreementRespObj.getResponse(),"financeAgreement")>
 		<cfset chelper = createObject('component','fw.model.carrierApi.att.attCarrierHelper') />
