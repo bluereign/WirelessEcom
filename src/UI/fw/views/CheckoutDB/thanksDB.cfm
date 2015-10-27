@@ -100,18 +100,16 @@
 <cfoutput>
 	<div class="col-md-12">
 		<h2>Thank You for Your Order ###session.checkout.OrderId#</h2>
-	</div>
-	<div class="col-md-12">
+		<hr/>
 		<p>You will receive an email with the order detials and how to check the status of the order.</p>
 		<p>Thanks again for your order. <a>Click here to go home.</a></p>
-	</div>
-	<div class="col-md-12">
+		<hr/>
 		<h3>Order Agreements and Purchase Summary</h3>
+		<br/>
 		<p><a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">#application.model.checkoutHelper.getCarrierName()# device financing agreement name</a></p>
 		<p><a href="##" id="agreeToCarrierTermsAndConditions" data-toggle="modal" data-target="##carrierDocModal">#application.model.checkoutHelper.getCarrierName()# Terms and Conditions</a></p>
 		<p><a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">Costco Wireless Customer Letter</a></p>
-	</div>
-    <div class="col-md-12">
+		<br/>
       <section class="content">
         <cfif structKeyExists(prc,"warningMessage")>
           <p class="bg-warning" style="padding:10px">#prc.warningMessage#</p>
@@ -455,13 +453,11 @@
         </form>
       </section>
     </div>
-
-
-    <div class="col-md-4">
-      <br/>
-      <br/>
-      <br/>
-      <br/>
+	<div class="col-md-4">
+		<br/>
+		<br/>
+		<br/>
+		<br/>
       <div class="sidebar">
         <h4>Have Questions?</h4>
         <ul>
@@ -478,7 +474,8 @@
         </ul>
       </div>
     </div>
-  </div>
+
+    
   <div class="row summary">
     <div class="col-md-12">
 

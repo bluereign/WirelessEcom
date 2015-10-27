@@ -43,8 +43,9 @@
           <h1>Cart</h1>
         </header>
         
-        <form id="formCheckout" action="/index.cfm/go/checkout/do/billship/" method="post">
-          
+        <!---<form id="formCheckout" action="/index.cfm/go/checkout/do/billship/" method="post">--->
+          <form id="formCheckout" action="/CheckoutDB/billship" method="post">
+          	
           <div class="right">
             <cfif prc.showAddAnotherDeviceButton>
               <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
