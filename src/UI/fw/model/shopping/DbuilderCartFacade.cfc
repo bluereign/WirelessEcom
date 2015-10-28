@@ -636,6 +636,7 @@
 				<cfif structKeyExists(arguments,"subscriberIndex") and isNumeric(arguments.subscriberIndex) and arguments.subscriberIndex GT 0>
 					<cfset local.thisLine = local.cartLines[arguments.cartLineNumber] />
 					<cfset local.thisLine.setSubscriberIndex(arguments.subscriberIndex) />
+					<cfset saveToSession(getSubscriberIndices(),"subscriberIndices") />
 				</cfif>
 
 				
@@ -1154,6 +1155,23 @@
 		</cfif>
 	</cffunction>
 	
+	<!--- Save anything important to the cartfacade session storage struct --->
+	<cffunction name="saveToSession" returnType="void" access="private">
+		<cfargument name="objToStore" type="any" required="true" />
+		<cfargument name="objName" type="string" required="true" />
+
+		<!--- create the session storage structure if it does not already exist --->		
+		<cfif not structKeyExists(session,"cartFacade")>
+			<cfset session.cartFacade = structNew() />
+		</cfif>
+		
+		<cfif isObject(objToStore) >
+			<cfset structInsert(session.cartFacade, arguments.objName, arguments.objToStore.getResponse(),true) />		
+		<cfelse>
+			<cfset structInsert(session.cartFacade, arguments.objName, arguments.objToStore,true) />		
+		</cfif>
+		
+	</cffunction>
 	
 	
 </cfcomponent>

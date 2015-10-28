@@ -41,6 +41,11 @@
 	<input type="hidden" name="agreementEntry" value="#trim(rc.financeAgreementRespObj.getResponse().FinanceAgreement)#"/>
 	<input type="submit" value="Save the Finance Agreement"></submit> 
 	</form>
+	
+<br><Form action="#event.buildLink('testFullApi.SubmitOrder')#" method="post" target="_blank">
+	<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>
+ 	<input type="submit" value="Submit the Order"></submit> 
+	</form>	
 </h2>
 
 

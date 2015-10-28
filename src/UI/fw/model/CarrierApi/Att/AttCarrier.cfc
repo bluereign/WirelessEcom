@@ -97,12 +97,12 @@
 			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
 			<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#arguments.installmentPlanId#" > 
 			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#arguments.subscriberNumber#" > 
-			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#arguments.accountNumber#" > 
-			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#arguments.nameOnAccount#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.accountNumber)#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.nameOnAccount)#" > 
 			<cfprocparam cfsqltype="CF_SQL_DATE" value="#arguments.acceptanceDate#" > 
 			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.channel#" > 
 			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.agreementTypeId#" > 
-			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#arguments.agreementEntry#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.agreementEntry)#" > 
 			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="1" > <!--- Processing Status, Always 1 --->
 		</cfstoredproc>
 		
@@ -141,6 +141,26 @@
 			<cfreturn processResponse(local.carrierResponse) />	
 		</cfif>		
 	</cffunction>
+	
+	<!------------------------------------------------------------------------------------------------------- 
+		Submit the Order to the Carrier 
+	-------------------------------------------------------------------------------------------------------->
+	<cffunction name="submitOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse">
+		<cfset var local = structNew() />
+		<cfset local.body = serializeJSonAddReferenceNumber(arguments) />	
+		<cfhttp url="#variables.CarrierServiceURL#/Order" method="Post" result="local.cfhttp">
+			<cfhttpparam type="header" name="Content-Type" value="application/json" />
+    		<cfhttpparam type="body" value="#local.body#">
+		</cfhttp>
+		
+		<!--- create the carrier response --->
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse').init() />
+		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+		<cfreturn processResponse(local.carrierResponse) />	
+		
+	</cffunction>	
+	
+	
 	
 	<!-------------------------------------------------------------------------------------------------------- 
 		Look at the results of the call and set appropriate fields in the carrier response	

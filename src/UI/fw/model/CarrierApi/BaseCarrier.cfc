@@ -109,9 +109,9 @@
 				</cfloop>
 			</cfif>
 			
-			<cfset local.theJson = replace(local.theJson,'\n','',"ALL") />
-			<cfset local.theJson = replace(local.theJson,'\r','',"ALL") />
-			<cfset local.theJson = replace(local.theJson,'\t','',"ALL") />
+			<cfset local.theJson = replace(local.theJson,chr(13),'',"ALL") />
+			<cfset local.theJson = replace(local.theJson,chr(10),'',"ALL") />
+			<cfset local.theJson = replace(local.theJson,chr(9),'',"ALL") />
 
 			<cfset local.resp = deserializeJson(local.theJson,true) />	
 

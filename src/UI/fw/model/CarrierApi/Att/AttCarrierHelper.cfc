@@ -12,6 +12,90 @@
 		Helper Functions		
 	 --------------------------------------------------------------------------------------------------->
 	
+	<cffunction name="getSubmitOrderRequest" output="false" access="public" returntype="struct">
+		
+		<cfset var local = structNew() />
+		<cfset local.sor = structNew() />
+		
+		<cfif structKeyExists(session,"carrierFacade") is false>
+			<cfset local.sor.errorMessage = "CarrierFacade is missing from session" />
+			<cfreturn local.sor />
+		</cfif>
+		
+		<cfif structKeyExists(session,"cartFacade") is false>
+			<cfset local.sor.errorMessage = "CartFacade is missing from session" />
+			<cfreturn local.sor />
+		</cfif>
+		<cfif structKeyExists(session.cartfacade,"subscriberIndices") is false>
+			<cfset local.sor.errorMessage = "CartFacade.subscriberIndices is missing from session" />
+			<cfreturn local.sor />
+		</cfif>
+
+		
+		<!--- Verify the required carrier responses are store in the session --->
+		<cfif structKeyExists(session.carrierFacade,"AccountResp") is false>
+			<cfset local.sor.errorMessage = "AccountResp is missing from session.carrierFacade" />
+			<cfreturn local.sor />
+		</cfif>
+		<cfif structKeyExists(session.carrierFacade,"FinanceAgreementResp") is false>
+			<cfset local.sor.errorMessage = "FinanceAgreementResp is missing from session.carrierFacade" />
+			<cfreturn local.sor />
+		</cfif>
+		<cfif structKeyExists(session,"Order") is false>
+			<cfset local.sor.errorMessage = "Order is missing from session" />
+			<cfreturn local.sor />
+		</cfif>
+		
+		<!--- Build the request --->
+		<cfset local.sor.carrierid = 109 />
+		<cfset local.sor.channel = getChannelValue() />
+		<cfset local.sor.account = session.carrierfacade.accountresp.account />
+		<cfset local.sor.OrderItems = arrayNew(1) />
+		<cfset local.i = 0 />
+		<cfloop array="#session.carrierFacade.financeAgreementResp.AgreementItems#" index="faai">
+			<cfset local.i = local.i+1 />
+			<cfset arrayAppend(local.sor.orderItems, getOrderItem(faai)) />
+		</cfloop>
+		
+		<!--- return the completed request --->
+		<cfreturn local.sor/>
+		
+	</cffunction>
+	
+	<cffunction name="getOrderItem" output="false" access="public" returntype="struct">
+		<cfargument name="faai" type="struct" required="true" />
+		<cfset var local = structNew() />
+		<cfset local.orderItem = structNew() />
+		
+		<cfset local.orderItem.Identifier = createUUID() />
+		<cfset local.orderitem.RequestType = getRequestType(session.order.getActivationTypeName()) />
+		<cfset local.orderitem.FinanceAgreementItem = arguments.faai />
+		<cfset local.orderItem.UpgradeQualification = arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications />
+		<cfreturn local.orderItem />
+	</cffunction>
+	
+	<cffunction name="getRequestType" returnType="numeric" access="public" >
+		<cfargument name="activationType" type="string" required="true" /> 
+		
+		<cfswitch expression="#arguments.activationType#">
+			<cfcase value="New">
+				<cfreturn 4 />
+			</cfcase>
+			<cfcase value="Upgrade">
+				<cfreturn 1 />
+			</cfcase>
+			<cfcase value="Add a Line">
+				<cfreturn 2 />
+			</cfcase>
+			<cfdefaultcase>
+				<cfreturn 0 />
+			</cfdefaultcase>			
+		</cfswitch>
+		
+		<cfreturn 0 />
+		
+	</cffunction>
+	
 	<cffunction name="getFinanceAgreementRequest" output="false" access="public" returntype="struct">
 		<cfset var local = structNew() />
 		<cfset local.far = structNew() />
