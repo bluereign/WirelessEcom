@@ -3,8 +3,8 @@
   <div class="col-md-12">
     <section class="content">
       <header class="main-header">
-        <h1>Carrier Account Login</h1>
-        <p>The primary Account Holder's information is used to verify status and line availability. <!--- (carrierId: #prc.productData.carrierId#) ---></p>
+        <h1>Log Into Your #prc.carrierName# Account</h1>
+        <p>To find the devices that qualify for upgrade we must verify your account with #prc.carrierName# <!--- (carrierId: #prc.productData.carrierId#) ---></p>
       </header>
       <cfif len(rc.carrierResponseMessage)>
         <p class="alert bg-danger" role="alert">#rc.carrierResponseMessage#</p>
@@ -18,6 +18,9 @@
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
           <input type="hidden" name="nextAction" value="#rc.nextAction#" />
         </div>
+		<div  class="form-group form-inline ">
+			<img alt="" src="#prc.carrierLogo#" alt="att">
+		</div>
         <div class="form-group form-inline phone">
           <label for="inputPhone1">Phone Number to Upgrade</label>
           ( <input type="text" class="form-control" id="inputPhone1" name="inputPhone1" value="<cfif isDefined('rc.inputPhone1')>#trim(rc.inputPhone1)#</cfif>" maxlength="3" onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('inputPhone2'))" /> )
@@ -34,7 +37,7 @@
           <a href="##" data-toggle="tooltip" title="#prc.inputSSNTooltipTitle#" id="inputSSNToolTip">Who's SSN do I use?</a>
         </div>
         <div class="form-group form-inline pin">
-          <label for="inputPin">Carrier Account Passcode/PIN</label>
+          <label for="inputPin">AT&amp;T Account Passcode</label>
           <input type="password" class="form-control" id="inputPin" name="inputPin" value="<cfif isDefined('rc.inputPin')>#rc.inputPin#</cfif>" maxlength="20" />
           <a href="##" data-toggle="tooltip" title="#prc.inputPinTooltipTitle#" id="inputPinToolTip">Where do I get this?</a>
         </div>

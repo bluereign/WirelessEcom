@@ -761,8 +761,20 @@
         default:
           break;
       }
+	  
+      if (prc.productData.carrierId eq prc.carrierIdAtt) {
+        prc.inputPinTooltipTitle = "If you don't have an AT&amp;T passcode or you've forgotten it, call 1-800-331-0500. AT&amp;T requires this passcode to verify your identity.";
+		prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo.png";
+		//TODO: Is this already in scope somewhere?
+		prc.carrierName = "AT&amp;T";
+      } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
+        prc.inputPinTooltipTitle = "TODO: Get Info For VZW.";
+		prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo.png";
+		//TODO: Is this already in scope somewhere?
+		prc.carrierName = "Verizon";
+      }
+	  
       
-      prc.inputPinTooltipTitle = "This could be the last 4 numbers of the primary account holder's social security number or a unique number sequence the primary account holder created for the account. If you do not remember this number or have this number, please call the carrier.";
       prc.includeTooltip = true;
     </cfscript>
   </cffunction>
