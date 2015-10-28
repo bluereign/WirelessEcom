@@ -8,8 +8,8 @@
     </cfif>
     <div class="row totals">
       <div class="wrap head">
-        <div class="col-xs-8">Due Today</div>
-        <div class="col-xs-8">Monthly</div>
+        <div class="col-xs-8">Due Today*</div>
+        <div class="col-xs-8">Monthly*</div>
       </div>
       <div class="wrap">
         <cfif arrayLen(prc.cartlines)>
@@ -46,8 +46,8 @@
                   <th colspan="2">#prc.tallyboxFinanceTitle#</th>
                 </thead>
                 <tr>
-                  <td>#prc.tallyboxFinanceMonthlyDueTitle#</td>
-                  <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueAmount)#/mo*</td>
+                  <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td>
+                  <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueAmount)#/mo</td>
                 </tr>
                 <!--- <tr>
                   <td>Regular Price</td>
@@ -86,9 +86,6 @@
                   <td>Due Today*</td>
                   <td class="price">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getDueToday())#</td>
                   <!--- <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueToday)# <cfif prc.paymentoption is 'financed'>Down</cfif></td> <!--- hard code from detail_new.cfm ---> --->
-                </tr>
-                <tr>
-                  <td colspan="2">* Final amount due not known until credit check is complete.</td>
                 </tr>
                 <!--- Note: it will be difficult to display the Line Access Fee here as it's part of the lineFeatures array --->
                 <!--- <tr>
@@ -220,7 +217,21 @@
             </div>
           </div>
         </div>
-      </aside>
+		
+		<div class="row">
+          <div class="col-xs-16 legal" >
+            <div>
+				* Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.
+			</div>
+			<div>
+				** $0 down (for qualified customers).
+			</div>
+          </div>
+        </div>
     </div>
+		
+		
+      </aside>
+	  
   </div>
 </cfoutput>
