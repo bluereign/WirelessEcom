@@ -136,7 +136,7 @@
           <div class="radio">
             <label>
               <input type="radio" name="warrantyid" id="warrantyoption_0" value="0" onchange="onChangeHandler(this.form,this.form.paymentoption.value)" <cfif prc.warrantyId eq 0>checked</cfif>  >
-              No Equipment Protection Plan
+              No, I choose not to protect my #dollarFormat(prc.productData.FinancedFullRetailPrice)# device.
             </label>
           </div>
 
