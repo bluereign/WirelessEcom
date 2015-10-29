@@ -45,7 +45,8 @@
           <a href="#prc.prevStep#">BACK</a>
           <button type="submit" class="btn btn-primary btn-block">Continue</button>
         </div>
-        <p class="alert alert-info" role="alert" style="display:none"></p>
+        <!--- <p class="alert alert-info" role="alert" id="carrierLoginLoader"> Hey now &nbsp;&nbsp;&nbsp; <img src="#assetPaths.common#/images/ui/ajax-loader-blue.gif"> </p> --->
+        <p class="alert alert-info" role="alert" style="display:none"> Carrier Login in progress.....  &nbsp;&nbsp;&nbsp; <img src='#assetPaths.common#/images/ui/ajax-loader-blue.gif'></p>
       </form>
     </section>
   </div>

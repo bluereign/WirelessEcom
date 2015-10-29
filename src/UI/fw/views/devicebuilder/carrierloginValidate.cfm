@@ -66,7 +66,8 @@
           }
       },
       submitHandler: function(form) {
-        $('p.alert-info').show().text("Carrier Login in progress.....");
+        $('p.alert-info').show();
+        // $('p.alert-info').show().text("Carrier Login in progress..... ");
         $('p.bg-danger').hide();
         $('button:submit').attr("disabled", true);
         // console.log('validation complete');
