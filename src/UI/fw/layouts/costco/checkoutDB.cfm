@@ -3,6 +3,7 @@
 <cfparam name="rc.type" default="upgrade" /> <!--- upgrade, addaline, new --->
 <cfparam name="rc.pid" default="00000" />
 <cfparam name="prc.showNav" default="true" />
+<cfparam name="prc.showHeader" default="true" />
 
 <cfset assetPaths = application.wirebox.getInstance("AssetPaths") />
 <cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />

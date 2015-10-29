@@ -707,6 +707,8 @@
 	    <cfparam name="prc.showCheckoutnowButton" default="true" />
 	    <cfparam name="prc.showClearCartLink" default="true" />
 	    
+	    <cfset rc.carrierName = application.model.checkoutHelper.getCarrierName()>
+	    
 	   <!--- MES FIX UP --->
 	    <cfscript>
 	    if (session.cart.getCarrierId() eq 109) {
@@ -722,7 +724,7 @@
 		<cfset prc.includeTallyBox = false/>
 		<cfset prc.cartLines = session.cart.getLines()/>
 		<cfset prc.customerType = listLast(session.cart.getActivationType(), '-')/>
-		
+		<cfset prc.showHeader = false/>
 		
 		<cfset session.cart.updateCartItemTaxes() />
 		<cfset session.cart.updateAllTaxes() />

@@ -113,6 +113,8 @@
 	
 </script>
 <cfoutput>
+	<div class="col-md-12">
+      <section class="content">
 	<input type="hidden" id="carrierID" value="#session.cart.getCarrierId()#">
 	<input type="hidden" id="docClicked" value="none">
 	<div class="bootstrap">
@@ -190,8 +192,27 @@
 				<a class="continue" href="##">Continue</a>
 			</span>
 		</div>
-		<!---<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="##myModal">Open Modal</button>
-		<a data-toggle="modal" data-target="##carrierDocModal">Open Modal</a>--->
+	</div>
+	</section>
+	</div>
+	<div class="col-md-4">
+      <div class="sidebar">
+        <h4>Have Questions?</h4>
+        <ul>
+          <li><a href="/index.cfm/go/content/do/customerService">Call us at 1-800-555-1212</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ">Chat with one of our representatives</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ">E-mail one of our experts</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ">Frequently Asked Questions</a></li>
+        </ul>
+        <h4>Our Signature Promise</h4>
+        <ul>
+          <li><a href="/index.cfm/go/content/do/shipping">Free UPS ground shipping</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">90 day return policy</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">Return in store</a></li>
+        </ul>
+      </div>
+    </div>
+  
 	<!-- Modal -->
 <div id="carrierDocModal" class="modal fade" role="dialog">
   <div class="modal-dialog">

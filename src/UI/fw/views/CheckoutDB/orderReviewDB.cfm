@@ -1,3 +1,4 @@
+<cfset setChannelConfig(application.wirebox.getInstance("ChannelConfig"))/>
 <!--- Adding style here and jQuery at the bottom as the javascript file provided by front-end developer is minified. --->
 <style>
 .cart .device-details {
@@ -31,10 +32,10 @@
 
 <cfoutput>
 	<div class="col-md-12">
-		<h2>Cart Review</h2>
+		<h2>Cart</h2>
 		<div style="float:right">
-	        <a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">Back</a>&nbsp;
-			<span class="btn btn-primary"><a href="##" onclick="$('##formCheckoutReview').submit()" style="color:##fff">Process Payment</a></span>
+	        <a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">Previous</a>&nbsp;
+			<span class="btn btn-primary"><a href="##" onclick="$('##formCheckoutReview').submit()" style="color:##fff">Process Payment Now</a></span>
 			<br/>
 			<br/>
 		</div>
@@ -374,11 +375,7 @@
                   </div>
                 </cfloop>
               </cfif>
-
-
           </cfif>
-
-
           </div>
         </form>
       </section>
@@ -386,10 +383,6 @@
 
 
     <div class="col-md-4">
-      <br/>
-      <br/>
-      <br/>
-      <br/>
       <div class="sidebar">
         <h4>Have Questions?</h4>
         <ul>
@@ -444,12 +437,12 @@
             <td>#dollarFormat(session.cart.getPrices().getDueToday())#</td>
           </tr>
           <tr>
-            <td>Shipping</td>
+            <td>Shipping<sup class="cartReview"><a href="##footnote1" style="font-size:8px">1</a></sup></td>
             <td></td>
             <td>#dollarFormat(session.checkout.shippingMethod.getDefaultFixedCost())#</td>
           </tr>
           <tr>
-            <td>Est. Tax</td>
+            <td>Est. Tax<sup class="cartReview"><a href="##footnote2" style="font-size:8px">2</a></sup></td>
             <td></td>
             <td>#dollarFormat(session.cart.getTaxes().getDueToday())#</td>
           </tr>
@@ -521,7 +514,11 @@
             <td colspan="2">#dollarFormaT(local.total)#</td>
           </tr>
           <tr>
-            <td>Total Due Monthly</td>
+            <td>Total Due Monthly
+            	<cfif session.cart.getCarrierID() eq '42'>
+            		<sup class="cartReview"><a href="##footnote3" style="font-size:8px">3</a></sup>
+            	</cfif>
+            </td>
             <td colspan="2">#dollarFormat(session.cart.getPrices().getMonthly())#</td>
           </tr>
           </tfoot>
@@ -532,12 +529,13 @@
     </div>
     <div class="col-md-12">
 	<div class="formControl" style="float:right">
-	<a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">Back</a>&nbsp;
-		<span class="btn btn-primary"><a href="##" onclick="$('##formCheckoutReview').submit()" style="color:##fff">Process Payment</a></span>
+	<a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">Previous</a>&nbsp;
+		<span class="btn btn-primary"><a href="##" onclick="$('##formCheckoutReview').submit()" style="color:##fff">Process Payment Now</a></span>
 		<br/>
 		<br/>
 	</div>
 	</div>
+	<!--- Legal section --->
     <div class="col-md-12">
       <p class="legal">
         
@@ -551,10 +549,55 @@
             <cfif session.cart.getCarrierId() neq 299>This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><!--- remove for Sprint --->
           <br />
         </cfif>
-
-         Legal Goes Here: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.</p>
+		<span class="note">
+			<sup class="cartReview">
+				<a name="footnote1" style="font-size:8px">
+					1
+				</a>
+			</sup>
+			Orders can take up to #getChannelConfig().getOrderProcessingTime()# business days to process before shipping. 
+		</span>
+		<br/>
+		<span class="note">
+			<sup class="cartReview">
+				<a name="footnote2" style="font-size:8px">
+					2
+				</a>
+			</sup>
+			In accordance with the tax laws in certain states and jurisdictions, including but not limited to California, the tax charged may be based 
+			on an amount higher than the retail price of the purchase. California sales tax is calculated in accordance
+			with Sales and Use Tax Regulation 1585. Taxes and fees estimated and based on zip code (
+			#session.cart.getZipcode()#
+			)
+			entered earlier and the service plan you selected. Actual fees will be determined by your 
+			wireless carrier.
+		</span>
+		<br/>
+	<cfif session.cart.getCarrierID() eq '42'>
+		<span class="note">
+			<sup class="cartReview">
+				<a name="footnote3" style="font-size:8px">
+					3
+				</a>
+			</sup>
+			These amounts will be billed by #rc.carrierName# and do not include other line or account charges, fees, taxes, and surcharges which can add between 6% and 44% to your bill.
+		</span>
+		<br/>
+	</cfif>
+	
+	
     </div>
   </div>
 </div>
 
 </cfoutput>
+
+<cffunction name="getChannelConfig" access="private" output="false" returntype="struct">
+	<cfreturn variables.instance.ChannelConfig/>
+</cffunction>
+
+<cffunction name="setChannelConfig" access="private" output="false" returntype="void">
+	<cfargument name="ChannelConfig" required="true"/>
+
+	<cfset variables.instance.ChannelConfig = arguments.ChannelConfig/>
+</cffunction>

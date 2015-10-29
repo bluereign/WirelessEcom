@@ -513,12 +513,12 @@
             <td>#dollarFormat(session.cart.getPrices().getDueToday())#</td>
           </tr>
           <tr>
-            <td>Shipping</td>
+            <td>Shipping<sup class="cartReview"><a href="##footnote1" style="font-size:8px">1</a></sup></td>
             <td></td>
             <td>#dollarFormat(session.checkout.shippingMethod.getDefaultFixedCost())#</td>
           </tr>
           <tr>
-            <td>Tax</td>
+            <td>Tax<sup class="cartReview"><a href="##footnote2" style="font-size:8px">2</a></sup></td>
             <td></td>
             <td>#dollarFormat(session.cart.getTaxes().getDueToday())#</td>
           </tr>
@@ -590,7 +590,11 @@
             <td colspan="2">#dollarFormaT(local.total)#</td>
           </tr>
           <tr>
-            <td>Total Due Monthly</td>
+            <td>Total Due Monthly
+            	<cfif session.cart.getCarrierID() eq '42'>
+            		<sup class="cartReview"><a href="##footnote3" style="font-size:8px">3</a></sup>
+            	</cfif>
+            </td>
             <td colspan="2">#dollarFormat(session.cart.getPrices().getMonthly())#</td>
           </tr>
           </tfoot>
@@ -599,8 +603,63 @@
       </div>
       </div>
     </div>  
+    
+    
+    
+    <!--- Legal section --->
+    <div class="col-md-12">
+      <p class="legal">
+        
+        <cfif session.cart.getActivationType() is 'upgrade'>  <!--- from cfc/view/Cart.cfc line 1331 --->
+          <!--- removing hard-coded upgrade fees and adding result from call to carrier component made earlier in this method  --->
+          <cfif NOT structKeyExists(local, 'upgradeFee')>
+            <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />
+            <cfset local.upgradeFee = local.carrierObj.getUpgradeFee( session.cart.getCarrierID() )>
+          </cfif>            
+          *  An Upgrade Fee of $#local.upgradeFee# applies to each Upgrade Line.
+            <cfif session.cart.getCarrierId() neq 299>This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><!--- remove for Sprint --->
+          <br />
+        </cfif>
+		<span class="note">
+			<sup class="cartReview">
+				<a name="footnote1" style="font-size:8px">
+					1
+				</a>
+			</sup>
+			Orders can take up to 2 business days to process before shipping. 
+		</span>
+		<br/>
+		<span class="note">
+			<sup class="cartReview">
+				<a name="footnote2" style="font-size:8px">
+					2
+				</a>
+			</sup>
+			In accordance with the tax laws in certain states and jurisdictions, including but not limited to California, the tax charged may be based 
+			on an amount higher than the retail price of the purchase. California sales tax is calculated in accordance
+			with Sales and Use Tax Regulation 1585. Taxes and fees estimated and based on zip code (
+			#session.cart.getZipcode()#
+			)
+			entered earlier and the service plan you selected. Actual fees will be determined by your 
+			wireless carrier.
+		</span>
+		<br/>
+	<cfif session.cart.getCarrierID() eq '42'>
+		<span class="note">
+			<sup class="cartReview">
+				<a name="footnote3" style="font-size:8px">
+					3
+				</a>
+			</sup>
+			These amounts will be billed by #application.model.checkoutHelper.getCarrierName()# and do not include other line or account charges, fees, taxes, and surcharges which can add between 6% and 44% to your bill.
+		</span>
+		<br/>
+	</cfif>
+	
+	
+    </div>
+   
   </div>
-</div>
 <div id="carrierDocModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -608,7 +667,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">carrierName Header</h4>
+        <h4 class="modal-title">#application.model.checkoutHelper.getCarrierName()#</h4>
       </div>
       <div class="modal-body">
 		<object id="carrierDoc" name="carrierDoc"  data="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" style="width:100%;height:100%">

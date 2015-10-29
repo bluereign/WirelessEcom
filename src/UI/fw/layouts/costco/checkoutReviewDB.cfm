@@ -3,6 +3,7 @@
 <cfparam name="rc.type" default="upgrade" /> <!--- upgrade, addaline, new --->
 <cfparam name="rc.pid" default="00000" />
 <cfparam name="prc.showNav" default="true" />
+<cfparam name="prc.showHeader" default="true" />
 
 <cfset assetPaths = application.wirebox.getInstance("AssetPaths") />
 <cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
@@ -32,23 +33,12 @@
   #googleAnalyticsTracker.tagPage()#
   <link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
   <!--- TODO: Add following to devicebuilder.css after final HTML prototype build and then remove it from this file --->
-  <style>
-  body.modal-open .nonmodal-container{
-      -webkit-filter: blur(5px);
-      -moz-filter: blur(5px);
-      -o-filter: blur(5px);
-      -ms-filter: blur(5px);
-      filter: blur(5px);
-      opacity:0.7 !important;
-  }
-  </style>
+
   <!--- You can clean code by including the devicebuilder.min.js file here and moving the js scripts below into their respective views.  However, load time will be increased. --->
   
   <script type="text/javascript" src="#assetPaths.common#scripts/devicebuilder.min.js"></script>
   
 </head>
-
-<body id="#event.getCurrentAction()#">
 
   #renderView('CheckoutDB/checkoutHeaderDB')#
 
@@ -59,21 +49,9 @@
       <br /><br /><br /><br />
     </cfif>
 
-    <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
+    <div class="row main cart">
       #renderView()#
-      <cfif prc.includeTallyBox>
-        <div id="myTallybox">
-        #renderView('devicebuilder/tallybox')#
-        </div>
-        
-        <!--- to load div content using ajax call:
-        <script type="text/javascript">
-        $(function(){
-          $("##myTallybox").load('#event.buildLink('devicebuilder.tallybox')#?cartLineNumber=#rc.cartLineNumber#');
-        });
-        </script> --->
 
-      </cfif>
     </div>
   </div>
 
@@ -100,141 +78,16 @@
   #renderView('devicebuilder/carrierloginValidate')#
 </cfif>
 
-
-<!--- zipModal, planModal --->
-<cfif listFindNoCase("devicebuilder.plans", event.getCurrentEvent())>
-  #renderView('devicebuilder/zipmodal')#
-  <cfif rc.type is 'new' and !application.model.cartHelper.zipCodeEntered()>
-    <script>
-      $('##zipModal').modal('show');
-    </script>
-  </cfif>
-</cfif>
-<!--- <end zipModal, planModal --->
-
-<!--- <protection and services view/modals --->
-<cfif listFindNoCase("devicebuilder.protection",event.getCurrentEvent())>
-  <div class="modal fade" id="protectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="featureModal" tabindex="-2" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      </div>
-    </div>
-  </div>
-</cfif>
-
-<!--- <accessories view --->
-<cfif listFindNoCase("devicebuilder.accessories", event.getCurrentEvent())>
-
-  <div class="modal fade device-detail" id="accessoryModal" tabindex="-1" role="dialog" aria-labeledby="deviceDetailModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-      </div>
-    </div>
-  </div>
-
-  <script>
-    $(function() {
-      $('.product')
-        .on('mouseover', function() {
-          $(this).addClass('hover');
-        })
-        .on('mouseout', function() {
-          $(this).removeClass('hover');
-        })
-        .find('.info-wrap').on('mouseover', function(e) {
-          e.stopPropagation();
-        });
-
-      $('.btnAddToCart')
-        .on('click', function() {
-
-          if ( $(this).data('fn') === 'add' ) {
-            $(this).data('fn', 'remove');
-            $(this).text('Remove');
-            $(this).addClass('btn-remove');
-            $.post('#event.buildLink('devicebuilder.tallybox')#', {cartLineNumber: #rc.cartLineNumber#, addaccessory: this.value}, function(data){
-              $('##myTallybox').html( data )
-            });
-
-          } else {
-            $(this).data('fn', 'add');
-            $(this).text('Add to Cart');
-            $(this).removeClass('btn-remove');
-            $.post('#event.buildLink('devicebuilder.tallybox')#', {cartLineNumber: #rc.cartLineNumber#, removeaccessory: this.value}, function(data){
-              $('##myTallybox').html( data )
-            });
-          }
-        });
-    });
-  </script>
-</cfif>
-<!--- <end accessories view --->
-
-
-<cfif listFindNoCase("devicebuilder.orderreview", event.getCurrentEvent())>
-  <script>
-    function showHideTextDevice(text) {
-      var SHOW_TEXT = 'Show Device Details',
-      HIDE_TEXT = 'Hide Device Details';
-
-      return  text === SHOW_TEXT ? HIDE_TEXT : SHOW_TEXT;
-    }
-
-    $(function() {
-      // Swap text on Show/Hide Cart Details
-      $('.device-details').on('click', function() {
-        var $this = $(this);
-
-        $(this).text(showHideTextDevice($this.text()));
-      });
-
-      // add OnChange to the accessory qty select
-      $('.accessoryqty').on('change', function() {
-        var thisid = $(this).attr('id');
-        var thisqty = $(this).val();
-        $('##addaccessory').val(thisid);
-        $('##accessoryqty').val(thisqty);
-        $('##formCheckout').submit();
-      });
-
-      // add OnClick to the accessory remove link
-      $('.removeaccessory').on('click', function() {
-        var thisid = $(this).data('removeaccessory');
-        $('##removeaccessory').val(thisid);
-        $('##formCheckout').submit();
-      });
-
-      // add OnClick to the phone remove link
-      $('.removephone').on('click', function() {
-        var thisid = $(this).data('removephone');
-        $('##removephone').val(thisid);
-        $('##formCheckout').submit();
-      });
-
-
-    });
-  </script>
-
-</cfif>
-
 <!--- clear data from Bootstrap 3 modals to load dynamic data --->
-<script>
+<!---<script>
   $(function() {
     $('body').on('hidden.bs.modal', '.modal', function () {
       $(this).removeData('bs.modal');
     });
   });
-</script>
+</script>--->
 <!--- <end clear bootstrap data --->
 
 
-
-</body>
 </html>
 </cfoutput>

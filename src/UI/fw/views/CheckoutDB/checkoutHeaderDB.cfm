@@ -24,30 +24,32 @@
   </div>
 
   <!--- <Blue Nav placeholder --->
-  <div class="container-fluid top-nav">
-    <div class="container">
-      <nav class="navbar navbar-static-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="##bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-          </div>
-          <div class="collapse navbar-collapse fade" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav nav-tabs">
-              <li role="presentation"><a href="##">Home</a></li>
-              <li role="presentation"><a href="##">Hot Deals</a></li>
-              <li role="presentation" class="active"><a href="##">Phones</a></li>
-              <li role="presentation"><a href="##">Mobile Hotspot</a></li>
-              <li role="presentation"><a href="##">Accessories</a></li>
-              <li role="presentation"><a href="##">Check Upgrade Eligibility</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </div> <!--- <end blue nav placeholder --->
+  <cfif prc.showHeader>
+	  <div class="container-fluid top-nav">
+	    <div class="container">
+	      <nav class="navbar navbar-static-top" role="navigation">
+	        <div class="container">
+	          <div class="navbar-header">
+	            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="##bs-example-navbar-collapse-1">
+	              <span class="sr-only">Toggle navigation</span>
+	              <span class="icon-bar"></span>
+	              <span class="icon-bar"></span>
+	              <span class="icon-bar"></span>
+	            </button>
+	          </div>
+	          <div class="collapse navbar-collapse fade" id="bs-example-navbar-collapse-1">
+	            <ul class="nav navbar-nav nav-tabs">
+	              <li role="presentation"><a href="##">Home</a></li>
+	              <li role="presentation"><a href="##">Hot Deals</a></li>
+	              <li role="presentation" class="active"><a href="##">Phones</a></li>
+	              <li role="presentation"><a href="##">Mobile Hotspot</a></li>
+	              <li role="presentation"><a href="##">Accessories</a></li>
+	              <li role="presentation"><a href="##">Check Upgrade Eligibility</a></li>
+	            </ul>
+	          </div>
+	        </div>
+	      </nav>
+	    </div>
+	  </div> <!--- <end blue nav placeholder --->
+	</cfif>
 </cfoutput>
