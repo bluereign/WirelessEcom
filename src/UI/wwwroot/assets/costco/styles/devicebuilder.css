@@ -7081,16 +7081,16 @@ button.close {
   background-repeat: repeat-x;
 }
 .btn.btn-primary[disabled] {
-  background-color: #ffffff;
-  background-image: -moz-linear-gradient(top, #ffffff, #ffffff);
-  background-image: -ms-linear-gradient(top, #ffffff, #ffffff);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#ffffff));
-  background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
-  background-image: -o-linear-gradient(top, #ffffff, #ffffff);
-  background-image: linear-gradient(top, #ffffff, #ffffff);
+  background-color: #555555;
+  background-image: -moz-linear-gradient(top, #888888, #555555);
+  background-image: -ms-linear-gradient(top, #888888, #555555);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#888888), to(#555555));
+  background-image: -webkit-linear-gradient(top, #888888, #555555);
+  background-image: -o-linear-gradient(top, #888888, #555555);
+  background-image: linear-gradient(top, #888888, #555555);
   background-repeat: repeat-x;
   border-color: transparent;
-  color: #6b6b6b;
+  color: #fff;
   opacity: .8;
 }
 .btn.btn-primary:hover,
@@ -7108,15 +7108,15 @@ button.close {
 }
 .btn.btn-primary:hover[disabled],
 .btn.btn-primary:focus[disabled] {
-  background-color: #ffffff;
-  background-image: -moz-linear-gradient(top, #ffffff, #ffffff);
-  background-image: -ms-linear-gradient(top, #ffffff, #ffffff);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#ffffff));
-  background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
-  background-image: -o-linear-gradient(top, #ffffff, #ffffff);
-  background-image: linear-gradient(top, #ffffff, #ffffff);
+  background-color: #555555;
+  background-image: -moz-linear-gradient(top, #888888, #555555);
+  background-image: -ms-linear-gradient(top, #888888, #555555);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#888888), to(#555555));
+  background-image: -webkit-linear-gradient(top, #888888, #555555);
+  background-image: -o-linear-gradient(top, #888888, #555555);
+  background-image: linear-gradient(top, #888888, #555555);
   background-repeat: repeat-x;
-  color: #6b6b6b;
+  color: #fff;
 }
 .btn.btn-dark-gray {
   background-color: #555555;
@@ -7643,15 +7643,6 @@ body {
 .totals .head .col-xs-8:first-child {
   border-color: #fff;
 }
-.details .row .legal {
-  background: none;
-  border:none;
-  border-top: 1px solid #b3b3b3;
-  clear: both;
-  font-size: 12px;
-  font-size: 0.75rem;
-  padding: 10px 20px 0 20px;
-}
 .details .row {
   margin: 0;
   overflow: auto;
@@ -7662,6 +7653,15 @@ body {
 }
 .details .row:last-of-type {
   margin-bottom: 10px;
+}
+.details .row .legal {
+  background: none;
+  border:none;
+  border-top: 1px solid #b3b3b3;
+  clear: both;
+  font-size: 12px;
+  font-size: 0.75rem;
+  padding: 10px 20px 0 20px;
 }
 .details .name {
   font-size: 12px;
@@ -7872,6 +7872,17 @@ form .right:first-child {
 }
 .product .btn.btn-primary[disabled] {
   font-weight: bold;
+  background-color: #ffffff;
+  background-image: -moz-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -ms-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#ffffff));
+  background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -o-linear-gradient(top, #ffffff, #ffffff);
+  background-image: linear-gradient(top, #ffffff, #ffffff);
+  background-repeat: repeat-x;
+  border-color: transparent;
+  color: #6b6b6b;
+  opacity: .8;
 }
 #existing .info {
   float: left;
