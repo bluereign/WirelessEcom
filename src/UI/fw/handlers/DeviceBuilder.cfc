@@ -872,6 +872,17 @@
     <cfargument name="prc">
 
     <cfscript>
+      local.eligibleLineCount = 0;
+      for (local.i = 1; local.i lte arrayLen(prc.subscribers); local.i++) {
+        if (prc.subscribers[i].getIsEligible()) {
+         local.eligibleLineCount++;
+        }
+      }
+      if (local.eligibleLineCount eq 0) {
+        prc.warningMessage = "This account has no lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.carrierLogin')#'>Please verify your account.</a>";
+        prc.displayBackButton = true;
+      }
+
       prc.addalineStep = event.buildLink('devicebuilder.transfer') & '/type/addaline/';     
       prc.includeTooltip = true;
     </cfscript>

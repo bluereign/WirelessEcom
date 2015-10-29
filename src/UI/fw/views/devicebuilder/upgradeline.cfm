@@ -1,3 +1,4 @@
+<cfparam name="prc.displayBackButton" default="false" />
 <cfoutput>
   <div class="col-md-12">
       <section class="content">
@@ -19,6 +20,10 @@
           <div class="right">
             <a href="#prc.prevStep#">BACK</a>
             <button type="submit" class="btn btn-primary">Continue</button>
+          </div>
+        <cfelseif prc.displayBackButton>
+          <div class="right">
+            <a href="#prc.prevStep#">BACK</a>
           </div>
         </cfif>
         <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
@@ -71,6 +76,10 @@
             <div class="right">
               <a href="#prc.prevStep#">BACK</a>
               <button type="submit" class="btn btn-primary">Continue</button>
+            </div>
+          <cfelseif prc.displayBackButton>
+            <div class="right">
+              <a href="#prc.prevStep#">BACK</a>
             </div>
           </cfif>
           
