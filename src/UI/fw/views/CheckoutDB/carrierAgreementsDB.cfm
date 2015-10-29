@@ -16,6 +16,7 @@
 .bootstrap .modal-custom{
     overflow-y: auto;
 }
+form .form-inline label { width:auto;}
 </style>
 <script type="text/javascript">
 	jQuery(document).ready( function($) {
@@ -136,53 +137,52 @@
 	<form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
 		<p>
 			<cfif session.cart.getActivationType() CONTAINS "New" or session.cart.getActivationType() CONTAINS "addaline" >
-				<a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">Terms & Conditions of the #carrierName# Two Year Customer Agreement</a><br/>
-				<p>
-					<input type="checkbox" name="agreeToContract" /><a></a>
+				<h4><a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Two Year Customer Agreement</a></h4>
+				<div class="form-group form-inline">
+					<label><input type="checkbox" name="agreeToContract" />
 					I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
 					LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
-					AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
-				</p>
+					AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.</label>
+				</div>
 			<cfelse>
-				<a href="##" id="agreeToContractExtension" data-toggle="modal" data-target="##carrierDocModal">Terms & Conditions of the #carrierName# Two Year Customer Extension</a><br/>
-				<p>
-					<input type="checkbox" name="agreeToContractExtension" /><a></a> 
+				<h4><a href="##" id="agreeToContractExtension" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Two Year Customer Extension</a></h4>
+				<div class="form-group form-inline">
+					<label><input type="checkbox" name="agreeToContractExtension" />
 					I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
 					LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
-					AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
-				</p>
+					AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.</label>
+				</div>
 			</cfif>
 		</p>
-		<p>
-			<a href="##" id="agreeToDevicePaymentPlan" data-toggle="modal" data-target="##carrierDocModal">Terms & Conditions of the #carrierName# Device Payment Plan</a>
-			<p>
-				<input type="checkbox" name="agreeToDevicePaymentPlan" /><a></a>
+		<h4><a href="##" id="agreeToDevicePaymentPlan" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Device Payment Plan</a></h4>
+		<div class="form-group form-inline">		
+			<label><input type="checkbox" name="agreeToDevicePaymentPlan" />
 				I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, 
 				SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
-			</p>
-		</p>
+			</label>
+		</div>
 		<p>
 			NOTICE TO BUYER: This is a retail installment sale agreement, not a lease. Do not accept if it contains blank spaces. You have a right to a copy of 
 			this agreement; keep it to protect your rights. You may pay off the full amount at any time. Please review the entire agreement, including the 
 			additional Notice to Buyer provisions, before accepting.
 		</p>
-		<p>
-			<input type="checkbox" name="agreeToDevicePaymentPresented" /><a></a>
+		<div class="form-group form-inline">
+			<label><input type="checkbox" name="agreeToDevicePaymentPresented" />
 			I acknowledge that Wireless Advocates has on this date presented me with the above completed Retail Installment Sale Agreement/Notice to Buyer 
 			(the "Agreement") and I have read the Agreement. I agree to all terms and conditions and understand that if I do not accept these terms, my order 
-			will be cancelled and the device will not be shipped.
-		</p>
-		<p>
-			<a href="##" id="agreeToCarrierTermsAndConditions" data-toggle="modal" data-target="##carrierDocModal">#carrierName# Terms &amp; Conditions</a><br/>
-			<input type="checkbox" name="agreeToCarrierTermsAndConditions" /><a></a> 
-			I HAVE READ AND AGREED TO THE #UCase(carrierName)# TERMS AND CONDITIONS FOR SERVICE AGREEMENT
-		</p>
-		<p>
-			<a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">Terms &amp; Conditions of the Costco Wireless Customer Letter</a><br/>
-			<input type="checkbox" name="agreeToCustomerLetter" /><a></a>
-			I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER
-		</p>
-		<br />
+			will be cancelled and the device will not be shipped.</label>
+		</div>
+		<h4><a href="##" id="agreeToCarrierTermsAndConditions" data-toggle="modal" data-target="##carrierDocModal">View #carrierName# Terms &amp; Conditions</a></h4>
+		<div class="form-group form-inline">		
+			<label><input type="checkbox" name="agreeToCarrierTermsAndConditions" />
+			I HAVE READ AND AGREED TO THE #UCase(carrierName)# TERMS AND CONDITIONS FOR SERVICE AGREEMENT</label>
+		</div>
+		
+		<h4><a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a></h4>
+		<div class="form-group form-inline">		
+			<label><input type="checkbox" name="agreeToCustomerLetter" />
+			I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER</label>
+		</div>
 		
 		<hr class="bottom-break" />
 		
