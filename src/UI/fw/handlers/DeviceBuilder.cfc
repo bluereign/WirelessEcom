@@ -528,10 +528,10 @@
           
           if ( arrayLen(prc.cartLines) gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
             prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
-          prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsText = ["Choose Line","Protection &amp; Services","Accessories","Cart Review"];
           } else {
             prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
-            prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+            prc.navItemsText = ["Carrier Login","Choose Line","Plans and Data","Protection &amp; Services","Accessories","Cart Review"];
           }
 
           // prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/type/upgradex/';
@@ -548,35 +548,35 @@
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];
-          prc.navItemsText = ["Carrier Login","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.navItemsText = ["Carrier Login","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/addalinex/';
           // prc.tallyboxHeader = "Add a Line";
           prc.cartTypeId = 3;
           break;
         case "new":
           prc.navItemsAction = ["plans","protection","accessories","numberporting","orderreview"];
-          prc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/newx/';
           // prc.tallyboxHeader = "New Customer (" & session.cart.getZipcode() & ")";
           prc.cartTypeId = 1;
           break;
         case "upgradex":
           prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
-          prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/type/upgradex/';
           // prc.tallyboxHeader = "Upgrading";
           prc.cartTypeId = 2;
           break;
         case "addalinex":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
-          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/addalinex/';
           // prc.tallyboxHeader = "Add a Line";
           prc.cartTypeId = 3;
           break;
         case "newx":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
-          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/newx/';
           // prc.tallyboxHeader = "New Customer";
           prc.cartTypeId = 1;
