@@ -512,7 +512,7 @@
 
       // <ZIP CHECK
       // if user has authenticated into carrier, make sure that the session zip is the carrier response object zip (unless they have logged out with Clear Entire Cart).
-      // else if inputZip exists and is valid, then set session.zipCode (ONLY IF the user has not authenticated with a carrier login).
+      // else if inputZip exists and is valid, then set session.zipCode (ONLY IF the user has not authenticated with a carrier logcarrier login).
       if ( structKeyExists(session,"carrierObj") and len(trim( session.carrierObj.getAddress().getZipCode() ) ) ) {
         session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
       } else if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip'))  ) {
@@ -528,10 +528,10 @@
           
           if ( arrayLen(prc.cartLines) gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
             prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
-          prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsText = ["Choose Line","Protection &amp; Services","Accessories","Cart Review"];
           } else {
             prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
-            prc.navItemsText = ["Carrier Login","Upgrade","Plans and Data","Protection &amp; Services","Accessories","Order Review"];
+            prc.navItemsText = ["Carrier Lookup","Choose Line","Plans and Data","Protection &amp; Services","Accessories","Cart Review"];
           }
 
           // prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/type/upgradex/';
@@ -548,35 +548,35 @@
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];
-          prc.navItemsText = ["Carrier Login","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.navItemsText = ["Carrier Lookup","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/addalinex/';
           // prc.tallyboxHeader = "Add a Line";
           prc.cartTypeId = 3;
           break;
         case "new":
           prc.navItemsAction = ["plans","protection","accessories","numberporting","orderreview"];
-          prc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.navItemsText = ["Plans and Data","Protection &amp; Services","Accessories","Number Porting","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/newx/';
           // prc.tallyboxHeader = "New Customer (" & session.cart.getZipcode() & ")";
           prc.cartTypeId = 1;
           break;
         case "upgradex":
           prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
-          prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Order Review"];
+          prc.navItemsText = ["Upgrade","Protection &amp; Services","Accessories","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/type/upgradex/';
           // prc.tallyboxHeader = "Upgrading";
           prc.cartTypeId = 2;
           break;
         case "addalinex":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
-          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/addalinex/';
           // prc.tallyboxHeader = "Add a Line";
           prc.cartTypeId = 3;
           break;
         case "newx":
           prc.navItemsAction = ["protection","accessories","numberporting","orderreview"];
-          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Order Review"];
+          prc.navItemsText = ["Protection &amp; Services","Accessories","Number Porting","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/newx/';
           // prc.tallyboxHeader = "New Customer";
           prc.cartTypeId = 1;
@@ -761,8 +761,20 @@
         default:
           break;
       }
+	  
+      if (prc.productData.carrierId eq prc.carrierIdAtt) {
+        prc.inputPinTooltipTitle = "If you don't have an AT&amp;T passcode or you've forgotten it, call 1-800-331-0500. AT&amp;T requires this passcode to verify your identity.";
+		prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo.png";
+		//TODO: Is this already in scope somewhere?
+		prc.carrierName = "AT&amp;T";
+      } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
+        prc.inputPinTooltipTitle = "TODO: Get Info For VZW.";
+		prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo.png";
+		//TODO: Is this already in scope somewhere?
+		prc.carrierName = "Verizon";
+      }
+	  
       
-      prc.inputPinTooltipTitle = "This could be the last 4 numbers of the primary account holder's social security number or a unique number sequence the primary account holder created for the account. If you do not remember this number or have this number, please call the carrier.";
       prc.includeTooltip = true;
     </cfscript>
   </cffunction>

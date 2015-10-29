@@ -3,6 +3,7 @@
 	<cfproperty name="AttCarrier" inject="id:AttCarrier" />
 	<cfproperty name="VzwCarrier" inject="id:VzwCarrier" />
 	<cfproperty name="MockCarrier" inject="id:MockCarrier" />
+	<cfproperty name="ChannelConfig" inject="id:ChannelConfig" />
 	
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.CarrierFacade">
 		<cfreturn this />
@@ -13,47 +14,70 @@
 	----------------------------------------------------------------------------------------------------->
 
 	<cffunction name="account" output="false" access="public" returntype="any">
-		<cfset var local = structNew() />		
+		<cfset var local = structNew() />
+		<cfset saveToSession(arguments,"AccountRequest") />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.beginTicks = getTickCount() />
 		<cfset local.accountResp =  carrierObject(arguments.carrierId).account(argumentCollection = local.args) />	
 		<cfset local.endTicks = getTickCount() />
 		<cfset local.accountResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfset saveToSession(local.accountResp,"AccountResp") />
 		<cfreturn local.accountResp />	
 	</cffunction>		
 
 	<cffunction name="areaCode" output="false" access="public" returntype="any">
 		<cfset var local = structNew() />		
+		<cfset saveToSession(arguments,"AreaCodeRequest") />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.beginTicks = getTickCount() />
 		<cfset local.AreaCodeResp =  carrierObject(arguments.carrierId).areaCode(argumentCollection = local.args) />	
 		<cfset local.endTicks = getTickCount() />
+		<cfset local.areaCodeResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfset saveToSession(local.areaCodeResp,"AreaCodeResp") />
 		<cfreturn local.areaCodeResp />
 	</cffunction>	
 	
 	<cffunction name="financeAgreement" output="false" access="public" returntype="any">
 		<cfset var local = structNew() />		
+		<cfset saveToSession(arguments,"FinanceAgreementRequest") />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.beginTicks = getTickCount() />
-		<cfset local.FinanceAgreementRequestResp =  carrierObject(arguments.carrierId).FinanceAgreement(argumentCollection = local.args) />	
+		<cfset local.FinanceAgreementResp =  carrierObject(arguments.carrierId).FinanceAgreement(argumentCollection = local.args) />	
 		<cfset local.endTicks = getTickCount() />
-		<cfreturn local.FinanceAgreementRequestResp />
+		<cfset local.FinanceAgreementResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfset saveToSession(local.FinanceAgreementResp,"FinanceAgreementResp") />
+		<cfreturn local.FinanceAgreementResp />
 	</cffunction>
 
 	<cffunction name="saveFinanceAgreement" output="false" access="public" returntype="any">
 		<cfset var local = structNew() />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.result =  carrierObject(arguments.carrierId).SaveFinanceAgreement(argumentCollection = local.args) />	
-		<cfreturn local.FinanceAgreementRequestResp />
+		<cfreturn local.result />
 	</cffunction>
 
-	<cffunction name="addressValidation" output="false" access="public" returntype="any">
+	<cffunction name="validateAddress" output="false" access="public" returntype="any">
 		<cfset var local = structNew() />		
+		<cfset saveToSession(arguments,"AddressValidationRequest") />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.beginTicks = getTickCount() />
-		<cfset local.AddressValidationResp =  carrierObject(arguments.carrierId).AddressValidation(argumentCollection = local.args) />	
+		<cfset local.AddressValidationResp =  carrierObject(arguments.carrierId).ValidateAddress(argumentCollection = local.args) />	
 		<cfset local.endTicks = getTickCount() />
+		<cfset local.AddressValidationResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfset saveToSession(local.AddressValidationResp,"AddressValidationResp") />
 		<cfreturn local.AddressValidationResp />
+	</cffunction>
+	
+	<cffunction name="submitOrder" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset saveToSession(arguments,"SubmitOrderRequest") />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.beginTicks = getTickCount() />
+		<cfset local.SubmitOrderResp =  carrierObject(arguments.carrierId).submitOrder(argumentCollection = local.args) />	
+		<cfset local.endTicks = getTickCount() />
+		<cfset local.SubmitOrderResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfset saveToSession(local.SubmitOrderResp,"SubmitOrderResp") />
+		<cfreturn local.SubmitOrderResp />
 	</cffunction>
 
 	<!---<cffunction name="upgradeEligibility" output="false" access="public" returntype="any">		
@@ -130,6 +154,22 @@
 		
 	</cffunction>	
 	
+	<cffunction name="saveToSession" returnType="void" access="private">
+		<cfargument name="objToStore" type="any" required="true" />
+		<cfargument name="objName" type="string" required="true" />
+
+		<!--- create the session storage structure if it does not already exist --->		
+		<cfif not structKeyExists(session,"carrierFacade")>
+			<cfset session.carrierFacade = structNew() />
+		</cfif>
+		
+		<cfif isObject(objToStore) >
+			<cfset structInsert(session.carrierFacade, arguments.objName, arguments.objToStore.getResponse(),true) />		
+		<cfelse>
+			<cfset structInsert(session.carrierFacade, arguments.objName, arguments.objToStore,true) />		
+		</cfif>
+		
+	</cffunction>
 
 	
 	

@@ -3,6 +3,7 @@
 	<cfproperty name="AttCarrierHelper" inject="id:AttCarrierHelper" />
 	<cfproperty name="VzwCarrierHelper" inject="id:VzwCarrierHelper" />
 	<cfproperty name="MockCarrierHelper" inject="id:MockCarrierHelper" />
+	<cfproperty name="ChannelConfig" 	inject="id:ChannelConfig" />
 	
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.CarrierHelper">
 		<cfreturn this />
@@ -17,6 +18,13 @@
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.FinanceAgreementRequest =  carrierObject(arguments.carrierId).getFinanceAgreementRequest(argumentCollection = local.args) />	
 		<cfreturn local.FinanceAgreementRequest />
+	</cffunction>
+	
+	<cffunction name="getSubmitOrderRequest" output="false" access="public" returntype="struct">
+		<cfset var local = structNew() />
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.SubmitOrderRequest =  carrierObject(arguments.carrierId).getSubmitOrderRequest(argumentCollection = local.args) />	
+		<cfreturn local.SubmitOrderRequest />
 	</cffunction>
 
 	<!---
@@ -79,5 +87,21 @@
 		</cfscript>
 		
 	</cffunction>	
+	
+	<cffunction name="getChannelValue" returnType="Numeric">
+		<cfswitch expression="#channelConfig.getDisplayName()#">
+			<cfcase value="Costco">
+				<cfreturn 0>
+				<cfbreak/>
+			</cfcase>
+			<cfcase value="AAfes">
+				<cfreturn 1>
+				<cfbreak/>
+			</cfcase>
+			<cfdefaultcase>
+				<cfreturn 0>
+			</cfdefaultcase>
+		</cfswitch>
+	</cffunction>
 	
 </cfcomponent>

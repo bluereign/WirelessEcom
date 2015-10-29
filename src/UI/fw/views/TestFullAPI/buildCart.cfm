@@ -10,7 +10,7 @@
 	WHERE imeitype is not null 
 	and itemid is not null 
 	and isAvailableOnline = 1
-	and qtyOnHand > 0
+	and qtyOnHand > 0 and ImeiType = 'P6'
 </cfquery>	
 
 

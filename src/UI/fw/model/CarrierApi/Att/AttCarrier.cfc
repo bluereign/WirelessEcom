@@ -58,14 +58,61 @@
 		
 	</cffunction>
 	
+	<!------------------------------------------------------------------------------------------------------- 
+		Store the Finance Agreement PDf  in the database
+	-------------------------------------------------------------------------------------------------------->
 	<cffunction name="SaveFinanceAgreement" output="false" access="public" returntype="string">
+		<cfset var local = structNew() />
+		
+		<cfif structKeyExists(arguments,"orderid") is false or isNumeric(arguments.orderid) is false>
+			<cfreturn "Argument 'orderid' is missing or non-numeric" />
+		</cfif>
+		<cfif structKeyExists(arguments,"InstallmentPlanId") is false or isNumeric(arguments.installmentPlanId) is false>
+			<cfreturn "Argument 'installmentPlanId' is missing or non-numeric" />
+		</cfif>
+		<cfif structKeyExists(arguments,"subscriberNumber") is false or isNumeric(arguments.subscriberNumber) is false>
+			<cfreturn "Argument 'subscriberNumber' is missing or non-numeric" />
+		</cfif>
+		<cfif structKeyExists(arguments,"accountNumber") is false or isNumeric(arguments.accountNumber) is false>
+			<cfreturn "Argument 'accountNumber' is missing or non-numeric" />
+		</cfif>
+		<cfif structKeyExists(arguments,"nameOnAccount") is false>
+			<cfreturn "Argument 'nameOnAccount' is missing" />
+		</cfif>
+		<cfif structKeyExists(arguments,"acceptanceDate") is false or isDate(arguments.acceptanceDate) is false>
+			<cfreturn "Argument 'acceptanceDate' is missing or non-date" />
+		</cfif>
+		<cfif structKeyExists(arguments,"Channel") is false or isNumeric(arguments.Channel) is false>
+			<cfreturn "Argument 'channel' is missing or non-numeric" />
+		</cfif>
+		<cfif structKeyExists(arguments,"agreementTypeId") is false or isNumeric(arguments.agreementTypeId) is false>
+			<cfreturn "Argument 'agreementTypeId' is missing or non-numeric" />
+		</cfif>
+		<cfif structKeyExists(arguments,"agreementEntry") is false>
+			<cfreturn "Argument 'agreementEntry' is missing" />
+		</cfif>
+		
+		<cfstoredproc datasource="wirelessadvocates" procedure="service.FinanceAgreementSave" result="local.result">
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.orderid#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
+			<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#arguments.installmentPlanId#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#arguments.subscriberNumber#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.accountNumber)#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.nameOnAccount)#" > 
+			<cfprocparam cfsqltype="CF_SQL_DATE" value="#arguments.acceptanceDate#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.channel#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.agreementTypeId#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.agreementEntry)#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="1" > <!--- Processing Status, Always 1 --->
+		</cfstoredproc>
+		
 		<cfreturn "success" />
 	</cffunction>
 	
 	<!------------------------------------------------------------------------------------------------------- 
 		Request the Finance Agreement PDf  
 	-------------------------------------------------------------------------------------------------------->
-	<cffunction name="AddressValidation" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttAddressValidationCarrierResponse">
+	<cffunction name="validateAddress" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttAddressValidationCarrierResponse">
 		<cfset var local = structNew() />
 
 		<!--- convert WA address object to a address request object --->
@@ -94,6 +141,26 @@
 			<cfreturn processResponse(local.carrierResponse) />	
 		</cfif>		
 	</cffunction>
+	
+	<!------------------------------------------------------------------------------------------------------- 
+		Submit the Order to the Carrier 
+	-------------------------------------------------------------------------------------------------------->
+	<cffunction name="submitOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse">
+		<cfset var local = structNew() />
+		<cfset local.body = serializeJSonAddReferenceNumber(arguments) />	
+		<cfhttp url="#variables.CarrierServiceURL#/Order" method="Post" result="local.cfhttp">
+			<cfhttpparam type="header" name="Content-Type" value="application/json" />
+    		<cfhttpparam type="body" value="#local.body#">
+		</cfhttp>
+		
+		<!--- create the carrier response --->
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse').init() />
+		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+		<cfreturn processResponse(local.carrierResponse) />	
+		
+	</cffunction>	
+	
+	
 	
 	<!-------------------------------------------------------------------------------------------------------- 
 		Look at the results of the call and set appropriate fields in the carrier response	

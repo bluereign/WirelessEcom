@@ -10,8 +10,8 @@
         </cfif>
 
         <header class="main-header">
-          <h1>Upgrade or Add a Line</h1>
-          <p>Choose a line to Upgrade or Add a New Line for this device.</p>
+          <h1>Select A Line To Upgrade</h1>
+          <p>Choose which line on your account you wish to upgrade.</p>
         </header>
 
         <form action="#prc.nextStep#" method="post">
@@ -51,7 +51,7 @@
                   <cfif local.isSubscriberIndexTaken>
                     <button class="btn btn-sm btn-primary" disabled="disabled"><cfif i eq prc.cartLine.getSubscriberIndex()>Selected<cfelse>In Cart</cfif></button>
                   <cfelse>
-                    <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade Line</button>
+                    <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade This Line</button>
                   </cfif>
 
                 <cfelse>

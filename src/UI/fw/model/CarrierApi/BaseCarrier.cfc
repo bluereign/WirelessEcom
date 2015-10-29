@@ -11,18 +11,18 @@
 		<cfset var jsonized = "" />
 		
 		<cfset stringFields = "SubscriberNumber,SecurityId,ZipCode,AccountIdentifier,ActiveLines,CanBeReachedPhone,HomePhone,WorkPhone,Imei,Sim,Sku,Number,ServiceArea,AreaCode,ZipExtension,Zip" />
-		<cfset UppercaseFields = "ACCOUNT,ADDRESS,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT,MSRP,DOWNPAYMENT" />
-		<cfset FixedcaseFields = "Account,Address,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat,Msrp,DownPayment" />
+		<cfset UppercaseFields = "IDENTIFIER,CATEGORY,DEVICEINFO,NUMBERSOURCE,FAMILY,FULLRETAILPRICE,ACCOUNT,ADDRESS,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT,MSRP,DOWNPAYMENT" />
+		<cfset FixedcaseFields = "Identifier,Category,DeviceInfo,NumberSource,Family,FullRetailPrice,Account,Address,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat,Msrp,DownPayment" />
 		<cfset stringDelimiter = "@x@y@z@" />
 		
-		<!---<cfset arguments = duplicate(arguments) />--->
+		<cfset local.args = duplicate(arguments.args) />
 		
 		<cfif isdefined("session.sessionid")>
-			<cfset arguments.args.ReferenceNumber = session.sessionid />
+			<cfset local.args.ReferenceNumber = session.sessionid />
 		</cfif>
 		
 		<cfloop list="#stringFields#" index="local.s">
-			<cfset local.found = structFindKey(arguments,local.s,"ALL")/>
+			<cfset local.found = structFindKey(local.args,local.s,"ALL")/>
 			<cfloop array="#local.found#" index="local.f">
 				<cfset local.key = listlast(local.f.path,".") />
 				<cfset local.f.path = listDeleteAt(local.f.path,listlen(local.f.path,"."),".") />
@@ -30,12 +30,17 @@
 					<cfset local.f.path = mid(local.f.path ,2 ,9999) />
 				</cfif>
 				<cfif isSimplevalue(local.f.value) and left(local.f.value,len(stringDelimiter)) is not stringDelimiter>
-					<cfset structUpdate(structGet(local.f.path),local.key,stringDelimiter & local.f.value) />
+					<cfif local.f.path is "">
+						<cfset structToUpdate = "local.args">
+					<cfelse>
+						<cfset structToUpdate = "local.args." & local.f.path />
+					</cfif>
+					<cfset structUpdate(structGet(structToUpdate),local.key,stringDelimiter & local.f.value) />
 				</cfif>
 			</cfloop>
 		</cfloop>
 		
-		<cfset jsonized = serializeJSON(arguments.args) />
+		<cfset jsonized = serializeJSON(local.args) />
 		<cfset jsonized = replaceNoCase(jsonized,stringDelimiter,"","ALL") />
 		
 		<!--- Fix casing in Key Names --->
@@ -99,10 +104,14 @@
 
 				<!--- add double quotes to all elements int he list --->
 				<cfloop list="#local.fixupItems#" index="local.f">
-					<cfset local.listval = chr(34) & listgetAt(local.theJson, local.f, "{},:[]") & chr(34) />
-					<cfset local.theJson = listSetAt(local.theJson, local.f, local.listval, ",{}:[]" )	/>			
+					<cfset local.listval = chr(34) & listgetAt(local.theJson, local.f, ",{}:[]") & chr(34) />
+					<cfset local.theJson = listSetAt(local.theJson, local.f, trim(local.listval), ",{}:[]" )	/>			
 				</cfloop>
 			</cfif>
+			
+			<cfset local.theJson = replace(local.theJson,chr(13),'',"ALL") />
+			<cfset local.theJson = replace(local.theJson,chr(10),'',"ALL") />
+			<cfset local.theJson = replace(local.theJson,chr(9),'',"ALL") />
 
 			<cfset local.resp = deserializeJson(local.theJson,true) />	
 

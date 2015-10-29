@@ -6,7 +6,7 @@
           <a href="http://www.costco.com" class="logo"><img src="#assetPaths.channel#images/costco_logosm.gif" alt="Costco.Com" title="Return to Costco.com"></a>
         </div>
         <div class="col-md-8">
-          <p class="disclaimer">You are no longer on Costco's site and are subject to the privacy policy of the company hosting this site. To review the privacy policy, <a href="/index.cfm/go/content/do/privacy">click here</a>.</p>
+          <p class="disclaimer"></p>
         </div>
         <div class="col-md-4 account">
           <ul>
