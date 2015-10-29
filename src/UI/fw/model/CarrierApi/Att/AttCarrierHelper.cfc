@@ -1,10 +1,12 @@
 <cfcomponent displayname="AttCarrierHelper" hint="Interface to ATT Carrier API" extends="fw.model.CarrierApi.CarrierHelper" output="false">
-	
+
+	<cfproperty name="CarrierFacade" inject="id:CarrierFacade" />
+
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.Att.AttCarrierHelper">
 		<cfargument name="ServiceURL" type="string" required="true" />
 		
 		<cfset variables.CarrierServiceURL = arguments.serviceURL />
-		
+				
 		<cfreturn this />
 	</cffunction>
 	
@@ -12,6 +14,23 @@
 		Helper Functions		
 	 --------------------------------------------------------------------------------------------------->
 	
+	<cffunction name="getSubmitCompletedOrderRequest" output="false" access="public" returntype="struct">
+		<cfset var local = structNew() />
+		<cfset local.socr = structNew() />
+		
+		<cfquery name="qOrderSubmission" datasource="wirelessadvocates" maxrows="1">
+			SELECT OrderEntry FROM [service].[OrderSubmissionLog] 
+			WHERE orderid = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.orderid#" > 
+		</cfquery>
+		
+		<cfif qOrderSubmission.recordcount is not 0>
+			<cfreturn carrierFacade.deserializeResponse(#qOrderSubmission.OrderEntry#) />
+		<cfelse>
+			<cfreturn structNew() />
+		</cfif>			
+		
+	</cffunction>
+			
 	<cffunction name="getSubmitOrderRequest" output="false" access="public" returntype="struct">
 		
 		<cfset var local = structNew() />
@@ -54,7 +73,7 @@
 		<cfset local.i = 0 />
 		<cfloop array="#session.carrierFacade.financeAgreementResp.AgreementItems#" index="faai">
 			<cfset local.i = local.i+1 />
-			<cfset arrayAppend(local.sor.orderItems, getOrderItem(faai)) />
+			<cfset arrayAppend(local.sor.orderItems, getOrderItem(faai,local.i)) />
 		</cfloop>
 		
 		<!--- return the completed request --->
@@ -64,14 +83,28 @@
 	
 	<cffunction name="getOrderItem" output="false" access="public" returntype="struct">
 		<cfargument name="faai" type="struct" required="true" />
+		<cfargument name="LineNo" type="numeric" required="true" />
 		<cfset var local = structNew() />
 		<cfset local.orderItem = structNew() />
+		<cfset local.wirelesslines = session.order.getWirelessLines() />
 		
 		<cfset local.orderItem.Identifier = createUUID() />
 		<cfset local.orderitem.RequestType = getRequestType(session.order.getActivationTypeName()) />
 		<cfset local.orderitem.FinanceAgreementItem = arguments.faai />
 		<cfset local.orderItem.UpgradeQualification = arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications />
+		<cfset local.Imei = local.wirelessLines[arguments.LineNo].getImei() />
+		<cfset local.Sim = local.wirelessLines[arguments.LineNo].getSim() />
+		<cfif local.Imei is "">
+			<cfset local.Imei = "TestIMEI1234" />
+		</cfif>
+		<cfif local.Sim is "">
+			<cfset local.Sim = "TestSIM4567" />
+		</cfif>
+		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.deviceInfo.imei = local.Imei />
+		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.deviceInfo.sim = local.Sim />
 		<cfreturn local.orderItem />
+		
+		
 	</cffunction>
 	
 	<cffunction name="getRequestType" returnType="numeric" access="public" >

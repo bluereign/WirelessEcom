@@ -26,6 +26,13 @@
 		<cfset local.SubmitOrderRequest =  carrierObject(arguments.carrierId).getSubmitOrderRequest(argumentCollection = local.args) />	
 		<cfreturn local.SubmitOrderRequest />
 	</cffunction>
+	
+	<cffunction name="getSubmitCompletedOrderRequest" output="false" access="public" returntype="struct">
+		<cfset var local = structNew() />
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.SubmitCompletedOrderRequest =  carrierObject(arguments.carrierId).getSubmitCompletedOrderRequest(argumentCollection = local.args) />	
+		<cfreturn local.SubmitOrderRequest />
+	</cffunction>
 
 	<!---
 		Receives an argument collection and returns collection minus args on the excludedArgsList		

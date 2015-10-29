@@ -54,6 +54,15 @@
 							</select>
 						</div>
 						<div>
+							<label for="fraud">Fraud</label>
+							<select id="fraud" name="fraud">
+								<option value="">All</option>
+								<option value="P" <cfif request.p.FraudStatus EQ 'P'>selected="selected"</cfif>>Pending</option>
+								<option value="Y" <cfif request.p.FraudStatus EQ 'Y'>selected="selected"</cfif>>Yes</option>
+								<option value="N" <cfif request.p.FraudStatus EQ 'N'>selected="selected"</cfif>>No</option>
+							</select>
+						</div>
+						<div>
 							<label for="activationStatus">Activation Status</label>
 							<select id="activationStatus" name="activationStatus">
 								<option value="">All</option>

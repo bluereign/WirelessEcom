@@ -79,6 +79,19 @@
 		<cfset saveToSession(local.SubmitOrderResp,"SubmitOrderResp") />
 		<cfreturn local.SubmitOrderResp />
 	</cffunction>
+	
+	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset saveToSession(arguments,"SubmitCompletedOrderRequest") />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.beginTicks = getTickCount() />
+		<cfset local.SubmitCompletedOrderResp =  carrierObject(arguments.carrierId).submitCompletedOrder(argumentCollection = local.args) />	
+		<cfset local.endTicks = getTickCount() />
+		<cfset local.SubmitCompletedOrderResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfset saveToSession(local.SubmitCompletedOrderResp,"SubmitCompletedOrderResp") />
+		<cfreturn local.SubmitCompletedOrderResp />
+	</cffunction>
+
 
 	<!---<cffunction name="upgradeEligibility" output="false" access="public" returntype="any">		
 		<cfset var args = passthruArgs(argumentCollection = arguments ) />

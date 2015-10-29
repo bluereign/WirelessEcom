@@ -6,6 +6,7 @@
 <cfparam name="request.p.mdn" default="" type="string" />
 <cfparam name="request.p.orderStatus" default="" type="string" />
 <cfparam name="request.p.activationStatus" default="" type="string" />
+<cfparam name="request.p.fraudStatus" default="" type="string" />
 <cfparam name="request.p.carrierId" default="0" type="numeric" />
 <cfparam name="request.p.activationType" default="" type="string" />
 
