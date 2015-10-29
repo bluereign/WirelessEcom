@@ -39,7 +39,7 @@
         inputPhone1: "Please enter a valid phone number in the format of (999) 999-9999.",
         inputPhone2: "Please enter a valid phone number in the format of (999) 999-9999.",
         inputPhone3: "Please enter a valid phone number in the format of (999) 999-9999.",
-        inputZip: "Please enter a valid Billing ZIP Code.",
+        inputZip: "Invalid Zip code, try again.",
         inputSSN: "Please enter the Last 4 Digits of Social Security Number.",
         inputPin: "Please enter your Carrier Account Passcode/PIN correctly."
       },
