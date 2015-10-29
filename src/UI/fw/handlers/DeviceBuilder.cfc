@@ -512,7 +512,7 @@
 
       // <ZIP CHECK
       // if user has authenticated into carrier, make sure that the session zip is the carrier response object zip (unless they have logged out with Clear Entire Cart).
-      // else if inputZip exists and is valid, then set session.zipCode (ONLY IF the user has not authenticated with a carrier login).
+      // else if inputZip exists and is valid, then set session.zipCode (ONLY IF the user has not authenticated with a carrier logcarrier login).
       if ( structKeyExists(session,"carrierObj") and len(trim( session.carrierObj.getAddress().getZipCode() ) ) ) {
         session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
       } else if ( event.valueExists('inputZip') and len(event.getValue('inputZip')) eq 5 and isNumeric(event.getValue('inputZip'))  ) {
@@ -531,7 +531,7 @@
           prc.navItemsText = ["Choose Line","Protection &amp; Services","Accessories","Cart Review"];
           } else {
             prc.navItemsAction = ["carrierlogin","upgradeline","plans","protection","accessories","orderreview"];
-            prc.navItemsText = ["Carrier Login","Choose Line","Plans and Data","Protection &amp; Services","Accessories","Cart Review"];
+            prc.navItemsText = ["Carrier Lookup","Choose Line","Plans and Data","Protection &amp; Services","Accessories","Cart Review"];
           }
 
           // prc.addxStep = event.buildLink('devicebuilder.upgradeline') & '/type/upgradex/';
@@ -548,7 +548,7 @@
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];
-          prc.navItemsText = ["Carrier Login","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Cart Review"];
+          prc.navItemsText = ["Carrier Lookup","Plans and Data","Protection &amp; Services","Accessories","Number Porting","Cart Review"];
           prc.addxStep = event.buildLink('devicebuilder.protection') & '/type/addalinex/';
           // prc.tallyboxHeader = "Add a Line";
           prc.cartTypeId = 3;
