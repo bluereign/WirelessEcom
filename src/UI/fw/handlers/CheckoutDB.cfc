@@ -1157,6 +1157,39 @@
 		<cfset event.setView('CheckoutDB/thanksDB') />
 	</cffunction>
 	
+	<cffunction name="emailPDF" returntype="void" access="remote" output="false">
+		<cfargument name="urlPDF" type="string" required="yes" />
+		<cfargument name="rc">
+		<cfargument name="event">   
+		
+		<cfset theOrder = CreateObject('component', 'cfc.model.Order').init() />
+		<cfset theOrderAddress = CreateObject('component', 'cfc.model.OrderAddress').init() />
+		<cfset theUser = CreateObject('component', 'cfc.model.User').init() />
+		
+		<cfset theOrder.load(session.checkout.OrderId) />
+		<cfset theUser.getUserById(theOrder.getUserId()) />
+		<cfset theShippingAddress = theOrder.getShipAddress() />
+		
+		<!--- setting email variable locally so that the footer is not dependent on a specific object for the email value --->
+		<cfset email = theOrder.getEmailAddress() />
+		<cfset sendFrom = request.config.customerServiceEmail />
+		<cfset subject = "#channelConfig.getDisplayName()# Order Documents" />
+		
+		<!--- mail the message --->
+		<cfmail to="#email#"
+        from="#sendFrom#"
+        subject="#subject#"
+        type="html">
+   		Please find attached your requested document.
+   		<cfmailparam
+                file="#urlPDF#"
+                type="application/pdf"
+                />
+        
+		</cfmail>
+        <cfset event.noRender() />
+	</cffunction>
+	
 	<cffunction name="customerservice" returntype="void" output="false" hint="">
 		<cfset request.layoutFile = 'nolayout' />
 		<cfset request.Title = ChannelConfig.getDisplayName() & ' Customer Service' />

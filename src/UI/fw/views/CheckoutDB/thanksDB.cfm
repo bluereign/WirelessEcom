@@ -125,6 +125,11 @@
     			parent.document.getElementById('confirmationPrint').contentWindow.print();
     		}
 		})
+		
+		$('#emailButton').click( function() {
+			
+		
+		})
 
 	});
 	
@@ -731,7 +736,7 @@
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       	<button type="button" id="printButton" class="btn btn-default">Print Device Agreement</button>
-        <button type="button" id="agreeButton" class="btn btn-default" data-dismiss="modal">Email Device Agreement</button>
+        <button type="button" id="emailButton" class="btn btn-default" data-dismiss="modal">Email Device Agreement</button>
       </div>
     </div>
 
