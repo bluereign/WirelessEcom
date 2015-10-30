@@ -387,7 +387,6 @@
         <h4>Have Questions?</h4>
         <ul>
           <li><a href="/index.cfm/go/content/do/customerService">Call us at 1-800-555-1212</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">Chat with one of our representatives</a></li>
           <li><a href="/index.cfm/go/content/do/FAQ">E-mail one of our experts</a></li>
           <li><a href="/index.cfm/go/content/do/FAQ">Frequently Asked Questions</a></li>
         </ul>
@@ -554,8 +553,8 @@
 				<a name="footnote1" style="font-size:8px">
 					1
 				</a>
-			</sup>
-			Orders can take up to #getChannelConfig().getOrderProcessingTime()# business days to process before shipping. 
+			</sup>			
+			Orders can take up to #getChannelConfig().getOrderProcessingTime()# business days to process before shipping. Once the order is shipped you will receive an email with the tracking number. 
 		</span>
 		<br/>
 		<span class="note">

@@ -1,5 +1,11 @@
 <cfcomponent name="CheckoutDB" output="false" extends="BaseHandler">
 	<!--- Use CFProperty to declare beans for injection.  By default, they will be placed in the variables scope --->
+	<cfproperty name="CarrierFacade" inject="id:CarrierFacade" />
+	<cfproperty name="CarrierHelper" inject="id:CarrierHelper" />
+	<cfproperty name="AttCarrier" inject="id:AttCarrier" />
+	<cfproperty name="VzwCarrier" inject="id:VzwCarrier" />
+	<cfproperty name="MockCarrier" inject="id:MockCarrier" />
+	<cfproperty name="ChannelConfig" inject="id:ChannelConfig" />
 	<cfproperty name="assetPaths" inject="id:assetPaths" scope="variables" />
 	
 	<cfsetting requesttimeout="1000" />
@@ -686,17 +692,73 @@
 	<cffunction name="carrierAgreements" returntype="void" output="false" hint="">
 		<cfargument name="event">
 
+		<cfset rc.accountRespObj = session.carrierObj>
+		<cfset rc.carrierId = session.carrierObj.getCarrierId()>
+		
+		<cfswitch expression="#channelConfig.getDisplayName()#">
+			<cfcase value="Costco">
+				<cfset local.channel = 0>
+				<cfbreak/>
+			</cfcase>
+			<cfcase value="AAfes">
+				<cfset local.channel = 1>
+				<cfbreak/>
+			</cfcase>
+			<cfdefaultcase>
+				<cfset local.channel = 0>
+			</cfdefaultcase>
+		</cfswitch>
+		
+		<cfset local.args_getFinanceAgreementRequest = {
+			carrierId = #rc.carrierId#,
+			AccountRespObj = #rc.accountRespObj#,
+			Channel = #local.channel#			
+		} />
+		
+		<cfset local.args_financeAgreementRequest = carrierHelper.getFinanceAgreementRequest(argumentCollection=local.args_getFinanceAgreementRequest) />
+		<cfset session.financeAgreementRequest = local.args_financeAgreementRequest />
+		<cfset session.accountResp = rc.accountRespObj />
+		<cfset local.args_financeAgreementRequest.carrierId = rc.carrierid />
+		<cfset rc.financeAgreementRequest = local.args_financeAgreementRequest />
+		<cfset rc.financeAgreementRequestJSON = AttCarrier.serializeJSonAddReferenceNumber(local.args_financeAgreementRequest) /><!--- for testing only --->
+		<cfset rc.FinanceAgreementRespObj = carrierFacade.FinanceAgreement(argumentCollection = local.args_financeAgreementRequest) />	
+		<cfset session.FinanceAgreementResp = rc.FinanceAgreementRespObj />
+		<cfset rc.pdf = session.FinanceAgreementResp.getResponse().FinanceAgreement />
+
 		<cfset event.setLayout('checkoutDB') />
 		<cfset event.setView('CheckoutDB/carrierAgreementsDB') />
 	</cffunction>
 	
+	<cffunction name="financeAgreement" returntype="void" output="false">
+		<cfargument name="event">
+		<cfargument name="rc">
+		<cfargument name="prc">
+		
+		<cfset rc.pdf = base64ToString(session.FinanceAgreementResp.getResponse().FinanceAgreement) />
+		<cfset event.setLayout('viewPdf') />
+		<cfset event.setView('TestFullAPI/ViewPDF') />
+	</cffunction>
+	
+	<cffunction name="base64ToString" returntype="any">
+		<cfargument name="base64Value" type="any" required="yes" />
+        
+        <cfset var binaryValue = binaryDecode(base64Value,'base64' ) />
+		<cfset var stringValue = ToString(binaryValue,'iso-8859-1' ) />
+        
+        <cfreturn stringValue />
+  
+	</cffunction>
+	
 	<cffunction name="processCarrierAgreements" returntype="void" output="false" hint="">
 		<cfargument name="event">
-
-		<cfset application.model.checkoutHelper.markStepCompleted('carrierAgreements') />
+		<cfargument name="rc">
+		<cfargument name="prc">
 		
-		<cfset setNextEvent('checkoutDB/orderReview') />
+		<cfset application.model.checkoutHelper.markStepCompleted('carrierAgreements') />
+        
+        <cfset setNextEvent('checkoutDB/orderReview') />
 	</cffunction>
+	
 	
 	<cffunction name="orderReview" returntype="void" output="false" hint="">
 		<cfargument name="event">

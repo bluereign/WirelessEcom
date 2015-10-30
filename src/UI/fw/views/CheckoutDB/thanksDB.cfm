@@ -43,29 +43,68 @@
 		
 		$('#agreeToContractDoc').click( function() {
 			$('#docClicked').val("agreeToContract");
+			if ($('#carrierID').val()=='42'){
+				alert("Verizon");
+			}
+			if ($('#carrierID').val()=='109'){
+				alert("ATT");
+			}
 			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
 			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
 			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+		})
+		
+		$('#agreeToContractExtension').click( function() {
+			$('#docClicked').val("agreeToContractExtension");
+			if ($('#carrierID').val()=='42'){
+				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
+				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
+				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
+			}
+			if ($('#carrierID').val()=='109'){
+				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
+				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
+				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
+			}
+		})
+		
+		$('#agreeToDevicePaymentPlan').click( function() {
+			$('#docClicked').val("agreeToDevicePaymentPlan");
+			if ($('#carrierID').val()=='42'){
+				
+			}
+			if ($('#carrierID').val()=='109'){
+				$('#carrierDoc').attr('data', $('#pdfURL').val());
+				$('#carrierDocEmbed').attr('src', $('#pdfURL').val());
+				$('#confirmationPrint').attr('src', $('#pdfURL').val());
+			}
 		})
 		
 		$('#agreeToCarrierTermsAndConditions').click( function() {
 			$('#docClicked').val("agreeToCarrierTermsAndConditions");
-			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf');
-			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf');
-			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf');
+			if ($('#carrierID').val()=='42'){
+				$('#carrierDoc').attr('data', $('#verizonTermsURL').val());
+				$('#carrierDocEmbed').attr('src', $('#verizonTermsURL').val());
+				$('#confirmationPrint').attr('src', $('#verizonTermsURL').val());
+			}
+			if ($('#carrierID').val()=='109'){
+				$('#carrierDoc').attr('data', $('#attTermsURL').val());
+				$('#carrierDocEmbed').attr('src', $('#attTermsURL').val());
+				$('#confirmationPrint').attr('src', $('#attTermsURL').val());
+			}
 		})
 		
 		$('#agreeToCustomerLetter').click( function() {
 			$('#docClicked').val("agreeToCustomerLetter");
-			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
-			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
-			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
-		})
-		
-		$('#agreeButton').click( function() {
-			var checkName = $('#docClicked').val();
-			if($('input[type="checkbox"][name="'+ checkName +'"]').attr('Checked','false')){
-				$('input[type="checkbox"][name="'+ checkName +'"]').attr('Checked','Checked');
+			if ($('#carrierID').val()=='42'){
+				$('#carrierDoc').attr('data', $('#costcoVerizonTermsURL').val());
+				$('#carrierDocEmbed').attr('src', $('#costcoVerizonTermsURL').val());
+				$('#confirmationPrint').attr('src', $('#costcoVerizonTermsURL').val());
+			}
+			if ($('#carrierID').val()=='109'){
+				$('#carrierDoc').attr('data', $('#costcoAttTermsURL').val());
+				$('#carrierDocEmbed').attr('src', $('#costcoAttTermsURL').val());
+				$('#confirmationPrint').attr('src', $('#costcoAttTermsURL').val());
 			}
 		})
 		
@@ -106,7 +145,16 @@
 		<hr/>
 		<h3>Order Agreements and Purchase Summary</h3>
 		<br/>
-		<p><a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">#application.model.checkoutHelper.getCarrierName()# device financing agreement name</a></p>
+		<cfif session.cart.getActivationType() CONTAINS "New" or session.cart.getActivationType() CONTAINS "addaline" or session.cart.getActivationType() DOES NOT CONTAIN "finance">
+			<p><a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">#application.model.checkoutHelper.getCarrierName()# Two Year Customer Agreement</a></p>
+		<cfelse>
+			<cfif session.cart.getActivationType() DOES NOT CONTAIN "finance">
+				<p><a href="##" id="agreeToContractExtension" data-toggle="modal" data-target="##carrierDocModal">#application.model.checkoutHelper.getCarrierName()# Two Year Customer Extension</a></p>
+			</cfif>
+		</cfif>
+		<cfif session.cart.getActivationType() CONTAINS "finance">
+			<p><a href="##" id="agreeToDevicePaymentPlan" data-toggle="modal" data-target="##carrierDocModal">#application.model.checkoutHelper.getCarrierName()# Device Payment Plan</a></p>
+		</cfif>
 		<p><a href="##" id="agreeToCarrierTermsAndConditions" data-toggle="modal" data-target="##carrierDocModal">#application.model.checkoutHelper.getCarrierName()# Terms and Conditions</a></p>
 		<p><a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">Costco Wireless Customer Letter</a></p>
 		<br/>
@@ -115,10 +163,17 @@
           <p class="bg-warning" style="padding:10px">#prc.warningMessage#</p>
         </cfif>
 
-        <form id="formCheckoutReview" action="#event.buildLink('/CheckoutDB/processOrderReview')#" method="post">
-          
-          <input type="hidden" name="cartLineNumber" value="#request.config.otherItemsLineNumber#" />
-
+		<form id="formCheckoutReview" action="#event.buildLink('/CheckoutDB/processOrderReview')#" method="post">
+          	<input type="hidden" id="carrierID" value="#session.cart.getCarrierId()#">
+			<input type="hidden" name="cartLineNumber" value="#request.config.otherItemsLineNumber#" />
+			<input type="hidden" id="pdfURL" value="#event.buildLink('/CheckoutDB/financeAgreement')#">
+			<input type="hidden" id="verizonContractExtensionURL" value="#assetPaths.channel#docs/customerletters/verizon/Verizon_2yr_Customer_Letter_9_29_15_API.pdf">
+			<input type="hidden" id="attContractExtensionURL" value="#assetPaths.channel#docs/customerletters/att/ATT_2Year_Customer_Letter_9_29_15_API_1.pdf">
+			<input type="hidden" id="verizonTermsURL" value="#assetPaths.channel#docs/termsandconditions/verizon/Verizon_tc_07_24_2015.pdf">
+			<input type="hidden" id="attTermsURL" value="#assetPaths.channel#docs/termsandconditions/att/att_tc_1_27_15.pdf">
+			<input type="hidden" id="costcoVerizonTermsURL" value="#assetPaths.channel#docs/termsandconditions/verizon/Verizon_Customer_Letter_09_24_15.pdf">
+			<input type="hidden" id="costcoAttTermsURL" value="#assetPaths.channel#docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf">
+				
           <div class="content">
             
             <div class="row hidden-xs">
@@ -462,7 +517,6 @@
         <h4>Have Questions?</h4>
         <ul>
           <li><a href="/index.cfm/go/content/do/customerService">Call us at 1-800-555-1212</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">Chat with one of our representatives</a></li>
           <li><a href="/index.cfm/go/content/do/FAQ">E-mail one of our experts</a></li>
           <li><a href="/index.cfm/go/content/do/FAQ">Frequently Asked Questions</a></li>
         </ul>
@@ -625,8 +679,8 @@
 				<a name="footnote1" style="font-size:8px">
 					1
 				</a>
-			</sup>
-			Orders can take up to 2 business days to process before shipping. 
+			</sup> 
+			Orders can take up to 2 business days to process before shipping. Once the order is shipped you will receive an email with the tracking number.
 		</span>
 		<br/>
 		<span class="note">
