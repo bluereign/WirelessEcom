@@ -168,6 +168,9 @@
 		<cfif not structKeyExists (session,"carrierFacade") >
 			<cfreturn false />
 		</cfif>
+		<cfif not structKeyExists (session.carrierFacade,"AccountResp") >
+			<cfreturn false />
+		</cfif>
 		<cfif not structKeyExists (session.carrierFacade,"FinanceAgreementResp") >
 			<cfreturn false />
 		</cfif>
@@ -179,9 +182,9 @@
 		</cfif>
 		
 		<!--- Loop thru the Agreement Items and generate/save a document for each agreement --->
-		<cfloop array="#session.cartfacade.FinanceAgreementResp.AgreementItems#" index="local.fai">
+		<cfloop array="#session.carrierFacade.FinanceAgreementResp.AgreementItems#" index="local.fai">
 			<cfset local.eConsentHtml = getEConsentHtml(local.fai) />
-			<cfdocument format="pdf "name="local.eConsentPDF" orientation="portrait">
+			<cfdocument format="pdf" name="local.eConsentPDF" orientation="portrait">
 				<cfoutput>#local.eConsentHtml#</cfoutput>
 			</cfdocument>
 			<cfset local.Base64Pdf = ToBase64(local.eConsentPDF) />
@@ -191,8 +194,8 @@
 				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
 				<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#trim(local.fai.installmentPlanId)#" > 
 				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(local.fai.AttDeviceOrderItem.subscriber.number)#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.accountNumber)#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.nameOnAccount)#" > 
+				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(session.carrierFacade.accountResp.Account.accountIdentifier)#" > 
+				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(session.carrierfacade.accountResp.Account.PrimaryAccountHolder)#" > 
 				<cfprocparam cfsqltype="CF_SQL_DATE" value="#dateformat(now(),'mm/dd/yyyy')#" > 
 				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#getChannelValue()#" > 
 				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="2" > <!---1=financeAgreement 2=eConsent --->
