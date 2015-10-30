@@ -1213,7 +1213,7 @@ $j(document).ready(function($j) {
 							<strong style="font-size:16px;">Current #prc.productData.carrierName# customer?</strong>
 							<br />
 							<br />
-							<p>Upgrade online now or Add a Line at your local warehouse.</p>
+							<p>You can Upgrade your device online or visit your local warehouse to Add a Line to your account.</p>
 							<br />
 							<br />
 							<div class="row center-block">
@@ -1241,7 +1241,7 @@ $j(document).ready(function($j) {
 								<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
 								<br />
 								<br />
-								<p>Visit your local warehouse to switch to #prc.productData.carrierName#.</p>
+								<p>Please visit your local warehouse if you would like to switch to #prc.productData.carrierName#.</p>
 								<br />
 								<br />
 								<div class="row center-block">
