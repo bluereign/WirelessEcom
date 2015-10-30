@@ -275,7 +275,6 @@ form .form-inline label { width:auto;}
         <h4>Have Questions?</h4>
         <ul>
           <li><a href="/index.cfm/go/content/do/customerService">Call us at 1-800-555-1212</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">Chat with one of our representatives</a></li>
           <li><a href="/index.cfm/go/content/do/FAQ">E-mail one of our experts</a></li>
           <li><a href="/index.cfm/go/content/do/FAQ">Frequently Asked Questions</a></li>
         </ul>
