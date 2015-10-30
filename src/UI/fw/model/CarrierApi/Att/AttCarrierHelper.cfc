@@ -88,8 +88,9 @@
 		<cfset local.orderItem = structNew() />
 		<cfset local.wirelesslines = session.order.getWirelessLines() />
 		
-		<cfset local.uuid = createUUID() />
-		<cfset local.orderItem.Identifier = left(local.uuid,19) & mid(local.uuid,20,4) & '-' & right(local.uuid,12) />
+		<!---<cfset local.uuid = createUUID() />
+		<cfset local.orderItem.Identifier = left(local.uuid,19) & mid(local.uuid,20,4) & '-' & right(local.uuid,12) />--->
+		<cfset local.orderItem.Identifier = createGUID() />
 		<cfset local.orderitem.RequestType = getRequestType(session.order.getActivationTypeName()) />
 		<cfset local.orderitem.FinanceAgreementItem = arguments.faai />
 		<cfset local.orderItem.UpgradeQualification = arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications />
@@ -159,6 +160,77 @@
 		
 		<cfreturn local.far />		
 	</cffunction>
+	
+	<cffunction name="saveEConsent" output="false" access="public" returntype="boolean">
+		<cfset var local = structNew() />
+		
+		<!--- make sure we have the info stored in session --->
+		<cfif not structKeyExists (session,"carrierFacade") >
+			<cfreturn false />
+		</cfif>
+		<cfif not structKeyExists (session.carrierFacade,"FinanceAgreementResp") >
+			<cfreturn false />
+		</cfif>
+		<cfif not structKeyExists (session.carrierFacade,"FinanceAgreementResp") >
+			<cfreturn false />
+		</cfif>
+		<cfif not structKeyExists (session,"Order") >
+			<cfreturn false />
+		</cfif>
+		
+		<!--- Loop thru the Agreement Items and generate/save a document for each agreement --->
+		<cfloop array="#session.cartfacade.FinanceAgreementResp.AgreementItems#" index="local.fai">
+			<cfset local.eConsentHtml = getEConsentHtml(local.fai) />
+			<cfdocument format="pdf "name="local.eConsentPDF" orientation="portrait">
+				<cfoutput>#local.eConsentHtml#</cfoutput>
+			</cfdocument>
+			<cfset local.Base64Pdf = ToBase64(local.eConsentPDF) />
+			
+			<cfstoredproc datasource="wirelessadvocates" procedure="service.FinanceAgreementSave" result="local.result">
+				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#session.order.getOrderId()#" > 
+				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
+				<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#trim(local.fai.installmentPlanId)#" > 
+				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(local.fai.AttDeviceOrderItem.subscriber.number)#" > 
+				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.accountNumber)#" > 
+				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.nameOnAccount)#" > 
+				<cfprocparam cfsqltype="CF_SQL_DATE" value="#dateformat(now(),'mm/dd/yyyy')#" > 
+				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#getChannelValue()#" > 
+				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="2" > <!---1=financeAgreement 2=eConsent --->
+				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(local.Base64Pdf)#" > 
+				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="1" > <!--- Processing Status, Always 1 --->
+			</cfstoredproc>			
+			
+		</cfloop>
+		
+		<cfreturn true />
+	</cffunction>
+		
+	<cffunction name="getEConsentHTML" output="false" access="public" returntype="string">
+		<cfargument name="agreementItem" type="struct" required="true" />		
+		<cfset var local = structNew() />
+		<cfsavecontent variable="local.econsent">
+			<cfoutput>
+			#arguments.agreementItem.AttDeviceOrderItem.Subscriber.Number#<br/>
+			#arguments.agreementItem.AttDeviceOrderItem.Subscriber.Contact.Contact.FirstName# #arguments.agreementItem.AttDeviceOrderItem.Subscriber.Contact.Contact.LastName#<br/>
+			#dateformat(now(),"mm/dd/yyyy")#<br/>
+			<p>
+			I acknowledge that Wireless Advocates has on this date presented me with a printed and completed Retail Installment Sale 
+			Agreement/Notice to Buyer (the “Agreement”) and I was given an opportunity to review the terms, including 8.33 and my right 
+			to cancel within 14 days. I understand that Wireless Advocates is not authorized to make or accept any changes to the Agreement 
+			and that if there are any markings or strikeouts they are not binding on Wireless Advocates or its assignee AT&T.
+			</p>
+			<p>
+			By signing my name on the Agreement under the Notice to Buyer and below, I acknowledge that I have read this Agreement and that 
+			Wireless Advocates gave me a copy of my signed Agreement.	
+			<p/>	
+			#arguments.agreementItem.AttDeviceOrderItem.Subscriber.Contact.Contact.FirstName# #arguments.agreementItem.AttDeviceOrderItem.Subscriber.Contact.Contact.LastName# 
+			#dateformat(now(),"mm/dd/yyyy")#<br/>
+			</cfoutput>		
+			
+		</cfsavecontent>	
+		
+		<cfreturn local.econsent />
+	</cffunction>			
 	
 	<cffunction name="getDeviceInfo" access="private" returnType="struct">
 		<cfargument name="cartLineNo" type="numeric" required="true" />
