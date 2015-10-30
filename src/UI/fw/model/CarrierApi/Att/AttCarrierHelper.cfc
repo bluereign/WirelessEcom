@@ -88,7 +88,8 @@
 		<cfset local.orderItem = structNew() />
 		<cfset local.wirelesslines = session.order.getWirelessLines() />
 		
-		<cfset local.orderItem.Identifier = createUUID() />
+		<cfset local.uuid = createUUID() />
+		<cfset local.orderItem.Identifier = left(local.uuid,19) & mid(local.uuid,20,4) & '-' & right(local.uuid,12) />
 		<cfset local.orderitem.RequestType = getRequestType(session.order.getActivationTypeName()) />
 		<cfset local.orderitem.FinanceAgreementItem = arguments.faai />
 		<cfset local.orderItem.UpgradeQualification = arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications />
