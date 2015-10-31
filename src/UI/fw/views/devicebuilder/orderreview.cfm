@@ -532,20 +532,22 @@
       <div class="sidebar">
         <h4>Have Questions?</h4>
         <ul>
-          <li><a href="/index.cfm/go/content/do/customerService">Call us at 1-800-555-1212</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">Chat with one of our representatives</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">E-mail one of our experts</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">Frequently Asked Questions</a></li>
+          <li><a href="/index.cfm/go/content/do/customerService" target="_blank">Call us at 1-800-555-1212</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ" target="_blank">E-mail one of our experts</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ" target="_blank">Frequently Asked Questions</a></li>
         </ul>
+	  </div>
+	  <div class="sidebar">
         <h4>Our Signature Promise</h4>
         <ul>
-          <li><a href="/index.cfm/go/content/do/shipping">Free UPS ground shipping</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">90 day return policy</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">Return in store</a></li>
+          <li><a href="/index.cfm/go/content/do/shipping" target="_blank">Free UPS ground shipping</a></li>
+          <li><a href="/index.cfm/go/content/do/FAQ##return_phone" target="_blank">90 day return policy</a></li>
+          <li><a href="##" data-toggle="modal" data-target="##accessoryKitModal">Member Accessory Kit</a></li>
         </ul>
       </div>
     </div>
   </div>
+
   <div class="row summary">
     <div class="col-md-12">
 
@@ -718,4 +720,20 @@
   </div>
 </div>
 
+<div class="modal fade" id="accessoryKitModal" tabindex="-1" role="dialog" aria-labelledby="accessoryKitModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="accessoryKitModalLabel">Member Benefit Kit</h4>
+									</div>
+									<div class="modal-body">
+										<p>Each device purchased includes an accessory bonus pack.  Contents of bonus pack vary by device.</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
 </cfoutput>
