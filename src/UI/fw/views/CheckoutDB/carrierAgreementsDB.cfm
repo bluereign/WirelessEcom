@@ -172,7 +172,16 @@ form .form-inline label { width:auto;}
 			</cfif>
 		</p>
 	<form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
-		
+		<h4><a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a></h4>
+		<div class="form-group form-inline">		
+			<label><input type="checkbox" name="agreeToCustomerLetter" />
+			<cfif session.cart.getCarrierId() eq 42>
+				I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER
+			<cfelseif session.cart.getCarrierId() eq 109>	
+				I have read and understand the information in the Costco Wireless Customer Letter
+			</cfif>	
+			</label>
+		</div>
 		
 		<p>
 			<cfif session.cart.getActivationType() CONTAINS "New" or session.cart.getActivationType() CONTAINS "addaline" or session.cart.getActivationType() DOES NOT CONTAIN "finance">
@@ -248,16 +257,8 @@ form .form-inline label { width:auto;}
 			</label>
 		</div>
 		
-		<h4><a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a></h4>
-		<div class="form-group form-inline">		
-			<label><input type="checkbox" name="agreeToCustomerLetter" />
-			<cfif session.cart.getCarrierId() eq 42>
-				I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER
-			<cfelseif session.cart.getCarrierId() eq 109>	
-				I have read and understand the information in the Costco Wireless Customer Letter
-			</cfif>	
-			</label>
-		</div>
+		
+    
 		
 		<hr class="bottom-break" />
 		
