@@ -34,7 +34,7 @@
         <div class="form-group form-inline ssn">
           <label for="inputSSN">Last 4 Digits of Social Security Number</label>
           <input type="password" class="form-control" id="inputSSN" name="inputSSN" value="<cfif isDefined('rc.inputSSN')>#rc.inputSSN#</cfif>" maxlength="4" />
-          <a href="##" data-toggle="tooltip" title="#prc.inputSSNTooltipTitle#" id="inputSSNToolTip">Who's SSN do I use?</a>
+          <a href="##" data-toggle="tooltip" title="#prc.inputSSNTooltipTitle#" id="inputSSNToolTip">Whose SSN do I use?</a>
         </div>
         <div class="form-group form-inline pin">
           <label for="inputPin">AT&amp;T Account Passcode</label>
