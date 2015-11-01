@@ -33,6 +33,10 @@
   <cfset qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
 </cfif>
 
+<!--- <cfdump var="#session.cartHelper.getLineSelectedFeatures(1)#"> --->
+<!--- <cfset cartLine = prc.cartLines[1] />
+<cfdump var="#application.model.ServiceManager.verifyRequiredServiceSelections( cartLine.getPlan().getProductId(), cartLine.getPhone().getProductId(), session.cartHelper.getLineSelectedFeatures(1), false, ArrayNew(1), application.model.cart.getCartTypeId(session.cart.getActivationType()) )#" /> --->
+
 <cfoutput>
     <div class="col-md-12">
       <section class="content">
