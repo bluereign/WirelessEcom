@@ -1,4 +1,3 @@
-<!--- <cfdump var="#rc#"> --->
 <cfoutput>
   <div class="col-md-12">
 
@@ -13,7 +12,7 @@
         <div class="right">
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
+          <button type="button" class="btn btn-primary btnContinue" id="btnContinue" data-toggle="modal" data-target=""
             <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
               disabled
             </cfif>
@@ -148,8 +147,6 @@
             <hr />
             <h4 id="h4AdditionalServices" style="display: none;">Additional Service</h4>
 
-            <!--- <br><cfdump var="#prc.groupLabels#"> --->
-
             <cfset prc.serviceCounter = 0>
             <cfloop query="prc.groupLabels">
 
@@ -160,10 +157,6 @@
                 cartTypeId = prc.cartTypeId,
                 rateplanId = prc.cartPlan.productGuid
                 } />
-              <!--- 
-              <cfif len(prc.cartPlan)>
-                <cfset local.serviceArgs.rateplanId = prc.cartPlan.productGuid />
-              </cfif> --->
               
               <cfset serviceLabels = application.model.serviceManager.getServiceMasterLabelsByGroup( argumentCollection = local.servicesArgs ) />
               
@@ -184,7 +177,6 @@
               
               <cfif serviceLabels.recordCount gt 0>
                 <div>#trim(prc.groupLabels.label)#</div>
-                <!--- <cfdump var="#serviceLabels#"> --->
                 <cfset prc.i = 1 />
                 <cfset prc.nothanks = 1 />
                 <cfloop query="serviceLabels">
@@ -210,14 +202,8 @@
 
                       <a type="button" data-toggle="modal" data-target="##featureModal" href="#event.buildLink('devicebuilder.featuremodal')#/cartLineNumber/#rc.cartLineNumber#/fid/#serviceLabels.productId#">
                         #trim(serviceLabels.label)#
-                        <!--- (#serviceLabels.productId#) --->
                       </a>
                       #dollarFormat(serviceLabels.monthlyFee)#/mo
-                      <!--- <cfif rc.paymentoption is 'financed' and (len(serviceLabels.FinancedPrice))>
-                        #dollarFormat(serviceLabels.FinancedPrice)#/mo
-                      <cfelse>
-                        #dollarFormat(serviceLabels.monthlyFee)#/mo
-                      </cfif> --->
                     </label>
                   </div>
                   <cfset prc.i = (prc.i + 1) />
@@ -255,7 +241,7 @@
 
         <div class="right">
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
+          <button type="button" class="btn btn-primary btnContinue" id="btnContinue" data-toggle="modal" data-target=""
             <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
               disabled
             </cfif>
@@ -267,22 +253,31 @@
       </form>
     </section>
 
-    
-
-
   </div>
 
   <script type="text/javascript">
+    
     function onChangeHandler(form,paymentoption) {
-      // form.action='#event.buildLink('devicebuilder.protection')#';
       form.paymentoption.value=paymentoption;
       // form.submit();
-      // Post
       $.post('#event.buildLink('devicebuilder.tallybox')#', $('##protectionForm').serialize(), function(data){
         $('##myTallybox').html( data )
       });
-      // {cartLineNumber:#rc.cartLineNumber#, paymentoption: paymentoption, financed: form.financed.value, warrantyid: form.warrantyid.value}
-    }    
+    }
+
+    $(function() {
+      
+      $('.btnContinue').click(function(){
+        if ( $('input[name=warrantyid]:checked').val() == 0 ) {
+          $('.btnContinue').attr('data-target', '##confirmNoProtectionModal');
+        } else {
+          $('.btnContinue').attr('data-target', '');
+          $('##protectionForm').submit();
+        }
+      });
+
+    });
+
   </script>
 
   <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
