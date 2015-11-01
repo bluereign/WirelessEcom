@@ -27,7 +27,7 @@
           <h4>#prc.productData.carrierName# Device Payment Options</h4>
           <div class="radio">
             <label>
-              <input type="radio" name="paymentoption" value="financed" <cfif prc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
+              <input type="radio" name="paymentoption" id="paymentoption" value="financed" <cfif prc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
               
               <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
                 
@@ -287,16 +287,18 @@
 
   <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
     <script>
-      $('##isDownPaymentApproved').click(function() {
-          var $this = $(this);
-          // $this will contain a reference to the checkbox   
-          if ($this.is(':checked')) {
-              // the checkbox was checked 
-              $('.btnContinue').prop('disabled', false);
-          } else {
-              // the checkbox was unchecked
-              $('.btnContinue').prop('disabled', true);
-          }
+      $(function() {
+        $('##isDownPaymentApproved').click(function() {
+            var $this = $(this);
+            // $this will contain a reference to the checkbox   
+            if ($this.is(':checked')) {
+                // the checkbox was checked 
+                $('.btnContinue').prop('disabled', false);
+            } else {
+                // the checkbox was unchecked
+                $('.btnContinue').prop('disabled', true);
+            }
+        });
       });
     </script>
   </cfif>
@@ -308,5 +310,13 @@
       });
     </script>
   </cfif>
+
+ <!--- Submit the AJAX/Tallybox form post upon load to update tally box with the pre-selected required service --->
+  <script>
+    $(function() {
+      var protectionvalue = $('input[name=paymentoption]:checked').val();
+      onChangeHandler(protectionForm,protectionvalue);
+    });
+  </script>
 
 </cfoutput>
