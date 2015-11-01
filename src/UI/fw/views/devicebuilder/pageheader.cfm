@@ -42,6 +42,7 @@
             <ul class="nav navbar-nav nav-tabs">
               <li role="presentation"><a href="##">Return to Shopping</a></li>
             </ul>
+            <!--- <cfinclude template="../../../layouts/costco/_topNav.cfm" /> --->
           </div>
         </div>
       </nav>
