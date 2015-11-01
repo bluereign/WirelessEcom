@@ -1058,25 +1058,268 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var prevAction = "" />
+    <cfset var servicesArgs = {} />
+    <cfset var groupLabels = "" />
+    <cfset var serviceLabels = "" />
+    <cfset var cartLine = "" />
+    <cfset var isRequiredServiceInCartLine = 0 />
+    <cfset var lineFeatures = "" />
+    <cfset var i = 0 />
+    <cfset var j = 0 />
+    <cfset var k = 0 />
+    <cfset var m = 0 />
+    <cfset var cartLinePhone = "" />
+    <cfset var cartValidationResponse = {} />
+    <cfset var cartErrors = [] />
+    <cfset var errorListCounter = 0 />
+    <cfset var lineMessage = "" />
+    <cfset var alertMsg = "" />
+    <cfset var SmartPhoneCount = 0 />
     <cfparam name="prc.showAddAnotherDeviceButton" default="true" />
     <cfparam name="prc.showCheckoutnowButton" default="true" />
+    <cfparam name="prc.disableCheckoutnowButton" default="false" />
     <cfparam name="prc.showClearCartLink" default="true" />
+
 
     <!--- Remove empty cart lines --->
     <!--- <cfset application.model.CartHelper.removeEmptyCartLines() /> --->
     <!--- TODO:  apply rebates logic from cfc/model/LineService.cfc --->
+    
+    <!--- error if the cart contains a family plan but appears to have fewer than 2 lines on non-shared plans --->
+
     <cfscript>
+
+      
+      // cartValidationResponse = application.model.cartHelper.validateCartForCheckout();
+      // if ( arrayLen(prc.cartLines) and !cartValidationResponse.getIsCartValid() ) {
+      //   cartErrors = cartValidationResponse.getErrors();
+      //   alertMsg = "Please correct the following #arraylen(cartErrors)# issue(s): ";
+      //   for (i = 1; i lte arrayLen(cartErrors); i++) {
+      //     errorListCounter = errorListCounter + 1;
+      //     alertMsg = alertMsg & "<br>" & "(#errorListCounter#) " & cartErrors[i];
+      //   }
+      //   prc.warningMessage = alertMsg;
+      // }
+      
+
+
+      // determine which items in the cart are abandoned or incomplete.
+      prc.listIncompleteCartLineIndex = "";
+      prc.listIncompleteCartLineProblem = "";
+      prc.arrayIncompleteCartLineMessages = [];
+
+      if (arrayLen(prc.cartLines)) {
+        for (i = 1; i lte arrayLen(prc.cartLines); i++) {
+          cartLine = prc.cartLines[i];
+
+          if ( cartLine.getPhone().getDeviceServiceType() eq 'SmartPhone' ) {
+            SmartPhoneCount++;
+          }
+
+          // CARRIER AUTH CHECK:  Must be logged in if 'upgrade' or 'addaline' customer:
+          if ( listFindNoCase(listCustomerTypesRequireLogin, prc.customerType) and !structKeyExists(session, "carrierObj") and !listFindNoCase(prc.listIncompleteCartLineIndex, i) ) {
+            prc.listIncompleteCartLineIndex = listAppend(prc.listIncompleteCartLineIndex,i);
+            prc.listIncompleteCartLineProblem = listAppend(prc.listIncompleteCartLineProblem,"carrierlogin");
+            lineMessage = "An upgrade requires you to log into your carrier account.";
+            arrayAppend(prc.arrayIncompleteCartLineMessages,lineMessage);
+          }
+
+          // SUBSCRIBER INDEX: If Upgrade, is there a subscriberIndex for this line?
+          else if ( prc.customerType is 'upgrade' and cartLine.getSubscriberIndex() lt 1 and !listFindNoCase(prc.listIncompleteCartLineIndex, i)) {
+            prc.listIncompleteCartLineIndex = listAppend(prc.listIncompleteCartLineIndex,i);
+            prc.listIncompleteCartLineProblem = listAppend(prc.listIncompleteCartLineProblem,"upgradeline");
+            lineMessage = "This device requires a line selected to upgrade.";
+            arrayAppend(prc.arrayIncompleteCartLineMessages,lineMessage);
+          }
+
+          // HAS PLAN: Is there a plan selected?
+          else if (!(isQuery(prc.cartPlan) and prc.cartPlan.recordcount) and !listFindNoCase(prc.listIncompleteCartLineIndex, i))  {
+            prc.listIncompleteCartLineIndex = listAppend(prc.listIncompleteCartLineIndex,i);
+            prc.listIncompleteCartLineProblem = listAppend(prc.listIncompleteCartLineProblem,"plans");
+            lineMessage = "This line does not contain a valid Device/Service Plan pairing.";
+            arrayAppend(prc.arrayIncompleteCartLineMessages,lineMessage);
+          }
+
+          // ZIP CODE: selected plan available in zipcode
+          else if ( !application.model.Plan.isPlanAvailableInZipcode(planId=prc.cartPlan.productId, zipcode=session.cart.getZipcode()) and !listFindNoCase(prc.listIncompleteCartLineIndex, i) ) {
+            prc.listIncompleteCartLineIndex = listAppend(prc.listIncompleteCartLineIndex,i);
+            prc.listIncompleteCartLineProblem = listAppend(prc.listIncompleteCartLineProblem,"carrierlogin");
+            lineMessage = "Your ZIP code is not known.  Please log into your carrier account.";
+            arrayAppend(prc.arrayIncompleteCartLineMessages,lineMessage);
+          }
+
+          // LEGACY LOGIC: from validateCartForCheckout():
+
+          // HAS PLAN/PHONE:
+          else if (!cartLine.getPlan().hasBeenSelected() or !cartLine.getPhone().hasBeenSelected()) {
+            prc.listIncompleteCartLineIndex = listAppend(prc.listIncompleteCartLineIndex,i);
+            prc.listIncompleteCartLineProblem = listAppend(prc.listIncompleteCartLineProblem,"plans");
+            lineMessage = "This line does not contain a valid Device/Service Plan pairing.";
+            arrayAppend(prc.arrayIncompleteCartLineMessages,lineMessage);
+          }
+
+
+          // HAS REQUIRED SERVICES:
+          else if (   !application.model.ServiceManager.verifyRequiredServiceSelections( cartLine.getPlan().getProductId(), cartLine.getPhone().getProductId(), getLineSelectedFeatures(cartLine), false, ArrayNew(1), application.model.cart.getCartTypeId( session.cart.getActivationType() ) )    ) {
+
+            prc.listIncompleteCartLineIndex = listAppend(prc.listIncompleteCartLineIndex,i);
+            prc.listIncompleteCartLineProblem = listAppend(prc.listIncompleteCartLineProblem,"protection");
+            // local.cartValidationResponse.addError( "Line #local.iLine# is missing required Service selections.", 1 )
+            lineMessage = "This line is missing required Service selections.";
+            arrayAppend(prc.arrayIncompleteCartLineMessages,lineMessage);
+          }
+
+          // Validate that Warranty is only added to Phone devices
+          // TODO: test this:
+          else if ( cartLine.getWarranty().hasBeenSelected() && cartLine.getPhone().hasBeenSelected() && cartLine.getPhone().getDeviceServiceType() eq 'MobileBroadband' ) {
+            prc.listIncompleteCartLineIndex = listAppend(prc.listIncompleteCartLineIndex,i);
+            prc.listIncompleteCartLineProblem = listAppend(prc.listIncompleteCartLineProblem,"protection");
+            lineMessage = "Warranty is valid only for phone devices. Please remove warranty plan or change the device that corresponds to it.";
+            arrayAppend(prc.arrayIncompleteCartLineMessages,lineMessage);
+          }
+
+
+          // DEVICE COMPATIBLE WITH PLAN:
+          // todo: Make sure the plan is compatible with the device.....
+
+
+
+
+        
+          // KEEP THE FOLLOWING IN CASE OF PERFORMANCE TWEAKING:
+          else if (!listFindNoCase(prc.listIncompleteCartLineIndex, i)) {
+
+            // get the device guid (cartLinePhone.deviceGuid):
+            cartLinePhone = application.model.phone.getByFilter(idList = cartLine.getPhone().getProductID(), allowHidden = true);
+
+
+            // REQUIRED SERVICES: Does the device have the required services?
+            // A service is (or at least seems to be) required if it has options associated with groupLabels (i.e. serviceLabels.recordCount gt 0) and a groupLabels.MinSelected of 1
+            servicesArgs = {
+              type = "O",
+              deviceGuid = cartLinePhone.deviceGuid,
+              HasSharedPlan = session.cart.getHasSharedPlan()
+            };
+
+            if (session.carrierObj.getCarrierId() eq prc.carrierIdAtt) {
+              servicesArgs.carrierId = prc.carrierGuidAtt;
+            } else if (session.carrierObj.getCarrierId() eq prc.carrierIdVzw) {
+              servicesArgs.carrierId = prc.carrierGuidVzw;
+            }
+
+            groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = servicesArgs);
+
+            if ( isQuery(groupLabels) and groupLabels.recordcount ) {
+              for (j = 1; j lte groupLabels.recordcount; j++) {
+
+                // if it has a minSelected of 1, grab the options:
+                if ( groupLabels.minSelected[j] eq 1 ){
+                  servicesArgs = {
+                    groupGUID = groupLabels.ServiceMasterGroupGuid[j],
+                    deviceId = cartLinePhone.deviceGuid,
+                    showActiveOnly = true,
+                    cartTypeId = prc.cartTypeId,
+                    rateplanId = prc.cartPlan.productGuid
+                  };
+                  serviceLabels = application.model.serviceManager.getServiceMasterLabelsByGroup(argumentCollection = servicesArgs);
+
+                  // if there are service options and minSelected eq 1, then it is a REQUIRED SERVICE:
+                  if (serviceLabels.recordcount ) {
+                    // check if a service option for this group has been added by looping through the child serviceLabels and making sure that one is in the services associated with this CartLine.
+                    isRequiredServiceInCartLine = 0;
+                    for (k = 1; k lte serviceLabels.recordcount; k++) {
+                      lineFeatures = cartLine.getFeatures();
+                      // DOES serviceLabels.serviceGuid eq cartLine.service.productGuid?
+                      for (m = 1; m lte arrayLen(lineFeatures); m++) {
+                        if ( lineFeatures[m].getProductID() eq serviceLabels.productId[k] ) {
+                          // if you get here, you have the required service
+                          isRequiredServiceInCartLine = 1;
+                        }
+                      }
+                    }
+                    if ( isRequiredServiceInCartLine eq 0 and !listFindNoCase(prc.listIncompleteCartLineIndex, i) ) {
+                      prc.listIncompleteCartLineIndex = listAppend(prc.listIncompleteCartLineIndex,i);
+                      prc.listIncompleteCartLineProblem = listAppend(prc.listIncompleteCartLineProblem,"protection");
+                      lineMessage = "This line is missing required Service selections.";
+                      arrayAppend(prc.arrayIncompleteCartLineMessages,lineMessage);
+                    }
+                  }
+                }
+              }
+            }
+            // <end REQUIRED SERVICES
+
+          }
+
+        
+        // Is the device compatible with the plan?
+        // Does the device have the required services?
+        // Have they agreed to a down payment if required?
+        // (For upgrade only), Does the line have a subscriber index assigned to it?
+        
+        // From /cfc/model/CartHelper.cfc Line 176:
+        // selected plan available in zipcode
+        // no cross-carrier phones in the same cart
+        // no cross-carrier plans in the same cart
+        // no family & individual plans
+        // no phone/plan cross-carrier combinations
+        }
+      }
+
+      // error if the cart contains a family plan but appears to have fewer than 2 lines on non-shared plans:
+      if ( session.cart.getFamilyPlan().hasBeenSelected() && !session.cart.getFamilyPlan().getIsShared() && arrayLen(prc.cartLines) lt 2 ) {
+        alertMsg = alertMsg & IIF(len(alertMsg),DE("<br>"),DE("")) & "Family Plans require a minimum of 2 lines.";
+      }
+
+      // error if the cart contains a family plan but devices is over the max lines
+      if ( session.cart.getFamilyPlan().hasBeenSelected() and arrayLen(prc.cartLines) GT application.model.Plan.getFamilyPlanMaxLines(session.cart.getFamilyPlan().getProductId()) ) {
+        alertMsg = alertMsg & IIF(len(alertMsg),DE("<br>"),DE("")) & "The family Plan you have chosen has a max of #application.model.Plan.getFamilyPlanMaxLines(session.cart.getFamilyPlan().getProductId())# lines.";
+      }
+
+      // error on Verizon PLAID plans that has a max of 1 Smart phone
+      if ( SmartPhoneCount gt 1 && session.cart.getCarrierId() eq 42 && session.cart.getFamilyPlan().hasBeenSelected() && session.cart.getFamilyPlan().getProductId() eq 5301 ) {
+        alertMsg = alertMsg & IIF(len(alertMsg),DE("<br>"),DE("")) & "The Rate Plan you have chosen has a max of 1 Smartphone per plan.";
+      }
+
+
+// TODO:
+      // <!--- VFD access check MES --->
+      // <!--- For VFD softreservation is done at end of cart sequence --->
+      // <cfif IsDefined("Session.VFD.access") and Session.VFD.access>
+      //   <cfset softReservationSuccess = application.model.CheckoutHelper.softReserveCartHardGoods() />
+      //   <cfset request.p.bSoftReservationSuccess = variables.softReservationSuccess />
+
+      //   <cfif not variables.softReservationSuccess>
+      //   <!--- TODO: prevent the user from proceeding with the order at this point if the hard goods could not all be reserved --->
+      //     <cfset local.cartValidationResponse.addError( "This item is currently out of stock.", 13 )>
+      //   </cfif>
+        
+      // </cfif>
+
+
+
+
+      if ( listLen(prc.listIncompleteCartLineIndex) ) {
+        prc.disableCheckoutnowButton = true;
+        alertMsg = "There is an unfinished device in the cart that must be completed or removed before checking out." & IIF(len(alertMsg),DE("<br>"),DE("")) & alertMsg;
+      }
+
       // case 394: If the customer has logged into a carrier account or there is a plan tied to their cart then an option to add another device should show in the cart:
       if ( ( structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) )  or isQuery(prc.cartPlan)  ) {
         prc.showAddAnotherDeviceButton = true;
       } else {
         prc.showAddAnotherDeviceButton = false;
       }
+
       // don't show top nav if cart is empty
       if (!arrayLen(prc.cartLines)) {
         prc.showNav = false;
       }
-      // prc.additionalAccessories = session.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
+      
+      if ( len(alertMsg) ) {
+        prc.warningMessage = alertMsg;
+      }
+
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.includeTallyBox = false;
     </cfscript>

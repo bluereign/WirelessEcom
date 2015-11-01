@@ -148,6 +148,7 @@
             <hr />
             <h4 id="h4AdditionalServices" style="display: none;">Additional Service</h4>
 
+            <!--- <br><cfdump var="#prc.groupLabels#"> --->
 
             <cfset prc.serviceCounter = 0>
             <cfloop query="prc.groupLabels">
@@ -183,10 +184,12 @@
               
               <cfif serviceLabels.recordCount gt 0>
                 <div>#trim(prc.groupLabels.label)#</div>
+                <!--- <cfdump var="#serviceLabels#"> --->
                 <cfset prc.i = 1 />
                 <cfset prc.nothanks = 1 />
                 <cfloop query="serviceLabels">
                   <cfset prc.serviceCounter = prc.serviceCounter + 1 />
+
 
                   <div class="checkbox">
                     <label>
