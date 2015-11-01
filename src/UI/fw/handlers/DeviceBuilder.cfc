@@ -1236,7 +1236,7 @@
                     if ( isRequiredServiceInCartLine eq 0 and !listFindNoCase(prc.listIncompleteCartLineIndex, i) ) {
                       prc.listIncompleteCartLineIndex = listAppend(prc.listIncompleteCartLineIndex,i);
                       prc.listIncompleteCartLineProblem = listAppend(prc.listIncompleteCartLineProblem,"protection");
-                      lineMessage = "This line is missing required Service selections._";
+                      lineMessage = "This line is missing required Service selections.";
                       arrayAppend(prc.arrayIncompleteCartLineMessages,lineMessage);
                     }
                   }
