@@ -1203,19 +1203,17 @@ $j(document).ready(function($j) {
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="verizonCustomerModalLabel">#prc.productData.carrierName# Customer Type?</h4>
+				<h4 class="modal-title" id="verizonCustomerModalLabel">&nbsp;</h4>
 			</div>
 			<!-- Modal Body -->
 			<div class="modal-body">
 				<div class="container">
 					<div class="row" >
-						<h4>Please choose from one of the options below.</h4>
-						<br />
 						<div class="col-xs-<cfif !structKeyExists(session,'carrierObj')>6<cfelse>9</cfif>" style="background:##e5e5e5;padding:15px;">
-							<strong style="font-size:16px;">Existing #prc.productData.carrierName# customer?</strong>
+							<strong style="font-size:16px;">Current #prc.productData.carrierName# customer?</strong>
 							<br />
 							<br />
-							<p>If you're already a(n) #prc.productData.carrierName# customer, you can Upgrade or Add a Line on your account.</p>
+							<p>You can Upgrade your device online or visit your local warehouse to Add a Line to your account.</p>
 							<br />
 							<br />
 							<div class="row center-block">
@@ -1229,7 +1227,7 @@ $j(document).ready(function($j) {
 									<form action="#rc.addalineURL#" method="post">
 										<input type="hidden" name="finance" value="">
 										<a href="##" id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;" disabled="disabled" data-original-title="This is my tooltip" data-placement="left" data-toggle="tooltip">Add a Line</a>
-										<p style="text-align:center">(coming soon)</p>
+										<p style="text-align:center">(available in warehouse)</p>
 									</form>
 								</div>
 							</div>
@@ -1243,13 +1241,13 @@ $j(document).ready(function($j) {
 								<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
 								<br />
 								<br />
-								<p>If you're not already a(n) #prc.productData.carrierName# customer, Continue here.</p>
+								<p>Please visit your local warehouse if you would like to switch to #prc.productData.carrierName#.</p>
 								<br />
 								<br />
 								<div class="row center-block">
 									<div class="col-xs-7">
-										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" disabled="disabled">New to #prc.productData.carrierName#</a>
-										<p style="text-align:center">(coming soon)</p>
+										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" disabled="disabled">Switch to #prc.productData.carrierName#</a>
+										<p style="text-align:center">(available in warehouse)</p>
 									</div>
 								</div>
 							</div>

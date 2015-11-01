@@ -147,7 +147,19 @@
 	-------------------------------------------------------------------------------------------------------->
 	<cffunction name="submitOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse">
 		<cfset var local = structNew() />
-		<cfset local.body = serializeJSonAddReferenceNumber(arguments) />	
+		
+		<cfset local.body = serializeJSonAddReferenceNumber(arguments) />
+		
+		<cfset local.saveSubmitOrderArgs = {
+			carrierId = 109,
+			orderId = session.order.getOrderId(),
+			orderType = "SubmitOrder",
+			orderEntry = "#local.body#",
+			orderResult = ""
+		} />
+		
+		<!--- Save the submitOrder request before we call carrier just in case we have a non-retryable failure --->
+		<cfset saveSubmitOrder(argumentCollection = local.saveSubmitOrderArgs) />	
 		<cfhttp url="#variables.CarrierServiceURL#/Order" method="Post" result="local.cfhttp">
 			<cfhttpparam type="header" name="Content-Type" value="application/json" />
     		<cfhttpparam type="body" value="#local.body#">
@@ -156,10 +168,64 @@
 		<!--- create the carrier response --->
 		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse').init() />
 		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
-		<cfreturn processResponse(local.carrierResponse) />	
 		
+		<!--- Update the save submitOrder with the carrier response --->
+		<cfset local.saveSubmitOrderArgs.orderResult = serializeJSonAddReferenceNumber(local.carrierResponse.getResponse()) />
+		<cfset saveSubmitOrder(argumentCollection = local.saveSubmitOrderArgs) />	
+		
+		<cfreturn processResponse(local.carrierResponse) />			
 	</cffunction>	
 	
+	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse">
+		<cfset var local = structNew() />
+		
+		<cfset local.body = serializeJSonAddReferenceNumber(arguments) />
+		
+		<cfset local.saveSubmitOrderArgs = {
+			carrierId = 109,
+			orderId = session.order.getOrderId(),
+			orderType = "SubmitCompletedOrder",
+			orderEntry = "#local.body#",
+			orderResult = ""
+		} />
+		
+		<!--- Save the submitOrder request before we call carrier just in case we have a non-retryable failure --->
+		<cfset saveSubmitOrder(argumentCollection = local.saveSubmitOrderArgs) />	
+		<cfhttp url="#variables.CarrierServiceURL#/Order" method="Post" result="local.cfhttp">
+			<cfhttpparam type="header" name="Content-Type" value="application/json" />
+    		<cfhttpparam type="body" value="#local.body#">
+		</cfhttp>
+		
+		<!--- create the carrier response --->
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse').init() />
+		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+		
+		<!--- Update the save submitOrder with the carrier response --->
+		<cfset local.saveSubmitOrderArgs.orderResult = serializeJSonAddReferenceNumber(local.carrierResponse.getResponse()) />
+		<cfset saveSubmitOrder(argumentCollection = local.saveSubmitOrderArgs) />	
+		
+		<cfreturn processResponse(local.carrierResponse) />			
+	</cffunction>	
+	
+	<cffunction name="saveSubmitOrder" output="false" access="public" returntype="boolean">
+		
+		<cftry>
+			<cfstoredproc procedure="service.OrderSubmissionSave" datasource="wirelessadvocates">
+				<cfprocparam cfsqltype="cf_sql_integer" value="#arguments.orderid#" />
+				<cfprocparam cfsqltype="cf_sql_integer" value="109" />
+				<cfprocparam cfsqltype="cf_sql_varchar" value="Ready" />
+				<cfprocparam cfsqltype="cf_sql_varchar" value="#arguments.OrderType#" />
+				<cfprocparam cfsqltype="cf_sql_varchar" value="#arguments.OrderEntry#" />
+				<cfif arguments.orderResult is not "">
+					<cfprocparam cfsqltype="cf_sql_varchar" value="#arguments.OrderResult#" />
+				</cfif>
+			</cfstoredproc>
+			<cfcatch type="any">
+				<cfreturn false />
+			</cfcatch>
+		</cftry>
+		<cfreturn true />
+	</cffunction>
 	
 	
 	<!-------------------------------------------------------------------------------------------------------- 

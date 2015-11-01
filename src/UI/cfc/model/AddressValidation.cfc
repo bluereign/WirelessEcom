@@ -1,5 +1,5 @@
 <cfcomponent displayname="AddressValidation" output="false">
-
+	
 	<cffunction name="init" returntype="AddressValidation" output="false">
 
 		<cfreturn this />
@@ -147,110 +147,28 @@
 					<cfreturn local.myResponse />
 				</cfcase>
 				<cfcase value="109"><!--- ATT --->
+						<cfset local.args_address = {
+							carrierId = local.validateWithCarrier,
+							address = local.address,
+							channel = getChannelValue() 
+						} />
+						
+						<cfset rc.requestObj = local.args_address />	
+						<cfset rc.respObj = application.wirebox.getInstance("carrierFacade").validateAddress(argumentCollection = local.args_address) />
+						<cfset rc.respObj = rc.respObj.getResponse() />
 
-					<cfscript>
-						requestHeader = CreateObject('component', 'cfc.model.carrierservice.ServiceBus.CarrierRequestHeader').init( argumentCollection = request.config.AttRequestHeader );
-						requestHeader.setServiceAreaZip( Trim(arguments.ServiceZipCode) );
-						requestHeader.setReferenceNumber( local.referenceNumber );
-						requestHeader.setConversationId( arguments.CarrierConversationId );
+						<cfif (rc.respObj.AddressValidationWasSuccessful eq "yes") OR (rc.respObj.AddressValidationWasSuccessful eq "true")>
+							<cfset local.myResponse.setResultCode('AV003')>
+						<cfelseif (rc.respObj.AddressValidationWasSuccessful eq "no") OR (rc.respObj.AddressValidationWasSuccessful eq "false")>
+							<cfset local.myResponse.setResultCode('AV004')>
+						<cfelse>
+							<cfset local.myResponse.setResultCode('AV011')>
+						</cfif>
 						
-						addressValidationRequest = CreateObject('component', 'cfc.model.carrierservice.Att.AddressValidationRequest').init();
-						addressValidationRequest.setRequestHeader( requestHeader );
-						addressValidationRequest.setAddressLine1( trim(local.address.getAddressLine1()) );
-						addressValidationRequest.setAddressLine2( trim(local.address.getAddressLine2()) );
-						addressValidationRequest.setAddressLine3( '' );
-						addressValidationRequest.setCity( trim(local.address.getCity()) );
-						addressValidationRequest.setState( trim(local.address.getState()) );
-						addressValidationRequest.setCountry( trim(local.address.getCountry()) );
-						addressValidationRequest.setZipCode( left(trim(local.address.getZipCode()), 5) );
-						addressValidationRequest.setCompanyName( trim(local.address.getCompany()) );
-						addressValidationRequest.setAddressType( 'Shipping' );
-						
-						addressValidationRequest.setFirstName( trim(local.address.getFirstName()) );
-						addressValidationRequest.setLastName( trim(local.address.getLastName()) );
-						addressValidationRequest.setMiddleInitial( '' );
-						addressValidationRequest.setPrefix( '' );
-						addressValidationRequest.setSuffix( '' );
-						
-						addressValidationRequest.setCellPhone( '' );
-						addressValidationRequest.setEmail( '' );
-						addressValidationRequest.setEveningPhone( trim(local.address.getEvePhone()) );
-						addressValidationRequest.setWorkPhone( trim(local.address.getDayPhone()) );
-						addressValidationRequest.setWorkPhoneExt( '' );
-						
-						
-						serviceBusRequest = CreateObject('component', 'cfc.model.carrierservice.ServiceBus.ServiceBusRequest').init( argumentCollection = request.config.ServiceBusRequest );
-						serviceBusRequest.setCarrier( request.config.CarrierServiceBusTarget.ATT ); 
-						serviceBusRequest.setAction( 'ValidateAddress' );
-						serviceBusRequest.setRequestData( addressValidationRequest );
-						
-						//application.model.Util.cfdump( serviceBusRequest.toJson() );
-						
-						serviceBusReponse = application.model.RouteService.Route( serviceBusRequest );
+						<cfset local.myResponse.setResult(local.result) />
 
-
-						switch(serviceBusReponse.ResponseStatus.ErrorCode)
-						{
-							case '0':
-							{
-
-								local.myResponse.setResultCode('AV003');
-								carrierResponse = deserializeJSON( serviceBusReponse.ResponseData );
-								local.myResponse.CarrierConversationId = carrierResponse.ConversationId;
-						
-								if ( carrierResponse.ResponseStatus.ErrorCode eq '00000' )
-								{					
-									local.returnAddress = createobject('component', 'Address').init();
-									local.returnAddress.setAddressLine1( carrierResponse.ValidAddress.AddressLine1 );
-									//local.returnAddress.setAddressLine2( carrierResponse.ValidAddress.AddressLine2 );
-									local.returnAddress.setCity( carrierResponse.ValidAddress.City );
-									local.returnAddress.setState( carrierResponse.ValidAddress.State );
-									local.returnAddress.setZipCode( left( carrierResponse.ValidAddress.ZipCode , 5) );
-									local.returnAddress.setZipCodeExtension( carrierResponse.ValidAddress.ExtendedZipCode );
-									local.returnAddress.setCountry( carrierResponse.ValidAddress.Country );
-							
-									local.result.address = local.returnAddress;
-								}
-								else
-								{
-									local.myResponse.setResultCode('AV002');
-									local.myResponse.setErrorMessage( carrierResponse.ResponseStatus.Message );
-								}
-						
-								break;
-							}
-							case 'RequestExecutionFailure':
-							{
-								local.myResponse.setResultCode('AV002');
-								local.myResponse.setErrorMessage( serviceBusReponse.ResponseStatus.Message );
-								break;
-							}
-							case 'HeaderValidationFailure':
-							{
-								local.myResponse.setResultCode('AV010');
-								break;
-							}
-							case 'RequestValidationFailure':
-							{
-								local.myResponse.setResultCode('AV010');
-								break;
-							}
-							case 'CommunicationFailure':
-							{
-								local.myResponse.setResultCode('AV011');
-								break;
-							}																								
-							default:
-							{
-								local.myResponse.setResultCode('AV011');
-								break;
-							}
-						}
-					</cfscript>
-
-					<cfset local.myResponse.setResult(local.result) />
-
-					<cfreturn local.myResponse />
+						<cfreturn local.myResponse />
+					
 				</cfcase>
 				
 				<!--- TMO --->
@@ -471,5 +389,21 @@
 		</cfif>
 
 		<cfreturn local.myResponse />
+	</cffunction>
+	
+	<cffunction name="getChannelValue" returnType="Numeric">
+		<cfswitch expression="#application.wirebox.getInstance("ChannelConfig").getDisplayName()#">
+			<cfcase value="Costco">
+				<cfreturn 0>
+				<cfbreak/>
+			</cfcase>
+			<cfcase value="AAfes">
+				<cfreturn 1>
+				<cfbreak/>
+			</cfcase>
+			<cfdefaultcase>
+				<cfreturn 0>
+			</cfdefaultcase>
+		</cfswitch>
 	</cffunction>
 </cfcomponent>

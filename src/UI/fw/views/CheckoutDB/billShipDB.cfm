@@ -304,7 +304,7 @@
 		</cfif>
 	</div>
 	<div class="formControl">
-		<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Back</a>
+		<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Previous</a>
 		<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('#billShip').submit()" style="color:#fff">Continue</a></span>
 	</div>
 </div>
@@ -322,7 +322,7 @@
 				</cfif>
 				<ol>
 					<li>
-						<label for="txtEmailAddress">Email Address <strong>*</strong></label>
+						<label for="txtEmailAddress">Email Address<strong>*</strong></label><br/>
 						<cfif not session.UserAuth.isLoggedIn()>
 							<input id="txtEmailAddress" name="emailAddress" autocomplete="off" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress'))#" />
 							<span id="spanEmailReq" class="req" <cfif session.UserAuth.isLoggedIn() and len(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress')))>style="display: none"</cfif>>
@@ -374,49 +374,49 @@
 					</li>
 
 					<li>
-						<label for="txtBillingFirstName">First Name <strong>*</strong></label>
+						<label for="txtBillingFirstName">First Name <strong>*</strong></label><br/>
 						<input id="txtBillingFirstName" name="billFirstName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billFirstName'))#" />
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billFirstName'))#
 					</li>
 
 					<li>
-						<label for="txtBillingMiddleInitial">Middle Initial</label>
+						<label for="txtBillingMiddleInitial">Middle Initial</label><br/>
 						<input id="txtBillingMiddleInitial" name="billMiddleInitial" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billMiddleInitial'))#" />
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billMiddleInitial'))#
 					</li>
 
 					<li>
-						<label for="txtBillingLastName">Last Name <strong>*</strong></label>
+						<label for="txtBillingLastName">Last Name <strong>*</strong></label><br/>
 						<input id="txtBillingLastName" name="billLastName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billLastName'))#" />
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billLastName'))#
 					</li>
 
 					<li>
-						<label for="txtBillingCompany">Company</label>
+						<label for="txtBillingCompany">Company</label><br/>
 						<input id="txtBillingCompany" name="billCompany" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billCompany'))#" />
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billCompany'))#
 					</li>
 
 					<li>
-						<label for="txtBillingAddress1">Address 1 <strong>*</strong></label>
+						<label for="txtBillingAddress1">Address 1 <strong>*</strong></label><br/>
 						<input id="txtBillingAddress1" name="billAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress1'))#" />
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress1'))#
 					</li>
 
 					<li>
-						<label for="txtBillingAddress2">Address 2</label>
+						<label for="txtBillingAddress2">Address 2</label><br/>
 						<input id="txtBillingAddress2" name="billAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress2'))#" />
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress2Error'))#
 					</li>
 
 					<li>
-						<label>City<strong>*</strong></label>
+						<label>City<strong>*</strong></label><br/>
 						<input id="txtBillingCity" name="billCity" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billCity'))#" />
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billCity'))#
 					</li>
 					
 					<li>
-						<label>State<strong>*</strong></label>
+						<label>State<strong>*</strong></label><br/>
 						<select id="selBillingState" name="billState">
 							<option value=""></option>
 
@@ -436,7 +436,7 @@
 					</li>
 					
 					<li>
-						<label>Zip Code<strong>*</strong></label>
+						<label>Zip Code<strong>*</strong></label><br/>
 						<input id="txtBillingZip" name="billZip" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billZip'))#" maxlength="5" />
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billZip'))#
 					</li>
@@ -447,7 +447,7 @@
 						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billDayPhone'))#
 					</li>--->
 					<li>
-						<label for="txtBillingDayPhone">Contact Phone<strong>*</strong></label>
+						<label for="txtBillingDayPhone">Contact Phone<strong>*</strong></label><br/>
 						( <input id="txtBillingDayPhonePt1" name="billDayPhonePt1" value="#LEFT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone')),3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtBillingDayPhonePt2'))" style="width:30px;text-align:center;"/> )
 						<input id="txtBillingDayPhonePt2" name="billDayPhonePt2" value="#MID(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone')),5,3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtBillingDayPhonePt3'))" style="width:30px;text-align:center;"/> - 
 						<input id="txtBillingDayPhonePt3" name="billDayPhonePt3" value="#RIGHT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone')),4)#" maxlength="4" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" style="width:40px;text-align:center;"/>
@@ -504,42 +504,42 @@
 
 					<ol id="shippingDetails" class="hidden">
 						<li>
-							<label for="txtShippingFirstName">First Name <strong>*</strong></label>
+							<label for="txtShippingFirstName">First Name <strong>*</strong></label><br/>
 							<input id="txtShippingFirstName" name="shipFirstName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipFirstName'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipFirstName'))#
 						</li>
 						<li>
-							<label for="txtShippingMiddleInitial">Middle Initial</label>
+							<label for="txtShippingMiddleInitial">Middle Initial</label><br/>
 							<input id="txtShippingMiddleInitial" name="shipMiddleInitial" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipMiddleInitial'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipMiddleInitial'))#
 						</li>
 						<li>
-							<label for="txtShippingLastName">Last Name <strong>*</strong></label>
+							<label for="txtShippingLastName">Last Name <strong>*</strong></label><br/>
 							<input id="txtShippingLastName" name="shipLastName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipLastName'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipLastName'))#
 						</li>
 						<li>
-							<label for="txtShippingCompany">Company</label>
+							<label for="txtShippingCompany">Company</label><br/>
 							<input id="txtShippingCompany" name="shipCompany" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipCompany'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipCompany'))#
 						</li>
 						<li>
-							<label for="txtShippingAddress1">Address 1 <strong>*</strong></label>
+							<label for="txtShippingAddress1">Address 1 <strong>*</strong></label><br/>
 							<input id="txtShippingAddress1" name="shipAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress1'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress1'))#
 						</li>
 						<li>
-							<label for="txtShippingAddress2">Address 2</label>
+							<label for="txtShippingAddress2">Address 2</label><br/>
 							<input id="txtShippingAddress2" name="shipAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress2'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress2Error'))#
 						</li>
 						<li>
-							<label>City<strong>*</strong></label>
+							<label>City<strong>*</strong></label><br/>
 							<input id="txtShippingCity" name="shipCity" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipCity'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipCity'))#
 						</li>
 						<li>
-							<label>State<strong>*</strong></label>
+							<label>State<strong>*</strong></label><br/>
 							<select id="selShippingState" name="shipState">
 								<option value=""></option>
 
@@ -558,7 +558,7 @@
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipState'))#
 						</li>
 						<li>
-							<label>Zip Code<strong>*</strong></label>						
+							<label>Zip Code<strong>*</strong></label><br/>						
 							<input size="12" id="txtShippingZip" name="shipZip" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipZip'))#" maxlength="5" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipZip'))#
 						</li>
@@ -575,7 +575,7 @@
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipDayPhone'))#
 						</li>--->
 						<li>
-						<label for="txtShippingDayPhone">Contact Phone<strong>*</strong></label>
+						<label for="txtShippingDayPhone">Contact Phone<strong>*</strong></label><br/>
 							( <input id="txtShippingDayPhonePt1" name="shipDayPhonePt1" value="#LEFT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone')),3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtShippingDayPhonePt2'))" style="width:30px;text-align:center;"/> )
 							<input id="txtShippingDayPhonePt2" name="shipDayPhonePt2" value="#MID(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone')),5,3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtShippingDayPhonePt3'))" style="width:30px;text-align:center;"/> - 
 							<input id="txtShippingDayPhonePt3" name="shipDayPhonePt3" value="#RIGHT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone')),4)#" maxlength="4" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" style="width:40px;text-align:center;"/>
@@ -665,7 +665,7 @@
 </cfoutput>
 
 <div class="formControl">
-	<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Back</a>
+	<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Previous</a>
 	<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('#billShip').submit()" style="color:#fff">Continue</a></span>
 </div>
 

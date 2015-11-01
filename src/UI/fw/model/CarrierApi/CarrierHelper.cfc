@@ -26,7 +26,20 @@
 		<cfset local.SubmitOrderRequest =  carrierObject(arguments.carrierId).getSubmitOrderRequest(argumentCollection = local.args) />	
 		<cfreturn local.SubmitOrderRequest />
 	</cffunction>
-
+	
+	<cffunction name="getSubmitCompletedOrderRequest" output="false" access="public" returntype="struct">
+		<cfset var local = structNew() />
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.SubmitCompletedOrderRequest =  carrierObject(arguments.carrierId).getSubmitCompletedOrderRequest(argumentCollection = local.args) />	
+		<cfreturn local.SubmitOrderRequest />
+	</cffunction>
+	
+	<cffunction name="saveEConsent" output="false" access="public" returntype="boolean">
+		<cfset var local = structNew() />
+		<cfset local.saveEConsent =  carrierObject(arguments.carrierId).saveEConsent() />	
+		<cfreturn local.saveEConsent />
+	</cffunction>	
+	
 	<!---
 		Receives an argument collection and returns collection minus args on the excludedArgsList		
 	 --->
@@ -103,5 +116,21 @@
 			</cfdefaultcase>
 		</cfswitch>
 	</cffunction>
+	
+	<cffunction name="createGUID" access="public" returntype="string">
+		<cfset var local = structNew() />
+		<cfset local.uuid = createUUID() />
+		<cfreturn left(local.uuid,19) & mid(local.uuid,20,4) & '-' & right(local.uuid,12) />
+	</cffunction>	
+
+	<cffunction name="getAssetPaths" access="private" output="false" returntype="struct">    
+    	<cfreturn variables.instance.assetPaths />    
+    </cffunction>    
+    <cffunction name="setAssetPaths" access="private" output="false" returntype="void">    
+    	<cfargument name="theVar" required="true" />    
+    	<cfset variables.instance.assetPaths = arguments.theVar />    
+    </cffunction>
+
+	
 	
 </cfcomponent>

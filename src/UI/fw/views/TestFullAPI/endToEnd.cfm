@@ -46,6 +46,18 @@
 	<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>
  	<input type="submit" value="Submit the Order"></submit> 
 	</form>	
+	
+<br><Form action="#event.buildLink('testFullApi.eConsent')#" method="post" target="_blank">
+	<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>
+ 	<input type="submit" value="Save the eConsent Documents"></submit> 
+	</form>	
+	
+	
+<br><Form action="#event.buildLink('testFullApi.SubmitCompletedOrder')#" method="post" target="_blank">
+	<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>
+	OrderId: <input type="text" name="orderid" value=""/>
+ 	<input type="submit" value="Submit the Completed Order"></submit> 
+	</form>		
 </h2>
 
 

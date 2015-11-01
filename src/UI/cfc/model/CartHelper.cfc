@@ -1734,7 +1734,6 @@
 		<cfreturn activationTypeAcronym />
 	</cffunction>
 	
-
 	<cffunction name="getAssetPaths" access="private" output="false" returntype="struct">    
     	<cfreturn variables.instance.assetPaths />    
     </cffunction>    

@@ -476,7 +476,7 @@
 		<!--- If we've been given a line number, but it appears to be a new line not yet in the cart. --->
 		<cfif arguments.cartLineNumber and arguments.cartLineNumber gt arrayLen(local.cartLines) and arguments.cartLineNumber neq request.config.otherItemsLineNumber>
 			<!--- Add a new line to the cart. --->
-			<cfset argumentscartLineNumber = application.model.carthelper.addLineToCart() />
+			<cfset arguments.cartLineNumber = application.model.carthelper.addLineToCart() />
 			<cfset local.cartLines = session.cart.getLines() />
 			 
 		</cfif>

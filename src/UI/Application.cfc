@@ -193,7 +193,7 @@
 		<cfset request.logoutNow = false />
 		
 		<!--- third party authentication, except for internal ips or special dev hostfile names like local... --->
-		<cfif request.config.thirdPartyAuth AND !session.thirdPartyIsAuth AND left(cgi.server_name,3) is not "10." and not refindnocase("^(local\.)(.)*(\.wa)$",cgi.server_name ) >
+		<cfif request.config.thirdPartyAuth AND !session.thirdPartyIsAuth AND left(cgi.server_name,3) is not "10." and not refindnocase("^(local\.)(.)*(\.wa)$",cgi.server_name ) and not refindnocase("(.)*(\.enterprise\.corp)$",cgi.server_name ) >
 			<cfset request.AAFESAuth = application.wirebox.getInstance("AAFESAuth") />
 
 			<cfif structKeyExists(url,"aafes_auth")>
