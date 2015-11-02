@@ -125,7 +125,44 @@
 		<cfreturn local.subscribers />
 	</cffunction>
 	
+	<cffunction name="getConflictResolvable" access="public" returnType="boolean">
+		<cfargument name="subscriberNumber" type="string" required="true"  > 
+		
+		<cfset local = structNew() />		
+		<cfset local.io = getIncompatibleOffers(arguments.subscriberNumber) />
+		<cfif isstruct(local.io) and isdefined("local.io.conflictsResolvable") >
+			<cfreturn local.io.conflictsResolvable />
+		<cfelse>
+			<cfreturn false />
+		</cfif>
+	</cffunction>
 	
+	<cffunction name="getHasConflicts" access="public" returnType="boolean">
+		<cfargument name="subscriberNumber" type="string" required="true"  > 
+		
+		<cfset local = structNew() />		
+		<cfset local.io = getIncompatibleOffers(arguments.subscriberNumber) />
+		<cfif isstruct(local.io) and isdefined("local.io.hasConflicts") >
+			<cfreturn local.io.hasConflicts />
+		<cfelse>
+			<cfreturn false />
+		</cfif>
+	</cffunction>
+
+	<cffunction name="getIncompatibleOffers" access="public" returnType="struct">
+		<cfargument name="subscriberNumber" type="string" required="true"  > 
+		<cfset var local = {} />
+		<cfset local.resp = getResponse() />
+		
+		<cfif structKeyExists(local.resp,"IncompatibleOffers") and arrayLen(local.resp.IncompatibleOffers) >
+			<cfloop array="#local.resp.incompatibleOffers#" index="local.io" >
+				<cfif local.io.SubscriberNumber is arguments.subscriberNumber>
+					<cfreturn local.io />
+				</cfif>
+			</cfloop>
+		</cfif>
+		<cfreturn structNew() />
+	</cffunction>
 	
 	<cffunction name="OnMissingMethod" access="public" returntype="any" output="false" hint="Handles missing method exceptions.">
 	    <cfargument name="MissingMethodName" type="string" required="true" hint="The name of the missing method." />

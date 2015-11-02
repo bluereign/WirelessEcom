@@ -47,7 +47,10 @@
 	<br/>Subscriber.getAddress().getZipCode() = #s.getAddress().getZipcode()#
 	<br/>Subscriber.getAddress().getZipCodeExtension() = #s.getAddress().getZipcodeExtension()#
 	<br/>Subscriber.getAddress().getCountry() = #s.getAddress().getCountry()#
+	<br/>rc.respObj.getHasConflicts(s.getNumber()) = #rc.respObj.getHasConflicts(s.getNumber())#
+	<br/>rc.respObj.getConflictResolvable(s.getNumber()) = #rc.respObj.getConflictResolvable(s.getNumber())#
 	<cfdump var="#s.getResponse()#" expand="false" />
+	
 	<cfset s_count = s_count + 1 />
 </cfloop>	
 
