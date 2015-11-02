@@ -52,6 +52,10 @@
  	<input type="submit" value="Save the eConsent Documents"></submit> 
 	</form>	
 	
+<br><Form action="#event.buildLink('testFullApi.view_eConsent')#" method="post" target="_blank">
+	<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>
+ 	<input type="submit" value="View the eConsent Documents"></submit> 
+	</form>	
 	
 <br><Form action="#event.buildLink('testFullApi.SubmitCompletedOrder')#" method="post" target="_blank">
 	<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>

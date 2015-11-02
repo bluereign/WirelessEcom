@@ -161,6 +161,22 @@
 		<cfreturn local.far />		
 	</cffunction>
 	
+	<cffunction name="loadEConsent" output="false" access="public" returntype="string">
+		<cfargument name="orderid" type="numeric" required="true" > 
+		
+			<cfquery name="qEConsent" datasource="wirelessadvocates">
+				SELECT cast(AgreementEntry as varchar(max)) as AgreementEntry 
+				FROM [service].[FinanceAgreementSubmissionLog]
+				WHERE orderid = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.orderid#"> 
+					AND AgreementTypeId = 2
+			</cfquery>
+			<cfif qEConsent.recordcount gt 0>
+				<cfreturn base64ToString(qEConsent.AgreementEntry) />
+			<cfelse>
+				<cfreturn "" />
+			</cfif>
+	</cffunction>
+	
 	<cffunction name="saveEConsent" output="false" access="public" returntype="boolean">
 		<cfset var local = structNew() />
 		
@@ -218,7 +234,7 @@
 			#dateformat(now(),"mm/dd/yyyy")#<br/>
 			<p>
 			I acknowledge that Wireless Advocates has on this date presented me with a printed and completed Retail Installment Sale 
-			Agreement/Notice to Buyer (the “Agreement”) and I was given an opportunity to review the terms, including 8.33 and my right 
+			Agreement/Notice to Buyer (the "Agreement") and I was given an opportunity to review the terms, including 8.33 and my right 
 			to cancel within 14 days. I understand that Wireless Advocates is not authorized to make or accept any changes to the Agreement 
 			and that if there are any markings or strikeouts they are not binding on Wireless Advocates or its assignee AT&T.
 			</p>
