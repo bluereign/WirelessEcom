@@ -72,6 +72,9 @@
       if (!structKeyExists(session,"dBuilderCartFacade")) {
         session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
       }
+      if (!structKeyExists(session,"listRequiredServices")) {
+        session.listRequiredServices = "";
+      }
       // <end check cart instantiated
 
 
@@ -1313,6 +1316,8 @@
       session.cart = createObject('component','cfc.model.cart').init();
       session.cartHelper = createObject('component','cfc.model.carthelper').init();
       session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
+      session.listRequiredServices = "";
+
 
       // reset the session zipcode
       session.cart.setZipcode(prc.zipcode);
