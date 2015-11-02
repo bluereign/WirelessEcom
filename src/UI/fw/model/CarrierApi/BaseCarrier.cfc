@@ -137,4 +137,22 @@
 		<cfreturn arglist />
 		
 	</cffunction>
+	
+	<cffunction name="saveToSession" returnType="void" access="public">
+		<cfargument name="objToStore" type="any" required="true" />
+		<cfargument name="objName" type="string" required="true" />
+
+		<!--- create the session storage structure if it does not already exist --->		
+		<cfif not structKeyExists(session,"carrierFacade")>
+			<cfset session.carrierFacade = structNew() />
+		</cfif>
+		
+		<cfif isObject(objToStore) >
+			<cfset structInsert(session.carrierFacade, arguments.objName, arguments.objToStore.getResponse(),true) />		
+		<cfelse>
+			<cfset structInsert(session.carrierFacade, arguments.objName, arguments.objToStore,true) />		
+		</cfif>
+		
+	</cffunction>
+
 </cfcomponent>

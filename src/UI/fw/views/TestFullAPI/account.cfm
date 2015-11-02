@@ -60,8 +60,20 @@
 <br/><br/>CFDUMP of the Carrier Request/Response for Account Login
 </h2>
 <div style="margin-top:25px;">
-	<h2><cfdump var="#rc.AccountRequestJSON#" expand="true" /></h2>
-	<cfdump var="#rc.respObj.getResponse()#" expand="true" />
+<cfif structKeyExists(session,"carrierFacade")>
+<br/>Dump of the CarrierFacade Session Store:
+<cfdump var="#session.carrierFacade#" expand="false" />
+</cfif>
+
+<cfif structKeyExists(session,"cartFacade")>
+<br/>Dump of the CartFacade Session Store:
+<cfdump var="#session.cartFacade#" expand="false" />
+</cfif>
+
+<cfif structKeyExists(session,"order")>
+<br/>Dump of the newly completed order in memory
+<cfoutput>#session.order.dump()#</cfoutput>
+</cfif>
 </div>
 
 
