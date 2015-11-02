@@ -160,7 +160,11 @@
 						<cfif (rc.respObj.AddressValidationWasSuccessful eq "yes") OR (rc.respObj.AddressValidationWasSuccessful eq "true")>
 							<cfset local.myResponse.setResultCode('AV003')>
 						<cfelseif (rc.respObj.AddressValidationWasSuccessful eq "no") OR (rc.respObj.AddressValidationWasSuccessful eq "false")>
-							<cfset local.myResponse.setResultCode('AV004')>
+							<cfif arguments.addressType eq 'Billing'>
+								<cfset local.myResponse.setResultCode('AV004')>
+							<cfelseif arguments.addressType eq 'Shipping'>
+								<cfset local.myResponse.setResultCode('AV002')>
+							</cfif>
 						<cfelse>
 							<cfset local.myResponse.setResultCode('AV011')>
 						</cfif>
