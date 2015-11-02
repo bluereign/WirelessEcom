@@ -175,7 +175,7 @@ Maintain data for when leaving page and returning
 					<li>
 						<label for="txtEmailAddress">Email Address <strong>*</strong></label>
 						<!---<cfif not session.UserAuth.isLoggedIn()>--->
-							<input id="txtEmailAddress" name="emailAddress" autocomplete="off" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress'))#" />
+							<input id="txtEmailAddress" name="emailAddress" autocomplete="off" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress'))#" maxlength="60"/>
 							<span id="spanEmailReq" class="req" <cfif session.UserAuth.isLoggedIn() and len(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress')))>style="display: none"</cfif>>
 								<span id="spanAuthenticated" <cfif not session.UserAuth.isLoggedIn() or not len(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress')))>style="display: none"</cfif>>
 									<img src="#assetPaths.common#images/ui/checkmark.png" width="12" height="10" alt="Validated" border="0" />

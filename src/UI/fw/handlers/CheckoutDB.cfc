@@ -317,22 +317,24 @@
 			<cfset request.validator.addEmailValidator('emailAddress', trim(request.p.emailAddress), 'Please supply a valid email address.') />
 
 			<cfset request.validator.addRequiredFieldValidator('billFirstName', trim(request.p.billFirstName), 'Please enter first name of the person this order is being billed to.') />
-			<cfset request.validator.addMaxRangeValidator('billFirstName', trim(request.p.billFirstName), 'Billing first name may not exceed 50 characters.', 50) />
+			<cfset request.validator.addMaxRangeValidator('billFirstName', trim(request.p.billFirstName), 'Billing first name may not exceed 15 characters.', 15) />
+			<cfset request.validator.AddRangeValidator('billFirstName', trim(request.p.billFirstName), 'Billing first name must be between 2 to 15 characters.', 2, 15) />
 
 			<cfset request.validator.addMaxRangeValidator('billMiddleInitial', trim(request.p.billMiddleInitial), 'Billing middle initial may not exceed 1 character, but is optional.', 1) />
 
 			<cfset request.validator.addRequiredFieldValidator('billLastName', trim(request.p.billLastName), 'Please enter last name of the person this order is being billed to.') />
-			<cfset request.validator.addMaxRangeValidator('billLastName', trim(request.p.billLastName), 'Billing last name may not exceed 50 characters.', 50) />
-
-			<cfset request.validator.addMaxRangeValidator('billCompanyError', trim(request.p.billCompany), 'Billing company name may not exceed 50 characters.', 50) />
+			<cfset request.validator.addMaxRangeValidator('billLastName', trim(request.p.billLastName), 'Billing last name may not exceed 20 characters.', 20) />
+			<cfset request.validator.AddRangeValidator('billLastName', trim(request.p.billLastName), 'Billing last name must be between 2 to 20 characters.', 2, 20) />
+			
+			<cfset request.validator.addMaxRangeValidator('billCompanyError', trim(request.p.billCompany), 'Billing company name may not exceed 30 characters.', 30) />
 
 			<cfset request.validator.addRequiredFieldValidator('billAddress1', trim(request.p.billAddress1), 'Please enter address line 1 of the person this order is being billed to.') />
-			<cfset request.validator.addMaxRangeValidator('billAddress1', trim(request.p.billAddress1), 'Billing address line 1 may not exceed 50 characters.', 50) />
+			<cfset request.validator.addMaxRangeValidator('billAddress1', trim(request.p.billAddress1), 'Billing address line 1 may not exceed 30 characters.', 30) />
 
-			<cfset request.validator.addMaxRangeValidator('billAddress2Error', trim(request.p.billAddress2), 'Billing address line 2 may not exceed 50 characters.', 50) />
+			<cfset request.validator.addMaxRangeValidator('billAddress2Error', trim(request.p.billAddress2), 'Billing address line 2 may not exceed 30 characters.', 30) />
 
 			<cfset request.validator.addRequiredFieldValidator('billCity', trim(request.p.billCity), 'Please enter city of the person this order is being billed to.') />
-			<cfset request.validator.addMaxRangeValidator('billCity', trim(request.p.billCity), 'Billing city may not exceed 50 characters.', 50) />
+			<cfset request.validator.addMaxRangeValidator('billCity', trim(request.p.billCity), 'Billing city may not exceed 20 characters.', 20) />
 
 			<cfset request.validator.addRequiredFieldValidator('billState', trim(request.p.billState), 'Please enter the state of the person this order is being billed to.') />
 
@@ -351,22 +353,24 @@
 
 			<cfif !request.p.sameAsBilling>
 				<cfset request.validator.addRequiredFieldValidator('shipFirstName', trim(request.p.shipFirstName), 'Please enter the first name of the person this order is being shipped to.') />
-				<cfset request.validator.addMaxRangeValidator('shipFirstName', trim(request.p.shipFirstName), 'Shipping first name may not exceed 50 characters.', 50) />
-
+				<cfset request.validator.addMaxRangeValidator('shipFirstName', trim(request.p.shipFirstName), 'Shipping first name may not exceed 15 characters.', 15) />
+				<cfset request.validator.AddRangeValidator('shipFirstName', trim(request.p.shipFirstName), 'Shipping first name must be between 2 to 15 characters.', 2, 15) />
+				
 				<cfset request.validator.addMaxRangeValidator('shipMiddleInitial', trim(request.p.shipMiddleInitial), 'Shipping middle initial may not exceed 1 character, but is optional.', 1) />
 
 				<cfset request.validator.addRequiredFieldValidator('shipLastName', trim(request.p.shipLastName), 'Please enter the last name of the person this order is being shipped to.') />
-				<cfset request.validator.addMaxRangeValidator('shipLastName', trim(request.p.shipLastName), 'Shipping last name may not exceed 50 characters.', 50) />
-
-				<cfset request.validator.addMaxRangeValidator('shipCompanyError', trim(request.p.shipCompany), 'Shipping company name may not exceed 50 characters.', 50) />
+				<cfset request.validator.addMaxRangeValidator('shipLastName', trim(request.p.shipLastName), 'Shipping last name may not exceed 20 characters.', 20) />
+				<cfset request.validator.AddRangeValidator('shipLastName', trim(request.p.shipLastName), 'Shipping last name must be between 2 to 20 characters.', 2, 20) />
+				
+				<cfset request.validator.addMaxRangeValidator('shipCompanyError', trim(request.p.shipCompany), 'Shipping company name may not exceed 30 characters.', 30) />
 
 				<cfset request.validator.addRequiredFieldValidator('shipAddress1', trim(request.p.shipAddress1), 'Please enter address line 1 of the person this order is being shipped to.') />
-				<cfset request.validator.addMaxRangeValidator('shipAddress1', trim(request.p.shipAddress1), 'Shipping address line 1 may not exceed 50 characters.', 50) />
+				<cfset request.validator.addMaxRangeValidator('shipAddress1', trim(request.p.shipAddress1), 'Shipping address line 1 may not exceed 30 characters.', 30) />
 
-				<cfset request.validator.addMaxRangeValidator('shipAddress2Error', trim(request.p.shipAddress2), 'Shipping Address 2 may not exceed 50 characters.', 50) />
+				<cfset request.validator.addMaxRangeValidator('shipAddress2Error', trim(request.p.shipAddress2), 'Shipping Address 2 may not exceed 30 characters.', 30) />
 
 				<cfset request.validator.addRequiredFieldValidator('shipCity', trim(request.p.shipCity), 'Please enter the city of the person this order is being shipped to.') />
-				<cfset request.validator.addMaxRangeValidator('shipCity', trim(request.p.shipCity), 'Shipping city may not exceed 50 characters.', 50) />
+				<cfset request.validator.addMaxRangeValidator('shipCity', trim(request.p.shipCity), 'Shipping city may not exceed 20 characters.', 20) />
 
 				<cfset request.validator.addRequiredFieldValidator('shipState', trim(request.p.shipState), 'Please select the state of the person this order is being shipped to.') />
 

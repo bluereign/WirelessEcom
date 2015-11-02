@@ -79,7 +79,7 @@
         <cfset var local = structNew()>
         <cfset local.fieldValue = arguments.FieldValue>
 
-        <cfif NOT isValid("range",local.fieldValue,ARGUMENTS.min,ARGUMENTS.max)>
+        <cfif (len(local.fieldValue) LT ARGUMENTS.min) OR (len(local.fieldValue) GT ARGUMENTS.max)>
         	<cfset instance.messages[ArrayLen(instance.messages)+1] = structNew()>
         	<cfset instance.messages[ArrayLen(instance.messages)].Message = arguments.Message>
         	<cfset instance.messages[ArrayLen(instance.messages)].FieldOfRef = arguments.FieldOfRef>
