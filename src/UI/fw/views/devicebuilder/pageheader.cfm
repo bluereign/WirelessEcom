@@ -38,15 +38,11 @@
               <span class="icon-bar"></span>
             </button>
           </div>
-          <div class="collapse navbar-collapse fade" id="bs-example-navbar-collapse-1">
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav nav-tabs">
-              <li role="presentation"><a href="##">Home</a></li>
-              <li role="presentation"><a href="##">Hot Deals</a></li>
-              <li role="presentation" class="active"><a href="##">Phones</a></li>
-              <li role="presentation"><a href="##">Mobile Hotspot</a></li>
-              <li role="presentation"><a href="##">Accessories</a></li>
-              <li role="presentation"><a href="##">Check Upgrade Eligibility</a></li>
+              <li role="presentation"><a href="##">Return to Shopping</a></li>
             </ul>
+            <!--- <cfinclude template="../../../layouts/costco/_topNav.cfm" /> --->
           </div>
         </div>
       </nav>

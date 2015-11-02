@@ -168,13 +168,20 @@ form .form-inline label { width:auto;}
 				After reviewing the following Terms & Conditions, check the corresponding boxes to agree to the #carrierName# and Costco Terms and Conditions. 
 				Once all the Terms & Conditions are accepted, you can then Continue checking out.
 			<cfelseif  session.cart.getCarrierId() eq 109>
-				After reviewing the following sections, check the corresponding box to agree and continue.
-			<cfelse>
-			
+				After reviewing the following sections, check the corresponding box to agree and continue.			
 			</cfif>
 		</p>
 	<form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
-		
+		<h4><a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a></h4>
+		<div class="form-group form-inline">		
+			<label><input type="checkbox" name="agreeToCustomerLetter" />
+			<cfif session.cart.getCarrierId() eq 42>
+				I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER
+			<cfelseif session.cart.getCarrierId() eq 109>	
+				I have read and understand the information in the Costco Wireless Customer Letter
+			</cfif>	
+			</label>
+		</div>
 		
 		<p>
 			<cfif session.cart.getActivationType() CONTAINS "New" or session.cart.getActivationType() CONTAINS "addaline" or session.cart.getActivationType() DOES NOT CONTAIN "finance">
@@ -185,6 +192,8 @@ form .form-inline label { width:auto;}
 						I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
 						LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
 						AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
+					<cfelseif  session.cart.getCarrierId() eq 109>
+						I agree with the terms of the 2-Year Contract Agreement
 					</cfif>
 					</label>
 				</div>
@@ -198,7 +207,7 @@ form .form-inline label { width:auto;}
 							LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
 							AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
 						<cfelseif session.cart.getCarrierId() eq 109>
-							Exact Text TBD
+							I agree with the terms of the 2-Year Contract Extension
 						</cfif>
 						</label>
 					</div>
@@ -213,7 +222,7 @@ form .form-inline label { width:auto;}
 					I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, 
 					SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
 				<cfelseif session.cart.getCarrierId() eq 109>	
-					Exact Text TBD
+					I agree with the terms and conditions specified in the Device Financing Agreement
 				</cfif>
 				</label>
 			</div>
@@ -243,21 +252,13 @@ form .form-inline label { width:auto;}
 			<cfif session.cart.getCarrierId() eq 42>
 				I HAVE READ AND AGREED TO THE #UCase(carrierName)# TERMS AND CONDITIONS FOR SERVICE AGREEMENT
 			<cfelseif session.cart.getCarrierId() eq 109>	
-				Exact Text TBD
+				I have read and agree to the terms and conditions specified in the AT&T Terms & Conditions
 			</cfif>
 			</label>
 		</div>
 		
-		<h4><a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a></h4>
-		<div class="form-group form-inline">		
-			<label><input type="checkbox" name="agreeToCustomerLetter" />
-			<cfif session.cart.getCarrierId() eq 42>
-				I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER
-			<cfelseif session.cart.getCarrierId() eq 109>	
-				Exact Text TBD
-			</cfif>	
-			</label>
-		</div>
+		
+    
 		
 		<hr class="bottom-break" />
 		

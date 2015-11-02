@@ -1,4 +1,3 @@
-<!--- <cfdump var="#rc#"> --->
 <cfoutput>
   <div class="col-md-12">
 
@@ -13,7 +12,7 @@
         <div class="right">
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
+          <button type="button" class="btn btn-primary btnContinue" id="btnContinue" data-toggle="modal" data-target=""
             <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
               disabled
             </cfif>
@@ -27,7 +26,7 @@
           <h4>#prc.productData.carrierName# Device Payment Options</h4>
           <div class="radio">
             <label>
-              <input type="radio" name="paymentoption" value="financed" <cfif prc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
+              <input type="radio" name="paymentoption" id="paymentoption" value="financed" <cfif prc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
               
               <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
                 
@@ -148,7 +147,6 @@
             <hr />
             <h4 id="h4AdditionalServices" style="display: none;">Additional Service</h4>
 
-
             <cfset prc.serviceCounter = 0>
             <cfloop query="prc.groupLabels">
 
@@ -159,10 +157,6 @@
                 cartTypeId = prc.cartTypeId,
                 rateplanId = prc.cartPlan.productGuid
                 } />
-              <!--- 
-              <cfif len(prc.cartPlan)>
-                <cfset local.serviceArgs.rateplanId = prc.cartPlan.productGuid />
-              </cfif> --->
               
               <cfset serviceLabels = application.model.serviceManager.getServiceMasterLabelsByGroup( argumentCollection = local.servicesArgs ) />
               
@@ -188,6 +182,7 @@
                 <cfloop query="serviceLabels">
                   <cfset prc.serviceCounter = prc.serviceCounter + 1 />
 
+
                   <div class="checkbox">
                     <label>
                       <input type="#prc.groupInputType#"
@@ -207,14 +202,8 @@
 
                       <a type="button" data-toggle="modal" data-target="##featureModal" href="#event.buildLink('devicebuilder.featuremodal')#/cartLineNumber/#rc.cartLineNumber#/fid/#serviceLabels.productId#">
                         #trim(serviceLabels.label)#
-                        <!--- (#serviceLabels.productId#) --->
                       </a>
                       #dollarFormat(serviceLabels.monthlyFee)#/mo
-                      <!--- <cfif rc.paymentoption is 'financed' and (len(serviceLabels.FinancedPrice))>
-                        #dollarFormat(serviceLabels.FinancedPrice)#/mo
-                      <cfelse>
-                        #dollarFormat(serviceLabels.monthlyFee)#/mo
-                      </cfif> --->
                     </label>
                   </div>
                   <cfset prc.i = (prc.i + 1) />
@@ -252,7 +241,7 @@
 
         <div class="right">
           <a href="#prc.prevStep#">BACK</a>
-          <button type="submit" class="btn btn-primary btnContinue" id="btnContinue" 
+          <button type="button" class="btn btn-primary btnContinue" id="btnContinue" data-toggle="modal" data-target=""
             <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
               disabled
             </cfif>
@@ -264,36 +253,47 @@
       </form>
     </section>
 
-    
-
-
   </div>
 
   <script type="text/javascript">
+    
     function onChangeHandler(form,paymentoption) {
-      // form.action='#event.buildLink('devicebuilder.protection')#';
       form.paymentoption.value=paymentoption;
       // form.submit();
-      // Post
       $.post('#event.buildLink('devicebuilder.tallybox')#', $('##protectionForm').serialize(), function(data){
         $('##myTallybox').html( data )
       });
-      // {cartLineNumber:#rc.cartLineNumber#, paymentoption: paymentoption, financed: form.financed.value, warrantyid: form.warrantyid.value}
-    }    
+    }
+
+    $(function() {
+      
+      $('.btnContinue').click(function(){
+        if ( $('input[name=warrantyid]:checked').val() == 0 ) {
+          $('.btnContinue').attr('data-target', '##confirmNoProtectionModal');
+        } else {
+          $('.btnContinue').attr('data-target', '');
+          $('##protectionForm').submit();
+        }
+      });
+
+    });
+
   </script>
 
   <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
     <script>
-      $('##isDownPaymentApproved').click(function() {
-          var $this = $(this);
-          // $this will contain a reference to the checkbox   
-          if ($this.is(':checked')) {
-              // the checkbox was checked 
-              $('.btnContinue').prop('disabled', false);
-          } else {
-              // the checkbox was unchecked
-              $('.btnContinue').prop('disabled', true);
-          }
+      $(function() {
+        $('##isDownPaymentApproved').click(function() {
+            var $this = $(this);
+            // $this will contain a reference to the checkbox   
+            if ($this.is(':checked')) {
+                // the checkbox was checked 
+                $('.btnContinue').prop('disabled', false);
+            } else {
+                // the checkbox was unchecked
+                $('.btnContinue').prop('disabled', true);
+            }
+        });
       });
     </script>
   </cfif>
@@ -305,5 +305,13 @@
       });
     </script>
   </cfif>
+
+ <!--- Submit the AJAX/Tallybox form post upon load to update tally box with the pre-selected required service --->
+  <script>
+    $(function() {
+      var protectionvalue = $('input[name=paymentoption]:checked').val();
+      onChangeHandler(protectionForm,protectionvalue);
+    });
+  </script>
 
 </cfoutput>

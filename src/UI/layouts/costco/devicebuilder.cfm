@@ -126,6 +126,38 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="confirmNoProtectionModal" tabindex="-3" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Confirmation Required</h4>
+        </div>
+        <div class="modal-body">
+          <div class="plans">
+            <div class="info">
+              <!--- <h3 style="height:40px"><span>Confirmation Required</span></h3> --->
+              <p>By declining to add device protection, I understand that in the event my device is lost, stolen, damaged or experiences a defect after the manufacturer's warranty, the cost of replacement device may be as high as retail price. </p>
+              <p>If you had insurance on your "existing plan" it is not transferrable to your new device.</p>
+              <p>If you want AT&T insurance you will need to contact the carrier within 14 days.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <a href="##" type="submit" class="btn btn-primary" name="btnConfirmContinue" id="btnConfirmContinue">Continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $('##btnConfirmContinue').click(function() {
+      var form = $("##protectionForm");
+      form.attr('action', '#prc.nextStep#');
+      form.submit();
+    });
+  </script>
 </cfif>
 
 <!--- <accessories view --->
@@ -180,19 +212,14 @@
 <cfif listFindNoCase("devicebuilder.orderreview", event.getCurrentEvent())>
   <script>
     function showHideTextDevice(text) {
-      var SHOW_TEXT = 'Show Device Details',
-      HIDE_TEXT = 'Hide Device Details';
+      var SHOW_TEXT = 'Show Details',
+      HIDE_TEXT = 'Hide Details';
 
       return  text === SHOW_TEXT ? HIDE_TEXT : SHOW_TEXT;
     }
 
     $(function() {
-      // Swap text on Show/Hide Cart Details
-      $('.device-details').on('click', function() {
-        var $this = $(this);
 
-        $(this).text(showHideTextDevice($this.text()));
-      });
 
       // add OnChange to the accessory qty select
       $('.accessoryqty').on('change', function() {

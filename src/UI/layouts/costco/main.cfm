@@ -2,7 +2,7 @@
 <cfset channelConfig = application.wirebox.getInstance("ChannelConfig") />
 <cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
 <cfset mercentAnalyticsTracker = application.wirebox.getInstance("MercentAnalyticsTracker") />
-<cfset listDeviceBuilderCarriers = "109,42" /> <!--- AT&T, VZW --->
+<cfset listDeviceBuilderCarriers = "109" /> <!--- 109,42 = AT&T, VZW --->
 
 <cfparam name="request.currentTopNav" default="phones" type="string" />
 <cfparam name="request.title" default="Costco Wireless - Big Savings on Cell Phones - Offering Plans from Verizon Wireless, AT&T, T-Mobile, and Sprint." type="string" />

@@ -1,3 +1,4 @@
+<cfset listDeviceBuilderCarriers = "109" /> <!--- 109,42 = AT&T, VZW --->
 <cfset cartValidationResponse = application.model.cartHelper.validateCartForCheckout() />
 <cfparam name="session.vfd.access" default="0">
 <cfoutput>
@@ -15,6 +16,8 @@
 				<cfif (structKeyExists(session, "vfd")) and (session.VFD.Access eq true)>
 					<!---<a href="##" onclick="location.href='?event=CheckoutVFD.startCheckout';return false;">Next</a>--->
 					<a href="##" onclick="location.href='/CheckoutVFD/startCheckout';return false;">Next</a>
+				<cfelseif arrayLen(session.cart.getLines()) and listFindNoCase(listDeviceBuilderCarriers,session.cart.getCarrierId()) and session.cart.getActivationType() contains 'finance'>
+					<a href="##" onclick="location.href='/devicebuilder/orderreview';return false;">Cart Review</a>
 				<cfelse>
 					<a href="##" onclick="location.href='/index.cfm/go/cart/do/view/';return false;">Cart Review</a>
 				</cfif>

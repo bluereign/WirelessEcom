@@ -2,8 +2,8 @@
   <div class="col-md-12">
     <section class="content accessories">
       <header class="main-header">
-        <h1>Accessorize Your Device</h1>
-        <p>When an accessory is selected you will see it added to Your Order.</p>
+        <h1>Customize Your Device</h1>
+        <p>Check out the accessories compatible with your new device.</p>
       </header>
       <form action="#prc.nextStep#" name="accessoryForm" id="accessoryForm" method="post">
         <div class="right">
