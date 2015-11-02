@@ -8,11 +8,12 @@
 
 <cfset assetPaths = application.wirebox.getInstance("assetPaths")>
 <cfinclude template="/views/checkout/paymentGatewayInclude.cfm" />
-<script language="javascript" type="text/javascript">
-	$(document).ready(
+<script type="text/javascript">
+	var $j = jQuery.noConflict();
+	$j(document).ready(
 		function()	{
 			showProgress('Proceeding to secure payment gateway.');
-			$('#paymentForm').submit();
+			$j('#paymentForm').submit();
 	});
 </script>
 
