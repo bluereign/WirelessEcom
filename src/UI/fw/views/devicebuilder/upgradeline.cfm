@@ -10,8 +10,8 @@
         </cfif>
 
         <header class="main-header">
-          <h1>Select A Line To Upgrade</h1>
-          <p>Choose which line on your account you wish to upgrade.</p>
+          <h1>Upgrade a Line</h1>
+          <p>Choose a line to Upgrade for this device.</p>
         </header>
 
         <form action="#prc.nextStep#" method="post">
