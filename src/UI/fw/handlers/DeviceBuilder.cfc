@@ -1282,6 +1282,11 @@
         prc.showAddAnotherDeviceButton = false;
       }
 
+      // ensure prc.subscribers exists:
+      if ( !structKeyExists(prc,"subscribers") and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers())   ) {
+        prc.subscribers = session.carrierObj.getSubscribers();
+      }
+
       // don't show top nav if cart is empty
       if (!arrayLen(prc.cartLines)) {
         prc.showNav = false;
