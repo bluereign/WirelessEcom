@@ -21,17 +21,44 @@ form .form-inline label { width:auto;}
 <script type="text/javascript">
 	jQuery(document).ready( function($) {
 		var $j = jQuery.noConflict();
+		var actType = $('#cartActivationType').val();
+		
+		//Checkboxes not displayed are checked so that validation will pass
+		if ((actType.search("new") >= 0) ||(actType.search("addaline") >= 0) || (actType.search("finance") < 0) ){
+					//alert("Display agreeToContractDoc");
+					$('input[type="checkbox"][name="agreeToContractExtension"]').attr('Checked','Checked');
+					$('input[type="checkbox"][name="agreeToDevicePaymentPlan"]').attr('Checked','Checked');
+					
+				} else if (actType.search("finance") < 0){
+					//alert("Display agreeToContractExtension");
+					$('input[type="checkbox"][name="agreeToContractDoc"]').attr('Checked','Checked');
+					$('input[type="checkbox"][name="agreeToDevicePaymentPlan"]').attr('Checked','Checked');
+				}
+		if (actType.search("finance") >= 0){
+					//alert("Display agreeToDevicePaymentPlan");
+					$('input[type="checkbox"][name="agreeToContractDoc"]').attr('Checked','Checked');
+					$('input[type="checkbox"][name="agreeToContractExtension"]').attr('Checked','Checked');
+				}
+		
 		$('#app').validate({
 			rules : {
+				agreeToContractDoc:		"required",
+				agreeToContractExtension:	"required",
+				agreeToDevicePaymentPlan:	"required",
+				agreeToDevicePaymentPresented:	"required",
 				agreeToCarrierTermsAndConditions : "required",
 				agreeToCustomerLetter: "required"
 			},
 			messages : {
+				agreeToContractDoc:		"You must agree to the contract documentation to proceed.",
+				agreeToContractExtension:	"You must agree to the contract extension to proceed.",
+				agreeToDevicePaymentPlan:	"You must agree to the device payment plan to proceed.",
+				agreeToDevicePaymentPresented: "You must acknowledge reading and approval of the documents to proceed.",
 				agreeToCarrierTermsAndConditions : "You must agree to the carrier terms and conditions to proceed.",
 				agreeToCustomerLetter : "You must agree to the customer letter to proceed."
 			},
 			errorPlacement : function(error, element) {
-				error.insertBefore(element);
+				error.insertAfter(element);
 			}
 		})
 		$('.continue').click( function() {
@@ -141,6 +168,7 @@ form .form-inline label { width:auto;}
 	<div class="col-md-12">
       <section class="content">
 	<input type="hidden" id="carrierID" value="#session.cart.getCarrierId()#">
+	<input type="hidden" id="cartActivationType" value="#session.cart.getActivationType()#">
 	<input type="hidden" id="docClicked" value="none">
 	<input type="hidden" name="pdfEncoded" value="#session.FinanceAgreementResp.getResponse().FinanceAgreement#"/>
 	<input type="hidden" id="pdfURL" value="#event.buildLink('/CheckoutDB/financeAgreement')#">

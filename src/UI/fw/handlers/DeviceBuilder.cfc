@@ -137,6 +137,7 @@
           prc.activationType = rc.finance & "-" & rc.type;
         }
         session.cart.setActivationType(prc.activationType);
+        session.cart.setUpgradeType('equipment+plan');
 
         // 6. set the cartLineNumber
         // if customer is new, cartLineNumber is always 1:
@@ -271,6 +272,7 @@
       if ( structKeyExists(rc,"HasExistingPlan")  ) {
         // session.DBuilderCart.setHasExistingPlan(rc.HasExistingPlan);
         session.cart.HasExistingPlan = rc.HasExistingPlan;
+        session.cart.setUpgradeType('equipment-only');
         // Remove plan from cartLineNumber and cart.  It should always be attached to Line 1:
         if (rc.HasExistingPlan) {
           session.cartHelper.removePlan(line = 1);
@@ -1280,6 +1282,11 @@
         prc.showAddAnotherDeviceButton = true;
       } else {
         prc.showAddAnotherDeviceButton = false;
+      }
+
+      // ensure prc.subscribers exists:
+      if ( !structKeyExists(prc,"subscribers") and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers())   ) {
+        prc.subscribers = session.carrierObj.getSubscribers();
       }
 
       // don't show top nav if cart is empty

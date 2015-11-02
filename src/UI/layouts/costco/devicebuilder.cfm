@@ -211,13 +211,6 @@
 
 <cfif listFindNoCase("devicebuilder.orderreview", event.getCurrentEvent())>
   <script>
-    function showHideTextDevice(text) {
-      var SHOW_TEXT = 'Show Details',
-      HIDE_TEXT = 'Hide Details';
-
-      return  text === SHOW_TEXT ? HIDE_TEXT : SHOW_TEXT;
-    }
-
     $(function() {
 
 

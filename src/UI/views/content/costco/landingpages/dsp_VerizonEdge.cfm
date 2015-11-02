@@ -1,4 +1,4 @@
-<!---<h1>Verizon's Device Payment Agreement Costco landing page</h1>--->
+<!---<h1>Verizon's Device Payment Program Costco landing page</h1>--->
 
 <style>
 	#wrapper {font-family:'VerizonApexMediumItalic',Arial,Helvetica,sans-serif;}
@@ -73,7 +73,7 @@
             		<p>AVAILABLE IN <br>WAREHOUSE ONLY</p>
 				</span>  
       		</div>
-        	<div id="s1c2">With Verizon's Device Payment Agreement, get your choice of the latest device, because two years is 
+        	<div id="s1c2">With Verizon's Device Payment Program, get your choice of the latest device, because two years is 
 			too long to wait to upgrade.
         		<ul>
             		<li style="">No upgrade fees</li>
@@ -148,11 +148,11 @@
 	</div>  
     
      <div id="about_vzedge">  
-     	<div id="abouthead">About Verizon's Device Payment Agreement</div>
+     	<div id="abouthead">About Verizon's Device Payment Program</div>
         <div id="aboutc1">
-        	<span class="aboutsub">What is Verizon's Device Payment Agreement?</span>
+        	<span class="aboutsub">What is Verizon's Device Payment Program?</span>
             <span class="aboutbody">
-	            <p>Verizon's Device Payment Agreement is a monthly payment plan that gives you the flexibility to play for your device over 24 months rather than 
+	            <p>Verizon's Device Payment Program is a monthly payment plan that gives you the flexibility to play for your device over 24 months rather than 
 	            it all upfront.</p>
 				<ul>
 					<li>Get a new device whenever you want, once your old device is paid off.</li>
@@ -160,14 +160,14 @@
 					<li>No activation or upgrade fee</li>
 				</ul>
 			</span>
-        	<span class="aboutsub"><br>What are the benefits of Verizon's Device Payment Agreement?</span>
+        	<span class="aboutsub"><br>What are the benefits of Verizon's Device Payment Program?</span>
             <span class="aboutbody">
-            	<p>With Verizon's Device Payment Agreement, you can:</p>
+            	<p>With Verizon's Device Payment Program, you can:</p>
 				<ul>
 					<li>Enjoy the latest technology available by upgrading your device more frequently</li>
 					<li>Upgrade without additional fees or finance charges</li>
 					<li>Purchase a new device and pay for it monthly</li>
-					<li>Get more with Verizon's Device Payment Agreement with The MORE Everything Plan. Customers on MORE Everything Plans 
+					<li>Get more with Verizon's Device Payment Program with The MORE Everything Plan. Customers on MORE Everything Plans 
 					that meet the Gigabyte requirement will receive up to $25 off their smartphone monthly line access 
 					charges each month.</li>
 				</ul>
@@ -179,17 +179,17 @@
 		</div>
         
         <div id="aboutc2">
-        	<span class="aboutsub">Which devices are eligible for Verizon's Device Payment Agreement?</span>
+        	<span class="aboutsub">Which devices are eligible for Verizon's Device Payment Program?</span>
             <span class="aboutbody">
             	<p>All Verizon Wireless smartphones, tablets, and basic phones.</p>
             	<p>Note: Device bundles are not included. All other devices (Jetpacks, modems, etc.) are not 
-				eligible for Verizon's Device Payment Agreement</p>
+				eligible for Verizon's Device Payment Program</p>
 				<br>
 			</span>
 
-			<span class="aboutsub"><br>Who is eligible for Verizon's Device Payment Agreement?</span>
+			<span class="aboutsub"><br>Who is eligible for Verizon's Device Payment Program?</span>
             <span class="aboutbody">
-            	<p>To be eligible for Verizon's Device Payment Agreement, your device must be eligible for an upgrade and:</p>
+            	<p>To be eligible for Verizon's Device Payment Program, your device must be eligible for an upgrade and:</p>
 				<ul>
 					<li>Existing customers of 7+ months must have a good payment history with us during the prior six months.</li>
 					<li>New and existing customers of 6 months or less must pass a credit check.</li>
@@ -198,15 +198,15 @@
 				<br>
 			</span>            
             
-           	<span class="aboutsub"><br>How much does Verizon's Device Payment Agreement cost?</span>
+           	<span class="aboutsub"><br>How much does Verizon's Device Payment Program cost?</span>
             <span class="aboutbody">
-            	<p>Verizon's Device Payment Agreement monthly payments will vary depending on the price of the device, but there's no 
+            	<p>Verizon's Device Payment Program monthly payments will vary depending on the price of the device, but there's no 
 				finance fee or upgrade fee to join the program.</p><br>
 			</span>   
 		</div>
 
 	<div class="footerEdge">
-		<p><b>Verizon's Device Payment Agreement:</b> Verizon's Device Payment Agreement is a monthly payment plan that gives you the flexibility to pay for your device 
+		<p><b>Verizon's Device Payment Program:</b> Verizon's Device Payment Program is a monthly payment plan that gives you the flexibility to pay for your device 
 		over 24 months rather than it all upfront. Get a new device whenever you want, once your old device is paid off. No 
 		money down for qualified customers. No activation or upgrade fee. Copyright &copy;2015 Verizon Wireless. All rights reserved. 
 		All Verizon logos and names are trademarks and property of Verizon Wireless. For more information on coverage, 

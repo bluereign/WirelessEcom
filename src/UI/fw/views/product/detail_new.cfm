@@ -474,34 +474,17 @@ $j(document).ready(function($j) {
 			$j("[class*='ActionButton']").show();
 		};
 
+		// update the number of months displayed within the "*Tax due at sale..." paragraph:
+		<cfif prc.productData.CarrierId eq 109>
+			$j('##AttMonthNumber').text($j(this).attr('data-months'));
+		</cfif>
+		
+
 		// devicebuilder:
 		// update hidden input to pass finance/CartType
-		// console.log($j(this).attr('data-activation-type'));
 		$j("input[name='finance']").val(actType);
-		// alert(actType);
 
 	 });
-
-	// devicebuilder:
-	// $('[data-toggle="tooltip"]').tooltip();
-	// $('[data-toggle="popover"]').popover();
-
-	// $('##btn-carrierAddaline').tooltip();
-	// $('##btn-carrierAddaline').show();
-	// $('[data-toggle="tooltip"]').tooltip();
-	// $('[data-toggle="tooltip"]').tooltip().on("mouseenter", function () {
-	//         var $this = $(this),
-	//             tooltip = $this.next(".tooltip");
-	//         tooltip.find(".tooltip-inner").css({
-	//             backgroundColor: "##fff",
-	//             color: "##333",
-	//             borderColor: "##333",
-	//             borderWidth: "1px",
-	//             borderStyle: "solid"
-	//         });
-	//     });
-	// $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-
 
 	$j('##specifications-tab').on('shown.bs.tab', function (e) {
 	  
@@ -850,9 +833,9 @@ $j(document).ready(function($j) {
 			<div id="priceblock-finance">
 				<!--- Price point not available if zero dollars --->
 				<cfif prc.productData.FinancedMonthlyPrice24 neq 0>
-					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#24" data-activation-type="financed-24">
+					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#24" data-activation-type="financed-24" data-months="<cfif prc.productData.CarrierId eq 109>30<cfelse>24</cfif>">
 						<cfif prc.productData.CarrierId eq 128>
-							<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109> (EIP)</cfif></div>
+							<div style="float:left;">#prc.financeproductname#</div>
 						<cfelse>
 							<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>24</cfif></div>
 						</cfif>
@@ -904,7 +887,7 @@ $j(document).ready(function($j) {
 
 				<!--- Price point not available if zero dollars --->
 				<cfif prc.productData.FinancedMonthlyPrice18 neq 0>
-					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#18" data-activation-type="financed-18">
+					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#18" data-activation-type="financed-18" data-months="<cfif prc.productData.CarrierId eq 109>24<cfelse>18</cfif>">
 						<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>18</cfif></div>
 						<div style="float:right;"><span class="priceBlockHeaderSmall">Due Monthly for <cfif prc.productData.CarrierId eq 109>24<cfelse>18</cfif> Months</span> 	#dollarFormat(prc.productData.FinancedMonthlyPrice18)#</div>
 					</button>
@@ -925,7 +908,7 @@ $j(document).ready(function($j) {
 
 				<!--- Price point not available if zero dollars --->
 				<cfif prc.productData.FinancedMonthlyPrice12 neq 0>
-					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#12" data-activation-type="financed-12">
+					<button class="priceBlockHeader" id="priceBlockHeader-#prc.financeproductname#12" data-activation-type="financed-12" data-months="20">
 						<div style="float:left;">#prc.financeproductname# <cfif prc.productData.CarrierId eq 109>12</cfif></div>
 						<div style="float:right;"><span class="priceBlockHeaderSmall">Due Monthly for 20 Months</span> #dollarFormat(prc.productData.FinancedMonthlyPrice12)#</div>
 					</button>
@@ -945,7 +928,7 @@ $j(document).ready(function($j) {
 				</cfif>
 				<div id="finance-legal">
 					<cfif prc.productData.CarrierId eq 109>
-						*Tax due at sale. If wireless service cancelled, device balance due. Requires 30-month 0% APR installment agreement, 
+						*Tax due at sale. If wireless service cancelled, device balance due. Requires <div id="AttMonthNumber" style="display:inline;">30</div>-month 0% APR installment agreement, 
 						qualifying credit and qualified monthly wireless service plans (voice & Data). Up to $25 savings: Savings on Mobile 
 						Share Value monthly pricing is only available on a no annual service contract line (AT&T Next, bring your own, pay 
 						full price, month-to-month), and is not available on a 2-year wireless contract. If you are currently receiving this 
@@ -953,7 +936,7 @@ $j(document).ready(function($j) {
 						discount, you must upgrade with AT&T Next or pay full price for your smartphone.
 					<cfelseif prc.productData.CarrierId eq 42>
 						*For qualified customers.
-						<b>Device Payment Agreement:</b>24 interest-free installments with 100% pay off to upgrade - customers can pay off their 
+						<b>Device Payment Program:</b>24 interest-free installments with 100% pay off to upgrade - customers can pay off their 
 						installment plan at any time and upgrade at any time! Copyright &copy;2015 Verizon Wireless. All rights reserved. 
 						All Verizon logos and names are trademarks and property of Verizon Wireless. For more information on coverage, 
 						<a href="http://verizonwireless.com/4GLTE" target="_blank">verizonwireless.com/4GLTE</a>. LTE is a trademark of ETSI.
