@@ -40,7 +40,7 @@
             
             <form id="formAccessory" action="#event.buildLink('devicebuilder.accessories')#" method="post">
               <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
-              <input type="hidden" name="addaccessory" value="#prc.accessoryInfo.productId#" />
+              <input type="hidden" name="addaccessory" id="addaccessory" value="#prc.accessoryInfo.productId#" />
 
               <div class="form-group form-inline">
                 <label for="accessoryqty">Quantity</label>
@@ -57,7 +57,7 @@
           <div class="col-md-8 price">Price: <strong>#dollarFormat(prc.accessoryInfo.Price)#</strong></div>
         </div>
 
-        <button type="submit" class="btn btn-primary right"  name="btnAddAccessory" id="btnAddAccessory">Continue</button>
+        <button type="button" class="btn btn-primary right"  name="btnAddAccessory" id="btnAddAccessory" >Continue</button>
         <button class="btn btn-gray right" data-dismiss="modal" aria-label="Close">No Thanks</button>
 
       </div>
@@ -75,7 +75,22 @@
     $(function() {
 
       $('##btnAddAccessory').on('click', function() {
-        $('##formAccessory').submit();
+        // $('##formAccessory').submit();
+        $.post('#event.buildLink('devicebuilder.tallybox')#', $('##formAccessory').serialize(), function(data){
+          $('##myTallybox').html( data )
+        });
+        $('##accessoryModal').modal('hide');
+
+        var id = $('##addaccessory').attr('value');
+
+        $('##accessory_'+id).data('fn', 'remove');
+        $('##accessory_'+id).text('Remove');
+        $('##accessory_'+id).addClass('btn-remove');
+
+        $('##removeacc_'+id).data('fn', 'remove');
+        $('##removeacc_'+id).text('Remove');
+        $('##removeacc_'+id).addClass('btn-remove');
+
       });
 
       // Swap images on thumbnail click in view details modal
