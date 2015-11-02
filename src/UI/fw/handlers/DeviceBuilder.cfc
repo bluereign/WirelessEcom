@@ -325,6 +325,7 @@
         } else if (rc.warrantyid eq 0) {
           // if warrantyid exists and it is zero, then remove the cartline warranty.
           session.cartHelper.removeWarranty(line = rc.cartLineNumber);
+          session.cartHelper.declineWarranty(rc.cartLineNumber);
         }
       }
 

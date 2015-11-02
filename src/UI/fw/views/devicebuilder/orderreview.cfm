@@ -706,7 +706,7 @@
         </div>
       </div>
       </div>
-	  <cfif structKeyExists(prc,"warningMessage")>
+	  <cfif structKeyExists(prc,"warningMessage") and len(prc.warningMessage)>
 				<div class="bs-callout bs-callout-error">
                     <h4>#prc.warningMessage#</h4>
                 </div>
