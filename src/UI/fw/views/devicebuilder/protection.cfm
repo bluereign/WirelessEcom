@@ -199,7 +199,7 @@
                   <cfset prc.i = 1 />
                   <cfset prc.nothanks = 1 />
                   <cfloop query="serviceLabels">
-                    <cfset prc.serviceCounter = prc.serviceCounter + 1 />
+                    <!--- <cfset prc.serviceCounter = prc.serviceCounter + 1 /> --->
 
                     <!--- Add this service productId to a list of required services for display in the Tallybox --->
                     <cfif !listFindNoCase(session.listRequiredServices,serviceLabels.productId)>
@@ -360,7 +360,7 @@
 
             </cfloop>
             
-            <input type="hidden" name="serviceCounter" value="#prc.serviceCounter#" />
+            <!--- <input type="hidden" name="serviceCounter" value="#prc.serviceCounter#" /> --->
 
           </section>
 

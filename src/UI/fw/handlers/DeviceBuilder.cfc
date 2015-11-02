@@ -137,6 +137,7 @@
           prc.activationType = rc.finance & "-" & rc.type;
         }
         session.cart.setActivationType(prc.activationType);
+        session.cart.setUpgradeType('equipment+plan');
 
         // 6. set the cartLineNumber
         // if customer is new, cartLineNumber is always 1:
