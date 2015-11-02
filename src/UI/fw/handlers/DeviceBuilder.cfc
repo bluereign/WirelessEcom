@@ -272,6 +272,7 @@
       if ( structKeyExists(rc,"HasExistingPlan")  ) {
         // session.DBuilderCart.setHasExistingPlan(rc.HasExistingPlan);
         session.cart.HasExistingPlan = rc.HasExistingPlan;
+        session.cart.setUpgradeType('equipment-only');
         // Remove plan from cartLineNumber and cart.  It should always be attached to Line 1:
         if (rc.HasExistingPlan) {
           session.cartHelper.removePlan(line = 1);

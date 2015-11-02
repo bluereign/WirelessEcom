@@ -1,19 +1,4 @@
 <cfoutput>
-<!---   <table>
-    <cfloop from="1" to="#arrayLen(prc.lineFeatures)#" index="local.iFeature">
-      <cfset local.thisFeatureID = prc.lineFeatures[local.iFeature].getProductID() />
-      <cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID) />
-      <cfset local.thisServiceRecommended = false />
-      <tr>
-        <td>#local.thisFeature.summaryTitle#</td>
-        <td class="price">#dollarFormat(prc.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</td>
-      </tr>
-      <tr>
-        <td colspan="2"><cfdump var="#local.thisFeature#"></td>
-      </tr>
-    </cfloop>
-  </table> --->
-  <cfdump var="#session.listRequiredServices#">
   <div class="col-md-12">
 
     <section class="content">
