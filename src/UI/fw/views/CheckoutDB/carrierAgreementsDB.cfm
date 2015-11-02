@@ -168,7 +168,7 @@ form .form-inline label { width:auto;}
 	<div class="col-md-12">
       <section class="content">
 	<input type="hidden" id="carrierID" value="#session.cart.getCarrierId()#">
-	<input id="cartActivationType" value="#session.cart.getActivationType()#">
+	<input type="hidden" id="cartActivationType" value="#session.cart.getActivationType()#">
 	<input type="hidden" id="docClicked" value="none">
 	<input type="hidden" name="pdfEncoded" value="#session.FinanceAgreementResp.getResponse().FinanceAgreement#"/>
 	<input type="hidden" id="pdfURL" value="#event.buildLink('/CheckoutDB/financeAgreement')#">
