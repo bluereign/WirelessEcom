@@ -953,7 +953,7 @@ $j(document).ready(function($j) {
 						discount, you must upgrade with AT&T Next or pay full price for your smartphone.
 					<cfelseif prc.productData.CarrierId eq 42>
 						*For qualified customers.
-						<b>Device Payment Agreement:</b>24 interest-free installments with 100% pay off to upgrade - customers can pay off their 
+						<b>Device Payment Program:</b>24 interest-free installments with 100% pay off to upgrade - customers can pay off their 
 						installment plan at any time and upgrade at any time! Copyright &copy;2015 Verizon Wireless. All rights reserved. 
 						All Verizon logos and names are trademarks and property of Verizon Wireless. For more information on coverage, 
 						<a href="http://verizonwireless.com/4GLTE" target="_blank">verizonwireless.com/4GLTE</a>. LTE is a trademark of ETSI.
