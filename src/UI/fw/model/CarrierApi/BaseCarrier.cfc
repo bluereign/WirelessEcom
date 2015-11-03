@@ -11,8 +11,8 @@
 		<cfset var jsonized = "" />
 		
 		<cfset stringFields = "SubscriberNumber,SecurityId,ZipCode,AccountIdentifier,ActiveLines,CanBeReachedPhone,HomePhone,WorkPhone,Imei,Sim,Sku,Number,ServiceArea,AreaCode,ZipExtension,Zip" />
-		<cfset UppercaseFields = "UPGRADEQUALIFICATION,FINANCEAGREEMENTITEM,REQUESTTYPE,IDENTIFIER,CATEGORY,DEVICEINFO,NUMBERSOURCE,FAMILY,FULLRETAILPRICE,ACCOUNT,ADDRESS,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT,MSRP,DOWNPAYMENT" />
-		<cfset FixedcaseFields = "UpgradeQualification,FinanceAgreementItem,RequestType,Identifier,Category,DeviceInfo,NumberSource,Family,FullRetailPrice,Account,Address,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat,Msrp,DownPayment" />
+		<cfset UppercaseFields = "IMEITYPE,UPGRADEQUALIFICATION,FINANCEAGREEMENTITEM,REQUESTTYPE,IDENTIFIER,CATEGORY,DEVICEINFO,NUMBERSOURCE,FAMILY,FULLRETAILPRICE,ACCOUNT,ADDRESS,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT,MSRP,DOWNPAYMENT" />
+		<cfset FixedcaseFields = "ImeiType,UpgradeQualification,FinanceAgreementItem,RequestType,Identifier,Category,DeviceInfo,NumberSource,Family,FullRetailPrice,Account,Address,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat,Msrp,DownPayment" />
 		<cfset stringDelimiter = "@x@y@z@" />
 		
 		<cfset local.args = duplicate(arguments.args) />
@@ -137,4 +137,22 @@
 		<cfreturn arglist />
 		
 	</cffunction>
+	
+	<cffunction name="saveToSession" returnType="void" access="public">
+		<cfargument name="objToStore" type="any" required="true" />
+		<cfargument name="objName" type="string" required="true" />
+
+		<!--- create the session storage structure if it does not already exist --->		
+		<cfif not structKeyExists(session,"carrierFacade")>
+			<cfset session.carrierFacade = structNew() />
+		</cfif>
+		
+		<cfif isObject(objToStore) >
+			<cfset structInsert(session.carrierFacade, arguments.objName, arguments.objToStore.getResponse(),true) />		
+		<cfelse>
+			<cfset structInsert(session.carrierFacade, arguments.objName, arguments.objToStore,true) />		
+		</cfif>
+		
+	</cffunction>
+
 </cfcomponent>
