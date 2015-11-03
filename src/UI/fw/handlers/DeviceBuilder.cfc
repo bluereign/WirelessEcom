@@ -302,6 +302,17 @@
         session.cart.setActivationType(prc.activationType);
         prc.cartLine.setCartLineActivationType(prc.activationType);
         prc.paymentoption = rc.paymentoption;
+
+        // 7. add phone to cart again.
+        cartArgs = {
+          productType = "phone:" & prc.activationType,
+          product_id = prc.productData.productId,
+          qty = 1,
+          price = prc.productData.FinancedFullRetailPrice,
+          cartLineNumber = rc.cartLineNumber
+        };
+        // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
       if (  structKeyExists(prc,"cartLine") and  ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) )  ) {
@@ -971,12 +982,10 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var servicesArgs = {} />
+    <cfparam name="rc.isDownPaymentApproved" default="0" />
+    <cfparam name="rc.isOptionalDownPaymentAdded" default="0" />
 
     <cfscript>
-      if (!structKeyExists(rc, "isDownPaymentApproved")) {
-        rc.isDownPaymentApproved = 0;
-      }
-
       // get all warranties for this device:
       prc.qWarranty = application.model.Warranty.getByDeviceId(prc.device.getProductId());
 
