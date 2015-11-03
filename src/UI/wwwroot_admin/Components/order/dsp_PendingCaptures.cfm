@@ -20,6 +20,7 @@
 					<th>Ship Method</th>
 					<th>Items without<br />Real Stock</th>
 					<th>Order<br />Assisted?</th>
+					<th>Type</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +33,7 @@
 						<td>#ShippingMethod#</td>
 						<td>#PhantomInventoryCount#</td>
 						<td>#YesNoFormat( OrderAssistanceUsed )#</td>
+						<td>#trim(application.model.order.getActivationTypeName(type = trim(activationType[qCaptures.currentRow])))#</td>
                     </tr>
 				</cfoutput>
             </tbody>

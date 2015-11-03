@@ -315,7 +315,7 @@
 
 	<cffunction name="getGeneralTabView" output="false" access="public" returntype="string">
 		<cfargument name="order" type="cfc.model.Order" required="true" />
-
+		
 		<cfscript>
 			var local = {};
 			var content = "";
@@ -330,7 +330,8 @@
 
 			var qry_getMilitaryBases = "";
 			
-			
+			var qActivationLines = application.model.order.getOrderActivationLines( order.getOrderId() );
+			var wirelessLines = application.model.WirelessAccount.getByOrderId( order.getOrderId() );
 			
 
 			//Order is sent to GERS when activation status is success or manual
@@ -570,7 +571,38 @@
 							</div>
 						</form>
 					</div>	
-				</div>					
+				</div>
+				<cfloop query="qActivationLines">
+					<h3>Financed Line Information</h3>	
+				
+					<div class="field-display">	
+						<div>
+							Line : #trim(qActivationLines.productTitle)#
+						</div>		
+						<div>
+							<strong>Retail Price:</strong> #dollarFormat( qActivationLines.RetailPrice)#
+						</div>
+						<div>
+							<strong>Down Payment:</strong> #dollarFormat(qActivationLines.DownPaymentReceived)#
+						</div>
+						<div>
+							<strong>Monthly Payment:</strong> #qActivationLines.MonthlyFee#
+						</div>
+						<div>
+							<strong>Term Length:</strong> #qActivationLines.contractLength#
+						</div>
+						<div>
+							<strong>Total Financed:</strong> #dollarFormat( qActivationLines.RetailPrice - qActivationLines.DownPaymentReceived)#
+						</div>
+					</cfloop>
+						<hr />
+						<div>
+							<strong>"Due Today" Total:</strong> #dollarFormat( arguments.order.getSubTotal() + arguments.order.getShipCost() + arguments.order.getTaxTotal() - arguments.order.getOrderDiscountTotal() - arguments.order.getDownPayment() )# (includes Taxes & Shipping & Deposit)
+						</div>
+						<div>
+							<strong>Due Monthly:</strong> all financed device monthly fee plus plan plus line access fee 
+						</div>
+					</div>
 				
 				<h3>Billing Information</h3>
 				<div class="field-display">
@@ -2057,7 +2089,7 @@
 		                            <tr>
 		                                <td><a href="?c=8edd9b84-6a06-4cd0-b88a-2a27765f88ff&orderId=#OrderId#" target="_blank">#OrderId#</a></td>
 		                                <td>#DateFormat( OrderDate, "mm/dd/yyyy" )#</td>
-		                                <td>#ActivationType#</td>
+		                                <td>#trim(application.model.order.getActivationTypeName(type = trim(activationType[arguments.qActivations.currentRow])))#</td>
 										<td>#CompanyName#</td>
 										<td>#CurrentAcctNumber#</td>
 										<td>#YesNoFormat( OrderAssistanceUsed )#</td>
