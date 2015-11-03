@@ -287,387 +287,408 @@
 </cfsavecontent>
 <cfhtmlhead text="#trim(local.jsHead)#" />
 
-<div>
-	<div style="width:65%;">
-		<h1>Billing and Shipping</h1>
-		
-		<cfif session.cart.getActivationType() CONTAINS 'New' AND !request.config.allowDifferstShippingOnNewActivations>
-			<p>To safeguard you, our customer, we only ship to your billing address.</p>
-		</cfif>
-		
-		<cfif session.cart.getActivationType() CONTAINS 'Upgrade'>
-			<p>If you are upgrading your device you must be the account holder or the authorized user.</p>
-		</cfif>
-		
-		<cfif session.cart.getActivationType() CONTAINS 'addaline'>
-			<p>If you are adding a line to your existing account you must be the account holder.</p>
-		</cfif>
-	</div>
-	<div class="formControl">
-		<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Previous</a>
-		<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('#billShip').submit()" style="color:#fff">Continue</a></span>
-	</div>
-</div>
+
 <cfoutput>
-	<form id="billShip" name="billShip" class="cmxform" action="#event.buildLink('/CheckoutDB/processBillShip')#" method="post">
-	
-		<cfif structKeyExists(request, 'validator') and request.validator.hasMessages()>
-			<div class="form-errorsummary">#trim(request.validatorView.validationSummary(request.validator.getMessages(), 4))#</div>
-		</cfif>
-		<input type="hidden" id="returningCustomer" name="returningCustomer" value="#session.checkout.returningCustomer#" />
-		<div id="billing">
-			<fieldset>
-				<cfif request.config.allowDifferstShippingOnNewActivations OR session.cart.getActivationType() DOES NOT CONTAIN 'New'>
-					<span class="title">Billing Address</span>
-				</cfif>
-				<ol>
-					<li>
-						<label for="txtEmailAddress">Email Address<strong>*</strong></label><br/>
-						<cfif not session.UserAuth.isLoggedIn()>
-							<input id="txtEmailAddress" name="emailAddress" autocomplete="off" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress'))#" />
-							<span id="spanEmailReq" class="req" <cfif session.UserAuth.isLoggedIn() and len(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress')))>style="display: none"</cfif>>
-								<span id="spanAuthenticated" <cfif not session.UserAuth.isLoggedIn() or not len(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress')))>style="display: none"</cfif>>
-									<img src="#assetPaths.common#images/ui/checkmark.png" width="12" height="10" alt="Validated" border="0" />
-								</span>
-							<cfajaxproxy bind="javascript:checkEmailAddress({emailAddress})" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'emailAddress'))#
-						<cfelse>
-							<span id="txtEmailAddress" style="font-size: 1.2em">#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress'))#</span>
-							<span id="spanAuthenticated">&nbsp;&nbsp;<img src="#assetPaths.common#images/ui/checkmark.png" width="12" height="10" alt="Validated" border="0" /></span>
-							<input type="hidden" id="hiddenEmailAddress" autocomplete="off" name="emailAddress" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress'))#" />
-						</cfif>
-					</li>
-
-					<cfset displayReturningPassword = false />
-
-					<cfif not session.UserAuth.isLoggedIn() and isDefined('session.checkout.returningCustomer') and session.checkout.returningCustomer>
-						<cfset displayReturningPassword = true />
-						<!--- see if this is a 3rd party auth situation --->
-						<cfif request.config.thirdPartyAuth and structKeyExists(session,"authenticationId") and session.authenticationid is not "" and (structKeyExists(session,"newReturningAuthCust") is false or session.newReturningAuthCust is false)>
-							<cfset displayReturningPassword = false />
-						</cfif>
+	<div class="row main">
+        <div class="col-md-12">
+            <section class="content">
+				<header class="main-header">
+                    <h1>Billing and Shipping Information</h1>
+                    <cfif session.cart.getActivationType() CONTAINS 'New' AND !request.config.allowDifferstShippingOnNewActivations>
+						<p>To safeguard you, our customer, we only ship to your billing address.</p>
 					</cfif>
-
-					<li id="liExistingUserPassword" <cfif not variables.displayReturningPassword>style="display: none"</cfif>>
-						It appears you already have an account with us, please enter your existing account password.
-						<br /><br />
-						<label for="txtExistingUserPassword">Password <strong>*</strong></label>
-						<input id="txtExistingUserPassword" name="existingUserPassword" type="password" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.existingUserPassword'))#" onkeyup="$('##divIncorrectPassword').hide('slow')" style="width: 150px" autofocus />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'existingUserPassword'))#
-						<br /><br />
-						<div style="padding-left: 120px">
-							<span ><a onclick="cancelLogin()">Cancel</a></span>
-							<span class="btn btn-default btn-sm"><a onclick="showProgress('Validating email address and password.<br />Please wait.<br>'); $('##billShip').attr('action', '/CheckoutDB/billShipAuthenticate');$('##billShip').submit();" style="color:##fff">Ok</a></span>
-							<div style="padding-left: 4px; padding-top: 2px; padding-bottom: 10px"><a href="/index.cfm/go/myAccount/do/forgotPassword/">I forgot my password.</a></div>
-						</div>
-						<div id="divIncorrectPassword" style="display: none; color: ##f00">
-							<br />
-							The password you entered is incorrect. Please try again.
-						</div>
-					</li>
-
-					<li id="liCorrectPassword" style="display: none">
-						<div id="divCorrectPassword" style="color: ##090">
-							<br />
-							You have been authenticated.
-						</div>
-					</li>
-
-					<li>
-						<label for="txtBillingFirstName">First Name <strong>*</strong></label><br/>
-						<input id="txtBillingFirstName" name="billFirstName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billFirstName'))#" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billFirstName'))#
-					</li>
-
-					<li>
-						<label for="txtBillingMiddleInitial">Middle Initial</label><br/>
-						<input id="txtBillingMiddleInitial" name="billMiddleInitial" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billMiddleInitial'))#" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billMiddleInitial'))#
-					</li>
-
-					<li>
-						<label for="txtBillingLastName">Last Name <strong>*</strong></label><br/>
-						<input id="txtBillingLastName" name="billLastName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billLastName'))#" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billLastName'))#
-					</li>
-
-					<li>
-						<label for="txtBillingCompany">Company</label><br/>
-						<input id="txtBillingCompany" name="billCompany" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billCompany'))#" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billCompany'))#
-					</li>
-
-					<li>
-						<label for="txtBillingAddress1">Address 1 <strong>*</strong></label><br/>
-						<input id="txtBillingAddress1" name="billAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress1'))#" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress1'))#
-					</li>
-
-					<li>
-						<label for="txtBillingAddress2">Address 2</label><br/>
-						<input id="txtBillingAddress2" name="billAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress2'))#" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress2Error'))#
-					</li>
-
-					<li>
-						<label>City<strong>*</strong></label><br/>
-						<input id="txtBillingCity" name="billCity" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billCity'))#" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billCity'))#
-					</li>
-					
-					<li>
-						<label>State<strong>*</strong></label><br/>
-						<select id="selBillingState" name="billState">
-							<option value=""></option>
-
-							<cfset request.p.selected = '' />
-
-							<cfloop query="request.p.states">
-								<cfif trim(request.p.states.stateCode) is trim(application.model.checkoutHelper.getFormKeyValue(form = 'billShipForm', key = 'billState')) or (isDefined('session.checkout.billShipForm.billState') and trim(request.p.states.stateCode) is trim(session.checkout.billShipForm.billState))>
-									<cfset request.p.selected = 'selected' />
-								<cfelse>
-									<cfset request.p.selected = '' />
-								</cfif>
-
-								<option value="#trim(request.p.states.stateCode)#" #trim(request.p.selected)#>#trim(request.p.states.state)#</option>
-							</cfloop>
-						</select>
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billState'))#
-					</li>
-					
-					<li>
-						<label>Zip Code<strong>*</strong></label><br/>
-						<input id="txtBillingZip" name="billZip" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billZip'))#" maxlength="5" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billZip'))#
-					</li>
-
-					<!---<li>
-						<label for="txtBillingDayPhone">Contact Phone <strong>*</strong></label>
-						<input id="txtBillingDayPhone" name="billDayPhone" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone'))#" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billDayPhone'))#
-					</li>--->
-					<li>
-						<label for="txtBillingDayPhone">Contact Phone<strong>*</strong></label><br/>
-						( <input id="txtBillingDayPhonePt1" name="billDayPhonePt1" value="#LEFT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone')),3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtBillingDayPhonePt2'))" style="width:30px;text-align:center;"/> )
-						<input id="txtBillingDayPhonePt2" name="billDayPhonePt2" value="#MID(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone')),5,3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtBillingDayPhonePt3'))" style="width:30px;text-align:center;"/> - 
-						<input id="txtBillingDayPhonePt3" name="billDayPhonePt3" value="#RIGHT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone')),4)#" maxlength="4" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" style="width:40px;text-align:center;"/>
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billDayPhone'))#
-					</li>
-					<!---<li>
-						<label for="txtBillingEvePhone">Evening Phone <strong>*</strong></label>
-						<input id="txtBillingEvePhone" name="billEvePhone" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billEvePhone'))#" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
-						#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billEvePhone'))#
-					</li>--->
-
-
-					<cfif request.config.allowAPOFPO>
-						<li>
-							<label for="txtMilitaryBase">Military Base <strong>*</strong></label>
-							<select id="selMilitaryBase" name="selMilitaryBase">
-								<option value="">-- Select Nearest Base --</option>
-								<cfset request.p.selected = '' />
-								<cfloop query="request.p.MilitaryBases">
-
-									<cfif trim(request.p.MilitaryBases.completeName) is trim(application.model.checkoutHelper.getFormKeyValue(form = 'billShipForm', key = 'selMilitaryBase')) or (isDefined('session.checkout.billShipForm.selMilitaryBase') and trim(request.p.MilitaryBases.completeName) is trim(session.checkout.billShipForm.selMilitaryBase))>
-										<cfset request.p.selected = 'selected' />
-									<cfelse>
-										<cfset request.p.selected = '' />
-									</cfif>
-									<option value="#completeName#" #trim(request.p.selected)#>#completeName#</option>
-								</cfloop>
-							</select>
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'selMilitaryBase'))#
-						</li>
-					<cfelse>
-					<input type="hidden" name="selMilitaryBase" value=""/>
+		
+					<cfif session.cart.getActivationType() CONTAINS 'Upgrade'>
+						<p>If you are upgrading your device you must be the account holder or the authorized user.</p>
 					</cfif>
-					<li class="full">
-						<input type="checkbox" id="saveBilling" name="saveBilling" value="1"<cfif application.model.CheckoutHelper.formValue('session.checkout.billShipForm.saveBilling') eq 1> checked="checked"</cfif> />
-						<label class="check" for="saveBilling">Save to my online account</label>
-						<br />
-					</li>
-				</ol>
-				<input type="hidden" name="saveBilling" value="" />
-			</fieldset>
-		</div>
+		
+					<cfif session.cart.getActivationType() CONTAINS 'addaline'>
+						<p>If you are adding a line to your existing account you must be the account holder.</p>
+					</cfif>
+                </header>
+				<form id="billShip" name="billShip" class="cmxform" action="#event.buildLink('/CheckoutDB/processBillShip')#" method="post">
+					<div class="right">
+                        <a href="/DeviceBuilder/orderReview">BACK</a>
+                        <button type="submit" class="btn btn-primary">Continue</button> <!--<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('##billShip').submit()" style="color:##fff">Continue</a></span>-->
+                    </div>
 
-		<cfif request.config.allowDifferstShippingOnNewActivations OR session.cart.getActivationType() DOES NOT CONTAIN 'New'>
-			<div id="shipping">
-				<fieldset>
-					<span class="title">Shipping Information</span>
-					<ol id="shippingCheck">
-						<li class="full">
-							<cfparam name="session.checkout.billShipForm.sameAsBilling" default="1" />
-							<input type="checkbox" name="sameAsBilling" id="sameAsBilling" value="1" <cfif application.model.checkoutHelper.formValue('session.checkout.billShipForm.sameAsBilling') eq 1> checked="checked"</cfif> /><label class="check" for="sameAsBilling">Shipping is the same as Billing</label>
-						</li>
-					</ol>
+					<cfif structKeyExists(request, 'validator') and request.validator.hasMessages()>
+						<div class="bs-callout bs-callout-error">#trim(request.validatorView.validationSummary(request.validator.getMessages(), 4))#</div>
+					</cfif>
+					<input type="hidden" id="returningCustomer" name="returningCustomer" value="#session.checkout.returningCustomer#" />
+					<cfif request.config.allowDifferstShippingOnNewActivations OR session.cart.getActivationType() DOES NOT CONTAIN 'New'>
+						<h3>Billing Address</h3>
+					</cfif>
+					<div id="billing">
+						<div class="form-group form-inline emailAddress">
+							<label for="txtEmailAddress">Email Address<strong>*</strong></label>
+							<cfif not session.UserAuth.isLoggedIn()>
+								<input class="form-control" id="txtEmailAddress" name="emailAddress" autocomplete="off" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress'))#" />
+								<span id="spanEmailReq" class="req" <cfif session.UserAuth.isLoggedIn() and len(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress')))>style="display: none"</cfif>>
+									<span id="spanAuthenticated" <cfif not session.UserAuth.isLoggedIn() or not len(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress')))>style="display: none"</cfif>>
+										<img src="#assetPaths.common#images/ui/checkmark.png" width="12" height="10" alt="Validated" border="0" />
+									</span>
+								<cfajaxproxy bind="javascript:checkEmailAddress({emailAddress})" />
+								#trim(request.validatorView.validationElement(request.validator.getMessages(), 'emailAddress'))#
+							<cfelse>
+								<span id="txtEmailAddress" style="font-size: 1.2em">#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress'))#</span>
+								<span id="spanAuthenticated">&nbsp;&nbsp;<img src="#assetPaths.common#images/ui/checkmark.png" width="12" height="10" alt="Validated" border="0" /></span>
+								<input type="hidden" id="hiddenEmailAddress" autocomplete="off" name="emailAddress" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.emailAddress'))#" />
+							</cfif>
+						</div>
+                    
+						<cfset displayReturningPassword = false />
 
-					<ol id="shippingDetails" class="hidden">
-						<li>
-							<label for="txtShippingFirstName">First Name <strong>*</strong></label><br/>
-							<input id="txtShippingFirstName" name="shipFirstName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipFirstName'))#" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipFirstName'))#
-						</li>
-						<li>
-							<label for="txtShippingMiddleInitial">Middle Initial</label><br/>
-							<input id="txtShippingMiddleInitial" name="shipMiddleInitial" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipMiddleInitial'))#" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipMiddleInitial'))#
-						</li>
-						<li>
-							<label for="txtShippingLastName">Last Name <strong>*</strong></label><br/>
-							<input id="txtShippingLastName" name="shipLastName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipLastName'))#" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipLastName'))#
-						</li>
-						<li>
-							<label for="txtShippingCompany">Company</label><br/>
-							<input id="txtShippingCompany" name="shipCompany" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipCompany'))#" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipCompany'))#
-						</li>
-						<li>
-							<label for="txtShippingAddress1">Address 1 <strong>*</strong></label><br/>
-							<input id="txtShippingAddress1" name="shipAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress1'))#" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress1'))#
-						</li>
-						<li>
-							<label for="txtShippingAddress2">Address 2</label><br/>
-							<input id="txtShippingAddress2" name="shipAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress2'))#" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress2Error'))#
-						</li>
-						<li>
-							<label>City<strong>*</strong></label><br/>
-							<input id="txtShippingCity" name="shipCity" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipCity'))#" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipCity'))#
-						</li>
-						<li>
-							<label>State<strong>*</strong></label><br/>
-							<select id="selShippingState" name="shipState">
+						<cfif not session.UserAuth.isLoggedIn() and isDefined('session.checkout.returningCustomer') and session.checkout.returningCustomer>
+							<cfset displayReturningPassword = true />
+							<!--- see if this is a 3rd party auth situation --->
+							<cfif request.config.thirdPartyAuth and structKeyExists(session,"authenticationId") and session.authenticationid is not "" and (structKeyExists(session,"newReturningAuthCust") is false or session.newReturningAuthCust is false)>
+								<cfset displayReturningPassword = false />
+							</cfif>
+						</cfif>
+
+						<div id="liExistingUserPassword" class="bs-callout bs-callout-warning" <cfif not variables.displayReturningPassword>style="display: none"</cfif>>
+							<p>It appears you already have an account with us, please enter your existing account password.</p>
+							<div class="form-group form-inline existingUserPassword has-error">
+								<label for="txtExistingUserPassword">Password <strong>*</strong></label>
+								<input class="form-control" id="txtExistingUserPassword" name="existingUserPassword" type="password" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.existingUserPassword'))#" onkeyup="$('##divIncorrectPassword').hide('slow')" style="width: 150px" autofocus />
+								#trim(request.validatorView.validationElement(request.validator.getMessages(), 'existingUserPassword'))#
+								
+								<div style="margin-left: 250px; padding-top:10px;">
+									<span ><a style="margin:0 15px;" onclick="cancelLogin()">Cancel</a></span>
+									<span class="btn btn-primary btn-sm"><a onclick="showProgress('Validating email address and password.<br />Please wait.<br>'); $('##billShip').attr('action', '/CheckoutDB/billShipAuthenticate');$('##billShip').submit();" style="color:##fff; margin:0 15px;">Ok</a></span>
+									<div style="padding: 15px 0 0;font-size:10px;"><a href="/index.cfm/go/myAccount/do/forgotPassword/">I forgot my password.</a></div>
+								</div>
+							</div>
+							
+							<div id="divIncorrectPassword" style="display: none; color: ##f00">
+								<br />
+								The password you entered is incorrect. Please try again.
+							</div>
+						</div>
+						<div id="liCorrectPassword" style="display: none">
+							<div id="divCorrectPassword" style="color: ##090">
+								<br />
+								You have been authenticated.
+							</div>
+						</div>
+						<div class="form-group form-inline firstName <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billFirstName'))>has-error</cfif>">
+							<label for="txtBillingFirstName">First Name <strong>*</strong></label>
+							<input class="form-control" id="txtBillingFirstName" name="billFirstName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billFirstName'))#" />
+
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billFirstName'))#
+						</div>
+                    
+					
+					
+						<div class="form-group form-inline middleInitial <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billMiddleInitial'))>has-error</cfif>">
+							<label for="txtBillingMiddleInitial">Middle Initial</label>
+							<input class="form-control" id="txtBillingMiddleInitial" name="billMiddleInitial" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billMiddleInitial'))#" />
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billMiddleInitial'))#                        
+						</div>
+
+
+
+						<div class="form-group form-inline lastName <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billLastName'))>has-error</cfif>">
+							<label for="txtBillingLastName">Last Name <strong>*</strong></label>
+							<input class="form-control" id="txtBillingLastName" name="billLastName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billLastName'))#" />
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billLastName'))#
+						</div>
+
+						<div class="form-group form-inline company <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billCompany'))>has-error</cfif>">
+							<label for="txtBillingCompany">Company</label>
+							<input class="form-control" id="txtBillingCompany" name="billCompany" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billCompany'))#" />
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billCompany'))#
+						</div>
+
+						<div class="form-group form-inline address1 <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress1'))>has-error</cfif>">
+							<label for="txtBillingAddress1">Address 1 <strong>*</strong></label>
+							<input class="form-control" id="txtBillingAddress1" name="billAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress1'))#" />
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress1'))#
+						</div>
+
+						<div class="form-group form-inline address2 <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress2Error'))>has-error</cfif>">
+							<label for="txtBillingAddress2">Address 2</label>
+							<input class="form-control" id="txtBillingAddress2" name="billAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress2'))#" />
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress2Error'))#
+						</div>
+
+						<div class="form-group form-inline city <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billCity'))>has-error</cfif>">
+							<label>City<strong>*</strong></label>
+							<input class="form-control" id="txtBillingCity" name="billCity" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billCity'))#" />
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billCity'))#
+						</div>
+
+						<div class="form-group form-inline billState <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billState'))>has-error</cfif>">
+							<label>State<strong>*</strong></label>
+							<select id="selBillingState" name="billState" class="form-control">
 								<option value=""></option>
 
 								<cfset request.p.selected = '' />
-								<cfloop query="request.p.shippingStates">
-									<cfif trim(request.p.shippingStates.stateCode) is trim(application.model.checkoutHelper.getFormKeyValue(form = 'billShipForm', key = 'shipState')) or (isDefined('session.checkout.billShipForm.billState') and trim(request.p.shippingStates.stateCode) is trim(session.checkout.billShipForm.shipState))>
+
+								<cfloop query="request.p.states">
+									<cfif trim(request.p.states.stateCode) is trim(application.model.checkoutHelper.getFormKeyValue(form = 'billShipForm', key = 'billState')) or (isDefined('session.checkout.billShipForm.billState') and trim(request.p.states.stateCode) is trim(session.checkout.billShipForm.billState))>
 										<cfset request.p.selected = 'selected' />
 									<cfelse>
 										<cfset request.p.selected = '' />
 									</cfif>
 
-									<option value="#trim(request.p.shippingStates.stateCode)#" #trim(request.p.selected)#>#trim(request.p.shippingStates.state)#</option>
-								</cfloop>
-
-							</select>	
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipState'))#
-						</li>
-						<li>
-							<label>Zip Code<strong>*</strong></label><br/>						
-							<input size="12" id="txtShippingZip" name="shipZip" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipZip'))#" maxlength="5" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipZip'))#
-						</li>
-						<cfif request.config.allowAPOFPO>
-							<li id="apodislaimer">
-								<input type="checkbox" name="checkApoDislaimer" value="1">
-								By selecting an APO/FPO shipping address, you are agreeing to waive the option to return the device.  Manufacturer warranty for defects remains valid.
-								#trim(request.validatorView.validationElement(request.validator.getMessages(), 'checkApoDislaimer'))#
-							</li>
-						</cfif>
-						<!---<li>
-							<label for="txtShippingDayPhone">Contact Phone <strong>*</strong></label>
-							<input id="txtShippingDayPhone" name="shipDayPhone" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone'))#" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipDayPhone'))#
-						</li>--->
-						<li>
-						<label for="txtShippingDayPhone">Contact Phone<strong>*</strong></label><br/>
-							( <input id="txtShippingDayPhonePt1" name="shipDayPhonePt1" value="#LEFT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone')),3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtShippingDayPhonePt2'))" style="width:30px;text-align:center;"/> )
-							<input id="txtShippingDayPhonePt2" name="shipDayPhonePt2" value="#MID(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone')),5,3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtShippingDayPhonePt3'))" style="width:30px;text-align:center;"/> - 
-							<input id="txtShippingDayPhonePt3" name="shipDayPhonePt3" value="#RIGHT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone')),4)#" maxlength="4" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" style="width:40px;text-align:center;"/>
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipDayPhone'))#
-						</li>
-						<!---<li>
-							<label for="txtShippingEvePhone">Evening Phone <strong>*</strong></label>
-							<input id="txtShippingEvePhone" name="shipEvePhone" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipEvePhone'))#" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
-							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipEvePhone'))#
-						</li>--->
-					</ol>
-				</fieldset>
-			</div>
-		</cfif>
-		<!--- Taxes and Shipping --->
-		<cfscript>
-			/*  shipping fix goes here */
-			shipMethodArgs = {CarrierId=session.cart.getCarrierId(), 
-			                          IsAfoApoAddress=application.model.CheckoutHelper.getShippingAddress().isApoFpoAddress(),
-			                          IsCartEligibleForPromoShipping=false};
-		
-			if(ChannelConfig.getOfferShippingPromo())
-			{
-				//Check to see if the cart meets the promo criteria
-				shipMethodArgs.IsCartEligibleForPromoShipping = application.model.CartHelper.isCartEligibleForPromoShipping();
-			}
-		
-			local.qShipMethods = application.model.ShipMethod.getShipMethods(argumentCollection=shipMethodArgs);
-			
-		</cfscript>
-			<div id="shippingDetails">
-				<h2>Shipping Details</h2>
-				<ol>
-					<li>
-						<label for="txtShippingDetails">Shipping<strong>*</strong></label>
-						<cfif local.qShipMethods.RecordCount eq 1>
-							- 
-							#local.qShipMethods.DisplayName#
-							<input type="hidden" name="shipping" value="#local.qShipMethods.ShipMethodId#"/>
-						<cfelse>
-							<select name="shipping" id="shippingCostSelect" style="font-size:12px">
-								<cfloop query="local.qShipMethods">
-									<option price="#DefaultFixedCost#" displayprice="#dollarFormat(DefaultFixedCost)#" 
-									        value="#ShipMethodId#" <cfif isDefined('session.checkout.shippingMethod') AND (trim(local.qShipMethods.ShipMethodId) eq trim(session.checkout.shippingMethod.getShipMethodId()))>selected</cfif>>
-										#DisplayName#
-										(
-										#dollarFormat(DefaultFixedCost)#
-										)
-									</option>
-									
+									<option value="#trim(request.p.states.stateCode)#" #trim(request.p.selected)#>#trim(request.p.states.state)#</option>
 								</cfloop>
 							</select>
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billState'))#
+						</div>
+					
+						<div class="form-group form-inline billZip <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billZip'))>has-error</cfif>">
+							<label>Zip Code<strong>*</strong></label>
+							<input class="form-control" id="txtBillingZip" name="billZip" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billZip'))#" maxlength="5" />
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billZip'))#
+						</div>
+
+						<!---<div class="form-group form-inline dayPhone <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billDayPhone'))>has-error</cfif>">
+							<label for="txtBillingDayPhone">Contact Phone <strong>*</strong></label>
+							<input class="form-control" id="txtBillingDayPhone" name="billDayPhone" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone'))#" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billDayPhone'))#
+						</div>--->
+						<div class="form-group form-inline phone contactPhone <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billDayPhone'))>has-error</cfif>">
+							<label for="txtBillingDayPhone">Contact Phone<strong>*</strong></label>
+							( <input class="form-control" id="txtBillingDayPhonePt1" name="billDayPhonePt1" value="#LEFT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone')),3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtBillingDayPhonePt2'))" style="text-align:center;"/> )
+							<input class="form-control" id="txtBillingDayPhonePt2" name="billDayPhonePt2" value="#MID(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone')),5,3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtBillingDayPhonePt3'))" style="text-align:center;"/> - 
+							<input class="form-control" id="txtBillingDayPhonePt3" name="billDayPhonePt3" value="#RIGHT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billDayPhone')),4)#" maxlength="4" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" style="text-align:center;"/>
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billDayPhone'))#
+						</div>
+						<!---<div class="form-group form-inline eveningPhone <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billEvePhone'))>has-error</cfif>">
+							<label for="txtBillingEvePhone">Evening Phone <strong>*</strong></label>
+							<input class="form-control" id="txtBillingEvePhone" name="billEvePhone" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billEvePhone'))#" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
+							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billEvePhone'))#
+						</div>--->
+
+
+						<cfif request.config.allowAPOFPO>
+							<div class="form-group form-inline allowAPO <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'selMilitaryBase'))>has-error</cfif>">
+								<label for="txtMilitaryBase">Military Base <strong>*</strong></label>
+								<select class="form-control" id="selMilitaryBase" name="selMilitaryBase">
+									<option value="">-- Select Nearest Base --</option>
+									<cfset request.p.selected = '' />
+									<cfloop query="request.p.MilitaryBases">
+
+										<cfif trim(request.p.MilitaryBases.completeName) is trim(application.model.checkoutHelper.getFormKeyValue(form = 'billShipForm', key = 'selMilitaryBase')) or (isDefined('session.checkout.billShipForm.selMilitaryBase') and trim(request.p.MilitaryBases.completeName) is trim(session.checkout.billShipForm.selMilitaryBase))>
+											<cfset request.p.selected = 'selected' />
+										<cfelse>
+											<cfset request.p.selected = '' />
+										</cfif>
+										<option value="#completeName#" #trim(request.p.selected)#>#completeName#</option>
+									</cfloop>
+								</select>
+								#trim(request.validatorView.validationElement(request.validator.getMessages(), 'selMilitaryBase'))#
+							</div>
+						<cfelse>
+						<input type="hidden" name="selMilitaryBase" value=""/>
 						</cfif>
-					</li>
-				</ol>
-			</div>
-		<cfif application.model.checkoutHelper.isPrepaidOrder()>
-			<fieldset>
-				<span class="title">Prepaid Phone Order Information</span>
+						<div class="form-group form-inline allowAPO">
+							<input type="checkbox" id="saveBilling" name="saveBilling" value="1"<cfif application.model.CheckoutHelper.formValue('session.checkout.billShipForm.saveBilling') eq 1> checked="checked"</cfif> />
+							<label class="check" for="saveBilling">Save to my online account</label>
+						</div>
+						<input type="hidden" name="saveBilling" value="" />
+					</div>
+					
 
-				<ol>
-					<li>
-						<label for="txtDateOfBirth">Date of Birth</label>
-						<input id="txtDateOfBirth" name="dob" width="100px" /><span class="req">*</span> mm/dd/yyyy
-						#request.validatorView.validationElement(request.validator.getMessages(), 'dob')#
-						<br />
-						Must be 18 years old to purchase.
-					</li>
-				</ol>
-			</fieldset>
-		</cfif>
+					<cfif request.config.allowDifferstShippingOnNewActivations OR session.cart.getActivationType() DOES NOT CONTAIN 'New'>
+						<div id="shipping">
+							
+							<h3>Shipping Information</h3>
 
-		<cfif request.config.showServiceCallResultCodes>
-			<select name="resultCode" class="resultCode">
-				<option value="AV003" selected="selected">Success</option>
-				<option value="AV004">Billing not valid</option>
-				<option value="AV002">Shipping not valid at all</option>
-				<option value="AV001">Shipping not valid, suggested changes</option>
-				<option value="AV010">Invalid Request</option>
-				<option value="AV011">Unable to Connect to Carrier Service</option>
-				<option value="AV012">Service Timeout</option>
-				<option value="">Run for Real</option>
-			</select>
-		</cfif>
-	
-</form>
+
+							<!--- Taxes and Shipping --->
+							<cfscript>
+								/*  shipping fix goes here */
+								shipMethodArgs = {CarrierId=session.cart.getCarrierId(), 
+														  IsAfoApoAddress=application.model.CheckoutHelper.getShippingAddress().isApoFpoAddress(),
+														  IsCartEligibleForPromoShipping=false};
+		
+								if(ChannelConfig.getOfferShippingPromo())
+								{
+									//Check to see if the cart meets the promo criteria
+									shipMethodArgs.IsCartEligibleForPromoShipping = application.model.CartHelper.isCartEligibleForPromoShipping();
+								}
+		
+								local.qShipMethods = application.model.ShipMethod.getShipMethods(argumentCollection=shipMethodArgs);
+			
+							</cfscript>
+							
+								
+							<div class="form-group form-inline shippingMethod">
+								<label for="txtShippingDetails">Shipping Method<strong>*</strong></label>
+								<cfif local.qShipMethods.RecordCount eq 1>
+									- 
+									#local.qShipMethods.DisplayName#
+									<input type="hidden" name="shipping" value="#local.qShipMethods.ShipMethodId#"/>
+								<cfelse>
+									<select class="form-control" name="shipping" id="shippingCostSelect">
+										<cfloop query="local.qShipMethods">
+											<option price="#DefaultFixedCost#" displayprice="#dollarFormat(DefaultFixedCost)#" 
+													value="#ShipMethodId#" <cfif isDefined('session.checkout.shippingMethod') AND (trim(local.qShipMethods.ShipMethodId) eq trim(session.checkout.shippingMethod.getShipMethodId()))>selected</cfif>>
+												#DisplayName#
+												(
+												#dollarFormat(DefaultFixedCost)#
+												)
+											</option>
+									
+										</cfloop>
+									</select>
+								</cfif>
+							</div>
+							
+
+
+
+
+
+							<div class="form-group form-inline allowAPO">
+								<cfparam name="session.checkout.billShipForm.sameAsBilling" default="1" />
+								<input type="checkbox" name="sameAsBilling" id="sameAsBilling" value="1" <cfif application.model.checkoutHelper.formValue('session.checkout.billShipForm.sameAsBilling') eq 1> checked="checked"</cfif> /><label class="check" for="sameAsBilling">Shipping is the same as Billing</label>
+							</div>
+								
+							<div id="shippingDetails" class="hidden">
+								<div class="form-group form-inline shipFirstName <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipFirstName'))>has-error</cfif>">
+									<label for="txtShippingFirstName">First Name <strong>*</strong></label>
+									<input class="form-control" id="txtShippingFirstName" name="shipFirstName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipFirstName'))#" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipFirstName'))#
+								</div>
+								<div class="form-group form-inline shipMiddle <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipMiddleInitial'))>has-error</cfif>">
+									<label for="txtShippingMiddleInitial">Middle Initial</label>
+									<input class="form-control" id="txtShippingMiddleInitial" name="shipMiddleInitial" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipMiddleInitial'))#" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipMiddleInitial'))#
+								</div>
+								<div class="form-group form-inline shipLastName <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipLastName'))>has-error</cfif>">
+									<label for="txtShippingLastName">Last Name <strong>*</strong></label>
+									<input class="form-control" id="txtShippingLastName" name="shipLastName" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipLastName'))#" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipLastName'))#
+								</div>
+								<div class="form-group form-inline shipCompany <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipCompany'))>has-error</cfif>">
+									<label for="txtShippingCompany">Company</label>
+									<input class="form-control" id="txtShippingCompany" name="shipCompany" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipCompany'))#" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipCompany'))#
+								</div>
+								<div class="form-group form-inline shipAddress1 <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress1'))>has-error</cfif>">
+									<label for="txtShippingAddress1">Address 1 <strong>*</strong></label>
+									<input class="form-control" id="txtShippingAddress1" name="shipAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress1'))#" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress1'))#
+								</div>
+								<div class="form-group form-inline shipAddress2 <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress2Error'))>has-error</cfif>">
+									<label for="txtShippingAddress2">Address 2</label>
+									<input class="form-control" id="txtShippingAddress2" name="shipAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress2'))#" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress2Error'))#
+								</div>
+								<div class="form-group form-inline shipCity <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipCity'))>has-error</cfif>">
+									<label>City<strong>*</strong></label>
+									<input class="form-control" id="txtShippingCity" name="shipCity" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipCity'))#" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipCity'))#
+								</div>
+								<div class="form-group form-inline shipState <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipState'))>has-error</cfif>">
+									<label>State<strong>*</strong></label>
+									<select class="form-control" id="selShippingState" name="shipState">
+										<option value=""></option>
+
+										<cfset request.p.selected = '' />
+										<cfloop query="request.p.shippingStates">
+											<cfif trim(request.p.shippingStates.stateCode) is trim(application.model.checkoutHelper.getFormKeyValue(form = 'billShipForm', key = 'shipState')) or (isDefined('session.checkout.billShipForm.billState') and trim(request.p.shippingStates.stateCode) is trim(session.checkout.billShipForm.shipState))>
+												<cfset request.p.selected = 'selected' />
+											<cfelse>
+												<cfset request.p.selected = '' />
+											</cfif>
+
+											<option value="#trim(request.p.shippingStates.stateCode)#" #trim(request.p.selected)#>#trim(request.p.shippingStates.state)#</option>
+										</cfloop>
+
+									</select>	
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipState'))#
+								</div>
+								<div class="form-group form-inline shipZip <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipZip'))>has-error</cfif>">
+									<label>Zip Code<strong>*</strong></label>
+									<input class="form-control" id="txtShippingZip" name="shipZip" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipZip'))#" maxlength="5" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipZip'))#
+								</div>
+								<cfif request.config.allowAPOFPO>
+									<div class="form-group form-inline apoDisclaimer <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'checkApoDislaimer'))>has-error</cfif>">
+										<input type="checkbox" name="checkApoDislaimer" value="1">
+										By selecting an APO/FPO shipping address, you are agreeing to waive the option to return the device.  Manufacturer warranty for defects remains valid.
+										#trim(request.validatorView.validationElement(request.validator.getMessages(), 'checkApoDislaimer'))#
+									</div>
+								</cfif>
+								<!---<div class="form-group form-inline shipDayPhone <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipDayPhone'))>has-error</cfif>">
+									<label for="txtShippingDayPhone">Contact Phone <strong>*</strong></label>
+									<input class="form-control" id="txtShippingDayPhone" name="shipDayPhone" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone'))#" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipDayPhone'))#
+								</div>--->
+								<div class="form-group form-inline shipContactPhone phone <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipDayPhone'))>has-error</cfif>">
+								<label for="txtShippingDayPhone">Contact Phone<strong>*</strong></label>
+									( <input class="form-control" id="txtShippingDayPhonePt1" name="shipDayPhonePt1" value="#LEFT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone')),3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtShippingDayPhonePt2'))" style="text-align:center;"/> )
+									<input class="form-control" id="txtShippingDayPhonePt2" name="shipDayPhonePt2" value="#MID(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone')),5,3)#" maxlength="3"  onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('txtShippingDayPhonePt3'))" style="text-align:center;"/> - 
+									<input class="form-control" id="txtShippingDayPhonePt3" name="shipDayPhonePt3" value="#RIGHT(trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipDayPhone')),4)#" maxlength="4" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" style="text-align:center;"/>
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipDayPhone'))#
+								</div>
+								<!---<div class="form-group form-inline shipEveningPhone <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipEvePhone'))>has-error</cfif>">
+									<label for="txtShippingEvePhone">Evening Phone <strong>*</strong></label>
+									<input class="form-control" id="txtShippingEvePhone" name="shipEvePhone" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipEvePhone'))#" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
+									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipEvePhone'))#
+								</div>--->
+							</div>
+						</div>
+					</cfif>
+
+
+
+
+
+					
+					<cfif application.model.checkoutHelper.isPrepaidOrder()>
+						<h3>Prepaid Phone Order Information</h3>
+
+						<div class="form-group form-inline dateOfBirth <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'dob'))>has-error</cfif>">
+							<label for="txtDateOfBirth">Date of Birth</label>
+							<input class="form-control" id="txtDateOfBirth" name="dob" width="100px" /><span class="req">*</span> mm/dd/yyyy
+							#request.validatorView.validationElement(request.validator.getMessages(), 'dob')#
+							<br />
+							Must be 18 years old to purchase.
+						</div>
+							
+					</cfif>
+
+					<cfif request.config.showServiceCallResultCodes>
+						<select name="resultCode" class="resultCode">
+							<option value="AV003" selected="selected">Success</option>
+							<option value="AV004">Billing not valid</option>
+							<option value="AV002">Shipping not valid at all</option>
+							<option value="AV001">Shipping not valid, suggested changes</option>
+							<option value="AV010">Invalid Request</option>
+							<option value="AV011">Unable to Connect to Carrier Service</option>
+							<option value="AV012">Service Timeout</option>
+							<option value="">Run for Real</option>
+						</select>
+					</cfif>
+           
+
+
+
+
+                    <div class="right">
+                        <a href="/DeviceBuilder/orderReview">BACK</a>
+                        <button type="submit" class="btn btn-primary btn-block">Continue</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+		
+		<div class="col-md-4">
+			<div class="row"><img src="#assetPaths.common#images/content/checkout/CustomerServiceContact.png" /></div>
+		</div>
+		
+	</div>
 </cfoutput>
 
-<div class="formControl">
-	<a href="##" onclick="window.location.href='/DeviceBuilder/orderReview'">Previous</a>
-	<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('#billShip').submit()" style="color:#fff">Continue</a></span>
-</div>
+
+
 
 <cfajaxproxy cfc="ajax.User" jsclassname="User" />
 <cfajaxproxy cfc="ajax.CheckoutHelper" jsclassname="CheckoutHelper" />
