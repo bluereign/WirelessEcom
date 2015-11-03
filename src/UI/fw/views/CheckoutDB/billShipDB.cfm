@@ -309,7 +309,7 @@
 				<form id="billShip" name="billShip" class="cmxform" action="#event.buildLink('/CheckoutDB/processBillShip')#" method="post">
 					<div class="right">
                         <a href="/DeviceBuilder/orderReview">BACK</a>
-                        <button type="submit" class="btn btn-primary">Continue</button> <!--<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('##billShip').submit()" style="color:##fff">Continue</a></span>-->
+                        <button type="submit" class="btn btn-primary" onclick="showProgress('Validating address, please wait.'); $('##billShip').submit()">Continue</button> <!--<span class="btn btn-primary"><a href="##" onclick="showProgress('Validating address, please wait.'); $('##billShip').submit()" style="color:##fff">Continue</a></span>-->
                     </div>
 
 					<cfif structKeyExists(request, 'validator') and request.validator.hasMessages()>
@@ -674,7 +674,7 @@
 
                     <div class="right">
                         <a href="/DeviceBuilder/orderReview">BACK</a>
-                        <button type="submit" class="btn btn-primary btn-block">Continue</button>
+                        <button type="submit" class="btn btn-primary btn-block" onclick="showProgress('Validating address, please wait.'); $('##billShip').submit()">Continue</button>
                     </div>
                 </form>
             </section>
