@@ -72,14 +72,15 @@ form .form-inline label { width:auto;}
 		$('#agreeToContractDoc').click( function() {
 			$('#docClicked').val("agreeToContract");
 			if ($('#carrierID').val()=='42'){
-				alert("Verizon");
+				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
+				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
+				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
-				alert("ATT");
+				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
+				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
+				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
 			}
-			$('#carrierDoc').attr('data', '/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
-			$('#carrierDocEmbed').attr('src', '/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
-			$('#confirmationPrint').attr('src', '/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
 		})
 		
 		$('#agreeToContractExtension').click( function() {
