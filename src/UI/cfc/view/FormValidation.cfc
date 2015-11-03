@@ -42,7 +42,7 @@
 
 			<cfsavecontent variable="local.html">
 				<cfoutput>
-					<div class="inline-error"><span>#trim(local.msg)#</span></div>
+					<div class="inline-error"><span class="help-block inline">#trim(local.msg)#</span></div>
 				</cfoutput>
 			</cfsavecontent>
 		</cfif>
