@@ -48,7 +48,19 @@
 		<cfset saveToSession(local.FinanceAgreementResp,"FinanceAgreementResp") />
 		<cfreturn local.FinanceAgreementResp />
 	</cffunction>
-
+	
+	<cffunction name="IncompatibleOffer" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset saveToSession(arguments,"IncompatibleOfferRequest") />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.beginTicks = getTickCount() />
+		<cfset local.IncompatibleOfferResp =  carrierObject(arguments.carrierId).IncompatibleOffer(argumentCollection = local.args) />	
+		<cfset local.endTicks = getTickCount() />
+		<cfset local.IncompatibleOfferResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfset saveToSession(local.IncompatibleOfferResp,"IncompatibleOfferResp") />
+		<cfreturn local.IncompatibleOfferResp />
+	</cffunction>
+	
 	<cffunction name="saveFinanceAgreement" output="false" access="public" returntype="any">
 		<cfset var local = structNew() />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />

@@ -1,5 +1,8 @@
 ﻿<cfcomponent displayname="AttCarrier" hint="Interface to ATT Carrier API" extends="fw.model.CarrierApi.BaseCarrier" output="false">
 	
+	
+	<cfproperty name="AttCarrierHelper" inject="id:AttCarrierHelper" />
+
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.Att.AttCarrier">
 		<cfargument name="ServiceURL" type="string" required="true" />
 		
@@ -66,6 +69,56 @@
 		
 		<!--- create the carrier response --->
 		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttFinanceAgreementCarrierResponse').init() />
+		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+		<cfreturn processResponse(local.carrierResponse) />	
+		
+	</cffunction>
+	
+	<!------------------------------------------------------------------------------------------------------- 
+		Request Incompatible Offers for a subscriber  
+	-------------------------------------------------------------------------------------------------------->
+	<cffunction name="IncompatibleOffer" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />
+		
+		<cfif structKeyExists(session.carrierfacade,"accountRequest") is false>
+			<cfreturn "Error: session.cartfacade.accountRequest is missing. Preform account login first." />
+		</cfif>
+		<cfif structKeyExists(session.carrierfacade,"accountResp") is false>
+			<cfreturn "Error: session.cartfacade.accountresp is missing. Preform account login first." />
+		</cfif>
+		<cfif structKeyExists(arguments,"subscriberNumber") is false>
+			<cfreturn "Error: arguments.SubscriberNumber is missing" />
+		</cfif>
+		<cfif structKeyExists(arguments,"productid") is false>
+			<cfreturn "Error: arguments.productid is missing" />
+		</cfif>
+		
+		<!--- Used passed productid to retrieve the IMEI type --->
+		<cfif structKeyExists(arguments,"productid") >
+			<cfset local.qphone = application.model.Phone.getByFilter(idList = arguments.productid) />
+			<cfif local.qphone.recordcount is 1 and local.qphone.ImeiType is not "">
+					<cfset local.imeiType = local.qphone.ImeiType />
+			</cfif>
+		</cfif>
+		
+		<cfset local.incompatibleOffer_args = {
+			subscriberNumber = #arguments.subscriberNumber#,
+			BillingMarketCode = #session.carrierfacade.accountresp.account.billingMarketCode#,
+			ImeiType = #local.imeiType#,
+			Channel = #AttCarrierHelper.getChannelValue()#
+		} />
+
+		<cfset local.body = serializeJSonAddReferenceNumber(local.incompatibleOffer_args) />	
+		<!--- save the request to the session --->
+		<cfset saveToSession(local.incompatibleOffer_args,"IncompatibleOfferRequest") />	
+			
+		<cfhttp url="#variables.CarrierServiceURL#/IncompatibleOffer" method="Post" result="local.cfhttp">
+			<cfhttpparam type="header" name="Content-Type" value="application/json" />
+    		<cfhttpparam type="body" value="#local.body#">
+		</cfhttp>
+		
+		<!--- create the carrier response --->
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttIncompatibleOfferCarrierResponse').init() />
 		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
 		<cfreturn processResponse(local.carrierResponse) />	
 		
