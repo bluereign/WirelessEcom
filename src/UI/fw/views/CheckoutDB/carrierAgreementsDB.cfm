@@ -77,9 +77,9 @@ form .form-inline label { width:auto;}
 			if ($('#carrierID').val()=='109'){
 				alert("ATT");
 			}
-			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
-			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
-			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+			$('#carrierDoc').attr('data', '/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+			$('#carrierDocEmbed').attr('src', '/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
+			$('#confirmationPrint').attr('src', '/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
 		})
 		
 		$('#agreeToContractExtension').click( function() {
@@ -177,144 +177,129 @@ form .form-inline label { width:auto;}
 	<input type="hidden" id="verizonTermsURL" value="#assetPaths.channel#docs/termsandconditions/verizon/Verizon_tc_07_24_2015.pdf">
 	<input type="hidden" id="attTermsURL" value="#assetPaths.channel#docs/termsandconditions/att/att_tc_1_27_15.pdf">
 	<input type="hidden" id="costcoVerizonTermsURL" value="#assetPaths.channel#docs/termsandconditions/verizon/Verizon_Customer_Letter_09_24_15.pdf">
-	<input type="hidden" id="costcoAttTermsURL" value="#assetPaths.channel#docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf">	
-		
-	<div class="bootstrap">
-	<h1>#carrierName# Agreements</h1>
-	<p>Click the links below to review the #carrierName# Terms &amp; Agreements</p>
-	<div class="formControl">
-			<a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Previous</a>
-		<span class="btn btn-primary">
-			<a class="continue" href="##">Continue</a>
-		</span>
-	</div>
-	
-	<hr class="blueline" />
-	
-		<p>
-			<cfif session.cart.getCarrierId() eq 42>
-				After reviewing the following Terms & Conditions, check the corresponding boxes to agree to the #carrierName# and Costco Terms and Conditions. 
-				Once all the Terms & Conditions are accepted, you can then Continue checking out.
-			<cfelseif  session.cart.getCarrierId() eq 109>
-				After reviewing the following sections, check the corresponding box to agree and continue.			
-			</cfif>
-		</p>
-	<form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
-		<h4><a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a></h4>
-		<div class="form-group form-inline">		
-			<label><input type="checkbox" name="agreeToCustomerLetter" />
-			<cfif session.cart.getCarrierId() eq 42>
-				I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER
-			<cfelseif session.cart.getCarrierId() eq 109>	
-				I have read and understand the information in the Costco Wireless Customer Letter
-			</cfif>	
-			</label>
-		</div>
-		
-		<p>
-			<cfif session.cart.getActivationType() CONTAINS "New" or session.cart.getActivationType() CONTAINS "addaline" or session.cart.getActivationType() DOES NOT CONTAIN "finance">
-				<h4><a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Two Year Customer Agreement</a></h4>
-				<div class="form-group form-inline">
-					<label><input type="checkbox" name="agreeToContract" />
-					<cfif session.cart.getCarrierId() eq 42>
-						I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
-						LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
-						AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
-					<cfelseif  session.cart.getCarrierId() eq 109>
-						I agree with the terms of the 2-Year Contract Agreement
-					</cfif>
-					</label>
-				</div>
-			<cfelse>
-				<cfif session.cart.getActivationType() DOES NOT CONTAIN "finance">		
-					<h4><a href="##" id="agreeToContractExtension" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Two Year Customer Extension</a></h4>
-					<div class="form-group form-inline">
-						<label><input type="checkbox" name="agreeToContractExtension" />
-						<cfif session.cart.getCarrierId() eq 42>
-							I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
-							LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
-							AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
-						<cfelseif session.cart.getCarrierId() eq 109>
-							I agree with the terms of the 2-Year Contract Extension
-						</cfif>
-						</label>
-					</div>
-				</cfif>
-			</cfif>
-		</p>
-		<cfif session.cart.getActivationType() CONTAINS "finance">
-			<h4><a href="##" id="agreeToDevicePaymentPlan" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Device Payment Plan</a></h4>
-			<div class="form-group form-inline">		
-				<label><input type="checkbox" name="agreeToDevicePaymentPlan" />
-				<cfif session.cart.getCarrierId() eq 42>
-					I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, 
-					SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
-				<cfelseif session.cart.getCarrierId() eq 109>	
-					I agree with the terms and conditions specified in the Device Financing Agreement
-				</cfif>
-				</label>
-			</div>
-		</cfif>
-		<cfif session.cart.getCarrierId() eq 42>
-			<p>
-				NOTICE TO BUYER: This is a retail installment sale agreement, not a lease. Do not accept if it contains blank spaces. You have a right to a copy of 
-				this agreement; keep it to protect your rights. You may pay off the full amount at any time. Please review the entire agreement, including the 
-				additional Notice to Buyer provisions, before accepting.
-			</p>
-		</cfif>
-		<h4>Electronic Acknowledgement</h4>
-		<div class="form-group form-inline">
-			<label><input type="checkbox" name="agreeToDevicePaymentPresented" />
-			<cfif session.cart.getCarrierId() eq 42>
-				I acknowledge that Wireless Advocates has on this date presented me with the above completed Retail Installment Sale Agreement/Notice to Buyer 
-				(the "Agreement") and I have read the Agreement. I agree to all terms and conditions and understand that if I do not accept these terms, my order 
-				will be cancelled and the device will not be shipped.
-			<cfelseif session.cart.getCarrierId() eq 109>	
-				Exact Text TBD
-			</cfif>
-			</label>
-		</div>
-		<h4><a href="##" id="agreeToCarrierTermsAndConditions" data-toggle="modal" data-target="##carrierDocModal">View #carrierName# Terms &amp; Conditions</a></h4>
-		<div class="form-group form-inline">		
-			<label><input type="checkbox" name="agreeToCarrierTermsAndConditions" />
-			<cfif session.cart.getCarrierId() eq 42>
-				I HAVE READ AND AGREED TO THE #UCase(carrierName)# TERMS AND CONDITIONS FOR SERVICE AGREEMENT
-			<cfelseif session.cart.getCarrierId() eq 109>	
-				I have read and agree to the terms and conditions specified in the AT&T Terms & Conditions
-			</cfif>
-			</label>
-		</div>
-		
-		
-    
-		
-		<hr class="bottom-break" />
-		
-		<div class="formControl">
-				<a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Previous</a>
-			<span class="btn btn-primary">
-				<a class="continue" href="##">Continue</a>
-			</span>
-		</div>
-	</div>
-	</section>
+	<input type="hidden" id="costcoAttTermsURL" value="#assetPaths.channel#docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf">
+
+
+
+    <header class="main-header">
+      <h1>#carrierName# Agreements</h1>
+      <p>The primary Account Holder's information is used to verify status and line availability.</p>
+    </header>
+    <form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
+      <div class="right">
+        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
+        <button type="submit" class="btn btn-primary continue">Continue</button>
+      </div>
+      
+      <p>
+			  <cfif session.cart.getCarrierId() eq 42>
+				  After reviewing the following Terms & Conditions, check the corresponding boxes to agree to the #carrierName# and Costco Terms and Conditions. 
+				  Once all the Terms & Conditions are accepted, you can then Continue checking out.
+			  <cfelseif  session.cart.getCarrierId() eq 109>
+				  After reviewing the following sections, check the corresponding box to agree and continue.			
+			  </cfif>
+		  </p>
+
+      <h4>
+        <a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a>
+      </h4>
+      <div class="form-group form-inline">
+        <label>
+          <input type="checkbox" name="agreeToCustomerLetter" />
+          <cfif session.cart.getCarrierId() eq 42>
+            I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER
+            <cfelseif session.cart.getCarrierId() eq 109>	
+				    I have read and understand the information in the Costco Wireless Customer Letter
+			    </cfif>
+        </label>
+      </div>
+
+      	<p>
+			    <cfif session.cart.getActivationType() CONTAINS "New" or session.cart.getActivationType() CONTAINS "addaline" or session.cart.getActivationType() DOES NOT CONTAIN "finance">
+				    <h4><a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Two Year Customer Agreement</a></h4>
+				    <div class="form-group form-inline">
+					    <label><input class="form-control" type="checkbox" name="agreeToContract" />
+					    <cfif session.cart.getCarrierId() eq 42>
+						    I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
+						    LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
+						    AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
+					    <cfelseif  session.cart.getCarrierId() eq 109>
+						    I agree with the terms of the 2-Year Contract Agreement
+					    </cfif>
+					    </label>
+				    </div>
+			    <cfelse>
+				    <cfif session.cart.getActivationType() DOES NOT CONTAIN "finance">		
+					    <h4><a href="##" id="agreeToContractExtension" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Two Year Customer Extension</a></h4>
+					    <div class="form-group form-inline">
+						    <label><input type="checkbox" name="agreeToContractExtension" />
+						    <cfif session.cart.getCarrierId() eq 42>
+							    I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
+							    LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
+							    AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
+						    <cfelseif session.cart.getCarrierId() eq 109>
+							    I agree with the terms of the 2-Year Contract Extension
+						    </cfif>
+						    </label>
+					    </div>
+				    </cfif>
+			    </cfif>
+		    </p>
+		    <cfif session.cart.getActivationType() CONTAINS "finance">
+			    <h4><a href="##" id="agreeToDevicePaymentPlan" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Device Payment Plan</a></h4>
+			    <div class="form-group form-inline">		
+				    <label><input type="checkbox" name="agreeToDevicePaymentPlan" />
+				    <cfif session.cart.getCarrierId() eq 42>
+					    I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, 
+					    SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
+				    <cfelseif session.cart.getCarrierId() eq 109>	
+					    I agree with the terms and conditions specified in the Device Financing Agreement
+				    </cfif>
+				    </label>
+			    </div>
+		    </cfif>
+		    <cfif session.cart.getCarrierId() eq 42>
+			    <p>
+				    NOTICE TO BUYER: This is a retail installment sale agreement, not a lease. Do not accept if it contains blank spaces. You have a right to a copy of 
+				    this agreement; keep it to protect your rights. You may pay off the full amount at any time. Please review the entire agreement, including the 
+				    additional Notice to Buyer provisions, before accepting.
+			    </p>
+		    </cfif>
+		    <h4>Electronic Acknowledgement</h4>
+		    <div class="form-group form-inline">
+			    <label><input type="checkbox" name="agreeToDevicePaymentPresented" />
+			    <cfif session.cart.getCarrierId() eq 42>
+				    I acknowledge that Wireless Advocates has on this date presented me with the above completed Retail Installment Sale Agreement/Notice to Buyer 
+				    (the "Agreement") and I have read the Agreement. I agree to all terms and conditions and understand that if I do not accept these terms, my order 
+				    will be cancelled and the device will not be shipped.
+			    <cfelseif session.cart.getCarrierId() eq 109>	
+				    Exact Text TBD
+			    </cfif>
+			    </label>
+		    </div>
+		    <h4><a href="##" id="agreeToCarrierTermsAndConditions" data-toggle="modal" data-target="##carrierDocModal">View #carrierName# Terms &amp; Conditions</a></h4>
+		    <div class="form-group form-inline">		
+			    <label><input type="checkbox" name="agreeToCarrierTermsAndConditions" />
+			    <cfif session.cart.getCarrierId() eq 42>
+				    I HAVE READ AND AGREED TO THE #UCase(carrierName)# TERMS AND CONDITIONS FOR SERVICE AGREEMENT
+			    <cfelseif session.cart.getCarrierId() eq 109>	
+				    I have read and agree to the terms and conditions specified in the AT&T Terms & Conditions
+			    </cfif>
+			    </label>
+		    </div>
+      <div class="right">
+        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
+        <button type="submit" class="btn btn-primary continue">Continue</button>
+      </div>
+    </form>
+    </section>
 	</div>
 	<div class="col-md-4">
-      <div class="sidebar">
-        <h4>Have Questions?</h4>
-        <ul>
-          <li><a href="/index.cfm/go/content/do/customerService">Call us at 1-800-555-1212</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">E-mail one of our experts</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">Frequently Asked Questions</a></li>
-        </ul>
-        <h4>Our Signature Promise</h4>
-        <ul>
-          <li><a href="/index.cfm/go/content/do/shipping">Free UPS ground shipping</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">90 day return policy</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">Return in store</a></li>
-        </ul>
+      <div class="row">
+        <img src="#assetPaths.common#images/content/checkout/CustomerServiceContact.png" />
       </div>
-    </div>
+  </div>
+    
   
 	<!-- Modal -->
 <div id="carrierDocModal" class="modal fade" role="dialog">
