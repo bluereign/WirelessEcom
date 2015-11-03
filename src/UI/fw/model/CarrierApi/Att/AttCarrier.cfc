@@ -15,6 +15,19 @@
 	<!--- Perform an Account Lookup and retrieve account information for the customer --->
 	<cffunction name="account" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttAccountCarrierResponse">
 		<cfset var local = structNew() />	
+
+		<!--- if productid is passed then load the product and get the imeiType --->
+		<cfif structKeyExists(arguments,"productid") >
+			<cfset local.qphone = application.model.Phone.getByFilter(idList = arguments.productid) />
+			<cfif local.qphone.recordcount and local.qphone.ImeiType is not "">
+					<cfset arguments.deviceInfo = {
+						Category = local.qphone.ImeiType 
+					} />
+					<!--- re-save modified request to session --->
+					<cfset saveToSession(arguments,"AccountRequest") />
+			</cfif>
+		</cfif>
+		
 		<cfhttp url="#variables.CarrierServiceURL#/account/login" method="POST" result="local.cfhttp">
 			<cfhttpparam type="header" name="Content-Type" value="application/json" />
     		<cfhttpparam type="body" value="#serializeJSonAddReferenceNumber(arguments)#">

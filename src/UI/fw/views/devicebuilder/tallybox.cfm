@@ -98,6 +98,7 @@
         </div>
 
         <h4>Carrier Plan</h4>
+
         <div class="row">
           <div class="col-xs-4">
             <cfif prc.productData.carrierId eq prc.carrierIdAtt>
@@ -127,12 +128,28 @@
                       #dollarFormat(prc.cartPlan.MonthlyFee)#/mo
                     </td>
                   </tr>
+                  <!--- Required Service --->
+                  <cfif structKeyExists(prc,"lineFeatures")>
+                    <cfloop from="1" to="#arrayLen(prc.lineFeatures)#" index="local.iFeature">
+                      <cfset local.thisFeatureID = prc.lineFeatures[local.iFeature].getProductID() />
+                      <cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID) />
+                      <cfif listFindNoCase(session.listRequiredServices,local.thisFeature.productId)>
+                        <tr>
+                          <td>#local.thisFeature.summaryTitle#</td>
+                          <td class="price">#dollarFormat(prc.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</td>
+                        </tr>
+                      </cfif>
+                    </cfloop>
+                  </cfif>
+
                 </table>
               </div>
             </cfif>
           </div>
         </div>
+
         <h4>Protection &amp; Services</h4>
+        
         <div class="row">
           <div class="col-xs-16">
             <div class="table-responsive">
@@ -144,10 +161,12 @@
                     <cfset local.thisFeatureID = prc.lineFeatures[local.iFeature].getProductID() />
                     <cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID) />
                     <cfset local.thisServiceRecommended = false />
-                    <tr>
-                      <td>#local.thisFeature.summaryTitle#</td>
-                      <td class="price">#dollarFormat(prc.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</td>
-                    </tr>
+                    <cfif !listFindNoCase(session.listRequiredServices,local.thisFeature.productId)>
+                      <tr>
+                        <td>#local.thisFeature.summaryTitle#</td>
+                        <td class="price">#dollarFormat(prc.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</td>
+                      </tr>
+                    </cfif>
                   </cfloop>
                 <cfelse>
                   <tr>

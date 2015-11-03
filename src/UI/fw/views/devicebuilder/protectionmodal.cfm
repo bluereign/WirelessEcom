@@ -22,7 +22,7 @@
   </div>
 
   <script>
-    $('##btnAddWarranty').click(function() {
+    $('##btnAddWarranty').on('click', function(e) {
       var thisvalue = $(this).attr("value");
       $("##warrantyoption_"+thisvalue).prop("checked",true);
       $('##protectionModal').modal('hide');

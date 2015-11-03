@@ -142,99 +142,214 @@
         </section>
 
         <cfif isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
+          <cfset prc.serviceCounter = 0>
+
+          <section class="seperator">
+
+            <hr />
+            <h4 id="h4RequiredServices">Required Service</h4>
+
+            
+            <cfloop query="prc.groupLabels">
+
+              <cfif prc.groupLabels.minSelected eq 1>
+                
+                <cfset local.servicesArgs = {
+                  groupGUID = prc.groupLabels.ServiceMasterGroupGuid,
+                  deviceId = prc.productData.productGuid,
+                  showActiveOnly = true,
+                  cartTypeId = prc.cartTypeId,
+                  rateplanId = prc.cartPlan.productGuid
+                  } />
+                
+                <cfset serviceLabels = application.model.serviceManager.getServiceMasterLabelsByGroup( argumentCollection = local.servicesArgs ) />
+                
+                <cfset prc.groupInputType = 'checkbox' />
+                <cfset prc.hasNoneOption = false />
+                <cfset prc.defaultIndex = 0 />
+                
+                <cfif prc.groupLabels.maxSelected eq 1>
+                  <cfset prc.groupInputType = 'radio' />
+                  <cfif prc.groupLabels.minSelected eq 0>
+                    <cfset prc.hasNoneOption = true />
+                  </cfif>
+                </cfif>
+                
+                <cfif prc.groupLabels.minSelected eq 1 and prc.groupLabels.maxSelected eq 1>
+                  <cfset prc.defaultIndex = 1 />
+                </cfif>
+                
+                <cfif serviceLabels.recordCount gt 0>
+                  <div>#trim(prc.groupLabels.label)#</div>
+                  <cfset prc.i = 1 />
+                  <cfset prc.nothanks = 1 />
+                  <cfloop query="serviceLabels">
+                    <!--- <cfset prc.serviceCounter = prc.serviceCounter + 1 /> --->
+
+                    <!--- Add this service productId to a list of required services for display in the Tallybox --->
+                    <cfif !listFindNoCase(session.listRequiredServices,serviceLabels.productId)>
+                      <cfset session.listRequiredServices = listAppend(session.listRequiredServices,serviceLabels.productId) />
+                    </cfif>
+
+
+                    <div class="checkbox">
+                      <label>
+                        <input type="#prc.groupInputType#"
+                              name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#"
+                              id="chk_features_#serviceLabels.productId[serviceLabels.currentRow]#"
+                              value="#serviceLabels.productId[serviceLabels.currentRow]#"
+
+                              <cfif listFindNoCase(prc.selectedServices, serviceLabels.productId[serviceLabels.currentRow])>
+                                <cfset prc.nothanks = 0 />
+                                checked
+                              <cfelseif len(serviceLabels.recommendationId[serviceLabels.currentRow]) or prc.i eq prc.defaultIndex>
+                                <cfset prc.nothanks = 0 />
+                                checked
+                              </cfif>
+
+                              onchange="onChangeHandler(this.form,this.form.paymentoption.value)" />
+
+                        <a type="button" data-toggle="modal" data-target="##featureModal" href="#event.buildLink('devicebuilder.featuremodal')#/cartLineNumber/#rc.cartLineNumber#/fid/#serviceLabels.productId#">
+                          #trim(serviceLabels.label)#
+                        </a>
+                        #dollarFormat(serviceLabels.monthlyFee)#/mo
+                      </label>
+                    </div>
+                    <cfset prc.i = (prc.i + 1) />
+                  </cfloop>
+
+                  <cfif prc.hasNoneOption>
+                    <cfparam name="prc.nothanks" default="1" />
+                    <div class="checkbox">
+                      <label>
+                        <input type="#prc.groupInputType#"
+                              name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#" 
+                              <cfif prc.nothanks eq 1>
+                                checked
+                              </cfif>
+
+                              onchange="onChangeHandler(this.form,this.form.paymentoption.value)" />
+
+                        <!--- No thanks --->
+                        No #trim(prc.groupLabels.label)# Option
+                        
+                      </label>
+                    </div>
+                  </cfif>
+
+                </cfif>
+
+              </cfif> <!--- prc.groupLabels.minSelected eq 1 --->
+
+
+            </cfloop>
+
+          </section>
+
+
+
+
+
           <section class="seperator">
 
             <hr />
             <h4 id="h4AdditionalServices" style="display: none;">Additional Service</h4>
 
-            <cfset prc.serviceCounter = 0>
             <cfloop query="prc.groupLabels">
 
-              <cfset local.servicesArgs = {
-                groupGUID = prc.groupLabels.ServiceMasterGroupGuid,
-                deviceId = prc.productData.productGuid,
-                showActiveOnly = true,
-                cartTypeId = prc.cartTypeId,
-                rateplanId = prc.cartPlan.productGuid
-                } />
-              
-              <cfset serviceLabels = application.model.serviceManager.getServiceMasterLabelsByGroup( argumentCollection = local.servicesArgs ) />
-              
-              <cfset prc.groupInputType = 'checkbox' />
-              <cfset prc.hasNoneOption = false />
-              <cfset prc.defaultIndex = 0 />
-              
-              <cfif prc.groupLabels.maxSelected eq 1>
-                <cfset prc.groupInputType = 'radio' />
-                <cfif prc.groupLabels.minSelected eq 0>
-                  <cfset prc.hasNoneOption = true />
+              <!--- Required services have a minSelected of 1 --->
+              <cfif prc.groupLabels.minSelected neq 1>
+
+                <cfset local.servicesArgs = {
+                  groupGUID = prc.groupLabels.ServiceMasterGroupGuid,
+                  deviceId = prc.productData.productGuid,
+                  showActiveOnly = true,
+                  cartTypeId = prc.cartTypeId,
+                  rateplanId = prc.cartPlan.productGuid
+                  } />
+                
+                <cfset serviceLabels = application.model.serviceManager.getServiceMasterLabelsByGroup( argumentCollection = local.servicesArgs ) />
+                
+                <cfset prc.groupInputType = 'checkbox' />
+                <cfset prc.hasNoneOption = false />
+                <cfset prc.defaultIndex = 0 />
+                
+                <cfif prc.groupLabels.maxSelected eq 1>
+                  <cfset prc.groupInputType = 'radio' />
+                  <cfif prc.groupLabels.minSelected eq 0>
+                    <cfset prc.hasNoneOption = true />
+                  </cfif>
                 </cfif>
-              </cfif>
-              
-              <cfif prc.groupLabels.minSelected eq 1 and prc.groupLabels.maxSelected eq 1>
-                <cfset prc.defaultIndex = 1 />
-              </cfif>
-              
-              <cfif serviceLabels.recordCount gt 0>
-                <div>#trim(prc.groupLabels.label)#</div>
-                <cfset prc.i = 1 />
-                <cfset prc.nothanks = 1 />
-                <cfloop query="serviceLabels">
-                  <cfset prc.serviceCounter = prc.serviceCounter + 1 />
+                
+                <cfif prc.groupLabels.minSelected eq 1 and prc.groupLabels.maxSelected eq 1>
+                  <cfset prc.defaultIndex = 1 />
+                </cfif>
+                
+                <cfif serviceLabels.recordCount gt 0>
 
+                  <div>#trim(prc.groupLabels.label)#</div>
+                  <cfset prc.i = 1 />
+                  <cfset prc.nothanks = 1 />
+                  <cfloop query="serviceLabels">
+                    <!--- update serviceCounter --->
+                    <cfset prc.serviceCounter = prc.serviceCounter + 1 />
 
-                  <div class="checkbox">
-                    <label>
-                      <input type="#prc.groupInputType#"
-                            name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#"
-                            id="chk_features_#serviceLabels.productId[serviceLabels.currentRow]#"
-                            value="#serviceLabels.productId[serviceLabels.currentRow]#"
+                    <div class="checkbox">
+                      <label>
+                        <input type="#prc.groupInputType#"
+                              name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#"
+                              id="chk_features_#serviceLabels.productId[serviceLabels.currentRow]#"
+                              value="#serviceLabels.productId[serviceLabels.currentRow]#"
 
-                            <cfif listFindNoCase(prc.selectedServices, serviceLabels.productId[serviceLabels.currentRow])>
-                              <cfset prc.nothanks = 0 />
-                              checked
-                            <cfelseif len(serviceLabels.recommendationId[serviceLabels.currentRow]) or prc.i eq prc.defaultIndex>
-                              <cfset prc.nothanks = 0 />
-                              checked
-                            </cfif>
+                              <cfif listFindNoCase(prc.selectedServices, serviceLabels.productId[serviceLabels.currentRow])>
+                                <cfset prc.nothanks = 0 />
+                                checked
+                              <cfelseif len(serviceLabels.recommendationId[serviceLabels.currentRow]) or prc.i eq prc.defaultIndex>
+                                <cfset prc.nothanks = 0 />
+                                checked
+                              </cfif>
 
-                            onchange="onChangeHandler(this.form,this.form.paymentoption.value)" />
+                              onchange="onChangeHandler(this.form,this.form.paymentoption.value)" />
 
-                      <a type="button" data-toggle="modal" data-target="##featureModal" href="#event.buildLink('devicebuilder.featuremodal')#/cartLineNumber/#rc.cartLineNumber#/fid/#serviceLabels.productId#">
-                        #trim(serviceLabels.label)#
-                      </a>
-                      #dollarFormat(serviceLabels.monthlyFee)#/mo
-                    </label>
-                  </div>
-                  <cfset prc.i = (prc.i + 1) />
-                </cfloop>
+                        <a type="button" data-toggle="modal" data-target="##featureModal" href="#event.buildLink('devicebuilder.featuremodal')#/cartLineNumber/#rc.cartLineNumber#/fid/#serviceLabels.productId#">
+                          #trim(serviceLabels.label)#
+                        </a>
+                        #dollarFormat(serviceLabels.monthlyFee)#/mo
+                      </label>
+                    </div>
+                    <cfset prc.i = (prc.i + 1) />
+                  </cfloop>
 
-                <cfif prc.hasNoneOption>
-                  <cfparam name="prc.nothanks" default="1" />
-                  <div class="checkbox">
-                    <label>
-                      <input type="#prc.groupInputType#"
-                            name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#" 
-                            <cfif prc.nothanks eq 1>
-                              checked
-                            </cfif>
+                  <cfif prc.hasNoneOption>
+                    <cfparam name="prc.nothanks" default="1" />
+                    <div class="checkbox">
+                      <label>
+                        <input type="#prc.groupInputType#"
+                              name="chk_features_#prc.groupLabels.serviceMasterGroupGuid#" 
+                              <cfif prc.nothanks eq 1>
+                                checked
+                              </cfif>
 
-                            onchange="onChangeHandler(this.form,this.form.paymentoption.value)" />
+                              onchange="onChangeHandler(this.form,this.form.paymentoption.value)" />
 
-                      <!--- No thanks --->
-                      No #trim(prc.groupLabels.label)# Option
-                      
-                    </label>
-                  </div>
+                        <!--- No thanks --->
+                        No #trim(prc.groupLabels.label)# Option
+                        
+                      </label>
+                    </div>
+                  </cfif>
+
                 </cfif>
 
-              </cfif>
+              </cfif> <!--- prc.groupLabels.minSelected neq 1 --->
 
             </cfloop>
             
-            <input type="hidden" name="serviceCounter" value="#prc.serviceCounter#" />
+            <!--- <input type="hidden" name="serviceCounter" value="#prc.serviceCounter#" /> --->
 
           </section>
+
+
         <cfelse>
           <cfset prc.serviceCounter = 0 />
         </cfif>

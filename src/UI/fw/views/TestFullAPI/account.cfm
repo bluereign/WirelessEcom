@@ -28,7 +28,7 @@
 	<hr/>
 	<b>Subscriber ###s_count#</b><br/>
 	<br/>Subscriber.getAccountStatus() = #s.getAccountStatus()#
-	<br/>Subscriber.getUpgradeDownPaymentPercent("NE",20) = #s..getUpgradeDownPaymentPercent("NE",20)#
+	<br/>Subscriber.getUpgradeDownPaymentPercent("NE",20,"P6") = #s.getUpgradeDownPaymentPercent("NE","20","p6")#
 	<br/>Subscriber.getEligibilityDate() = #dateformat(s.getEligibilityDate(),"mm/dd/yyyy")#
 	<br/>Subscriber.getEligibilityStatus() = #s.getEligibilityStatus()#
 	<br/>Subscriber.getIsEligible() = #s.getIsEligible()#
@@ -47,7 +47,10 @@
 	<br/>Subscriber.getAddress().getZipCode() = #s.getAddress().getZipcode()#
 	<br/>Subscriber.getAddress().getZipCodeExtension() = #s.getAddress().getZipcodeExtension()#
 	<br/>Subscriber.getAddress().getCountry() = #s.getAddress().getCountry()#
+	<br/>rc.respObj.getHasConflicts(s.getNumber()) = #rc.respObj.getHasConflicts(s.getNumber())#
+	<br/>rc.respObj.getConflictResolvable(s.getNumber()) = #rc.respObj.getConflictResolvable(s.getNumber())#
 	<cfdump var="#s.getResponse()#" expand="false" />
+	
 	<cfset s_count = s_count + 1 />
 </cfloop>	
 
@@ -57,8 +60,20 @@
 <br/><br/>CFDUMP of the Carrier Request/Response for Account Login
 </h2>
 <div style="margin-top:25px;">
-	<h2><cfdump var="#rc.AccountRequestJSON#" expand="true" /></h2>
-	<cfdump var="#rc.respObj.getResponse()#" expand="true" />
+<cfif structKeyExists(session,"carrierFacade")>
+<br/>Dump of the CarrierFacade Session Store:
+<cfdump var="#session.carrierFacade#" expand="false" />
+</cfif>
+
+<cfif structKeyExists(session,"cartFacade")>
+<br/>Dump of the CartFacade Session Store:
+<cfdump var="#session.cartFacade#" expand="false" />
+</cfif>
+
+<cfif structKeyExists(session,"order")>
+<br/>Dump of the newly completed order in memory
+<cfoutput>#session.order.dump()#</cfoutput>
+</cfif>
 </div>
 
 

@@ -72,6 +72,9 @@
       if (!structKeyExists(session,"dBuilderCartFacade")) {
         session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
       }
+      if (!structKeyExists(session,"listRequiredServices")) {
+        session.listRequiredServices = "";
+      }
       // <end check cart instantiated
 
 
@@ -134,6 +137,7 @@
           prc.activationType = rc.finance & "-" & rc.type;
         }
         session.cart.setActivationType(prc.activationType);
+        session.cart.setUpgradeType('equipment+plan');
 
         // 6. set the cartLineNumber
         // if customer is new, cartLineNumber is always 1:
@@ -268,6 +272,7 @@
       if ( structKeyExists(rc,"HasExistingPlan")  ) {
         // session.DBuilderCart.setHasExistingPlan(rc.HasExistingPlan);
         session.cart.HasExistingPlan = rc.HasExistingPlan;
+        session.cart.setUpgradeType('equipment-only');
         // Remove plan from cartLineNumber and cart.  It should always be attached to Line 1:
         if (rc.HasExistingPlan) {
           session.cartHelper.removePlan(line = 1);
@@ -1279,6 +1284,11 @@
         prc.showAddAnotherDeviceButton = false;
       }
 
+      // ensure prc.subscribers exists:
+      if ( !structKeyExists(prc,"subscribers") and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers())   ) {
+        prc.subscribers = session.carrierObj.getSubscribers();
+      }
+
       // don't show top nav if cart is empty
       if (!arrayLen(prc.cartLines)) {
         prc.showNav = false;
@@ -1313,6 +1323,8 @@
       session.cart = createObject('component','cfc.model.cart').init();
       session.cartHelper = createObject('component','cfc.model.carthelper').init();
       session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
+      session.listRequiredServices = "";
+
 
       // reset the session zipcode
       session.cart.setZipcode(prc.zipcode);

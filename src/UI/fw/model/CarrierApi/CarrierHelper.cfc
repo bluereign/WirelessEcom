@@ -40,6 +40,14 @@
 		<cfreturn local.saveEConsent />
 	</cffunction>	
 	
+	<cffunction name="loadEConsent" output="false" access="public" returntype="string">
+		<cfargument name="carrierid" type="numeric" required="true" > 
+		<cfargument name="orderid" type="numeric" required="true" > 
+		<cfset var local = structNew() />
+		<cfset local.loadEConsent =  carrierObject(arguments.carrierId).loadEConsent(arguments.orderid) />	
+		<cfreturn local.loadEConsent />
+	</cffunction>	
+	
 	<!---
 		Receives an argument collection and returns collection minus args on the excludedArgsList		
 	 --->
@@ -130,6 +138,16 @@
     	<cfargument name="theVar" required="true" />    
     	<cfset variables.instance.assetPaths = arguments.theVar />    
     </cffunction>
+
+	<cffunction name="base64ToString" returntype="any">
+		<cfargument name="base64Value" type="any" required="yes" />
+        
+        <cfset var binaryValue = binaryDecode(base64Value,'base64' ) />
+		<cfset var stringValue = ToString(binaryValue,'iso-8859-1' ) />
+        
+        <cfreturn stringValue />
+  
+	</cffunction>
 
 	
 	

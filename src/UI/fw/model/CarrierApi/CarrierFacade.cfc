@@ -167,7 +167,7 @@
 		
 	</cffunction>	
 	
-	<cffunction name="saveToSession" returnType="void" access="private">
+	<cffunction name="saveToSession" returnType="void" access="public">
 		<cfargument name="objToStore" type="any" required="true" />
 		<cfargument name="objName" type="string" required="true" />
 
@@ -183,7 +183,6 @@
 		</cfif>
 		
 	</cffunction>
-
 	
 	
 </cfcomponent>
