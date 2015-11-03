@@ -454,15 +454,7 @@
 
       // ORDER REVIEW: Remove Phone
       if ( structKeyExists(rc,"removephone") and len(trim(rc.removephone)) and isValid("integer",rc.removephone) and arrayLen(prc.cartLines) ) {
-        // prc.removeCartLine = prc.cartLines[rc.removephone];
-        // application.model.cartHelper.removePhone(line = rc.removephone);
-        // application.model.cartHelper.removeAllLineFeatures(line = rc.removephone);
-        // application.model.cartHelper.removeLineBundledAccessories(lineNumber = rc.removephone);
-        // application.model.cartHelper.removeWarranty(line = rc.removephone);
-        // prc.removeCartLine.setAccessories(accessories=arrayNew(1));
-        
         session.cartHelper.deleteLine(lineNumber = rc.removephone);
-
         session.cartHelper.removeEmptyCartLines();
 
         // since that cartLineNumber does not exist, change active cartLineNumber to 999:
@@ -555,6 +547,12 @@
           
           // prc.tallyboxHeader = "Upgrading";
           prc.cartTypeId = 2;
+
+          // Get carrier upgrade fees using the Old carrierObj:
+          local.carrier = application.wirebox.getInstance("Carrier");
+          prc.upgradeFee = local.carrier.getUpgradeFee(session.cart.getCarrierID());
+          prc.activationFee = local.carrier.getActivationFee(session.cart.getCarrierID());
+
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];

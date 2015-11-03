@@ -46,16 +46,12 @@
             <h4>#prc.warningMessage#</h4>
           </div>
         </cfif>
-
-        <!--- <cfdump var="#prc.cartValidationResponse.getIsCartValid()#"> --->
         
         <header class="main-header">
           <h1>Cart</h1>
-          <!--- (zipcode: #session.cart.getZipcode()#) List: #prc.listIncompleteCartLineIndex# --->
         </header>
         
-        <!---<form id="formCheckout" action="/index.cfm/go/checkout/do/billship/" method="post">--->
-          <form id="formCheckout" action="/CheckoutDB/billship" method="post">
+        <form id="formCheckout" action="/CheckoutDB/billship" method="post">
           	
           <div class="right">
             <cfif prc.showAddAnotherDeviceButton>
@@ -86,7 +82,7 @@
             <cfif !isQuery(prc.cartPlan) and !arrayLen(prc.cartLines) and !arrayLen(prc.additionalAccessories)>
               <div class="row">
                 <div class="col-md-16 col-xs-16 item">
-                  Your cart is empty.<!---   <a href="#prc.browseDevicesUrl#">Click here to go to Browse Devices.</a> --->
+                  Your cart is empty.
                 </div>
               </div>
             </cfif>
@@ -144,13 +140,9 @@
               <cfloop from="1" to="#arrayLen(prc.cartLines)#" index="local.iCartLine">
                 <cfset local.cartLine = prc.cartLines[local.iCartLine] />
                 <cfset local.showAddServiceButton = false />
-
                 <cfset local.selectedPhone = application.model.phone.getByFilter(idList = local.cartLine.getPhone().getProductID(), allowHidden = true) />
-                
                 <cfset local.lineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = local.iCartLine, type = 'bundled') />
-
                 <cfset local.lineFeatures = local.cartLine.getFeatures() />
-
                 <cfset local.lineAccessories = application.model.dBuilderCartFacade.getAccessories(local.iCartLine) />
 
                 <cfif not local.selectedPhone.recordCount>
@@ -218,7 +210,6 @@
                   <div class="col-md-2 col-xs-6 item">
                     <img src="#imageDetail.src#" alt="#imageDetail.alt#" /><br />
                     <a href="#event.buildLink('devicebuilder.protection')#/cartLineNumber/#local.iCartLine#">Edit Options</a><br />
-                    <!--- <div class="alert alert-danger" role="alert">Error: Incomplete Device</div> --->
                   </div>
                   <div class="col-md-8 col-xs-10 data">
                     <h3>#local.selectedPhone.summaryTitle#</h3>
@@ -275,8 +266,6 @@
                                   #dollarFormat(local.productData.FinancedMonthlyPrice12)#/mo
                                 </cfcase>
                               </cfswitch>
-
-
               						  <cfelse>
               								&nbsp;
               						  </cfif>
@@ -356,8 +345,7 @@
                               </cfif>
                             </cfloop>
                           </cfif>
-                          <!--- <cfdump var="#local.thisFeature#"> --->
-                          <!--- <cfdump var="#local.lineFeatures[local.iFeature].getProductID()#"> --->
+
             							<div class="row">
             							  <div class="col-md-10">#local.thisFeature.summaryTitle#<cfif local.thisServiceRecommended AND NOT local.thisFeature.hidemessage> - Best Value</cfif></div>
             							  <div class="col-md-3">#dollarFormat(local.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</div>
@@ -386,18 +374,47 @@
 
                         <!--- Line warranty --->
                         <cfif local.cartLine.getWarranty().hasBeenSelected()>
-                          <!--- <cfset local.selectedWarranty = application.model.Warranty.getById( local.cartLine.getWarranty().getProductId() ) /> --->
-            						  <div class="row">
-            							  <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
-            							  <div class="col-md-3">&nbsp;</div>
-            							  <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
-            						  </div>
+                          <div class="row">
+                            <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
+                          </div>
                         <cfelse>
-            							<div class="row">
-            							  <div class="col-md-10">No protection plan selected</div>
-            							  <div class="col-md-3">&nbsp;</div>
-            							  <div class="col-md-3">$0.00</div>
-            							</div>
+                          <div class="row">
+                            <div class="col-md-10">No protection plan selected</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3">$0.00</div>
+                          </div>
+                        </cfif>
+
+
+                        <!--- Activation/Upgrade Fee --->
+                        <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+                          <div class="row">
+                            <div class="col-md-10">Upgrade Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> *</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3">$0.00</div>
+                          </div>
+                        <cfelse>
+                          <div class="row">
+                            <div class="col-md-10">Activation Fee ***</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelse>#dollarFormat(prc.activationFee)#</cfif></div>
+                          </div>
+                        </cfif>
+
+                        <cfif local.cartLine.getWarranty().hasBeenSelected()>
+                          <div class="row">
+                            <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
+                          </div>
+                        <cfelse>
+                          <div class="row">
+                            <div class="col-md-10">No protection plan selected</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3">$0.00</div>
+                          </div>
                         </cfif>
 
 
@@ -454,7 +471,6 @@
               <cfset local.total_dueToday_other = 0 />
               <cfset local.total_firstBill_other = 0 />
               <cfset local.total_monthly_other = 0 />
-
 
 
               <!--- Prepaid --->
@@ -521,7 +537,6 @@
                   </cfif>
                 </cfloop>
               </cfif> --->
-
 
 
               <!--- Accessories --->
@@ -609,129 +624,130 @@
 
 
       <div class="row">
-      <div class="col-md-10 col-md-offset-6">
-        <div class="table-wrap">
-        <table class="table table-responsive">
-          <thead>
-          <tr class="head">
-            <th colspan="3">Order Summary</th>
-          </tr>
-          <tr>
-            <th></th>
-            <th>Monthly Price</th>
-            <th>Due Today</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>Sub-Total</td>
-            <td>#dollarFormat(session.cart.getPrices().getMonthly())#</td>
-            <td>#dollarFormat(session.cart.getPrices().getDueToday())#</td>
-          </tr>
-          <tr>
-            <td>Shipping</td>
-            <td></td>
-            <td>#request.config.CartReviewShippingDisplayName#</td>
-          </tr>
-          <tr>
-            <td>Est. Tax</td>
-            <td></td>
-            <td>TBD</td>
-          </tr>
-          <!--- <tr>
-            <td>
-              <div class="form-inline">
-                <div class="form-group">
-                  <label for="taxInputName">Est. Tax</label>
-                  <input type="text" class="form-control input-sm" id="taxInputName">
-                </div>
-                <button type="submit" class="btn btn-default btn-sm">Apply</button>
-              </div>
-            </td>
-            <td></td>
-            <td>TBD</td>
-          </tr> --->
+        <div class="col-md-10 col-md-offset-6">
+          <div class="table-wrap">
+            <table class="table table-responsive">
+              <thead>
+                <tr class="head">
+                  <th colspan="3">Order Summary</th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th>Monthly Price</th>
+                  <th>Due Today</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sub-Total</td>
+                  <td>#dollarFormat(session.cart.getPrices().getMonthly())#</td>
+                  <td>#dollarFormat(session.cart.getPrices().getDueToday())#</td>
+                </tr>
+                <tr>
+                  <td>Shipping</td>
+                  <td></td>
+                  <td>#request.config.CartReviewShippingDisplayName#</td>
+                </tr>
+                <tr>
+                  <td>Est. Tax</td>
+                  <td></td>
+                  <td>TBD</td>
+                </tr>
+                <!--- <tr>
+                  <td>
+                    <div class="form-inline">
+                      <div class="form-group">
+                        <label for="taxInputName">Est. Tax</label>
+                        <input type="text" class="form-control input-sm" id="taxInputName">
+                      </div>
+                      <button type="submit" class="btn btn-default btn-sm">Apply</button>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td>TBD</td>
+                </tr> --->
 
-          <!--- <REBATES (have not been tested yet) --->
-          <cfset qry_getRebates = application.model.rebates.getRebates() />
-          <cfif qry_getRebates.recordCount>
-            <cfparam name="local.newRebateTotal" default="0" type="numeric" />
-            <cfparam name="local.totalAppliedRebates" default="0" type="numeric" />
-            <cfparam name="local.orderRebateGuidList" default="" type="string" />
+                <!--- <REBATES (have not been tested yet) --->
+                <cfset qry_getRebates = application.model.rebates.getRebates() />
+                <cfif qry_getRebates.recordCount>
+                  <cfparam name="local.newRebateTotal" default="0" type="numeric" />
+                  <cfparam name="local.totalAppliedRebates" default="0" type="numeric" />
+                  <cfparam name="local.orderRebateGuidList" default="" type="string" />
 
-            <cfloop query="qry_getRebates">
-              <cfif application.model.rebates.isCartEligibleForRebate(qry_getRebates.rebateGuid[qry_getRebates.currentRow], local.deviceGuidList, session.cart.getActivationType()) and qry_getRebates.type[qry_getRebates.currentRow] is session.cart.getActivationType()>
-                <cfset local.orderRebateGuidList = listAppend(local.orderRebateGuidList, qry_getRebates.rebateGuid) />
-                <cfif qry_getRebates.displayType[qry_getRebates.currentRow] is not 'N'>
-                  <cfset local.newRebateTotal = (local.newRebateTotal + qry_getRebates.amount[qry_getRebates.currentRow]) />
-                </cfif>
-                <cfset local.totalAppliedRebates = (local.totalAppliedRebates + 1) />
-
-                <cfif trim(qry_getRebates.title[qry_getRebates.currentRow]) is not 'CLICK HERE FOR PRICE'>
-                  <tr>
-                    <td>
-                      <cfif len(trim(qry_getRebates.url[qry_getRebates.currentRow]))>
-                        <a href="#trim(qry_getRebates.url[qry_getRebates.currentRow])#" target="_blank">Click to Download the #trim(qry_getRebates.title[qry_getRebates.currentRow])# Form</a>
-                      <cfelse>
-                        #trim(qry_getRebates.title[qry_getRebates.currentRow])#
+                  <cfloop query="qry_getRebates">
+                    <cfif application.model.rebates.isCartEligibleForRebate(qry_getRebates.rebateGuid[qry_getRebates.currentRow], local.deviceGuidList, session.cart.getActivationType()) and qry_getRebates.type[qry_getRebates.currentRow] is session.cart.getActivationType()>
+                      <cfset local.orderRebateGuidList = listAppend(local.orderRebateGuidList, qry_getRebates.rebateGuid) />
+                      <cfif qry_getRebates.displayType[qry_getRebates.currentRow] is not 'N'>
+                        <cfset local.newRebateTotal = (local.newRebateTotal + qry_getRebates.amount[qry_getRebates.currentRow]) />
                       </cfif>
-                    </td>
-                    <td></td>
-                    <td>
-                      <cfif qry_getRebates.displayType[qry_getRebates.currentRow] is 'N'>
-                        N/A
-                      <cfelse>
-                        <strong>- #dollarFormat(qry_getRebates.amount[qry_getRebates.currentRow])#</strong>
-                      </cfif>
-                    </td>
-                  </tr>
-                <cfelse>
-                  <cfset local.hideRebateTotal = true />
-                </cfif>
-              </cfif>
-            </cfloop>
-            <cfif local.totalAppliedRebates gt 0 and not structKeyExists(local, 'hideRebateTotal')>
-              <cfset session.cart.orderRebateGuidList = local.orderRebateGuidList />
-              <cfset local.totalAfterRebates = (local.total - session.cart.getShipping().getDueToday() - local.newRebateTotal) />
-              <tr>
-                <td>Total After Mail-In Rebate<cfif local.totalAppliedRebates gt 1>s</cfif></td>
-                <td></td>
-                <td>#dollarFormat(local.totalAfterRebates)#</td>
-              </tr>
-            </cfif>
-          </cfif>
-          <!--- <end rebates --->
+                      <cfset local.totalAppliedRebates = (local.totalAppliedRebates + 1) />
 
-          <!--- PROMO CODE (will get added at some point in the future) --->
-          <!--- <tr>
-            <td>Discount Code: XXXXX</td>
-            <td></td>
-            <td>$XX.XX</td>
-          </tr> --->
-          </tbody>
-          <tfoot>
-          <tr>
-            <td>Total Due Today</td>
-            <cfset local.total = session.cart.getPrices().getDueToday() />
-            <cfset local.total += session.cart.getTaxes().getDueToday() />
-            <cfset local.total += session.cart.getShipping().getDueToday() />
-            <cfset session.totalDueToday = local.total />
-            <td colspan="2">#dollarFormaT(local.total)#</td>
-          </tr>
-          <tr>
-            <td>Total Due Monthly</td>
-            <td colspan="2">#dollarFormat(session.cart.getPrices().getMonthly())#</td>
-          </tr>
-          </tfoot>
-        </table>
+                      <cfif trim(qry_getRebates.title[qry_getRebates.currentRow]) is not 'CLICK HERE FOR PRICE'>
+                        <tr>
+                          <td>
+                            <cfif len(trim(qry_getRebates.url[qry_getRebates.currentRow]))>
+                              <a href="#trim(qry_getRebates.url[qry_getRebates.currentRow])#" target="_blank">Click to Download the #trim(qry_getRebates.title[qry_getRebates.currentRow])# Form</a>
+                            <cfelse>
+                              #trim(qry_getRebates.title[qry_getRebates.currentRow])#
+                            </cfif>
+                          </td>
+                          <td></td>
+                          <td>
+                            <cfif qry_getRebates.displayType[qry_getRebates.currentRow] is 'N'>
+                              N/A
+                            <cfelse>
+                              <strong>- #dollarFormat(qry_getRebates.amount[qry_getRebates.currentRow])#</strong>
+                            </cfif>
+                          </td>
+                        </tr>
+                      <cfelse>
+                        <cfset local.hideRebateTotal = true />
+                      </cfif>
+                    </cfif>
+                  </cfloop>
+                  <cfif local.totalAppliedRebates gt 0 and not structKeyExists(local, 'hideRebateTotal')>
+                    <cfset session.cart.orderRebateGuidList = local.orderRebateGuidList />
+                    <cfset local.totalAfterRebates = (local.total - session.cart.getShipping().getDueToday() - local.newRebateTotal) />
+                    <tr>
+                      <td>Total After Mail-In Rebate<cfif local.totalAppliedRebates gt 1>s</cfif></td>
+                      <td></td>
+                      <td>#dollarFormat(local.totalAfterRebates)#</td>
+                    </tr>
+                  </cfif>
+                </cfif>
+                <!--- <end rebates --->
+
+                <!--- DON'T DELETE: --->
+                <!--- PROMO CODE (will get added at some point in the future) --->
+                <!--- <tr>
+                  <td>Discount Code: XXXXX</td>
+                  <td></td>
+                  <td>$XX.XX</td>
+                </tr> --->
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total Due Today</td>
+                  <cfset local.total = session.cart.getPrices().getDueToday() />
+                  <cfset local.total += session.cart.getTaxes().getDueToday() />
+                  <cfset local.total += session.cart.getShipping().getDueToday() />
+                  <cfset session.totalDueToday = local.total />
+                  <td colspan="2">#dollarFormaT(local.total)#</td>
+                </tr>
+                <tr>
+                  <td>Total Due Monthly</td>
+                  <td colspan="2">#dollarFormat(session.cart.getPrices().getMonthly())#</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
         </div>
       </div>
-      </div>
-	  <cfif structKeyExists(prc,"warningMessage") and len(prc.warningMessage)>
-				<div class="bs-callout bs-callout-error">
-                    <h4>#prc.warningMessage#</h4>
-                </div>
-        </cfif>
+      <cfif structKeyExists(prc,"warningMessage") and len(prc.warningMessage)>
+        <div class="bs-callout bs-callout-error">
+          <h4>#prc.warningMessage#</h4>
+        </div>
+      </cfif>
       <div class="right">
         <cfif prc.showAddAnotherDeviceButton>
           <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
@@ -747,20 +763,24 @@
 
     <div class="col-md-12">
       <p class="legal">
-        
-        <cfif session.cart.getActivationType() is 'upgrade'>  <!--- from cfc/view/Cart.cfc line 1331 --->
-          <!--- removing hard-coded upgrade fees and adding result from call to carrier component made earlier in this method  --->
-          <cfif NOT structKeyExists(local, 'upgradeFee')>
-            <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />
-            <cfset local.upgradeFee = local.carrierObj.getUpgradeFee( session.cart.getCarrierID() )>
-          </cfif>            
-          *  An Upgrade Fee of $#local.upgradeFee# applies to each Upgrade Line.
-            <cfif session.cart.getCarrierId() neq 299>This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><!--- remove for Sprint --->
-          <br />
+        <cfif session.cart.getActivationType() contains 'upgrade'>
+          * An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><br />
+        <cfelse>
+          <cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>
+            <cfif listFindNoCase('109, 128', session.cart.getCarrierId())>
+              * #prc.selectedPlan.carrierName# activation fees will be refunded through a Bill Credit on all qualifying activations.<br />
+            <cfelseif listFindNoCase('299', session.cart.getCarrierId())>
+              * Activation fee credit will be applied in the first bill cycle and refunded to your account within three billing cycles.<br />
+            <cfelseif session.cart.getCarrierId() eq 42>
+              * Customers will receive a mail-in rebate from Wireless Advocates to reimburse the activation fee on a new single line and/or Family Share 2-year #prc.selectedPlan.carrierName# service agreement. Upgrades do not qualify for this credit.<br />
+            </cfif>
+          <cfelse>
+            * Activation Fee will be applied to the first bill cycle.<br />
+          </cfif>
         </cfif>
-
-         Legal Goes Here: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.</p>
+      </p>
     </div>
+
   </div>
 </div>
 
