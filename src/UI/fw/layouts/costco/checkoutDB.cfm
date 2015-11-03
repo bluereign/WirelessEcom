@@ -31,12 +31,15 @@
 	#mercentAnalyticsTracker.tagPage()#
 </cfif> 
 	#googleAnalyticsTracker.tagPage()#
-<link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
 
-<cfinclude template="_cssAndJs.cfm" />
-<link rel="stylesheet" href="/assets/common/scripts/bootstrap/3.2.0-custom/css/bootstrap.min.css" />
-<script type="text/javascript" src="/assets/common/scripts/bootstrap/3.2.0-custom/js/bootstrap.min.js"></script>
-<link rel="stylesheet" media="screen" type="text/css" href="#assetPaths.common#styles/checkout.css?v=1.0.5" />
+
+<!--<cfinclude template="_cssAndJs.cfm" />-->
+<!--<link rel="stylesheet" href="/assets/common/scripts/bootstrap/3.2.0-custom/css/bootstrap.min.css" />-->
+<!--<script type="text/javascript" src="/assets/common/scripts/bootstrap/3.2.0-custom/js/bootstrap.min.js"></script>-->
+<!--<link rel="stylesheet" media="screen" type="text/css" href="#assetPaths.common#styles/checkout.css?v=1.0.5" />-->
+
+  <link rel="stylesheet" href="#assetPaths.channel#styles/devicebuilder.css" />
+  <script type="text/javascript" src="#assetPaths.common#scripts/libs/jquery-1.7.2.min.js"></script>
 </head>
 
 <body>

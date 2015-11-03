@@ -699,24 +699,10 @@
 		<cfset rc.accountRespObj = session.carrierObj>
 		<cfset rc.carrierId = session.carrierObj.getCarrierId()>
 		
-		<cfswitch expression="#channelConfig.getDisplayName()#">
-			<cfcase value="Costco">
-				<cfset local.channel = 0>
-				<cfbreak/>
-			</cfcase>
-			<cfcase value="AAfes">
-				<cfset local.channel = 1>
-				<cfbreak/>
-			</cfcase>
-			<cfdefaultcase>
-				<cfset local.channel = 0>
-			</cfdefaultcase>
-		</cfswitch>
-		
 		<cfset local.args_getFinanceAgreementRequest = {
 			carrierId = #rc.carrierId#,
 			AccountRespObj = #rc.accountRespObj#,
-			Channel = #local.channel#			
+			Channel = #getChannelValue()#			
 		} />
 		
 		<cfset local.args_financeAgreementRequest = carrierHelper.getFinanceAgreementRequest(argumentCollection=local.args_getFinanceAgreementRequest) />
@@ -741,16 +727,6 @@
 		<cfset rc.pdf = base64ToString(session.FinanceAgreementResp.getResponse().FinanceAgreement) />
 		<cfset event.setLayout('viewPdf') />
 		<cfset event.setView('TestFullAPI/ViewPDF') />
-	</cffunction>
-	
-	<cffunction name="base64ToString" returntype="any">
-		<cfargument name="base64Value" type="any" required="yes" />
-        
-        <cfset var binaryValue = binaryDecode(base64Value,'base64' ) />
-		<cfset var stringValue = ToString(binaryValue,'iso-8859-1' ) />
-        
-        <cfreturn stringValue />
-  
 	</cffunction>
 	
 	<cffunction name="processCarrierAgreements" returntype="void" output="false" hint="">
@@ -981,29 +957,57 @@
 
 		
 		<cfset application.model.checkoutHelper.markStepCompleted('review') />
-		<!---
-		**
-		* If wireless order, continue to coverage confirmation.
-		**
-		--->
-		<!---<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
-			<cfif GatewayRegistry.hasMultipleRegistered()>
-				<cfset event.setLayout('checkoutVFD') />
-				<cfset event.setView('VFD/checkout/paymentOptions') />
+		
+		
+		
+		<cfset setNextEvent('checkoutDB/orderCarrierProcessing') />
+	</cffunction>
+	
+	<cffunction name="orderCarrierProcessing" returntype="void" output="false" hint="">
+		<cfargument name="event">
+		<cfargument name="rc">
+		<cfargument name="prc">
+		
+		<!---<cfdump var="#trim(session.checkout.orderId)#"><br/>
+		<cfdump var="#trim(session.FinanceAgreementResp.getCarrierID())#"><br/>
+		<cfdump var="#trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].InstallmentPLanId)#"><br/>
+		<cfdump var="#trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].AttDeviceOrderItem.SubscriberNumber.SubscriberNumber)#"><br/>
+		<cfdump var="#trim(session.accountResp.getAccount().accountIdentifier)#"><br/>
+		<cfdump var="#trim(session.accountResp.getAccount().primaryAccountHolder)#"><br/>
+		<cfdump var="#trim(session.FinanceAgreementResp.getResponse().FinanceAgreement)#"><br/>
+		<cfabort>--->
+		
+		<!---<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>
+		<input type="hidden" name="installmentPlanId" value="#trim(rc.financeAgreementRespObj.getResponse().AgreementItems[1].InstallmentPLanId)#" />
+		<input type="hidden" name="subscriberNumber" value="#trim(rc.subscriberNumber)#"/>
+		<input type="hidden" name="accountNumber" value="#trim(rc.AccountRespObj.getAccount().accountIdentifier)#"/>
+		<input type="hidden" name="nameOnAccount" value="#trim(rc.AccountRespObj.getAccount().primaryAccountHolder)#"/>
+		<input type="hidden" name="agreementEntry" value="#trim(rc.financeAgreementRespObj.getResponse().FinanceAgreement)#"/>--->
+		
+		<!---save finance agreement for ATT --->
+		<cfif application.model.checkoutHelper.getCarrier() eq 109>
+			<cfset local.args_saveFinanceAgreement = {
+				orderId = #trim(session.checkout.orderId)#,
+				carrierId = #trim(session.FinanceAgreementResp.getCarrierID())#,
+				installmentPlanId = #trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].InstallmentPLanId)#,
+				subscriberNumber = #trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].AttDeviceOrderItem.SubscriberNumber.SubscriberNumber)#,
+				accountNumber = #trim(session.accountResp.getAccount().accountIdentifier)#,
+				nameOnAccount = "#trim(session.accountResp.getAccount().primaryAccountHolder)#",
+				acceptanceDate = "#dateformat(now(),'mm/dd/yyyy')#",
+				channel = #getChannelValue()#,
+				agreementTypeId = 1,
+				agreementEntry = "#trim(session.FinanceAgreementResp.getResponse().FinanceAgreement)#"			
+			} />
+		
+			<cfset rc.saveFinanceAgreementResult = carrierFacade.SaveFinanceAgreement(argumentCollection = local.args_saveFinanceAgreement) />
+			
+			<cfif (rc.saveFinanceAgreementResult eq "yes") OR (rc.saveFinanceAgreementResult eq "true")>
+				<cfset setNextEvent('checkoutDB/payment') />
 			<cfelse>
-				<cfset setNextEvent('CheckoutVFD.payment')>
+				<!--- error page --->
+				<cfabort>
 			</cfif>
-		<cfelse>
-			<cfif application.model.checkoutHelper.isPrepaidOrder()>
-				<cflocation url="/index.cfm/go/checkout/do/customerInfo/" addtoken="false" />
-			<cfelseif application.model.checkoutHelper.isWirelessOrder()>
-				<cflocation url="/index.cfm/go/checkout/do/carrierTerms/" addtoken="false" />
-			<cfelseif GatewayRegistry.hasMultipleRegistered()>
-				<cflocation url="/index.cfm/go/checkout/do/paymentOptions" addtoken="false" />
-			<cfelse>
-				<cfinclude template="/views/checkout/dsp_payment.cfm" />
-			</cfif>
-		</cfif>--->
+		</cfif>
 		
 		<cfset setNextEvent('checkoutDB/payment') />
 	</cffunction>
@@ -1674,6 +1678,31 @@
 		<cfset session.userID = 0 />
 		
 		<cfset event.setView('VFD/logoutVFD') />
+	</cffunction>
+	
+	<cffunction name="base64ToString" returntype="any">
+		<cfargument name="base64Value" type="any" required="yes" />
+        
+        <cfset var binaryValue = binaryDecode(base64Value,'base64' ) />
+		<cfset var stringValue = ToString(binaryValue,'iso-8859-1' ) />
+        
+        <cfreturn stringValue />
+	</cffunction>
+	
+	<cffunction name="getChannelValue" returnType="Numeric">
+		<cfswitch expression="#channelConfig.getDisplayName()#">
+			<cfcase value="Costco">
+				<cfreturn 0>
+				<cfbreak/>
+			</cfcase>
+			<cfcase value="AAfes">
+				<cfreturn 1>
+				<cfbreak/>
+			</cfcase>
+			<cfdefaultcase>
+				<cfreturn 0>
+			</cfdefaultcase>
+		</cfswitch>
 	</cffunction>
 	
 </cfcomponent>

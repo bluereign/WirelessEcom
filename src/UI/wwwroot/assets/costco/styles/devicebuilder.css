@@ -7196,7 +7196,8 @@ a {
 .slick-next:before {
   content: '>';
 }
-.form-group.has-error input {
+.form-group.has-error input,
+.form-group.has-error select {
   background-color: #fdf7f7;
   border-color: red;
 }
@@ -7958,6 +7959,39 @@ aside.details {
 }
 .bs-callout-info h4 {
   color: #1b809e;
+}
+.agreement form .form-inline label {
+  width: auto;
+}
+/*the basics, and works for FF*/
+#LoadingDiva {
+  margin: 0px 0px 0px 0px;
+  position: fixed;
+  height: 100%;
+  z-index: 9999;
+  width: 100%;
+  clear: none;
+  background: url('/assets/common/images/ui/transbg.png');
+  /*background-color:#666666;
+	border:1px solid #000000;*/
+}
+#LoadingDiva div.bg {
+  height: 100px;
+  width: 400px;
+  text-align: center;
+  background-color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+}
+#LoadingDiva div.bg span {
+  display: block;
+  margin-top: 30px;
+  padding-top: 20px;
+  margin-bottom: 8px;
+}
+.inline-error, 
+.inline {
+    display: inline;
 }
 .accessories {
   /* Small devices (tablets, 768px and up) */
