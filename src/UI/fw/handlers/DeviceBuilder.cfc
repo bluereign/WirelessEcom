@@ -843,6 +843,11 @@
             Passcode = rc.inputPin
           };
 
+          // if (prc.customerType is "upgrade") {
+          //   accountArgs.requestType = 1;
+          // }
+          // accountArgs.productid = prc.productData.productId;
+
           // for testing purposes/development (carrierloginpost.cfm):
           rc.respObj = carrierFacade.Account(argumentCollection = accountArgs);
           rc.message = rc.respObj.getHttpStatus();
@@ -1024,12 +1029,19 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var nextAction = "" />
-    <cfset var prevAction = "" />
 
     <cfscript>
       prc.CatalogService = application.model.Catalog;
       prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories(prc.device.getProductId());
+      if (!prc.qAccessory.recordcount) {
+        // create warningMessage
+        flash.put("warningMessage","No accessories available specific to this device. To see all devices accessories, <a href='/index.cfm/go/shop/do/browseAccessories'>click here</a> to go to all accessories.");
+        
+        setNextEvent(
+          event="devicebuilder.orderreview",
+          persist="cartLineNumber"
+          );
+      }
     </cfscript>
   </cffunction>
 
