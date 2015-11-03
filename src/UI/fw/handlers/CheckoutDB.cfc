@@ -960,7 +960,7 @@
 		
 		
 		
-		<cfset setNextEvent('checkoutDB/paymentBD') />
+		<cfset setNextEvent('checkoutDB/orderCarrierProcessing') />
 	</cffunction>
 	
 	<cffunction name="orderCarrierProcessing" returntype="void" output="false" hint="">
@@ -1012,12 +1012,12 @@
 		</cfif>
 		
 		<!---submit order--->
-		<cfset local.args_submit = {
+		<!---<cfset local.args_submit = {
 			carrierid = 109
 		} />
 		
 		<cfset rc.submitOrderRequest = carrierHelper.getSubmitOrderRequest(argumentcollection = local.args_submit) />
-		<cfset rc.submitOrderResponse = carrierFacade.submitOrder(argumentCollection = rc.submitOrderRequest) />
+		<cfset rc.submitOrderResponse = carrierFacade.submitOrder(argumentCollection = rc.submitOrderRequest) />--->
 		
 		<!---econsent--->
 		<cfset local.args_eConsent = {
@@ -1027,7 +1027,7 @@
 		<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />
 		
 		<!---submit order completed--->
-		<cfset local = structNew() />		
+		<!---<cfset local = structNew() />		
 		
 		<cfset local.args_complete = {
 			carrierid = application.model.checkoutHelper.getCarrier(),
@@ -1035,7 +1035,7 @@
 		} />
 		
 		<cfset rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete) />
-		<cfset rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest) />
+		<cfset rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest) />--->
 		
 		<cfset setNextEvent('checkoutDB/payment') />
 	</cffunction>
