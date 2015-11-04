@@ -7246,6 +7246,24 @@ a {
   -webkit-box-shadow: 0;
   box-shadow: 0;
 }
+.oldHeader .dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: -2px;
+  padding: 0px;
+  border: 0px;
+}
+.oldHeader .dropdown .dropdown-menu li {
+  width: 170px;
+  background-color: #337ab7;
+  font-size: 12px;
+}
+.oldHeader .dropdown .dropdown-menu li a {
+  border-left: none;
+  padding:5px 15px;
+}
+.oldHeader .dropdown .dropdown-menu li a:hover {
+  font-weight: bold;
+}
 html,
 body {
   color: #6b6b6b;
@@ -8790,3 +8808,6 @@ aside.details {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
+
+
+

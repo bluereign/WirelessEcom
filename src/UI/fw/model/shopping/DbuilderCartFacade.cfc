@@ -266,8 +266,7 @@
 						<cfif listFindNoCase('phone,tablet,dataCardAndNetbook,prepaid', arguments.productType)>
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().setProductID(arguments.product_id) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().setGersSKU(application.model.OrderDetail.getGersSkuByProductId(arguments.product_id)) />
-							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setDueToday(local.p.price) />
-							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setDueToday(local.p.monthlyPrice) />
+							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setDueToday(local.p.monthlyPrice+arguments.mandatoryDownPmtAmt+arguments.optionalDownPmtAmt) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setCOGS(application.model.product.getCOGS(arguments.product_id)) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMandatoryDownPmtPct(arguments.mandatoryDownPmtPct) />
 							<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMandatoryDownPmtAmt(arguments.mandatoryDownPmtAmt) />
@@ -506,7 +505,7 @@
 				<cfset local.cartLines[arguments.cartLineNumber].getPhone().setProductID(arguments.product_id) />
 				<cfset local.cartLines[arguments.cartLineNumber].getPhone().setGersSKU(application.model.OrderDetail.getGersSkuByProductId(arguments.product_id)) />
 				<cfset local.cartLines[arguments.cartLineNumber].getPhone().setType('device') />
-				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setDueToday(arguments.price) />
+				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setDueToday(arguments.price+arguments.mandatoryDownPmtAmt+arguments.optionalDownPmtAmt) />
 				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setCOGS(application.model.product.getCOGS(arguments.product_id)) />
 				<cfset local.cartLines[arguments.cartLineNumber].setCartLineActivationType(local.p.activationType) />
 				<cfset local.cartLines[arguments.cartLineNumber].getPhone().getPrices().setMandatoryDownPmtPct(arguments.mandatoryDownPmtPct) />
