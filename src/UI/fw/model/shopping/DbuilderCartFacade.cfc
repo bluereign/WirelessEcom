@@ -1164,6 +1164,48 @@
 	</cffunction>		
 	
 	
+	<cffunction name="updateAllPrices" access="public" returnType="void" output="false" >
+		<cfargument name="cart" type="cfc.model.cart" required="true" />
+		<cfset var local = structNew() />
+		<cfset local.activationtype = arguments.cart.getActivationType() />
+		<cfset local.cartlines = arguments.cart.getLines() />
+		
+		<cfloop array="#local.cartlines#" index="local.cl">
+			<cfset local.phone = local.cl.getPhone() />
+			<cfif isObject(local.phone)>
+				<cfset local.prices = local.phone.getPrices() />
+				
+				<cfset local.prices.setMonthly( decimalformat(local.prices.getRetailPrice() - local.prices.getDownPaymentAmount()) / activationTypeMonths(local.activationType)) />
+				<cfset local.prices.setDueToday( local.prices.getMandatoryDownPmtAmt() + local.prices.getOptionalDownPmtAmt() ) />
+			</cfif>
+		</cfloop>
+		
+	</cffunction>
+
+	<cffunction name="ActivationTypeMonths" returntype="numeric" access="public" >
+		<cfargument name="activationType" type="string" required="true" />
+		<cfset var local = structNew() />
+		<cfset local.nMonths = 0 />
+		<cfset local.contractMonths = 0 />
+		<cfif listlen(arguments.activationType ge 3) and isNumeric(listgetat(arguments.activationType,2,'-')) >
+			<cfset local.contractMonths = listgetat(arguments.activationType,2,'-') />
+		</cfif>
+		<cfswitch expression="#local.contractMonths#">
+			<cfcase value="12">
+				<cfset local.nMonths = 20 />
+			</cfcase>
+			<cfcase value="18">
+				<cfset local.nMonths = 24 />
+			</cfcase>
+			<cfcase value="24">
+				<cfset local.nMonths = 30 />
+			</cfcase>
+		</cfswitch> 
+		<cfreturn local.nMonths />
+	</cffunction>
+
+	
+	
 	<!--- Save anything important to the cartfacade session storage struct --->
 	<cffunction name="saveToSession" returnType="void" access="private">
 		<cfargument name="objToStore" type="any" required="true" />
