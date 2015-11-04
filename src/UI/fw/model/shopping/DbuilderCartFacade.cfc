@@ -1154,6 +1154,16 @@
 		</cfif>
 	</cffunction>
 	
+	<cffunction name="setSubscriberIndex" returnType="void" access="public">
+		<cfargument name="cartline" type="cfc.model.cartline" required="true">
+		<cfargument name="subscriberIndex" type="numeric" required="true">
+		
+		<cfset arguments.cartLine.setSubscriberIndex(arguments.subscriberIndex) />
+		<cfset saveToSession(getSubscriberIndices(),"subscriberIndices") />		
+		
+	</cffunction>		
+	
+	
 	<!--- Save anything important to the cartfacade session storage struct --->
 	<cffunction name="saveToSession" returnType="void" access="private">
 		<cfargument name="objToStore" type="any" required="true" />

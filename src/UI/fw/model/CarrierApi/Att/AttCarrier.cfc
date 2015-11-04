@@ -1,6 +1,5 @@
 ﻿<cfcomponent displayname="AttCarrier" hint="Interface to ATT Carrier API" extends="fw.model.CarrierApi.BaseCarrier" output="false">
 	
-	
 	<cfproperty name="AttCarrierHelper" inject="id:AttCarrierHelper" />
 
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.Att.AttCarrier">
@@ -84,7 +83,13 @@
 			<cfreturn "Error: session.cartfacade.accountRequest is missing. Preform account login first." />
 		</cfif>
 		<cfif structKeyExists(session.carrierfacade,"accountResp") is false>
-			<cfreturn "Error: session.cartfacade.accountresp is missing. Preform account login first." />
+			<cfreturn "Error: session.cartfacade.accountresp is missing. Perform account login first." />
+		</cfif>
+		<cfif structKeyExists(session.carrierfacade.accountResp,"account") is false>
+			<cfreturn "Error: session.cartfacade.accountresp.account is missing." />
+		</cfif>
+		<cfif structKeyExists(session.carrierfacade.accountResp.account,"subscribers") is false>
+			<cfreturn "Error: session.cartfacade.accountresp.account.subscribers is missing." />
 		</cfif>
 		<cfif structKeyExists(arguments,"subscriberNumber") is false>
 			<cfreturn "Error: arguments.SubscriberNumber is missing" />
@@ -92,6 +97,15 @@
 		<cfif structKeyExists(arguments,"productid") is false>
 			<cfreturn "Error: arguments.productid is missing" />
 		</cfif>
+
+		<!--- Loop thru the subscribers and find the correct entry --->
+		<cfset local.subscriber = structNew() />
+		<cfloop array="#session.carrierFacade.accountResp.account.subscribers#" index="local.s">
+			<cfif local.s.number is arguments.subscriberNumber>
+				<cfset local.subscriber = local.s />
+				<cfbreak/>
+			</cfif>
+		</cfloop>
 		
 		<!--- Used passed productid to retrieve the IMEI type --->
 		<cfif structKeyExists(arguments,"productid") >
@@ -103,6 +117,7 @@
 		
 		<cfset local.incompatibleOffer_args = {
 			subscriberNumber = #arguments.subscriberNumber#,
+			planInfo = #local.subscriber.planInfo#,
 			BillingMarketCode = #session.carrierfacade.accountresp.account.billingMarketCode#,
 			ImeiType = #local.imeiType#,
 			Channel = #AttCarrierHelper.getChannelValue()#
@@ -158,7 +173,7 @@
 			<cfreturn "Argument 'agreementEntry' is missing" />
 		</cfif>
 		
-		<cfstoredproc datasource="wirelessadvocates" procedure="service.FinanceAgreementSave" result="local.result">
+		<cfstoredproc datasource="wirelessadvocates" procedure="service.AttFinanceAgreementSave" result="local.result">
 			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.orderid#" > 
 			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
 			<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#arguments.installmentPlanId#" > 

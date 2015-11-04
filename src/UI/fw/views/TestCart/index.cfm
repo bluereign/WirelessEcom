@@ -19,8 +19,8 @@
 
 <cfset phoneids = "27671,27665,27674" />
 <cfset phonePrices = "799.99,199.00,299,98" />
-<cfset phoneMandatoryDownPaymentPct = "10,15,5" />
-<cfset phoneOptionalDownPaymentPct = "0,0,10" />
+<cfset phoneMandatoryDownPaymentPct = "20,15,10" />
+<cfset phoneOptionalDownPaymentPct = "10,15,20" />
 <cfset accessoryids = "515,25766,4212,26626,26721" />
 
 <cfloop from="1" To="#listlen(phoneids)#" index="cartLineNo">
@@ -131,6 +131,8 @@ Result = #resultStr#
 <cfloop array="#cartlines#" index="cl">
 	<cfset clnum = clnum+1>
 <br/><hr/>Line #clnum# Details:
+<br>cl.getPhone().getPrices().getMandatoryDownPmtAmt() = #cl.getPhone().getPrices().getMandatoryDownPmtAmt()#
+<br>cl.getPhone().getPrices().getOptionalDownPmtAmt() = #cl.getPhone().getPrices().getOptionalDownPmtAmt()#
 <br/>#cl.dump()#
 <br>cl.getPhone().getType() = #cl.getphone().getType()#
 <br>cl.getPhone().getDeviceServiceType() = #cl.getphone().getDeviceServiceType()#
