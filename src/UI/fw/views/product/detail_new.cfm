@@ -690,7 +690,12 @@ $j(document).ready(function($j) {
 
 
 <div class="row">
-	<h2 style="font-size:24px;">Choose Your Pricing and See the Savings</h2>
+  <!--- Display Financed price options when enabled and non-zero price entered in database --->
+  <cfif prc.channelConfig.getOfferFinancedDevices() && prc.productData.FinancedFullRetailPrice neq 0>
+    <h2 style="font-size:24px;">Select Your Finance Plan</h2>
+  <cfelse>
+    <h2 style="font-size:24px;">Choose Your Pricing and See the Savings</h2>
+  </cfif>
 	<hr class="blueline" />
 </div>
 
