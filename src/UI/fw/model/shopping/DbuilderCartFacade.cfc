@@ -1185,7 +1185,7 @@
 	<cffunction name="ActivationTypeMonths" returntype="numeric" access="public" >
 		<cfargument name="activationType" type="string" required="true" />
 		<cfset var local = structNew() />
-		<cfset local.nMonths = 0 />
+		<cfset local.nMonths = 1 />
 		<cfset local.contractMonths = 0 />
 		<cfif listlen(arguments.activationType ge 3) and isNumeric(listgetat(arguments.activationType,2,'-')) >
 			<cfset local.contractMonths = listgetat(arguments.activationType,2,'-') />
