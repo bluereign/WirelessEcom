@@ -1,4 +1,4 @@
-<cfparam name="prc.activetab" default="individual" />
+<cfparam name="prc.activetab" default="shared" />
 <cfparam name="prc.existingPlanEligible" default="false" />
 
 <cfoutput>
@@ -32,14 +32,14 @@
     			<ul class="nav nav-tabs">
     			  
             <!--- INDIVIDUAL --->
-    			  <li role="presentation" <cfif prc.activetab is 'individual'>class="active"</cfif> >
+    			  <!--<li role="presentation" <cfif prc.activetab is 'individual'>class="active"</cfif> >
     				  <a href="##individual" aria-controls="individual" role="tab" data-toggle="tab">Individual Plans</a>
-    			  </li>
+    			  </li>-->
     			  
     			  <!--- SHARED --->
     			  <cfif prc.planDataShared.recordcount>
-      				<li role="presentation">
-      				  <a href="##shared" aria-controls="shared" role="tab" data-toggle="tab">Shared Plans</a>
+      				<li role="presentation" <cfif prc.activetab is 'shared'>class="active"</cfif>>
+      				  <a href="##shared" aria-controls="shared" role="tab" data-toggle="tab">Choose A New Plan</a>
       				</li>
     			  </cfif>
 
@@ -76,11 +76,11 @@
                 <div class="carousel" id="sharedCarousel">
                   
                   <cfloop query="prc.planDataShared">
-                    <div class="info">
+                    <div class="info <cfif #prc.planDataShared.DataLimitGB# eq 2 or #prc.planDataShared.DataLimitGB# eq 3>featured</cfif>">
                       <a href="##">
                         <h3><span>#prc.planDataShared.DetailTitle#</span></h3>
                         <ul>
-                          <li class="large"><span>#prc.planDataShared.DataLimitGB#GB</span></li>
+                          <li class="large">Data Included:<span>#prc.planDataShared.DataLimitGB#GB</span></li>
                         </ul>
                         #prc.planDataShared.SummaryDescription#
                         <div class="price">$#int(prc.planDataShared.MonthlyFee)#</div>

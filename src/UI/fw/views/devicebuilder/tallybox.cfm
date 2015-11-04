@@ -24,7 +24,7 @@
         </cfif>
       </div>
     </div>
-<!--- <cfdump var="#prc.lineFeatures#"> --->
+
     <div class="row">
       <aside class="details">
         <h3>#prc.tallyboxHeader#</h3>
@@ -49,16 +49,7 @@
                   <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td>
                   <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueAmount)#/mo</td>
                 </tr>
-                <!--- <tr>
-                  <td>Regular Price</td>
-                  <td class="price">                    
-                    <cfif structKeyExists(prc,"selectedPhone")>
-                      #dollarFormat(prc.selectedPhone.price_retail)#
-                    <cfelse>
-                      #dollarFormat(prc.productData.FinancedFullRetailPrice)#
-                    </cfif>
-                  </td>
-                </tr> --->
+
                 <tr>
                   <td>Full Retail Price</td>
                   <td class="price">#dollarFormat(prc.productData.FinancedFullRetailPrice)#</td>
@@ -82,16 +73,23 @@
                   </cfloop>
                 </cfif>
 
+                <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+                  <tr>
+                    <td>Upgrade Fee ***</td>
+                    <td class="price"><cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif></td>
+                  </tr>
+                <cfelse>                  
+                  <tr>
+                    <td>Activation Fee ***</td>
+                    <td class="price"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelse>#dollarFormat(prc.activationFee)#</cfif></td>
+                  </tr>
+                </cfif>
+
                 <tr>
                   <td>Due Today*</td>
                   <td class="price">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getDueToday())#</td>
-                  <!--- <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueToday)# <cfif prc.paymentoption is 'financed'>Down</cfif></td> <!--- hard code from detail_new.cfm ---> --->
                 </tr>
-                <!--- Note: it will be difficult to display the Line Access Fee here as it's part of the lineFeatures array --->
-                <!--- <tr>
-                  <td>Line Access Fee</td>
-                  <td class="price">$xx.xx ?</td>
-                </tr> --->
+
               </table>
             </div>
           </div>
@@ -187,17 +185,6 @@
                     <td class="price">$0.00</td>
                   </tr>
                 </cfif>
-                <!--- <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getWarranty().hasBeenSelected()>
-                  <tr>
-                    <td>Warranty: #prc.cartLine.getWarranty().getTitle()#</td>
-                    <td class="price">#dollarFormat(prc.cartLine.getWarranty().getPrices().getDueToday())#</td>
-                  </tr>
-                <cfelse>
-                  <tr>
-                    <td>No Protection Plan Selected</td>
-                    <td class="price">$0.00</td>
-                  </tr>
-                </cfif> --->
 
               </table>
             </div>
@@ -236,18 +223,30 @@
             </div>
           </div>
         </div>
-		
-		<div class="row">
-          <div class="col-xs-16 legal" >
-            <div>
-				* Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.
-			</div>
-			<div>
-				** $0 down (for qualified customers).
-			</div>
+
+        <div class="row">
+          <div class="col-xs-16 legal">
+            <div>* Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.</div>
+            <div>** $0 down (for qualified customers).</div>
+            <cfif session.cart.getActivationType() contains 'upgrade'>
+              <div>*** An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif></div>
+            <cfelse>
+              <cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>
+                <cfif listFindNoCase('109, 128', session.cart.getCarrierId())>
+                  <div>*** #prc.selectedPlan.carrierName# activation fees will be refunded through a Bill Credit on all qualifying activations.</div>
+                <cfelseif listFindNoCase('299', session.cart.getCarrierId())>
+                  <div>*** Activation fee credit will be applied in the first bill cycle and refunded to your account within three billing cycles.</div>
+                <cfelseif session.cart.getCarrierId() eq 42>
+                  <div>*** Customers will receive a mail-in rebate from Wireless Advocates to reimburse the activation fee on a new single line and/or Family Share 2-year #prc.selectedPlan.carrierName# service agreement. Upgrades do not qualify for this credit.</div>
+                </cfif>
+                <!--- Please <a href="##" onclick="viewActivationFeeInWindow('activationFeeWindow', 'Activation Fee Details', '/index.cfm/go/cart/do/explainActivationFee/carrierId/#session.cart.getCarrierId()#');return false;">click here</a> for details. --->
+              <cfelse>
+                <div>*** Activation Fee will be applied to the first bill cycle.</div>
+              </cfif>
+            </cfif>
           </div>
         </div>
-    </div>
+      </div>
 		
 		
       </aside>

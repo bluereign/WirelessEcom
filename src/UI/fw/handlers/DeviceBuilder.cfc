@@ -302,6 +302,17 @@
         session.cart.setActivationType(prc.activationType);
         prc.cartLine.setCartLineActivationType(prc.activationType);
         prc.paymentoption = rc.paymentoption;
+
+        // 7. add phone to cart again.
+        cartArgs = {
+          productType = "phone:" & prc.activationType,
+          product_id = prc.productData.productId,
+          qty = 1,
+          price = prc.productData.FinancedFullRetailPrice,
+          cartLineNumber = rc.cartLineNumber
+        };
+        // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
       if (  structKeyExists(prc,"cartLine") and  ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) )  ) {
@@ -454,15 +465,7 @@
 
       // ORDER REVIEW: Remove Phone
       if ( structKeyExists(rc,"removephone") and len(trim(rc.removephone)) and isValid("integer",rc.removephone) and arrayLen(prc.cartLines) ) {
-        // prc.removeCartLine = prc.cartLines[rc.removephone];
-        // application.model.cartHelper.removePhone(line = rc.removephone);
-        // application.model.cartHelper.removeAllLineFeatures(line = rc.removephone);
-        // application.model.cartHelper.removeLineBundledAccessories(lineNumber = rc.removephone);
-        // application.model.cartHelper.removeWarranty(line = rc.removephone);
-        // prc.removeCartLine.setAccessories(accessories=arrayNew(1));
-        
         session.cartHelper.deleteLine(lineNumber = rc.removephone);
-
         session.cartHelper.removeEmptyCartLines();
 
         // since that cartLineNumber does not exist, change active cartLineNumber to 999:
@@ -555,6 +558,12 @@
           
           // prc.tallyboxHeader = "Upgrading";
           prc.cartTypeId = 2;
+
+          // Get carrier upgrade fees using the Old carrierObj:
+          local.carrier = application.wirebox.getInstance("Carrier");
+          prc.upgradeFee = local.carrier.getUpgradeFee(session.cart.getCarrierID());
+          prc.activationFee = local.carrier.getActivationFee(session.cart.getCarrierID());
+
           break;
         case "addaline":
           prc.navItemsAction = ["carrierlogin","plans","protection","accessories","numberporting","orderreview"];
@@ -845,6 +854,11 @@
             Passcode = rc.inputPin
           };
 
+          // if (prc.customerType is "upgrade") {
+          //   accountArgs.requestType = 1;
+          // }
+          // accountArgs.productid = prc.productData.productId;
+
           // for testing purposes/development (carrierloginpost.cfm):
           rc.respObj = carrierFacade.Account(argumentCollection = accountArgs);
           rc.message = rc.respObj.getHttpStatus();
@@ -968,12 +982,10 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var servicesArgs = {} />
+    <cfparam name="rc.isDownPaymentApproved" default="0" />
+    <cfparam name="rc.isOptionalDownPaymentAdded" default="0" />
 
     <cfscript>
-      if (!structKeyExists(rc, "isDownPaymentApproved")) {
-        rc.isDownPaymentApproved = 0;
-      }
-
       // get all warranties for this device:
       prc.qWarranty = application.model.Warranty.getByDeviceId(prc.device.getProductId());
 
@@ -1026,12 +1038,19 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
-    <cfset var nextAction = "" />
-    <cfset var prevAction = "" />
 
     <cfscript>
       prc.CatalogService = application.model.Catalog;
       prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories(prc.device.getProductId());
+      if (!prc.qAccessory.recordcount) {
+        // create warningMessage
+        flash.put("warningMessage","No accessories available specific to this device. To see all devices accessories, <a href='/index.cfm/go/shop/do/browseAccessories'>click here</a> to go to all accessories.");
+        
+        setNextEvent(
+          event="devicebuilder.orderreview",
+          persist="cartLineNumber"
+          );
+      }
     </cfscript>
   </cffunction>
 

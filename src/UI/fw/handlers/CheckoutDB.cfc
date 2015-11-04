@@ -967,7 +967,9 @@
 		<cfargument name="event">
 		<cfargument name="rc">
 		<cfargument name="prc">
-		
+		<cfset var local = structNew() />
+		<!---<cfset var order = createObject('component','cfc.model.order') />
+		<cfset order.load(trim(session.checkout.orderId)) />--->
 		<!---<cfdump var="#trim(session.checkout.orderId)#"><br/>
 		<cfdump var="#trim(session.FinanceAgreementResp.getCarrierID())#"><br/>
 		<cfdump var="#trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].InstallmentPLanId)#"><br/>
@@ -1001,13 +1003,39 @@
 		
 			<cfset rc.saveFinanceAgreementResult = carrierFacade.SaveFinanceAgreement(argumentCollection = local.args_saveFinanceAgreement) />
 			
-			<cfif (rc.saveFinanceAgreementResult eq "yes") OR (rc.saveFinanceAgreementResult eq "true")>
+			<!---<cfif (rc.saveFinanceAgreementResult eq "yes") OR (rc.saveFinanceAgreementResult eq "true")>
 				<cfset setNextEvent('checkoutDB/payment') />
 			<cfelse>
 				<!--- error page --->
 				<cfabort>
-			</cfif>
+			</cfif>--->
 		</cfif>
+		
+		<!---submit order--->
+		<!---<cfset local.args_submit = {
+			carrierid = 109
+		} />
+		
+		<cfset rc.submitOrderRequest = carrierHelper.getSubmitOrderRequest(argumentcollection = local.args_submit) />
+		<cfset rc.submitOrderResponse = carrierFacade.submitOrder(argumentCollection = rc.submitOrderRequest) />--->
+		
+		<!---econsent--->
+		<cfset local.args_eConsent = {
+			carrierId = 109
+		} />
+
+		<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />
+		
+		<!---submit order completed--->
+		<!---<cfset local = structNew() />		
+		
+		<cfset local.args_complete = {
+			carrierid = application.model.checkoutHelper.getCarrier(),
+			orderid = session.checkout.orderId
+		} />
+		
+		<cfset rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete) />
+		<cfset rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest) />--->
 		
 		<cfset setNextEvent('checkoutDB/payment') />
 	</cffunction>

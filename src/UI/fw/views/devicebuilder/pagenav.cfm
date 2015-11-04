@@ -1,4 +1,6 @@
 <cfoutput>
+<cfif event.getCurrentAction() is not "orderreview">
+
   <div class="head">
     <ul class="nav nav-pills nav-justified">
       <cfloop index="i" from="1" to="#arrayLen(prc.navItemsAction)#">
@@ -39,4 +41,5 @@
       </cfloop>
     </ul>
   </div>
+  </cfif>
 </cfoutput>

@@ -1444,29 +1444,33 @@
 		<cfset var qOrders = 0 />
 
 		<cfquery name="qOrders" datasource="#application.dsn.wirelessAdvocates#">
-			SELECT
-				o.OrderId
-				, o.ActivationType
-				, c.CompanyName
-				, od.OrderDetailId
-				, od.ProductTitle
-				, wl.WirelessLineId
-				, wl.ActivationStatus
-				, CASE
-					WHEN wl.ActivationStatus IS NULL THEN 'Ready'
-					WHEN wl.ActivationStatus = 0 THEN 'Ready'
-					WHEN wl.ActivationStatus = 1 THEN 'Requested'
-					WHEN wl.ActivationStatus = 2 THEN 'Success'
-					WHEN wl.ActivationStatus = 4 THEN 'Failure'
-					WHEN wl.ActivationStatus = 5 THEN 'Error'
-					WHEN wl.ActivationStatus = 6 THEN 'Manual'
-					WHEN wl.ActivationStatus = 7 THEN 'Canceled'
-					ELSE ''
-				  END ActivationStatusDescription
-			FROM salesorder.[Order] o WITH (NOLOCK)
-			INNER JOIN salesorder.OrderDetail od WITH (NOLOCK) ON od.OrderId = o.OrderId
-			INNER JOIN salesorder.WirelessLine wl WITH (NOLOCK) ON wl.OrderDetailId = od.OrderDetailId
-			LEFT JOIN catalog.Company c WITH (NOLOCK) ON c.CarrierId = o.CarrierId
+			SELECT o.OrderId 
+			, o.ActivationType 
+			, c.CompanyName 
+			, od.OrderDetailId 
+			, od.ProductTitle 
+			, od.RetailPrice
+			, wl.WirelessLineId 
+			, wl.MonthlyFee
+			, wl.contractLength
+			, od.taxes
+			, od.taxable
+			, od.DownPaymentReceived
+			, wl.ActivationStatus 
+			, CASE WHEN wl.ActivationStatus IS NULL THEN 'Ready' 
+			WHEN wl.ActivationStatus = 0 THEN 'Ready' 
+			WHEN wl.ActivationStatus = 1 THEN 'Requested' 
+			WHEN wl.ActivationStatus = 2 THEN 'Success' 
+			WHEN wl.ActivationStatus = 4 THEN 'Failure' 
+			WHEN wl.ActivationStatus = 5 THEN 'Error' 
+			WHEN wl.ActivationStatus = 6 THEN 'Manual' 
+			WHEN wl.ActivationStatus = 7 THEN 'Canceled' 
+			ELSE '' END 
+			ActivationStatusDescription
+			 FROM salesorder.[Order] o WITH (NOLOCK) 
+			 INNER JOIN salesorder.OrderDetail od WITH (NOLOCK) ON od.OrderId = o.OrderId 
+			 INNER JOIN salesorder.WirelessLine wl WITH (NOLOCK) ON wl.OrderDetailId = od.OrderDetailId 
+			 LEFT JOIN catalog.Company c WITH (NOLOCK) ON c.CarrierId = o.CarrierId
 			WHERE
 				o.OrderId = <cfqueryparam value="#arguments.orderId#" cfsqltype="cf_sql_integer" />
 				AND o.ActivationType NOT IN ('R')
@@ -1645,18 +1649,21 @@
 		<cfset var qCaptures = 0 />
 
 		<cfquery name="qCaptures" datasource="#application.dsn.wirelessAdvocates#">
-			SELECT
-				OrderId
-				, OrderDate
-				, EmailAddress
-				, ActivationType
-				, CarrierId
-				, CompanyName
-				, ShippingMethod
-				, PhantomInventoryCount
-				, OrderAssistanceUsed
-			FROM salesOrder.CapturesWaiting
-			ORDER BY OrderDate, OrderId ASC
+			SELECT distinct
+				c.OrderId
+				, c.OrderDate
+				, c.EmailAddress
+				, c.ActivationType
+				, c.CarrierId
+				, c.CompanyName
+				, c.ShippingMethod
+				, c.PhantomInventoryCount
+				, c.OrderAssistanceUsed
+				, o.ActivationType
+			FROM salesOrder.CapturesWaiting c
+			INNER JOIN [salesorder].[Order] o WITH (NOLOCK) ON c.orderid = o.orderid
+			WHERE 1=1
+			ORDER BY c.OrderDate, c.OrderId ASC
 		</cfquery>
 
 		<cfreturn qCaptures />
