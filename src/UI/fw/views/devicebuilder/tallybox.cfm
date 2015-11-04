@@ -62,7 +62,7 @@
                   </tr>
                 </cfif>
 
-                <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getPlan().hasBeenSelected() and structKeyExists(prc,"lineBundledAccessories") and arrayLen(prc.lineBundledAccessories)>
+                <!--- <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getPlan().hasBeenSelected() and structKeyExists(prc,"lineBundledAccessories") and arrayLen(prc.lineBundledAccessories)>
                   <cfloop from="1" to="#arrayLen(prc.lineBundledAccessories)#" index="local.iAccessory">
                     <cfset local.thisAccessory = prc.lineBundledAccessories[local.iAccessory] />
                     <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
@@ -71,7 +71,7 @@
                       <td class="price"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>FREE</cfif></td>
                     </tr>
                   </cfloop>
-                </cfif>
+                </cfif> --->
 
                 <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
                   <tr>
@@ -212,17 +212,17 @@
                 <cfset local.accessoriesCount = 0 />
                 <cfif structKeyExists(prc,"lineAccessories") and isArray(prc.lineAccessories)>
                   <cfloop from="1" to="#arrayLen(prc.lineAccessories)#" index="i">
-                    <cfif prc.lineAccessories[i].price_subTotal>
+                    <!--- <cfif prc.lineAccessories[i].price_subTotal> --->
                       <cfset local.accessoriesCount++ />
                       <tr>
                         <td>
-                          #prc.lineAccessories[i].detailTitle# #prc.lineAccessories[i].productId# <cfif prc.lineAccessories[i].qty gt 1>x #prc.lineAccessories[i].qty#</cfif>
+                          #prc.lineAccessories[i].detailTitle# <cfif prc.lineAccessories[i].qty gt 1>x #prc.lineAccessories[i].qty#</cfif>
                         </td>
                         <td class="price">
                           #dollarFormat(prc.lineAccessories[i].price_subTotal)#
                         </td>
                       </tr>
-                    </cfif>            
+                    <!--- </cfif>  --->
                   </cfloop>
                 </cfif>
 
