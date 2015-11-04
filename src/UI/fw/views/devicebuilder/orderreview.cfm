@@ -95,7 +95,12 @@
             <cfif isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
-                  <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
+                  <cfif structKeyExists(session,"carrierObj")>
+                    <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
+                  <cfelseif structKeyExists(prc,"carrierLogo")>
+                    <img src="#prc.carrierLogo#" alt="" /><br />
+                  </cfif>
+                  
                   <a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/1">Edit Plan</a><br /><br />
                 </div>
                 <div class="col-md-8 col-xs-10 data">

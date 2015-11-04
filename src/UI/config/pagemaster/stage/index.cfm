@@ -116,6 +116,12 @@
 
 	// the domain value for emailTemplates 
 	request.config.emailTemplateDomain = cgi.server_name;
+
+	// Full API Configuration 
+	request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = "";
+	request.config.DeviceBuilder.carriersAllowUpdate = "";
+	request.config.DeviceBuilder.carriersAllowAddaline = "";
+	request.config.DeviceBuilder.carriersAllowNew = "";
 </cfscript>
 
 <!--- TRV: include our rateplanControl data for this environment --->
