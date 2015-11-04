@@ -120,6 +120,12 @@
 	
 	// the domain value for emailTemplates 
 	request.config.emailTemplateDomain = "aafesmobile.com";	
+
+	// Full API Configuration 
+	request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = "";
+	request.config.DeviceBuilder.carriersAllowUpdate = "";
+	request.config.DeviceBuilder.carriersAllowAddaline = "";
+	request.config.DeviceBuilder.carriersAllowNew = "";
 </cfscript>
 
 <!--- MAC: Carrier service endpoints, included because it can be diff on diff prod servers --->

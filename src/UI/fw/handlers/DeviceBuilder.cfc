@@ -9,6 +9,7 @@
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
 
   <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal,accessorymodal,clearcart,showcarttype" /> <!--- clearcart (?)--->
+  <cfset this.legacyCartReviewUrl = "/index.cfm/go/cart/do/view/" />
   <cfset this.browseDevicesUrl = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0/" />
   <cfset this.browseDevicesUrlAtt = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,1,32/" />
   <cfset this.browseDevicesUrlVzw = "/index.cfm/go/shop/do/browsePhones/phoneFilter.submit/1/filter.filterOptions/0,3,32/" />
@@ -38,6 +39,21 @@
       // session.cart = createObject('component','cfc.model.cart').init();
 
 
+      // <CHECK CART INSTANTIATED
+      if (!structKeyExists(session,"cart")) {
+        session.cart = createObject('component','cfc.model.cart').init();
+      }
+      if (!structKeyExists(session,"cartHelper")) {
+        session.cartHelper = createObject('component','cfc.model.carthelper').init();
+      }
+      if (!structKeyExists(session,"dBuilderCartFacade")) {
+        session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
+      }
+      if (!structKeyExists(session,"listRequiredServices")) {
+        session.listRequiredServices = "";
+      }
+      // <end check cart instantiated
+
 
       // <CARRIER CONSTANTS
       prc.carrierIdAtt = 109;
@@ -62,26 +78,9 @@
 
 
 
-      // <CHECK CART INSTANTIATED
-      if (!structKeyExists(session,"cart")) {
-        session.cart = createObject('component','cfc.model.cart').init();
-      }
-      if (!structKeyExists(session,"cartHelper")) {
-        session.cartHelper = createObject('component','cfc.model.carthelper').init();
-      }
-      if (!structKeyExists(session,"dBuilderCartFacade")) {
-        session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
-      }
-      if (!structKeyExists(session,"listRequiredServices")) {
-        session.listRequiredServices = "";
-      }
-      // <end check cart instantiated
-
-
-
       // <ADD DEVICE TO CART (FROM PRODUCT DETAIL PAGE)
       // if customer enters devicebuider with rc.pid, rc.type, rc.finance then they are adding to cart.
-      if ( structKeyExists(rc,"pid") and structKeyExists(rc,"finance") and structKeyExists(rc,"type") ) {
+      if ( structKeyExists(rc,"pid") and isNumeric(rc.pid) and structKeyExists(rc,"finance") and structKeyExists(rc,"type") ) {
 
         // 1. validate the finance.
         if ( !structKeyExists(rc,"finance") OR !len(trim(rc.finance)) OR !listFindNoCase(listActivationTypes,rc.finance) ) {
@@ -99,20 +98,32 @@
 
         // 3. validate the pid.
         // return customer to Browse all phones (no filter) if a product id is not found in the URL (or form field):
-        if (!structKeyExists(rc,"pid") OR !isNumeric(rc.pid)) {
-          relocate( prc.browseDevicesUrl );
-        }
         if (!structKeyExists(prc,"productData")) {
           prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
         }
+
         // return customer to Browse all phones if product id is not found in the database or there are no qty on hand:
         if ( !isNumeric(prc.productData.productId) or prc.productData.qtyOnHand lt 1 ) {
           relocate( prc.browseDevicesUrl  );
         }
 
+        // return customer to Browse all phones if carrierId is not in allowed list:
+        if ( !listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId) ) {
+          relocate( prc.browseDevicesUrl );
+        }
+
         // 4. validate the CARRIER
         // if the cart already has at least one device in it, then check to ensure that this new device belongs to the same carrier.  If it does not, send user to the orderreview page and display a warning message that they can't add a device of two different carriers to their cart.
         // get the carrier id of first device in cart.
+        
+        // first validate if item exists in the cart with 2-year contract.  If it does, send customer to the legacy cart review.
+        // Logic: If the cart has one or more cartlines and the cart activationType does not contain 'finance':
+        if ( session.cart.getActivationType() does not contain 'finance' and arrayLen(session.cart.getLines()) ) {
+          relocate( this.legacyCartReviewUrl );
+        }
+
+
+
         if ( arrayLen(session.cart.getLines()) and session.cart.getCarrierId() neq 0 and session.cart.getCarrierId() neq prc.productData.carrierId ) {
           
           if ( session.cart.getCarrierId() eq prc.carrierIdAtt ) {
@@ -198,6 +209,12 @@
         }
         if (!structKeyExists(prc,"productImages")) {
          prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
+        }
+
+        if (prc.productData.carrierId eq prc.carrierIdAtt) {
+          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
+        } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
+          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
         }
 
 
@@ -789,14 +806,14 @@
 	  
       if (prc.productData.carrierId eq prc.carrierIdAtt) {
         prc.inputPinTooltipTitle = "If you don't have an AT&amp;T passcode or you've forgotten it, call 1-800-331-0500. AT&amp;T requires this passcode to verify your identity.";
-		prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo.png";
-		//TODO: Is this already in scope somewhere?
-		prc.carrierName = "AT&amp;T";
+        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo.png";
+        //TODO: Is this already in scope somewhere?
+        prc.carrierName = "AT&amp;T";
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
         prc.inputPinTooltipTitle = "TODO: Get Info For VZW.";
-		prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo.png";
-		//TODO: Is this already in scope somewhere?
-		prc.carrierName = "Verizon";
+        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo.png";
+        //TODO: Is this already in scope somewhere?
+        prc.carrierName = "Verizon";
       }
 	  
       
@@ -878,7 +895,7 @@
 
             if (session.carrierObj.getCarrierId() eq prc.carrierIdAtt) {
               session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
-            } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
+            } else if (session.carrierObj.carrierId eq prc.carrierIdVzw) {
               session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
             }
 
@@ -1321,7 +1338,7 @@
       
       // display the alertMsg
       if ( len(alertMsg) ) {
-        prc.warningMessage = alertMsg;
+        prc.warningMessage =   IIF(len(prc.warningMessage),DE("#prc.warningMessage#<br><br>"),DE("")) & alertMsg;
       }
 
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);

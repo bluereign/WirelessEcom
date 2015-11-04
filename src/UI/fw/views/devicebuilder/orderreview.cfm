@@ -95,12 +95,16 @@
             <cfif isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
-                  <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
+                  <cfif structKeyExists(session,"carrierObj")>
+                    <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
+                  <cfelseif structKeyExists(prc,"carrierLogo")>
+                    <img src="#prc.carrierLogo#" alt="" /><br />
+                  </cfif>
                   <a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/1">Edit Plan</a><br /><br />
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#prc.cartPlan.companyName# #prc.cartPlan.planName#</h3>
-                    <p>#reReplaceNoCase(prc.cartPlan.summaryDescription, "<.*?>","","all")#</p>
+                  <p>#reReplaceNoCase(prc.cartPlan.summaryDescription, "<.*?>","","all")#</p>
                 </div>
                 <div class="col-md-2 col-xs-16 quantity">1</div>
                 <div class="col-md-2 col-xs-16 monthly">#dollarFormat(prc.cartPlan.monthlyFee)# <span class="visible-xs-inline">Monthly*</span></div>
@@ -111,36 +115,31 @@
 
                   <div class="row">
                     <div class="collapse" id="plan-details">
-					<div class="row">
-                      <div class="col-md-10">#prc.cartPlan.companyName# #prc.cartPlan.planName#</div>
-                      <div class="col-md-3">#dollarFormat(prc.cartPlan.monthlyFee)#/mo</div>
-					  <div class="col-md-3"></div>
-					</div>
-					<div class="row">
-                      <div class="col-md-10">Data Limit:</div>
-                      <div class="col-md-3">#prc.cartPlan.data_limit#</div>
-					  <div class="col-md-3"></div>
-					</div>
-					<div class="row">
-                      <div class="col-md-10">Maximum Lines:</div>
-                      <div class="col-md-3">#prc.cartPlan.maxLines#</div>
-					  <div class="col-md-3"></div>
-					</div>
-                      <!--- <div class="col-md-12 col-xs-11">Additional Data Usage:</div>
-                      <div class="col-md-4 col-xs-5">#prc.cartPlan.additional_data_usage#</div>
-                      <div class="col-md-16 col-xs-16">#prc.cartPlan.companyName# #prc.cartPlan.planName#</div>
-                      <div class="col-md-16 col-xs-16">Data Limit: #prc.cartPlan.data_limit#</div>
-                      <div class="col-md-16 col-xs-16">Additional Data Usage: #prc.cartPlan.additional_data_usage#</div>
-                      <div class="col-md-16 col-xs-16">Maximum Lines: #prc.cartPlan.maxLines#</div> --->
-
+                      <div class="row">
+                        <div class="col-md-10">#prc.cartPlan.companyName# #prc.cartPlan.planName#</div>
+                        <div class="col-md-3">#dollarFormat(prc.cartPlan.monthlyFee)#/mo</div>
+                        <div class="col-md-3"></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-10">Data Limit:</div>
+                        <div class="col-md-3">#prc.cartPlan.data_limit#</div>
+                        <div class="col-md-3"></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-10">Maximum Lines:</div>
+                        <div class="col-md-3">#prc.cartPlan.maxLines#</div>
+                        <div class="col-md-3"></div>
+                      </div>
                     </div>
                   </div>
+
                   <a role="button"
                     class="plan-details collapsed"
                     data-toggle="collapse"
                     href="##plan-details"
                     aria-expanded="false"
                     aria-controls="plan-details">Show Details</a>
+                
                 </div>
               </div>
             </cfif>

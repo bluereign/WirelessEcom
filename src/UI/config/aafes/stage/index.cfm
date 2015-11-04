@@ -114,7 +114,13 @@
 	request.config.disableSSL = true;
 	
 	// the domain value for emailTemplates 
-	request.config.emailTemplateDomain = "exchangemobilecenter.com";	
+	request.config.emailTemplateDomain = "exchangemobilecenter.com";
+
+	// Full API Configuration 
+	request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = "";
+	request.config.DeviceBuilder.carriersAllowUpdate = "";
+	request.config.DeviceBuilder.carriersAllowAddaline = "";
+	request.config.DeviceBuilder.carriersAllowNew = "";
 </cfscript>
 
 <!--- TRV: include our rateplanControl data for this environment --->

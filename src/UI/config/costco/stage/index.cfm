@@ -116,6 +116,12 @@
 
 	// the domain value for emailTemplates 
 	request.config.emailTemplateDomain = "membershipwireless.com";	
+
+	// Full API Configuration 
+	request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = 109;
+	request.config.DeviceBuilder.carriersAllowUpdate = 109;
+	request.config.DeviceBuilder.carriersAllowAddaline = "";
+	request.config.DeviceBuilder.carriersAllowNew = "";
 </cfscript>
 
 <!--- TRV: include our rateplanControl data for this environment --->
