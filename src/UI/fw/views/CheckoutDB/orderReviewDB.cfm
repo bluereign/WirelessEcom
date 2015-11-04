@@ -441,7 +441,7 @@
             <td>#dollarFormat(session.checkout.shippingMethod.getDefaultFixedCost())#</td>
           </tr>
           <tr>
-            <td>Est. Tax<sup class="cartReview"><a href="##footnote2" style="font-size:8px">2</a></sup></td>
+            <td>Tax<sup class="cartReview"><a href="##footnote2" style="font-size:8px">2</a></sup></td>
             <td></td>
             <td>#dollarFormat(session.cart.getTaxes().getDueToday())#</td>
           </tr>
