@@ -17,6 +17,10 @@
     overflow-y: auto;
 }
 form .form-inline label { width:auto;}
+.error {
+color:red;
+padding-left:5px;
+}
 </style>
 <script type="text/javascript">
 	jQuery(document).ready( function($) {

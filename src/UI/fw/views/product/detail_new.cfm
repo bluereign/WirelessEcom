@@ -1049,7 +1049,7 @@ $j(document).ready(function($j) {
 
 					<!--- devicebuilder --->
 					<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only if qty on hand is greater than 0  and prc.productData.qtyOnHand gt 0 --->
-					<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase("109,42",prc.productData.CarrierId)>
+					<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId)>
 						<cfif prc.productData.qtyOnHand gt 0>
 							<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
 								<a class="ActionButton learnMoreBtn" href="##" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
@@ -1226,8 +1226,14 @@ $j(document).ready(function($j) {
 								<div class="col-xs-6">
 									<form action="#rc.addalineURL#" method="post">
 										<input type="hidden" name="finance" value="">
-										<a href="##" id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;" disabled="disabled" data-original-title="This is my tooltip" data-placement="left" data-toggle="tooltip">Add a Line</a>
-										<p style="text-align:center">(available in warehouse)</p>
+										<a href="##" id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;" data-original-title="This is my tooltip" data-placement="left" data-toggle="tooltip"
+										<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId)>
+											disabled="disabled"
+										</cfif>
+										>Add a Line</a>
+										<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId)>
+											<p style="text-align:center">(available in warehouse)</p>
+										</cfif>
 									</form>
 								</div>
 							</div>
@@ -1246,8 +1252,14 @@ $j(document).ready(function($j) {
 								<br />
 								<div class="row center-block">
 									<div class="col-xs-7">
-										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" disabled="disabled">Switch to #prc.productData.carrierName#</a>
-										<p style="text-align:center;width:150px;">(available in warehouse)</p>
+										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" 
+										<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId)>
+											disabled="disabled"	
+										</cfif>
+										>Switch to #prc.productData.carrierName#</a>
+										<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId)>
+											<p style="text-align:center;width:150px;">(available in warehouse)</p>
+										</cfif>
 									</div>
 								</div>
 							</div>
