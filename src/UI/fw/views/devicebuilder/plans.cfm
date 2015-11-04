@@ -97,7 +97,9 @@
 
           </div> <!--- tab-content plans --->
 		    </div>
-        
+  <div class="bs-callout bs-callout-warning switchWarning">
+    <h4>Choosing a new plan will replace your existing plan</h4>
+  </div>
       </section>
 
     </form>
