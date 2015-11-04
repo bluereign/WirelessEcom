@@ -1,3 +1,4 @@
+<!--- <cfdump var="#rc#"> --->
 <cfoutput>
   <div class="col-md-12">
 
@@ -72,10 +73,17 @@
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" value="1" name="isDownPaymentApproved" id="isDownPaymentApproved" <cfif rc.isDownPaymentApproved>checked</cfif> >
-                    <!--- <a href="##"> --->I Agree to the required CARRIER down payment of:<!--- </a> ---> #dollarFormat(prc.subscriber.downPayment)#
+                    I Agree to the required CARRIER down payment of: #dollarFormat(prc.subscriber.downPayment)#
                   </label>
                 </div>
-              </cfif>                
+              <cfelseif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="1" name="isOptionalDownPaymentAdded" id="isOptionalDownPaymentAdded" <cfif rc.isOptionalDownPaymentAdded>checked</cfif> >
+                    Add an additional 30% down payment of #dollarFormat(round(prc.productData.FinancedFullRetailPrice * 0.3))# today
+                  </label>
+                </div>
+              </cfif>            
             </label>
           </div>
           
@@ -389,6 +397,11 @@
           $('.btnContinue').attr('data-target', '');
           $('##protectionForm').submit();
         }
+      });
+
+      $('##isOptionalDownPaymentAdded').on('change', function() {
+        var protectionvalue = $('input[name=paymentoption]:checked').val();
+        onChangeHandler(protectionForm,protectionvalue);
       });
 
     });

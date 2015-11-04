@@ -303,7 +303,7 @@
         prc.cartLine.setCartLineActivationType(prc.activationType);
         prc.paymentoption = rc.paymentoption;
 
-        // 7. add phone to cart again.
+        // add phone to cartline again (which updates the device)
         cartArgs = {
           productType = "phone:" & prc.activationType,
           product_id = prc.productData.productId,
@@ -311,6 +311,12 @@
           price = prc.productData.FinancedFullRetailPrice,
           cartLineNumber = rc.cartLineNumber
         };
+
+        if ( structKeyExists(rc,"isOptionalDownPaymentAdded") and rc.isOptionalDownPaymentAdded and prc.productData.carrierId eq prc.carrierIdAtt ) {
+          cartArgs.optionalDownPmtPct = 30;
+          cartArgs.optionalDownPmtAmt = round(prc.productData.FinancedFullRetailPrice * 0.3);
+        }
+
         // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
@@ -403,14 +409,12 @@
 
       // add services to cart
       if ( listLen(prc.selectedServices) and isQuery(prc.cartPlan) and prc.cartPlan.recordcount ) {
-        
         cartArgs = {
           productType = "plan",
           product_id = prc.cartPlan.productId & ":" & prc.selectedServices,
           qty = 1,
           cartLineNumber = rc.cartLineNumber
         };
-
         // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
@@ -517,6 +521,7 @@
           prc.subscriber.minimumCommitment = listLast(prc.financed, '-');
           prc.subscriber.downPaymentPercent = prc.subscriber.getUpgradeDownPaymentPercent(prc.subscriber.offerCategory,prc.subscriber.minimumCommitment);
           prc.subscriber.downPayment = prc.subscriber.downPaymentPercent * prc.productData.FinancedFullRetailPrice / 100;
+          // prc.subscriber.downPayment = 100;
         } 
       }
       // <end down payment
