@@ -30,8 +30,6 @@
 
 				  <cfset prc.isComplete = true>
 				  <!--- Set cartLineNumber to '1' if coming from Order Summary page (and cartLineNumber is 999) --->
-				  <cfset prc.navUrl = event.buildLink('devicebuilder.#prc.navItemsAction[i]#') & '/cartLineNumber/' & IIF(rc.cartLineNumber eq request.config.otherItemsLineNumber, 1, DE(rc.cartLineNumber) ) & '/'>
-
 				<cfelse>
           
 				  <cfset prc.isComplete = false>
