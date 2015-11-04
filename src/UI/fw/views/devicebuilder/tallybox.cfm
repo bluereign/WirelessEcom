@@ -62,7 +62,7 @@
                   </tr>
                 </cfif>
 
-                <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getPlan().hasBeenSelected() and structKeyExists(prc,"lineBundledAccessories") and arrayLen(prc.lineBundledAccessories)>
+                <!--- <cfif structKeyExists(prc,"cartLine") and prc.cartLine.getPlan().hasBeenSelected() and structKeyExists(prc,"lineBundledAccessories") and arrayLen(prc.lineBundledAccessories)>
                   <cfloop from="1" to="#arrayLen(prc.lineBundledAccessories)#" index="local.iAccessory">
                     <cfset local.thisAccessory = prc.lineBundledAccessories[local.iAccessory] />
                     <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
@@ -71,7 +71,7 @@
                       <td class="price"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>FREE</cfif></td>
                     </tr>
                   </cfloop>
-                </cfif>
+                </cfif> --->
 
                 <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
                   <tr>
@@ -85,6 +85,19 @@
                   </tr>
                 </cfif>
 
+                <!--- prc.cartLines[rc.cartLineNumber].getOptionalDownPmtAmt() --->
+                <cfif prc.cartLines[rc.cartLineNumber].getPhone().getPrices().getOptionalDownPmtAmt()>
+                  <tr>
+                    <td>Optional Down Payment</td>
+                    <td class="price">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPhone().getPrices().getOptionalDownPmtAmt())#</td>
+                  </tr>
+                </cfif>
+                <!--- <tr>
+                  <td colspan="2"><cfdump var="#prc.cartArgs#"></td>
+                </tr> --->
+                  
+
+
                 <tr>
                   <td>Due Today*</td>
                   <td class="price">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getDueToday())#</td>
@@ -96,7 +109,6 @@
         </div>
 
         <h4>Carrier Plan</h4>
-
         <div class="row">
           <div class="col-xs-4">
             <cfif prc.productData.carrierId eq prc.carrierIdAtt>
@@ -120,7 +132,7 @@
                 <table class="table">
                   <tr>
                     <td>
-                      Due Monthly
+                      #prc.cartPlan.DataLimitGB#GB Data Plan
                     </td>
                     <td class="price">
                       #dollarFormat(prc.cartPlan.MonthlyFee)#/mo
@@ -197,26 +209,28 @@
             <div class="table-responsive">
               <table class="table">
 
+                <cfset local.accessoriesCount = 0 />
                 <cfif structKeyExists(prc,"lineAccessories") and isArray(prc.lineAccessories)>
-
                   <cfloop from="1" to="#arrayLen(prc.lineAccessories)#" index="i">
-                    <tr>
-                      <td>
-                        #prc.lineAccessories[i].detailTitle# <cfif prc.lineAccessories[i].qty gt 1>x #prc.lineAccessories[i].qty#</cfif>
-                      </td>
-                      <td class="price">
-                        #dollarFormat(prc.lineAccessories[i].price_subTotal)#
-                      </td>
-                    </tr>                    
+                    <!--- <cfif prc.lineAccessories[i].price_subTotal> --->
+                      <cfset local.accessoriesCount++ />
+                      <tr>
+                        <td>
+                          #prc.lineAccessories[i].detailTitle# <cfif prc.lineAccessories[i].qty gt 1>x #prc.lineAccessories[i].qty#</cfif>
+                        </td>
+                        <td class="price">
+                          #dollarFormat(prc.lineAccessories[i].price_subTotal)#
+                        </td>
+                      </tr>
+                    <!--- </cfif>  --->
                   </cfloop>
-                  
-                <cfelse>
+                </cfif>
 
+                <cfif !local.accessoriesCount>
                   <tr>
                     <td>No Accessories Selected</td>
                     <td class="price"></td>
                   </tr>
-
                 </cfif>
 
               </table>

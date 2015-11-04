@@ -1,4 +1,5 @@
 <!--- Adding style here and jQuery at the bottom as the javascript file provided by front-end developer is minified. --->
+<cfajaximport tags="cfform,cfwindow,cfdiv" scriptsrc="#assetPaths.common#scripts/cfajax/">
 <style>
 .cart .device-details {
   font-size: 12px;
@@ -44,14 +45,17 @@
 		$('#agreeToContractDoc').click( function() {
 			$('#docClicked').val("agreeToContract");
 			if ($('#carrierID').val()=='42'){
-				alert("Verizon");
+				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
+				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
+				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
+				$('#emailDocLink').val($('#verizonContractExtensionURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
-				alert("ATT");
+				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
+				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
+				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
+				$('#emailDocLink').val($('#attContractExtensionURL').val());
 			}
-			$('#carrierDoc').attr('data', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
-			$('#carrierDocEmbed').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
-			$('#confirmationPrint').attr('src', 'http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_02_14.pdf');
 		})
 		
 		$('#agreeToContractExtension').click( function() {
@@ -60,11 +64,13 @@
 				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
+				$('#emailDocLink').val($('#verizonContractExtensionURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
 				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
+				$('#emailDocLink').val($('#attContractExtensionURL').val());
 			}
 		})
 		
@@ -77,6 +83,7 @@
 				$('#carrierDoc').attr('data', $('#pdfURL').val());
 				$('#carrierDocEmbed').attr('src', $('#pdfURL').val());
 				$('#confirmationPrint').attr('src', $('#pdfURL').val());
+				$('#emailDocLink').val($('#pdfURL').val());
 			}
 		})
 		
@@ -86,11 +93,13 @@
 				$('#carrierDoc').attr('data', $('#verizonTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonTermsURL').val());
+				$('#emailDocLink').val($('#verizonTermsURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
 				$('#carrierDoc').attr('data', $('#attTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#attTermsURL').val());
+				$('#emailDocLink').val($('#attTermsURL').val());
 			}
 		})
 		
@@ -100,11 +109,13 @@
 				$('#carrierDoc').attr('data', $('#costcoVerizonTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#costcoVerizonTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#costcoVerizonTermsURL').val());
+				$('#emailDocLink').val($('#costcoVerizonTermsURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
 				$('#carrierDoc').attr('data', $('#costcoAttTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#costcoAttTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#costcoAttTermsURL').val());
+				$('#emailDocLink').val($('#costcoAttTermsURL').val());
 			}
 		})
 		
@@ -127,8 +138,17 @@
 		})
 		
 		$('#emailButton').click( function() {
+			var urlSend = $('#emailDocLink').val();
 			
-		
+			$.ajax({
+						cache: false,
+						type: "POST",
+						url: "../CheckoutDB/emailPDF",
+						data: {
+							urlPDF: urlSend
+						},
+						dataType: "json"						
+					})
 		})
 
 	});
@@ -172,6 +192,7 @@
           	<input type="hidden" id="carrierID" value="#session.cart.getCarrierId()#">
 			<input type="hidden" name="cartLineNumber" value="#request.config.otherItemsLineNumber#" />
 			<input type="hidden" id="pdfURL" value="#event.buildLink('/CheckoutDB/financeAgreement')#">
+			<input type="hidden" id="emailDocLink" value="">
 			<input type="hidden" id="verizonContractExtensionURL" value="#assetPaths.channel#docs/customerletters/verizon/Verizon_2yr_Customer_Letter_9_29_15_API.pdf">
 			<input type="hidden" id="attContractExtensionURL" value="#assetPaths.channel#docs/customerletters/att/ATT_2Year_Customer_Letter_9_29_15_API_1.pdf">
 			<input type="hidden" id="verizonTermsURL" value="#assetPaths.channel#docs/termsandconditions/verizon/Verizon_tc_07_24_2015.pdf">
