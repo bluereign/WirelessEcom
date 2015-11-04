@@ -229,7 +229,8 @@
         }
 
         if ( !local.isSubscriberIndexTaken ) {
-          prc.cartLine.setSubscriberIndex(rc.subscriberIndex);
+          //prc.cartLine.setSubscriberIndex(rc.subscriberIndex);
+          application.model.dBuilderCartFacade.setSubscriberIndex(prc.cartline,rc.subscriberIndex);
           // the refresh lines, etc.
           prc.cartLines = session.cart.getLines();
           prc.cartLine = prc.cartLines[rc.cartLineNumber];

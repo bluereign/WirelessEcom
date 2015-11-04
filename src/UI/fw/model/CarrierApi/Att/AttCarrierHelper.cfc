@@ -163,15 +163,16 @@
 	
 	<cffunction name="loadEConsent" output="false" access="public" returntype="string">
 		<cfargument name="orderid" type="numeric" required="true" > 
+		<cfset var local = structNew() />
 		
-			<cfquery name="qEConsent" datasource="wirelessadvocates">
-				SELECT cast(AgreementEntry as varchar(max)) as AgreementEntry 
-				FROM [service].[FinanceAgreementSubmissionLog]
-				WHERE orderid = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.orderid#"> 
-					AND AgreementTypeId = 2
-			</cfquery>
-			<cfif qEConsent.recordcount gt 0>
-				<cfreturn base64ToString(qEConsent.AgreementEntry) />
+			<cfstoredproc datasource="wirelessadvocates" procedure="service.AttFinanceAgreementGet" result="local.results">
+				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.orderid#" > 
+				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="2" > 
+				<cfprocresult name="local.qEConsent" >
+			</cfstoredproc>
+
+			<cfif local.qEConsent.recordcount gt 0>
+				<cfreturn base64ToString(local.qEConsent.AgreementEntry) />
 			<cfelse>
 				<cfreturn "" />
 			</cfif>
@@ -205,7 +206,7 @@
 			</cfdocument>
 			<cfset local.Base64Pdf = ToBase64(local.eConsentPDF) />
 			
-			<cfstoredproc datasource="wirelessadvocates" procedure="service.FinanceAgreementSave" result="local.result">
+			<cfstoredproc datasource="wirelessadvocates" procedure="service.AttFinanceAgreementSave" result="local.result">
 				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#session.order.getOrderId()#" > 
 				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
 				<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#trim(local.fai.installmentPlanId)#" > 
