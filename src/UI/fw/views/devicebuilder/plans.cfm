@@ -80,7 +80,7 @@
                       <a href="##">
                         <h3><span>#prc.planDataShared.DetailTitle#</span></h3>
                         <ul>
-                          <li class="large">Data Included:<span>#prc.planDataShared.DataLimitGB#GB</span></li>
+                          <li class="large">Total Data Included:<span>#prc.planDataShared.DataLimitGB#GB</span></li>
                         </ul>
                         #prc.planDataShared.SummaryDescription#
                         <div class="price">$#int(prc.planDataShared.MonthlyFee)#</div>
@@ -97,7 +97,9 @@
 
           </div> <!--- tab-content plans --->
 		    </div>
-        
+  <div class="bs-callout bs-callout-warning switchWarning">
+    <h4>Choosing a new plan will replace your existing plan</h4>
+  </div>
       </section>
 
     </form>

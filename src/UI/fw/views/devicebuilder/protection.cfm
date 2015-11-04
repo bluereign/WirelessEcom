@@ -120,7 +120,6 @@
 
         </section>
 
-        
         <section class="seperator">
 
           <hr />
@@ -136,7 +135,7 @@
                   #prc.qWarranty.SummaryTitle#
                 </a> 
                 #dollarformat(prc.qWarranty.price)#
-                <cfif findNoCase("Apple",prc.qWarranty.SummaryTitle)><span class="actionLink" style="color:##009900;"> - Recommended</span></cfif>
+                <cfif findNoCase("Apple",prc.qWarranty.SummaryTitle) && request.config.channelname neq "costco"><span class="actionLink" style="color:##009900;"> - Recommended</span></cfif>
               </label>
             </div>
           </cfloop>

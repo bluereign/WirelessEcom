@@ -109,7 +109,6 @@
         </div>
 
         <h4>Carrier Plan</h4>
-
         <div class="row">
           <div class="col-xs-4">
             <cfif prc.productData.carrierId eq prc.carrierIdAtt>
@@ -133,7 +132,7 @@
                 <table class="table">
                   <tr>
                     <td>
-                      Due Monthly
+                      #prc.cartPlan.DataLimitGB#GB Data Plan
                     </td>
                     <td class="price">
                       #dollarFormat(prc.cartPlan.MonthlyFee)#/mo

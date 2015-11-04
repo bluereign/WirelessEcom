@@ -690,7 +690,12 @@ $j(document).ready(function($j) {
 
 
 <div class="row">
-	<h2 style="font-size:24px;">Choose Your Pricing and See the Savings</h2>
+  <!--- Display Financed price options when enabled and non-zero price entered in database --->
+  <cfif prc.channelConfig.getOfferFinancedDevices() && prc.productData.FinancedFullRetailPrice neq 0>
+    <h2 style="font-size:24px;">Select Your Finance Plan</h2>
+  <cfelse>
+    <h2 style="font-size:24px;">Choose Your Pricing and See the Savings</h2>
+  </cfif>
 	<hr class="blueline" />
 </div>
 
@@ -709,6 +714,18 @@ $j(document).ready(function($j) {
 				<div class="btnHeader">#prc.financeproductname#</div>
 				#prc.FinancedPriceRangeDisplay#
 			</button>
+      
+
+
+      <cfif prc.renderAddToCartArgs.carrierID eq 109>
+        <div style="font-size:14px; text-align:center; width:173px;">
+          <a href="##" data-toggle="modal" data-target="##nextInfoModal">Learn About #prc.financeproductname#</a>
+        </div>
+        
+        
+        
+        
+      </cfif>
 		</cfif>
 
 		<cfif prc.channelConfig.getOfferNoContractDevices() && !prc.productData.IsNoContractRestricted && prc.channelConfig.isNoContractDevice(prc.productClass)>
@@ -1196,7 +1213,7 @@ $j(document).ready(function($j) {
 							<strong style="font-size:16px;">Current #prc.productData.carrierName# customer?</strong>
 							<br />
 							<br />
-							<p>You can Upgrade your device online or visit your local warehouse to Add a Line to your account.</p>
+							<p>You can Upgrade your device online or visit your local warehouse wireless center to Add a Line to your account.</p>
 							<br />
 							<br />
 							<div class="row center-block">
@@ -1224,13 +1241,13 @@ $j(document).ready(function($j) {
 								<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
 								<br />
 								<br />
-								<p>Please visit your local warehouse if you would like to switch to #prc.productData.carrierName#.</p>
+								<p>Please visit your local warehouse wireless center if you would like to switch to #prc.productData.carrierName#.</p>
 								<br />
 								<br />
 								<div class="row center-block">
 									<div class="col-xs-7">
 										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" disabled="disabled">Switch to #prc.productData.carrierName#</a>
-										<p style="text-align:center">(available in warehouse)</p>
+										<p style="text-align:center;width:150px;">(available in warehouse)</p>
 									</div>
 								</div>
 							</div>
@@ -1267,8 +1284,50 @@ $j(document).ready(function($j) {
 		</div>
 	</div>
 </div>
-<!--- /Customer Type Modal (devicebuilder) --->
+  
+ <!--- /Customer Type Modal (devicebuilder) --->
 
+    <div class="modal fade bootstrap" id="nextInfoModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="nextInfoModalLabel">Learn About #prc.financeproductname#</h4>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-9">
+                <p>AT&amp;T Next offers the ability to make low monthly installment payments based on the full retail price of the new smartphone. Monthly installment payments are determined by the full retail price of the smartphone divided by the AT&nbsp;T Next installment agreement option you choose.</p>
+                <p>AT&amp;T Next is available to new customers and existing customers adding a new line of service, with qualifying credit. If you're upgrading with AT&amp;T Next, your account must be in good standing. We offer the following AT&nbsp;T Next options for smartphones</p>
+                <ul>
+                  <li>
+                    <p><strong>AT&amp;T Next 24</strong> allows you to make 30 low monthly installment payments equaling the full retail price of a new smartphone. Once you pay the balance of 24 installment payments, you have the option to trade in a fully functional and in good physical condition AT&amp;T Next smartphone to upgrade to a new one. Well-qualified credit is required.</p>
+                  </li>
+                  <li>
+                    <p>
+                      <strong>AT&amp;T Next 18</strong> allows you to make 24 low monthly installment payments equaling the full retail price of a new smartphone. Once you pay the balance of 18 installment payments, you have the option to trade in a fully functional and in good physical condition AT&amp;T Next smartphone to upgrade to a new one. Well-qualified credit is required.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <strong>AT&amp;T Next 12</strong> allows you to make 20 low monthly installment payments equaling the full retail price of a new smartphone. Once you pay the balance of 12 installment payments, you have the option to trade in a fully functional and in good physical condition AT&amp;T Next smartphone to upgrade to a new one. Well-qualified credit is required.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <strong>AT&amp;T Next with down payment</strong> requires a 30% down payment at the time of purchase and allows you to make 28 low monthly installment payments equaling the full retail price of a new smartphone. A deposit may also be required. Once you pay the balance of 12 installment payments, you have the option to trade in a fully functional and in good physical condition AT&amp;T Next smartphone to upgrade to a new one.
+                  </li>
+                  </p>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
 
 
 <!-- Modal -->
