@@ -754,9 +754,9 @@
 	   <!--- MES FIX UP --->
 	    <cfscript>
 	    if (session.cart.getCarrierId() eq 109) {
-              session.carrierObj.carrierLogo = "#assetPaths.channel#images/carrierLogos/att_logo_25.png";
+              session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/att_logo_25.png";
             } else if (session.cart.getCarrierId() eq 42) {
-              session.carrierObj.carrierLogo = "#assetPaths.channel#images/carrierLogos/verizon_logo_25.png";
+              session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/verizon_logo_25.png";
             }
 		</cfscript>
 	    <!---GET PLAN FROM CART--->
@@ -1145,9 +1145,9 @@
 	   <!--- MES FIX UP --->
 	    <cfscript>
 	    if (session.cart.getCarrierId() eq 109) {
-              session.carrierObj.carrierLogo = "#assetPaths.channel#images/carrierLogos/att_logo_25.png";
+              session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/att_logo_25.png";
             } else if (session.cart.getCarrierId() eq 42) {
-              session.carrierObj.carrierLogo = "#assetPaths.channel#images/carrierLogos/verizon_logo_25.png";
+              session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/verizon_logo_25.png";
             }
 		</cfscript>
 	    <!---GET PLAN FROM CART--->
