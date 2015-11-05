@@ -993,7 +993,7 @@
 		<cfset var local = structNew() />
 		
 		<!---save finance agreement for ATT --->
-		<!---<cfif application.model.checkoutHelper.getCarrier() eq 109>
+		<cfif application.model.checkoutHelper.getCarrier() eq 109>
 			<cfset local.args_saveFinanceAgreement = {
 				orderId = #trim(session.checkout.orderId)#,
 				carrierId = #trim(session.FinanceAgreementResp.getCarrierID())#,
@@ -1009,31 +1009,32 @@
 		
 			<cfset rc.saveFinanceAgreementResult = carrierFacade.SaveFinanceAgreement(argumentCollection = local.args_saveFinanceAgreement) />
 			
-		</cfif>--->
+		</cfif>
 		
-		<!---submit order--->
-		<!---<cfset local.args_submit = {
-			carrierid = 109
+		<!---submit order - Park order--->
+		<cfset local.args_submit = {
+			carrierid = application.model.checkoutHelper.getCarrier()
 		} />
 		
 		<cfset rc.submitOrderRequest = carrierHelper.getSubmitOrderRequest(argumentcollection = local.args_submit) />
-		<cfset rc.submitOrderResponse = carrierFacade.submitOrder(argumentCollection = rc.submitOrderRequest) />--->
+		<cfset rc.submitOrderResponse = carrierFacade.submitOrder(argumentCollection = rc.submitOrderRequest) />
 		
 		<!---econsent--->
-		<!---<cfset local.args_eConsent = {
-			carrierId = 109
+		<cfset local.args_eConsent = {
+			carrierId = application.model.checkoutHelper.getCarrier()
 		} />
 
-		<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />--->
+		<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />
 		
-		<!---submit order completed--->
-		<!---<cfset local = structNew() />		
+		<!---submit order completed - Activate --->	
 		
-		<cfset local.args_complete = {
-			carrierid = 109,
+		<!---<cfset local.args_complete = {
+			carrierid = application.model.checkoutHelper.getCarrier(),
 			orderid = session.checkout.orderId
 		} />
+		
 		<cfset rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete) />
+		<cfset rc.submitOrderRequest.carrierId = application.model.checkoutHelper.getCarrier() />
 		<cfset rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest) />--->
 		
 		<cfset setNextEvent('checkoutDB/payment') />
