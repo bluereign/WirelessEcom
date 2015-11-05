@@ -197,7 +197,8 @@
 	</cffunction>
 	
 	<!--- Carrier Response deserialization  --->
-	<cffunction name="deserializeResponse" access="public" returntype="any">
+	<!--- now located in the baseCarrier object --->	
+	<!---<cffunction name="deserializeResponse" access="public" returntype="any">
 		<cfargument name="theJson" type="string" required="true" /> 
 		<cfset var local = structNew() />
 		<cfset local.resp = structNew() />
@@ -235,7 +236,7 @@
 
 		</cfif>
 		<cfreturn local.resp />		
-	</cffunction>
+	</cffunction>--->
 	
 	
 </cfcomponent>
