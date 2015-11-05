@@ -1067,7 +1067,7 @@
       prc.qAccessory = prc.CatalogService.getDeviceRelatedAccessories(prc.device.getProductId());
       if (!prc.qAccessory.recordcount) {
         // create warningMessage
-        flash.put("warningMessage","No accessories available specific to this device. To see all devices accessories, <a href='/index.cfm/go/shop/do/browseAccessories'>click here</a> to go to all accessories.");
+        flash.put("warningMessage","No accessories available specific to this device. <a href='/index.cfm/go/shop/do/browseAccessories'>Click here</a> to view all accessories.");
         
         setNextEvent(
           event="devicebuilder.orderreview",
