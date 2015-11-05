@@ -349,7 +349,7 @@
 
 
                         <!--- Activation/Upgrade Fee --->
-                        <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+                        <!--- <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
                           <div class="row">
                             <div class="col-md-10">Upgrade Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> ***</div>
                             <div class="col-md-3">&nbsp;</div>
@@ -361,21 +361,7 @@
                             <div class="col-md-3">&nbsp;</div>
                             <div class="col-md-3"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelseif structKeyExists(prc,"activationFee")>#dollarFormat(prc.activationFee)#<cfelse>unknown</cfif></div>
                           </div>
-                        </cfif>
-
-                        <cfif local.cartLine.getWarranty().hasBeenSelected()>
-                          <div class="row">
-                            <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
-                            <div class="col-md-3">&nbsp;</div>
-                            <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
-                          </div>
-                        <cfelse>
-                          <div class="row">
-                            <div class="col-md-10">No protection plan selected</div>
-                            <div class="col-md-3">&nbsp;</div>
-                            <div class="col-md-3">$0.00</div>
-                          </div>
-                        </cfif>
+                        </cfif> --->
 
 
                         <!--- Instant MIR --->
@@ -634,9 +620,27 @@
                 </tr>
               </tfoot>
             </table>
+
           </div>
         </div>
       </div>
+
+      <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-6">
+            <div class="table-wrap">
+              <table class="table table-responsive">
+                <tr>
+                  <td>One time Activation Fee added to first month's bill ***</td>
+                  <td></td>
+                  <td><cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif></div></td>
+                </tr>
+              </table> 
+            </div>
+          </div>
+        </div>
+      </cfif>
+
       <cfif structKeyExists(prc,"warningMessage") and len(prc.warningMessage)>
         <div class="bs-callout bs-callout-error">
           <h4>#prc.warningMessage#</h4>
@@ -684,20 +688,20 @@
   </div>
 </div>
 <div class="modal fade" id="accessoryKitModal" tabindex="-1" role="dialog" aria-labelledby="accessoryKitModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="accessoryKitModalLabel">Member Benefit Kit</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Each device purchased includes an accessory bonus pack.  Contents of bonus pack vary by device.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="accessoryKitModalLabel">Member Benefit Kit</h4>
+          </div>
+          <div class="modal-body">
+              <p>Each device purchased includes an accessory bonus pack.  Contents of bonus pack vary by device.</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
 
 </cfoutput>
