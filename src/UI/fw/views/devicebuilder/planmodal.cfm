@@ -8,12 +8,11 @@
     <div class="plans">
       <div class="info">
         <h3 style="height:40px"><span>#prc.planInfo.DetailTitle#</span></h3>
-		<h4>Data Included</h4>
-		
-		<ul>
+        <h4>Data Included</h4>
+        <ul>
           <li class="large"><span>#prc.planInfo.DataLimitGB#GB</span></li>
         </ul>
-		<h4>Plan Summary</h4>
+        <h4>Plan Summary</h4>
         <p>#prc.planInfo.SummaryDescription#</p>
         <p>#prc.planInfo.DetailDescription#</p>
         <div class="price">#dollarFormat(prc.planInfo.MonthlyFee)#/month</div>

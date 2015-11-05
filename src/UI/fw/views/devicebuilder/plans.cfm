@@ -58,11 +58,12 @@
                       <ul>
                         <li class="large"><span>#prc.planData.DataLimitGB#GB</span></li>
                       </ul>
+                      <!--- Plan Product Id: #prc.planData.productid#<br> --->
                       #prc.planData.SummaryDescription#
                       <div class="price">$#int(prc.planData.MonthlyFee)#</div>
                       <button class="btn btn-primary btn-block" name="planid" value="#prc.planData.productid#">Select Plan</button>
                       <div class="details-link" data-toggle="modal" data-target="##planModal" 
-                        href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#/cartLineNumber/#rc.cartLineNumber#">Plan Details</div>
+                        href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#/cartLineNumber/#rc.cartLineNumber#">Plan Details </div>
                     </a>
                   </div>
                 </cfloop>
@@ -82,11 +83,12 @@
                         <ul>
                           <li class="large">Total Data Included:<span>#prc.planDataShared.DataLimitGB#GB</span></li>
                         </ul>
+                        <!--- Plan Product Id: #prc.planDataShared.productid#<br> --->
                         #prc.planDataShared.SummaryDescription#
                         <div class="price">$#int(prc.planDataShared.MonthlyFee)#</div>
                         <button class="btn btn-primary btn-block" name="planid" value="#prc.planDataShared.productid#">Select Plan</button>
                         <div class="details-link" data-toggle="modal" data-target="##planModal" 
-                          href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#/cartLineNumber/#rc.cartLineNumber#">Plan Details</div>
+                          href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planDataShared.productid#/cartLineNumber/#rc.cartLineNumber#">Plan Details</div>
                       </a>
                     </div>
                   </cfloop>
@@ -97,9 +99,9 @@
 
           </div> <!--- tab-content plans --->
 		    </div>
-  <div class="bs-callout bs-callout-warning switchWarning">
-    <h4>Choosing a new plan will replace your existing plan</h4>
-  </div>
+        <div class="bs-callout bs-callout-warning switchWarning">
+          <h4>Choosing a new plan will replace your existing plan</h4>
+        </div>
       </section>
 
     </form>
