@@ -1,6 +1,7 @@
 <cfcomponent displayname="AttCarrierHelper" hint="Interface to ATT Carrier API" extends="fw.model.CarrierApi.CarrierHelper" output="false">
 
 	<cfproperty name="CarrierFacade" inject="id:CarrierFacade" />
+	<cfproperty name="BaseCarrier" inject="id:BaseCarrier" />
 
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.Att.AttCarrierHelper">
 		<cfargument name="ServiceURL" type="string" required="true" />
@@ -24,7 +25,7 @@
 		</cfquery>
 		
 		<cfif qOrderSubmission.recordcount is not 0>
-			<cfreturn carrierFacade.deserializeResponse(#qOrderSubmission.OrderEntry#) />
+			<cfreturn baseCarrier.deserializeResponse(#qOrderSubmission.OrderEntry#) />
 		<cfelse>
 			<cfreturn structNew() />
 		</cfif>			

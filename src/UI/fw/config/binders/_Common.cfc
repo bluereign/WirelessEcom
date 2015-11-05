@@ -87,6 +87,10 @@
 			
 		// FullAPI Carrier Services			
 		
+		map("BaseCarrier")
+			.to("fw.model.carrierApi.BaseCarrier")
+			.asSingleton();	
+			
 		map("CarrierFacade")
 			.to("fw.model.carrierApi.CarrierFacade")
 			.asSingleton();	
