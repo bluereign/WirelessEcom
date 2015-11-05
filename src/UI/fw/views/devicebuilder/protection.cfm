@@ -12,6 +12,7 @@
       <form action="#prc.nextStep#" name="protectionForm" id="protectionForm" method="post">
         <div class="right">
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
+          <input type="hidden" name="hasDeclinedDeviceProtection" id="hasDeclinedDeviceProtection" value="0" />
           <a href="#prc.prevStep#">BACK</a>
           <button type="button" class="btn btn-primary btnContinue" id="btnContinue" data-toggle="modal" data-target=""
             <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
@@ -390,12 +391,17 @@
     $(function() {
       
       $('.btnContinue').click(function(){
-        if ( $('input[name=warrantyid]:checked').val() == 0 ) {
-          $('.btnContinue').attr('data-target', '##confirmNoProtectionModal');
-        } else {
+        <cfif session.hasDeclinedDeviceProtection>
           $('.btnContinue').attr('data-target', '');
           $('##protectionForm').submit();
-        }
+        <cfelse>
+          if ( $('input[name=warrantyid]:checked').val() == 0 ) {
+            $('.btnContinue').attr('data-target', '##confirmNoProtectionModal');
+          } else {
+            $('.btnContinue').attr('data-target', '');
+            $('##protectionForm').submit();
+          }
+        </cfif>
       });
 
       $('##isOptionalDownPaymentAdded').on('change', function() {

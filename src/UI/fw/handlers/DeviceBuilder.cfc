@@ -369,6 +369,14 @@
         }
       }
 
+      if ( structKeyExists(rc,"hasDeclinedDeviceProtection") and rc.hasDeclinedDeviceProtection ) {
+        session.hasDeclinedDeviceProtection = 1;
+      }
+
+      if ( !structKeyExists(session,"hasDeclinedDeviceProtection") ) {
+        session.hasDeclinedDeviceProtection = 0;
+      }
+
       // now, get the cartline warranty.
       // prc.warranty = session.dBuilderCartFacade.getWarranty(rc.cartLineNumber);
       prc.warranty = application.model.dBuilderCartFacade.getWarranty(rc.cartLineNumber);

@@ -58,7 +58,6 @@
                       <ul>
                         <li class="large"><span>#prc.planData.DataLimitGB#GB</span></li>
                       </ul>
-                      <!--- Plan Product Id: #prc.planData.productid#<br> --->
                       #prc.planData.SummaryDescription#
                       <div class="price">$#int(prc.planData.MonthlyFee)#</div>
                       <button class="btn btn-primary btn-block" name="planid" value="#prc.planData.productid#">Select Plan</button>
@@ -83,7 +82,6 @@
                         <ul>
                           <li class="large">Total Data Included:<span>#prc.planDataShared.DataLimitGB#GB</span></li>
                         </ul>
-                        <!--- Plan Product Id: #prc.planDataShared.productid#<br> --->
                         #prc.planDataShared.SummaryDescription#
                         <div class="price">$#int(prc.planDataShared.MonthlyFee)#</div>
                         <button class="btn btn-primary btn-block" name="planid" value="#prc.planDataShared.productid#">Select Plan</button>
