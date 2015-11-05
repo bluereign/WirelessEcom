@@ -150,6 +150,7 @@
               <!--- Following logic refactored from cfc/view/Cart.cfc Line 233 through 1419 --->
               <cfloop from="1" to="#arrayLen(prc.cartLines)#" index="local.iCartLine">
                 <cfset local.cartLine = prc.cartLines[local.iCartLine] />
+                <cfset local.productData = application.model.phone.getByFilter(idList = local.cartLine.getPhone().getProductID(), allowHidden = true) />
                 <cfset local.showAddServiceButton = false />
                 <cfset local.selectedPhone = application.model.phone.getByFilter(idList = local.cartLine.getPhone().getProductID(), allowHidden = true) />
                 <cfset local.lineBundledAccessories = application.model.cartHelper.lineGetAccessoriesByType(line = local.iCartLine, type = 'bundled') />
@@ -261,11 +262,18 @@
                       <div class="collapse" id="devicedetails#local.iCartLine#">
                         <div class="row">
             							<!--- Device or line item --->
-            							<div class="col-md-10">#local.selectedPhone.summaryTitle# #local.cartline.getCartLineActivationType()#</div>
+            							<div class="col-md-10">
+                            #local.selectedPhone.summaryTitle#
+                            <cfif local.cartline.getCartLineActivationType() contains "financed">
+                              <cfset local.months = listGetAt(local.cartline.getCartLineActivationType(),2,'-') />
+                              (#local.months# months)
+                            </cfif>
+                             <!--- #local.cartline.getCartLineActivationType()# --->
+                          </div>
             							<div class="col-md-3">
               							<cfif local.cartline.getCartLineActivationType() contains "financed">
-              								<cfset local.months = listGetAt(local.cartline.getCartLineActivationType(),2,'-') />
-                              <cfset local.productData = application.model.phone.getByFilter(idList = local.cartLine.getPhone().getProductID(), allowHidden = true) />
+              								#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())#
+                              <!--- <cfset local.months = listGetAt(local.cartline.getCartLineActivationType(),2,'-') />
                               <cfswitch expression="#local.months#">
                                 <cfcase value="24">
                                   #dollarFormat(local.productData.FinancedMonthlyPrice24)#/mo#local.financeLegalStar#
@@ -276,7 +284,7 @@
                                 <cfcase value="12">
                                   #dollarFormat(local.productData.FinancedMonthlyPrice12)#/mo#local.financeLegalStar#
                                 </cfcase>
-                              </cfswitch>
+                              </cfswitch> --->
               						  <cfelse>
               								&nbsp;
               						  </cfif>
@@ -284,13 +292,14 @@
             							<div class="col-md-3">
             							  <cfif local.cartline.getCartLineActivationType() contains "financed" and local.cartLine.getSubscriberIndex() gt 0>
                               <!--- Down Payment: --->
-                              <cfset local.subscriber = prc.subscribers[local.cartLine.getSubscriberIndex()] />
+                              #dollarFormat(local.cartline.getPhone().getPrices().getDownPaymentAmount())#
+                              <!--- <cfset local.subscriber = prc.subscribers[local.cartLine.getSubscriberIndex()] />
                               <cfset local.subscriber.offerCategory = IIF(local.productData.carrierId eq prc.carrierIdAtt, DE(prc.offerCategoryAtt), DE(prc.offerCategoryVzw)) />
                               <cfset local.subscriber.downPaymentPercent = local.subscriber.getUpgradeDownPaymentPercent(local.subscriber.offerCategory,local.months) />
                               <cfif local.subscriber.downPaymentPercent gt 0>
                                 <cfset local.subscriber.downPayment = local.subscriber.downPaymentPercent * local.productData.FinancedFullRetailPrice / 100 />
                                 #dollarFormat(local.subscriber.downPayment)#
-                              </cfif>
+                              </cfif> --->
             							  <cfelse>
             								  #dollarFormat(local.selectedPhone.price_retail)#
             							  </cfif>

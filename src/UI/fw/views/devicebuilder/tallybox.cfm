@@ -47,7 +47,8 @@
                 </thead>
                 <tr>
                   <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td>
-                  <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueAmount)#/mo</td>
+                  <td class="price">#dollarFormat(prc.cartLine.getPhone().getPrices().getMonthly())#/mo</td>
+                  <!--- <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueAmount)#/mo</td> --->
                 </tr>
 
                 <tr>
