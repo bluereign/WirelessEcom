@@ -543,7 +543,7 @@
 
 
 
-
+							
 							<div class="form-group form-inline allowAPO">
 								<cfparam name="session.checkout.billShipForm.sameAsBilling" default="1" />
 								<input type="checkbox" name="sameAsBilling" id="sameAsBilling" value="1" <cfif application.model.checkoutHelper.formValue('session.checkout.billShipForm.sameAsBilling') eq 1> checked="checked"</cfif> /><label class="check" for="sameAsBilling">Shipping is the same as Billing</label>
@@ -707,10 +707,10 @@
   					}
 				);
 			});
-			if($j('#sameAsBilling').is(':checked')) {
-				$j('#shippingDetails').hide();
+			if($('#sameAsBilling').is(':checked')) {
+				$('#shippingDetails').addClass( "hidden" );
 			} else {
-				$j('#shippingDetails').show();
+				$('#shippingDetails' ).removeClass( "hidden" );
 			}
 			if ($j('#txtEmailAddress').val()){
 				$j('#txtBillingFirstName').focus();
