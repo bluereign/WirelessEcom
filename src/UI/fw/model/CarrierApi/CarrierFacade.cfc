@@ -196,5 +196,46 @@
 		
 	</cffunction>
 	
+	<!--- Carrier Response deserialization  --->
+	<cffunction name="deserializeResponse" access="public" returntype="any">
+		<cfargument name="theJson" type="string" required="true" /> 
+		<cfset var local = structNew() />
+		<cfset local.resp = structNew() />
+		<cfset local.fixupItems = ""/>
+		<cfset local.i = 0 />
+		<cfset local.theJson = arguments.theJson />
+		
+		<cfif isJson(local.theJson)>
+			
+			<!--- Loop thru the json and save the indices that need to be fixed --->
+			<cfloop list="#local.theJson#" delimiters="{},:[]" index="local.e">
+				<cfset local.i = local.i+1 />
+				<cfif left(local.e,1) is not '"' and isNumeric(local.e) and local.e gt 999999>
+					<cfset local.fixupItems = listAppend(local.fixupItems,local.i) />
+				</cfif>
+			</cfloop>
+			
+			<cfif listlen(local.fixupItems)>
+				<!--- sort the list from biggest index to smallest so we are fixing things in reverse order --->	
+				<cfset local.fixupItems = listSort(local.fixupItems,"numeric","desc") />
+				
+
+				<!--- add double quotes to all elements int he list --->
+				<cfloop list="#local.fixupItems#" index="local.f">
+					<cfset local.listval = chr(34) & listgetAt(local.theJson, local.f, ",{}:[]") & chr(34) />
+					<cfset local.theJson = listSetAt(local.theJson, local.f, trim(local.listval), ",{}:[]" )	/>			
+				</cfloop>
+			</cfif>
+			
+			<cfset local.theJson = replace(local.theJson,chr(13),'',"ALL") />
+			<cfset local.theJson = replace(local.theJson,chr(10),'',"ALL") />
+			<cfset local.theJson = replace(local.theJson,chr(9),'',"ALL") />
+
+			<cfset local.resp = deserializeJson(local.theJson,true) />	
+
+		</cfif>
+		<cfreturn local.resp />		
+	</cffunction>
+	
 	
 </cfcomponent>
