@@ -8027,6 +8027,8 @@ aside.details {
   font-size: 13px;
   font-size: 0.8125rem;
   text-align: left;
+  height:42px;
+  overflow:hidden;
 }
 .accessories .product .price {
   color: #000;
