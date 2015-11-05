@@ -108,7 +108,7 @@
         }
 
         // return customer to Browse all phones if carrierId is not in allowed list:
-        if ( !listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId) ) {
+        if ( !listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,"|") ) {
           relocate( prc.browseDevicesUrl );
         }
 
