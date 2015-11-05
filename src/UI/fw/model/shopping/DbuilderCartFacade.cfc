@@ -1170,15 +1170,17 @@
 		<cfset local.activationtype = arguments.cart.getActivationType() />
 		<cfset local.cartlines = arguments.cart.getLines() />
 		
-		<cfloop array="#local.cartlines#" index="local.cl">
-			<cfset local.phone = local.cl.getPhone() />
-			<cfif isObject(local.phone)>
-				<cfset local.prices = local.phone.getPrices() />
-				
-				<cfset local.prices.setMonthly( decimalformat(local.prices.getRetailPrice() - local.prices.getDownPaymentAmount()) / activationTypeMonths(local.activationType)) />
-				<cfset local.prices.setDueToday( local.prices.getMandatoryDownPmtAmt() + local.prices.getOptionalDownPmtAmt() ) />
-			</cfif>
-		</cfloop>
+		<cfif local.activationtype contains 'financed' and listlen(local.activationtype,'-') GE 3>
+			<cfloop array="#local.cartlines#" index="local.cl">
+				<cfset local.phone = local.cl.getPhone() />
+				<cfif isObject(local.phone)>
+					<cfset local.prices = local.phone.getPrices() />
+					
+					<cfset local.prices.setMonthly( decimalformat(local.prices.getRetailPrice() - local.prices.getDownPaymentAmount()) / activationTypeMonths(local.activationType)) />
+					<cfset local.prices.setDueToday( local.prices.getMandatoryDownPmtAmt() + local.prices.getOptionalDownPmtAmt() ) />
+				</cfif>
+			</cfloop>
+		</cfif>
 		
 	</cffunction>
 
@@ -1187,7 +1189,7 @@
 		<cfset var local = structNew() />
 		<cfset local.nMonths = 1 />
 		<cfset local.contractMonths = 0 />
-		<cfif listlen(arguments.activationType ge 3) and isNumeric(listgetat(arguments.activationType,2,'-')) >
+		<cfif listlen(arguments.activationType,'-') GE 3 and isNumeric(listgetat(arguments.activationType,2,'-')) >
 			<cfset local.contractMonths = listgetat(arguments.activationType,2,'-') />
 		</cfif>
 		<cfswitch expression="#local.contractMonths#">
