@@ -57,8 +57,6 @@
 	<cffunction name="updateAllPrices" access="public" output="false" returntype="void">
 
 		<cfset var local = {} />
-		
-		<cfset application.model.dbuilderCartfacade.updateAllPrices(this) />
 
 		<cfset local.cartPrices = createObject('component', 'cfc.model.cartPriceBlock').init() />
 		<cfset local.carrierID = session.cart.getCarrierID() />
@@ -79,7 +77,7 @@
 			
 			<cfset local.linePrices = createObject('component', 'cfc.model.cartPriceBlock').init() />
 			<cfset cartLineActivationType = local.aLines[local.i].getCartLineActivationType() />
-			<cfif local.phone.hasBeenSelected() and cartLineActivationType contains 'legacy_financed'> 	<!--- renamed for full api testing --->			
+			<cfif local.phone.hasBeenSelected() and cartLineActivationType contains 'financed'> 				
 				
 				<cfset local.linePrices.setDueToday(0) />
 				<cfset local.linePrices.setFirstBill(0) />
@@ -87,16 +85,6 @@
 				<cfset local.linePrices.setMonthly(local.linePrices.getMonthly() + local.phone.getPrices().getMonthly()) />
 				<cfset local.linePrices.setCOGS(0) />		
 				<cfset local.linePrices.setRetailPrice(0) />
-				<cfset local.linePrices.setDiscountTotal(0) />
-				
-			<cfelseif local.phone.hasBeenSelected() and cartLineActivationType contains 'financed'> 				
-				
-				<cfset local.linePrices.setDueToday(local.phone.getPrices().getDownPaymentAmount()) />
-				<cfset local.linePrices.setFirstBill(local.linePrices.getFirstBill() + local.phone.getPrices().getFirstBill()) />
-				<!---<cfset local.linePrices.setMonthly(local.phone.getPrices().getMonthly()) />--->
-				<cfset local.linePrices.setMonthly(local.linePrices.getMonthly() + local.phone.getPrices().getMonthly()) />
-				<cfset local.linePrices.setCOGS(local.linePrices.getCOGS() + local.phone.getPrices().getCOGS()) />
-				<cfset local.linePrices.setRetailPrice(local.linePrices.getRetailPrice() + local.phone.getPrices().getRetailPrice()) />
 				<cfset local.linePrices.setDiscountTotal(0) />
 			
 			<cfelseif local.phone.hasBeenSelected()>
