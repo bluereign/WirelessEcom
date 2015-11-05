@@ -1049,7 +1049,7 @@ $j(document).ready(function($j) {
 
 					<!--- devicebuilder --->
 					<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only if qty on hand is greater than 0  and prc.productData.qtyOnHand gt 0 --->
-					<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId)>
+					<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')>
 						<cfif prc.productData.qtyOnHand gt 0>
 							<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
 								<a class="ActionButton learnMoreBtn" href="##" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
@@ -1186,117 +1186,158 @@ $j(document).ready(function($j) {
 </div>
 
 
+<cfif listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')>
+	
+	<!--- Customer Type Modal (devicebuilder modal) v1--->
+	<!--- NOTE: if session.carrierObj exists, then session.zipCode should also exist --->
+	<cfif structKeyExists(session,'carrierObj')>
+		<cfset rc.upgradeURL = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgrade/' />
+		<cfset rc.addalineURL = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/addaline/' />	
+	<cfelse>
+		<cfset rc.upgradeURL = event.buildLink('devicebuilder.carrierlogin') & '/pid/' & rc.pid & '/type/upgrade/' />
+		<cfset rc.addalineURL = event.buildLink('devicebuilder.carrierlogin') & '/pid/' & rc.pid & '/type/addaline/' />
+	</cfif>
+	<cfset rc.newURL = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/new/' />
 
-<!--- Customer Type Modal (devicebuilder) v1--->
-<!--- NOTE: if session.carrierObj exists, then session.zipCode should also exist --->
-<cfif structKeyExists(session,'carrierObj')>
-	<cfset rc.upgradeURL = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgrade/' />
-	<cfset rc.addalineURL = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/addaline/' />	
-<cfelse>
-	<cfset rc.upgradeURL = event.buildLink('devicebuilder.carrierlogin') & '/pid/' & rc.pid & '/type/upgrade/' />
-	<cfset rc.addalineURL = event.buildLink('devicebuilder.carrierlogin') & '/pid/' & rc.pid & '/type/addaline/' />
-</cfif>
-<cfset rc.newURL = event.buildLink('devicebuilder.plans') & '/pid/' & rc.pid & '/type/new/' />
+	<!--- Get the propert Cart URL for the user's cart carrierId --->
+	<cfif listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,session.cart.getCarrierID(),'|')>
+		<cfset prc.cartUrl = "/devicebuilder/orderreview/" />
+	<cfelse>
+		<cfset prc.cartUrl = "/index.cfm/go/cart/do/view/" />
+	</cfif>
 
-<div class="modal fade bootstrap" id="customerTypeModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
-	<div class="modal-dialog <cfif !structKeyExists(session,'carrierObj')>modal-lg</cfif>">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="verizonCustomerModalLabel">&nbsp;</h4>
-			</div>
-			<!-- Modal Body -->
-			<div class="modal-body">
-				<div class="container">
-					<div class="row" >
-						<div class="col-xs-<cfif !structKeyExists(session,'carrierObj')>6<cfelse>9</cfif>" style="background:##e5e5e5;padding:15px;">
-							<strong style="font-size:16px;">Current #prc.productData.carrierName# customer?</strong>
-							<br />
-							<br />
-							<p>You can Upgrade your device online or visit your local warehouse wireless center to Add a Line to your account.</p>
-							<br />
-							<br />
-							<div class="row center-block">
-								<div class="col-xs-6">
-									<form action="#rc.upgradeURL#" method="post">
-										<input type="hidden" name="finance" value="">
-										<button id="btn-carrierUpgrade" type="submit" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</button>
-									</form>
-								</div>
-								<div class="col-xs-6">
-									<form action="#rc.addalineURL#" method="post">
-										<input type="hidden" name="finance" value="">
-										<a href="##" id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;" data-original-title="This is my tooltip" data-placement="left" data-toggle="tooltip"
-										<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId)>
-											disabled="disabled"
-										</cfif>
-										>Add a Line</a>
-										<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId)>
-											<p style="text-align:center">(available in warehouse)</p>
-										</cfif>
-									</form>
-								</div>
-							</div>
-						</div>
+	<cfif arrayLen(session.cart.getLines()) and session.cart.getCarrierID() neq prc.productData.CarrierId>
+		<cfset prc.DeviceBuilderWarningMessage = "Your cart already has a device for a different carrier than the one you've selected.  You must first clear your cart before selecting a device for a different carrier.  <a href='#prc.cartUrl#'>Click here to update your cart.</a>" />
+	<cfelseif arrayLen(session.cart.getLines()) and session.cart.getActivationType() does not contain 'finance'>
+		<cfset prc.DeviceBuilderWarningMessage = "Your cart already contains a 2-year contract device. You cannot add a financed device before removing the 2-year contract device from your cart.  <a href='#prc.cartUrl#'>Click here to update your cart.</a>" />
+	<!--- <cfelse>
+		<cfset prc.DeviceBuilderWarningMessage = "Your cart already has a device for a different carrier than the one you've selected.  You must first clear your cart before selecting a device for a different carrier.  <a href='/index.cfm/go/cart/do/view/'>Click here to update your cart.</a>" /> --->
+	</cfif>
 
-						<cfif !structKeyExists(session,'carrierObj')>
-						
-							<div class="col-xs-1">
-							</div>
-							<div class="col-xs-5" style="background:##e5e5e5;padding:15px;" id="customerTypeBlock">
-								<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
-								<br />
-								<br />
-								<p>Please visit your local warehouse wireless center if you would like to switch to #prc.productData.carrierName#.</p>
-								<br />
-								<br />
-								<div class="row center-block">
-									<div class="col-xs-7">
-										<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" 
-										<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId)>
-											disabled="disabled"	
-										</cfif>
-										>Switch to #prc.productData.carrierName#</a>
-										<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId)>
-											<p style="text-align:center;width:150px;">(available in warehouse)</p>
-										</cfif>
+	<cfif structKeyExists(session,'carrierObj') or (structKeyExists(prc,"DeviceBuilderWarningMessage") and len(prc.DeviceBuilderWarningMessage))>
+		<cfset prc.deviceBuilderModalLarge = false>
+	<cfelse>
+		<cfset prc.deviceBuilderModalLarge = true>
+	</cfif>
+
+
+	<div class="modal fade bootstrap" id="customerTypeModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
+		<div class="modal-dialog <cfif prc.deviceBuilderModalLarge>modal-lg</cfif>">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="verizonCustomerModalLabel">&nbsp;</h4>
+				</div>
+				<!-- Modal Body -->
+				<div class="modal-body">
+					<div class="container">
+						<div class="row" >
+
+							<cfif structKeyExists(prc,"DeviceBuilderWarningMessage") and len(prc.DeviceBuilderWarningMessage)>
+								<div class="col-xs-9" style="background:##e5e5e5;padding:15px;">
+									<strong style="font-size:16px;">Error: Unable to add this item to your cart.</strong>
+									<br />
+									<br />
+									<p>#prc.DeviceBuilderWarningMessage#</p>
+									<br />
+									<br />
+									<div class="row center-block">
+										<button type="button" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;"  data-dismiss="modal">Cancel</button>
 									</div>
 								</div>
-							</div>
-							<div class="col-xs-5" style="background:##e5e5e5;padding:15px;display:none;" id="zipCodeBlock">
-								<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
-								<br />
-								<br />
-								<p>Please enter the zip codewhere you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
-								<div class="row">
-									<div class="col-md-6 col-md-offset-2">
-										<form id="zipCodeForm" action="#rc.newURL#" method="post">
-											<input type="hidden" name="finance" value="">
-											<div class="form-group zip">
-												<label for="inputZip"><h4>ZIP Code</h4></label>
-												<input type="number" class="form-control" id="inputZip" name="inputZip" width="50%" min="11111" max="99999" required value="<cfif application.model.cartHelper.zipCodeEntered()>#session.cart.getZipcode()#</cfif>">
+
+							<cfelse>
+								
+								<div class="col-xs-<cfif !structKeyExists(session,'carrierObj')>6<cfelse>9</cfif>" style="background:##e5e5e5;padding:15px;">
+									<strong style="font-size:16px;">Current #prc.productData.carrierName# customer?</strong>
+									<br />
+									<br />
+									<p>You can Upgrade your device online or visit your local warehouse wireless center to Add a Line to your account.</p>
+									<br />
+									<br />
+									<div class="row center-block">
+										<div class="col-xs-6">
+											<form action="#rc.upgradeURL#" method="post">
+												<input type="hidden" name="finance" value="">
+												<button id="btn-carrierUpgrade" type="submit" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</button>
+											</form>
+										</div>
+										<div class="col-xs-6">
+											<form action="#rc.addalineURL#" method="post">
+												<input type="hidden" name="finance" value="">
+												<a href="##" id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;" data-original-title="This is my tooltip" data-placement="left" data-toggle="tooltip"
+												<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId,'|')>
+													disabled="disabled"
+												</cfif>
+												>Add a Line</a>
+												<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId,'|')>
+													<p style="text-align:center">(available in warehouse)</p>
+												</cfif>
+											</form>
+										</div>
+									</div>
+								</div>
+
+								<cfif !structKeyExists(session,'carrierObj')>
+								
+									<div class="col-xs-1">
+									</div>
+									<div class="col-xs-5" style="background:##e5e5e5;padding:15px;" id="customerTypeBlock">
+										<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
+										<br />
+										<br />
+										<p>Please visit your local warehouse wireless center if you would like to switch to #prc.productData.carrierName#.</p>
+										<br />
+										<br />
+										<div class="row center-block">
+											<div class="col-xs-7">
+												<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" 
+												<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId,'|')>
+													disabled="disabled"	
+												</cfif>
+												>Switch to #prc.productData.carrierName#</a>
+												<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId,'|')>
+													<p style="text-align:center;width:150px;">(available in warehouse)</p>
+												</cfif>
 											</div>
-											<button type="submit" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</button>
-										</form>
+										</div>
 									</div>
-								</div>
+									<div class="col-xs-5" style="background:##e5e5e5;padding:15px;display:none;" id="zipCodeBlock">
+										<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
+										<br />
+										<br />
+										<p>Please enter the zip codewhere you will most frequently use your wireless device, or if changing carriers use the zip code from your existing account.</p>
+										<div class="row">
+											<div class="col-md-6 col-md-offset-2">
+												<form id="zipCodeForm" action="#rc.newURL#" method="post">
+													<input type="hidden" name="finance" value="">
+													<div class="form-group zip">
+														<label for="inputZip"><h4>ZIP Code</h4></label>
+														<input type="number" class="form-control" id="inputZip" name="inputZip" width="50%" min="11111" max="99999" required value="<cfif application.model.cartHelper.zipCodeEntered()>#session.cart.getZipcode()#</cfif>">
+													</div>
+													<button type="submit" class="btn btn-lg btn-primary" style="padding-left:50px;padding-right:50px;">See Plans</button>
+												</form>
+											</div>
+										</div>
+									</div>
+									
+								</cfif>
 							</div>
-							
 						</cfif>
 
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
 					</div>
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-				</div>
-			</div>			
+				</div>			
+			</div>
 		</div>
 	</div>
-</div>
-  
+</cfif>
+
  <!--- /Customer Type Modal (devicebuilder) --->
 
     <div class="modal fade bootstrap" id="nextInfoModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">

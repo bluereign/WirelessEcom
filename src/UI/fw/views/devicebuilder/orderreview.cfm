@@ -410,7 +410,7 @@
                           <div class="row">
                             <div class="col-md-10">Activation Fee ***</div>
                             <div class="col-md-3">&nbsp;</div>
-                            <div class="col-md-3"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelse>#dollarFormat(prc.activationFee)#</cfif></div>
+                            <div class="col-md-3"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelseif structKeyExists(prc,"activationFee")>#dollarFormat(prc.activationFee)#<cfelse>unknown</cfif></div>
                           </div>
                         </cfif>
 
