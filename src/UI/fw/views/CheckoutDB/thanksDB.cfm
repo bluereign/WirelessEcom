@@ -535,24 +535,13 @@
       </section>
     </div>
 	<div class="col-md-4">
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-      <div class="sidebar">
-        <h4>Have Questions?</h4>
-        <ul>
-          <li><a href="/index.cfm/go/content/do/customerService">Call us at 1-800-555-1212</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">E-mail one of our experts</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ">Frequently Asked Questions</a></li>
-        </ul>
-        <h4>Our Signature Promise</h4>
-        <ul>
-          <li><a href="/index.cfm/go/content/do/shipping">Free UPS ground shipping</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">90 day return policy</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ##return_phone">Return in store</a></li>
-        </ul>
-      </div>
+		<h2>Order Complete</h2>
+		<ul class="orderComplete">
+			<li class=""><a href="/index.cfm/go/myAccount/do/viewOrderHistoryDetails/orderId/#request.p.orderId#">View Order</a></li>
+			<li class=""><a href="/index.cfm/go/myAccount/do/view/">View Your Account</a></li>
+			<li class=""><a href="/">Return to Shopping</a></li>
+			<li class=""><a href="/index.cfm/go/content/do/customerService">Contact Customer Service</a></li>
+		</ul>
     </div>
 
     
