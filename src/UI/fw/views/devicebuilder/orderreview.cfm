@@ -59,9 +59,9 @@
           	
           <div class="right">
             <cfif prc.showAddAnotherDeviceButton>
-              <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
+              <a href="#prc.addxStep#">Add Another Device</a>
             <cfelse>
-              <a href="#prc.browseDevicesUrl#" >BROWSE DEVICES</a>
+              <a href="#prc.browseDevicesUrl#" >Browse Devices</a>
             </cfif>
             <cfif prc.showCheckoutnowButton>
               <button type="submit" class="btn btn-primary" <cfif prc.disableCheckoutnowButton>disabled="disabled"</cfif> >Checkout Now</button>
@@ -772,9 +772,9 @@
       </cfif>
       <div class="right">
         <cfif prc.showAddAnotherDeviceButton>
-          <a href="#prc.addxStep#">ADD ANOTHER DEVICE</a>
+          <a href="#prc.addxStep#">Add Another Device</a>
         <cfelse>
-          <a href="#prc.browseDevicesUrl#">BROWSE DEVICES</a>
+          <a href="#prc.browseDevicesUrl#">Browse Devices</a>
         </cfif>
         <cfif prc.showCheckoutnowButton>
           <button type="submit" class="btn btn-primary" <cfif prc.disableCheckoutnowButton>disabled="disabled"</cfif> >Checkout Now</button>
