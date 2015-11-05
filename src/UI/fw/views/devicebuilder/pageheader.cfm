@@ -42,7 +42,7 @@
             <ul class="nav navbar-nav nav-tabs">
               <cfif event.getCurrentAction() is not "orderreview">
                 <li role="presentation">
-                  <a href="##">Return to Shopping</a>
+                  <a href="/">Return to Shopping</a>
                 </li>
                 <cfelse>
                   <li role="presentation">
