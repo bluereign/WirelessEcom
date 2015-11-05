@@ -269,7 +269,7 @@ padding-left:5px;
 				    this agreement; keep it to protect your rights. You may pay off the full amount at any time. Please review the entire agreement, including the 
 				    additional Notice to Buyer provisions, before accepting.
 			    </p>
-		    </cfif>
+		    
 		    <h4>Electronic Acknowledgement</h4>
 		    <div class="form-group form-inline">
 			    <label><input type="checkbox" name="agreeToDevicePaymentPresented" />
@@ -282,6 +282,7 @@ padding-left:5px;
 			    </cfif>
 			    </label>
 		    </div>
+        </cfif>
 		    <h4><a href="##" id="agreeToCarrierTermsAndConditions" data-toggle="modal" data-target="##carrierDocModal">View #carrierName# Terms &amp; Conditions</a></h4>
 		    <div class="form-group form-inline">		
 			    <label><input type="checkbox" name="agreeToCarrierTermsAndConditions" />
