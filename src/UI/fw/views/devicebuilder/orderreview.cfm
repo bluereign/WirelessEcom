@@ -37,10 +37,6 @@
   <cfset qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
 </cfif>
 
-<!--- <cfdump var="#session.cartHelper.getLineSelectedFeatures(1)#"> --->
-<!--- <cfset cartLine = prc.cartLines[1] />
-<cfdump var="#application.model.ServiceManager.verifyRequiredServiceSelections( cartLine.getPlan().getProductId(), cartLine.getPhone().getProductId(), session.cartHelper.getLineSelectedFeatures(1), false, ArrayNew(1), application.model.cart.getCartTypeId(session.cart.getActivationType()) )#" /> --->
-
 <cfoutput>
     <div class="col-md-12">
       <section class="content">
@@ -190,14 +186,6 @@
                 <!--- Get Device Summary Description --->
                 <cfset local.deviceDescription = "" />
 
-                 <!--- from cfc/view/Cart.cfc line 339 --->
-                <!--- <cfif arrayLen(local.lineBundledAccessories)>
-                  <cfloop from="1" to="#arrayLen(local.lineBundledAccessories)#" index="local.iAccessory">
-                    <cfset local.thisAccessory = local.lineBundledAccessories[local.iAccessory] />
-                    <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
-                    <cfset local.deviceDescription = listAppend(local.deviceDescription,local.selectedAccessory.summaryTitle) />
-                  </cfloop>
-                </cfif> --->
                 <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">
                   <cfset local.thisFeatureID = local.lineFeatures[local.iFeature].getProductID() />
                   <cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID) />
@@ -268,24 +256,10 @@
                               <cfset local.months = application.model.dBuilderCartFacade.ActivationTypeMonths(local.cartline.getCartLineActivationType()) />
                               (#local.months# months)
                             </cfif>
-                             <!--- #local.cartline.getCartLineActivationType()# --->
                           </div>
             							<div class="col-md-3">
               							<cfif local.cartline.getCartLineActivationType() contains "financed">
               								#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())#/mo
-                              <!--- <cfset local.months = listGetAt(local.cartline.getCartLineActivationType(),2,'-') /> --->
-                              <!--- <cfset local.months = listGetAt(local.cartline.getCartLineActivationType(),2,'-') />
-                              <cfswitch expression="#local.months#">
-                                <cfcase value="24">
-                                  #dollarFormat(local.productData.FinancedMonthlyPrice24)#/mo#local.financeLegalStar#
-                                </cfcase>
-                                <cfcase value="18">
-                                  #dollarFormat(local.productData.FinancedMonthlyPrice18)#/mo#local.financeLegalStar#
-                                </cfcase>
-                                <cfcase value="12">
-                                  #dollarFormat(local.productData.FinancedMonthlyPrice12)#/mo#local.financeLegalStar#
-                                </cfcase>
-                              </cfswitch> --->
               						  <cfelse>
               								&nbsp;
               						  </cfif>
@@ -294,13 +268,6 @@
             							  <cfif local.cartline.getCartLineActivationType() contains "financed" and local.cartLine.getSubscriberIndex() gt 0>
                               <!--- Down Payment: --->
                               #dollarFormat(local.cartline.getPhone().getPrices().getDownPaymentAmount())#
-                              <!--- <cfset local.subscriber = prc.subscribers[local.cartLine.getSubscriberIndex()] />
-                              <cfset local.subscriber.offerCategory = IIF(local.productData.carrierId eq prc.carrierIdAtt, DE(prc.offerCategoryAtt), DE(prc.offerCategoryVzw)) />
-                              <cfset local.subscriber.downPaymentPercent = local.subscriber.getUpgradeDownPaymentPercent(local.subscriber.offerCategory,local.months) />
-                              <cfif local.subscriber.downPaymentPercent gt 0>
-                                <cfset local.subscriber.downPayment = local.subscriber.downPaymentPercent * local.productData.FinancedFullRetailPrice / 100 />
-                                #dollarFormat(local.subscriber.downPayment)#
-                              </cfif> --->
             							  <cfelse>
             								  #dollarFormat(local.selectedPhone.price_retail)#
             							  </cfif>
@@ -315,34 +282,6 @@
             							  </div>
             							</cfif>
             						</div>
-                        <!--- Bundled Accessories
-                        <cfif arrayLen(local.lineBundledAccessories)> <!--- from cfc/view/Cart.cfc line 339 --->
-                          <cfloop from="1" to="#arrayLen(local.lineBundledAccessories)#" index="local.iAccessory">
-                            <cfset local.thisAccessory = local.lineBundledAccessories[local.iAccessory] />
-                            <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
-                            <cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(local.selectedAccessory.accessoryGuid) />
-                            <cfset local.deviceGuidList = listAppend(local.deviceGuidList, local.selectedAccessory.accessoryGuid) />
-
-                            <cfif structKeyExists(local.stcPrimaryImage, local.selectedAccessory.accessoryGuid)>
-                              <cfset imageDetail = {
-                                  src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[local.selectedAccessory.accessoryGuid], height = 0, width = 75)
-                                  , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
-                                  , width = 75
-                              } />
-                            <cfelse>
-                              <cfset imageDetail = {
-                                src = '#getAssetPaths().common#images/catalog/noimage.jpg'
-                                , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
-                                , width = 75
-                              } />
-                            </cfif>
-              							<div class="row">
-              								<div class="col-md-10">Accessory: #local.selectedPhone.carriername# - #local.selectedAccessory.summaryTitle#</div>
-              								<div class="col-md-3">&nbsp;</div>
-              								<div class="col-md-3"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>INCLUDED</cfif></div>
-              							</div>
-                          </cfloop>
-                        </cfif> --->
 
                         <!--- Plan --->
                         <cfif local.cartLine.getPlan().hasBeenSelected()>
@@ -410,7 +349,7 @@
 
 
                         <!--- Activation/Upgrade Fee --->
-                        <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+                        <!--- <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
                           <div class="row">
                             <div class="col-md-10">Upgrade Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> ***</div>
                             <div class="col-md-3">&nbsp;</div>
@@ -422,21 +361,7 @@
                             <div class="col-md-3">&nbsp;</div>
                             <div class="col-md-3"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelseif structKeyExists(prc,"activationFee")>#dollarFormat(prc.activationFee)#<cfelse>unknown</cfif></div>
                           </div>
-                        </cfif>
-
-                        <cfif local.cartLine.getWarranty().hasBeenSelected()>
-                          <div class="row">
-                            <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
-                            <div class="col-md-3">&nbsp;</div>
-                            <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
-                          </div>
-                        <cfelse>
-                          <div class="row">
-                            <div class="col-md-10">No protection plan selected</div>
-                            <div class="col-md-3">&nbsp;</div>
-                            <div class="col-md-3">$0.00</div>
-                          </div>
-                        </cfif>
+                        </cfif> --->
 
 
                         <!--- Instant MIR --->
@@ -492,73 +417,6 @@
               <cfset local.total_dueToday_other = 0 />
               <cfset local.total_firstBill_other = 0 />
               <cfset local.total_monthly_other = 0 />
-
-
-              <!--- Prepaid --->
-              <!--- <cfif arrayLen(local.thisPrepaids)>
-
-                <cfset local.selectedOtherItems = session.cart.getOtherItems() />
-
-                <cfloop from="1" to="#arrayLen(local.selectedOtherItems)#" index="local.iAccessory">
-                  <cfset local.thisAccessory = local.selectedOtherItems[local.iAccessory] />
-
-                  <cfif local.thisAccessory.getType() is 'prepaid'>
-                    <cfset local.selectedAccessory = application.model.prepaid.getByFilter(idList = local.thisAccessory.getProductID()) />
-
-                    <cfif local.selectedAccessory.recordCount>
-                      <cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(local.selectedAccessory.productGuid) />
-                      <cfset local.deviceGuidList = listAppend(local.deviceGuidList, local.selectedAccessory.productGuid) />
-                      <cfset local.total_dueToday_other = (local.total_dueToday_other + local.selectedOtherItems[local.iAccessory].getPrices().getDueToday()) />
-                      <cfset local.linkDetails = getLink(lineNumber = request.config.otherItemsLineNumber, do = 'prepaidDetails', productID = local.selectedAccessory.productId) />
-                      <cfset local.linkChange = getLink(lineNumber = request.config.otherItemsLineNumber, do = 'browsePrepaids') />
-
-
-                        <div class="row">
-                          <div class="col-md-2 col-xs-6 item">
-                            <cfif structKeyExists(local.stcPrimaryImage, local.selectedAccessory.productGuid)>
-                              <img src="#application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[local.selectedAccessory.productGuid], height = 0, width = 130)#" alt="#htmlEditFormat(local.selectedAccessory.summaryTitle)#" />
-                            <cfelse>
-                              <img src="#getAssetPaths().common#images/catalog/noimage.jpg" alt="#htmlEditFormat(local.selectedAccessory.summaryTitle)#" />
-                            </cfif>
-                          </div>
-                          <div class="col-md-8 col-xs-10 data">
-                            <h3>Prepaid Phone: #local.selectedAccessory.summaryTitle#</h3>
-                          </div>
-                          <div class="col-md-2 col-xs-16 quantity">
-                            <select class="form-control">
-                              <option>1</option>
-                              <option>2</option>
-                            </select>
-                            <a href="##">Remove</a>
-                          </div>
-                          <div class="col-md-2 col-xs-16 monthly">$76.99 <span class="visible-xs-inline">Monthly*</span></div>
-                          <div class="col-md-2 col-xs-16 due">#dollarFormat(local.selectedOtherItems[local.iAccessory].getPrices().getDueToday())# <span class="visible-xs-inline">Due Today*</span></div>
-
-                          <div class="col-md-2 col-xs-16"></div>
-                          <div class="col-md-14 col-xs-16">
-
-                            <div class="row">
-                              <div class="collapse" id="prepaid-details#local.iAccessory#">
-                                <div class="col-md-12 col-xs-11">Prepaid Phone: #local.selectedAccessory.summaryTitle#</div>
-                                <div class="col-md-4 col-xs-5">#dollarFormat(local.selectedAccessories[local.iAccessory].getPrices().getDueToday())#</div>
-                              </div>
-                            </div>
-
-                            <a role="button"
-                              class="plan-details collapsed"
-                              data-toggle="collapse"
-                              href="##prepaid-details#local.iAccessory#"
-                              aria-expanded="false"
-                              aria-controls="prepaid-details#local.iAccessory#">Show Details</a>
-                          </div>
-
-                        </div>
-
-                    </cfif>
-                  </cfif>
-                </cfloop>
-              </cfif> --->
-
 
               <!--- Accessories --->
               <input type="hidden" id="addaccessory" name="addaccessory" value="" />
@@ -762,9 +620,27 @@
                 </tr>
               </tfoot>
             </table>
+
           </div>
         </div>
       </div>
+
+      <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-6">
+            <div class="table-wrap">
+              <table class="table table-responsive">
+                <tr>
+                  <td>One time Activation Fee added to first month's bill ***</td>
+                  <td></td>
+                  <td><cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif></div></td>
+                </tr>
+              </table> 
+            </div>
+          </div>
+        </div>
+      </cfif>
+
       <cfif structKeyExists(prc,"warningMessage") and len(prc.warningMessage)>
         <div class="bs-callout bs-callout-error">
           <h4>#prc.warningMessage#</h4>
@@ -812,20 +688,20 @@
   </div>
 </div>
 <div class="modal fade" id="accessoryKitModal" tabindex="-1" role="dialog" aria-labelledby="accessoryKitModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="accessoryKitModalLabel">Member Benefit Kit</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Each device purchased includes an accessory bonus pack.  Contents of bonus pack vary by device.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="accessoryKitModalLabel">Member Benefit Kit</h4>
+          </div>
+          <div class="modal-body">
+              <p>Each device purchased includes an accessory bonus pack.  Contents of bonus pack vary by device.</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
 
 </cfoutput>

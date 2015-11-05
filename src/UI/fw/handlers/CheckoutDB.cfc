@@ -72,6 +72,8 @@
 		  prc.carrierIdVzw = 42;
 		  prc.carrierGuidVzw = "263a472d-74b1-494d-be1e-ad135dfefc43";
 		  prc.offerCategoryVzw = "VZ";
+		  local.carrier = application.wirebox.getInstance("Carrier");
+		  prc.upgradeFee = local.carrier.getUpgradeFee(session.cart.getCarrierID());
 	  </cfscript>
 
 	</cffunction>
@@ -771,16 +773,14 @@
 	    
 	   <!--- MES FIX UP --->
 	    <cfscript>
-	    if (session.cart.getCarrierId() eq 109) {
-              session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/att_logo_25.png";
-            } else if (session.cart.getCarrierId() eq 42) {
-              session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/verizon_logo_25.png";
-            }
-      prc.subscribers = session.carrierObj.getSubscribers();
-      prc.stringUtil = application.wirebox.getInstance("stringUtil");
-      local.carrier = application.wirebox.getInstance("Carrier");
-      prc.upgradeFee = local.carrier.getUpgradeFee(session.cart.getCarrierID());
-		</cfscript>
+		    if (session.cart.getCarrierId() eq 109) {
+	        session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/att_logo_25.png";
+	      } else if (session.cart.getCarrierId() eq 42) {
+	        session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/verizon_logo_25.png";
+	      }
+	      prc.subscribers = session.carrierObj.getSubscribers();
+	      prc.stringUtil = application.wirebox.getInstance("stringUtil");
+			</cfscript>
 	    <!---GET PLAN FROM CART--->
       	<cfset prc.cartPlan = application.model.dBuilderCartFacade.getPlan()/>
 		<cfset prc.showAddAnotherDeviceButton = false/>
