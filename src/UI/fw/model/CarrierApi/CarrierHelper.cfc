@@ -31,7 +31,8 @@
 		<cfset var local = structNew() />
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.SubmitCompletedOrderRequest =  carrierObject(arguments.carrierId).getSubmitCompletedOrderRequest(argumentCollection = local.args) />	
-		<cfreturn local.SubmitOrderRequest />
+		<!---<cfreturn local.SubmitOrderRequest />--->
+		<cfreturn local.SubmitCompletedOrderRequest />
 	</cffunction>
 	
 	<cffunction name="saveEConsent" output="false" access="public" returntype="boolean">
