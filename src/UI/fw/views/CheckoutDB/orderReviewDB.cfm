@@ -266,13 +266,13 @@ width:260px;}
             							<div class="col-md-3">
             							  <cfif local.cartline.getCartLineActivationType() contains "financed" and local.cartLine.getSubscriberIndex() gt 0>
                               <!--- Down Payment: --->
-                              <TODOcfset local.subscriber = prc.subscribers[local.cartLine.getSubscriberIndex()] />
-                              <TODOcfset local.subscriber.offerCategory = IIF(local.productData.carrierId eq prc.carrierIdAtt, DE(prc.offerCategoryAtt), DE(prc.offerCategoryVzw)) />
-                              <TODOcfset local.subscriber.downPaymentPercent = local.subscriber.getUpgradeDownPaymentPercent(local.subscriber.offerCategory,local.months) />
-                              <TODOcfif local.subscriber.downPaymentPercent gt 0>
-                                <TODOcfset local.subscriber.downPayment = local.subscriber.downPaymentPercent * local.productData.FinancedFullRetailPrice / 100 />
-                                ##dollarFormat(local.subscriber.downPayment)##
-                              </TODOcfif>
+                              <cfset local.subscriber = prc.subscribers[local.cartLine.getSubscriberIndex()] />
+                              <cfset local.subscriber.offerCategory = IIF(local.productData.carrierId eq prc.carrierIdAtt, DE(prc.offerCategoryAtt), DE(prc.offerCategoryVzw)) />
+                              <cfset local.subscriber.downPaymentPercent = local.subscriber.getUpgradeDownPaymentPercent(local.subscriber.offerCategory,local.months) />
+                              <cfif local.subscriber.downPaymentPercent gt 0>
+                                <cfset local.subscriber.downPayment = local.subscriber.downPaymentPercent * local.productData.FinancedFullRetailPrice / 100 />
+                                #dollarFormat(local.subscriber.downPayment)#
+                              </cfif>
             							  <cfelse>
             								  #dollarFormat(local.selectedPhone.price_retail)#
             							  </cfif>
@@ -384,7 +384,7 @@ width:260px;}
                         <!--- Activation/Upgrade Fee --->
                         <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
                           <div class="row">
-                            <div class="col-md-10">Upgrade Fee of <TODOcfif prc.upgradeFee>##dollarFormat(prc.upgradeFee)##<TODOcfelse>$18.00</TODOcfif> ***</div>
+                            <div class="col-md-10">Upgrade Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> ***</div>
                             <div class="col-md-3">&nbsp;</div>
                             <div class="col-md-3">$0.00</div>
                           </div>

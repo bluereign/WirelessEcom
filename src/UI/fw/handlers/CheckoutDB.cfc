@@ -58,6 +58,24 @@
 	<!--- Update the timestamp on all soft reservations for this user with every step through checkout. --->
 	<cfset application.model.checkoutHelper.updateSoftReservationTimestamps() />
 	
+	
+	<cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
+	  <cfargument name="event">
+	  <cfargument name="rc">
+	  <cfargument name="prc">
+
+	  <cfscript>
+		  // <CARRIER CONSTANTS
+		  prc.carrierIdAtt = 109;
+		  prc.carrierGuidAtt = "83d7a62e-e62f-4e37-a421-3d5711182fb0";
+		  prc.offerCategoryAtt = "NE";
+		  prc.carrierIdVzw = 42;
+		  prc.carrierGuidVzw = "263a472d-74b1-494d-be1e-ad135dfefc43";
+		  prc.offerCategoryVzw = "VZ";
+	  </cfscript>
+
+	</cffunction>
+
 	<cffunction name="startCheckout" returntype="void" output="false" hint="">
 		<cfargument name="event">
 		<cfargument name="rc">
@@ -758,6 +776,10 @@
             } else if (session.cart.getCarrierId() eq 42) {
               session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/verizon_logo_25.png";
             }
+      prc.subscribers = session.carrierObj.getSubscribers();
+      prc.stringUtil = application.wirebox.getInstance("stringUtil");
+      local.carrier = application.wirebox.getInstance("Carrier");
+      prc.upgradeFee = local.carrier.getUpgradeFee(session.cart.getCarrierID());
 		</cfscript>
 	    <!---GET PLAN FROM CART--->
       	<cfset prc.cartPlan = application.model.dBuilderCartFacade.getPlan()/>
