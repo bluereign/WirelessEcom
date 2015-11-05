@@ -494,20 +494,6 @@
                         </div>
                       </cfif> --->
 
-                      <cfif local.cartLine.getWarranty().hasBeenSelected()>
-                        <div class="row">
-                          <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
-                          <div class="col-md-3">&nbsp;</div>
-                          <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
-                        </div>
-                      <cfelse>
-                        <div class="row">
-                          <div class="col-md-10">No protection plan selected</div>
-                          <div class="col-md-3">&nbsp;</div>
-                          <div class="col-md-3">$0.00</div>
-                        </div>
-                      </cfif>
-
 
                       <!--- Instant MIR --->
                       <cfif local.cartLine.getInstantRebateAmount() gt 0>
