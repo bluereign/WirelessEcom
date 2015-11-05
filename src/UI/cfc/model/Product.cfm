@@ -181,6 +181,7 @@
 				<cfif channelConfig.getTmoRedirectEnabled() is true AND channelConfig.getVFDEnabled() is false>
 					AND (carrierid != 128 or (carrierid = 128 AND buyurl IS NOT NULL))
 				</cfif>
+				AND (carrierid != 109 or (carrierid = 109 and itemid is not null and imeitype is not null))
 			</cfif>			
 			<cfif arguments.DisplayNoInventoryItems is false>
 				and p.QtyOnHand > 0

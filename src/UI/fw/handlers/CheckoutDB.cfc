@@ -976,7 +976,8 @@
 		</cfif>
 
 		<cfset application.model.checkoutHelper.setOrderTotal(order.getOrderTotal()) />
-
+		<!--- Need this for OrderCarrierProcessing --->
+		<cfset session.order = order />
 		
 		<cfset application.model.checkoutHelper.markStepCompleted('review') />
 		
@@ -990,26 +991,9 @@
 		<cfargument name="rc">
 		<cfargument name="prc">
 		<cfset var local = structNew() />
-		<!---<cfset var order = createObject('component','cfc.model.order') />
-		<cfset order.load(trim(session.checkout.orderId)) />--->
-		<!---<cfdump var="#trim(session.checkout.orderId)#"><br/>
-		<cfdump var="#trim(session.FinanceAgreementResp.getCarrierID())#"><br/>
-		<cfdump var="#trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].InstallmentPLanId)#"><br/>
-		<cfdump var="#trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].AttDeviceOrderItem.SubscriberNumber.SubscriberNumber)#"><br/>
-		<cfdump var="#trim(session.accountResp.getAccount().accountIdentifier)#"><br/>
-		<cfdump var="#trim(session.accountResp.getAccount().primaryAccountHolder)#"><br/>
-		<cfdump var="#trim(session.FinanceAgreementResp.getResponse().FinanceAgreement)#"><br/>
-		<cfabort>--->
-		
-		<!---<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>
-		<input type="hidden" name="installmentPlanId" value="#trim(rc.financeAgreementRespObj.getResponse().AgreementItems[1].InstallmentPLanId)#" />
-		<input type="hidden" name="subscriberNumber" value="#trim(rc.subscriberNumber)#"/>
-		<input type="hidden" name="accountNumber" value="#trim(rc.AccountRespObj.getAccount().accountIdentifier)#"/>
-		<input type="hidden" name="nameOnAccount" value="#trim(rc.AccountRespObj.getAccount().primaryAccountHolder)#"/>
-		<input type="hidden" name="agreementEntry" value="#trim(rc.financeAgreementRespObj.getResponse().FinanceAgreement)#"/>--->
 		
 		<!---save finance agreement for ATT --->
-		<cfif application.model.checkoutHelper.getCarrier() eq 109>
+		<!---<cfif application.model.checkoutHelper.getCarrier() eq 109>
 			<cfset local.args_saveFinanceAgreement = {
 				orderId = #trim(session.checkout.orderId)#,
 				carrierId = #trim(session.FinanceAgreementResp.getCarrierID())#,
@@ -1025,13 +1009,7 @@
 		
 			<cfset rc.saveFinanceAgreementResult = carrierFacade.SaveFinanceAgreement(argumentCollection = local.args_saveFinanceAgreement) />
 			
-			<!---<cfif (rc.saveFinanceAgreementResult eq "yes") OR (rc.saveFinanceAgreementResult eq "true")>
-				<cfset setNextEvent('checkoutDB/payment') />
-			<cfelse>
-				<!--- error page --->
-				<cfabort>
-			</cfif>--->
-		</cfif>
+		</cfif>--->
 		
 		<!---submit order--->
 		<!---<cfset local.args_submit = {
@@ -1042,20 +1020,19 @@
 		<cfset rc.submitOrderResponse = carrierFacade.submitOrder(argumentCollection = rc.submitOrderRequest) />--->
 		
 		<!---econsent--->
-		<cfset local.args_eConsent = {
+		<!---<cfset local.args_eConsent = {
 			carrierId = 109
 		} />
 
-		<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />
+		<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />--->
 		
 		<!---submit order completed--->
 		<!---<cfset local = structNew() />		
 		
 		<cfset local.args_complete = {
-			carrierid = application.model.checkoutHelper.getCarrier(),
+			carrierid = 109,
 			orderid = session.checkout.orderId
 		} />
-		
 		<cfset rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete) />
 		<cfset rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest) />--->
 		
@@ -1216,7 +1193,6 @@
 	</cffunction>
 	
 	<cffunction name="emailPDF" returntype="void" access="remote" output="false">
-		<cfargument name="urlPDF" type="string" required="yes" />
 		<cfargument name="rc">
 		<cfargument name="event">   
 		
@@ -1240,10 +1216,9 @@
         type="html">
    		Please find attached your requested document.
    		<cfmailparam
-                file="#urlPDF#"
+                file="#rc.urlPDF#"
                 type="application/pdf"
                 />
-        
 		</cfmail>
         <cfset event.noRender() />
 	</cffunction>
