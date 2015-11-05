@@ -265,14 +265,15 @@
             							<div class="col-md-10">
                             #local.selectedPhone.summaryTitle#
                             <cfif local.cartline.getCartLineActivationType() contains "financed">
-                              <cfset local.months = listGetAt(local.cartline.getCartLineActivationType(),2,'-') />
+                              <cfset local.months = application.model.dBuilderCartFacade.ActivationTypeMonths(local.cartline.getCartLineActivationType()) />
                               (#local.months# months)
                             </cfif>
                              <!--- #local.cartline.getCartLineActivationType()# --->
                           </div>
             							<div class="col-md-3">
               							<cfif local.cartline.getCartLineActivationType() contains "financed">
-              								#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())#
+              								#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())#/mo
+                              <!--- <cfset local.months = listGetAt(local.cartline.getCartLineActivationType(),2,'-') /> --->
                               <!--- <cfset local.months = listGetAt(local.cartline.getCartLineActivationType(),2,'-') />
                               <cfswitch expression="#local.months#">
                                 <cfcase value="24">
