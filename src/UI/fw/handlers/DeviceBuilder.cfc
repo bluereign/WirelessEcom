@@ -1311,7 +1311,10 @@
           // <end REQUIRED SERVICES
 
         }
+      } else {
+        prc.showCheckoutnowButton = false;
       }
+
 
       // error if the cart contains a family plan but appears to have fewer than 2 lines on non-shared plans:
       if ( session.cart.getFamilyPlan().hasBeenSelected() && !session.cart.getFamilyPlan().getIsShared() && arrayLen(prc.cartLines) lt 2 ) {
