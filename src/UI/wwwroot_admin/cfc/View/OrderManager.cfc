@@ -1,5 +1,5 @@
 <cfcomponent output="false" displayname="OrderManager">
-	
+
 	<cffunction name="init" output="false" returntype="OrderManager">
 		<!--- Remove these when this component is added to CS --->        
         <cfset setPaymentProcessorRegistry ( application.wirebox.getInstance("PaymentProcessorRegistry") )>
@@ -1239,7 +1239,8 @@
 										<button name="autoActivationSubmit" id="autoActivationSubmit" style="width: 150px">Activate All</button>
 									<cfelse>
 										<button name="autoActivationSubmit" style="width: 150px" disabled="true">Activate All</button>
-									</cfif>	
+									</cfif>
+	
 								</div>
 							</cfcase>
 							<cfcase value="109"><!--- AT&T --->
@@ -1247,7 +1248,6 @@
 									<input name="orderId" type="hidden" value="#arguments.order.getOrderId()#" />
 									<input name="carrier" type="hidden" value="#arguments.order.getCarrierId()#" />
 									<input name="wirelessAccountId" type="hidden" value="#arguments.order.getWirelessAccount().getWirelessAccountId()#" />
-									<input name="purchaseType" type="hidden" value="#qActivationLines.PurchaseType#" />
 									<input name="activationFullSubmit" type="hidden" />
 									Requested Activation Date (used to activate all lines): <input name="requestedActivationDate" value = "#DateFormat( DateAdd( 'd', Now(), 2), 'mm/dd/yyyy' )#" style="width:100px">
 								</form>

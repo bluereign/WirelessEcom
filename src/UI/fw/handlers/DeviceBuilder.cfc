@@ -519,9 +519,9 @@
             // prc.activetab = "existing";
             // prc.activetab = "individual";
             prc.subscriber.phoneNumber = stringUtil.formatPhoneNumber(trim(prc.subscriber.getNumber()));
-            prc.tallyboxHeader = "Configuring " & prc.subscriber.phoneNumber;
+            prc.tallyboxHeader = "Upgrading " & prc.subscriber.phoneNumber;
           } else {
-            prc.tallyboxHeader = "Upgrading";
+            prc.tallyboxHeader = "Configuring";
           }
         }
         // <end selected line and subscribers
@@ -763,8 +763,6 @@
         }
         // <end tally box
       }
-      
-
       
       // UPDATE CART TOTALS:
       if ( session.cartHelper.hasSelectedFeatures() ) {
@@ -1014,7 +1012,6 @@
     <cfargument name="prc">
     <cfset var servicesArgs = {} />
     <cfparam name="rc.isDownPaymentApproved" default="0" />
-    <cfparam name="rc.isOptionalDownPaymentAdded" default="0" />
 
     <cfscript>
       // get all warranties for this device:
@@ -1030,9 +1027,20 @@
         servicesArgs.carrierId = prc.carrierGuidAtt;
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
         servicesArgs.carrierId = prc.carrierGuidVzw;
-      }
+      }      
 
       prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = servicesArgs);
+
+      // get payment options
+      if ( isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 ) {
+        prc.downPayment = prc.subscriber.downPayment;
+      } else {
+        prc.downPayment = prc.productData.FinancedFullRetailPrice * 0.3;
+      }
+      prc.dueMonthlyFinanced24AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade");
+      prc.dueMonthlyFinanced18AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade");
+      prc.dueMonthlyFinanced12AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade");
+
     </cfscript>
   </cffunction>
 
@@ -1303,7 +1311,10 @@
           // <end REQUIRED SERVICES
 
         }
+      } else {
+        prc.showCheckoutnowButton = false;
       }
+
 
       // error if the cart contains a family plan but appears to have fewer than 2 lines on non-shared plans:
       if ( session.cart.getFamilyPlan().hasBeenSelected() && !session.cart.getFamilyPlan().getIsShared() && arrayLen(prc.cartLines) lt 2 ) {

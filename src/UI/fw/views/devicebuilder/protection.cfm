@@ -31,94 +31,39 @@
               <input type="radio" name="paymentoption" id="paymentoption" value="financed" <cfif prc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
               
               <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
-                
                 <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')">
-                  <option value="financed-24" <cfif prc.financed is 'financed-24'>selected</cfif> >
-                    #prc.financeproductname# 24: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 30 Months
+                  <option id="option-financed-24" value="financed-24" <cfif prc.financed is 'financed-24'>selected</cfif> >
                   </option>
-                  <option value="financed-18" <cfif prc.financed is 'financed-18'>selected</cfif> >
-                    #prc.financeproductname# 18: #dollarFormat(prc.productData.FinancedMonthlyPrice18)# Due Monthly for 24 Months
+                  <option id="option-financed-18" value="financed-18" <cfif prc.financed is 'financed-18'>selected</cfif> >
                   </option>
-                  <option value="financed-12" <cfif prc.financed is 'financed-12'>selected</cfif> >
-                    #prc.financeproductname# 12: #dollarFormat(prc.productData.FinancedMonthlyPrice12)# Due Monthly for 20 Months
+                  <option id="option-financed-12" value="financed-12" <cfif prc.financed is 'financed-12'>selected</cfif> >
                   </option>
                 </select>
-
               <cfelseif prc.productData.CarrierId eq prc.carrierIdVzw>
-                
                 <input type="hidden" name="financed" value="financed-24">
                 #prc.financeproductname#: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 24 Months
-                
               </cfif>
-
-              <!--- <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')">
-                <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
-                  <option value="financed-24" <cfif prc.financed is 'financed-24'>selected</cfif> >
-                    #prc.financeproductname# 24: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 30 Months
-                  </option>
-                  <option value="financed-18" <cfif prc.financed is 'financed-18'>selected</cfif> >
-                    #prc.financeproductname# 18: #dollarFormat(prc.productData.FinancedMonthlyPrice18)# Due Monthly for 24 Months
-                  </option>
-                  <option value="financed-12" <cfif prc.financed is 'financed-12'>selected</cfif> >
-                    #prc.financeproductname# 12: #dollarFormat(prc.productData.FinancedMonthlyPrice12)# Due Monthly for 20 Months
-                  </option>
-                <cfelseif prc.productData.CarrierId eq prc.carrierIdVzw>
-                  <option value="financed-24" <cfif prc.financed is 'financed-24'>selected</cfif> >
-                    #prc.financeproductname#: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 24 Months
-                  </option>
-                </cfif>
-              </select> --->
 
               <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
                 CARRIER is requiring a down payment
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" value="1" name="isDownPaymentApproved" id="isDownPaymentApproved" <cfif rc.isDownPaymentApproved>checked</cfif> >
+                    <input type="checkbox" value="1" name="isDownPaymentApproved" id="isDownPaymentApproved" dollar-amount="#decimalFormat(prc.subscriber.downPayment)#" <cfif rc.isDownPaymentApproved>checked</cfif> >
                     I Agree to the required CARRIER down payment of: #dollarFormat(prc.subscriber.downPayment)#
                   </label>
                 </div>
-              <cfelseif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade">
+              <cfelseif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade" and prc.downPayment>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" value="1" name="isOptionalDownPaymentAdded" id="isOptionalDownPaymentAdded" <cfif rc.isOptionalDownPaymentAdded>checked</cfif> >
-                    Add an additional 30% down payment of #dollarFormat(round(prc.productData.FinancedFullRetailPrice * 0.3))# today
+                    <input type="checkbox" value="1" name="isOptionalDownPaymentAdded" id="isOptionalDownPaymentAdded"  dollar-amount="#decimalFormat(prc.downPayment)#" <cfif prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt()>checked</cfif> >
+                    Add an additional 30% down payment of #dollarFormat(prc.downPayment)# today
                   </label>
                 </div>
-              </cfif>            
+              </cfif>
+
             </label>
           </div>
           
-          
-
-          <!--- Remove 2-year contract price --->
-          <!--- <cfif prc.productData.carrierId eq prc.carrierIdVzw and prc.productData.price_new NEQ 9999>
-            
-            <div class="radio">
-              <label>
-                <input type="radio" name="paymentoption" value="2yearcontract" <cfif prc.paymentoption is '2yearcontract'>checked</cfif> onchange="onChangeHandler(this.form,'2yearcontract')">
-                2-Year Contract Upgrade Price 
-                <cfif val(prc.productData.upgradePriceAfterRebate)>
-                  <cfset prc.priceModifier.upgradePriceRebateAmount = prc.productData.price_upgrade - prc.productData.upgradePriceAfterRebate />
-                  #dollarFormat(prc.productData.upgradePriceAfterRebate)#
-                <cfelse>
-                  #dollarFormat(prc.productData.price_upgrade)#
-                </cfif>
-              </label>
-            </div> --->
-
-          <!--- <cfelse> --->
-            <!--- For some reason, the upgrade price is the same as the 2-year contract upgrade price.  Adding it to an 'else' clause for now --->
-            <!--- <div class="radio"> --->
-              <!--- <label> --->
-                <!--- <input type="radio" name="paymentoption" value="fullretail" <cfif prc.paymentoption is 'fullretail'>checked</cfif> onchange="onChangeHandler(this.form,'fullretail')"> --->
-                <!--- Full Retail Price #dollarFormat(prc.productData.FinancedFullRetailPrice)# --->
-                <!--- Upgrade Price #dollarFormat(prc.productData.price_upgrade)# --->
-              <!--- </label> --->
-            <!--- </div> --->
-
-
-          <!--- </cfif> --->
-
         </section>
 
         <section class="seperator">
@@ -380,9 +325,31 @@
 
   <script type="text/javascript">
     
+    function setFinancedOptions() {
+      var financeproductname = '#replace(prc.financeproductname,"&amp;", "&")#';
+      var monthCountFinanced24 = #application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade")#;
+      var monthCountFinanced18 = #application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade")#;
+      var monthCountFinanced12 = #application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade")#;
+
+      var dueMonthlyFinanced24 = #prc.productData.FinancedMonthlyPrice24#;
+      var dueMonthlyFinanced18 = #prc.productData.FinancedMonthlyPrice18#;
+      var dueMonthlyFinanced12 = #prc.productData.FinancedMonthlyPrice12#;
+
+      if($("##isOptionalDownPaymentAdded").is(':checked')) {
+        dueMonthlyFinanced24 = #prc.dueMonthlyFinanced24AfterDownPayment#;
+        dueMonthlyFinanced18 = #prc.dueMonthlyFinanced18AfterDownPayment#;
+        dueMonthlyFinanced12 = #prc.dueMonthlyFinanced12AfterDownPayment#;
+      }
+
+      $('##option-financed-24').text(financeproductname + ' 24: $' + dueMonthlyFinanced24.toFixed(2) + ' Due Monthly for ' + monthCountFinanced24 + ' Months');
+      $('##option-financed-18').text(financeproductname + ' 18: $' + dueMonthlyFinanced18.toFixed(2) + ' Due Monthly for ' + monthCountFinanced18 + ' Months');
+      $('##option-financed-12').text(financeproductname + ' 12: $' + dueMonthlyFinanced12.toFixed(2) + ' Due Monthly for ' + monthCountFinanced12 + ' Months');
+    }
+
+
     function onChangeHandler(form,paymentoption) {
+      setFinancedOptions();
       form.paymentoption.value=paymentoption;
-      // form.submit();
       $.post('#event.buildLink('devicebuilder.tallybox')#', $('##protectionForm').serialize(), function(data){
         $('##myTallybox').html( data )
       });
@@ -390,6 +357,9 @@
 
     $(function() {
       
+      setFinancedOptions();
+
+
       $('.btnContinue').click(function(){
         <cfif session.hasDeclinedDeviceProtection>
           $('.btnContinue').attr('data-target', '');

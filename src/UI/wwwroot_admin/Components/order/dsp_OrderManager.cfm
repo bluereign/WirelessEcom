@@ -3,14 +3,6 @@
 
 <cfset assetPaths = application.wirebox.getInstance("assetPaths") />
 <cfset PaymentService = application.wirebox.getInstance("PaymentService") />
-<cfset carrierFacade = application.wirebox.getInstance("CarrierFacade") />
-<cfset AttCarrier = application.wirebox.getInstance("AttCarrier") />
-<cfset VzwCarrier = application.wirebox.getInstance("VzwCarrier") />
-<cfset carrierHelper = application.wirebox.getInstance("CarrierFacade") />
-<cfset AttCarrierHelper = application.wirebox.getInstance("AttCarrierHelper") />
-<cfset VzwCarrierHelper = application.wirebox.getInstance("VzwCarrierHelper") />
-
-
 <cfset local = {} />
 
 <cfif structKeyExists(form, 'doCapture') and not structKeyExists(form, 'process')>
@@ -965,22 +957,8 @@
 				
 				break;
 			case '109': //AT&T
-				//Handles Financed Phones
-				if (structKeyExists(form, 'purchaseType') and Form.purchaseType eq 'FP'){
-					local.args_complete = {
-						carrierid = form.carrier,
-						orderid = FORM.orderId
-					};
-		
-					rc.submitOrderRequest = application.model.carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete);
-					rc.submitOrderRequest.carrierId = form.carrier;
-					rc.submitCompletedOrderResponse = application.model.carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest);
-					message = rc.submitCompletedOrderResponse;
-					break;
-				} else {
-					message = application.controller.AttActivationController.activateOrder( form.OrderId, form.requestedActivationDate );
-					break;
-				}
+				message = application.controller.AttActivationController.activateOrder( form.OrderId, form.requestedActivationDate );
+				break;
 			case '128': //T-Mobile
 				wirelessAccount = createObject('component', 'cfc.model.WirelessAccount').init();
 				wirelessAccount.load(request.p.wirelessAccountId);

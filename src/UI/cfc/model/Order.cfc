@@ -1456,7 +1456,6 @@
 			, od.taxes
 			, od.taxable
 			, od.DownPaymentReceived
-			, od.PurchaseType
 			, wl.ActivationStatus 
 			, CASE WHEN wl.ActivationStatus IS NULL THEN 'Ready' 
 			WHEN wl.ActivationStatus = 0 THEN 'Ready' 
