@@ -21,6 +21,9 @@ form .form-inline label { width:auto;}
 color:red;
 padding-left:5px;
 }
+label {
+font-weight: normal;
+}
 </style>
 <script type="text/javascript">
 	jQuery(document).ready( function($) {
@@ -188,14 +191,6 @@ padding-left:5px;
 
     <header class="main-header">
       <h1>#carrierName# Agreements</h1>
-      <p>The primary Account Holder's information is used to verify status and line availability.</p>
-    </header>
-    <form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
-      <div class="right">
-        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
-        <button type="submit" class="btn btn-primary continue">Continue</button>
-      </div>
-      
       <p>
 			  <cfif session.cart.getCarrierId() eq 42>
 				  After reviewing the following Terms & Conditions, check the corresponding boxes to agree to the #carrierName# and Costco Terms and Conditions. 
@@ -204,7 +199,12 @@ padding-left:5px;
 				  After reviewing the following sections, check the corresponding box to agree and continue.			
 			  </cfif>
 		  </p>
-
+    </header>
+    <form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
+      <div class="right">
+        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
+        <button type="submit" class="btn btn-primary continue">Continue</button>
+      </div>
       <h4>
         <a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a>
       </h4>
