@@ -1,4 +1,9 @@
 <!--- <cfdump var="#rc#"> --->
+<cfsilent>
+  <cfset local.financedMonthCount24 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade") />
+  <cfset local.financedMonthCount18 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade") />
+  <cfset local.financedMonthCount12 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade") />
+</cfsilent>
 <cfoutput>
   <div class="col-md-12">
 
@@ -32,11 +37,11 @@
               
               <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
                 <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')">
-                  <option id="option-financed-24" value="financed-24" <cfif prc.financed is 'financed-24'>selected</cfif> >
+                  <option id="option-financed-24" value="financed-24" data-months="#local.financedMonthCount24#" <cfif prc.financed is 'financed-24'>selected</cfif> >
                   </option>
-                  <option id="option-financed-18" value="financed-18" <cfif prc.financed is 'financed-18'>selected</cfif> >
+                  <option id="option-financed-18" value="financed-18" data-months="#local.financedMonthCount18#" <cfif prc.financed is 'financed-18'>selected</cfif> >
                   </option>
-                  <option id="option-financed-12" value="financed-12" <cfif prc.financed is 'financed-12'>selected</cfif> >
+                  <option id="option-financed-12" value="financed-12" data-months="#local.financedMonthCount12#" <cfif prc.financed is 'financed-12'>selected</cfif> >
                   </option>
                 </select>
               <cfelseif prc.productData.CarrierId eq prc.carrierIdVzw>
@@ -327,9 +332,9 @@
     
     function setFinancedOptions() {
       var financeproductname = '#replace(prc.financeproductname,"&amp;", "&")#';
-      var monthCountFinanced24 = #application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade")#;
-      var monthCountFinanced18 = #application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade")#;
-      var monthCountFinanced12 = #application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade")#;
+      var monthCountFinanced24 = #local.financedMonthCount24#;
+      var monthCountFinanced18 = #local.financedMonthCount18#;
+      var monthCountFinanced12 = #local.financedMonthCount12#;
 
       var dueMonthlyFinanced24 = #prc.productData.FinancedMonthlyPrice24#;
       var dueMonthlyFinanced18 = #prc.productData.FinancedMonthlyPrice18#;
