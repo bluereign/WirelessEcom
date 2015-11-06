@@ -3,6 +3,14 @@
 
 <cfset assetPaths = application.wirebox.getInstance("assetPaths") />
 <cfset PaymentService = application.wirebox.getInstance("PaymentService") />
+<cfset carrierFacade = application.wirebox.getInstance("CarrierFacade") />
+<cfset AttCarrier = application.wirebox.getInstance("AttCarrier") />
+<cfset VzwCarrier = application.wirebox.getInstance("VzwCarrier") />
+<cfset carrierHelper = application.wirebox.getInstance("CarrierFacade") />
+<cfset AttCarrierHelper = application.wirebox.getInstance("AttCarrierHelper") />
+<cfset VzwCarrierHelper = application.wirebox.getInstance("VzwCarrierHelper") />
+
+
 <cfset local = {} />
 
 <cfif structKeyExists(form, 'doCapture') and not structKeyExists(form, 'process')>
