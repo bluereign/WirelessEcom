@@ -154,6 +154,7 @@
   <script>
     $('##btnConfirmContinue').click(function() {
       var form = $("##protectionForm");
+      $('##hasDeclinedDeviceProtection').val(1);
       form.attr('action', '#prc.nextStep#');
       form.submit();
     });

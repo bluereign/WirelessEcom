@@ -945,12 +945,8 @@ $j(document).ready(function($j) {
 				</cfif>
 				<div id="finance-legal">
 					<cfif prc.productData.CarrierId eq 109>
-						*Tax due at sale. If wireless service cancelled, device balance due. Requires <div id="AttMonthNumber" style="display:inline;">30</div>-month 0% APR installment agreement, 
-						qualifying credit and qualified monthly wireless service plans (voice & Data). Up to $25 savings: Savings on Mobile 
-						Share Value monthly pricing is only available on a no annual service contract line (AT&T Next, bring your own, pay 
-						full price, month-to-month), and is not available on a 2-year wireless contract. If you are currently receiving this 
-						discount and upgrade to a new 2-year agreement, the discount will be lost. If you want to continue to receive the 
-						discount, you must upgrade with AT&T Next or pay full price for your smartphone.
+            *Tax on full price of the device is due at sale. Purchase Requires <div id="AttMonthNumber" style="display:inline;">30</div>-month 0% APR installment agreement, qualifying credit and qualified monthly wireless service plans (voice & Data).   
+            If wireless service is cancelled, device balance becomes due on the next AT&amp;T billing cycle.
 					<cfelseif prc.productData.CarrierId eq 42>
 						*For qualified customers.
 						<b>Device Payment Program:</b>24 interest-free installments with 100% pay off to upgrade - customers can pay off their 

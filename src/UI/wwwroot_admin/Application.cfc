@@ -216,6 +216,8 @@
 			application.model.CustomerAccountService = CreateObject( 'component', 'cfc.model.carrierservice.CustomerAccountService' ).init();
 			application.model.VerizonCarrierService = CreateObject('component', 'cfc.model.carrierservice.Verizon.VerizonCarrierService').init( request.config.VerizonErosEndPoint );
 			application.model.RouteService = CreateObject('component', 'cfc.model.carrierservice.ServiceBus.RouteService').init( argumentCollection = request.config.CarrierServiceBus );
+			application.model.CarrierFacade = Createobject("component", "fw.model.CarrierApi.CarrierFacade").init();
+			application.model.CarrierHelper = Createobject("component", "fw.model.CarrierApi.CarrierHelper").init();
 		</cfscript>
 		
 	</cffunction>

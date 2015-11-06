@@ -26,7 +26,7 @@
 	<cfparam name="request.p.do" default="startCheckout" type="string" />
 	<cfparam name="request.currentTopNav" default="checkout.startCheckout" type="string" />
 	<cfparam name="request.p.bSoftReservationSuccess" type="boolean" default="false" />
-
+		
 	<cfif application.model.CheckoutHelper.getCarrier() EQ 299>
 		<cfset request.maxpinlength = 10 />
 	<cfelse>
@@ -72,6 +72,8 @@
 		  prc.carrierIdVzw = 42;
 		  prc.carrierGuidVzw = "263a472d-74b1-494d-be1e-ad135dfefc43";
 		  prc.offerCategoryVzw = "VZ";
+		  local.carrier = application.wirebox.getInstance("Carrier");
+		  prc.upgradeFee = local.carrier.getUpgradeFee(session.cart.getCarrierID());
 	  </cfscript>
 
 	</cffunction>
@@ -174,6 +176,7 @@
 		<cfargument name="event">
 		<cfargument name="prc">
 		<cfset request.p = Event.getCollection()/>
+	
 		<!--- clear validators --->
         <cfset request.validator.clear()>
 
@@ -771,16 +774,14 @@
 	    
 	   <!--- MES FIX UP --->
 	    <cfscript>
-	    if (session.cart.getCarrierId() eq 109) {
-              session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/att_logo_25.png";
-            } else if (session.cart.getCarrierId() eq 42) {
-              session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/verizon_logo_25.png";
-            }
-      prc.subscribers = session.carrierObj.getSubscribers();
-      prc.stringUtil = application.wirebox.getInstance("stringUtil");
-      local.carrier = application.wirebox.getInstance("Carrier");
-      prc.upgradeFee = local.carrier.getUpgradeFee(session.cart.getCarrierID());
-		</cfscript>
+		    if (session.cart.getCarrierId() eq 109) {
+	        session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/att_logo_25.png";
+	      } else if (session.cart.getCarrierId() eq 42) {
+	        session.carrierObj.carrierLogo = "#assetPaths.common#images/carrierLogos/verizon_logo_25.png";
+	      }
+	      prc.subscribers = session.carrierObj.getSubscribers();
+	      prc.stringUtil = application.wirebox.getInstance("stringUtil");
+			</cfscript>
 	    <!---GET PLAN FROM CART--->
       	<cfset prc.cartPlan = application.model.dBuilderCartFacade.getPlan()/>
 		<cfset prc.showAddAnotherDeviceButton = false/>
@@ -992,40 +993,44 @@
 		<cfargument name="prc">
 		<cfset var local = structNew() />
 		
+		<cfif !structKeyExists(session, 'carrierDocsGenerated') OR session.carrierDocsGenerated eq "false" >
 		<!---save finance agreement for ATT --->
-		<cfif application.model.checkoutHelper.getCarrier() eq 109>
-			<cfset local.args_saveFinanceAgreement = {
-				orderId = #trim(session.checkout.orderId)#,
-				carrierId = #trim(session.FinanceAgreementResp.getCarrierID())#,
-				installmentPlanId = #trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].InstallmentPLanId)#,
-				subscriberNumber = #trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].AttDeviceOrderItem.SubscriberNumber.SubscriberNumber)#,
-				accountNumber = #trim(session.accountResp.getAccount().accountIdentifier)#,
-				nameOnAccount = "#trim(session.accountResp.getAccount().primaryAccountHolder)#",
-				acceptanceDate = "#dateformat(now(),'mm/dd/yyyy')#",
-				channel = #getChannelValue()#,
-				agreementTypeId = 1,
-				agreementEntry = "#trim(session.FinanceAgreementResp.getResponse().FinanceAgreement)#"			
-			} />
-		
-			<cfset rc.saveFinanceAgreementResult = carrierFacade.SaveFinanceAgreement(argumentCollection = local.args_saveFinanceAgreement) />
+			<cfif (application.model.checkoutHelper.getCarrier() eq 109)>
+				<!--- Finance agreement gets generated once --->
+				<cfset session.carrierDocsGenerated = "true">
+				
+				<cfset local.args_saveFinanceAgreement = {
+					orderId = #trim(session.checkout.orderId)#,
+					carrierId = #trim(session.FinanceAgreementResp.getCarrierID())#,
+					installmentPlanId = #trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].InstallmentPLanId)#,
+					subscriberNumber = #trim(session.FinanceAgreementResp.getResponse().AgreementItems[1].AttDeviceOrderItem.SubscriberNumber.SubscriberNumber)#,
+					accountNumber = #trim(session.accountResp.getAccount().accountIdentifier)#,
+					nameOnAccount = "#trim(session.accountResp.getAccount().primaryAccountHolder)#",
+					acceptanceDate = "#dateformat(now(),'mm/dd/yyyy')#",
+					channel = #getChannelValue()#,
+					agreementTypeId = 1,
+					agreementEntry = "#trim(session.FinanceAgreementResp.getResponse().FinanceAgreement)#"			
+				} />
 			
+				<cfset rc.saveFinanceAgreementResult = carrierFacade.SaveFinanceAgreement(argumentCollection = local.args_saveFinanceAgreement) />
+				
+			</cfif>
+			
+			<!---submit order - Park order--->
+			<cfset local.args_submit = {
+				carrierid = application.model.checkoutHelper.getCarrier()
+			} />
+			
+			<cfset rc.submitOrderRequest = carrierHelper.getSubmitOrderRequest(argumentcollection = local.args_submit) />
+			<cfset rc.submitOrderResponse = carrierFacade.submitOrder(argumentCollection = rc.submitOrderRequest) />
+			
+			<!---econsent--->
+			<cfset local.args_eConsent = {
+				carrierId = application.model.checkoutHelper.getCarrier()
+			} />
+	
+			<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />
 		</cfif>
-		
-		<!---submit order - Park order--->
-		<cfset local.args_submit = {
-			carrierid = application.model.checkoutHelper.getCarrier()
-		} />
-		
-		<cfset rc.submitOrderRequest = carrierHelper.getSubmitOrderRequest(argumentcollection = local.args_submit) />
-		<cfset rc.submitOrderResponse = carrierFacade.submitOrder(argumentCollection = rc.submitOrderRequest) />
-		
-		<!---econsent--->
-		<cfset local.args_eConsent = {
-			carrierId = application.model.checkoutHelper.getCarrier()
-		} />
-
-		<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />
-		
 		<!---submit order completed - Activate --->	
 		
 		<!---<cfset local.args_complete = {

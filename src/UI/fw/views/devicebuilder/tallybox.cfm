@@ -99,10 +99,11 @@
                   
 
 
-                <tr>
+                <!--- Removed per Case 1195 --->
+                <!--- <tr>
                   <td>Due Today*</td>
                   <td class="price">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPrices().getDueToday())#</td>
-                </tr>
+                </tr> --->
 
               </table>
             </div>

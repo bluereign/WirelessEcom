@@ -8027,6 +8027,8 @@ aside.details {
   font-size: 13px;
   font-size: 0.8125rem;
   text-align: left;
+  height:42px;
+  overflow:hidden;
 }
 .accessories .product .price {
   color: #000;
@@ -8453,7 +8455,6 @@ aside.details {
   display: block;
   padding: 25px 0 40px;
   text-align: right;
-  text-transform: uppercase;
 }
 .cart .sidebar {
   border: 1px solid #b3b3b3;

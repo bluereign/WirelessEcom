@@ -74,7 +74,7 @@
 	  </tbody>
 	</table>
 	<div>
-		<p>Wireless Advocates is an authorized retailers of wireless devices and wireless plans from AT&T&reg;, Sprint, T-Mobile&reg;, and Verizon Wireless. We carry a broad range of products from Motorola, BlackBerry&reg;, LG, Sony Ericsson, Samsung, HTC, Pantech and Nokia. BlackBerry&reg;, RIM&reg;, Research In Motion&reg;, SureType&reg; and related trademarks, names and logos are the property of Research In Motion Limited and are registered and/or used in EMEA and countries around the world. Used under license from Research in Motion Limited.</p>
+		<p>Wireless Advocates is an authorized retailer of wireless devices and wireless plans from AT&T&reg;, Sprint, T-Mobile&reg;, and Verizon Wireless. We carry a broad range of products from Motorola, BlackBerry&reg;, LG, Sony Ericsson, Samsung, HTC, Pantech and Nokia. BlackBerry&reg;, RIM&reg;, Research In Motion&reg;, SureType&reg; and related trademarks, names and logos are the property of Research In Motion Limited and are registered and/or used in EMEA and countries around the world. Used under license from Research in Motion Limited.</p>
 		<p>Apple, the Apple logo, iPad, iPhone and Retina are trademarks of Apple Inc. registered in the US and other countries.  iPad Air and iPad mini are trademarks of Apple Inc.</p>
 	</div>
 	<div id="server" style="visibility:hidden; display:none;"><cfoutput>#ListLast(application.model.Util.GetHostAddress(CGI.SERVER_NAME), '.')#</cfoutput></div>			

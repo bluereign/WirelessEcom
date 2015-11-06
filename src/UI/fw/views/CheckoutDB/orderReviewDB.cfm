@@ -46,7 +46,7 @@ width:260px;}
         </header>
 		<form id="formCheckoutReview" action="#event.buildLink('/CheckoutDB/processOrderReview')#" method="post">
 		<div class="right">
-            <a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">Previous</a>
+            <a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">BACK</a>
             <button type="submit" onclick="$('##formCheckoutReview').submit()" class="btn btn-primary">Process Payment Now</button>
         </div>
         <cfif structKeyExists(prc,"warningMessage")>
@@ -82,6 +82,7 @@ width:260px;}
                 <div class="col-md-2 col-xs-6 item">
                   <img src="#session.carrierObj.carrierLogo#" alt="" /><br />
                   <!---<a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/1">Edit Plan</a><br /><br />--->
+				  <div style="height:50px;"></div>
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#prc.cartPlan.companyName# #prc.cartPlan.planName#</h3>
@@ -626,7 +627,7 @@ width:260px;}
     </div>
     <div class="col-md-12">
 	<div class="formControl" style="float:right">
-	<a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">Previous</a>&nbsp;
+	<a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">BACK</a>&nbsp;
 		<span class="btn btn-primary"><a href="##" onclick="$('##formCheckoutReview').submit()" style="color:##fff">Process Payment Now</a></span>
 		<br/>
 		<br/>
