@@ -14,6 +14,24 @@
 	<!--------------------------------------------------------------------------------------------------
 		Helper Functions		
 	 --------------------------------------------------------------------------------------------------->
+	 
+	<cffunction name="conflictsResolvable" output="false" access="public" returntype="boolean">
+		<cfargument name="carrierid" type="numeric" required="true" > 
+		<cfargument name="subscriberNumber" type="string" required="true" > 
+		<cfargument name="ImeiType" type="string" required="true" > 
+		<cfset var local = structNew() />
+		
+		<cfif isdefined("session.carrierfacade.accountResp.IncompatibleOffers")>
+			<cfloop array="#session.carrierfacade.accountResp.IncompatibleOffers#" index="local.io">
+				<cfif local.io.subscriberNumber is arguments.subscriberNumber AND local.io.ImeiType is arguments.imeiType>
+					<cfreturn local.io.conflictsResolvable />
+				</cfif>
+			</cfloop>
+		</cfif>
+		
+		<cfreturn false />
+		
+	</cffunction>	
 	
 	<cffunction name="getSubmitCompletedOrderRequest" output="false" access="public" returntype="struct">
 		<cfset var local = structNew() />
