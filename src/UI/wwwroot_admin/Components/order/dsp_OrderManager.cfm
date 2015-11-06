@@ -6,7 +6,7 @@
 <cfset carrierFacade = application.wirebox.getInstance("CarrierFacade") />
 <cfset AttCarrier = application.wirebox.getInstance("AttCarrier") />
 <cfset VzwCarrier = application.wirebox.getInstance("VzwCarrier") />
-<cfset carrierHelper = application.wirebox.getInstance("CarrierFacade") />
+<cfset carrierHelper = application.wirebox.getInstance("CarrierHelper") />
 <cfset AttCarrierHelper = application.wirebox.getInstance("AttCarrierHelper") />
 <cfset VzwCarrierHelper = application.wirebox.getInstance("VzwCarrierHelper") />
 
@@ -945,6 +945,7 @@
 
 
 <cfif structKeyExists(form, 'activationFullSubmit')>
+	<cfset Order = createObject( "component", "cfc.model.Order" ).init() />
 	<cfscript>
 		selectedTab = 2;	
 		session.processMessages = [];
@@ -971,11 +972,14 @@
 						carrierid = form.carrier,
 						orderid = FORM.orderId
 					};
-		
-					rc.submitOrderRequest = application.model.carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete);
+					
+					Order.load( FORM.OrderId );
+					session.order = Order;
+					
+					rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete);
 					rc.submitOrderRequest.carrierId = form.carrier;
-					rc.submitCompletedOrderResponse = application.model.carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest);
-					message = rc.submitCompletedOrderResponse;
+					rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest);
+					message = "IS ACTIVATED = " & rc.submitCompletedOrderResponse.getResult() & "  REASON = " & rc.submitCompletedOrderResponse.getResultDetail();
 					break;
 				} else {
 					message = application.controller.AttActivationController.activateOrder( form.OrderId, form.requestedActivationDate );
