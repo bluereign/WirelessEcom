@@ -49,6 +49,16 @@
 		<cfreturn local.loadEConsent />
 	</cffunction>	
 	
+	<cffunction name="conflictsResolvable" output="false" access="public" returntype="string">
+		<cfargument name="carrierid" type="numeric" required="true" > 
+		<cfargument name="subscriberNumber" type="string" required="true" > 
+		<cfargument name="ImeiType" type="string" required="true" > 
+		<cfset var local = structNew() />
+		
+		<cfset local.conflictsResolvable =  carrierObject(arguments.carrierId).conflictsResolvable(argumentCollection = arguments) />	
+		<cfreturn local.conflictsResolvable />
+	</cffunction>	
+	
 	<!---
 		Receives an argument collection and returns collection minus args on the excludedArgsList		
 	 --->
