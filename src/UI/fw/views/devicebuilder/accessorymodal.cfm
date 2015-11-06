@@ -57,7 +57,7 @@
           <div class="col-md-8 price">Price: <strong>#dollarFormat(prc.accessoryInfo.Price)#</strong></div>
         </div>
 
-        <button type="button" class="btn btn-primary right"  name="btnAddAccessory" id="btnAddAccessory" >Continue</button>
+        <button type="button" class="btn btn-primary right"  name="btnAddAccessory" id="btnAddAccessory" >Add to Cart</button>
         <button class="btn btn-gray right" data-dismiss="modal" aria-label="Close">No Thanks</button>
 
       </div>

@@ -1337,7 +1337,7 @@ $j(document).ready(function($j) {
  <!--- /Customer Type Modal (devicebuilder) --->
 
     <div class="modal fade bootstrap" id="nextInfoModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
-    <div class="modal-dialog ">
+    <div class="modal-dialog" style="width:780px;">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -1347,30 +1347,9 @@ $j(document).ready(function($j) {
         <div class="modal-body">
           <div class="container">
             <div class="row">
-              <div class="col-xs-9">
-                <p>AT&amp;T Next offers the ability to make low monthly installment payments based on the full retail price of the new smartphone. Monthly installment payments are determined by the full retail price of the smartphone divided by the AT&nbsp;T Next installment agreement option you choose.</p>
-                <p>AT&amp;T Next is available to new customers and existing customers adding a new line of service, with qualifying credit. If you're upgrading with AT&amp;T Next, your account must be in good standing. We offer the following AT&nbsp;T Next options for smartphones</p>
-                <ul>
-                  <li>
-                    <p><strong>AT&amp;T Next 24</strong> allows you to make 30 low monthly installment payments equaling the full retail price of a new smartphone. Once you pay the balance of 24 installment payments, you have the option to trade in a fully functional and in good physical condition AT&amp;T Next smartphone to upgrade to a new one. Well-qualified credit is required.</p>
-                  </li>
-                  <li>
-                    <p>
-                      <strong>AT&amp;T Next 18</strong> allows you to make 24 low monthly installment payments equaling the full retail price of a new smartphone. Once you pay the balance of 18 installment payments, you have the option to trade in a fully functional and in good physical condition AT&amp;T Next smartphone to upgrade to a new one. Well-qualified credit is required.
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      <strong>AT&amp;T Next 12</strong> allows you to make 20 low monthly installment payments equaling the full retail price of a new smartphone. Once you pay the balance of 12 installment payments, you have the option to trade in a fully functional and in good physical condition AT&amp;T Next smartphone to upgrade to a new one. Well-qualified credit is required.
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      <strong>AT&amp;T Next with down payment</strong> requires a 30% down payment at the time of purchase and allows you to make 28 low monthly installment payments equaling the full retail price of a new smartphone. A deposit may also be required. Once you pay the balance of 12 installment payments, you have the option to trade in a fully functional and in good physical condition AT&amp;T Next smartphone to upgrade to a new one.
-                  </li>
-                  </p>
-                </ul>
-              </div>
+              <a href="/content/att-next">
+                <img src="/assets/common/images/financepricing/att_popup_both.png" style="display: block;margin:0 auto;" width="714" height="733">
+              </a>
             </div>
           </div>
         </div>
