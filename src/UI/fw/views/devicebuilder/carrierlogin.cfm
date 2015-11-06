@@ -23,22 +23,22 @@
 		</div>
         <div class="form-group form-inline phone">
           <label for="inputPhone1">Phone Number to Upgrade</label>
-          ( <input type="text" class="form-control" id="inputPhone1" name="inputPhone1" value="<cfif isDefined('rc.inputPhone1')>#trim(rc.inputPhone1)#</cfif>" maxlength="3" onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('inputPhone2'))" /> )
-          <input type="text" class="form-control" id="inputPhone2" name="inputPhone2" value="<cfif isDefined('rc.inputPhone2')>#trim(rc.inputPhone2)#</cfif>" maxlength="3" onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('inputPhone3'))" /> -
-          <input type="text" class="form-control" id="inputPhone3" name="inputPhone3" value="<cfif isDefined('rc.inputPhone3')>#trim(rc.inputPhone3)#</cfif>" maxlength="4" onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');" />
+          ( <input type="text" tabindex="1" class="form-control" id="inputPhone1" name="inputPhone1" value="<cfif isDefined('rc.inputPhone1')>#trim(rc.inputPhone1)#</cfif>" maxlength="3" onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('inputPhone2'))" /> )
+          <input type="text" tabindex="2" class="form-control" id="inputPhone2" name="inputPhone2" value="<cfif isDefined('rc.inputPhone2')>#trim(rc.inputPhone2)#</cfif>" maxlength="3" onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('inputPhone3'))" /> -
+          <input type="text" tabindex="3" class="form-control" id="inputPhone3" name="inputPhone3" value="<cfif isDefined('rc.inputPhone3')>#trim(rc.inputPhone3)#</cfif>" maxlength="4" onKeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');" />
         </div>
         <div class="form-group form-inline zip">
           <label for="inputZip">Billing ZIP Code</label>
-          <input type="text" class="form-control" id="inputZip" name="inputZip" value="<cfif isDefined('rc.inputZip')>#rc.inputZip#</cfif>" maxlength="5" />
+          <input type="text" tabindex="4" class="form-control" id="inputZip" name="inputZip" value="<cfif isDefined('rc.inputZip')>#rc.inputZip#</cfif>" maxlength="5" />
         </div>
         <div class="form-group form-inline ssn">
           <label for="inputSSN">Last 4 Digits of Social Security Number</label>
-          <input type="password" class="form-control" id="inputSSN" name="inputSSN" value="<cfif isDefined('rc.inputSSN')>#rc.inputSSN#</cfif>" maxlength="4" />
+          <input type="password" tabindex="5" class="form-control" id="inputSSN" name="inputSSN" value="<cfif isDefined('rc.inputSSN')>#rc.inputSSN#</cfif>" maxlength="4" />
           <a href="##" data-toggle="tooltip" title="#prc.inputSSNTooltipTitle#" id="inputSSNToolTip">Whose SSN do I use?</a>
         </div>
         <div class="form-group form-inline pin">
           <label for="inputPin">AT&amp;T Account Passcode</label>
-          <input type="password" class="form-control" id="inputPin" name="inputPin" value="<cfif isDefined('rc.inputPin')>#rc.inputPin#</cfif>" maxlength="20" />
+          <input type="password" tabindex="6" class="form-control" id="inputPin" name="inputPin" value="<cfif isDefined('rc.inputPin')>#rc.inputPin#</cfif>" maxlength="20" />
           <a href="##" data-toggle="tooltip" title="#prc.inputPinTooltipTitle#" id="inputPinToolTip">Where do I get this?</a>
         </div>
         <div class="right">
