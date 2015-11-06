@@ -519,9 +519,9 @@
             // prc.activetab = "existing";
             // prc.activetab = "individual";
             prc.subscriber.phoneNumber = stringUtil.formatPhoneNumber(trim(prc.subscriber.getNumber()));
-            prc.tallyboxHeader = "Configuring " & prc.subscriber.phoneNumber;
+            prc.tallyboxHeader = "Upgrading " & prc.subscriber.phoneNumber;
           } else {
-            prc.tallyboxHeader = "Upgrading";
+            prc.tallyboxHeader = "Configuring";
           }
         }
         // <end selected line and subscribers
