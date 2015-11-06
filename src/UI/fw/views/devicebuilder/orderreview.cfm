@@ -690,7 +690,7 @@
   </div>
 </div>
 <div class="modal fade" id="accessoryKitModal" tabindex="-1" role="dialog" aria-labelledby="accessoryKitModalLabel">
-  <div class="modal-dialog" role="document">
+  <!--<div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -698,6 +698,20 @@
           </div>
           <div class="modal-body">
               <p>Each device purchased includes an accessory bonus pack.  Contents of bonus pack vary by device.</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>-->
+  <div class="modal-dialog" role="document" style="width:740px;">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="accessoryKitModalLabel">Member Benefit Kit</h4>
+          </div>
+          <div class="modal-body">
+              <img src="/assets/common/images/onlinebenefit/costcoValue_version_5.jpg" />
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
