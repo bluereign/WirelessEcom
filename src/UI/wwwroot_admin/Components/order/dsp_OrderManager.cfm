@@ -5,6 +5,13 @@
 <cfset PaymentService = application.wirebox.getInstance("PaymentService") />
 <cfset local = {} />
 
+<cfset carrierFacade = application.wirebox.getInstance("CarrierFacade") />
+<cfset AttCarrier = application.wirebox.getInstance("AttCarrier") />
+<cfset VzwCarrier = application.wirebox.getInstance("VzwCarrier") />
+<cfset carrierHelper = application.wirebox.getInstance("CarrierHelper") />
+<cfset AttCarrierHelper = application.wirebox.getInstance("AttCarrierHelper") />
+<cfset VzwCarrierHelper = application.wirebox.getInstance("VzwCarrierHelper") />
+ 
 <cfif structKeyExists(form, 'doCapture') and not structKeyExists(form, 'process')>
 	
 	<cftry>
@@ -937,6 +944,7 @@
 
 
 <cfif structKeyExists(form, 'activationFullSubmit')>
+	<cfset Order = createObject( "component", "cfc.model.Order" ).init() />
 	<cfscript>
 		selectedTab = 2;	
 		session.processMessages = [];
@@ -957,8 +965,26 @@
 				
 				break;
 			case '109': //AT&T
-				message = application.controller.AttActivationController.activateOrder( form.OrderId, form.requestedActivationDate );
-				break;
+			    //Handles Financed Phones
+                if (structKeyExists(form, 'purchaseType') and Form.purchaseType eq 'FP'){
+                    local.args_complete = {
+                        carrierid = form.carrier,
+                        orderid = FORM.orderId
+                    };
+        
+                                        
+                    Order.load( FORM.OrderId );
+                    session.order = Order;
+                    
+                    rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete);
+                    rc.submitOrderRequest.carrierId = form.carrier;
+                    rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest);
+                    message = "IS ACTIVATED = " & rc.submitCompletedOrderResponse.getResult() & "  REASON = " & rc.submitCompletedOrderResponse.getResultDetail();
+                    break;
+                } else {
+                    message = application.controller.AttActivationController.activateOrder( form.OrderId, form.requestedActivationDate );
+                    break;
+                }
 			case '128': //T-Mobile
 				wirelessAccount = createObject('component', 'cfc.model.WirelessAccount').init();
 				wirelessAccount.load(request.p.wirelessAccountId);
