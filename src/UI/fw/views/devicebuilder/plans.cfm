@@ -62,7 +62,7 @@
                       <div class="price">$#int(prc.planData.MonthlyFee)#</div>
                       <button class="btn btn-primary btn-block" name="planid" value="#prc.planData.productid#">Select Plan</button>
                       <div class="details-link" data-toggle="modal" data-target="##planModal" 
-                        href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#/cartLineNumber/#rc.cartLineNumber#" onclick="event.preventDefault();alert('here');">Plan Details </div>
+                        href="#event.buildLink('devicebuilder.planmodal')#/plan/#prc.planData.productid#/cartLineNumber/#rc.cartLineNumber#" onclick="event.preventDefault();">Plan Details </div>
                     </a>
                   </div>
                 </cfloop>
