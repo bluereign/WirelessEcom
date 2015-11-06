@@ -48,14 +48,14 @@
                 CARRIER is requiring a down payment
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" value="1" name="isDownPaymentApproved" id="isDownPaymentApproved" <cfif rc.isDownPaymentApproved>checked</cfif> >
+                    <input type="checkbox" value="1" name="isDownPaymentApproved" id="isDownPaymentApproved" dollar-amount="#decimalFormat(prc.subscriber.downPayment)#" <cfif rc.isDownPaymentApproved>checked</cfif> >
                     I Agree to the required CARRIER down payment of: #dollarFormat(prc.subscriber.downPayment)#
                   </label>
                 </div>
-              <cfelseif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade">
+              <cfelseif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade" and prc.downPayment>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" value="1" name="isOptionalDownPaymentAdded" id="isOptionalDownPaymentAdded" <cfif prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt()>checked</cfif> >
+                    <input type="checkbox" value="1" name="isOptionalDownPaymentAdded" id="isOptionalDownPaymentAdded"  dollar-amount="#decimalFormat(prc.downPayment)#" <cfif prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt()>checked</cfif> >
                     Add an additional 30% down payment of #dollarFormat(prc.downPayment)# today
                   </label>
                 </div>
