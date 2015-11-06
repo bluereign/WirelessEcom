@@ -1,5 +1,9 @@
 <!--- Adding style here and jQuery at the bottom as the javascript file provided by front-end developer is minified. --->
 <cfajaximport tags="cfform,cfwindow,cfdiv" scriptsrc="#assetPaths.common#scripts/cfajax/">
+
+<cfset session.checkout = duplicate(session.checkoutDone) />
+<cfset session.cart = duplicate(session.cartDone) />
+		
 <style>
 .cart .device-details {
   font-size: 12px;

@@ -78,90 +78,6 @@
 
 	</cffunction>
 
-	<cffunction name="startCheckout" returntype="void" output="false" hint="">
-		<cfargument name="event">
-		<cfargument name="rc">
-		<cfargument name="prc">
-		
-		<cfparam name="request.p.do" default="startCheckout" type="string" />
-		
-		<cfset session.cart.updateAllPrices() />
-		<cfset session.cart.updateAllDiscounts() />
-		<cfset session.cart.updateAllTaxes() />
-
-		<cfif Len(request.config.disableCarrierCheckout) && ListFind(request.config.disableCarrierCheckout, session.cart.getCarrierId(), '|')>
-			<cflocation url="/index.cfm/go/checkout/do/error/code/55" addtoken="false" />
-		</cfif>
-
-		<cfparam name="request.p.bypassCartValidation" type="boolean" default="false" />
-
-		<cfif not request.p.bypassCartValidation>
-			<cfset cartValidationResponse = application.model.cartHelper.validateCartForCheckout() />
-
-			<cfif not variables.cartValidationResponse.getIsCartValid()>
-				<cfset campaignId = '' />
-				
-				<!--- Get campaign ID if channel uses the campaign service --->
-				<cfif StructKeyExists(variables, 'CampaignService')>
-					<cfif CampaignService.doesCurrentCampaignSubdomainExist()>
-						<cfset campaign = CampaignService.getCampaignBySubdomain( CampaignService.getCurrentSubdomain() ) />
-						<cfset campaignId = campaign.getCampaignId() />
-					</cfif>
-				</cfif>
-
-				<cfset application.model.Log.logInvalidCart( cartValidationResponse.getInvalidCartTypeId(), session.cart.getActivationType(), session.cart.getCarrierId(), Trim(cartValidationResponse.renderErrorLIs()), campaignId ) />
-
-				<cfset url.code = 'cartValidation' />
-				<cfset request.p.do = 'error' />
-
-				<cfinclude template="index.cfm" />
-
-				<cfexit method="exittag" />
-			</cfif>
-		</cfif>
-
-		<cfif not application.model.checkoutHelper.isWirelessOrder()>
-			<cfif session.cart.getPrepaid()>
-				<cfset application.model.checkoutHelper.generateReferenceNumber() />
-				<cflocation url="/index.cfm/go/checkout/do/requestAreaCode" addtoken="false" />
-			<cfelse>
-				<!--- Accessories and No-Contract phones --->
-				<cfset setNextEvent('CheckoutVFD.billShip')>
-				<!---<cflocation url="/index.cfm/go/checkout/do/billShip/bSoftReservationSuccess/1/" addtoken="false" />--->
-			</cfif>
-		</cfif>
-
-		<cfif isDefined('url.regen')>
-			<cfset application.model.checkoutHelper.clearReferenceNumber() />
-		</cfif>
-
-		<cfset application.model.checkoutHelper.generateReferenceNumber() />
-		<cfset application.model.checkoutHelper.setCarrierConversationId('') /> <!--- Clear conversation ID --->
-
-		<cfswitch expression="#application.model.checkoutHelper.getCheckoutType()#">
-			<cfcase value="new">
-				<cfset setNextEvent('CheckoutVFD.billShip')>
-				<!---<cflocation url="/index.cfm/go/checkout/do/lnpRequest/bSoftReservationSuccess/1/" addtoken="false" />--->
-			</cfcase>
-			<cfcase value="add">
-				<cfset setNextEvent('CheckoutVFD.billShip')>
-				<!---<cflocation url="/index.cfm/go/checkout/do/wirelessAccountForm/bSoftReservationSuccess/1/" addtoken="false" />--->
-			</cfcase>
-			<cfcase value="upgrade">
-				<cfset setNextEvent('CheckoutVFD.billShip')>
-				<!---<cflocation url="/index.cfm/go/checkout/do/wirelessAccountForm/bSoftReservationSuccess/1/" addtoken="false" />--->
-			</cfcase>
-	<!---		<cfcase value="financed">
-				<cfset setNextEvent('CheckoutVFD.billShip')>
-				<!---<cflocation url="/index.cfm/go/checkout/do/wirelessAccountForm/bSoftReservationSuccess/1/" addtoken="false" />--->
-			</cfcase>--->
-			
-			<cfdefaultcase>
-				<!---The rest should all be "financed" so just adding it as the default--->
-					<cfset setNextEvent('CheckoutVFD.billShip')>
-			</cfdefaultcase>
-		</cfswitch>
-	</cffunction>
 	
 	<cffunction name="billShip" returntype="void" output="false" hint="">
 		<cfargument name="event">
@@ -995,7 +911,7 @@
 		
 		<cfif !structKeyExists(session, 'carrierDocsGenerated') OR session.carrierDocsGenerated eq "false" >
 		<!---save finance agreement for ATT --->
-			<cfif (application.model.checkoutHelper.getCarrier() eq 109)>
+			<!---<cfif (application.model.checkoutHelper.getCarrier() eq 109)>
 				<!--- Finance agreement gets generated once --->
 				<cfset session.carrierDocsGenerated = "true">
 				
@@ -1029,18 +945,8 @@
 				carrierId = application.model.checkoutHelper.getCarrier()
 			} />
 	
-			<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />
+			<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />--->
 		</cfif>
-		<!---submit order completed - Activate --->	
-		
-		<!---<cfset local.args_complete = {
-			carrierid = application.model.checkoutHelper.getCarrier(),
-			orderid = session.checkout.orderId
-		} />
-		
-		<cfset rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete) />
-		<cfset rc.submitOrderRequest.carrierId = application.model.checkoutHelper.getCarrier() />
-		<cfset rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest) />--->
 		
 		<cfset setNextEvent('checkoutDB/payment') />
 	</cffunction>
@@ -1173,7 +1079,30 @@
 
 		<cfset request.p.orderId = variables.order.getOrderId() />
 		<cfset request.p.email = variables.order.getEmailAddress() />
-
+		
+		<cfif !structKeyExists(session, 'orderProcessed') OR session.orderProcessed eq "false" >
+			<!--- Finance agreement gets generated once --->
+			<cfset session.orderProcessed = "true">
+			
+			<cfset session.checkoutDone = structNew() />
+			<cfset session.checkoutDone = duplicate(session.checkout) />
+			
+			<cfset session.cartDone = structNew() />
+			<cfset session.cartDone = duplicate(session.cart) />
+			
+			<cfset session.carrierObjDone = structNew() />
+			<cfset session.carrierObjDone = duplicate(session.carrierObj) />
+			<!--- session.totalDueToday --->
+			
+			<cfset application.model.checkoutHelper.clearCart() />
+			<cfset application.model.checkoutHelper.clearCheckOut() />
+			
+			<cfset session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init() />
+			<cfset session.listRequiredServices = "" />
+			<cfset carrierObjExists = structdelete(session, 'carrierObj', true)/>
+			<cfset session.carrierObj = "" />
+		</cfif>
+			
 		<!---<cfif ChannelConfig.getTrackMercentAnalytics()>
 			<cfset mercentAnalyticsTracker = application.wirebox.getInstance("MercentAnalyticsTracker") />
 			<cfoutput>#mercentAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>
@@ -1183,16 +1112,6 @@
 			<!---<cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
 			<cfoutput>#googleAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>--->
 		<!---</cfif>--->
-		
-		<!--- If this is a VFD transaction proceed to Carrier Activation --->
-		<!---<cfif channelConfig.getVfdEnabled()>
-			<cflocation url="/CheckoutVFD/preCarrierActivation/" addtoken="false"/>
-		</cfif>--->
-		
-		<!---<cfinclude template="/views/checkout/dsp_thanks.cfm" />--->
-
-		<!---<cfset application.model.checkoutHelper.clearCart() />
-		<cfset application.model.checkoutHelper.clearCheckOut() />--->
 		
 		<cfset event.setLayout('checkoutReviewDB') />
 		<cfset event.setView('CheckoutDB/thanksDB') />
@@ -1335,184 +1254,6 @@
 		</cfif>
 		
 		<cflocation addtoken="false" url="#returnURL#">
-	</cffunction>
-	
-	<!--------------------------------------------------------------------------------------------
-	 Capture payments
-	 --------------------------------------------------------------------------------------------->
-	 
-	 <cffunction name="doCapturePayment" returntype="void" output="false" hint="">
-	 	<cfargument name="orderId" type="numeric" required="true" />
-	 	<cfset assetPaths = application.wirebox.getInstance("assetPaths") />
-		<cfset PaymentService = application.wirebox.getInstance("PaymentService") />
-		<cfset session.adminuser.adminuserid = session.VFD.employeeNumber />
-		<cftry>
-		
-		<cfset order = CreateObject( "component", "cfc.model.Order" ).init()>
-		<cfset order.load(arguments.orderId)>
-
-		<cfset PaymentGateway = PaymentService.getPaymentGatewayByID( order.getPaymentGatewayID() ) />
-		<cfset Response = PaymentGateway.capturePayment( argumentCollection = form )>
-		<cfset Result = Response.getResult()>
-
-		<cfquery datasource="#application.dsn.wirelessadvocates#">
-			INSERT INTO service.PaymentGatewayLog
-			(
-				LoggedDateTime
-				, OrderId
-				, Type
-				, RequestType
-				, Data
-			)
-			VALUES
-			(
-				GETDATE()
-				, <cfqueryparam value="#Result.getSalesOrderNumber()#" cfsqltype="cf_sql_integer" />
-				, <cfqueryparam value="Response" cfsqltype="cf_sql_varchar" />
-				, <cfqueryparam value="Capture" cfsqltype="cf_sql_varchar" />
-				, <cfqueryparam value="#Response.getDetail()#" cfsqltype="cf_sql_longvarchar" />
-			)
-		</cfquery>
-		
-		<cfif Response.getResultCode() eq "PG001">
-			
-			<cfquery name="qry_getPaymentMethod" datasource="#application.dsn.wirelessadvocates#">
-				SELECT PaymentMethodId FROM salesorder.PaymentMethod 
-				WHERE [Name] = <cfqueryparam value="#Result.getCCType()#" cfsqltype="cf_sql_varchar" />
-			</cfquery>
-			
-			<cfif qry_getPaymentMethod.recordCount>
-				<cfset payMethodId = qry_getPaymentMethod.paymentMethodId />
-			<cfelse>
-				<cfset payMethodId = 1 />
-			</cfif>
-						
-			
-			<cfquery name="qry_insertPayment" datasource="#application.dsn.wirelessadvocates#">
-				INSERT INTO salesorder.Payment (
-					OrderId,
-					PaymentAmount,
-					PaymentDate,
-					CreditCardExpDate,
-					CreditCardAuthorizationNumber,
-					PaymentMethodId,
-					BankCode,
-					AuthorizationOrigId,
-					RefundOrigId,
-					ChargebackOrigId,
-					PaymentToken
-				)
-				VALUES
-				(
-					<cfqueryparam value="#Result.getSalesOrderNumber()#" cfsqltype="cf_sql_integer" />,
-					<cfqueryparam value="#Result.getTotalAmount()#" cfsqltype="cf_sql_money" />,
-					GETDATE(),
-					NULL,
-					<cfqueryparam value="#Result.getReceiptNumber()#" cfsqltype="cf_sql_varchar" />,
-					<cfqueryparam value="#variables.payMethodId#" cfsqltype="cf_sql_integer" />,
-					'DD',
-					<cfqueryparam value="#Result.getGUID()#" cfsqltype="cf_sql_varchar" />,
-					NULL,
-					NULL,
-					( 	
-						SELECT TOP 1 PaymentToken 
-						FROM salesorder.Payment 
-						WHERE OrderId = <cfqueryparam cfsqltype="cf_sql_varchar" value="#Result.getSalesOrderNumber()#" />
-							AND PaymentToken IS NOT NULL
-						ORDER BY PaymentId DESC
-					)
-				)
-			</cfquery>
-			
-			<cfscript>
-				// Commit Tax Transaction
-				args = {
-					CommitDate 			=	order.getOrderDate()
-					,InvoiceNumber 		=	request.config.InvoiceNumberPrefix & order.getOrderId()
-					,PriorTransactionId	=	order.getSalesTaxTransactionId()
-				};
-
-				taxCalculator = application.wirebox.getInstance("TaxCalculator");
-				taxCalculator.commitTaxTransaction(argumentCollection = variables.args);
-
-				order.setIsSalesTaxTransactionCommited(true);
-				
-				order.setStatus( 2 ); //Update status to submitted
-				order.setPaymentCapturedById( session.UserId ); //Log user that captured payment
-				order.save();
-			
-				application.model.actionCaptures.insertActionCapture(adminUserId = session.UserId, actionId = 2, orderId = Result.getSalesOrderNumber(), message = '');
-	
-				// Add order note
-				local.ticketStruct = StructNew();
-				local.ticketStruct.NoteBody = 'Payment Capture Sucessful - Verbiage: #Result.getVerbiage()#';
-				local.ticketStruct.OrderNoteSubjectId = 52;
-				local.ticketStruct.OrderId = Result.getSalesOrderNumber();
-				local.ticketStruct.CreatedById = session.userid;
-				local.void = application.model.TicketService.addOrderNote(argumentCollection = local.ticketStruct);
-			</cfscript>
-			
-			<div class="message">
-				Payment has been captured
-			</div>
-			
-		<cfelse>
-			
-			<cfquery datasource="#application.dsn.wirelessadvocates#">
-				INSERT INTO service.PaymentGatewayLog
-				(
-					LoggedDateTime
-					, OrderId
-					, Type
-					, RequestType
-					, Data
-				)
-				VALUES
-				(
-					GETDATE()
-					, <cfqueryparam value="#arguments.orderID#" cfsqltype="cf_sql_integer" />
-					, <cfqueryparam value="Response" cfsqltype="cf_sql_varchar" />
-					, <cfqueryparam value="Capture" cfsqltype="cf_sql_varchar" />
-					, <cfqueryparam value="#Response.getMessage()# - #Response.getDetail()#" cfsqltype="cf_sql_longvarchar" />
-				)
-			</cfquery>
-						
-			<!--- Add order note --->
-			<cfset local.ticketStruct = StructNew()>
-			<cfset local.ticketStruct.NoteBody = 'Payment Response: #Response.getMessage()#' />
-			<cfset local.ticketStruct.OrderNoteSubjectId = 52 />
-			<cfset local.ticketStruct.OrderId = arguments.orderId />
-			<cfset local.ticketStruct.CreatedById = session.userid />
-			<cfset local.void = application.model.TicketService.addOrderNote(argumentCollection = local.ticketStruct) />			
-			
-			<div class="message">
-				Payment Response: <cfoutput>#Response.getMessage()#</cfoutput>
-			</div>
-		</cfif>	
-	
-		<cfcatch>
-			
-
-			<cfquery name="qry_insertError" datasource="#application.dsn.wirelessadvocates#">
-				INSERT INTO service.PaymentGatewayListener
-				(
-					Content,
-					CreatedDate
-				)
-				VALUES
-				(
-					<cfqueryparam value="Payment capture unsuccessful: #cfcatch.message# - #cfcatch.detail#" cfsqltype="cf_sql_longvarchar" />,
-					GETDATE()
-				)
-			</cfquery>
-			<cfdump var="#cfcatch.message#"><cfabort>
-			
-			<div class="message-sticky">
-				<cfoutput>Payment capture unsuccessful: #cfcatch.message# - #cfcatch.detail#</cfoutput>
-			</div>
-		</cfcatch>
-
-		</cftry>
 	</cffunction>
 	
 	<!--------------------------------------------------------------------------------------------
@@ -1701,14 +1442,11 @@
 	<cffunction name="exitVFD" returntype="void" output="false" >
 		<cfargument name="event">
 		
-		<cfset session.VFD.access = false/>
-		<cfset Session.VFD.kioskNumber= 0/>
-		<cfset Session.VFD.employeeNumber = 0/>
 		<cfset application.model.checkoutHelper.clearCart() />
 		<cfset application.model.checkoutHelper.clearCheckOut() />
 		<cfset session.userID = 0 />
 		
-		<cfset event.setView('VFD/logoutVFD') />
+		<cfset event.noRender() />
 	</cffunction>
 	
 	<cffunction name="base64ToString" returntype="any">
