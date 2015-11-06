@@ -209,9 +209,6 @@
 		
 		<cfset request.p = Event.getCollection()/>
 		
-		<!--- Only generate documents once --->
-		<cfset session.carrierDocsGenerated = "false">
-		
 		<cfparam name="url.emailAddress" default="#trim(request.p.emailAddress)#" type="string" />
 		<cfset application.model.checkoutHelper.setFormKeyValue('billShipForm', 'emailAddress', trim(url.emailAddress)) />
 
@@ -996,7 +993,7 @@
 		<cfargument name="prc">
 		<cfset var local = structNew() />
 		
-		<cfif session.carrierDocsGenerated eq "false" >
+		<cfif !structKeyExists(session, 'carrierDocsGenerated') OR session.carrierDocsGenerated eq "false" >
 		<!---save finance agreement for ATT --->
 			<cfif (application.model.checkoutHelper.getCarrier() eq 109)>
 				<!--- Finance agreement gets generated once --->
