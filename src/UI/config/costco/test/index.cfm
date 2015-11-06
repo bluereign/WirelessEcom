@@ -60,8 +60,8 @@
 	request.config.PlanDiscount.Sprint = 0; //.05;
 
 	//MAC: Carrier Interface Local Endpoints
-	request.config.TMobileEndPoint = "http://costco.ecom-dev-test-1.enterprise.corp/TMobileCarrierInterface/TMobileService.asmx?WSDL";
-	request.config.SprintEndPoint =  "http://test-ws.ecom.corp/api/sprintcarrierservice/costco/sprintservice.asmx?WSDL";
+   request.config.TMobileEndPoint = "http://10.7.0.80/TMobileCarrierInterface/TMobileService.asmx?WSDL";
+   request.config.SprintEndPoint =  "http://costco.ecom-dev-test-1.enterprise.corp/SprintCarrierInterface/SprintService.asmx?WSDL";
 	
 	
 	//Carrier Service Bus
