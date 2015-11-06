@@ -50,7 +50,7 @@
                 #prc.financeproductname#: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 24 Months
                 
               </cfif>
-
+              </label>
               <!--- <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')">
                 <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
                   <option value="financed-24" <cfif prc.financed is 'financed-24'>selected</cfif> >
@@ -69,6 +69,7 @@
                 </cfif>
               </select> --->
 
+            <div style="padding-left:20px;">
               <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
                 CARRIER is requiring a down payment
                 <div class="checkbox">
@@ -79,13 +80,13 @@
                 </div>
               <cfelseif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade">
                 <div class="checkbox">
-                  <label>
+                  <label style="width:350px;">
                     <input type="checkbox" value="1" name="isOptionalDownPaymentAdded" id="isOptionalDownPaymentAdded" <cfif rc.isOptionalDownPaymentAdded>checked</cfif> >
                     Add an additional 30% down payment of #dollarFormat(round(prc.productData.FinancedFullRetailPrice * 0.3))# today
                   </label>
                 </div>
               </cfif>            
-            </label>
+            </div>
           </div>
           
           
