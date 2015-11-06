@@ -44,13 +44,13 @@
 
 <body>
 	<cfajaximport tags="cfform,cfwindow,cfdiv" scriptsrc="#assetPaths.common#scripts/cfajax/">
-	#renderView('CheckoutDB/checkoutHeaderDB')#
 	<div id="LoadingDiva" style="display: none">
 		<div class="bg">
 			<span id="progressLabel">Please wait, validating address</span>
 			<img src="#assetPaths.common#images/ui/bar180.gif" alt="" />
 		</div>
 	</div>
+	#renderView('CheckoutDB/checkoutHeaderDB')#
 	
 
 	<div class="container nonmodal-container">
