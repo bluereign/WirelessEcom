@@ -212,9 +212,9 @@
         }
 
         if (prc.productData.carrierId eq prc.carrierIdAtt) {
-          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
+          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
         } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
-          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
+          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
         }
 
 
@@ -519,9 +519,9 @@
             // prc.activetab = "existing";
             // prc.activetab = "individual";
             prc.subscriber.phoneNumber = stringUtil.formatPhoneNumber(trim(prc.subscriber.getNumber()));
-            prc.tallyboxHeader = "Configuring " & prc.subscriber.phoneNumber;
+            prc.tallyboxHeader = "Upgrading " & prc.subscriber.phoneNumber;
           } else {
-            prc.tallyboxHeader = "Upgrading";
+            prc.tallyboxHeader = "Configuring";
           }
         }
         // <end selected line and subscribers
@@ -764,8 +764,6 @@
         // <end tally box
       }
       
-
-      
       // UPDATE CART TOTALS:
       if ( session.cartHelper.hasSelectedFeatures() ) {
         prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices();
@@ -814,12 +812,12 @@
 	  
       if (prc.productData.carrierId eq prc.carrierIdAtt) {
         prc.inputPinTooltipTitle = "If you don't have an AT&amp;T passcode or you've forgotten it, call 1-800-331-0500. AT&amp;T requires this passcode to verify your identity.";
-        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo.png";
+        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
         //TODO: Is this already in scope somewhere?
         prc.carrierName = "AT&amp;T";
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
         prc.inputPinTooltipTitle = "TODO: Get Info For VZW.";
-        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo.png";
+        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
         //TODO: Is this already in scope somewhere?
         prc.carrierName = "Verizon";
       }
@@ -902,9 +900,9 @@
             session.cart.setCarrierId(session.carrierObj.getCarrierId());
 
             if (session.carrierObj.getCarrierId() eq prc.carrierIdAtt) {
-              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
+              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
             } else if (session.carrierObj.carrierId eq prc.carrierIdVzw) {
-              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
+              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
             }
 
             // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
@@ -1014,7 +1012,6 @@
     <cfargument name="prc">
     <cfset var servicesArgs = {} />
     <cfparam name="rc.isDownPaymentApproved" default="0" />
-    <cfparam name="rc.isOptionalDownPaymentAdded" default="0" />
 
     <cfscript>
       // get all warranties for this device:
@@ -1030,9 +1027,20 @@
         servicesArgs.carrierId = prc.carrierGuidAtt;
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
         servicesArgs.carrierId = prc.carrierGuidVzw;
-      }
+      }      
 
       prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = servicesArgs);
+
+      // get payment options
+      if ( isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 ) {
+        prc.downPayment = prc.subscriber.downPayment;
+      } else {
+        prc.downPayment = prc.productData.FinancedFullRetailPrice * 0.3;
+      }
+      prc.dueMonthlyFinanced24AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade");
+      prc.dueMonthlyFinanced18AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade");
+      prc.dueMonthlyFinanced12AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade");
+
     </cfscript>
   </cffunction>
 

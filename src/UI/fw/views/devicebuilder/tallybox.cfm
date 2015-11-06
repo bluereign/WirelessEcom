@@ -48,7 +48,6 @@
                 <tr>
                   <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td>
                   <td class="price">#dollarFormat(prc.cartLine.getPhone().getPrices().getMonthly())#/mo</td>
-                  <!--- <td class="price">#dollarFormat(prc.tallyboxFinanceMonthlyDueAmount)#/mo</td> --->
                 </tr>
 
                 <tr>
@@ -93,11 +92,6 @@
                     <td class="price">#dollarFormat(prc.cartLines[rc.cartLineNumber].getPhone().getPrices().getOptionalDownPmtAmt())#</td>
                   </tr>
                 </cfif>
-                <!--- <tr>
-                  <td colspan="2"><cfdump var="#prc.cartArgs#"></td>
-                </tr> --->
-                  
-
 
                 <!--- Removed per Case 1195 --->
                 <!--- <tr>
