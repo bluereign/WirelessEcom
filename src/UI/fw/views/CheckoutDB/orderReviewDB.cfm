@@ -62,7 +62,7 @@ width:260px;}
             <div class="row hidden-xs">
               <div class="head">
                 <div class="col-md-2">Item</div>
-                <div class="col-md-8"></div>
+                <div class="col-md-8">&nbsp;</div>
                 <div class="col-md-2">Quantity</div>
                 <div class="col-md-2">Monthly*</div>
                 <div class="col-md-2">Due Today*</div>
