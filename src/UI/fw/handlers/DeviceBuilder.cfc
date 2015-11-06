@@ -369,13 +369,13 @@
         }
       }
 
-      if ( structKeyExists(rc,"hasDeclinedDeviceProtection") and rc.hasDeclinedDeviceProtection ) {
-        session.hasDeclinedDeviceProtection = 1;
-      }
-
       if ( !structKeyExists(session,"hasDeclinedDeviceProtection") ) {
-        session.hasDeclinedDeviceProtection = 0;
+        session.hasDeclinedDeviceProtection = "";
       }
+      if ( structKeyExists(rc,"hasDeclinedDeviceProtection") and rc.hasDeclinedDeviceProtection ) {
+        session.hasDeclinedDeviceProtection = listAppend(session.hasDeclinedDeviceProtection,rc.hasDeclinedDeviceProtection);
+      }
+      
 
       // now, get the cartline warranty.
       // prc.warranty = session.dBuilderCartFacade.getWarranty(rc.cartLineNumber);
@@ -1378,13 +1378,14 @@
       prc.zipcode = session.cart.getZipcode();
 
       // remove carrierObj from session: 
-      carrierObjExists = structdelete(session, 'carrierObj', true);
+      structDelete(session, 'carrierObj', true);
+      structDelete(session,"hasDeclinedDeviceProtection", true);
+      structDelete(session,"listRequiredServices", true);
 
       // reinitialize the cart
       session.cart = createObject('component','cfc.model.cart').init();
       session.cartHelper = createObject('component','cfc.model.carthelper').init();
       session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
-      session.listRequiredServices = "";
 
 
       // reset the session zipcode

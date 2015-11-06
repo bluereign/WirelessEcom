@@ -361,7 +361,7 @@
 
 
       $('.btnContinue').click(function(){
-        <cfif session.hasDeclinedDeviceProtection>
+        <cfif listFindNoCase(session.hasDeclinedDeviceProtection,rc.cartLineNumber)>
           $('.btnContinue').attr('data-target', '');
           $('##protectionForm').submit();
         <cfelse>
