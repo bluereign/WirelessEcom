@@ -504,7 +504,8 @@
 								/*  shipping fix goes here */
 								shipMethodArgs = {CarrierId=session.cart.getCarrierId(), 
 														  IsAfoApoAddress=application.model.CheckoutHelper.getShippingAddress().isApoFpoAddress(),
-														  IsCartEligibleForPromoShipping=false};
+														  IsCartEligibleForPromoShipping=false,
+														  supressFreeText = request.config.channelName eq 'costco' };
 		
 								if(ChannelConfig.getOfferShippingPromo())
 								{
