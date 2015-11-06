@@ -46,7 +46,7 @@ width:260px;}
         </header>
 		<form id="formCheckoutReview" action="#event.buildLink('/CheckoutDB/processOrderReview')#" method="post">
 		<div class="right">
-            <a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">BACK</a>
+            <a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">Previous</a>
             <button type="submit" onclick="$('##formCheckoutReview').submit()" class="btn btn-primary">Process Payment Now</button>
         </div>
         <cfif structKeyExists(prc,"warningMessage")>
@@ -62,7 +62,7 @@ width:260px;}
             <div class="row hidden-xs">
               <div class="head">
                 <div class="col-md-2">Item</div>
-                <div class="col-md-8">&nbsp;</div>
+                <div class="col-md-8"></div>
                 <div class="col-md-2">Quantity</div>
                 <div class="col-md-2">Monthly*</div>
                 <div class="col-md-2">Due Today*</div>
@@ -628,7 +628,7 @@ width:260px;}
     </div>
     <div class="col-md-12">
 	<div class="formControl" style="float:right">
-	<a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">BACK</a>&nbsp;
+	<a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">Previous</a>&nbsp;
 		<span class="btn btn-primary"><a href="##" onclick="$('##formCheckoutReview').submit()" style="color:##fff">Process Payment Now</a></span>
 		<br/>
 		<br/>

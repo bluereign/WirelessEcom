@@ -147,7 +147,6 @@
 		<cfargument name="IsAfoApoAddress" type="boolean" required="false" />
 		<cfargument name="IsCartEligibleForPromoShipping" type="boolean" required="false" />
 		<cfargument name="activeOnly" type="boolean" default="true" />
-    <cfargument name="supressFreeText" type="boolean" default="false" />
 		
 		<cfset var qShipMethods = '' />
 
@@ -156,18 +155,10 @@
 				ShipMethodId
 				, GersShipMethodId
 				<cfif structKeyExists( arguments, 'IsCartEligibleForPromoShipping') && arguments.IsCartEligibleForPromoShipping>
-          <cfif arguments.supressFreeText>
-            , replace(PromoDisplayName, 'FREE', 'INCLUDED') DisplayName
-          <cfelse>
-            , PromoDisplayName DisplayName
-          </cfif>
+					, PromoDisplayName DisplayName
 					, PromoPrice DefaultFixedCost
 				<cfelse>
-          <cfif arguments.supressFreeText>
-            , replace(DisplayName, 'FREE', 'INCLUDED') DisplayName
-            <cfelse>
-            , DisplayName
-          </cfif>
+					, DisplayName
 					, DefaultFixedCost
 				</cfif>
 				,IsActive

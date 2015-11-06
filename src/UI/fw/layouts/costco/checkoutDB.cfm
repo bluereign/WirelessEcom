@@ -50,10 +50,9 @@
 			<img src="#assetPaths.common#images/ui/bar180.gif" alt="" />
 		</div>
 	</div>
-	#renderView('CheckoutDB/checkoutHeaderDB')#
-	
+    #renderView('CheckoutDB/checkoutHeaderDB')#
 
-	<div class="container nonmodal-container">
+    <div class="container nonmodal-container">
 		<cfif prc.showNav>
 			#renderView('CheckoutDB/checkoutNavDB')#  
 		<cfelse>

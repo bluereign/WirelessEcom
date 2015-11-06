@@ -21,9 +21,8 @@ form .form-inline label { width:auto;}
 color:red;
 padding-left:5px;
 }
-label
-{
-font-weight:normal;
+label {
+font-weight: normal;
 }
 </style>
 <script type="text/javascript">
@@ -82,12 +81,10 @@ font-weight:normal;
 			if ($('#carrierID').val()=='42'){
 				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
-        $('#carrierDocHeader').html('Verizon Contract');
 			}
 			if ($('#carrierID').val()=='109'){
 				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
-        $('#carrierDocHeader').html('AT&amp;T Contract');
 			}
 		})
 		
@@ -96,12 +93,10 @@ font-weight:normal;
 			if ($('#carrierID').val()=='42'){
 				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
-        $('#carrierDocHeader').html('Verizon Contract Extension');
 			}
 			if ($('#carrierID').val()=='109'){
 				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
-        $('#carrierDocHeader').html('AT&amp;T Contract Extension');
 			}
 		})
 		
@@ -113,7 +108,6 @@ font-weight:normal;
 			if ($('#carrierID').val()=='109'){
 				$('#carrierDocEmbed').attr('src', $('#pdfURL').val());
 				$('#confirmationPrint').attr('src', $('#pdfURL').val());
-        $('#carrierDocHeader').html('AT&amp;T Device Payment Plan');
 			}
 		})
 		
@@ -122,10 +116,8 @@ font-weight:normal;
 			if ($('#carrierID').val()=='42'){
 				$('#carrierDocEmbed').attr('src', $('#verizonTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonTermsURL').val());
-        $('#carrierDocHeader').html('Verizon Terms &amp; Conditions');
 			}
 			if ($('#carrierID').val()=='109'){
-      $('#carrierDocHeader').html('AT&amp;T Terms &amp; Conditions');
 				$('#carrierDocEmbed').attr('src', $('#attTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#attTermsURL').val());
 			}
@@ -133,7 +125,6 @@ font-weight:normal;
 		
 		$('#agreeToCustomerLetter').click( function() {
 			$('#docClicked').val("agreeToCustomerLetter");
-      $('#carrierDocHeader').html('Costco Wireless Customer Letter');
 			if ($('#carrierID').val()=='42'){
 				$('#carrierDocEmbed').attr('src', $('#costcoVerizonTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#costcoVerizonTermsURL').val());
@@ -205,9 +196,6 @@ font-weight:normal;
         <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
         <button type="submit" class="btn btn-primary continue">Continue</button>
       </div>
-      
-      
-
       <h4>
         <a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a>
       </h4>
@@ -318,14 +306,14 @@ font-weight:normal;
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" id="carrierDocHeader">#carrierName# Header</h4>
+        <h4 class="modal-title">#carrierName# Header</h4>
       </div>
       <div class="modal-body">
-        <iframe id="carrierDocEmbed" src="" style="width:100%;height:100%;"></iframe>
-		  </div>
+		    <iframe id="carrierDocEmbed" src="" style="width:100%;height:100%;"></iframe>
+      </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      	<button type="button" id="printButton" class="btn btn-default">Print Terms & Conditions</button>
+      	<button type="button" id="printButton" class="btn btn-default">Print Details</button>
         <button type="button" id="agreeButton" class="btn btn-default" data-dismiss="modal">Agree</button>
       </div>
     </div>

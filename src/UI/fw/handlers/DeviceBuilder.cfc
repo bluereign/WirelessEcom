@@ -369,13 +369,13 @@
         }
       }
 
-      if ( structKeyExists(rc,"hasDeclinedDeviceProtection") and rc.hasDeclinedDeviceProtection ) {
-        session.hasDeclinedDeviceProtection = 1;
-      }
-
       if ( !structKeyExists(session,"hasDeclinedDeviceProtection") ) {
-        session.hasDeclinedDeviceProtection = 0;
+        session.hasDeclinedDeviceProtection = "";
       }
+      if ( structKeyExists(rc,"hasDeclinedDeviceProtection") and rc.hasDeclinedDeviceProtection ) {
+        session.hasDeclinedDeviceProtection = listAppend(session.hasDeclinedDeviceProtection,rc.hasDeclinedDeviceProtection);
+      }
+      
 
       // now, get the cartline warranty.
       // prc.warranty = session.dBuilderCartFacade.getWarranty(rc.cartLineNumber);
@@ -764,8 +764,6 @@
         // <end tally box
       }
       
-
-      
       // UPDATE CART TOTALS:
       if ( session.cartHelper.hasSelectedFeatures() ) {
         prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices();
@@ -1014,7 +1012,6 @@
     <cfargument name="prc">
     <cfset var servicesArgs = {} />
     <cfparam name="rc.isDownPaymentApproved" default="0" />
-    <cfparam name="rc.isOptionalDownPaymentAdded" default="0" />
 
     <cfscript>
       // get all warranties for this device:
@@ -1030,9 +1027,20 @@
         servicesArgs.carrierId = prc.carrierGuidAtt;
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
         servicesArgs.carrierId = prc.carrierGuidVzw;
-      }
+      }      
 
       prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = servicesArgs);
+
+      // get payment options
+      if ( isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 ) {
+        prc.downPayment = prc.subscriber.downPayment;
+      } else {
+        prc.downPayment = prc.productData.FinancedFullRetailPrice * 0.3;
+      }
+      prc.dueMonthlyFinanced24AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade");
+      prc.dueMonthlyFinanced18AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade");
+      prc.dueMonthlyFinanced12AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade");
+
     </cfscript>
   </cffunction>
 
@@ -1303,7 +1311,10 @@
           // <end REQUIRED SERVICES
 
         }
+      } else {
+        prc.showCheckoutnowButton = false;
       }
+
 
       // error if the cart contains a family plan but appears to have fewer than 2 lines on non-shared plans:
       if ( session.cart.getFamilyPlan().hasBeenSelected() && !session.cart.getFamilyPlan().getIsShared() && arrayLen(prc.cartLines) lt 2 ) {
@@ -1367,13 +1378,14 @@
       prc.zipcode = session.cart.getZipcode();
 
       // remove carrierObj from session: 
-      carrierObjExists = structdelete(session, 'carrierObj', true);
+      structDelete(session, 'carrierObj', true);
+      structDelete(session,"hasDeclinedDeviceProtection", true);
+      structDelete(session,"listRequiredServices", true);
 
       // reinitialize the cart
       session.cart = createObject('component','cfc.model.cart').init();
       session.cartHelper = createObject('component','cfc.model.carthelper').init();
       session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
-      session.listRequiredServices = "";
 
 
       // reset the session zipcode

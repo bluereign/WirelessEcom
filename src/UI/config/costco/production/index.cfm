@@ -45,7 +45,7 @@
 	request.config.customerServiceEmail = "onlinesupport@wirelessadvocates.com";
 
 	//Display configs
-	request.config.CartReviewShippingDisplayName = 'INCLUDED';
+	request.config.CartReviewShippingDisplayName = 'FREE';
 
 	//Tax service
 	request.config.InvoiceNumberPrefix = "";

@@ -94,48 +94,121 @@
 		<cfif structKeyExists(arguments,"subscriberNumber") is false>
 			<cfreturn "Error: arguments.SubscriberNumber is missing" />
 		</cfif>
-		<cfif structKeyExists(arguments,"productid") is false>
+		<cfif structKeyExists(arguments,"productid") is false AND structKeyExists(arguments,"imeiType") is false>
 			<cfreturn "Error: arguments.productid is missing" />
 		</cfif>
 
 		<!--- Loop thru the subscribers and find the correct entry --->
-		<cfset local.subscriber = structNew() />
+<!---		<cfset local.subscriber = structNew() />
 		<cfloop array="#session.carrierFacade.accountResp.account.subscribers#" index="local.s">
 			<cfif local.s.number is arguments.subscriberNumber>
 				<cfset local.subscriber = local.s />
 				<cfbreak/>
 			</cfif>
-		</cfloop>
+		</cfloop>--->
 		
 		<!--- Used passed productid to retrieve the IMEI type --->
-		<cfif structKeyExists(arguments,"productid") >
+		<cfif structKeyExists(arguments,"imeiType") >
+			<cfset local.imeiType = arguments.ImeiType />
+		<cfelseif structKeyExists(arguments,"productid") >
 			<cfset local.qphone = application.model.Phone.getByFilter(idList = arguments.productid) />
 			<cfif local.qphone.recordcount is 1 and local.qphone.ImeiType is not "">
 					<cfset local.imeiType = local.qphone.ImeiType />
 			</cfif>
 		</cfif>
 		
-		<cfset local.incompatibleOffer_args = {
-			subscriberNumber = #arguments.subscriberNumber#,
-			planInfo = #local.subscriber.planInfo#,
-			BillingMarketCode = #session.carrierfacade.accountresp.account.billingMarketCode#,
-			ImeiType = #local.imeiType#,
-			Channel = #AttCarrierHelper.getChannelValue()#
-		} />
+		<!--- See if we already have the subscriberNumber/ImeiType cached. If yes, just return --->
+		<!---<cfset local.subscriberNumbers = getEligibleSubscriberList() />--->
+		<cfset local.ImeiTypes = getIncompatibleOffersImeiTypes() />
+		<cfif listfind(local.ImeiTypes,local.imeiType)>
+			<cfreturn "Subscriber Number/ImeiType already in cache" />
+		</cfif> 
 
-		<cfset local.body = serializeJSonAddReferenceNumber(local.incompatibleOffer_args) />	
-		<!--- save the request to the session --->
-		<cfset saveToSession(local.incompatibleOffer_args,"IncompatibleOfferRequest") />	
+		<cfset local.eligibleCount = 0 />
+		<cfloop list="#local.ImeiTypes#" index="local.i">
+			<cfloop array="#session.carrierfacade.accountResp.Account.subscribers#" index="local.s">	
+				<cfif local.s.upgradeInfo.isEligible>	
+					<cfset local.eligibleCount = local.eligibleCount+1 />
+					<cfset local.incompatibleOffer_args = {
+						subscriberNumber = #local.s.number#,
+						planInfo = #local.s.planInfo#,
+						BillingMarketCode = #session.carrierfacade.accountresp.account.billingMarketCode#,
+						ImeiType = #local.imeiType#,
+						Channel = #AttCarrierHelper.getChannelValue()#
+					} />
 			
-		<cfhttp url="#variables.CarrierServiceURL#/IncompatibleOffer" method="Post" result="local.cfhttp">
-			<cfhttpparam type="header" name="Content-Type" value="application/json" />
-    		<cfhttpparam type="body" value="#local.body#">
-		</cfhttp>
+					<cfset local.body = serializeJSonAddReferenceNumber(local.incompatibleOffer_args) />	
+					<!--- save the request to the session --->
+					<cfset saveToSession(local.incompatibleOffer_args,"IncompatibleOfferRequest") />	
+				
+					<cfhttp url="#variables.CarrierServiceURL#/IncompatibleOffer" method="Post" result="local.cfhttp">
+						<cfhttpparam type="header" name="Content-Type" value="application/json" />
+			    		<cfhttpparam type="body" value="#local.body#">
+					</cfhttp>
+					
+					<!--- create the carrier response --->
+					<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttIncompatibleOfferCarrierResponse').init() />
+					<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+				
+					<!--- store the retrieved incompatible offers in the accountResp structure --->
+					<cfset arrayAppend(session.carrierfacade.accountResp.IncompatibleOffers,local.carrierResponse.getResponse())	/>			
+						
+				</cfif>
+			</cfloop>
+		</cfloop>
 		
-		<!--- create the carrier response --->
-		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttIncompatibleOfferCarrierResponse').init() />
-		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
-		<cfreturn processResponse(local.carrierResponse) />	
+		<cfif not structKeyExists(local,"carrierResponse") >
+			<cfset local.carrierResponse = structNew() />
+			<cfset local.carrierResponse.errorMessage = "No eligible subscribers" />
+		</cfif>
+		<cfreturn local.carrierResponse />
+	</cffunction>
+	
+	<!------------------------------------------------------------------------------------------------------- 
+		Return a list of eligible subscribers
+	-------------------------------------------------------------------------------------------------------->
+	<cffunction name="getEligibleSubscriberList" output="false" access="public" returntype="string">
+		
+		<cfset var local = structNew() />
+		
+		<!--- make sure we have a list of subscribers to search --->
+		<cfif isDefined("session.carrierfacade.accountresp.subscribers") is false or arrayIsEmpty(session.carrierfacade.accountresp.subscribers) >
+			<cfreturn ""/>
+		</cfif>
+		
+		<!--- search the list of subscribers for those that are upgrade eligible --->
+		<cfset local.eligibleSubscribers = "" />
+		<cfloop array="#session.carrierfacade.accountresp.subscribers#" index="local.s">
+			<cfif local.s.upgradeInfo.IsEligible>
+				<cfset local.eligibleSubscribers = listappend(local.eligibleSubscribers,local.s.number) />
+			</cfif>
+		</cfloop>
+		
+		<cfreturn local.eligibleSubscribers />
+		
+	</cffunction>
+	
+	<!------------------------------------------------------------------------------------------------------- 
+		Return a list of current ImeiTypes in IncompatibleOffers
+	-------------------------------------------------------------------------------------------------------->
+	<cffunction name="getIncompatibleOffersImeiTypes" output="false" access="public" returntype="string">
+		
+		<cfset var local = structNew() />
+		
+		<!--- make sure we have a list of subscribers to search --->
+		<cfif isDefined("session.carrierfacade.accountresp.IncompatibleOffers") is false or arrayIsEmpty(session.carrierfacade.accountresp.incompatibleOffers) >
+			<cfreturn ""/>
+		</cfif>
+		
+		<!---  search thru and find a list of unique IMEITypes --->
+		<cfset local.imeiTypes = "" />
+		<cfloop array="#session.carrierfacade.accountresp.incompatibleOffers#" index="local.i">
+			<cfif not listfind(local.imeiTypes,local.i.imeiType)>
+				<cfset local.imeiTypes = listappend(local.imeiTypes,local.i.imeiType) />
+			</cfif>
+		</cfloop>
+		
+		<cfreturn local.imeiTypes />
 		
 	</cffunction>
 	
@@ -173,23 +246,19 @@
 			<cfreturn "Argument 'agreementEntry' is missing" />
 		</cfif>
 		
-		<cftry>
-			<cfstoredproc datasource="wirelessadvocates" procedure="service.AttFinanceAgreementSave" result="local.result">
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.orderid#" > 
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
-				<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#arguments.installmentPlanId#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#arguments.subscriberNumber#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.accountNumber)#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.nameOnAccount)#" > 
-				<cfprocparam cfsqltype="CF_SQL_DATE" value="#arguments.acceptanceDate#" > 
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.channel#" > 
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.agreementTypeId#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.agreementEntry)#" > 
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="1" > <!--- Processing Status, Always 1 --->
-			</cfstoredproc>
-		<cfcatch type="database" >
-		</cfcatch> 
-		</cftry>
+		<cfstoredproc datasource="wirelessadvocates" procedure="service.AttFinanceAgreementSave" result="local.result">
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.orderid#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
+			<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#arguments.installmentPlanId#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#arguments.subscriberNumber#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.accountNumber)#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.nameOnAccount)#" > 
+			<cfprocparam cfsqltype="CF_SQL_DATE" value="#arguments.acceptanceDate#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.channel#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.agreementTypeId#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.agreementEntry)#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="1" > <!--- Processing Status, Always 1 --->
+		</cfstoredproc>
 		
 		<cfreturn "success" />
 	</cffunction>

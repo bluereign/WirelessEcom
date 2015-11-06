@@ -14,6 +14,24 @@
 	<!--------------------------------------------------------------------------------------------------
 		Helper Functions		
 	 --------------------------------------------------------------------------------------------------->
+	 
+	<cffunction name="conflictsResolvable" output="false" access="public" returntype="boolean">
+		<cfargument name="carrierid" type="numeric" required="true" > 
+		<cfargument name="subscriberNumber" type="string" required="true" > 
+		<cfargument name="ImeiType" type="string" required="true" > 
+		<cfset var local = structNew() />
+		
+		<cfif isdefined("session.carrierfacade.accountResp.IncompatibleOffers")>
+			<cfloop array="#session.carrierfacade.accountResp.IncompatibleOffers#" index="local.io">
+				<cfif local.io.subscriberNumber is arguments.subscriberNumber AND local.io.ImeiType is arguments.imeiType>
+					<cfreturn local.io.conflictsResolvable />
+				</cfif>
+			</cfloop>
+		</cfif>
+		
+		<cfreturn false />
+		
+	</cffunction>	
 	
 	<cffunction name="getSubmitCompletedOrderRequest" output="false" access="public" returntype="struct">
 		<cfset var local = structNew() />
@@ -92,16 +110,9 @@
 		<!---<cfset local.uuid = createUUID() />
 		<cfset local.orderItem.Identifier = left(local.uuid,19) & mid(local.uuid,20,4) & '-' & right(local.uuid,12) />--->
 		<cfset local.orderItem.Identifier = createGUID() />
-		<cfset local.orderItem.ApprovalNumber = 0 /> <!--- should come from accountresp.account.subscribers[x].upgradeQualifications.approvalNumber --->
 		<cfset local.orderitem.RequestType = getRequestType(session.order.getActivationTypeName()) />
 		<cfset local.orderitem.FinanceAgreementItem = arguments.faai />
-		<cfset qualificationSearchArgs = {
-			subscriberNumber = #arguments.faai.AttDeviceOrderItem.subscriberNumber.SubscriberNumber#,
-			MinimumCommitment = #faai.AttDeviceOrderItem.contractTerm#,
-			ImeiType = #faai.AttDeviceOrderItem.DeviceInfo.category#,	
-			OfferCategory = "NE"		
-		} />
-		<cfset local.orderItem.UpgradeQualification = getBaseOfferQualificationDetails(arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications.qualificationDetails[1].BaseOfferQualificationDetails,qualificationSearchArgs)  />
+		<cfset local.orderItem.UpgradeQualification = arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications />
 		<cfset local.Imei = local.wirelessLines[arguments.LineNo].getImei() />
 		<cfset local.Sim = local.wirelessLines[arguments.LineNo].getSim() />
 		<cfif local.Imei is "">
@@ -113,22 +124,8 @@
 		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.deviceInfo.imei = local.Imei />
 		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.deviceInfo.sim = local.Sim />
 		<cfreturn local.orderItem />
-	</cffunction>
-	
-	<cffunction name="getBaseOfferQualificationDetails" returnType="struct" access="public" >
-		<cfargument name="qualifications" type="array" required="true" />
-		<cfargument name="searchArgs" type="struct" required="true"/>
-		<cfset var local = structNew() />
 		
-		<cfloop array="#qualifications#" index="local.q">
-			<cfif local.q.MinimumCommitment is arguments.searchArgs.minimumCommitment AND Listfind(local.q.ImeiType,arguments.searchArgs.ImeiType) AND local.q.OfferCategory is arguments.searchArgs.offerCategory >
-				<cfreturn local.q />
-			</cfif>	 
-		</cfloop>
 		
-		<cfset local.default = structNew() />
-		<cfset local.default.errorMsg = "Unable to find BaseOfferQualficiationDetails for subscriberNumber=#arguments.searchArgs.subscriberNumber# Term=#arguments.searchArgs.minimumCommitment# ImeiType=#arguments.searchArgs.ImeiType#" />
-		<cfreturn local.default />
 	</cffunction>
 	
 	<cffunction name="getRequestType" returnType="numeric" access="public" >
@@ -279,7 +276,7 @@
 		<cfset var local = structNew() />
 		<cfset local.deviceInfo = structNew()/>
 		<cfset local.device = application.model.dBuilderCartFacade.getDevice(arguments.cartLineNo) />
-		<cfset local.deviceInfo.FullRetailPrice = local.device.productDetail.getFinancedFullRetailPrice() />
+		<cfset local.deviceInfo.FullRetailPrice = local.device.productDetail.getRetailPrice() />
 		<cfset local.deviceInfo.Family = local.device.productDetail.getManufacturerName() />
 		<cfset local.deviceInfo.Identifier = local.device.productDetail.getItemId() />
 		<cfset local.deviceInfo.Category =  local.device.productDetail.getImeiType() />
@@ -294,9 +291,7 @@
 		<cfset local.deviceDetail = structNew()/>
 		<cfset local.device = application.model.dBuilderCartFacade.getDevice(arguments.cartLineNo) />
 		<cfset local.deviceDetail.contractTerm = local.device.contractMonths />
-		<!---<cfset local.cartline.getPhone().getPrices().setCOGS(application.model.Product.getCOGS(local.cartline.getPhone().getproductId())) />--->
-		<cfset local.deviceDetail.MSRP = local.device.productDetail.getFinancedFullRetailPrice() />
-
+		<cfset local.deviceDetail.MSRP = local.device.productDetail.getRetailPrice() />
 		<cfset local.deviceDetail.DownPayment = local.cartLine.getPhone().getPrices().getDownPaymentAmount() /> 
 		<cfreturn local.deviceDetail />
 	</cffunction>

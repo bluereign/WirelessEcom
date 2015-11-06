@@ -23,6 +23,14 @@
 	<br/>financeAgreementRespObj:
 	<cfdump var="#rc.financeAgreementRespObj.getResponse()#" expand="false" />
 </div>
+
+<br><Form action="#event.buildLink('testFullApi.IncompatibleOffer_input')#" method="post" target="_blank">
+	<input type="submit" value="Generate an Incompatible Offer"></submit> 
+	</form>
+<br><Form action="#event.buildLink('testFullApi.CreateOrder')#" method="post" target="_blank">
+	<input type="submit" value="Create Order"></submit> 
+	</form>
+
 <br><Form action="#event.buildLink('testFullApi.FinanceAgreement')#" method="post" target="_blank">
 	<input type="hidden" name="pdfEncoded" value="#rc.financeAgreementRespObj.getResponse().FinanceAgreement#"/>
 	<input type="submit" value="View Finance Agreement PDF"></submit> 
@@ -32,6 +40,7 @@
 	</form>
 </h2>
 
+<cfif isDefined("rc.financeAgreementRespObject")>
 <br><Form action="#event.buildLink('testFullApi.SaveFinanceAgreement')#" method="post" target="_blank">
 	<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>
 	<input type="hidden" name="installmentPlanId" value="#trim(rc.financeAgreementRespObj.getResponse().AgreementItems[1].InstallmentPLanId)#" />
@@ -41,6 +50,8 @@
 	<input type="hidden" name="agreementEntry" value="#trim(rc.financeAgreementRespObj.getResponse().FinanceAgreement)#"/>
 	<input type="submit" value="Save the Finance Agreement"></submit> 
 	</form>
+</cfif>
+
 	
 <br><Form action="#event.buildLink('testFullApi.SubmitOrder')#" method="post" target="_blank">
 	<input type="hidden" name="carrierid" value="#trim(rc.accountRespObj.getCarrierId())#"/>

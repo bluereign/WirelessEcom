@@ -40,30 +40,30 @@
               </cfif>
             </cfloop>
             <cfif prc.subscribers[i].getIsEligible()>
-            <div class="col-md-4 col-sm-3 col-xs-8">
-              <div class="product">
-                <div class="phone info">#prc.subscribers[i].phoneNumber#</div>
-                <cfif prc.subscribers[i].getIsEligible()>
-                  <cfif local.isSubscriberIndexTaken>
-                    <button class="btn btn-sm btn-primary" disabled="disabled"><cfif i eq prc.cartLine.getSubscriberIndex()>Selected<cfelse>In Cart</cfif></button>
-                  <cfelse>
-                    <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade This Line</button>
-                  </cfif>
-                <cfelse>
-                  <button class="btn btn-sm btn-primary" disabled="disabled">
-                    <cfif isDate(prc.subscribers[i].getEligibilityDate()) and dateCompare(prc.subscribers[i].getEligibilityDate(),now()) gte 0>
-                      Eligible #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
+              <div class="col-md-4 col-sm-3 col-xs-8">
+                <div class="product">
+                  <div class="phone info">#prc.subscribers[i].phoneNumber#</div>
+                  <cfif prc.subscribers[i].getIsEligible()>
+                    <cfif local.isSubscriberIndexTaken>
+                      <button class="btn btn-sm btn-primary" disabled="disabled"><cfif i eq prc.cartLine.getSubscriberIndex()>Selected<cfelse>In Cart</cfif></button>
                     <cfelse>
-                      Ineligible
+                      <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade This Line</button>
                     </cfif>
-                  </button>
-                </cfif>
+                  <cfelse>
+                    <button class="btn btn-sm btn-primary" disabled="disabled">
+                      <cfif isDate(prc.subscribers[i].getEligibilityDate()) and dateCompare(prc.subscribers[i].getEligibilityDate(),now()) gte 0>
+                        Eligible #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
+                      <cfelse>
+                        Ineligible
+                      </cfif>
+                    </button>
+                  </cfif>
+                </div>
               </div>
-            </div>
             </cfif>
           </cfloop>
           <!-- End output upgrade eligible lines-->
-          <!-- output upgrade eligible lines-->
+          <!-- Start output upgrade non eligible lines-->
           <cfloop index="i" from="1" to="#arrayLen(prc.subscribers)#">
             <cfset prc.subscribers[i].phoneNumber = prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[i].getNumber())) />
             <cfset local.isSubscriberIndexTaken = false>
@@ -73,33 +73,31 @@
                 <cfbreak>
               </cfif>
             </cfloop>
-          
             <cfif !prc.subscribers[i].getIsEligible()>
-            <div class="col-md-4 col-sm-3 col-xs-8">
-              <div class="product">
-                <div class="phone info">#prc.subscribers[i].phoneNumber#</div>
-                <cfif prc.subscribers[i].getIsEligible()>
-                  <cfif local.isSubscriberIndexTaken>
-                    <button class="btn btn-sm btn-primary" disabled="disabled"><cfif i eq prc.cartLine.getSubscriberIndex()>Selected<cfelse>In Cart</cfif></button>
-                  <cfelse>
-                    <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade This Line</button>
-                  </cfif>
-                <cfelse>
-                  <button class="btn btn-sm btn-primary" disabled="disabled">
-                    <cfif isDate(prc.subscribers[i].getEligibilityDate()) and dateCompare(prc.subscribers[i].getEligibilityDate(),now()) gte 0>
-                      Eligible #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
+              <div class="col-md-4 col-sm-3 col-xs-8">
+                <div class="product">
+                  <div class="phone info">#prc.subscribers[i].phoneNumber#</div>
+                  <cfif prc.subscribers[i].getIsEligible()>
+                    <cfif local.isSubscriberIndexTaken>
+                      <button class="btn btn-sm btn-primary" disabled="disabled"><cfif i eq prc.cartLine.getSubscriberIndex()>Selected<cfelse>In Cart</cfif></button>
                     <cfelse>
-                      Ineligible
+                      <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade This Line</button>
                     </cfif>
-                  </button>
-                </cfif>
+                  <cfelse>
+                    <button class="btn btn-sm btn-primary" disabled="disabled">
+                      <cfif isDate(prc.subscribers[i].getEligibilityDate()) and dateCompare(prc.subscribers[i].getEligibilityDate(),now()) gte 0>
+                        Eligible #DateFormat(prc.subscribers[i].getEligibilityDate(), "m/d/yyyy")#
+                      <cfelse>
+                        Ineligible
+                      </cfif>
+                    </button>
+                  </cfif>
+                </div>
               </div>
-            </div>
             </cfif>
           </cfloop>
-          <!-- End output upgrade eligible lines-->
+          <!-- Start output upgrade non eligible lines-->
           
-
           <cfif structKeyExists(prc,"cartLine") and isValid("integer",prc.cartLine.getSubscriberIndex()) and prc.cartLine.getSubscriberIndex() gt 0>
             <div class="right">
               <a href="#prc.prevStep#">BACK</a>
