@@ -60,7 +60,7 @@
         <ul>
           <li><a href="/index.cfm/go/content/do/customerService" target="_blank">Call us at #request.config.customerServiceNumber#</a></li>
           <li><a href="##">Chat with one of our representatives</a></li>
-          <li><a href="mailto:#requset.config.CustomerCareEmail#">E-mail one of our experts</a></li>
+          <li><a href="mailto:#request.config.CustomerCareEmail#">E-mail one of our experts</a></li>
           <li><a href="##">Frequently Asked Questions</a></li>
         </ul>
         <h4>Our Signature Promise</h4>
