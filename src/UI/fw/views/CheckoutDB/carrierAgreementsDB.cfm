@@ -79,11 +79,13 @@ padding-left:5px;
 				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
+        $('#carrierDocHeader').html('Verizon Contract');
 			}
 			if ($('#carrierID').val()=='109'){
 				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
+        $('#carrierDocHeader').html('AT&amp;T Contract');
 			}
 		})
 		
@@ -93,11 +95,13 @@ padding-left:5px;
 				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
+        $('#carrierDocHeader').html('Verizon Contract Extension');
 			}
 			if ($('#carrierID').val()=='109'){
 				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
+        $('#carrierDocHeader').html('AT&amp;T Contract Extension');
 			}
 		})
 		
@@ -110,6 +114,7 @@ padding-left:5px;
 				$('#carrierDoc').attr('data', $('#pdfURL').val());
 				$('#carrierDocEmbed').attr('src', $('#pdfURL').val());
 				$('#confirmationPrint').attr('src', $('#pdfURL').val());
+        $('#carrierDocHeader').html('AT&amp;T Device Payment Plan');
 			}
 		})
 		
@@ -119,8 +124,10 @@ padding-left:5px;
 				$('#carrierDoc').attr('data', $('#verizonTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonTermsURL').val());
+        $('#carrierDocHeader').html('Verizon Terms &amp; Conditions');
 			}
 			if ($('#carrierID').val()=='109'){
+      $('#carrierDocHeader').html('AT&amp;T Terms &amp; Conditions');
 				$('#carrierDoc').attr('data', $('#attTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#attTermsURL').val());
@@ -129,6 +136,7 @@ padding-left:5px;
 		
 		$('#agreeToCustomerLetter').click( function() {
 			$('#docClicked').val("agreeToCustomerLetter");
+      $('#carrierDocHeader').html('Costco Wireless Customer Letter');
 			if ($('#carrierID').val()=='42'){
 				$('#carrierDoc').attr('data', $('#costcoVerizonTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#costcoVerizonTermsURL').val());
@@ -315,7 +323,7 @@ padding-left:5px;
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">#carrierName# Header</h4>
+        <h4 class="modal-title" id="carrierDocHeader">#carrierName# Header</h4>
       </div>
       <div class="modal-body">
 		<object id="carrierDoc" name="carrierDoc"  data="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" style="width:100%;height:100%">
