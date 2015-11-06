@@ -473,7 +473,7 @@
         <h4>Have Questions?</h4>
         <ul>
           <li><a href="/index.cfm/go/content/do/customerService" target="_blank">Call us at #request.config.customerServiceNumber#</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ" target="_blank">E-mail one of our experts</a></li>
+          <li><a href="mailto:#request.config.CustomerCareEmail#" target="_blank">E-mail one of our experts</a></li>
           <li><a href="/index.cfm/go/content/do/FAQ" target="_blank">Frequently Asked Questions</a></li>
         </ul>
 	  </div>
