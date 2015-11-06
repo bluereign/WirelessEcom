@@ -147,7 +147,8 @@
 		<cfargument name="IsAfoApoAddress" type="boolean" required="false" />
 		<cfargument name="IsCartEligibleForPromoShipping" type="boolean" required="false" />
 		<cfargument name="activeOnly" type="boolean" default="true" />
-		
+    <cfargument name="supressFreeText" type="boolean" default="false" />
+    
 		<cfset var qShipMethods = '' />
 
 		<cfquery name="qShipMethods" datasource="#application.dsn.wirelessAdvocates#">
@@ -155,10 +156,18 @@
 				ShipMethodId
 				, GersShipMethodId
 				<cfif structKeyExists( arguments, 'IsCartEligibleForPromoShipping') && arguments.IsCartEligibleForPromoShipping>
-					, PromoDisplayName DisplayName
+					<cfif arguments.supressFreeText>
+            , replace(PromoDisplayName, 'FREE', 'INCLUDED') DisplayName
+          <cfelse>
+            , PromoDisplayName DisplayName
+          </cfif>
 					, PromoPrice DefaultFixedCost
 				<cfelse>
-					, DisplayName
+					<cfif arguments.supressFreeText>
+            , replace(DisplayName, 'FREE', 'INCLUDED') DisplayName
+          <cfelse>
+            , DisplayName
+          </cfif>
 					, DefaultFixedCost
 				</cfif>
 				,IsActive

@@ -482,7 +482,7 @@
 	  <div class="sidebar">
         <h4>Member Benefits</h4>
         <ul>
-          <li><a href="/index.cfm/go/content/do/shipping" target="_blank">Free UPS ground shipping</a></li>
+          <li><a href="/index.cfm/go/content/do/shipping" target="_blank">#request.config.CartReviewShippingDisplayName# UPS ground shipping</a></li>
           <li><a href="/index.cfm/go/content/do/FAQ##return_phone" target="_blank">90 day return policy</a></li>
           <li><a href="##" data-toggle="modal" data-target="##accessoryKitModal">Member Benefit Accessory Kit</a></li>
         </ul>

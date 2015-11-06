@@ -65,7 +65,7 @@
         </ul>
         <h4>Our Signature Promise</h4>
         <ul>
-          <li><a href="##">Free UPS ground shipping</a></li>
+          <li><a href="##">Included UPS ground shipping</a></li>
           <li><a href="##">90 day return policy</a></li>
           <li><a href="##">Return in store</a></li>
         </ul>
