@@ -154,7 +154,7 @@
   <script>
     $('##btnConfirmContinue').click(function() {
       var form = $("##protectionForm");
-      $('##hasDeclinedDeviceProtection').val(1);
+      $('##hasDeclinedDeviceProtection').val(#rc.cartLineNumber#);
       form.attr('action', '#prc.nextStep#');
       form.submit();
     });
