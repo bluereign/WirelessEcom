@@ -325,7 +325,7 @@ font-weight:normal;
 		  </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      	<button type="button" id="printButton" class="btn btn-default">Print Terms & Conditions</button>
+      	<button type="button" id="printButton" class="btn btn-default">Print Details</button>
         <button type="button" id="agreeButton" class="btn btn-default" data-dismiss="modal">Agree</button>
       </div>
     </div>
