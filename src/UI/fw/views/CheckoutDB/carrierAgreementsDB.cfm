@@ -21,6 +21,9 @@ form .form-inline label { width:auto;}
 color:red;
 padding-left:5px;
 }
+label {
+font-weight: normal;
+}
 </style>
 <script type="text/javascript">
 	jQuery(document).ready( function($) {
@@ -76,28 +79,28 @@ padding-left:5px;
 		$('#agreeToContractDoc').click( function() {
 			$('#docClicked').val("agreeToContract");
 			if ($('#carrierID').val()=='42'){
-				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
+         $('#carrierDocHeader').html('Verizon Contract');
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
+        $('#carrierDocHeader').html('AT&amp;T Contract');
 			}
 		})
 		
 		$('#agreeToContractExtension').click( function() {
 			$('#docClicked').val("agreeToContractExtension");
 			if ($('#carrierID').val()=='42'){
-				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
+        $('#carrierDocHeader').html('Verizon Contract Extension');
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
+        $('#carrierDocHeader').html('AT&amp;T Contract Extension');
 			}
 		})
 		
@@ -107,21 +110,21 @@ padding-left:5px;
 				
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#pdfURL').val());
 				$('#carrierDocEmbed').attr('src', $('#pdfURL').val());
 				$('#confirmationPrint').attr('src', $('#pdfURL').val());
+        $('#carrierDocHeader').html('AT&amp;T Device Payment Plan');
 			}
 		})
 		
 		$('#agreeToCarrierTermsAndConditions').click( function() {
 			$('#docClicked').val("agreeToCarrierTermsAndConditions");
 			if ($('#carrierID').val()=='42'){
-				$('#carrierDoc').attr('data', $('#verizonTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonTermsURL').val());
+        $('#carrierDocHeader').html('Verizon Terms &amp; Conditions');
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#attTermsURL').val());
+        $('#carrierDocHeader').html('AT&amp;T Terms &amp; Conditions');
 				$('#carrierDocEmbed').attr('src', $('#attTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#attTermsURL').val());
 			}
@@ -129,13 +132,12 @@ padding-left:5px;
 		
 		$('#agreeToCustomerLetter').click( function() {
 			$('#docClicked').val("agreeToCustomerLetter");
+      $('#carrierDocHeader').html('Costco Wireless Customer Letter');
 			if ($('#carrierID').val()=='42'){
-				$('#carrierDoc').attr('data', $('#costcoVerizonTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#costcoVerizonTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#costcoVerizonTermsURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#costcoAttTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#costcoAttTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#costcoAttTermsURL').val());
 			}
@@ -188,14 +190,6 @@ padding-left:5px;
 
     <header class="main-header">
       <h1>#carrierName# Agreements</h1>
-      <p>The primary Account Holder's information is used to verify status and line availability.</p>
-    </header>
-    <form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
-      <div class="right">
-        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
-        <button type="submit" class="btn btn-primary continue">Continue</button>
-      </div>
-      
       <p>
 			  <cfif session.cart.getCarrierId() eq 42>
 				  After reviewing the following Terms & Conditions, check the corresponding boxes to agree to the #carrierName# and Costco Terms and Conditions. 
@@ -204,7 +198,12 @@ padding-left:5px;
 				  After reviewing the following sections, check the corresponding box to agree and continue.			
 			  </cfif>
 		  </p>
-
+    </header>
+    <form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
+      <div class="right">
+        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
+        <button type="submit" class="btn btn-primary continue">Continue</button>
+      </div>
       <h4>
         <a href="##" id="agreeToCustomerLetter" data-toggle="modal" data-target="##carrierDocModal">View Terms &amp; Conditions of the Costco Wireless Customer Letter</a>
       </h4>
@@ -309,22 +308,20 @@ padding-left:5px;
   
 	<!-- Modal -->
 <div id="carrierDocModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width:875px;">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">#carrierName# Header</h4>
+        <h4 class="modal-title" id="carrierDocHeader">#carrierName# Header</h4>
       </div>
       <div class="modal-body">
-		<object id="carrierDoc" name="carrierDoc"  data="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" style="width:100%;height:100%">
-        	<embed id="carrierDocEmbed" name="carrierDocEmbed" src="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" />
-    	</object>
+		    <iframe id="carrierDocEmbed" src="" style="width:100%;height:100%;"></iframe>
       </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      	<button type="button" id="printButton" class="btn btn-default">Print Terms & Conditions</button>
+      	<button type="button" id="printButton" class="btn btn-default">Print Details</button>
         <button type="button" id="agreeButton" class="btn btn-default" data-dismiss="modal">Agree</button>
       </div>
     </div>

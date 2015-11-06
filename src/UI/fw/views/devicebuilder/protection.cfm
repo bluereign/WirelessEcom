@@ -49,6 +49,8 @@
                 #prc.financeproductname#: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 24 Months
               </cfif>
 
+              </label>
+              <div style="padding-left:20px;">
               <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
                 CARRIER is requiring a down payment
                 <div class="checkbox">
@@ -59,14 +61,14 @@
                 </div>
               <cfelseif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade" and prc.downPayment>
                 <div class="checkbox">
-                  <label>
+                  <label style="width:350px;">
                     <input type="checkbox" value="1" name="isOptionalDownPaymentAdded" id="isOptionalDownPaymentAdded"  dollar-amount="#decimalFormat(prc.downPayment)#" <cfif prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt()>checked</cfif> >
                     Add an additional 30% down payment of #dollarFormat(prc.downPayment)# today
                   </label>
                 </div>
               </cfif>
-
-            </label>
+              </div>
+            
           </div>
           
         </section>

@@ -72,7 +72,7 @@
             <div class="row hidden-xs">
               <div class="head">
                 <div class="col-md-2">Item</div>
-                <div class="col-md-8"></div>
+                <div class="col-md-8">&nbsp;</div>
                 <div class="col-md-2">Quantity</div>
                 <div class="col-md-2">Monthly*</div>
                 <div class="col-md-2">Due Today*</div>
@@ -319,8 +319,9 @@
                         <cfif isArray(local.lineAccessories) and arrayLen(local.lineAccessories)>
                           <cfloop from="1" to="#arrayLen(local.lineAccessories)#" index="i">
               							<div class="row">
-              								<div class="col-md-10">Accessory: #local.lineAccessories[i].detailTitle# <cfif local.lineAccessories[i].qty gt 1> x #local.lineAccessories[i].qty#</cfif></div>
-              								<div class="col-md-3">&nbsp;</div>
+              								<div class="col-md-9">Accessory: #local.lineAccessories[i].detailTitle#</div>
+              								<div class="col-md-1">#local.lineAccessories[i].qty#</div>
+											<div class="col-md-3">&nbsp;</div>
               								<div class="col-md-3">#dollarFormat(local.lineAccessories[i].price_subTotal)#</div>
               							</div>
                           </cfloop>
@@ -473,8 +474,8 @@
       <div class="sidebar">
         <h4>Have Questions?</h4>
         <ul>
-          <li><a href="/index.cfm/go/content/do/customerService" target="_blank">Call us at 1-800-555-1212</a></li>
-          <li><a href="/index.cfm/go/content/do/FAQ" target="_blank">E-mail one of our experts</a></li>
+          <li><a href="/index.cfm/go/content/do/customerService" target="_blank">Call us at #request.config.customerServiceNumber#</a></li>
+          <li><a href="mailto:#requset.config.CustomerCareEmail#">E-mail one of our experts</a></li>
           <li><a href="/index.cfm/go/content/do/FAQ" target="_blank">Frequently Asked Questions</a></li>
         </ul>
 	  </div>
