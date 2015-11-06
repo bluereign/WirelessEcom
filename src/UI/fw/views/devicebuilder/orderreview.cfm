@@ -87,7 +87,7 @@
               </div>
             </cfif>
 
-            <!--- plan --->
+            <!--- <PLAN DETAILS --->
             <cfif isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
               <div class="row">
                 <div class="col-md-2 col-xs-6 item">
@@ -139,6 +139,7 @@
                 </div>
               </div>
             </cfif>
+            <!--- <end plan details --->
 
 
 
@@ -245,7 +246,7 @@
                   <div class="col-md-2 col-xs-16"></div>
                   <div class="col-md-14 col-xs-16">
 
-                    <!--- <PLAN DETAILS --->
+                    <!--- <DEVICE DETAILS --->
                     <div class="row">
                       <div class="collapse" id="devicedetails#local.iCartLine#">
                         <div class="row">
@@ -376,8 +377,8 @@
 
                       </div>
                     </div>
-
                     <!--- <end device details --->
+
                     <a role="button"
                       class="device-details collapsed"
                       data-toggle="collapse"
