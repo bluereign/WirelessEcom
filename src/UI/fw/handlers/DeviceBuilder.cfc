@@ -212,9 +212,9 @@
         }
 
         if (prc.productData.carrierId eq prc.carrierIdAtt) {
-          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
+          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
         } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
-          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
+          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
         }
 
 
@@ -814,12 +814,12 @@
 	  
       if (prc.productData.carrierId eq prc.carrierIdAtt) {
         prc.inputPinTooltipTitle = "If you don't have an AT&amp;T passcode or you've forgotten it, call 1-800-331-0500. AT&amp;T requires this passcode to verify your identity.";
-        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo.png";
+        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
         //TODO: Is this already in scope somewhere?
         prc.carrierName = "AT&amp;T";
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
         prc.inputPinTooltipTitle = "TODO: Get Info For VZW.";
-        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo.png";
+        prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
         //TODO: Is this already in scope somewhere?
         prc.carrierName = "Verizon";
       }
@@ -902,9 +902,9 @@
             session.cart.setCarrierId(session.carrierObj.getCarrierId());
 
             if (session.carrierObj.getCarrierId() eq prc.carrierIdAtt) {
-              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_logo_25.png";
+              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
             } else if (session.carrierObj.carrierId eq prc.carrierIdVzw) {
-              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_logo_25.png";
+              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
             }
 
             // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
