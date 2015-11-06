@@ -79,12 +79,10 @@ font-weight: normal;
 		$('#agreeToContractDoc').click( function() {
 			$('#docClicked').val("agreeToContract");
 			if ($('#carrierID').val()=='42'){
-				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
 			}
@@ -93,12 +91,10 @@ font-weight: normal;
 		$('#agreeToContractExtension').click( function() {
 			$('#docClicked').val("agreeToContractExtension");
 			if ($('#carrierID').val()=='42'){
-				$('#carrierDoc').attr('data', $('#verizonContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonContractExtensionURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#attContractExtensionURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attContractExtensionURL').val());
 				$('#confirmationPrint').attr('src', $('#attContractExtensionURL').val());
 			}
@@ -110,7 +106,6 @@ font-weight: normal;
 				
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#pdfURL').val());
 				$('#carrierDocEmbed').attr('src', $('#pdfURL').val());
 				$('#confirmationPrint').attr('src', $('#pdfURL').val());
 			}
@@ -119,12 +114,10 @@ font-weight: normal;
 		$('#agreeToCarrierTermsAndConditions').click( function() {
 			$('#docClicked').val("agreeToCarrierTermsAndConditions");
 			if ($('#carrierID').val()=='42'){
-				$('#carrierDoc').attr('data', $('#verizonTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#verizonTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#verizonTermsURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#attTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#attTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#attTermsURL').val());
 			}
@@ -133,12 +126,10 @@ font-weight: normal;
 		$('#agreeToCustomerLetter').click( function() {
 			$('#docClicked').val("agreeToCustomerLetter");
 			if ($('#carrierID').val()=='42'){
-				$('#carrierDoc').attr('data', $('#costcoVerizonTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#costcoVerizonTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#costcoVerizonTermsURL').val());
 			}
 			if ($('#carrierID').val()=='109'){
-				$('#carrierDoc').attr('data', $('#costcoAttTermsURL').val());
 				$('#carrierDocEmbed').attr('src', $('#costcoAttTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#costcoAttTermsURL').val());
 			}
@@ -309,7 +300,7 @@ font-weight: normal;
   
 	<!-- Modal -->
 <div id="carrierDocModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width:875px;">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -318,9 +309,7 @@ font-weight: normal;
         <h4 class="modal-title">#carrierName# Header</h4>
       </div>
       <div class="modal-body">
-		<object id="carrierDoc" name="carrierDoc"  data="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" style="width:100%;height:100%">
-        	<embed id="carrierDocEmbed" name="carrierDocEmbed" src="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" />
-    	</object>
+		    <iframe id="carrierDocEmbed" src="" style="width:100%;height:100%;"></iframe>
       </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
