@@ -973,7 +973,6 @@
 				
 				break;
 			case '109': //AT&T
-<<<<<<< HEAD
 			    //Handles Financed Phones
                 if (structKeyExists(form, 'purchaseType') and Form.purchaseType eq 'FP'){
                     local.args_complete = {
@@ -994,27 +993,6 @@
                     message = application.controller.AttActivationController.activateOrder( form.OrderId, form.requestedActivationDate );
                     break;
                 }
-=======
-				//Handles Financed Phones
-				if (structKeyExists(form, 'purchaseType') and Form.purchaseType eq 'FP'){
-					local.args_complete = {
-						carrierid = form.carrier,
-						orderid = FORM.orderId
-					};
-					
-					Order.load( FORM.OrderId );
-					session.order = Order;
-					
-					rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete);
-					rc.submitOrderRequest.carrierId = form.carrier;
-					rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest);
-					message = "IS ACTIVATED = " & rc.submitCompletedOrderResponse.getResult() & "  REASON = " & rc.submitCompletedOrderResponse.getResultDetail();
-					break;
-				} else {
-					message = application.controller.AttActivationController.activateOrder( form.OrderId, form.requestedActivationDate );
-					break;
-				}
->>>>>>> 9e7269f4fcd954976c2c5e374f9ef1ef65cc228b
 			case '128': //T-Mobile
 				wirelessAccount = createObject('component', 'cfc.model.WirelessAccount').init();
 				wirelessAccount.load(request.p.wirelessAccountId);
