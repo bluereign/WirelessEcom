@@ -173,23 +173,19 @@
 			<cfreturn "Argument 'agreementEntry' is missing" />
 		</cfif>
 		
-		<cftry>
-			<cfstoredproc datasource="wirelessadvocates" procedure="service.AttFinanceAgreementSave" result="local.result">
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.orderid#" > 
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
-				<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#arguments.installmentPlanId#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#arguments.subscriberNumber#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.accountNumber)#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.nameOnAccount)#" > 
-				<cfprocparam cfsqltype="CF_SQL_DATE" value="#arguments.acceptanceDate#" > 
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.channel#" > 
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.agreementTypeId#" > 
-				<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.agreementEntry)#" > 
-				<cfprocparam cfsqltype="CF_SQL_INTEGER" value="1" > <!--- Processing Status, Always 1 --->
-			</cfstoredproc>
-		<cfcatch type="database" >
-		</cfcatch> 
-		</cftry>
+		<cfstoredproc datasource="wirelessadvocates" procedure="service.AttFinanceAgreementSave" result="local.result">
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.orderid#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="109" > 
+			<cfprocparam cfsqltype="CF_SQL_BIGINT" value="#arguments.installmentPlanId#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#arguments.subscriberNumber#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.accountNumber)#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.nameOnAccount)#" > 
+			<cfprocparam cfsqltype="CF_SQL_DATE" value="#arguments.acceptanceDate#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.channel#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.agreementTypeId#" > 
+			<cfprocparam cfsqltype="CF_SQL_NVARCHAR" value="#trim(arguments.agreementEntry)#" > 
+			<cfprocparam cfsqltype="CF_SQL_INTEGER" value="1" > <!--- Processing Status, Always 1 --->
+		</cfstoredproc>
 		
 		<cfreturn "success" />
 	</cffunction>

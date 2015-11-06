@@ -131,7 +131,7 @@
 			OfferFinancedDevices = true,
 			DirectToRedesignDetailsPage = true,		//Temp for 6.5.0 release
 			DefaultProductSort = 'Popular',
-			TMORedirectEnabled = false ,
+			TMORedirectEnabled = true ,
 			PresaleVerbiage = 'Presale',
 			WA2GOurl = 'http://wa2gopilot.wirelessadvocates.llc/'
 			// SearchIndexMethod = "GetAll" // method within cfc.model.product.cfm to use when creating the solr search index. GetAll=All Products. GetSearchable=excludes out of stock

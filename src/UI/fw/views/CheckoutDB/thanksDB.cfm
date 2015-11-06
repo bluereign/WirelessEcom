@@ -207,7 +207,7 @@
           <div class="row hidden-xs">
             <div class="head">
               <div class="col-md-2">Item</div>
-              <div class="col-md-8">&nbsp;</div>
+              <div class="col-md-8"></div>
               <div class="col-md-2">Quantity</div>
               <div class="col-md-2">Monthly*</div>
               <div class="col-md-2">Due Today*</div>
@@ -449,10 +449,9 @@
                       <cfif isArray(local.lineAccessories) and arrayLen(local.lineAccessories)>
                         <cfloop from="1" to="#arrayLen(local.lineAccessories)#" index="i">
                           <div class="row">
-                            <div class="col-md-9">Accessory: #local.lineAccessories[i].detailTitle#</div>
-              				<div class="col-md-1">#local.lineAccessories[i].qty#</div>
-							<div class="col-md-3">&nbsp;</div>
-              				<div class="col-md-3">#dollarFormat(local.lineAccessories[i].price_subTotal)#</div>
+                            <div class="col-md-10">Accessory: #local.lineAccessories[i].detailTitle# <cfif local.lineAccessories[i].qty gt 1> x #local.lineAccessories[i].qty#</cfif></div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3">#dollarFormat(local.lineAccessories[i].price_subTotal)#</div>
                           </div>
                         </cfloop>
                       <cfelse>
@@ -609,8 +608,8 @@
           </tr>
           <tr>
             <th></th>
-            <th>Monthly Price*</th>
-            <th>Due Now*</th>
+            <th>Monthly Price</th>
+            <th>Due Now</th>
           </tr>
           </thead>
           <tbody>
@@ -689,7 +688,7 @@
           </tbody>
           <tfoot>
           <tr>
-            <td>Total Due Today*</td>
+            <td>Total Due Today</td>
             <cfset local.total = session.cart.getPrices().getDueToday() />
             <cfset local.total += session.cart.getTaxes().getDueToday() />
             <cfset local.total += session.cart.getShipping().getDueToday() />
@@ -697,7 +696,7 @@
             <td colspan="2">#dollarFormaT(local.total)#</td>
           </tr>
           <tr>
-            <td>Total Due Monthly*
+            <td>Total Due Monthly
             	<cfif session.cart.getCarrierID() eq '42'>
             		<sup class="cartReview"><a href="##footnote3" style="font-size:8px">3</a></sup>
             	</cfif>
@@ -716,15 +715,14 @@
     <!--- Legal section --->
     <div class="col-md-12">
       <p class="legal">
-        * Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.<br />
-		** $0 down (for qualified customers).
+        
         <cfif session.cart.getActivationType() is 'upgrade'>  <!--- from cfc/view/Cart.cfc line 1331 --->
           <!--- removing hard-coded upgrade fees and adding result from call to carrier component made earlier in this method  --->
           <cfif NOT structKeyExists(local, 'upgradeFee')>
             <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />
             <cfset local.upgradeFee = local.carrierObj.getUpgradeFee( session.cart.getCarrierID() )>
           </cfif>            
-          ***  An Upgrade Fee of $#local.upgradeFee# applies to each Upgrade Line.
+          *  An Upgrade Fee of $#local.upgradeFee# applies to each Upgrade Line.
             <cfif session.cart.getCarrierId() neq 299>This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><!--- remove for Sprint --->
           <br />
         </cfif>

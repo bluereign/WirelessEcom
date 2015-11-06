@@ -764,8 +764,6 @@
         // <end tally box
       }
       
-
-      
       // UPDATE CART TOTALS:
       if ( session.cartHelper.hasSelectedFeatures() ) {
         prc.qRecommendedServices = application.model.ServiceManager.getRecommendedServices();
@@ -1014,7 +1012,6 @@
     <cfargument name="prc">
     <cfset var servicesArgs = {} />
     <cfparam name="rc.isDownPaymentApproved" default="0" />
-    <cfparam name="rc.isOptionalDownPaymentAdded" default="0" />
 
     <cfscript>
       // get all warranties for this device:
@@ -1030,9 +1027,20 @@
         servicesArgs.carrierId = prc.carrierGuidAtt;
       } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
         servicesArgs.carrierId = prc.carrierGuidVzw;
-      }
+      }      
 
       prc.groupLabels = application.model.serviceManager.getServiceMasterGroups(argumentCollection = servicesArgs);
+
+      // get payment options
+      if ( isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 ) {
+        prc.downPayment = prc.subscriber.downPayment;
+      } else {
+        prc.downPayment = prc.productData.FinancedFullRetailPrice * 0.3;
+      }
+      prc.dueMonthlyFinanced24AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade");
+      prc.dueMonthlyFinanced18AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade");
+      prc.dueMonthlyFinanced12AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade");
+
     </cfscript>
   </cffunction>
 
