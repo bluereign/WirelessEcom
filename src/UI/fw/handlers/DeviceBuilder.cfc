@@ -868,7 +868,6 @@
         setNextEvent(
           event="devicebuilder.carrierLogin",
           persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
-        // cartLineNumber
       }
       // <end simple validation
 
@@ -1034,6 +1033,8 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var servicesArgs = {} />
+    <cfset var arrayPaymentPlans = [] />
+    <cfset var i = 0 />
     <cfparam name="rc.isDownPaymentApproved" default="0" />
 
     <cfscript>
@@ -1058,11 +1059,28 @@
       if ( isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 ) {
         prc.downPayment = prc.subscriber.downPayment;
       } else {
-        prc.downPayment = prc.productData.FinancedFullRetailPrice * 0.3;
+        // prc.downPayment = prc.productData.FinancedFullRetailPrice * 0.3;
+        // Remove optional downpayment:
+        prc.downPayment = 0;
       }
       prc.dueMonthlyFinanced24AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade");
       prc.dueMonthlyFinanced18AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade");
       prc.dueMonthlyFinanced12AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade");
+
+      // thissub = prc.subscribers[1];
+      // thisnumber = thissub.getNumber();
+
+      servicesArgs = {
+        carrierid = prc.productData.CarrierId,
+        subscriberNumber = prc.subscriber.getNumber(),
+        ImeiType = prc.productData.ImeiType
+      };
+      prc.arrayPaymentPlans = carrierHelper.getSubscriberPaymentPlans(argumentCollection = servicesArgs);
+
+      // prc.arrayFinancedOptions = [];
+      // for (i = 1; i lte arrayLen(prc.cartLines); i++) {
+
+      // }
 
     </cfscript>
   </cffunction>
