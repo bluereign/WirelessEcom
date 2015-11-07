@@ -52,12 +52,27 @@
 	<cffunction name="conflictsResolvable" output="false" access="public" returntype="string">
 		<cfargument name="carrierid" type="numeric" required="true" > 
 		<cfargument name="subscriberNumber" type="string" required="true" > 
-		<cfargument name="ImeiType" type="string" required="true" > 
+		<cfargument name="productId" type="numeric" required="false" > 
+		<cfargument name="imeitype" type="string" required="false" > 
 		<cfset var local = structNew() />
 		
 		<cfset local.conflictsResolvable =  carrierObject(arguments.carrierId).conflictsResolvable(argumentCollection = arguments) />	
 		<cfreturn local.conflictsResolvable />
 	</cffunction>	
+	
+	<cffunction name="getSubscriberPaymentPlans" output="false" access="public" returntype="array">
+		
+		<cfargument name="carrierid" type="numeric" required="true" > 
+		<cfargument name="subscriberNumber" type="string" required="true" > 
+		<cfargument name="productId" type="numeric" required="false" > 
+		<cfargument name="imeitype" type="string" required="false" > 
+		<cfset var local = structNew() />
+		
+		<cfset local.SubscriberPaymentPlans =  carrierObject(arguments.carrierId).getSubscriberPaymentPlans(argumentCollection = arguments) />	
+		<cfreturn local.SubscriberPaymentPlans />
+	
+	</cffunction>
+	
 	
 	<!---
 		Receives an argument collection and returns collection minus args on the excludedArgsList		

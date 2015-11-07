@@ -11,6 +11,15 @@
 <br/>getCarrierName() = #rc.accountRespObj.getCarrierName()#
 <br/>getCarrierId() = #rc.accountRespObj.getCarrierId()#
 
+<cfset SubscriberPaymentPlanArgs = {
+	carrierid = rc.accountRespObj.getCarrierId(),
+	subscriberNumber = rc.subscriberNumber,
+	ImeiType = 'p6'
+} />
+<br/>rc.carrierHelper.getSubscriberPaymentPlans(argumentCollection=subscriberPaymentPlanArgs) =
+<cfdump var="#rc.carrierHelper.getSubscriberPaymentPlans(argumentCollection=subscriberPaymentPlanArgs)#" />
+
+
 <br/><br/>CFDUMP of the Finance Agreement Carrier Response for FinanceAgreement
 
 <div style="margin-top:25px;">
