@@ -880,7 +880,8 @@
             SubscriberNumber = rc.PhoneNumber,
             ZipCode = rc.inputZip,
             SecurityId = rc.inputSSN,
-            Passcode = rc.inputPin
+            Passcode = rc.inputPin,
+            productId = prc.productData.productId
           };
 
           // if (prc.customerType is "upgrade") {
