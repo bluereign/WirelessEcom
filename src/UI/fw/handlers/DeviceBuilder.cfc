@@ -1,12 +1,14 @@
 <cfcomponent output="false" extends="BaseHandler">
   
   <cfproperty name="CarrierFacade" inject="id:CarrierFacade" />
+  <cfproperty name="CarrierHelper" inject="id:CarrierHelper" />
   <cfproperty name="PlanService" inject="id:PlanService" />
 
   <cfproperty name="AssetPaths" inject="id:assetPaths" scope="variables" />
   <cfproperty name="channelConfig" inject="id:channelConfig" scope="variables" />
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
+
 
   <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal,accessorymodal,clearcart,showcarttype" /> <!--- clearcart (?)--->
   <cfset this.legacyCartReviewUrl = "/index.cfm/go/cart/do/view/" />
@@ -866,7 +868,6 @@
         setNextEvent(
           event="devicebuilder.carrierLogin",
           persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
-        // cartLineNumber
       }
       // <end simple validation
 
@@ -880,7 +881,8 @@
             SubscriberNumber = rc.PhoneNumber,
             ZipCode = rc.inputZip,
             SecurityId = rc.inputSSN,
-            Passcode = rc.inputPin
+            Passcode = rc.inputPin,
+            productId = prc.productData.productId
           };
 
           // if (prc.customerType is "upgrade") {
@@ -937,11 +939,30 @@
     <cfargument name="prc">
 
     <cfscript>
+      
       local.eligibleLineCount = 0;
       for (local.i = 1; local.i lte arrayLen(prc.subscribers); local.i++) {
-        if (prc.subscribers[i].getIsEligible()) {
+        
+        // local.args_incompatibleOffers = {
+        //   carrierId = prc.productData.carrierId,
+        //   SubscriberNumber = i,
+        //   ProductId = prc.productData.productId
+        // };
+
+        // prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+
+        local.args_incompatibleOffers = {
+          carrierId = prc.productData.carrierId,
+          SubscriberNumber = i,
+          ImeiType = prc.productData.ImeiType
+        };
+        local.isConflictsResolvable = carrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+
+        if (prc.subscribers[i].getIsEligible() or !local.isConflictsResolvable) {
          local.eligibleLineCount++;
         }
+
+
       }
       if (local.eligibleLineCount eq 0) {
         prc.warningMessage = "This account has no lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.carrierLogin')#'>Please verify your account.</a>";
@@ -950,6 +971,7 @@
 
       prc.addalineStep = event.buildLink('devicebuilder.transfer') & '/type/addaline/';     
       prc.includeTooltip = true;
+      prc.CarrierHelper = CarrierHelper;
     </cfscript>
   </cffunction>
 
@@ -1011,6 +1033,8 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var servicesArgs = {} />
+    <cfset var arrayPaymentPlans = [] />
+    <cfset var i = 0 />
     <cfparam name="rc.isDownPaymentApproved" default="0" />
 
     <cfscript>
@@ -1035,11 +1059,28 @@
       if ( isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 ) {
         prc.downPayment = prc.subscriber.downPayment;
       } else {
-        prc.downPayment = prc.productData.FinancedFullRetailPrice * 0.3;
+        // prc.downPayment = prc.productData.FinancedFullRetailPrice * 0.3;
+        // Remove optional downpayment:
+        prc.downPayment = 0;
       }
       prc.dueMonthlyFinanced24AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade");
       prc.dueMonthlyFinanced18AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade");
       prc.dueMonthlyFinanced12AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade");
+
+      // thissub = prc.subscribers[1];
+      // thisnumber = thissub.getNumber();
+
+      servicesArgs = {
+        carrierid = prc.productData.CarrierId,
+        subscriberNumber = prc.subscriber.getNumber(),
+        ImeiType = prc.productData.ImeiType
+      };
+      prc.arrayPaymentPlans = carrierHelper.getSubscriberPaymentPlans(argumentCollection = servicesArgs);
+
+      // prc.arrayFinancedOptions = [];
+      // for (i = 1; i lte arrayLen(prc.cartLines); i++) {
+
+      // }
 
     </cfscript>
   </cffunction>

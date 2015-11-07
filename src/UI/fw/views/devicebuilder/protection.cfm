@@ -1,4 +1,4 @@
-<!--- <cfdump var="#rc#"> --->
+<!--- <cfdump var="#prc.arrayPaymentPlans#"> --->
 <cfsilent>
   <cfset local.financedMonthCount24 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade") />
   <cfset local.financedMonthCount18 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade") />
@@ -37,6 +37,9 @@
               
               <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
                 <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')">
+                  <!--- <cfloop index="i" from="1" to="#arrayLen(prc.arrayPaymentPlans)#">
+                    <option id="option-financed-24" value="financed-24" data-months="#local.financedMonthCount24#" <cfif prc.financed is 'financed-24'>selected</cfif> ></option>
+                  </cfloop> --->
                   <option id="option-financed-24" value="financed-24" data-months="#local.financedMonthCount24#" <cfif prc.financed is 'financed-24'>selected</cfif> >
                   </option>
                   <option id="option-financed-18" value="financed-18" data-months="#local.financedMonthCount18#" <cfif prc.financed is 'financed-18'>selected</cfif> >
@@ -44,6 +47,7 @@
                   <option id="option-financed-12" value="financed-12" data-months="#local.financedMonthCount12#" <cfif prc.financed is 'financed-12'>selected</cfif> >
                   </option>
                 </select>
+
               <cfelseif prc.productData.CarrierId eq prc.carrierIdVzw>
                 <input type="hidden" name="financed" value="financed-24">
                 #prc.financeproductname#: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 24 Months
