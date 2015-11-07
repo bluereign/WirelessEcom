@@ -76,36 +76,29 @@
 	<!------------------------------------------------------------------------------------------------------- 
 		Request Incompatible Offers for a subscriber  
 	-------------------------------------------------------------------------------------------------------->
-	<cffunction name="IncompatibleOffer" output="false" access="public" returntype="any">
+	<cffunction name="IncompatibleOffer" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttIncompatibleOfferCarrierResponse">
 		<cfset var local = structNew() />
-		
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttIncompatibleOfferCarrierResponse').init() />
+
 		<cfif structKeyExists(session.carrierfacade,"accountRequest") is false>
-			<cfreturn "Error: session.cartfacade.accountRequest is missing. Preform account login first." />
+			<cfset local.carrierResponse.errorMessage = "Error: session.cartfacade.accountRequest is missing. Preform account login first." />
 		</cfif>
 		<cfif structKeyExists(session.carrierfacade,"accountResp") is false>
-			<cfreturn "Error: session.cartfacade.accountresp is missing. Perform account login first." />
+			<cfset local.carrierResponse.errorMessage = "Error: session.cartfacade.accountresp is missing. Perform account login first." />
 		</cfif>
 		<cfif structKeyExists(session.carrierfacade.accountResp,"account") is false>
-			<cfreturn "Error: session.cartfacade.accountresp.account is missing." />
+			<cfset local.carrierResponse.errorMessage = "Error: session.cartfacade.accountresp.account is missing." />
 		</cfif>
 		<cfif structKeyExists(session.carrierfacade.accountResp.account,"subscribers") is false>
-			<cfreturn "Error: session.cartfacade.accountresp.account.subscribers is missing." />
+			<cfset local.carrierResponse.errorMessage = "Error: session.cartfacade.accountresp.account.subscribers is missing." />
 		</cfif>
 		<cfif structKeyExists(arguments,"subscriberNumber") is false>
-			<cfreturn "Error: arguments.SubscriberNumber is missing" />
+			<cfset local.carrierResponse.errorMessage = "Error: arguments.SubscriberNumber is missing" />
 		</cfif>
 		<cfif structKeyExists(arguments,"productid") is false AND structKeyExists(arguments,"imeiType") is false>
-			<cfreturn "Error: arguments.productid is missing" />
+			<cfset local.carrierResponse.errorMessage = "Error: arguments.productid is missing" />
 		</cfif>
 
-		<!--- Loop thru the subscribers and find the correct entry --->
-<!---		<cfset local.subscriber = structNew() />
-		<cfloop array="#session.carrierFacade.accountResp.account.subscribers#" index="local.s">
-			<cfif local.s.number is arguments.subscriberNumber>
-				<cfset local.subscriber = local.s />
-				<cfbreak/>
-			</cfif>
-		</cfloop>--->
 		
 		<!--- Used passed productid to retrieve the IMEI type --->
 		<cfif structKeyExists(arguments,"imeiType") >
@@ -121,41 +114,43 @@
 		<!---<cfset local.subscriberNumbers = getEligibleSubscriberList() />--->
 		<cfset local.ImeiTypes = getIncompatibleOffersImeiTypes() />
 		<cfif listfind(local.ImeiTypes,local.imeiType)>
-			<cfreturn "Subscriber Number/ImeiType already in cache" />
+			<cfset local.carrierResponse.errorMessage = "Subscriber Number/ImeiType already in cache" />
 		</cfif> 
-
-		<cfset local.eligibleCount = 0 />
-		<cfloop list="#local.ImeiTypes#" index="local.i">
-			<cfloop array="#session.carrierfacade.accountResp.Account.subscribers#" index="local.s">	
-				<cfif local.s.upgradeInfo.isEligible>	
-					<cfset local.eligibleCount = local.eligibleCount+1 />
-					<cfset local.incompatibleOffer_args = {
-						subscriberNumber = #local.s.number#,
-						planInfo = #local.s.planInfo#,
-						BillingMarketCode = #session.carrierfacade.accountresp.account.billingMarketCode#,
-						ImeiType = #local.imeiType#,
-						Channel = #AttCarrierHelper.getChannelValue()#
-					} />
-			
-					<cfset local.body = serializeJSonAddReferenceNumber(local.incompatibleOffer_args) />	
-					<!--- save the request to the session --->
-					<cfset saveToSession(local.incompatibleOffer_args,"IncompatibleOfferRequest") />	
+	
+		<cfif not structKeyExists(local.carrierResponse,"errorMessage") >
+			<cfset local.eligibleCount = 0 />
+			<cfloop list="#local.ImeiTypes#" index="local.i">
+				<cfloop array="#session.carrierfacade.accountResp.Account.subscribers#" index="local.s">	
+					<cfif local.s.upgradeInfo.isEligible>	
+						<cfset local.eligibleCount = local.eligibleCount+1 />
+						<cfset local.incompatibleOffer_args = {
+							subscriberNumber = #local.s.number#,
+							planInfo = #local.s.planInfo#,
+							BillingMarketCode = #session.carrierfacade.accountresp.account.billingMarketCode#,
+							ImeiType = #local.imeiType#,
+							Channel = #AttCarrierHelper.getChannelValue()#
+						} />
 				
-					<cfhttp url="#variables.CarrierServiceURL#/IncompatibleOffer" method="Post" result="local.cfhttp">
-						<cfhttpparam type="header" name="Content-Type" value="application/json" />
-			    		<cfhttpparam type="body" value="#local.body#">
-					</cfhttp>
+						<cfset local.body = serializeJSonAddReferenceNumber(local.incompatibleOffer_args) />	
+						<!--- save the request to the session --->
+						<cfset saveToSession(local.incompatibleOffer_args,"IncompatibleOfferRequest") />	
 					
-					<!--- create the carrier response --->
-					<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttIncompatibleOfferCarrierResponse').init() />
-					<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
-				
-					<!--- store the retrieved incompatible offers in the accountResp structure --->
-					<cfset arrayAppend(session.carrierfacade.accountResp.IncompatibleOffers,local.carrierResponse.getResponse())	/>			
+						<cfhttp url="#variables.CarrierServiceURL#/IncompatibleOffer" method="Post" result="local.cfhttp">
+							<cfhttpparam type="header" name="Content-Type" value="application/json" />
+				    		<cfhttpparam type="body" value="#local.body#">
+						</cfhttp>
 						
-				</cfif>
+						<!--- create the carrier response --->
+						<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttIncompatibleOfferCarrierResponse').init() />
+						<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+					
+						<!--- store the retrieved incompatible offers in the accountResp structure --->
+						<cfset arrayAppend(session.carrierfacade.accountResp.IncompatibleOffers,local.carrierResponse.getResponse())	/>			
+							
+					</cfif>
+				</cfloop>
 			</cfloop>
-		</cfloop>
+		</cfif>
 		
 		<cfif not structKeyExists(local,"carrierResponse") >
 			<cfset local.carrierResponse = structNew() />
