@@ -98,7 +98,11 @@
 		<cfif structKeyExists(arguments,"productid") is false AND structKeyExists(arguments,"imeiType") is false>
 			<cfset local.carrierResponse.errorMessage = "Error: arguments.productid is missing" />
 		</cfif>
-
+		
+		<!--- If the imcompatible offers array does not exist in the accountResp then add it as an empty array --->
+		<cfif not structKeyExists(session.carrierFacade.accountResp,"IncompatibleOffers")>
+			<cfset session.carrierFacade.accountResp.IncompatibleOffers = arrayNew(1) />
+		</cfif>
 		
 		<!--- Used passed productid to retrieve the IMEI type --->
 		<cfif structKeyExists(arguments,"imeiType") >
