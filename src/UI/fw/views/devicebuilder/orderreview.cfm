@@ -53,7 +53,7 @@
         
         <form id="formCheckout" action="/CheckoutDB/billship" method="post">
           	
-          <div class="right">
+          <div class="right" style="width:273px;">
             <cfif prc.showAddAnotherDeviceButton>
               <a href="#prc.addxStep#">Add Another Device</a>
             <cfelse>
