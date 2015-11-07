@@ -53,11 +53,11 @@
               <div class="col-md-4 col-sm-3 col-xs-8">
                 <div class="product">
                   <div class="phone info">#prc.subscribers[i].phoneNumber#</div>
-                  <cfif prc.subscribers[i].getIsEligible() and !local.isConflictsResolvable>
+                  <cfif prc.subscribers[i].getIsEligible() and local.isConflictsResolvable>
                     <cfif local.isSubscriberIndexTaken>
                       <button class="btn btn-sm btn-primary" disabled="disabled"><cfif i eq prc.cartLine.getSubscriberIndex()>Selected<cfelse>In Cart</cfif></button>
                     <cfelse>
-                      <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade This Line (#local.isConflictsResolvable#)</button>
+                      <button class="btn btn-sm btn-primary" name="subscriberIndex" value="#i#">Upgrade This Line</button>
                     </cfif>
                   <cfelse>
                     <button class="btn btn-sm btn-primary" disabled="disabled">

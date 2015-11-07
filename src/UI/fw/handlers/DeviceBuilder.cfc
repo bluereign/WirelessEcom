@@ -959,7 +959,7 @@
         };
         local.isConflictsResolvable = carrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
 
-        if (prc.subscribers[i].getIsEligible() or local.isConflictsResolvable) {
+        if (prc.subscribers[i].getIsEligible() or !local.isConflictsResolvable) {
          local.eligibleLineCount++;
         }
 
