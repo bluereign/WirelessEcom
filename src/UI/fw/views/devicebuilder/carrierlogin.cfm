@@ -1,18 +1,20 @@
-<!--- Randy: Uncomment the next line to test Carrier Response error message --->
+<!--- Uncomment the next line to test Carrier Response error message --->
 <!--- <cfset rc.carrierResponseMessage = "This is a test Carrier Response message." /> --->
 
 <cfoutput>
   <div class="col-md-12">
     <section class="content">
 
+      <cfif len(rc.carrierResponseMessage)>
+        <div class="bs-callout bs-callout-error">
+          <h4>#rc.carrierResponseMessage#</h4>
+        </div>
+      </cfif>
+
       <header class="main-header">
         <h1>#prc.carrierName# Account Lookup</h1>
         <p>To find the devices that qualify for upgrade we must verify your account with #prc.carrierName# <!--- (carrierId: #prc.productData.carrierId#) ---></p>
       </header>
-
-      <cfif len(rc.carrierResponseMessage)>
-        <p class="alert bg-danger" role="alert">#rc.carrierResponseMessage#</p>
-      </cfif>
 
       <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
       <form id="carrierLoginForm" action="#event.buildLink('devicebuilder.carrierLoginPost')#" method="post">
