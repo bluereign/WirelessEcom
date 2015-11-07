@@ -67,10 +67,8 @@
       },
       submitHandler: function(form) {
         $('p.alert-info').show();
-        // $('p.alert-info').show().text("Carrier Login in progress..... ");
-        $('p.bg-danger').hide();
+        $('div.bs-callout-error').hide();
         $('button:submit').attr("disabled", true);
-        // console.log('validation complete');
         form.submit();
       }
   });
