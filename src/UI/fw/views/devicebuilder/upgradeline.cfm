@@ -1,3 +1,5 @@
+<!--- <cfdump var="#prc.productData.IMEITYPE#"> --->
+<!--- <cfdump var="#prc.iorespObj#"> --->
 <cfparam name="prc.displayBackButton" default="false" />
 <cfoutput>
   <div class="col-md-12">
@@ -31,6 +33,14 @@
         <div class="row">
           <!-- output upgrade eligible lines-->
           <cfloop index="i" from="1" to="#arrayLen(prc.subscribers)#">
+            <cfscript>
+              local.args_incompatibleOffers = {
+                carrierId = prc.productData.carrierId,
+                SubscriberNumber = i,
+                ImeiType = prc.productData.ImeiType
+              };
+              local.isConflictsResolvable = prc.carrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+            </cfscript>
             <cfset prc.subscribers[i].phoneNumber = prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[i].getNumber())) />
             <cfset local.isSubscriberIndexTaken = false>
             <cfloop index="j" from="1" to="#arrayLen(prc.cartLines)#">
@@ -43,7 +53,7 @@
               <div class="col-md-4 col-sm-3 col-xs-8">
                 <div class="product">
                   <div class="phone info">#prc.subscribers[i].phoneNumber#</div>
-                  <cfif prc.subscribers[i].getIsEligible()>
+                  <cfif prc.subscribers[i].getIsEligible() and local.isConflictsResolvable>
                     <cfif local.isSubscriberIndexTaken>
                       <button class="btn btn-sm btn-primary" disabled="disabled"><cfif i eq prc.cartLine.getSubscriberIndex()>Selected<cfelse>In Cart</cfif></button>
                     <cfelse>
