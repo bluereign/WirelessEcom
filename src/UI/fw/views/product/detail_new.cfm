@@ -9,9 +9,9 @@
 </cfif>
 
 <!--- devicebuilder --->
-<cfif arrayLen(session.cart.getLines()) and session.cart.getActivationType() contains 'finance'>
+<!--- <cfif arrayLen(session.cart.getLines()) and session.cart.getActivationType() contains 'finance'>
 	<cfset hide2yearpricing = true>
-</cfif>
+</cfif> --->
 
 <cfoutput>
 <style type="text/css">
@@ -255,29 +255,25 @@ border-top: 5px solid ##0061ac;
 
 
 .bootstrap a.DisabledButton  {
-
-text-shadow: 1px 1px ##CFCFCF;
-font-weight: bold;
-text-align: center;
-line-height: 42px;
+	text-shadow: 1px 1px ##CFCFCF;
+	font-weight: bold;
+	text-align: center;
+	line-height: 42px;
 }
 
 .bootstrap a.DisabledButton span {
-font-size: 18px;
-color: ##6b6b6b;
+	font-size: 18px;
+	color: ##6b6b6b;
 }
 
 
 .bootstrap span.actionButton a, .bootstrap span.actionButtonLow a {
-
-height: 24px;
-
+	height: 24px;
 }
 
 
 .bootstrap ##accessoryTable td{
 	padding-bottom: 100px;
-
 }
 
 .bootstrap img.centered{
@@ -1003,20 +999,20 @@ $j(document).ready(function($j) {
 			<div class="col-md-6">
 				
 				<cfif NOT hide2yearpricing>
-				<div id="availability-container-nonfinance" style="font-size:12px;">
-					<em>&raquo; Available: 
-						<cfif prc.productData.IsAvailableInWarehouse[prc.productData.currentRow] && prc.productData.IsAvailableOnline[prc.productData.currentRow]>
-							Online + #prc.textDisplayRenderer.getStoreAliasName()#
-						<cfelseif prc.productData.IsAvailableOnline[prc.productData.currentRow]>
-							Online Only
-						<cfelseif prc.productData.IsAvailableInWarehouse[prc.productData.currentRow]>
-							#prc.textDisplayRenderer.getStoreAliasName()# Only 
-						</cfif>
-					</em>
-				</div>
-				<div id="availability-container-finance" style="font-size:12px;">
-					<em>&raquo; Available: #prc.textDisplayRenderer.getStoreAliasName()# Only</em>			
-				</div>
+					<div id="availability-container-nonfinance" style="font-size:12px;">
+						<em>&raquo; Available: 
+							<cfif prc.productData.IsAvailableInWarehouse[prc.productData.currentRow] && prc.productData.IsAvailableOnline[prc.productData.currentRow]>
+								Online + #prc.textDisplayRenderer.getStoreAliasName()#
+							<cfelseif prc.productData.IsAvailableOnline[prc.productData.currentRow]>
+								Online Only
+							<cfelseif prc.productData.IsAvailableInWarehouse[prc.productData.currentRow]>
+								#prc.textDisplayRenderer.getStoreAliasName()# Only 
+							</cfif>
+						</em>
+					</div>
+					<div id="availability-container-finance" style="font-size:12px;">
+						<em>&raquo; Available: #prc.textDisplayRenderer.getStoreAliasName()# Only</em>			
+					</div>
 				</cfif>
 
 			</div>
@@ -1024,21 +1020,34 @@ $j(document).ready(function($j) {
 			<div class="col-md-6">
 
 
+					<!--- devicebuilder logic: hide 2-year Add to Cart button if Financed device is already in cart --->
 					<div id="addtocart-new" class="pull-right" style="display:none;">
-						<cfset prc.renderAddToCartArgs.PriceType = 'new' />
-						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+						<cfif arrayLen(session.cart.getLines()) and session.cart.getActivationType() contains 'finance'>
+							<a type="button" class="DisabledButton" href="##" disabled="disabled" onclick="alert('Your cart already has a Monthly Financed device that must be removed before you may add a 2-Year Contract device.');"><span>Cart Incompatible</span></a>
+						<cfelse>
+							<cfset prc.renderAddToCartArgs.PriceType = 'new' />
+							#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#							
+						</cfif>
 					</div>
 					<div id="addtocart-upgrade" class="pull-right" style="display:none;">
-						<cfset prc.renderAddToCartArgs.PriceType = 'upgrade' />
-						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+						<cfif arrayLen(session.cart.getLines()) and session.cart.getActivationType() contains 'finance'>
+							<a type="button" class="DisabledButton" href="##" disabled="disabled" onclick="alert('Your cart already has a Monthly Financed device that must be removed before you may add a 2-Year Contract device.');"><span>Cart Incompatible</span></a>
+						<cfelse>
+							<cfset prc.renderAddToCartArgs.PriceType = 'upgrade' />
+							#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+						</cfif>
 					</div>
 					<div id="addtocart-addaline" class="pull-right" style="display:none;">
-						<cfset prc.renderAddToCartArgs.PriceType = 'addaline' />
-						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+						<cfif arrayLen(session.cart.getLines()) and session.cart.getActivationType() contains 'finance'>
+							<a type="button" class="DisabledButton" href="##" disabled="disabled" onclick="alert('Your cart already has a Monthly Financed device that must be removed before you may add a 2-Year Contract device.');"><span>Cart Incompatible</span></a>
+						<cfelse>
+							<cfset prc.renderAddToCartArgs.PriceType = 'addaline' />
+							#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+						</cfif>
 					</div>		
 					<div id="addtocart-nocontract" class="pull-right" style="display:none;">
-						<cfset prc.renderAddToCartArgs.PriceType = 'nocontract' />
-						#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
+							<cfset prc.renderAddToCartArgs.PriceType = 'nocontract' />
+							#prc.ProductView.renderAddToCartButton( argumentCollection = prc.renderAddToCartArgs )#
 					</div>
 
 					
