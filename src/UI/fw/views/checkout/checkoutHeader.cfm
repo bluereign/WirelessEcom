@@ -10,7 +10,12 @@
         </div>
         <div class="col-md-4 account">
           <ul>
-            <li><a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a></li>
+            
+            <li><cfif not session.userId>
+										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a>
+									<cfelse>
+										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Your Account</a>
+									</cfif>				</li>
             <li class="cart"><a href="##">Your Cart</a></li>
           </ul>
           <div class="form-group form-inline search">
