@@ -937,11 +937,25 @@
     <cfargument name="prc">
 
     <cfscript>
+      
       local.eligibleLineCount = 0;
       for (local.i = 1; local.i lte arrayLen(prc.subscribers); local.i++) {
+        
+        local.args_incompatibleOffers = {
+          carrierId = prc.productData.carrierId,
+          SubscriberNumber = i,
+          ProductId = prc.productData.productId
+        };
+        local.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+        prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+
+
+
         if (prc.subscribers[i].getIsEligible()) {
          local.eligibleLineCount++;
         }
+
+
       }
       if (local.eligibleLineCount eq 0) {
         prc.warningMessage = "This account has no lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.carrierLogin')#'>Please verify your account.</a>";

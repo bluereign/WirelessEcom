@@ -1,3 +1,4 @@
+<cfdump var="#prc.iorespObj#">
 <cfparam name="prc.displayBackButton" default="false" />
 <cfoutput>
   <div class="col-md-12">
