@@ -33,8 +33,14 @@
 			</cfif>
 		</cfif>--->
 		
-		<cfset local.imeiType = getImeiType( argumentCollection = arguments ) />
-
+		<cfif structKeyExists(arguments,"imeiType")>
+			<cfset local.imeiType = arguments.imeiType />
+		</cfif>
+		<cfif structKeyExists(arguments,"productInfo")>		
+			<cfset local.productInfo = getGetProductInfo( argumentCollection = arguments ) />
+			<cfset local.imeiType = local.productInfo.imeiType />
+		</cfif>
+		
 		<cfif isdefined("session.carrierfacade.accountResp.IncompatibleOffers")>
 			<cfloop array="#session.carrierfacade.accountResp.IncompatibleOffers#" index="local.io">
 				<cfif local.io.subscriberNumber is arguments.subscriberNumber AND local.io.ImeiType is local.imeiType>
@@ -58,7 +64,14 @@
 		<cfset var local = structNew() />
 		<cfset local.subscriberPaymentPlans = arrayNew(1) />
 
-		<cfset local.imeiType = getImeiType( argumentCollection = arguments ) />
+		<cfif structKeyExists(arguments,"imeiType")>
+			<cfset local.imeiType = arguments.imeiType />
+		</cfif>
+		<cfif structKeyExists(arguments,"productId")>		
+			<cfset local.productInfo = getProductInfo( argumentCollection = arguments ) />
+			<cfset local.imeiType = local.productInfo.imeiType />
+		</cfif>
+		
 		<cfset local.subscriber = findSubscriber(arguments.subscriberNumber) />
 		<cfif not structIsEmpty(local.subscriber)>
 			<cfloop array="#local.subscriber.UpgradeQualifications.QualificationDetails[1].BaseOfferQualificationDetails#" index="local.boqd">
@@ -69,7 +82,10 @@
 					<cfset local.subscriberPaymentPlan.MinimumCommitment = local.boqd.minimumCommitment />
 					<cfset local.subscriberPaymentPlan.OfferType = local.boqd.offerType />
 					<cfset local.subscriberPaymentPlan.DownPaymentPercent = local.boqd.DownPaymentPercent />
-					<cfset local.subscriberPaymentPlan.OFferCategory = local.boqd.OfferCategory />
+					<cfset local.subscriberPaymentPlan.OfferCategory = local.boqd.OfferCategory />
+					<cfif structKeyExists(local,"productInfo") >
+						<cfset local.subscriberPaymentPlan.monthlyPayment = (local.productInfo.FinancedFullRetailPrice - ((local.boqd.DownPaymentPercent*local.productInfo.FinancedFullRetailPrice)/100))/local.boqd.minimumCommitment />
+					</cfif>
 					<cfset arrayAppend(local.subscriberPaymentPlans,local.subscriberPaymentPlan) />
 				</cfif>				
 			</cfloop>
@@ -372,20 +388,18 @@
 		</cfif> 
 	</cffunction>
 	
-	<cffunction name="getImeiType" access="public" returnType="string">
+	<cffunction name="getProductInfo" access="public" returnType="query">
 		<cfset var local = structNew() />
 		
 		<cfset local.imeiType = "" />
 		<!--- Used passed productid to retrieve the IMEI type --->
-		<cfif structKeyExists(arguments,"imeiType") >
-			<cfset local.imeiType = arguments.ImeiType />
-		<cfelseif structKeyExists(arguments,"productid") >
+		<cfif structKeyExists(arguments,"productid") >
 			<cfset local.qphone = application.model.Phone.getByFilter(idList = arguments.productid) />
-			<cfif local.qphone.recordcount is 1 and local.qphone.ImeiType is not "">
-					<cfset local.imeiType = local.qphone.ImeiType />
+			<cfif local.qphone.recordcount is 1>
+					<cfreturn local.qPhone />
 			</cfif>
 		</cfif>
-		<cfreturn uCase(local.imeiType) />
+		<cfreturn "" />
 	</cffunction>
 	
 </cfcomponent>	
