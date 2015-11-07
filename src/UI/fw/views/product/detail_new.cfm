@@ -1252,13 +1252,13 @@ $j(document).ready(function($j) {
 									<br />
 									<br />
 									<div class="row center-block">
-										<div class="col-xs-6">
+										<div class="col-xs-6" style="text-align:center">
 											<form action="#rc.upgradeURL#" method="post">
 												<input type="hidden" name="finance" value="">
 												<button id="btn-carrierUpgrade" type="submit" class="btn btn-lg btn-success" style="padding-left:30px;padding-right:30px;">Upgrade</button>
 											</form>
 										</div>
-										<div class="col-xs-6">
+										<div class="col-xs-6" style="text-align:center">
 											<form action="#rc.addalineURL#" method="post">
 												<input type="hidden" name="finance" value="">
 												<a href="##" id="btn-carrierAddaline" type="submit" class="btn btn-lg btn-primary" style="padding-left:30px;padding-right:30px;" data-original-title="This is my tooltip" data-placement="left" data-toggle="tooltip"
@@ -1267,7 +1267,7 @@ $j(document).ready(function($j) {
 												</cfif>
 												>Add a Line</a>
 												<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId,'|')>
-													<p style="text-align:center">(available in warehouse)</p>
+													<p>(available in warehouse)</p>
 												</cfif>
 											</form>
 										</div>
@@ -1286,14 +1286,14 @@ $j(document).ready(function($j) {
 										<br />
 										<br />
 										<div class="row center-block">
-											<div class="col-xs-7">
+											<div class="col-xs-7" style="text-align:center">
 												<a href="##" class="btn btn-lg btn-primary" id="btn-newToCarrier" 
 												<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId,'|')>
 													disabled="disabled"	
 												</cfif>
 												>Switch to #prc.productData.carrierName#</a>
 												<cfif !listFindNoCase(request.config.DeviceBuilder.carriersAllowAddaline,prc.productData.carrierId,'|')>
-													<p style="text-align:center;width:150px;">(available in warehouse)</p>
+													<p style="width:150px;">(available in warehouse)</p>
 												</cfif>
 											</div>
 										</div>
