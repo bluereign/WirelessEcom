@@ -1,12 +1,14 @@
 <cfcomponent output="false" extends="BaseHandler">
   
   <cfproperty name="CarrierFacade" inject="id:CarrierFacade" />
+  <cfproperty name="CarrierHelper" inject="id:CarrierHelper" />
   <cfproperty name="PlanService" inject="id:PlanService" />
 
   <cfproperty name="AssetPaths" inject="id:assetPaths" scope="variables" />
   <cfproperty name="channelConfig" inject="id:channelConfig" scope="variables" />
   <cfproperty name="textDisplayRenderer" inject="id:textDisplayRenderer" scope="variables" />
   <cfproperty name="stringUtil" inject="id:stringUtil" scope="variables" />
+
 
   <cfset this.preHandler_except = "planmodal,protectionmodal,featuremodal,accessorymodal,clearcart,showcarttype" /> <!--- clearcart (?)--->
   <cfset this.legacyCartReviewUrl = "/index.cfm/go/cart/do/view/" />
@@ -942,17 +944,22 @@
       local.eligibleLineCount = 0;
       for (local.i = 1; local.i lte arrayLen(prc.subscribers); local.i++) {
         
+        // local.args_incompatibleOffers = {
+        //   carrierId = prc.productData.carrierId,
+        //   SubscriberNumber = i,
+        //   ProductId = prc.productData.productId
+        // };
+
+        // prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+
         local.args_incompatibleOffers = {
           carrierId = prc.productData.carrierId,
           SubscriberNumber = i,
-          ProductId = prc.productData.productId
+          ImeiType = prc.productData.ImeiType
         };
-        local.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
-        prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+        local.isConflictsResolvable = carrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
 
-
-
-        if (prc.subscribers[i].getIsEligible()) {
+        if (prc.subscribers[i].getIsEligible() or local.isConflictsResolvable) {
          local.eligibleLineCount++;
         }
 
@@ -965,6 +972,7 @@
 
       prc.addalineStep = event.buildLink('devicebuilder.transfer') & '/type/addaline/';     
       prc.includeTooltip = true;
+      prc.CarrierHelper = CarrierHelper;
     </cfscript>
   </cffunction>
 
