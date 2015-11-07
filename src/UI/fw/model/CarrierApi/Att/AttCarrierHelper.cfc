@@ -18,18 +18,31 @@
 	<cffunction name="conflictsResolvable" output="false" access="public" returntype="boolean">
 		<cfargument name="carrierid" type="numeric" required="true" > 
 		<cfargument name="subscriberNumber" type="string" required="true" > 
-		<cfargument name="ImeiType" type="string" required="true" > 
+		<cfargument name="productId" type="numeric" required="false" > 
+		<cfargument name="imeitype" type="string" required="false" > 
+		
 		<cfset var local = structNew() />
 		
+		<!--- Used passed productid to retrieve the IMEI type --->
+		<cfif structKeyExists(arguments,"imeiType") >
+			<cfset local.imeiType = arguments.ImeiType />
+		<cfelseif structKeyExists(arguments,"productid") >
+			<cfset local.qphone = application.model.Phone.getByFilter(idList = arguments.productid) />
+			<cfif local.qphone.recordcount is 1 and local.qphone.ImeiType is not "">
+					<cfset local.imeiType = local.qphone.ImeiType />
+			</cfif>
+		</cfif>
+
 		<cfif isdefined("session.carrierfacade.accountResp.IncompatibleOffers")>
 			<cfloop array="#session.carrierfacade.accountResp.IncompatibleOffers#" index="local.io">
-				<cfif local.io.subscriberNumber is arguments.subscriberNumber AND local.io.ImeiType is arguments.imeiType>
+				<cfif local.io.subscriberNumber is arguments.subscriberNumber AND local.io.ImeiType is local.imeiType>
 					<cfreturn local.io.conflictsResolvable />
 				</cfif>
 			</cfloop>
 		</cfif>
 		
-		<cfreturn false />
+		<!--- If it's not found then there are no incompatibleOffers so they are resolveable --->
+		<cfreturn true />
 		
 	</cffunction>	
 	
