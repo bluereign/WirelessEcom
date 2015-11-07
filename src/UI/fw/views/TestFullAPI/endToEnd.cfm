@@ -14,7 +14,7 @@
 <cfset SubscriberPaymentPlanArgs = {
 	carrierid = rc.accountRespObj.getCarrierId(),
 	subscriberNumber = rc.subscriberNumber,
-	ImeiType = 'p6'
+	productid = '25646'
 } />
 <br/>rc.carrierHelper.getSubscriberPaymentPlans(argumentCollection=subscriberPaymentPlanArgs) =
 <cfdump var="#rc.carrierHelper.getSubscriberPaymentPlans(argumentCollection=subscriberPaymentPlanArgs)#" />
