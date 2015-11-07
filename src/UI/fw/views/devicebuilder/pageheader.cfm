@@ -139,7 +139,7 @@
                     </ul>
                   </li>
                   <li role="presentation">
-                    <a href="##">Check Upgrade Eligibility</a>
+                    <a href="/index.cfm/go/shop/do/upgrade-checker">Check Upgrade Eligibility</a>
                   </li>
                 </cfif>
             </ul>
