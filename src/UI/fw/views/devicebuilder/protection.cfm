@@ -37,15 +37,15 @@
               
               <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
                 <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')">
-                  <!--- <cfloop index="i" from="1" to="#arrayLen(prc.arrayPaymentPlans)#">
-                    <option id="option-financed-24" value="financed-24" data-months="#local.financedMonthCount24#" <cfif prc.financed is 'financed-24'>selected</cfif> ></option>
-                  </cfloop> --->
-                  <option id="option-financed-24" value="financed-24" data-months="#local.financedMonthCount24#" <cfif prc.financed is 'financed-24'>selected</cfif> >
+                  <cfloop index="i" from="1" to="#arrayLen(prc.arrayPaymentPlans)#">
+                    <option value="financed-#mid(prc.arrayPaymentPlans[i].planIdentifier,4,2)#" data-months="#prc.arrayPaymentPlans[i].minimumCommitment#" <cfif prc.financed is 'financed-#mid(prc.arrayPaymentPlans[i].planIdentifier,4,2)#'>selected</cfif> >#prc.financeproductname# #mid(prc.arrayPaymentPlans[i].planIdentifier,4,2)#: #dollarFormat(prc.arrayPaymentPlans[i].monthlyPayment)# Due Monthly for #prc.arrayPaymentPlans[i].minimumCommitment# Months<cfif prc.arrayPaymentPlans[i].downPaymentPercent> with a Down Payment of #dollarFormat((prc.arrayPaymentPlans[i].downPaymentPercent/100) * prc.productData.FinancedFullRetailPrice)#</cfif> </option>
+                  </cfloop>
+                  <!--- <option id="option-financed-24" value="financed-24" data-months="#local.financedMonthCount24#" <cfif prc.financed is 'financed-24'>selected</cfif> >
                   </option>
                   <option id="option-financed-18" value="financed-18" data-months="#local.financedMonthCount18#" <cfif prc.financed is 'financed-18'>selected</cfif> >
                   </option>
                   <option id="option-financed-12" value="financed-12" data-months="#local.financedMonthCount12#" <cfif prc.financed is 'financed-12'>selected</cfif> >
-                  </option>
+                  </option> --->
                 </select>
 
               <cfelseif prc.productData.CarrierId eq prc.carrierIdVzw>
@@ -368,7 +368,7 @@
 
     $(function() {
       
-      setFinancedOptions();
+      // setFinancedOptions();
 
 
       $('.btnContinue').click(function(){
