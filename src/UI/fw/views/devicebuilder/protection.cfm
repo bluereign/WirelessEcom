@@ -40,9 +40,13 @@
               <input type="radio" name="paymentoption" id="paymentoption" value="financed" <cfif prc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
               
               <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
-                <select name="planIdentifier" class="form-control" onchange="onChangeHandler(this.form,'financed')">
+                <select name="planIdentifier" id="planIdentifier" class="form-control">
                   <cfloop index="i" from="1" to="#arrayLen(prc.arrayPaymentPlans)#">
-                    <option value="#prc.arrayPaymentPlans[i].planIdentifier#" data-months="#prc.arrayPaymentPlans[i].minimumCommitment#" 
+                    <option 
+                      value="#prc.arrayPaymentPlans[i].planIdentifier#" 
+                      data-months="#prc.arrayPaymentPlans[i].minimumCommitment#" 
+                      data-downPaymentPercent="#prc.arrayPaymentPlans[i].downPaymentPercent#"
+                      data-downPaymentAmount="#decimalFormat((prc.arrayPaymentPlans[i].downPaymentPercent/100) * prc.productData.FinancedFullRetailPrice)#"
                       <cfif rc.planIdentifier is prc.arrayPaymentPlans[i].planIdentifier>
                         selected
                       </cfif>>
@@ -65,9 +69,24 @@
                 #prc.financeproductname#: #dollarFormat(prc.productData.FinancedMonthlyPrice24)# Due Monthly for 24 Months
               </cfif>
 
-              </label>
-              <div style="padding-left:20px;">
-              <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
+            </label>
+            <div style="padding-left:20px;">
+              <cfif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade">
+                <div id="isOptionalDownPaymentAddedDiv" class="checkbox" <cfif prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt() eq 0>style="display:none;"</cfif>>
+                  <label for="isOptionalDownPaymentAdded">
+                    <input 
+                      type="checkbox" 
+                      value="1" 
+                      name="isOptionalDownPaymentAdded" 
+                      id="isOptionalDownPaymentAdded" 
+                      data-downPaymentPercent="#prc.cartLine.getPhone().getPrices().getOptionalDownPmtPct()#"
+                      data-downPaymentAmount="#decimalFormat(prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt())#"
+                      dollar-amount="#decimalFormat(prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt())#" 
+                      <!--- <cfif prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt()>checked</cfif>  --->
+                      >
+                    <div id="isOptionalDownPaymentAddedLabel">I Agree to the required CARRIER down payment of: #dollarFormat(prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt())#<div></label>
+                </div>
+              <cfelseif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
                 CARRIER is requiring a down payment
                 <div class="checkbox">
                   <label>
@@ -75,16 +94,16 @@
                     I Agree to the required CARRIER down payment of: #dollarFormat(prc.subscriber.downPayment)#
                   </label>
                 </div>
-              <cfelseif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade" and prc.downPayment>
+              <!--- <cfelseif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade" and prc.downPayment>
                 <div class="checkbox">
                   <label style="width:350px;">
                     <input type="checkbox" value="1" name="isOptionalDownPaymentAdded" id="isOptionalDownPaymentAdded"  dollar-amount="#decimalFormat(prc.downPayment)#" <cfif prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt()>checked</cfif> >
                     Add an additional 30% down payment of #dollarFormat(prc.downPayment)# today
                   </label>
-                </div>
+                </div> --->
               </cfif>
-              </div>
-            
+            </div>
+          
           </div>
           
         </section>
@@ -402,6 +421,32 @@
         onChangeHandler(protectionForm,protectionvalue);
       });
 
+      <cfif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade">
+        $('##planIdentifier').on('change', function() {
+          var protectionvalue = 'financed';
+          var selectedOption = $('##planIdentifier option:selected');
+          var planIdentifier = selectedOption.val();
+          var downPaymentPercent = selectedOption.attr('data-downPaymentPercent');
+          var downPaymentAmount = selectedOption.attr('data-downPaymentAmount');
+          if (downPaymentPercent > 0) {
+            $('##isOptionalDownPaymentAdded').prop('checked', false);
+            $('.btnContinue').prop('disabled', true);
+            $('##isOptionalDownPaymentAddedDiv').show();
+            $('##isOptionalDownPaymentAddedLabel').text('I Agree to the required CARRIER down payment of: $' + downPaymentAmount);
+          } else {
+            $('##isOptionalDownPaymentAdded').prop('checked', true);
+            $('.btnContinue').prop('disabled', false);
+            $('##isOptionalDownPaymentAddedDiv').hide();
+          }
+
+          onChangeHandler(protectionForm,protectionvalue);
+        });
+
+        $('##isOptionalDownPaymentAdded').click(function() {
+          $('.btnContinue').attr('disabled', !this.checked);
+        });
+      </cfif>
+
     });
 
   </script>
@@ -435,8 +480,14 @@
  <!--- Submit the AJAX/Tallybox form post upon load to update tally box with the pre-selected required service --->
   <script>
     $(function() {
-      var protectionvalue = $('input[name=paymentoption]:checked').val();
-      onChangeHandler(protectionForm,protectionvalue);
+      
+      <cfif prc.productData.carrierId eq prc.carrierIdAtt and prc.customerType is "upgrade">
+        $('##planIdentifier').trigger('change');
+      <cfelse>
+        var protectionvalue = $('input[name=paymentoption]:checked').val();
+        onChangeHandler(protectionForm,protectionvalue);
+      </cfif>
+
     });
   </script>
 
