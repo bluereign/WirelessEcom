@@ -14,10 +14,13 @@
 <cfset SubscriberPaymentPlanArgs = {
 	carrierid = rc.accountRespObj.getCarrierId(),
 	subscriberNumber = rc.subscriberNumber,
-	productid = '25646'
-} />
+	productid = '25646',
+	PlanIdentifier = 'NXT12DP3'
+	} />
 <br/>rc.carrierHelper.getSubscriberPaymentPlans(argumentCollection=subscriberPaymentPlanArgs) =
 <cfdump var="#rc.carrierHelper.getSubscriberPaymentPlans(argumentCollection=subscriberPaymentPlanArgs)#" />
+<br/>rc.carrierHelper.getSubscriberPaymentPlan(argumentCollection=subscriberPaymentPlanArgs) =
+<cfdump var="#rc.carrierHelper.getSubscriberPaymentPlan(argumentCollection=subscriberPaymentPlanArgs)#" />
 
 
 <br/><br/>CFDUMP of the Finance Agreement Carrier Response for FinanceAgreement

@@ -54,9 +54,26 @@
 		
 	</cffunction>	
 	
-	
-	<cffunction name="getSubscriberPaymentPlans" output="false" access="public" returntype="array">
+	<cffunction name="getSubscriberPaymentPlan" output="false" access="public" returntype="struct">
+		<cfargument name="carrierid" type="numeric" required="true" > 
+		<cfargument name="subscriberNumber" type="string" required="true" > 
+		<cfargument name="productId" type="numeric" required="false" > 
+		<cfargument name="PlanIdentifier" type="string" required="false" > 
 		
+		<cfset var local = structNew() />
+
+		<cfset local.subscriberPaymentPlans = getSubscriberPaymentPlans(argumentCollection = arguments )/>
+		<cfif isArray(local.subscriberPaymentPlans)>
+			<cfloop array="#local.subscriberPaymentPlans#" index="local.sp">
+				<cfif local.sp.planIdentifier is arguments.planIdentifier>
+					<cfreturn local.sp />
+				</cfif>
+			</cfloop>
+		</cfif>
+		<cfreturn structNew() />
+	</cffunction>
+	
+	<cffunction name="getSubscriberPaymentPlans" output="false" access="public" returntype="array">		
 		<cfargument name="carrierid" type="numeric" required="true" > 
 		<cfargument name="subscriberNumber" type="string" required="true" > 
 		<cfargument name="productId" type="numeric" required="false" > 
