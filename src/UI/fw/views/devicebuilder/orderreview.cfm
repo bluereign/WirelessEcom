@@ -631,7 +631,7 @@
         </div>
       </div>
 
-      <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+      <cfif session.cart.getActivationType() CONTAINS 'upgrade' and arrayLen(prc.cartLines)>
         <div class="row">
           <div class="col-md-10 col-md-offset-6">
             <div class="table-wrap">
