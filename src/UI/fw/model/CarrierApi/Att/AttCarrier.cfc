@@ -16,7 +16,9 @@
 	
 	<!--- Perform an Account Lookup and retrieve account information for the customer --->
 	<cffunction name="account" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttAccountCarrierResponse">
-		<cfset var local = structNew() />	
+		<cfargument name="requestType" type="numeric" required="false" default="1" /><!--- default to upgrade for now --->
+			<cfset var local = structNew() />	
+		
 
 		<!--- if productid is passed then load the product and get the imeiType --->
 		<cfif structKeyExists(arguments,"productid") >
