@@ -930,7 +930,10 @@
 				<cfset rc.saveFinanceAgreementResult = carrierFacade.SaveFinanceAgreement(argumentCollection = local.args_saveFinanceAgreement) />
 				
 			</cfif>
-		
+			<cfset Order = CreateObject('component', 'cfc.model.Order').init() />
+			<cfset Order.load(session.checkout.orderId) />
+            <cfset session.order = Order />
+                    
 			<!---submit order - Park order--->
 			<cfset local.args_submit = {
 				carrierid = application.model.checkoutHelper.getCarrier()
@@ -1081,7 +1084,7 @@
 		
 		<cfif !structKeyExists(session, 'orderProcessed') OR session.orderProcessed eq "false" >
 			<!--- Finance agreement gets generated once --->
-			<cfset session.orderProcessed = "true">
+			<!---<cfset session.orderProcessed = "true">
 			
 			<cfset session.checkoutDone = structNew() />
 			<cfset session.checkoutDone = duplicate(session.checkout) />
@@ -1099,7 +1102,7 @@
 			<cfset session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init() />
 			<cfset session.listRequiredServices = "" />
 			<cfset carrierObjExists = structdelete(session, 'carrierObj', true)/>
-			<cfset session.carrierObj = "" />
+			<cfset session.carrierObj = "" />--->
 		</cfif>
 			
 		<!---<cfif ChannelConfig.getTrackMercentAnalytics()>
@@ -1144,6 +1147,7 @@
                 type="application/pdf"
                 />
 		</cfmail>
+		
         <cfset event.noRender() />
 	</cffunction>
 	
