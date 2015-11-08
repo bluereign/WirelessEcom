@@ -111,20 +111,24 @@
 			</script>
 
 			<div class="main left phones">
-				<div id="banner-container" style="display:none;"></div>
+        <cfif !channelConfig.getVfdEnabled()>
+				  <div id="banner-container" style="display:none;"></div>
+        </cfif>
 				<div>
 					<div class="left">
 						<div>
 							<div class="left">
 								<h1 class="product-list">Select a #trim(variables.label)#</h1>
 							</div>
-							<cfif listContainsNoCase('Phone,Tablet', variables.productClass)>
-								<div id="upgrade-eligibility-btn-container">
-									<a href="/index.cfm/go/shop/do/upgrade-checker-widget/" class="UpgradeCheckerButton fancy-box" data-fancybox-type="iframe">
-										<span>Check Upgrade Eligibility</span>
-									</a>
-								</div>
-							</cfif>
+              <cfif !channelConfig.getVfdEnabled()>
+							  <cfif listContainsNoCase('Phone,Tablet', variables.productClass)>
+								  <div id="upgrade-eligibility-btn-container">
+									  <a href="/index.cfm/go/shop/do/upgrade-checker-widget/" class="UpgradeCheckerButton fancy-box" data-fancybox-type="iframe">
+										  <span>Check Upgrade Eligibility</span>
+									  </a>
+								  </div>
+							  </cfif>
+              </cfif>
 							<div style="clear:both"></div>
 						</div>
 
@@ -353,14 +357,26 @@
 								<a href="/index.cfm/go/shop/do/#variables.productClass#Details/productId/#arguments.productData.productId[arguments.productData.currentRow]#"><img src="#assetPaths.common#images/Catalog/NoImage.jpg" height="160" alt="#htmlEditFormat(arguments.productData.summaryTitle[arguments.productData.currentRow])#" border="0" /></a>
 							</cfif>
 						<div onclick="window.location.href ='/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#'"  class="prodImg" style="text-align: center;background-image:url('#local.imgURL#');">
-						<cfif NOT arguments.productData.qtyOnHand[arguments.productData.currentRow]>
+						<cfif NOT arguments.productData.qtyOnHand[arguments.productData.currentRow] and ( NOT IsDefined("Session.VFD.access") or session.vfd.access is 0)>
 							<img src="#assetPaths.common#images/ui/OutOfStock.png">
 						</cfif>	
+						<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
+							<cfif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LTE 0>
+							  <img src="#assetPaths.common#images/ui/OutOfStock.png">
+						  </cfif>
+            <div class="imageInventory <cfif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LTE 0>imageInventoryOut<cfelseif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LT 5>imageInventoryLow</cfif> ">
+								<cfif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LTE 0>
+									0
+								<cfelse>
+									#arguments.productData.realQtyOnHand[arguments.productData.currentRow]#
+								</cfif>
+						</div>
+						</cfif>
 							<cfif ListFindNoCase(allocatedSkus,#arguments.productData.gersSku[arguments.productData.currentRow]#) gt 0 and allocation.loadBySku(#arguments.productData.gersSku[arguments.productData.currentRow]#)>
 									<cfswitch expression="#allocation.getInventoryTypeDescription()#">
 										<cfcase value="Pre-Sale">
 											<!---Pre-Sale: expected release date #dateformat(allocation.getReleaseDate(),"mm/dd/yyyy")#--->
-											<div class="imagePromotion">PRESALE</div>
+											<div class="imagePromotion">#channelConfig.getPresaleVerbiage()#</div>
 										</cfcase>
 										<cfcase value="Backorder">								
 											<!---<div class="imagePromotion"><!---BACKORDERED---></div>--->
@@ -407,8 +423,7 @@
 							
 							<cfelse>--->	
 							<div onclick="window.location.href ='/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#/activationtype/#request.p.ActivationPrice#'"  class="prodPrice">
-								
-								<cfif arguments.productData.price_new[arguments.productData.currentRow] NEQ "9999" AND arguments.productData.newPriceAfterRebate[arguments.productData.currentRow] NEQ "9999">							
+                <cfif arguments.productData.price_new[arguments.productData.currentRow] NEQ "9999" AND arguments.productData.newPriceAfterRebate[arguments.productData.currentRow] NEQ "9999">							
 									<div class="leftCol<cfif arguments.productData.carrierID EQ 42 and val(local.minFinancedPrice)>vzw</cfif>">2-year:</div>
 									<div class="rightCol<cfif arguments.productData.carrierID EQ 42 and val(local.minFinancedPrice)>vzw</cfif>"><span class="bold red">
 									
@@ -1898,8 +1913,23 @@ TEMPORARY DISABLE --->
 						<a class="DisabledButton" href="##" onclick="alert('An error occured. Please contact customer service.');return false;"><span>Error</span></a>
 					</cfdefaultcase>
 				</cfswitch>
-			<cfelseif session.cart.hasCart() and len(trim(session.cart.getActivationType())) and session.cart.getActivationType() neq arguments.priceType>
+			<cfelseif session.cart.hasCart() and len(trim(session.cart.getActivationType())) and (session.cart.getActivationType() neq arguments.priceType)>
 				<!--- <span class="actionButtonDisabled"><a href="##" onclick="alert('You may not add this to your cart because your cart currently has a<cfif session.cart.getActivationType() is 'new'> 2-year<cfelseif session.cart.getActivationType() is 'upgrade'>n upgrade<cfelseif session.cart.getActivationType() is 'addaline'>n add-a-line</cfif> designation.');return false;">Disabled</a></span> --->
+        <!---<cfif  (session.cart.getActivationType() CONTAINS "Finance") OR (arguments.priceType CONTAINS "Finance")>--->
+				<!--- Handling Financed phones and how contract phones interact with financed options --->
+				<cfif (arguments.priceType CONTAINS "Finance")> <!--- Allows financed items (They are set with a pricetype of financed-XX-new-upgrade-addaline) ---->
+					<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+				<cfelseif (session.cart.getActivationType() CONTAINS "Finance")> <!--- Enables AddALine, New, Upgrade add to cart button ---->					
+					<cfif (arguments.PriceType eq 'new') AND (session.cart.getActivationType() CONTAINS "new")> <!--- If it is a financed new allow contract new ---->
+						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+					<cfelseif (arguments.PriceType eq 'upgrade') AND (session.cart.getActivationType() CONTAINS "upgrade")> <!--- If it is a financed upgrade allow contract upgrade ---->
+						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+					<cfelseif (arguments.PriceType eq 'addaline') AND (session.cart.getActivationType() CONTAINS "addaline")> <!--- If it is a financed addaline allow contract addaline ---->
+						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+					<cfelse>
+					
+					</cfif>
+				</cfif>
 			<cfelseif arguments.IsProductCompatibleWithPlan>
 				<cfif arguments.IsTMORedirect>
 					<cfif Len(arguments.TMOBuyURL)>
@@ -1908,7 +1938,12 @@ TEMPORARY DISABLE --->
 						<a class="DisabledButton" href="##" onclick="alert('#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockAlertText()#');return false;"><span>#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockButtonText()#</span></a>				
 					</cfif>
 				<cfelse>
-					<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+					<!---Handles Finance BtnHeader for non-VFD finance phones --->
+					<cfif arguments.priceType eq "Finance">
+						<a class="ActionButton learnMoreBtn" href="##"><span>Warehouse Only</span></a>
+					<cfelse>
+						<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
+					</cfif>
 				</cfif>
 			<cfelse>
 				<cfset thisWindowName = 'windowNotCompatible1' & createUUID() />
