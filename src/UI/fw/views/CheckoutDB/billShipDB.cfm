@@ -356,7 +356,7 @@
 								
 								<div style="margin-left: 250px; padding-top:10px;">
 									<span ><a style="margin:0 15px;" onclick="cancelLogin()">Cancel</a></span>
-									<span class="btn btn-primary btn-sm"><a onclick="showProgress('Validating email address and password.<br />Please wait.<br>'); $('##billShip').attr('action', '/CheckoutDB/billShipAuthenticate');$('##billShip').submit();" style="color:##fff; margin:0 15px;">Ok</a></span>
+									<button class="btn btn-primary btn-sm" onclick="event.preventDefault();showProgress('Validating email address and password.<br />Please wait.<br>'); $('##billShip').attr('action', '/CheckoutDB/billShipAuthenticate');$('##billShip').submit();" style="color:##fff; width:75px;">Ok</button>
 									<div style="padding: 15px 0 0;font-size:10px;"><a href="/index.cfm/go/myAccount/do/forgotPassword/">I forgot my password.</a></div>
 								</div>
 							</div>
