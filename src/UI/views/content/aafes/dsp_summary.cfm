@@ -34,6 +34,7 @@
 	    <li><a href="/index.cfm/go/content/do/displayDocument/?doc=termsandconditions/att/" target="_blank">AT&amp;T Terms and Conditions</a></li>
 	    <li><a href="/index.cfm/go/content/do/earlyTermination/carrier/att">AT&amp;T Early Termination Fee</a></li>
 		<li><a href="/index.cfm/go/content/do/displayDocument/?doc=customerletters/att/" target="_blank">AT&amp;T Exchange Mobile Center Customer Letter</a></li>
+	    <li><a href="https://www.att.com/maps/wireless-coverage.html" target="_blank">AT&amp;T Coverage Map</a></li>
 	    <li><a href="/index.cfm/go/content/do/activatingPhone/carrier/att">Activating Your Phone</a></li>
 	    <li><a href="/index.cfm/go/content/do/rebateCenter">Rebates</a></li>
     </cfcase>
@@ -41,6 +42,7 @@
 		<li><a href="/index.cfm/go/content/do/displayDocument/?doc=termsandconditions/tmobile/" target="_blank">T-Mobile Terms and Conditions</a></li>
 	    <li><a href="/index.cfm/go/content/do/earlyTermination/carrier/tmobile">T-Mobile Early Termination Fee</a></li>
 		<li><a href="/index.cfm/go/content/do/displayDocument/?doc=customerletters/tmobile/" target="_blank">T-Mobile Exchange Mobile Center Customer Letter</a></li>
+	    <li><a href="http://www.t-mobile.com/coverage.html" target="_blank">T-Mobile Coverage Map</a></li>
 	    <li><a href="/index.cfm/go/content/do/activatingPhone/carrier/tmobile">Activating Your Phone</a></li>
 	    <li><a href="/index.cfm/go/content/do/rebateCenter">Rebates</a></li>
     </cfcase>
@@ -48,6 +50,7 @@
 	    <li><a href="/index.cfm/go/content/do/displayDocument/?doc=termsandconditions/verizon/" target="_blank">Verizon Wireless Terms and Conditions</a></li>
 	    <li><a href="/index.cfm/go/content/do/earlyTermination/carrier/verizon">Verizon Wireless Early Termination Fee</a></li>
 		<li><a href="/index.cfm/go/content/do/displayDocument/?doc=customerletters/verizon/" target="_blank">Verizon Wireless Exchange Mobile Center Customer Letter</a></li>
+	    <li><a href="http://vzwmap.verizonwireless.com/dotcom/coveragelocator/" target="_blank">Verizon Wireless Coverage Map</a></li>
 	    <li><a href="/index.cfm/go/content/do/activatingPhone/carrier/verizon">Activating Your Phone</a></li>
 	    <li><a href="/index.cfm/go/content/do/rebateCenter">Rebates</a></li>
     </cfcase>
@@ -55,6 +58,7 @@
 	    <li><a href="/index.cfm/go/content/do/displayDocument/?doc=termsandconditions/sprint/" target="_blank">Sprint Terms and Conditions</a></li>
 	    <li><a href="/index.cfm/go/content/do/earlyTermination/carrier/sprint">Sprint Early Termination Fee</a></li>
 		<li><a href="/index.cfm/go/content/do/displayDocument/?doc=customerletters/sprint/" target="_blank">Sprint Exchange Mobile Center Customer Letter</a></li>
+	    <li><a href="https://coverage.sprint.com/IMPACT.jsp" target="_blank">Sprint Coverage Map</a></li>
 	    <li><a href="/index.cfm/go/content/do/activatingPhone/carrier/sprint">Activating Your Phone</a></li>
 	    <li><a href="/index.cfm/go/content/do/rebateCenter">Rebates</a></li>
     </cfcase>    

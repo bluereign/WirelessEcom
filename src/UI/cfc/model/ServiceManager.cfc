@@ -420,7 +420,7 @@
 
 					)
 				</cfif>
-				<cfif arguments.HasSharedPlan eq 'yes'>
+				<cfif arguments.HasSharedPlan eq 'yes' OR local.carrierID eq '109'>
 					AND smg.IsShared = 1
 				<cfelse>
 					AND smg.IsShared = 0

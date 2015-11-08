@@ -335,7 +335,7 @@
 
 			<cfif not local.isByPassOn>
 				<!--- Handle PO validation on billing address only for T-Mobile. --->
-				<cfset local.poBoxRegEx = "[PO.]*\s?B(ox)?.*\d+">
+				<cfset local.poBoxRegEx = "^(?:Post (?:Office )?|P[. ]?O\.? )?Box ">
 
 				<cfif application.model.checkoutHelper.isWirelessOrder() and application.model.checkoutHelper.getCarrier() eq 128>
 					<cfif REFindNoCase(local.poBoxRegEx,request.p.billAddress1)>
@@ -428,7 +428,7 @@
 					<cfset local.billingResult = application.model.addressValidation.validateAddress(application.model.checkoutHelper.getBillingAddress(), 'Billing', application.model.checkoutHelper.getReferenceNumber(), local.billingCarrier, request.p.resultCode, session.cart.getZipCode(), application.model.checkoutHelper.getCarrierConversationId() ) />
 					<cfset application.model.checkoutHelper.setBillingResult(local.billingResult) />
 					
-					<cfif !isDefined('request.p.overrideAddress')><!--- Override Address is not checked --->		
+					<cfif !isDefined('request.p.overrideAddress') AND (application.model.checkoutHelper.getCarrier() neq 128) ><!--- Override Address is not checked --->		
 						<cfswitch expression="#trim(local.billingResult.getResultCode())#">
 							<!--- Address failed third party address validation and returned alternates. --->
 							<cfcase value="AV001">
@@ -471,7 +471,7 @@
 				</cfif>
 
 				<cfif not local.isByPassOn>
-					<cfif request.config.allowAPOFPO AND listFindNoCase("APO,FPO",request.p.shipCity)>
+					<cfif (request.config.allowAPOFPO AND listFindNoCase("APO,FPO",request.p.shipCity))or(application.model.checkoutHelper.getCarrier() eq 128)>
 						<cfset uspsObj = application.wirebox.getInstance("Usps")>
 						<cfset local.resultCode = uspsObj.AddressValidate(Address2 = request.p.shipaddress1,City = request.p.shipCity ,State = request.p.shipState,zip5=request.p.shipzip)>
 						
@@ -717,19 +717,7 @@
 			<cfset cartLines = session.cart.getLines() />
 			<cfloop from="1" to="#arrayLen(order.getWirelessLines())#" index="i">	
 				
-				<cfset deviceActivationType =  cartlines[i].getCartLineActivationType()>
-				<!---<cfif deviceActivationType contains 'financed'>
-					<cfif deviceActivationType contains '12'>
-						<cfset ratePlanLength = 12 />
-					<cfelseif deviceActivationType contains '18' >
-						<cfset ratePlanLength = 18 />
-					<cfelse>
-						<cfset ratePlanLength = 24 />
-					</cfif>
-				<cfelse>
-					<cfset ratePlanLength = 24 />
-				</cfif>	--->	 	 
-			 	 
+				<cfset deviceActivationType =  cartlines[i].getCartLineActivationType()>			 	 
 			 	 <!---translate activation types--->
 				<cfset cartLineActivationType = cartlines[i].getCartLineActivationType() />
 				<cfif cartLineActivationType contains 'financed'>
@@ -780,16 +768,8 @@
 							<cfset	local.mappedActivationType = cartlines[i].getCartLineActivationType()>
 							<cfset	local.ratePlanLength = 0>
 				</cfif>	
-				<cfif application.model.checkoutHelper.getCarrier() eq 128>
-				 	<cfset local.lineFeatures = cartlines[i].getFeatures()/>
-				 	<!---<cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">--->
-					<cfset local.thisFeatureID = local.lineFeatures[1].getProductID()/>
-					<cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID)/>
-					<!---</cfloop>--->
-					<!---<cfdump var="#local.thisFeature.ProductID#">
-					<cfabort>--->
-				</cfif>
-					
+			 	 
+			 	 
 			 	 <cfif cartlines[i].getCartLineActivationType() is 'nocontract'>
 				 	<cfset CommissionSku = application.model.CheckoutHelper.GetNoActivationRateplanSKU( 
 							application.model.checkoutHelper.getCarrier()
@@ -807,49 +787,27 @@
 							<cfset CommissionSkuTitle = "Prepaid sale" />
 				</cfif>
 			 	<cfif cartlines[i].getCartLineActivationType() contains 'upgrade'>
-					<cfif application.model.checkoutHelper.getCarrier() neq 128>
-						<cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
-								application.model.checkoutHelper.getCarrier()
-								, cartlines[i].getPhone().getGersSKU()
-								, cartlines[i].getPhone().getDeviceServiceType()
-								, local.mappedActivationType
-								, i <!--- line number --->
-								, local.ratePlanLength
-								) />
-						<cfset CommissionSkuTitle = "Keep current rateplan" />
-					<cfelse>
-						<cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
-								application.model.checkoutHelper.getCarrier()
-								, cartlines[i].getPhone().getGersSKU()
-								, local.thisFeature.ProductID
-								, cartlines[i].getPhone().getDeviceServiceType()
-								, local.mappedActivationType
-								) />
-						<cfset CommissionSkuTitle = "Keep current rateplan" />
-					</cfif>
+					<cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
+							application.model.checkoutHelper.getCarrier()
+							, cartlines[i].getPhone().getGersSKU()
+							, cartlines[i].getPhone().getDeviceServiceType()
+							, local.mappedActivationType
+							, i <!--- line number --->
+							, local.ratePlanLength
+							) />
+					<cfset CommissionSkuTitle = "Keep current rateplan" />
 				</cfif>
 				  
 				<cfif cartlines[i].getCartLineActivationType() contains 'addaline'>
-				 	<cfif application.model.checkoutHelper.getCarrier() neq 128>
-					 	 <cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
-								application.model.checkoutHelper.getCarrier()
-								, cartlines[i].getPhone().getGersSKU()
-								, cartlines[i].getPhone().getDeviceServiceType()
-								, local.mappedActivationType
-								, i <!--- line number --->
-								, local.ratePlanLength
-								) />
-						<cfset CommissionSkuTitle = "Add a line to current rateplan" />
-					<cfelse>
-						<cfset CommissionSku = application.model.CheckoutHelper.GetDataCommissionSku( 
-								application.model.checkoutHelper.getCarrier()
-								, cartlines[i].getPhone().getGersSKU()
-								, local.thisFeature.ProductID
-								, cartlines[i].getPhone().getDeviceServiceType()
-								, local.mappedActivationType
-								) />
-						<cfset CommissionSkuTitle = "Add a line to current rateplan" />
-					</cfif>
+				 	 <cfset CommissionSku = application.model.CheckoutHelper.GetKeepRateplanSKU( 
+							application.model.checkoutHelper.getCarrier()
+							, cartlines[i].getPhone().getGersSKU()
+							, cartlines[i].getPhone().getDeviceServiceType()
+							, local.mappedActivationType
+							, i <!--- line number --->
+							, local.ratePlanLength
+							) />
+					<cfset CommissionSkuTitle = "Add a line to current rateplan" />
 				</cfif>
 			 	 
 			 	<cfscript> 
