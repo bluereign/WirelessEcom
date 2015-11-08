@@ -55,7 +55,6 @@
 			<script type="text/javascript" language="javascript" src="#assetPaths.common#scripts/filter.js?v=1.0.2"></script>
 			<script type="text/javascript" language="javascript" src="#assetPaths.common#scripts/compare.js"></script>
 			<script type="text/javascript" language="javascript" src="#assetPaths.common#scripts/tooltip.js"></script>
-			<script type="text/javascript" language="javascript" src="#assetPaths.common#scripts/listing.js"></script>
 			<link rel="stylesheet" href="#assetPaths.common#scripts/fancybox/source/jquery.fancybox.css?v=2.0.6" type="text/css" media="screen" />
 			<script type="text/javascript" src="#assetPaths.common#scripts/fancybox/source/noconflict-jquery.fancybox.js?v=2.0.6"></script>
 			
@@ -111,24 +110,24 @@
 			</script>
 
 			<div class="main left phones">
-        <cfif !channelConfig.getVfdEnabled()>
-				  <div id="banner-container" style="display:none;"></div>
-        </cfif>
+				<cfif !channelConfig.getVfdEnabled()>
+					<div id="banner-container" style="display:none;"></div>
+				</cfif>
 				<div>
 					<div class="left">
 						<div>
 							<div class="left">
 								<h1 class="product-list">Select a #trim(variables.label)#</h1>
 							</div>
-              <cfif !channelConfig.getVfdEnabled()>
-							  <cfif listContainsNoCase('Phone,Tablet', variables.productClass)>
-								  <div id="upgrade-eligibility-btn-container">
-									  <a href="/index.cfm/go/shop/do/upgrade-checker-widget/" class="UpgradeCheckerButton fancy-box" data-fancybox-type="iframe">
-										  <span>Check Upgrade Eligibility</span>
-									  </a>
-								  </div>
-							  </cfif>
-              </cfif>
+							<cfif !channelConfig.getVfdEnabled()>
+								<cfif listContainsNoCase('Phone,Tablet', variables.productClass)>
+									<div id="upgrade-eligibility-btn-container">
+										<a href="/index.cfm/go/shop/do/upgrade-checker-widget/" class="UpgradeCheckerButton fancy-box" data-fancybox-type="iframe">
+											<span>Check Upgrade Eligibility</span>
+										</a>
+									</div>
+								</cfif>
+							</cfif>
 							<div style="clear:both"></div>
 						</div>
 
@@ -211,7 +210,6 @@
 
 	<cfreturn trim(local.html) />
 </cffunction>
-
 
 <cffunction name="browseProductsResults" access="public" returntype="string" output="false">
 	<cfargument name="ProductData" type="query" required="true" />
@@ -362,9 +360,9 @@
 						</cfif>	
 						<cfif IsDefined("Session.VFD.access") and Session.VFD.access>
 							<cfif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LTE 0>
-							  <img src="#assetPaths.common#images/ui/OutOfStock.png">
-						  </cfif>
-            <div class="imageInventory <cfif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LTE 0>imageInventoryOut<cfelseif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LT 5>imageInventoryLow</cfif> ">
+								<img src="#assetPaths.common#images/ui/OutOfStock.png">
+							</cfif>
+						<div class="imageInventory <cfif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LTE 0>imageInventoryOut<cfelseif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LT 5>imageInventoryLow</cfif> ">
 								<cfif arguments.productData.realQtyOnHand[arguments.productData.currentRow] LTE 0>
 									0
 								<cfelse>
@@ -404,9 +402,11 @@
 							<div onclick="window.location.href ='/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#/activationtype/#request.p.ActivationPrice#'"  class="prodPrice">
 								<a href="/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#"> Click to show pricing</a>
 							</div>	
-						<cfelseif !channelConfig.getVfdEnabled() and arguments.productData.carrierId[arguments.productData.currentRow] eq 128>
+						                        <cfelseif !channelConfig.getVfdEnabled() and arguments.productData.carrierId[arguments.productData.currentRow] eq 128>
+
 						
 							<!--- FB 885 Treat TMO like other carriers, it is only showing financed --->
+							
 							<div onclick="window.location.href ='/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#/activationtype/#request.p.ActivationPrice#'"  class="prodPrice">
 								
 								<div style="text-align:center;">
@@ -420,9 +420,10 @@
 								</div>
 							</div>
 							
-							<cfelse>	
+							<cfelse>
 							<div onclick="window.location.href ='/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#/activationtype/#request.p.ActivationPrice#'"  class="prodPrice">
-                <cfif arguments.productData.price_new[arguments.productData.currentRow] NEQ "9999" AND arguments.productData.newPriceAfterRebate[arguments.productData.currentRow] NEQ "9999">							
+								
+								<cfif arguments.productData.price_new[arguments.productData.currentRow] NEQ "9999" AND arguments.productData.newPriceAfterRebate[arguments.productData.currentRow] NEQ "9999">							
 									<div class="leftCol<cfif arguments.productData.carrierID EQ 42 and val(local.minFinancedPrice)>vzw</cfif>">2-year:</div>
 									<div class="rightCol<cfif arguments.productData.carrierID EQ 42 and val(local.minFinancedPrice)>vzw</cfif>"><span class="bold red">
 									
@@ -945,7 +946,7 @@
 		if( session.cart.getActivationType() neq '' )
 		{
 			//Add-a-Line pricing
-			if ( session.cart.hasCart() && session.cart.getHasFamilyPlan() && session.cart.getActivationType() neq 'upgrade' )
+			if ( session.cart.hasCart() && session.cart.getHasFamilyPlan() && session.cart.getActivationType() DOES NOT CONTAIN 'upgrade' )
 			{
 				if ( ListFind( "42,299", session.cart.getCarrierId() ) )
 				{
@@ -1275,9 +1276,9 @@ TEMPORARY DISABLE --->
 
 	<cfsavecontent variable="local.productHTML">
 		<cfoutput>			
-			<link rel="stylesheet" href="#assetPaths.common#scripts/bxslider/bx_styles/bx_styles.css" type="text/css" media="screen" />
+			<!---<link rel="stylesheet" href="#assetPaths.common#scripts/bxslider/bx_styles/bx_styles.css" type="text/css" media="screen" />--->
 			<script type="text/javascript" language="javascript" src="#assetPaths.common#scripts/details.js"></script>
-			<script type="text/javascript" language="javascript" src="#assetPaths.common#scripts/libs/jquery.bxSlider.min.js"></script>
+			<!---<script type="text/javascript" language="javascript" src="#assetPaths.common#scripts/libs/jquery.bxSlider.min.js"></script>--->
 			<script type="text/javascript" language="javascript">
 				var priceTabClass = '#trim(local.planType)#';
 
@@ -1335,7 +1336,7 @@ TEMPORARY DISABLE --->
 						hideOnOverlayClick : false
 					});
 
-					jQuery(".fancy-box-video").fancybox({
+					/* jQuery(".fancy-box-video").fancybox({
 						maxWidth	: 700,
 						maxHeight	: 400,
 						minWidth	: 700,
@@ -1347,7 +1348,7 @@ TEMPORARY DISABLE --->
 						closeClick	: false,
 						closeEffect	: 'none',
 						hideOnOverlayClick : false
-					});
+					}); */
 
 					jQuery('##spec-tab').click(function(){
 						var productId = jQuery(this).attr('data-productId');
@@ -1367,15 +1368,15 @@ TEMPORARY DISABLE --->
 						jQuery(this).off('click'); //prevent double loading
 					});
 
-				    var videoSlider = jQuery('##VideoSlider').bxSlider({
+				    /* var videoSlider = jQuery('##VideoSlider').bxSlider({
 						infiniteLoop: false,
 						hideControlOnEnd: true,
 						pager: false,
 						startingSlide: 0
-				    });
+				    }); */
 
 					//IE8 not starting at position 0
-					videoSlider.goToSlide(0);
+					/* videoSlider.goToSlide(0); */
 				});
 			</script>
 
@@ -1481,7 +1482,7 @@ TEMPORARY DISABLE --->
 				--->
 				<div style="clear:both;"></div>
 				<!--- Videos--->
-				<cfif arguments.qVideos.RecordCount>
+				<!---<cfif arguments.qVideos.RecordCount>
 					<div style="border-top: 1px dashed ##cfcfcf; margin-top: 20px; padding-top: 20px; text-align:center; padding-left: 35px;">
 						<ul id="VideoSlider">
 							<cfloop query="arguments.qVideos">
@@ -1496,7 +1497,7 @@ TEMPORARY DISABLE --->
 							</cfloop>
 						</li>
 					</div>
-				</cfif>
+				</cfif>--->
 
 			</div><!--- End Left Side Bar--->
 			<div class="main #trim(local.planType)# phones" id="prodList">
@@ -1914,7 +1915,7 @@ TEMPORARY DISABLE --->
 				</cfswitch>
 			<cfelseif session.cart.hasCart() and len(trim(session.cart.getActivationType())) and (session.cart.getActivationType() neq arguments.priceType)>
 				<!--- <span class="actionButtonDisabled"><a href="##" onclick="alert('You may not add this to your cart because your cart currently has a<cfif session.cart.getActivationType() is 'new'> 2-year<cfelseif session.cart.getActivationType() is 'upgrade'>n upgrade<cfelseif session.cart.getActivationType() is 'addaline'>n add-a-line</cfif> designation.');return false;">Disabled</a></span> --->
-        <!---<cfif  (session.cart.getActivationType() CONTAINS "Finance") OR (arguments.priceType CONTAINS "Finance")>--->
+				<!---<cfif  (session.cart.getActivationType() CONTAINS "Finance") OR (arguments.priceType CONTAINS "Finance")>--->
 				<!--- Handling Financed phones and how contract phones interact with financed options --->
 				<cfif (arguments.priceType CONTAINS "Finance")> <!--- Allows financed items (They are set with a pricetype of financed-XX-new-upgrade-addaline) ---->
 					<a class="ActionButton learnMoreBtn" href="##" onclick="addToCart('#lcase(arguments.productClass)#:#arguments.priceType#','#arguments.productID#',1 <cfif request.config.enforceInventoryRestrictions>,#arguments.AvailableQty#</cfif>);return false;"><span>Add to Cart</span></a>
@@ -1979,9 +1980,7 @@ TEMPORARY DISABLE --->
 		if ( arguments.cartHasFamilyPlan )
 		{
 			maxLinesForFamilyPlan = application.model.plan.getFamilyPlanMaxLines(session.cart.getFamilyPlan().getProductId());
-			switch(arguments.priceType)
-			{
-				case 'new':
+				if(arguments.priceType contains 'new')
 				{
 					if (listFind('42,299', arguments.cartCarrierId))	{
 						if (arguments.cartCurrentLine lt maxLinesForFamilyPlan)	{
@@ -1996,10 +1995,8 @@ TEMPORARY DISABLE --->
 							buttonState = 'disabled';
 						}
 					}
-
-					break;
 				}
-				case 'upgrade':
+				else if(arguments.priceType contains 'upgrade')
 				{
 					if (listFind('42,109', arguments.cartCarrierId))
 					{
@@ -2009,11 +2006,10 @@ TEMPORARY DISABLE --->
 					{
 						buttonState = 'disabled';
 					}
-					break;
 				}
-				case 'addaline':
+				else if(arguments.priceType contains 'addaline')
 				{
-					if (cartActivationType eq 'upgrade')
+					if (cartActivationType contains 'upgrade')
 					{
 						buttonState = 'disabled';
 					}
@@ -2036,16 +2032,12 @@ TEMPORARY DISABLE --->
 							}
 						}
 					}
-
-					break;
 				}
-				default:
+				else
 				{
 					buttonState = 'error';
-					break;
 				}
 			}
-		}
 	</cfscript>
 
 	<cfreturn buttonState />
