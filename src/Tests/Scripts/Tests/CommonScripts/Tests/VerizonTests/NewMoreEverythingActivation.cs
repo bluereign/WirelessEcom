@@ -14,10 +14,11 @@ namespace SeleniumTests
         [TestInitialize]
         public void SetupTest()
         {
+            Utilities.ClearLogFolder();
             /* ==================================================================
              * ==   Must get the settings file before generating the log file. ==
              * ================================================================== */
-            Utilities.GetSettings("D:\\source\\WA_Costco\\src\\Tests\\Scripts\\Tests\\Collateral\\vzwMoreEverythingActivation_settings.xml");
+            Utilities.GetSettings("D:\\Sources\\src\\Tests\\Scripts\\Tests\\Collateral\\vzwMoreEverythingActivation_settings.xml");
             Utilities.Log("+++ Begin test", true);
             Globals._Driver = Utilities.InitializeDriver();
             Globals._VerificationErrors = new StringBuilder();
@@ -104,9 +105,9 @@ namespace SeleniumTests
             string orderNumber = Utilities.GetOrderNumber();
 
             // Activate the line in OMT
-            //if (Globals._ActivateLineInOmt)
-            //    Actors.ActivateLine(Globals._AdminUsername, Globals._AdminUsername, orderNumber,
-            //        Globals._Imei, Globals._Sim, Convert.ToBoolean(Globals._RemoveLine));
+            if (Globals._ActivateLineInOmt)
+                Actors.ActivateLine(Globals._AdminUsername, Globals._AdminUsername, orderNumber,
+                    Globals._Imei, Globals._Sim, Convert.ToBoolean(Globals._RemoveLine));
         }
         #endregion
     }

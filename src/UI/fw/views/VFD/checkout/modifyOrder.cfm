@@ -25,38 +25,30 @@
 			<cfset local.line = local.line+1/>
         	<table id="confirmInfo" class="confirmInfo">
         	<tr>
-        		<td style="font-weight:bold">
+        		<td style="color:red;font-weight:bold;">
         			IMEI:
-        		</td>
-        		<td style="color:red;font-weight:bold">
         			#rc.qWirelesslines.IMEI#
         		</td>
-        		<td style="margin:5px;">
-        		</td>
-        		<td style="font-weight:bold">
+        		<td style="color:red;font-weight:bold;">
         			SIM:
-        		</td>
-        		<td style="color:red;font-weight:bold">
         			#rc.qWirelesslines.SIM#
+        		</td>
+        		<td style="color:red;font-weight:bold;">
+        			UPC:
+        			#application.model.OrderDetail.getUPCbyWirelessLineID(rc.qWirelesslines.wirelesslineid)#
         		</td>
         	</tr>
         	<tr>
-        		<td style="margin:5px;">
-        		</td>
-        		
-        		<td style="margin:5px;">
-        			Phone ##
-        		</td>
-        		<td style="margin:5px;width:20px;">
+        		<td>
         			&nbsp;
         		</td>
-        		<td style="margin:5px;">
+        		<td>
+        			Phone ##
+        		</td>
+        		<td>
         			Agreement ##
         		</td>
-        		
-        		<td style="margin:5px;visibility:hidden;">
-        		</td>
-        		<td style="margin:5px;width:20px;">
+        		<td>
         			&nbsp;
         		</td>
         	</tr>
@@ -69,7 +61,6 @@
 					       value="#rc.qWirelesslines.WirelessLineId#"/>
 				</td>
 				<td>
-					<div>
 						( 
 						<input id="Phone_#local.line#_NumPt1" name="Phone_#local.line#_NumPt1" 
 						       onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'');autotab(event, this, document.getElementById('Phone_#local.line#_NumPt2'))" 
@@ -82,10 +73,6 @@
 						<input id="Phone_#local.line#_NumPt3" name="Phone_#local.line#_NumPt3" 
 						       onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" 
 						       maxlength="4" style="width:50px;text-align:center;"/>
-					</div>
-				</td>
-				<td>
-					&nbsp;
 				</td>
 				<td>
 					<cfif rc.qWirelesslines.PurchaseType contains 'fp'>
@@ -97,12 +84,9 @@
 					</cfif>
 				</td>
 				
-				<td style="visibility:hidden;width:0px;">
+				<td style="visibility:hidden;">
 					<input id="activationID#local.line#" name="activationID#local.line#" 
 					       class="activation" type='text' style="margin:5px;"/>
-				</td>
-				<td>
-					&nbsp;
 				</td>
 			</tr>
 		</cfloop>

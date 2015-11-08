@@ -163,7 +163,7 @@
 		<input type="hidden" id="carrierAuthWording" name="carrierAuthWording" value="MSID" />
 	</cfif>--->
 	<div class="bootstrap">
-		<div>
+		<div> 
 			<cfif local.hasActivationItems>
 				<h2>
 					You MUST Activate in the Carrier Portal 
@@ -208,6 +208,13 @@
 						</label>
 						<input style="font-size:larger;font-weight:bold;color:red" id="txtActivationSIM#local.iCartLine#" name="txtActivationSIM#local.iCartLine#" 
 						       onclick="this.select();" value="#OrderDetail[local.iCartLine].getSim()#" readonly/>
+					</div>
+					<div>
+						<label class="floatLeft" for="txtActivationUPC" style="font-size:x-large;font-weight:bold;color:red">
+							UPC:
+						</label>
+						<input style="font-size:larger;font-weight:bold;color:red" id="txtActivationUPC#local.iCartLine#" name="txtActivationUPC#local.iCartLine#" 
+						       onclick="this.select();" value="#local.selectedPhone.upc#" readonly/>
 					</div>
 				</cfloop>
 				<div>

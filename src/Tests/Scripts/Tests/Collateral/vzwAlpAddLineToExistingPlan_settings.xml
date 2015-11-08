@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <TestCase name="vzwAddLineToExistingPlan" browser="ie" baseUrl="http://Costco.Ecom-dev-test-1.enterprise.corp" timeoutHalfSeconds="20" activateDevice="true">
   <Admin omtUsername="jcardon@wirelessadvocates.com" omtPassword="jcardon1">
-    <Line imei="99000064090005" sim="89148000002007067595" removeLine="true" />
+    <Line imei="99000055500005" sim="89148000002172409853" removeLine="true" />
     <Database serverName="10.7.0.22" databaseName="COSTCO.TEST" username="" password="" />
   </Admin>
-  <CustomerInfo last4Ssn="5620" accountPassword="jcardon1">
+  <CustomerInfo last4Ssn="8000" accountPassword="jcardon1">
     <Name firstName="Test" lastName="Script" />
     <Home streetAddress="134 Pine St." city="Abilene" state="Texas" zipCode="79601" />
-    <Contact mobileNumber="7037856381" email="jcardon@wirelessadvocates.com" />
+    <Contact mobileNumber="4129973850" email="jcardon@wirelessadvocates.com" />
     <CreditCard cardNumber="4005554444444403" expireMonth="12" expireYear="15" cvv="123" />
   </CustomerInfo>
-  <Device id="25704" name="samsung-galaxy-s-5-16gb-white" />
-  <Carrier zipCode="20110" password="HELLO" />
+  <Device id="27716" name="apple-iphone-6-16gb-space-gray" />
+  <Carrier zipCode="15314" password="HELLO" />
 </TestCase>

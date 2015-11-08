@@ -47,6 +47,7 @@ namespace FogBugzCreate
         string _FinalUrl = "https://wirelessadvocates.fogbugz.com/f/cases/";
         Color _ListFileBackColor = Color.FromArgb(255, 240, 240, 240);
         Hashtable _TemplateFileLocations;
+        bool _IsLocked = false;
 
         public Form1()
         {
@@ -56,7 +57,7 @@ namespace FogBugzCreate
             connectedLbl.Text = "";
         }
 
-        # region API Instantiation
+        #region API Instantiation
         public FBApi Api
         {
             get
@@ -214,7 +215,18 @@ namespace FogBugzCreate
             return "";
         }
         #endregion
-
+        #region ResetUi()
+        private void ResetUi()
+        {
+            createBttn.Enabled = true;
+            resultLbl.Text = "";
+            if (_IsLocked)
+            {
+                attachFilesChkBx.Checked = false;
+                listFiles.Items.Clear();
+            }
+        }
+        #endregion
         #region Create button
         private void createBttn_Click(object sender, EventArgs e)
         {
@@ -302,6 +314,7 @@ namespace FogBugzCreate
 
             // Disable the button so we don't accidentally recreate a copy
             createBttn.Enabled = false;
+            _IsLocked = true;
         }
         #endregion
         #region Connect button
@@ -432,8 +445,8 @@ namespace FogBugzCreate
 
         private void titleTxtBx_TextChanged(object sender, EventArgs e)
         {
-            createBttn.Enabled = true;
-            resultLbl.Text = "";
+            ResetUi();
+            _IsLocked = false;
         }
 
         private void richTextBox_TextChanged(object sender, EventArgs e)
@@ -452,10 +465,12 @@ namespace FogBugzCreate
             // Query the hashtable to find the template location for the selected template name
             string templateLocation = (string)_TemplateFileLocations[selectedText];
 
-            // Load the contents of the file
+            // Load the contents of the template
             string[] lines = File.ReadAllLines(templateLocation);
             for (int i = 0; i < lines.Length; i++)
             {
+                if (lines[i].StartsWith("[") && lines[i].EndsWith("]") && lines[i].Contains("Title"))
+                    titleTxtBx.Text = lines[i + 1];
                 if (lines[i].StartsWith("[") && lines[i].EndsWith("]") && lines[i].Contains("Project"))
                     projectCmboBx.SelectedIndex = projectCmboBx.FindString(lines[i + 1]);
                 if (lines[i].StartsWith("[") && lines[i].EndsWith("]") && lines[i].Contains("FixFor"))
@@ -480,6 +495,8 @@ namespace FogBugzCreate
                     }
                 }
             }
+            attachFilesChkBx.Checked = false;
+            listFiles.Items.Clear();
         }
         #endregion
     }

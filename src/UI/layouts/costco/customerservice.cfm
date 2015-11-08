@@ -163,6 +163,9 @@ a, a:link, a:visited, a:hover, a:active {
 				<li><a href="/index.cfm/go/content/do/displayDocument/?doc=customerletters/att/" target="_blank">AT&amp;T Costco Customer Letter</a></li>
 			</div>			
 			<div class="subtopic">
+				<li><a href="http://www.att.com/maps/wireless-coverage.html" target="_blank" >Coverage Map</a></li>
+			</div>
+			<div class="subtopic">
 				<li><a href="#local.contentURL#/activatingPhone/carrier/att">Activating Your Phone</a></li>
 			</div>
 			<div class="subtopic">
@@ -203,6 +206,9 @@ a, a:link, a:visited, a:hover, a:active {
 				<li><a href="/index.cfm/go/content/do/displayDocument/?doc=customerletters/verizon/" target="_blank">Verizon Costco Customer Letter</a></li>
 			</div>			
 			<div class="subtopic">
+				<li><a href="http://vzwmap.verizonwireless.com/dotcom/coveragelocator/" target="_blank" >Coverage Map</a></li>
+			</div>
+			<div class="subtopic">
 				<li><a href="#local.contentURL#/activatingPhone/carrier/verizon">Activating Your Phone</a></li>
 			</div>
 			<div class="subtopic">
@@ -221,6 +227,9 @@ a, a:link, a:visited, a:hover, a:active {
 			</div>
 			<div class="subtopic">
 				<li><a href="/index.cfm/go/content/do/displayDocument/?doc=customerletters/sprint/" target="_blank">Sprint Costco Customer Letter</a></li>
+			</div>
+			<div class="subtopic">
+				<li><a href="https://coverage.sprint.com/IMPACT.jsp?" target="_blank" >Coverage Map</a></li>
 			</div>
 			<div class="subtopic">
 				<li><a href="#local.contentURL#/activatingPhone/carrier/sprint">Activating Your Phone</a></li>

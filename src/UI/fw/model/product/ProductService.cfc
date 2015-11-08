@@ -120,7 +120,7 @@
 					productName = 'Verizon Monthly';
 					break;
 				case 128:
-					productName = 'T-Mobile';
+					productName = 'T-Mobile Monthly';
 					break;
 				case 299:
 					productName = 'Sprint Easy Pay';

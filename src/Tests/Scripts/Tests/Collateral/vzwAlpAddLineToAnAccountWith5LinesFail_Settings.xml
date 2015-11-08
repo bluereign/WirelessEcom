@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <TestCase name="vzwAlpAddLineToAnAccountWith5Lines" browser="ie" baseUrl="http://Costco.Ecom-dev-test-1.enterprise.corp"
           timeoutHalfSeconds="20" activateDevice="false">
-  <CustomerInfo last4Ssn="8700" accountPassword="jcardon1">
+  <CustomerInfo last4Ssn="8000" accountPassword="jcardon1">
     <Home zipCode="79601" />
-    <Contact mobileNumber="8643801717" />
+    <Contact mobileNumber="4129973850" />
   </CustomerInfo>
-  <Device id="25704" name="samsung-galaxy-s-5-16gb-white" />
-  <Carrier zipCode="29662" password="HELLO" />
+  <Device id="27716" name="apple-iphone-6-16gb-space-gray" />
+  <Carrier zipCode="15314" password="HELLO" />
 </TestCase>

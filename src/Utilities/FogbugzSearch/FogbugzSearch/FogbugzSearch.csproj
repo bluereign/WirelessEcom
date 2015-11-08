@@ -46,7 +46,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UBR.Products.FogBugz.Lib">
-      <HintPath>.\UBR.Products.FogBugz.Lib.dll</HintPath>
+      <HintPath>..\..\FogbugzAPI\UBR.Products.FogBugz.Lib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
