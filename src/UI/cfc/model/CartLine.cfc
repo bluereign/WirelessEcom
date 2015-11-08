@@ -19,6 +19,7 @@
 		<cfargument name="planIDCount" type="numeric" required="false" default="1" /> <!--- Num of previous lines (in cart) with the same plan ID (running total) --->
 		<cfargument name="cartLineActivationType" type="string" required="false" default="" />
 		<cfargument name="subscriberIndex" type="numeric" required="false" default="0" />
+		<cfargument name="PaymentPlanDetail" type="struct" required="false" default="#structNew()#" />
 		
 		<cfscript>
 			variables.instance = {};
@@ -40,6 +41,7 @@
 			setPlanIDCount(arguments.planIDCount);
 			setCartLineActivationType(arguments.cartLineActivationType);
 			setSubscriberIndex(arguments.subscriberIndex);
+			setPaymentPlanDetail(arguments.paymentPlanDetail);
 		</cfscript>
 		
 		<cfreturn this />
@@ -49,6 +51,10 @@
 
 	<cffunction name="getSubscriberIndex" returntype="numeric" output="false">
 		<cfreturn variables.instance.subscriberIndex>
+	</cffunction>
+
+	<cffunction name="getPaymentPlanDetail" returntype="struct" output="false">
+		<cfreturn variables.instance.paymentPlanDetail>
 	</cffunction>
 
 	<cffunction name="getAlias" returntype="string" output="false">
@@ -120,6 +126,11 @@
 	<cffunction name="setSubscriberIndex" returntype="void">
 		<cfargument name="subscriberIndex" type="numeric" required="true">
 		<cfset variables.instance.subscriberIndex = arguments.subscriberIndex>
+	</cffunction>
+
+	<cffunction name="setPaymentPlanDetail" returntype="void">
+		<cfargument name="paymentPlanDetail" type="struct" required="true">
+		<cfset variables.instance.paymentPlanDetail = arguments.paymentPlanDetail>
 	</cffunction>
 
 	<cffunction name="setAlias" returntype="void">
