@@ -1073,7 +1073,8 @@
       servicesArgs = {
         carrierid = prc.productData.CarrierId,
         subscriberNumber = prc.subscriber.getNumber(),
-        ImeiType = prc.productData.ImeiType
+        ImeiType = prc.productData.ImeiType,
+        productId = prc.productData.productId
       };
       prc.arrayPaymentPlans = carrierHelper.getSubscriberPaymentPlans(argumentCollection = servicesArgs);
 
