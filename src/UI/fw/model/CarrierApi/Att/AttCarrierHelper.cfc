@@ -336,7 +336,7 @@
 		<cfset var local = structNew() />
 		<cfset local.deviceInfo = structNew()/>
 		<cfset local.device = application.model.dBuilderCartFacade.getDevice(arguments.cartLineNo) />
-		<cfset local.deviceInfo.FullRetailPrice = local.device.productDetail.getRetailPrice() />
+		<cfset local.deviceInfo.FullRetailPrice = local.device.productDetail.getFinancedFullRetailPrice() />
 		<cfset local.deviceInfo.Family = local.device.productDetail.getManufacturerName() />
 		<cfset local.deviceInfo.Identifier = local.device.productDetail.getItemId() />
 		<cfset local.deviceInfo.Category =  local.device.productDetail.getImeiType() />
@@ -351,7 +351,7 @@
 		<cfset local.deviceDetail = structNew()/>
 		<cfset local.device = application.model.dBuilderCartFacade.getDevice(arguments.cartLineNo) />
 		<cfset local.deviceDetail.contractTerm = local.device.contractMonths />
-		<cfset local.deviceDetail.MSRP = local.device.productDetail.getRetailPrice() />
+		<cfset local.deviceDetail.MSRP = local.device.productDetail.getFinancedFullRetailPrice() />
 		<cfset local.deviceDetail.DownPayment = local.cartLine.getPhone().getPrices().getDownPaymentAmount() /> 
 		<cfreturn local.deviceDetail />
 	</cffunction>
