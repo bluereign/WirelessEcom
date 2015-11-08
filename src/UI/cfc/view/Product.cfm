@@ -404,10 +404,9 @@
 							<div onclick="window.location.href ='/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#/activationtype/#request.p.ActivationPrice#'"  class="prodPrice">
 								<a href="/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#"> Click to show pricing</a>
 							</div>	
-						<cfelse>
+						<cfelseif !channelConfig.getVfdEnabled() and arguments.productData.carrierId[arguments.productData.currentRow] eq 128>
 						
 							<!--- FB 885 Treat TMO like other carriers, it is only showing financed --->
-							<!---<cfif (arguments.productData.carrierId[arguments.productData.currentRow] eq 128>
 							<div onclick="window.location.href ='/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#/activationtype/#request.p.ActivationPrice#'"  class="prodPrice">
 								
 								<div style="text-align:center;">
@@ -421,7 +420,7 @@
 								</div>
 							</div>
 							
-							<cfelse>--->	
+							<cfelse>	
 							<div onclick="window.location.href ='/#arguments.productData.productId[arguments.productData.currentRow]#/#stringUtil.friendlyUrl(arguments.productData.DetailTitle[arguments.productData.currentRow])#/activationtype/#request.p.ActivationPrice#'"  class="prodPrice">
                 <cfif arguments.productData.price_new[arguments.productData.currentRow] NEQ "9999" AND arguments.productData.newPriceAfterRebate[arguments.productData.currentRow] NEQ "9999">							
 									<div class="leftCol<cfif arguments.productData.carrierID EQ 42 and val(local.minFinancedPrice)>vzw</cfif>">2-year:</div>
