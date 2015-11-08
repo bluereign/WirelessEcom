@@ -48,7 +48,7 @@
                       </cfif>>
                       #prc.financeproductname# #mid(prc.arrayPaymentPlans[i].planIdentifier,4,2)#: #dollarFormat(prc.arrayPaymentPlans[i].monthlyPayment)# Due Monthly for #prc.arrayPaymentPlans[i].minimumCommitment# Months
                       <cfif prc.arrayPaymentPlans[i].downPaymentPercent> 
-                        with a Down Payment of #dollarFormat((prc.arrayPaymentPlans[i].downPaymentPercent/100) * prc.productData.FinancedFullRetailPrice)#
+                        with Down Payment of #prc.arrayPaymentPlans[i].downPaymentPercent#% (#dollarFormat((prc.arrayPaymentPlans[i].downPaymentPercent/100) * prc.productData.FinancedFullRetailPrice)#)
                       </cfif>
                     </option>
                   </cfloop>
