@@ -1,9 +1,13 @@
+<cfparam name="rc.planIdentifier" default="" />
+
 <!--- <cfdump var="#prc.arrayPaymentPlans#"> --->
+<!--- <cfdump var="#prc.cartLine.getCartLineActivationType()#"> --->
 <cfsilent>
   <cfset local.financedMonthCount24 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade") />
   <cfset local.financedMonthCount18 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade") />
   <cfset local.financedMonthCount12 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade") />
 </cfsilent>
+
 <cfoutput>
   <div class="col-md-12">
 
@@ -36,9 +40,17 @@
               <input type="radio" name="paymentoption" id="paymentoption" value="financed" <cfif prc.paymentoption is 'financed'>checked</cfif> onchange="onChangeHandler(this.form,'financed')">
               
               <cfif prc.productData.CarrierId eq prc.carrierIdAtt>
-                <select name="financed" class="form-control" onchange="onChangeHandler(this.form,'financed')">
+                <select name="planIdentifier" class="form-control" onchange="onChangeHandler(this.form,'financed')">
                   <cfloop index="i" from="1" to="#arrayLen(prc.arrayPaymentPlans)#">
-                    <option value="financed-#mid(prc.arrayPaymentPlans[i].planIdentifier,4,2)#" data-months="#prc.arrayPaymentPlans[i].minimumCommitment#" <cfif prc.financed is 'financed-#mid(prc.arrayPaymentPlans[i].planIdentifier,4,2)#'>selected</cfif> >#prc.financeproductname# #mid(prc.arrayPaymentPlans[i].planIdentifier,4,2)#: #dollarFormat(prc.arrayPaymentPlans[i].monthlyPayment)# Due Monthly for #prc.arrayPaymentPlans[i].minimumCommitment# Months<cfif prc.arrayPaymentPlans[i].downPaymentPercent> with a Down Payment of #dollarFormat((prc.arrayPaymentPlans[i].downPaymentPercent/100) * prc.productData.FinancedFullRetailPrice)#</cfif> </option>
+                    <option value="#prc.arrayPaymentPlans[i].planIdentifier#" data-months="#prc.arrayPaymentPlans[i].minimumCommitment#" 
+                      <cfif rc.planIdentifier is prc.arrayPaymentPlans[i].planIdentifier>
+                        selected
+                      </cfif>>
+                      #prc.financeproductname# #mid(prc.arrayPaymentPlans[i].planIdentifier,4,2)#: #dollarFormat(prc.arrayPaymentPlans[i].monthlyPayment)# Due Monthly for #prc.arrayPaymentPlans[i].minimumCommitment# Months
+                      <cfif prc.arrayPaymentPlans[i].downPaymentPercent> 
+                        with a Down Payment of #dollarFormat((prc.arrayPaymentPlans[i].downPaymentPercent/100) * prc.productData.FinancedFullRetailPrice)#
+                      </cfif>
+                    </option>
                   </cfloop>
                   <!--- <option id="option-financed-24" value="financed-24" data-months="#local.financedMonthCount24#" <cfif prc.financed is 'financed-24'>selected</cfif> >
                   </option>

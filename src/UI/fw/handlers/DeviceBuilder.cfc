@@ -31,6 +31,7 @@
     <cfset var prevNavIndex = "" />
     <cfset var nextAction = "" />
     <cfset var prevAction = "" />
+    <cfset var i = 0 />
 
     <cfset var planArgs = {} />
     <cfset var cartArgs = {} />
@@ -308,37 +309,72 @@
       // PROTECTION AND SERVICES
       // update finance plan if rc.paymentoption exists (i.e. finance plan has changed):
       if ( structKeyExists(rc,"paymentoption") ) {
+        
+        // if ( rc.paymentoption is 'financed' ) {
+        //   prc.financed = rc.financed;
+        //   prc.activationType = rc.financed & "-" & prc.customerType;
+        // } else if ( rc.paymentoption is 'fullretail' ) {
+        //   prc.activationType = prc.customerType;
+        // } else if ( rc.paymentoption is '2yearcontract' ) {
+        //   prc.activationType = prc.customerType;
+        // }
 
-        if ( rc.paymentoption is 'financed' ) {
-          prc.financed = rc.financed;
-          prc.activationType = rc.financed & "-" & prc.customerType;
-        } else if ( rc.paymentoption is 'fullretail' ) {
-          // prc.activationType = rc.paymentoption & "-" & prc.customerType;
-          prc.activationType = prc.customerType;
-        } else if ( rc.paymentoption is '2yearcontract' ) {
-          prc.activationType = prc.customerType;
-        }
-
-        session.cart.setActivationType(prc.activationType);
-        prc.cartLine.setCartLineActivationType(prc.activationType);
-        prc.paymentoption = rc.paymentoption;
 
         // add phone to cartline again (which updates the device)
         cartArgs = {
-          productType = "phone:" & prc.activationType,
           product_id = prc.productData.productId,
           qty = 1,
           price = prc.productData.FinancedFullRetailPrice,
           cartLineNumber = rc.cartLineNumber
         };
 
-        if ( structKeyExists(rc,"isOptionalDownPaymentAdded") and rc.isOptionalDownPaymentAdded and prc.productData.carrierId eq prc.carrierIdAtt ) {
-          cartArgs.optionalDownPmtPct = 30;
-          cartArgs.optionalDownPmtAmt = round(prc.productData.FinancedFullRetailPrice * 0.3);
+        // if ( structKeyExists(rc,"isOptionalDownPaymentAdded") and rc.isOptionalDownPaymentAdded and prc.productData.carrierId eq prc.carrierIdAtt ) {
+        //   cartArgs.optionalDownPmtPct = 30;
+        //   cartArgs.optionalDownPmtAmt = round(prc.productData.FinancedFullRetailPrice * 0.3);
+        // }
+
+        if ( rc.paymentoption is 'financed' and structKeyExists(rc,"planIdentifier") ) {
+          
+          prc.subscribers = session.carrierObj.getSubscribers();
+          prc.subscriber = prc.subscribers[rc.cartLineNumber];
+
+          local.paymentPlanArgs = {
+            carrierid = prc.productData.CarrierId,
+            subscriberNumber = prc.subscriber.getNumber(),
+            ImeiType = prc.productData.ImeiType,
+            productId = prc.productData.productId
+          };
+          prc.arrayPaymentPlans = carrierHelper.getSubscriberPaymentPlans(argumentCollection = local.paymentPlanArgs);
+
+          for (i = 1; i lte arrayLen(prc.arrayPaymentPlans); i++) {
+            if ( prc.arrayPaymentPlans[i].planIdentifier is rc.planIdentifier ) {
+              
+              prc.financed = "financed-" & mid(prc.arrayPaymentPlans[i].planIdentifier,4,2);
+              prc.activationType = prc.financed & "-" & prc.customerType;
+
+              if (prc.arrayPaymentPlans[i].downPaymentPercent) {
+                cartArgs.optionalDownPmtPct = prc.arrayPaymentPlans[i].downPaymentPercent;
+                cartArgs.optionalDownPmtAmt = decimalFormat(prc.productData.FinancedFullRetailPrice * prc.arrayPaymentPlans[i].downPaymentPercent/100);
+                prc.optionalDownPmtAmt = decimalFormat(prc.productData.FinancedFullRetailPrice * prc.arrayPaymentPlans[i].downPaymentPercent/100);
+                prc.optionalDownPmtPct = prc.arrayPaymentPlans[i].downPaymentPercent;
+              }
+
+            }
+          }
+        } else if ( rc.paymentoption is 'fullretail' ) {
+          prc.activationType = prc.customerType;
+        } else if ( rc.paymentoption is '2yearcontract' ) {
+          prc.activationType = prc.customerType;
         }
 
-        // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        cartArgs.productType = "phone:" & prc.activationType;
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+
+        session.cart.setActivationType(prc.activationType);
+        prc.cartLine.setCartLineActivationType(prc.activationType);
+        prc.paymentoption = rc.paymentoption;
+
+
       }
 
       if (  structKeyExists(prc,"cartLine") and  ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) )  ) {
@@ -937,11 +973,12 @@
     <cfargument name="event">
     <cfargument name="rc">
     <cfargument name="prc">
+    <cfset var i = 0 />
 
     <cfscript>
       
       local.eligibleLineCount = 0;
-      for (local.i = 1; local.i lte arrayLen(prc.subscribers); local.i++) {
+      for (i = 1; i lte arrayLen(prc.subscribers); i++) {
         
         // local.args_incompatibleOffers = {
         //   carrierId = prc.productData.carrierId,
@@ -1033,7 +1070,6 @@
     <cfargument name="rc">
     <cfargument name="prc">
     <cfset var servicesArgs = {} />
-    <cfset var arrayPaymentPlans = [] />
     <cfset var i = 0 />
     <cfparam name="rc.isDownPaymentApproved" default="0" />
 
@@ -1078,10 +1114,27 @@
       };
       prc.arrayPaymentPlans = carrierHelper.getSubscriberPaymentPlans(argumentCollection = servicesArgs);
 
-      // prc.arrayFinancedOptions = [];
-      // for (i = 1; i lte arrayLen(prc.cartLines); i++) {
+      // get cartline planIdentifier if it exists
+      // if (prc.cartLine.getPhone().getPrices().getOptionalDownPmtPct()){
 
       // }
+      if (!structKeyExists(rc,"planIdentifier") and prc.cartLine.getCartLineActivationType() contains 'upgrade') {
+        // get plan number (12,18,24):
+        if (prc.cartLine.getCartLineActivationType() contains '12'){
+          local.planNumber = 12;
+        } else if (prc.cartLine.getCartLineActivationType() contains '18'){
+          local.planNumber = 18;
+        } else if (prc.cartLine.getCartLineActivationType() contains '24'){
+          local.planNumber = 24;
+        }
+
+        for (i = 1; i lte arrayLen(prc.arrayPaymentPlans); i++) {
+          if (  prc.cartLine.getPhone().getPrices().getOptionalDownPmtPct() eq prc.arrayPaymentPlans[i].downPaymentPercent
+                and local.planNumber is mid(prc.arrayPaymentPlans[i].planIdentifier,4,2)  ) {
+            rc.planIdentifier = prc.arrayPaymentPlans[i].planIdentifier;
+          }
+        }
+      }
 
     </cfscript>
   </cffunction>

@@ -5,6 +5,10 @@
   <div class="col-md-4">
     <cfif prc.showClearCartLink>
       <div class="pull-right"><a href="#prc.clearCartAction#" class="clear">Clear Entire Cart</a><br><br></div>
+      <!--- <br> --->
+      <!--- prc.optionalDownPmtAmt: #prc.optionalDownPmtAmt# --->
+      <!--- <br> --->
+      <!--- prc.optionalDownPmtPct: #prc.optionalDownPmtPct# --->
     </cfif>
     <div class="row totals">
       <div class="wrap head">
