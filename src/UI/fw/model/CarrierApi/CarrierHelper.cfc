@@ -59,6 +59,17 @@
 		<cfset local.conflictsResolvable =  carrierObject(arguments.carrierId).conflictsResolvable(argumentCollection = arguments) />	
 		<cfreturn local.conflictsResolvable />
 	</cffunction>	
+
+	<cffunction name="getSubscriberPaymentPlan" output="false" access="public" returntype="struct">
+		<cfargument name="carrierid" type="numeric" required="true" > 
+		<cfargument name="subscriberNumber" type="string" required="true" > 
+		<cfargument name="productId" type="numeric" required="false" > 
+		<cfargument name="PlanIdentifier" type="string" required="false" > 
+		<cfset var local = structNew() />
+		
+		<cfset local.SubscriberPaymentPlan =  carrierObject(arguments.carrierId).getSubscriberPaymentPlan(argumentCollection = arguments) />	
+		<cfreturn local.SubscriberPaymentPlan />
+	</cffunction>
 	
 	<cffunction name="getSubscriberPaymentPlans" output="false" access="public" returntype="array">
 		
