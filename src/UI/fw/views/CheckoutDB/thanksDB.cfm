@@ -1,8 +1,5 @@
 <!--- Adding style here and jQuery at the bottom as the javascript file provided by front-end developer is minified. --->
 <cfajaximport tags="cfform,cfwindow,cfdiv" scriptsrc="#assetPaths.common#scripts/cfajax/">
-
-<cfset session.checkout = duplicate(session.checkoutDone) />
-<cfset session.cart = duplicate(session.cartDone) />
 		
 <style>
 .cart .device-details {
@@ -362,7 +359,11 @@
                 <div class="col-md-2 col-xs-16 quantity">1</div>
 
                 <div class="col-md-2 col-xs-16 monthly">
-                  #dollarFormat(local.cartline.getPrices().getMonthly())#
+                  <cfif local.iCartLine eq 1 AND isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
+						#dollarFormat(local.cartline.getPrices().getMonthly() - prc.cartPlan.monthlyFee)# 
+					<cfelse>
+						#dollarFormat(local.cartline.getPrices().getMonthly())# 
+					</cfif>
                   <span class="visible-xs-inline">Monthly*</span>
                 </div>
                 <div class="col-md-2 col-xs-16 due">

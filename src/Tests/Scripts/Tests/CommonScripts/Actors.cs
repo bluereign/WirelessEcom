@@ -99,8 +99,20 @@ namespace SeleniumTests
                 //System.Threading.Thread.Sleep(10000);
 
                 // Get the result message
-                Assert.IsTrue(Utilities.WaitForElement("//div[@id='mid-col']/div/div/div/a/div", SeleniumTests._By.xPath, 240));
+                Assert.IsTrue(Utilities.WaitForElement("//div[@id='mid-col']/div/div/div/a/div", _By.xPath, 240));
                 string result = Globals._Driver.FindElement(By.XPath("//div[@id='mid-col']/div/div/div/a/div")).Text;
+                string result2 = "";
+                try
+                {
+                    // When removing a line during activation, there are 2 messages that appear.  The following
+                    // in intended to capture the second message, only if it exists.
+                    Assert.IsTrue(Utilities.WaitForElement("//div[@id='mid-col']/div/div/div/a/div[2]", _By.xPath, Globals._DefaultTimeoutValue));
+                    result2 = Globals._Driver.FindElement(By.XPath("//div[@id='mid-col']/div/div/div/a/div[2]")).Text;
+                }
+                catch { /* Nothing to do here, just move on. */ }
+
+                if (result2 != "")
+                    result += "\r\n\r\n" + result2;
                 Utilities.Log("+ Result of device activation:\r\n" + result);
 
                 // Check for errors on the page
@@ -161,7 +173,7 @@ namespace SeleniumTests
             catch (Exception e)
             {
                 Utilities.Log("- " + e.Message);
-                Assert.Fail();
+                Assert.Fail(e.Message);
 
                 return false;
             }
@@ -193,8 +205,8 @@ namespace SeleniumTests
             {
                 Assert.IsTrue(Utilities.WaitForElement("upgradeType", SeleniumTests._By.name, Globals._DefaultTimeoutValue));
                 Globals._Driver.FindElement(By.Name("upgradeType")).Click();
-                Utilities.WaitForElement("chk_features_5324", SeleniumTests._By.id, Globals._DefaultTimeoutValue);
-                Globals._Driver.FindElement(By.Id("chk_features_5324")).Click();
+                Utilities.WaitForElement("chk_features_4638", SeleniumTests._By.id, Globals._DefaultTimeoutValue);
+                Globals._Driver.FindElement(By.Id("chk_features_4638")).Click();
                 Globals._Driver.FindElement(By.Id("nextBtn")).Click();
 
                 return true;
@@ -290,7 +302,7 @@ namespace SeleniumTests
                         }
                         catch (Exception)
                         {
-                            // Raise exception and move on
+                            // No reason to raise exception, just move on
                         }
                         Globals._Driver.FindElement(By.Id("txtEmailAddress")).Clear();
                         Globals._Driver.FindElement(By.Id("txtEmailAddress")).SendKeys("");
@@ -353,11 +365,13 @@ namespace SeleniumTests
                 Utilities.Log("+ type " + zipCode);
                 Globals._Driver.FindElement(By.Id("txtBillingZip")).SendKeys(zipCode);
                 Globals._Driver.FindElement(By.Id("txtBillingDayPhone")).Clear();
-                Utilities.Log("+ type " + contactPhoneAreaCode + "-" + "788-1234");
-                Globals._Driver.FindElement(By.Id("txtBillingDayPhone")).SendKeys(contactPhoneAreaCode + "-788-1234");
+                string randomNumber1 = Utilities.RandNumberGenerator(4).ToString();
+                Utilities.Log("+ type " + contactPhoneAreaCode + "-" + "788-" + randomNumber1);
+                Globals._Driver.FindElement(By.Id("txtBillingDayPhone")).SendKeys(contactPhoneAreaCode + "-788-" + randomNumber1);
                 Globals._Driver.FindElement(By.Id("txtBillingEvePhone")).Clear();
-                Utilities.Log("+ type " + contactPhoneAreaCode + "-" + "788-1235");
-                Globals._Driver.FindElement(By.Id("txtBillingEvePhone")).SendKeys(contactPhoneAreaCode + "-788-1235");
+                string randomNumber2 = Utilities.RandNumberGenerator(4).ToString();
+                Utilities.Log("+ type " + contactPhoneAreaCode + "-" + "788-" + randomNumber2);
+                Globals._Driver.FindElement(By.Id("txtBillingEvePhone")).SendKeys(contactPhoneAreaCode + "-788-" + randomNumber2);
                 Globals._Driver.FindElement(By.LinkText("Continue")).Click();
 
                 // Check for errors on the page
@@ -368,7 +382,7 @@ namespace SeleniumTests
             catch (Exception e)
             {
                 Utilities.Log("- " + e.Message);
-                Assert.Fail();
+                Assert.Fail(e.Message);
 
                 return false;
             }
@@ -406,7 +420,7 @@ namespace SeleniumTests
             catch (Exception e)
             {
                 Utilities.Log("- " + e.Message);
-                Assert.Fail();
+                Assert.Fail(e.Message);
 
                 return false;
             }
@@ -423,8 +437,9 @@ namespace SeleniumTests
                 Globals._Driver.FindElement(By.Id("txtDOB")).Clear();
                 Globals._Driver.FindElement(By.Id("txtDOB")).SendKeys(Utilities.GetDate(-20));
                 Globals._Driver.FindElement(By.Id("txtSSN")).Clear();
-                Utilities.Log("+ type 555-55-" + last4Ssn);
-                Globals._Driver.FindElement(By.Id("txtSSN")).SendKeys("555-55-" + last4Ssn);
+                string generateFullSsn = Utilities.RandNumberGenerator(3) + "-" + Utilities.RandNumberGenerator(2) + "-" + last4Ssn;
+                Utilities.Log("+ type " + generateFullSsn);
+                Globals._Driver.FindElement(By.Id("txtSSN")).SendKeys(generateFullSsn);
                 Globals._Driver.FindElement(By.Id("txtDriver")).Clear();
                 string randomNumber = Utilities.RandNumberGenerator(9).ToString();
                 Utilities.Log("+ type " + randomNumber);
@@ -766,6 +781,9 @@ namespace SeleniumTests
         {
             Utilities.Log("** KeepCurrentNumber");
 
+            if (currentNumber.Length == 6)
+                currentNumber += Utilities.RandNumberGenerator(4);
+
             // Add dashes if they don't already exist so the data can be parsed
             if (!currentNumber.Contains("-") && currentNumber != "")
             {
@@ -879,7 +897,7 @@ namespace SeleniumTests
             catch (Exception e)
             {
                 Utilities.Log("- " + e.Message);
-                Assert.Fail();
+                Assert.Fail(e.Message);
 
                 return false;
             }
@@ -1057,8 +1075,8 @@ namespace SeleniumTests
                         Globals._Driver.FindElement(By.Id("chk_features_46598")).Click();
                         break;
                     default:
-                        Assert.IsTrue(Utilities.WaitForElement("chk_features_5324", _By.id, Globals._DefaultTimeoutValue));
-                        Globals._Driver.FindElement(By.Id("chk_features_5324")).Click();
+                        Assert.IsTrue(Utilities.WaitForElement("chk_features_4638", _By.id, Globals._DefaultTimeoutValue));
+                        Globals._Driver.FindElement(By.Id("chk_features_4638")).Click();
                         break;
                 }
 
@@ -1178,7 +1196,7 @@ namespace SeleniumTests
         #region VerizonAccountLookup()
         public static bool VerizonAccountLookup(string mdn, string last4Ssn, string zipCode, string password)
         {
-            Utilities.Log("** Checkout");
+            Utilities.Log("** VerizonAccountLookup");
 
             // Add dashes if they don't already exist so the data can be parsed
             if (!mdn.Contains("-"))

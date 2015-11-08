@@ -79,7 +79,7 @@ namespace SeleniumTests
 
             string date;
 
-            if (m >= 9)
+            if (m <= 9)
                 date = "0" + m.ToString();
             else
                 date = m.ToString();

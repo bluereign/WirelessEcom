@@ -39,7 +39,7 @@
     			  <!--- SHARED --->
     			  <cfif prc.planDataShared.recordcount>
       				<li role="presentation" <cfif prc.activetab is 'shared'>class="active"</cfif>>
-      				  <a href="##shared" aria-controls="shared" role="tab" data-toggle="tab">Choose A New Plan</a>
+      				  <a href="##shared" aria-controls="shared" role="tab" data-toggle="tab" style="font-size:18px;">Choose A New Plan</a>
       				</li>
     			  </cfif>
 

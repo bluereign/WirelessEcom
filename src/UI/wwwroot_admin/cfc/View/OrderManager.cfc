@@ -1248,6 +1248,7 @@
 									<input name="orderId" type="hidden" value="#arguments.order.getOrderId()#" />
 									<input name="carrier" type="hidden" value="#arguments.order.getCarrierId()#" />
 									<input name="wirelessAccountId" type="hidden" value="#arguments.order.getWirelessAccount().getWirelessAccountId()#" />
+									<input name="purchaseType" type="hidden" value="#qActivationLines.PurchaseType#" />
 									<input name="activationFullSubmit" type="hidden" />
 									Requested Activation Date (used to activate all lines): <input name="requestedActivationDate" value = "#DateFormat( DateAdd( 'd', Now(), 2), 'mm/dd/yyyy' )#" style="width:100px">
 								</form>

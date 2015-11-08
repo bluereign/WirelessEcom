@@ -26,17 +26,20 @@
 					</thead>
 					<tbody>
 						<cfloop query="rc.qOrders">
-								<tr <cfif (Status eq 2) AND (GersStatus eq 0)>style="color:red;font-weight:bold;"<cfelse></cfif>>
+								<tr <cfif (Status eq 2) AND (GersStatus eq 0)>style="color:red;font-weight:bold;"<cfelseif (Status eq 4) AND (GersStatus eq 0)>style="color:blue;font-weight:bold;"<cfelse></cfif>>
 									<cfoutput>
 										<td><a href="##" onclick="javascript: viewOrderConfirmation(orderID=#orderid#);">View Order</a> #orderid#
 											<cfif (Status eq 2) AND (GersStatus eq 0)>
 												<br/>
 												<a href="##" onclick="javascript: modifyOrder(orderID=#orderid#);"><button class="btn btn-default" type="button" style="color:red;font-weight:bolder">Fix It</button></a>
+												<!---<a href="<cfoutput>#event.buildLink('omtVFD/cancelOrderSubmit?orderID=#orderid#')#</cfoutput>"><button class="btn btn-default" type="button" style="color:red;font-weight:bolder">Cancel</button></a>--->
+												<a onclick="javascript: {var ok=confirm('This will cancel the selected order and it CANNOT be undone.  Click OK to proceed with cancellation'); if(ok){location.href='<cfoutput>#event.buildLink('omtVFD/cancelOrderSubmit?orderID=#orderid#')#</cfoutput>'; }}"><button class="btn btn-default" type="button" style="color:red;font-weight:bolder" >Cancel</button></a>
 											</cfif>
+											<!---<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="##cancelModal" data-id="#orderID#">Cancel Order</button>--->
 										</td><!---href="#event.buildLink('OmtVFD.orderConfirmationReprint?orderid=#orderid#')#" onclick="javascript: printConfirmation();" --->
 										<td>#dateformat(orderdate,"MM/DD/yyyy")#</td>
 										<td>#CustomerName#</td>
-										<td><cfif (Status eq 2) AND (GersStatus eq 0)>ACTIVATION MISSING, please fix<cfelse>#CombinedStatus#</cfif></td>
+										<td><cfif (Status eq 2) AND (GersStatus eq 0)>ACTIVATION MISSING, please fix<cfelseif ((Status eq 4) AND (GersStatus eq 0))>ORDER CANCELLED<cfelse>#CombinedStatus#</cfif></td>
 										<td><cfif len(trim(EmployeeName))>#EmployeeName#<cfelse>#AssociateId#</cfif></td>
 										<td><cfif len(trim(KioskNumber))>#KioskNumber#<cfelse>NA</cfif></td>					
 									</cfoutput>
@@ -46,8 +49,36 @@
 				</table>
 			</div>
 		</div>
-	</div>
-	
+		
+		
+		
+		
+<!---<div id="cancelModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cancel Order Header</h4>
+      </div>
+      <div class="modal-body">
+        Body Text
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default">Agree</button>
+      </div>
+    </div>
+  </div>
+</div>--->
+		
+		
+		
+		
+		
+		
+</div>	
 <div class="row" style="clear:left">
     <div class="col-md-4"></div>
     <div class="col-md-8">
@@ -61,7 +92,7 @@
 	        id="confirmationPrint">
 </iframe>
 <script>
-	
+		var $j = jQuery.noConflict();
 		//Changes states of Print Order Confirmation and Finish Buttons
 		function printClicked(){
 			//document.getElementById('confirmationPrint').src = "#event.buildLink( linkto="general.maintain", queryString="userid=#User.getUserID()#" )#"
