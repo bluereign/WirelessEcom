@@ -260,6 +260,7 @@
 	</cffunction>
 
 	<cffunction name="save" access="public" output="false" returntype="void">
+		<cfset var channelConfig = application.wirebox.getInstance("ChannelConfig") >
 		<cfset var local = structNew()>
 
 		<!--- save linedevice --->
@@ -284,6 +285,26 @@
 			<cfloop from="1" to="#arrayLen(local.a)#" index="local.i">
 				<cfif local.a[local.i].getIsDirty() and local.a[local.i].getOrderId() neq this.getOrderId()>
 					<cfset local.a[local.i].setOrderId(this.getOrderId())>
+				</cfif>
+				<!--- Check for whether TMO and if so, go through  GetDataCommissionSku to update service--->
+				<cfif application.model.checkoutHelper.getCarrier() eq 128 and (isDefined('variables.deviceActivationType'))><!---Preventing second save of same service and potentially messing up commission sku--->
+					<cfset local.serviceGersSku=local.a[local.i].getGersSku()>
+					<cfset local.deviceGersSku=this.getLineDevice().getGersSku() >
+					<cfset local.deviceActivation = variables.deviceActivationType >
+					<cfif local.deviceActivation contains "New">
+						<cfset local.deviceActivation = "FNew">
+					<cfelseif local.deviceActivation contains "Upgrade">
+						<cfset local.deviceActivation = "FUpgrade">
+					<cfelse>
+						<cfset local.deviceActivation = "FAddaline">
+					</cfif>				
+				 	<cfset CommissionSku = application.model.CheckoutHelper.GetDataCommissionSku( 
+						application.model.checkoutHelper.getCarrier()
+						, local.deviceGersSku
+						, local.serviceGersSku
+						, local.deviceActivation
+						) />
+					<cfset local.a[local.i].setGersSku(CommissionSku) />
 				</cfif>
 				<cfset local.a[local.i].save()>
 			</cfloop>

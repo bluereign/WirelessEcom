@@ -16,7 +16,7 @@ namespace SeleniumTests
             /* ==================================================================
              * ==   Must get the settings file before generating the log file. ==
              * ================================================================== */
-            Utilities.GetSettings("D:\\source\\WA_Costco\\src\\Tests\\Scripts\\Tests\\Collateral\\vzwUpgradeKeepExistingPlan_settings.xml");
+            Utilities.GetSettings("D:\\Sources\\src\\Tests\\Scripts\\Tests\\Collateral\\vzwUpgradeKeepExistingPlan_settings.xml");
             Utilities.Log("+++ Begin test", true);
             Globals._Driver = Utilities.InitializeDriver();
             Globals._VerificationErrors = new StringBuilder();

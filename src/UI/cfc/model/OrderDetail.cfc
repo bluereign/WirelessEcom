@@ -717,6 +717,25 @@
 
 		<cfreturn local.sku>
 	</cffunction>
+	
+	<cffunction name="getUPCbyWirelessLineID" access="public" output="false" returntype="string">
+		<cfargument name="WirelessLineID" type="numeric" required="true">
+		<cfset var local = structNew()>
+		<cfset local.upc = "">
+
+		<cfquery name="local.qgetUPCbyWirelessLineID" datasource="#application.dsn.wirelessAdvocates#">
+			SELECT p.UPC 
+			FROM [salesorder].[OrderDetail] o
+			INNER JOIN [salesorder].[WirelessLine] w ON o.OrderDetailID = w.OrderDetailID
+			LEFT OUTER JOIN [catalog].[dn_Phones] p ON o.ProductID = p.ProductID
+			WHERE w.WirelessLineID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.WirelessLineID#">
+		</cfquery>
+		<cfif local.qgetUPCbyWirelessLineID.recordCount>
+			<cfset local.upc = local.qgetUPCbyWirelessLineID.upc>
+		</cfif>
+
+		<cfreturn local.upc>
+	</cffunction>
 
 	<cffunction name="getByWirelessLineIdAndOrderDetailType" access="public" output="false" returntype="cfc.model.OrderDetail[]">
 		<cfargument name="WirelessLineId" type="numeric" required="true">

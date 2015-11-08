@@ -472,7 +472,6 @@
       	<cfargument name="carrierId" type="numeric" required="true" />
 		<cfargument name="deviceSKU" type="string" required="true" />
 		<cfargument name="dataSKU" type="string" required="true" />
-		<cfargument name="deviceType" type="string" default="" required="true" />
 		<cfargument name="activationType" type="string" default="" required="true" />
 		
      	<cfset var local = structNew()>
@@ -483,7 +482,6 @@
 				<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.carrierId#">   		<!--- @CarrierID (int, No default) --->
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deviceSKU#">		<!--- @DeviceSku (nvarchar(9), No default) --->
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.dataSKU#">			<!--- @DataSKU (nvarchar(5), No default) --->
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deviceType#">		<!--- @DeviceType (nvarchar(20), No default) --->
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.activationType#">	<!--- @ActivationType (nvarchar(10), No default) --->			
 			) AS gersSKU	
 		</cfquery>
