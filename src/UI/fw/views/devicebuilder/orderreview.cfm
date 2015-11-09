@@ -639,7 +639,7 @@
                 <tr>
                   <td>One time Activation Fee added to first month's bill ***</td>
                   <td></td>
-                  <td><cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif></div></td>
+                  <td><cfif prc.upgradeFee>#dollarFormat(arrayLen(prc.cartLines)*prc.upgradeFee)#<cfelse>$18.00</cfif></div></td>
                 </tr>
               </table> 
             </div>
