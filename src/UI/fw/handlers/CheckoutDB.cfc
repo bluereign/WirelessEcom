@@ -1151,6 +1151,41 @@
         <cfset event.noRender() />
 	</cffunction>
 	
+	<cffunction name="emailFinanceAgreementPDF" returntype="void" access="remote" output="false">
+		<cfargument name="rc">
+		<cfargument name="event">   
+		
+		<cfset theOrder = CreateObject('component', 'cfc.model.Order').init() />
+		<cfset theOrderAddress = CreateObject('component', 'cfc.model.OrderAddress').init() />
+		<cfset theUser = CreateObject('component', 'cfc.model.User').init() />
+		
+		<cfset theOrder.load(session.checkout.OrderId) />
+		<cfset theUser.getUserById(theOrder.getUserId()) />
+		<cfset theShippingAddress = theOrder.getShipAddress() />
+		
+		<!--- setting email variable locally so that the footer is not dependent on a specific object for the email value --->
+		<cfset email = theOrder.getEmailAddress() />
+		<cfset sendFrom = request.config.customerServiceEmail />
+		<cfset subject = "#channelConfig.getDisplayName()# Order Documents" />
+		
+		<!---<cfpdf action="read" source="#trim(rc.urlPDF)#" name="test" />--->
+		
+		<!--- mail the message --->
+		<cfmail to="#email#"
+        from="#sendFrom#"
+        subject="#subject#"
+        type="html">
+   		Please find attached your requested document.
+   		<cfmailparam
+                file="FinanceAgreeemt.pdf"
+                content="#toBinary(session.financeAgreementResp.getResponse().FinanceAgreement)#"
+                type="application/pdf"
+                />
+		</cfmail>
+		
+        <cfset event.noRender() />
+	</cffunction>
+	
 	<cffunction name="customerservice" returntype="void" output="false" hint="">
 		<cfset request.layoutFile = 'nolayout' />
 		<cfset request.Title = ChannelConfig.getDisplayName() & ' Customer Service' />
