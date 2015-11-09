@@ -84,7 +84,7 @@
                       dollar-amount="#decimalFormat(prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt())#" 
                       <!--- <cfif prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt()>checked</cfif>  --->
                       >
-                    <div id="isOptionalDownPaymentAddedLabel">I Agree to the required CARRIER down payment of: #dollarFormat(prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt())#<div></label>
+                    <div id="isOptionalDownPaymentAddedLabel">I Agree to the down payment of: #dollarFormat(prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt())#<div></label>
                 </div>
               <cfelseif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0>
                 CARRIER is requiring a down payment
