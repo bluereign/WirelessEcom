@@ -1176,7 +1176,7 @@
 				<cfif isObject(local.phone)>
 					<cfset local.prices = local.phone.getPrices() />
 					
-					<cfset local.prices.setMonthly( decimalformat(local.prices.getRetailPrice() - local.prices.getDownPaymentAmount()) / activationTypeMonths(local.activationType)) />
+					<cfset local.prices.setMonthly( decimalformat(local.prices.getRetailPrice() - local.prices.getDownPaymentAmount()) / activationTypeMonths(local.activationType,local.cl)) />
 					<cfset local.prices.setDueToday( local.prices.getMandatoryDownPmtAmt() + local.prices.getOptionalDownPmtAmt() ) />
 				</cfif>
 			</cfloop>
@@ -1186,9 +1186,19 @@
 
 	<cffunction name="ActivationTypeMonths" returntype="numeric" access="public" >
 		<cfargument name="activationType" type="string" required="true" />
+		<cfargument name="cartLine" type="cfc.model.cartLine" required="true" />
+		
 		<cfset var local = structNew() />
 		<cfset local.nMonths = 1 />
 		<cfset local.contractMonths = 0 />
+		
+		<!--- look to see if PaymentPlanDetail is available for the line, if so use that --->
+		<cfset local.paymentPlanInfo = arguments.cartLine.getPaymentPlanDetail() />
+		<cfif structKeyExists(local.paymentPlanInfo,"minimumCommitment")>
+			<cfreturn local.paymentPlanInfo.minimumCommitment />
+		</cfif>
+		
+		<!--- There's no playment plan detail so try and derive it from activationType --->
 		<cfif listlen(arguments.activationType,'-') GE 3 and isNumeric(listgetat(arguments.activationType,2,'-')) >
 			<cfset local.contractMonths = listgetat(arguments.activationType,2,'-') />
 		</cfif>
