@@ -40,7 +40,25 @@
 		<!--- create the carrier response --->
 		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttAccountCarrierResponse').init() />
 		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+		<cfset local.carrierResponse = validateLogin(local.carrierResponse, arguments.passcode ) />
+		
+		
 		<cfreturn processResponse(local.carrierResponse) />	
+		
+	</cffunction>
+	
+	<!--- Check to see if a password is returned from ATT. If yes, then does the customer entered passcode match it --->
+	<cffunction name="validateLogin" returnType="fw.model.CarrierApi.Att.AttAccountCarrierResponse" access="private">
+		<cfargument name="carrierResponse" type="fw.model.CarrierApi.Att.AttAccountCarrierResponse"	required="true" /> 
+		<cfargument name="passcode" type="string" required="true" /> 
+		<cfset var local = structnew() />
+		<cfset local.resp = arguments.carrierResponse.getResponse() />
+		<cfif isdefined("local.resp.account.credential.password") and local.resp.account.credential.password is not "">	
+			<cfif local.resp.account.credential.password is not arguments.passcode>
+				<cfset arguments.carrierResponse.getResponse().responseStatusMessage = "Failed" />
+			</cfif>
+		</cfif>	
+		<cfreturn arguments.carrierResponse />
 	</cffunction>
 	
 	<!------------------------------------------------------------------------------------------------------- 
@@ -100,7 +118,7 @@
 		<cfif structKeyExists(arguments,"productid") is false AND structKeyExists(arguments,"imeiType") is false>
 			<cfset local.carrierResponse.errorMessage = "Error: arguments.productid is missing" />
 		</cfif>
-		
+
 		<!--- If the imcompatible offers array does not exist in the accountResp then add it as an empty array --->
 		<cfif not structKeyExists(session.carrierFacade.accountResp,"IncompatibleOffers")>
 			<cfset session.carrierFacade.accountResp.IncompatibleOffers = arrayNew(1) />
@@ -116,12 +134,14 @@
 			</cfif>
 		</cfif>
 		
-		<!--- See if we already have the subscriberNumber/ImeiType cached. If yes, just return --->
+		<!--- See if we already have the ImeiType cached. If yes, just return --->
 		<!---<cfset local.subscriberNumbers = getEligibleSubscriberList() />--->
 		<cfset local.ImeiTypes = getIncompatibleOffersImeiTypes() />
 		<cfif listfind(local.ImeiTypes,local.imeiType)>
 			<cfset local.carrierResponse.errorMessage = "Subscriber Number/ImeiType already in cache" />
 		</cfif> 
+		
+		<!--- if the Plan Identifier is the same as  --->
 	
 		<cfif not structKeyExists(local.carrierResponse,"errorMessage") >
 			<cfset local.eligibleCount = 0 />
