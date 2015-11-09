@@ -921,10 +921,9 @@
             productId = prc.productData.productId
           };
 
-          // if (prc.customerType is "upgrade") {
-          //   accountArgs.requestType = 1;
-          // }
-          // accountArgs.productid = prc.productData.productId;
+          if (prc.customerType is "upgrade") {
+            accountArgs.requestType = 1;
+          }
 
           // for testing purposes/development (carrierloginpost.cfm):
           rc.respObj = carrierFacade.Account(argumentCollection = accountArgs);
