@@ -1177,7 +1177,7 @@
         type="html">
    		Please find attached your requested document.
    		<cfmailparam
-                file="FinanceAgreeemt.pdf"
+                file="#rc.urlPDF#"
                 content="#toBinary(session.financeAgreementResp.getResponse().FinanceAgreement)#"
                 type="application/pdf"
                 />

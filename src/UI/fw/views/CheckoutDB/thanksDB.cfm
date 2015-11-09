@@ -141,7 +141,18 @@
 		$('#emailButton').click( function() {
 			var urlSend = $('#emailDocLink').val();
 			
-			$.ajax({
+			if($('#emailDocLink').val() == $('#pdfURL').val()){ //Email for finance agreement
+				$.ajax({
+						cache: false,
+						type: "POST",
+						url: "../CheckoutDB/emailFinanceAgreementPDF",
+						data: {
+							urlPDF: urlSend
+						},
+						dataType: "json"							
+					})
+			}else{					
+				$.ajax({
 						cache: false,
 						type: "POST",
 						url: "../CheckoutDB/emailPDF",
@@ -150,6 +161,9 @@
 						},
 						dataType: "json"						
 					})
+			}
+			
+			
 		})
 
 	});
