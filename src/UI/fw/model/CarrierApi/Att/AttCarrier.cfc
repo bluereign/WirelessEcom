@@ -134,10 +134,27 @@
 			</cfif>
 		</cfif>
 		
+		<!--- If the changePlan argument is passed then check to see if the current plan is SDDVRP  --->
+		<cfif structKeyExists(arguments,"ChangePlan")  and arguments.changePlan is true> 
+			<cfset local.subscriber = AttCarrierHelper.FindSubscriber(arguments.subscriberNumber) />
+			<cfif not structIsEmpty(local.subscriber) and local.subscriber.PlanInfo.Identifier is "SDDVRP">
+				<cfset local.carrierResponse.errorMessage = "Subscriber already using SDDVRP Plan" />
+			<cfelse>
+				<cfset local.newPlanInfo = structNew() />
+				<cfset local.newPlanInfo.PlanInfo = structNew() />
+				<cfset local.newPlanInfo.PlanInfo.Identifier = "SDDVRP" />	
+				<cfset local.newPlanInfo.PlanInfo.ActionCode = "A" />	
+				<cfset local.newPlanInfo.PlanInfo.isGroupPlan = false />	
+				<cfif isdefined("local.subscriber.additionalOfferings")	>
+					<cfset local.newPlanInfo.AdditionalOffers = local.subscriber.additionalOfferings />
+				</cfif>
+			</cfif>
+		</cfif>		
+		
 		<!--- See if we already have the ImeiType cached. If yes, just return --->
 		<!---<cfset local.subscriberNumbers = getEligibleSubscriberList() />--->
 		<cfset local.ImeiTypes = getIncompatibleOffersImeiTypes() />
-		<cfif listfind(local.ImeiTypes,local.imeiType)>
+		<cfif arguments.changePlan is false and listfind(local.ImeiTypes,local.imeiType)>
 			<cfset local.carrierResponse.errorMessage = "Subscriber Number/ImeiType already in cache" />
 		</cfif> 
 		
@@ -151,11 +168,19 @@
 						<cfset local.eligibleCount = local.eligibleCount+1 />
 						<cfset local.incompatibleOffer_args = {
 							subscriberNumber = #local.s.number#,
-							planInfo = #local.s.planInfo#,
 							BillingMarketCode = #session.carrierfacade.accountresp.account.billingMarketCode#,
 							ImeiType = #local.imeiType#,
 							Channel = #AttCarrierHelper.getChannelValue()#
 						} />
+						<!--- add in the appropriate planInfo and additional offers --->
+						<cfif structKeyExists(local,"newPlanInfo")>
+							<cfset local.incompatibleOffer_args.planInfo = local.newPlanInfo.planInfo />
+							<cfif structKeyExists(local.newPlanInfo,"additionalOffers") >
+								<cfset local.incompatibleOffer_args.additionalOffers = local.newPlanInfo.AdditionalOffers />
+							</cfif>
+						<cfelse>
+							<cfset local.incompatibleOffer_args.planInfo = local.s.planInfo />
+						</cfif>
 				
 						<cfset local.body = serializeJSonAddReferenceNumber(local.incompatibleOffer_args) />	
 						<!--- save the request to the session --->
