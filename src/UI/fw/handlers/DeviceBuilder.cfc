@@ -336,7 +336,8 @@
         if ( rc.paymentoption is 'financed' and structKeyExists(rc,"planIdentifier") ) {
           
           prc.subscribers = session.carrierObj.getSubscribers();
-          prc.subscriber = prc.subscribers[rc.cartLineNumber];
+          prc.subscriberIndex = prc.cartLine.getSubscriberIndex();
+          prc.subscriber = prc.subscribers[prc.subscriberIndex]; //subscriberIndex
 
           local.paymentPlanArgs = {
             carrierid = prc.productData.CarrierId,
@@ -387,6 +388,7 @@
         local.paymentPlanDetail.subscriberNumber = prc.subscriber.getNumber();
         local.paymentPlanDetail.subscriberIndex = rc.cartLineNumber;
         local.paymentPlanDetail.FinancedFullRetailPrice = prc.productData.FinancedFullRetailPrice;
+        local.paymentPlanDetail.paymentPlanName = prc.productService.getFinanceProductName(carrierid = prc.productData.CarrierId) & " " & mid(rc.planIdentifier,4,2);
         prc.cartLine.setPaymentPlanDetail(local.paymentPlanDetail);
 
       }

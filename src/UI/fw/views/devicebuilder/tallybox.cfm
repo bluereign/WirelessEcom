@@ -47,10 +47,11 @@
             <div class="table-responsive">
               <table class="table">
                 <thead>
-                  <th colspan="2">#prc.tallyboxFinanceTitle#</th>
+                  <th colspan="2"><cfif structKeyExists(prc.cartLine,"getPaymentPlanDetail().paymentPlanName") and len(prc.cartLine.getPaymentPlanDetail().paymentPlanName)>#cartLine.getPaymentPlanDetail().paymentPlanName#<cfelse>#prc.productData.carrierName#</cfif></th>
+                  <!--- <th colspan="2">#prc.tallyboxFinanceTitle#</th> --->
                 </thead>
                 <tr>
-                  <td>Due Monthly for #prc.cartLine.getPaymentPlanDetail().minimumCommitment# Months**</td>
+                  <td>Due Monthly <cfif structKeyExists(prc.cartLine,"getPaymentPlanDetail().minimumCommitment") and len(prc.cartLine.getPaymentPlanDetail().minimumCommitment)>for #prc.cartLine.getPaymentPlanDetail().minimumCommitment# Months**</cfif></td>
                   <!--- <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td> --->
                   <td class="price">#dollarFormat(prc.cartLine.getPhone().getPrices().getMonthly())#/mo</td>
                 </tr>
