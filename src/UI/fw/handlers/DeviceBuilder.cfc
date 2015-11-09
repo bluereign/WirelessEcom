@@ -250,10 +250,12 @@
 
         if ( !local.isSubscriberIndexTaken ) {
           //prc.cartLine.setSubscriberIndex(rc.subscriberIndex);
-          application.model.dBuilderCartFacade.setSubscriberIndex(prc.cartline,rc.subscriberIndex);
+          application.model.dBuilderCartFacade.setSubscriberIndex(prc.cartLine,rc.subscriberIndex);
           // the refresh lines, etc.
-          prc.cartLines = session.cart.getLines();
-          prc.cartLine = prc.cartLines[rc.cartLineNumber];
+
+          // prc.cartLines = session.cart.getLines();
+          // prc.cartLine = prc.cartLines[rc.cartLineNumber];
+          
           // prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
           prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
 
@@ -288,6 +290,25 @@
         };
         // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+
+        // change plans: Call incompatibleOffer
+        if ( prc.productData.carrierId eq prc.carrierIdAtt ) {
+          prc.subscribers = session.carrierObj.getSubscribers();
+          prc.subscriberIndex = prc.cartLine.getSubscriberIndex();
+          prc.subscriber = prc.subscribers[prc.subscriberIndex];
+
+          // 
+          local.args_incompatibleOffers = {
+            carrierId = prc.productData.carrierId,
+            productId = prc.productData.productId,
+            SubscriberNumber = prc.subscriber.getNumber(),
+            changePlan = true
+          };
+
+          prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+        }
+
+        // call this after they pick a plan (unless they keep exising).  Pass in subscriberNumber and changePlan = true.
       }
 
       if ( structKeyExists(rc,"HasExistingPlan")  ) {
@@ -997,15 +1018,18 @@
         
         // local.args_incompatibleOffers = {
         //   carrierId = prc.productData.carrierId,
-        //   SubscriberNumber = i,
+        //   SubscriberNumber = local.subscriber.getNumber(),
         //   ProductId = prc.productData.productId
         // };
 
         // prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+        // call this after they pick a plan (unless they keep exising).  Pass in subscriberNumber and changePlan = true.
+
+        local.subscriber = prc.subscribers[i];
 
         local.args_incompatibleOffers = {
           carrierId = prc.productData.carrierId,
-          SubscriberNumber = i,
+          SubscriberNumber = local.subscriber.getNumber(),
           ImeiType = prc.productData.ImeiType
         };
         local.isConflictsResolvable = carrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
