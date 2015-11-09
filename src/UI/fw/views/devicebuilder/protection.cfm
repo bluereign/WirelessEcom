@@ -4,9 +4,9 @@
 <!--- <cfdump var="#prc.cartLine.getCartLineActivationType()#"> --->
 <!--- <cfdump var="#prc.cartLine.getPaymentPlanDetail()#"> --->
 <cfsilent>
-  <cfset local.financedMonthCount24 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade") />
-  <cfset local.financedMonthCount18 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade") />
-  <cfset local.financedMonthCount12 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade") />
+  <cfset local.financedMonthCount24 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade",cartLine=prc.cartLine) />
+  <cfset local.financedMonthCount18 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade",cartLine=prc.cartLine) />
+  <cfset local.financedMonthCount12 = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade",cartLine=prc.cartLine) />
 </cfsilent>
 
 <cfoutput>
