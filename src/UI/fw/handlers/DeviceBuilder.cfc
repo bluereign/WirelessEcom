@@ -355,8 +355,9 @@
               if (prc.arrayPaymentPlans[i].downPaymentPercent) {
                 cartArgs.optionalDownPmtPct = prc.arrayPaymentPlans[i].downPaymentPercent;
                 cartArgs.optionalDownPmtAmt = decimalFormat(prc.productData.FinancedFullRetailPrice * prc.arrayPaymentPlans[i].downPaymentPercent/100);
-                prc.optionalDownPmtAmt = decimalFormat(prc.productData.FinancedFullRetailPrice * prc.arrayPaymentPlans[i].downPaymentPercent/100);
-                prc.optionalDownPmtPct = prc.arrayPaymentPlans[i].downPaymentPercent;
+              } else {
+                cartArgs.optionalDownPmtPct = 0;
+                cartArgs.optionalDownPmtAmt = 0;
               }
 
             }
@@ -374,6 +375,18 @@
         prc.cartLine.setCartLineActivationType(prc.activationType);
         prc.paymentoption = rc.paymentoption;
 
+        // add setPaymentPlanDetail structure
+        local.paymentPlanDetail = {};
+        local.paymentPlanDetail.planIdentifier = rc.planIdentifier;
+        local.paymentPlanDetail.optionalDownPmtPct = cartArgs.optionalDownPmtPct;
+        local.paymentPlanDetail.optionalDownPmtAmt = cartArgs.optionalDownPmtAmt;
+        local.paymentPlanDetail.productId = prc.productData.productId;
+        local.paymentPlanDetail.carrierId = prc.productData.CarrierId;
+        local.paymentPlanDetail.ImeiType = prc.productData.ImeiType;
+        local.paymentPlanDetail.subscriberNumber = prc.subscriber.getNumber();
+        local.paymentPlanDetail.subscriberIndex = rc.cartLineNumber;
+        local.paymentPlanDetail.FinancedFullRetailPrice = prc.productData.FinancedFullRetailPrice;
+        prc.cartLine.setPaymentPlanDetail(local.paymentPlanDetail);
 
       }
 
