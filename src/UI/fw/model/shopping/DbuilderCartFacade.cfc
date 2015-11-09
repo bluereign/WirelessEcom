@@ -1186,16 +1186,18 @@
 
 	<cffunction name="ActivationTypeMonths" returntype="numeric" access="public" >
 		<cfargument name="activationType" type="string" required="true" />
-		<cfargument name="cartLine" type="cfc.model.cartLine" required="true" />
+		<cfargument name="cartLine" type="cfc.model.cartLine" required="false" />
 		
 		<cfset var local = structNew() />
 		<cfset local.nMonths = 1 />
 		<cfset local.contractMonths = 0 />
 		
 		<!--- look to see if PaymentPlanDetail is available for the line, if so use that --->
-		<cfset local.paymentPlanInfo = arguments.cartLine.getPaymentPlanDetail() />
-		<cfif structKeyExists(local.paymentPlanInfo,"minimumCommitment")>
-			<cfreturn local.paymentPlanInfo.minimumCommitment />
+		<cfif structKeyExists(arguments,"cartLine") >
+			<cfset local.paymentPlanInfo = arguments.cartLine.getPaymentPlanDetail() />
+			<cfif structKeyExists(local.paymentPlanInfo,"minimumCommitment")>
+				<cfreturn local.paymentPlanInfo.minimumCommitment />
+			</cfif>
 		</cfif>
 		
 		<!--- There's no playment plan detail so try and derive it from activationType --->
