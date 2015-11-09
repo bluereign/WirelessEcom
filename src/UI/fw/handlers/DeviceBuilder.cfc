@@ -359,7 +359,7 @@
                 cartArgs.optionalDownPmtPct = 0;
                 cartArgs.optionalDownPmtAmt = 0;
               }
-
+              local.minimumCommitment = prc.arrayPaymentPlans[i].minimumCommitment;
             }
           }
         } else if ( rc.paymentoption is 'fullretail' ) {
@@ -378,6 +378,7 @@
         // add setPaymentPlanDetail structure
         local.paymentPlanDetail = {};
         local.paymentPlanDetail.planIdentifier = rc.planIdentifier;
+        local.paymentPlanDetail.minimumCommitment = local.minimumCommitment;
         local.paymentPlanDetail.optionalDownPmtPct = cartArgs.optionalDownPmtPct;
         local.paymentPlanDetail.optionalDownPmtAmt = cartArgs.optionalDownPmtAmt;
         local.paymentPlanDetail.productId = prc.productData.productId;
@@ -1111,9 +1112,9 @@
         // Remove optional downpayment:
         prc.downPayment = 0;
       }
-      prc.dueMonthlyFinanced24AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade");
-      prc.dueMonthlyFinanced18AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade");
-      prc.dueMonthlyFinanced12AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade");
+      prc.dueMonthlyFinanced24AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-24-upgrade",cartLine=prc.cartLine);
+      prc.dueMonthlyFinanced18AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-18-upgrade",cartLine=prc.cartLine);
+      prc.dueMonthlyFinanced12AfterDownPayment = (prc.productData.FinancedFullRetailPrice - prc.downPayment)/application.model.dBuilderCartFacade.ActivationTypeMonths(activationType="financed-12-upgrade",cartLine=prc.cartLine);
 
       // thissub = prc.subscribers[1];
       // thisnumber = thissub.getNumber();

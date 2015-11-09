@@ -50,7 +50,8 @@
                   <th colspan="2">#prc.tallyboxFinanceTitle#</th>
                 </thead>
                 <tr>
-                  <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td>
+                  <td>Due Monthly for #prc.cartLine.getPaymentPlanDetail().minimumCommitment# Months**</td>
+                  <!--- <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td> --->
                   <td class="price">#dollarFormat(prc.cartLine.getPhone().getPrices().getMonthly())#/mo</td>
                 </tr>
 

@@ -258,7 +258,7 @@
             							<div class="col-md-10">
                             #local.selectedPhone.summaryTitle#
                             <cfif local.cartline.getCartLineActivationType() contains "financed">
-                              <cfset local.months = application.model.dBuilderCartFacade.ActivationTypeMonths(local.cartline.getCartLineActivationType()) />
+                              <cfset local.months = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType=local.cartline.getCartLineActivationType(),cartLine=local.cartLine) />
                               (#local.months# months)
                             </cfif>
                           </div>
