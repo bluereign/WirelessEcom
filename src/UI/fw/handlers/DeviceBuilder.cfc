@@ -1282,6 +1282,7 @@
     <cfset var alertMsg = "" />
     <cfset var SmartPhoneCount = 0 />
     <cfparam name="prc.showAddAnotherDeviceButton" default="true" />
+    <cfparam name="prc.showBrowseDevicesButton" default="true" />
     <cfparam name="prc.showCheckoutnowButton" default="true" />
     <cfparam name="prc.disableCheckoutnowButton" default="false" />
     <cfparam name="prc.showClearCartLink" default="true" />
@@ -1500,6 +1501,11 @@
 
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.includeTallyBox = false;
+
+      if ( prc.customerType is 'upgrade' and arrayLen(prc.cartLines) gte arrayLen(prc.subscribers) ) {
+        prc.showAddAnotherDeviceButton = false;
+        prc.showBrowseDevicesButton = false;
+      }
     </cfscript>
   </cffunction>
 
