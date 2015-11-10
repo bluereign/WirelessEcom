@@ -22,6 +22,7 @@
 <br/>getAddress().getZipCode() = #rc.respobj.getAddress().getZipCode()#
 <br/>getAddress().getZipCodeExtension() = #rc.respobj.getAddress().getZipCodeExtension()#
 <br/>getAddress().getCountry() = #rc.respobj.getAddress().getCountry()#
+<br/>rc.carrierHelper.isGroupPlan() = #rc.carrierHelper.isGroupPlan()#
 <cfset subscribers = rc.respObj.getSubscribers() />
 <cfset s_count = 1 />
 <cfloop array="#subscribers#" index="s">

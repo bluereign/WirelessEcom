@@ -137,8 +137,11 @@
 		<!--- If the changePlan argument is passed then check to see if the current plan is SDDVRP  --->
 		<cfif structKeyExists(arguments,"ChangePlan")  and arguments.changePlan is true> 
 			<cfset local.subscriber = AttCarrierHelper.FindSubscriber(arguments.subscriberNumber) />
-			<cfif not structIsEmpty(local.subscriber) and local.subscriber.PlanInfo.Identifier is "SDDVRP">
-				<cfset local.carrierResponse.errorMessage = "Subscriber already using SDDVRP Plan" />
+			<cfif not structIsEmpty(local.subscriber) >
+				<cfset session.carrierFacade.accountResp.Account.Subscribers[local.subscriber.subscriberIndex].WAFlag_PlanHasChanged = true />
+				<cfif local.subscriber.PlanInfo.Identifier is "SDDVRP">
+					<cfset local.carrierResponse.errorMessage = "Subscriber already using SDDVRP Plan" />
+				</cfif>
 			<cfelse>
 				<cfset local.newPlanInfo = structNew() />
 				<cfset local.newPlanInfo.PlanInfo = structNew() />

@@ -10,6 +10,7 @@
 <br/>getResultDetail() = #rc.accountRespObj.getResultDetail()#
 <br/>getCarrierName() = #rc.accountRespObj.getCarrierName()#
 <br/>getCarrierId() = #rc.accountRespObj.getCarrierId()#
+<br/>rc.carrierHelper.isGroupPlan(rc.carrierId) = #rc.carrierHelper.isGroupPlan(rc.carrierId)#
 
 <cfset SubscriberPaymentPlanArgs = {
 	carrierid = rc.accountRespObj.getCarrierId(),

@@ -52,6 +52,14 @@
 		<!--- If it's not found then there are no incompatibleOffers so they are resolveable --->
 		<cfreturn true />
 		
+	</cffunction>
+		
+	<cffunction name="isGroupPlan" output="false" access="public" returntype="boolean">
+		
+		<cfif isdefined("session.carrierfacade.accountresp.account.subscribers")>
+			<cfreturn session.carrierfacade.accountresp.account.subscribers[1].planInfo.IsGroupPlan is true />
+		</cfif>
+		<cfreturn false />
 	</cffunction>	
 	
 	<cffunction name="getSubscriberPaymentPlan" output="false" access="public" returntype="struct">
@@ -101,7 +109,11 @@
 					<cfset local.subscriberPaymentPlan.DownPaymentPercent = local.boqd.DownPaymentPercent />
 					<cfset local.subscriberPaymentPlan.OfferCategory = local.boqd.OfferCategory />
 					<cfif structKeyExists(local,"productInfo") >
-						<cfset local.subscriberPaymentPlan.monthlyPayment = (local.productInfo.FinancedFullRetailPrice - ((local.boqd.DownPaymentPercent*local.productInfo.FinancedFullRetailPrice)/100))/local.boqd.minimumCommitment />
+						<cfif local.boqd.minimumCommitment ge 1>
+							<cfset local.subscriberPaymentPlan.monthlyPayment = (local.productInfo.FinancedFullRetailPrice - ((local.boqd.DownPaymentPercent*local.productInfo.FinancedFullRetailPrice)/100))/local.boqd.minimumCommitment />
+						<cfelse>
+							<cfset local.subscriberPaymentPlan.monthlyPayment = 0>
+						</cfif>
 					</cfif>
 					<cfset arrayAppend(local.subscriberPaymentPlans,local.subscriberPaymentPlan) />
 				</cfif>				
@@ -395,8 +407,11 @@
 		<cfset var local = structNew() />
 		
 		<cfif isDefined("session.carrierFacade.accountResp.account.subscribers") >
+			<cfset local.subscriberIndex = 0>
 			<cfloop array="#session.carrierFacade.accountResp.account.subscribers#" index="local.s" >
+				<cfset local.subscriberIndex = local.subscriberIndex+1 />
 				<cfif local.s.number is arguments.subscriberNumber>
+					<cfset local.s.subscriberIndex = local.subscriberIndex />
 					<cfreturn local.s/>
 				</cfif>
 			</cfloop>
