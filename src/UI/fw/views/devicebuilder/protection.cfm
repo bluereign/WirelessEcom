@@ -439,6 +439,9 @@
             $('.btnContinue').prop('disabled', false);
             $('##isOptionalDownPaymentAddedDiv').hide();
           }
+          $('##isOptionalDownPaymentAdded').attr('data-downPaymentPercent',downPaymentPercent);
+          $('##isOptionalDownPaymentAdded').attr('data-downPaymentAmount',downPaymentAmount);
+          $('##isOptionalDownPaymentAdded').attr('dollar-amount',downPaymentAmount);
 
           onChangeHandler(protectionForm,protectionvalue);
         });
