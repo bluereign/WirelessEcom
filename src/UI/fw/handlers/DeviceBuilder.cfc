@@ -302,7 +302,8 @@
             carrierId = prc.productData.carrierId,
             productId = prc.productData.productId,
             SubscriberNumber = prc.subscriber.getNumber(),
-            changePlan = true
+            changePlan = true,
+            planId = rc.planid
           };
 
           prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
