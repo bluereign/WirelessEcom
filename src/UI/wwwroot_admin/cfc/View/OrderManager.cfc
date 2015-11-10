@@ -330,7 +330,6 @@
 
 			var qry_getMilitaryBases = "";
 			
-			var qActivationLines = application.model.order.getOrderActivationLines( order.getOrderId() );
 			var wirelessLines = application.model.WirelessAccount.getByOrderId( order.getOrderId() );
 			
 
@@ -484,10 +483,6 @@
 						<strong>Taxes:</strong> #dollarFormat( arguments.order.getTaxTotal() )#
 					</div>
 					<div>
-						<strong>Down Payment:</strong> #dollarFormat( arguments.order.getDownPayment() )#
-					</div>
-
-					<div>
 						<strong>"Due Today" Total:</strong> #dollarFormat( arguments.order.getSubTotal() + arguments.order.getShipCost() + arguments.order.getTaxTotal() - arguments.order.getOrderDiscountTotal() )# (includes Taxes & Shipping)
 					</div>
 					<div>
@@ -572,37 +567,6 @@
 						</form>
 					</div>	
 				</div>
-				<cfloop query="qActivationLines">
-					<h3>Financed Line Information</h3>	
-				
-					<div class="field-display">	
-						<div>
-							Line : #trim(qActivationLines.productTitle)#
-						</div>		
-						<div>
-							<strong>Retail Price:</strong> #dollarFormat( qActivationLines.RetailPrice)#
-						</div>
-						<div>
-							<strong>Down Payment:</strong> #dollarFormat(qActivationLines.DownPaymentReceived)#
-						</div>
-						<div>
-							<strong>Monthly Payment:</strong> #qActivationLines.MonthlyFee#
-						</div>
-						<div>
-							<strong>Term Length:</strong> #qActivationLines.contractLength#
-						</div>
-						<div>
-							<strong>Total Financed:</strong> #dollarFormat( qActivationLines.RetailPrice - qActivationLines.DownPaymentReceived)#
-						</div>
-					</cfloop>
-						<hr />
-						<div>
-							<strong>"Due Today" Total:</strong> #dollarFormat( arguments.order.getSubTotal() + arguments.order.getShipCost() + arguments.order.getTaxTotal() - arguments.order.getOrderDiscountTotal() - arguments.order.getDownPayment() )# (includes Taxes & Shipping & Deposit)
-						</div>
-						<div>
-							<strong>Due Monthly:</strong> all financed device monthly fee plus plan plus line access fee 
-						</div>
-					</div>
 				
 				<h3>Billing Information</h3>
 				<div class="field-display">
@@ -811,6 +775,7 @@
 			var isMissingImei = false;
 			var missingImeiCount = 0;
 			var local = {};
+			var monthlyDue = 0;
 			
 			//Check if any devices are missing an IMEI
 			for (i=1; i <= ArrayLen(lines); i++)
@@ -866,10 +831,20 @@
 									</cfif>
 									<div class="price">
 										Retail Price: <span>#DollarFormat( lines[i].getLineDevice().getRetailPrice() )#</span><br />
-										Online Discount: <span>#DollarFormat( lines[i].getLineDevice().getRetailPrice() - lines[i].getLineDevice().getNetPrice() )#</span><br />
+										<!--- Only non-financed phones have online discount --->
+										<cfif lines[i].getLineDevice().getPurchaseType() neq "FP" >
+											Online Discount: <span>#DollarFormat( lines[i].getLineDevice().getRetailPrice() - lines[i].getLineDevice().getNetPrice() )#</span><br />
+										</cfif>
 										Net Price: <span>#DollarFormat( lines[i].getLineDevice().getNetPrice() )#</span ><br />
 										Tax: <span>#DollarFormat( lines[i].getLineDevice().getTaxes() )#</span><br />
-										Down Payment Received: <span>#DollarFormat( lines[i].getLineDevice().getDownPaymentReceived() )#</span><br />
+										<!---Checking for Financed --->
+										<cfif lines[i].getLineDevice().getPurchaseType() eq "FP" >
+											Down Payment: <span>#DollarFormat(lines[i].getLineDevice().getDownPaymentReceived())#</span><br />
+											<cfset monthlyDue = monthlyDue + lines[i].GetMonthlyFee() />
+											Monthly Payment: <span>#DollarFormat(lines[i].GetMonthlyFee())#</span><br />
+											Term Length: <span>#lines[i].getcontractlength()#</span><br />
+											Total Financed: <span>#DollarFormat( (lines[i].getLineDevice().getRetailPrice()) - (lines[i].getLineDevice().getDownPaymentReceived()))#</span><br />
+										</cfif>
 										Total: <span>#DollarFormat( lines[i].getLineDevice().getNetPrice() + lines[i].getLineDevice().getTaxes() )#</span><br />
 									</div>
 								</div>
@@ -884,7 +859,9 @@
 											</div>
 										</cfif>							
 										<div class="price">
-											Monthly Fee: <span>#DollarFormat( lines[i].getMonthlyFee() )#</span><br />
+											<!---Monthly Fee: <span>#DollarFormat( lines[i].getMonthlyFee() )#</span><br />--->
+											<cfset monthlyDue = monthlyDue + lines[i].getLineRateplan().getNetPrice() />
+											Monthly Fee: <span>#DollarFormat( lines[i].getLineRateplan().getNetPrice() )#</span><br />
 										</div>
 									</div>
 								</cfif>
@@ -894,6 +871,7 @@
 										<div class="item">		
 											<div class="item-name">#service.getProductTitle()#</div>																			
 											<div class="price">
+												<cfset monthlyDue = monthlyDue + service.getLineService().getMonthlyFee() />
 												Monthly Fee: <span>#DollarFormat( service.getLineService().getMonthlyFee() )#</span><br />
 											</div>
 										</div>
@@ -992,6 +970,9 @@
 							</div>
 							<div>
 								Taxes: <span class="price">#dollarFormat( order.getTaxTotal() )#</span>
+							</div>
+							<div>
+								Due Monthly: <span class="price">#dollarFormat( monthlyDue )#</span> 
 							</div>
 							<div>
 								"Due Today" Total  (includes Taxes & Shipping): <span class="price">#dollarFormat( order.getSubTotal() + order.getShipCost() + order.getTaxTotal() - order.getOrderDiscountTotal() )#</span>
