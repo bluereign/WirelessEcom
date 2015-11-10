@@ -366,7 +366,7 @@
             ImeiType = prc.productData.ImeiType,
             productId = prc.productData.productId
           };
-          prc.arrayPaymentPlans = carrierHelper.getSubscriberPaymentPlans(argumentCollection = local.paymentPlanArgs);
+          prc.arrayPaymentPlans = CarrierHelper.getSubscriberPaymentPlans(argumentCollection = local.paymentPlanArgs);
 
           for (i = 1; i lte arrayLen(prc.arrayPaymentPlans); i++) {
             if ( prc.arrayPaymentPlans[i].planIdentifier is rc.planIdentifier ) {
@@ -1033,7 +1033,7 @@
           SubscriberNumber = local.subscriber.getNumber(),
           ImeiType = prc.productData.ImeiType
         };
-        local.isConflictsResolvable = carrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+        local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
 
         if (prc.subscribers[i].getIsEligible() or !local.isConflictsResolvable) {
          local.eligibleLineCount++;
@@ -1069,6 +1069,9 @@
       
       prc.planData = PlanService.getPlans(argumentCollection = planArgs);
       prc.planDataShared = PlanService.getSharedPlans(argumentCollection = planArgs);
+
+      prc.hideNewPlans = CarrierHelper.isGroupPlan(prc.productData.carrierId);
+      prc.showNewPlans = !prc.hideNewPlans;
     </cfscript>
 
     <!--- If an existing plan's productId exists, then see if it is eligible (i.e. in the Individual or Shared plans queries) --->
