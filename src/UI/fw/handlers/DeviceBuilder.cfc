@@ -922,19 +922,19 @@
       // AND len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
       if ( 
           !(
-            len(rc.inputPhone1) eq 3
+            len(trim(rc.inputPhone1)) eq 3
             AND
-            isNumeric(rc.inputPhone1)
+            isNumeric(trim(rc.inputPhone1))
             AND
-            len(rc.inputPhone2) eq 3
+            len(trim(rc.inputPhone2)) eq 3
             AND
-            isNumeric(rc.inputPhone2)
+            isNumeric(trim(rc.inputPhone2))
             AND
-            len(rc.inputZip) gte 5 and len(rc.inputZip) lte 10
+            len(trim(rc.inputZip)) gte 5 and len(trim(rc.inputZip)) lte 10
             AND
-            isNumeric(left(rc.inputZip, 5))
+            isNumeric(left(trim(rc.inputZip), 5))
             AND
-            isNumeric(right(rc.inputZip, 4))
+            isNumeric(right(trim(rc.inputZip), 4))
           )
         ) {
         rc.carrierResponseMessage = "There was an issue with the values you entered.  Please double check each value and then try again.";
@@ -948,13 +948,13 @@
       switch (prc.productData.carrierId) {
         // AT&T carrierId = 109, VZW carrierId = 42
         case 109: case 42: {
-          rc.PhoneNumber = rc.inputPhone1 & rc.inputPhone2 & rc.inputPhone3;
+          rc.PhoneNumber = trim(rc.inputPhone1) & trim(rc.inputPhone2) & trim(rc.inputPhone3);
           accountArgs = {
             carrierId = prc.productData.carrierId,
             SubscriberNumber = rc.PhoneNumber,
-            ZipCode = rc.inputZip,
-            SecurityId = rc.inputSSN,
-            Passcode = rc.inputPin,
+            ZipCode = trim(rc.inputZip),
+            SecurityId = trim(rc.inputSSN),
+            Passcode = trim(rc.inputPin),
             productId = prc.productData.productId
           };
 
@@ -962,6 +962,7 @@
             accountArgs.requestType = 1;
           }
 
+          // rc.accountArgs = accountArgs;
           // for testing purposes/development (carrierloginpost.cfm):
           rc.respObj = carrierFacade.Account(argumentCollection = accountArgs);
           rc.message = rc.respObj.getHttpStatus();
