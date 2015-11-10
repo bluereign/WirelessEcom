@@ -79,7 +79,8 @@
                   </cfloop>
                 </cfif> --->
 
-                <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+                <!--- UPGRADE FEE removed per case 1224 --->
+                <!--- <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
                   <tr>
                     <td>Upgrade Fee ***</td>
                     <td class="price"><cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif></td>
@@ -89,7 +90,7 @@
                     <td>Activation Fee ***</td>
                     <td class="price"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelse>#dollarFormat(prc.activationFee)#</cfif></td>
                   </tr>
-                </cfif>
+                </cfif> --->
 
                 <!--- prc.cartLines[rc.cartLineNumber].getOptionalDownPmtAmt() --->
                 <cfif prc.cartLines[rc.cartLineNumber].getPhone().getPrices().getOptionalDownPmtAmt()>
