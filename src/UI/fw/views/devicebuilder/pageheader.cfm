@@ -3,18 +3,24 @@
     <header class="header">
       <div class="content row">
         <div class="col-md-4">
-          <a href="http://www.costco.com" class="logo"><img src="#assetPaths.channel#images/costco_logosm.gif" alt="Costco.Com" title="Return to Costco.com"></a>
+          <cfif request.config.channelName is 'costco'>            
+            <a href="http://www.costco.com" class="logo"><img src="#assetPaths.channel#images/costco_logosm.gif" alt="Costco.Com" title="Return to Costco.com"></a>
+          <cfelseif request.config.channelName is 'aafes'>
+            <a href="/" id="WAlogo"><img src="#assetPaths.channel#images/X_mobile_center_logo.png" alt="Exchange Mobile Center" title="" /></a>
+          </cfif>
         </div>
         <div class="col-md-8">
           <p class="disclaimer"></p>
         </div>
         <div class="col-md-4 account">
           <ul>
-            <li><cfif not session.userId>
-										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a>
-									<cfelse>
-										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Your Account</a>
-									</cfif>				</li>
+            <li>
+              <cfif not session.userId>
+                <a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a>
+              <cfelse>
+                <a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Your Account</a>
+              </cfif>
+            </li>
             <li class="cart"><a href="#event.buildLink('devicebuilder.orderreview')#">Your Cart</a></li>
           </ul>
           <div class="form-group form-inline search">

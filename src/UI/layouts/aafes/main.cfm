@@ -60,7 +60,13 @@
 					</div>
 				</cfif>
 				<div class="linksRight">
+
+					<cfif arrayLen(session.cart.getLines()) and listFindNoCase(listDeviceBuilderCarriers,session.cart.getCarrierId()) and session.cart.getActivationType() contains 'finance'>
+						<a href="/devicebuilder/orderreview/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=Cart" id="lnkMyCart">Your Cart<cfif isDefined('session.cart') and isStruct(session.cart) and application.model.cartHelper.zipCodeEntered()><cfset cartZipCode = session.cart.getZipCode()> ( #trim(variables.cartZipCode)# )</cfif></a>
+					<cfelse>
 					<a href="##?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=Cart" onClick="viewCart(); return false;" id="lnkMyCart"><span></span>Your Cart<cfif isDefined('session.cart') and isStruct(session.cart) and application.model.cartHelper.zipCodeEntered()><cfset cartZipCode = session.cart.getZipCode()> ( #trim(variables.cartZipCode)# )</cfif></a>
+					</cfif>
+
 					<cfif !channelConfig.getVfdEnabled()>
 						<cfif not session.userId>
 							<a href="/index.cfm/go/myAccount/do/view/?utm_source=AAFESMOBILE&utm_medium=P-NAV&utm_campaign=SignInToAccount" id="lnkMyAccount">Sign into Your Account</a>

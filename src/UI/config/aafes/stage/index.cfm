@@ -116,11 +116,12 @@
 	// the domain value for emailTemplates 
 	request.config.emailTemplateDomain = "exchangemobilecenter.com";
 
-	// Full API Configuration 
-	request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = "";
-	request.config.DeviceBuilder.carriersAllowUpdate = "";
-	request.config.DeviceBuilder.carriersAllowAddaline = "";
-	request.config.DeviceBuilder.carriersAllowNew = "";
+   // Full API Configuration 
+   // request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = "109|42";
+   request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = "109";
+   request.config.DeviceBuilder.carriersAllowUpdate = "109";
+   request.config.DeviceBuilder.carriersAllowAddaline = "";
+   request.config.DeviceBuilder.carriersAllowNew = "";
 </cfscript>
 
 <!--- TRV: include our rateplanControl data for this environment --->

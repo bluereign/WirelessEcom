@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
+        <img src="#assetPaths.common#images/Trustwave.gif" alt="Trustwave" class="trustwave">
       </div>
       <div class="col-md-8">
         <div class="footer-links">
@@ -29,7 +29,7 @@
       </div>
       <div class="col-md-4">
         <a href="/index.cfm/go/content/do/aboutus/" class="wireless">
-          <img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="#assetPaths.channel#images/WirelessAdvocates_poweredBy_2.gif">
+          <img title="About Wireless Advocates" alt="Powered By Wireless Advocates" src="#assetPaths.common#images/WirelessAdvocates_poweredBy_2.gif">
         </a>
       </div>
     </div>
