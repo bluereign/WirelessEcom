@@ -412,7 +412,7 @@
 		
 		<!--- Save the submitOrder request before we call carrier just in case we have a non-retryable failure --->
 		<cfset saveSubmitOrder(argumentCollection = local.saveSubmitOrderArgs) />	
-		<cfhttp url="#variables.CarrierServiceURL#/Order" method="Post" result="local.cfhttp">
+		<cfhttp url="#variables.CarrierServiceURL#/Order/Complete" method="POST" result="local.cfhttp">
 			<cfhttpparam type="header" name="Content-Type" value="application/json" />
     		<cfhttpparam type="body" value="#local.body#">
 		</cfhttp>
