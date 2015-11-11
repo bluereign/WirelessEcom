@@ -231,11 +231,15 @@
                   </div>
 
                   <div class="col-md-2 col-xs-16 monthly">
+                  	<!--- Services --->
+                        <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">
+            				<cfset lineAccessFee = local.lineFeatures[local.iFeature].getPrices().getMonthly() />
+                        </cfloop>
                     <cfif local.iCartLine eq 1 AND isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
-						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())# <!---MES--->
+						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly() + lineAccessFee)# <!---MES--->
 					<cfelse>
 						<!---#dollarFormat(local.cartline.getPrices().getMonthly())# --->
-						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())# <!---MES--->
+						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly() + lineAccessFee)# <!---MES--->
 					</cfif>
                     <span class="visible-xs-inline">Monthly*</span>
                   </div>
