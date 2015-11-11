@@ -51,7 +51,7 @@
                   <!--- <th colspan="2">#prc.tallyboxFinanceTitle#</th> --->
                 </thead>
                 <tr>
-                  <td>Due Monthly <cfif isStruct(prc.cartLine.getPaymentPlanDetail()) and not structIsEmpty(prc.cartLine.getPaymentPlanDetail()) and len(prc.cartLine.getPaymentPlanDetail().minimumCommitment)>for #prc.cartLine.getPaymentPlanDetail().minimumCommitment# Months**</cfif></td>
+                  <td>Due Monthly<cfif isStruct(prc.cartLine.getPaymentPlanDetail()) and not structIsEmpty(prc.cartLine.getPaymentPlanDetail()) and len(prc.cartLine.getPaymentPlanDetail().minimumCommitment)> for #prc.cartLine.getPaymentPlanDetail().minimumCommitment# Months</cfif>**</td>
                   <!--- <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td> --->
                   <td class="price">#dollarFormat(prc.cartLine.getPhone().getPrices().getMonthly())#/mo</td>
                 </tr>
