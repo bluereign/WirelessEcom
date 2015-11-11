@@ -222,9 +222,9 @@ width:260px;}
 
                   <div class="col-md-2 col-xs-16 monthly">
                     <cfif local.iCartLine eq 1 AND isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
-						#dollarFormat(local.cartline.getPrices().getMonthly() - prc.cartPlan.monthlyFee)# 
+						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())# <!---MES--->
 					<cfelse>
-						#dollarFormat(local.cartline.getPrices().getMonthly())# 
+						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())# <!---MES--->
 					</cfif>
                     <span class="visible-xs-inline">Monthly*</span>
                   </div>
