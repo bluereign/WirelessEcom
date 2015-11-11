@@ -90,8 +90,6 @@
           relocate( prc.browseDevicesUrl );
         }
 
-        
-
         // 2. validate the type.
         // Make sure customer type exists.  If it does not, set it to upgrade.
         if ( !listFindNoCase(listCustomerTypes,rc.type) ) {
@@ -175,7 +173,7 @@
         };
         // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
-      }
+      } // end if ( structKeyExists(rc,"pid") and isNumeric(rc.pid) and structKeyExists(rc,"finance") and structKeyExists(rc,"type") )
       // <end add device to cart
 
 
@@ -193,47 +191,46 @@
 
       
 
-      // if not adding an accessory from the order review page
-      if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
+      if (arrayLen(prc.cartLines)) {
 
-        if (arrayLen(prc.cartLines)) {
-          prc.cartLine = prc.cartLines[rc.cartLineNumber];
-          // prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
-          prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
-        } else {
-          relocate( prc.browseDevicesUrl );
+        // if not adding an accessory from the order review page
+        if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
+
+            prc.cartLine = prc.cartLines[rc.cartLineNumber];
+            // prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+            prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+          // else if ( !listFindNoCase("devicebuilder.orderreview", event.getCurrentEvent()) ) {
+          //   relocate( prc.browseDevicesUrl );
+          // }
+
+          // GET CARTLINE DEVICE INFO (only if cart lines have length - which they may not in the Order Review page)
+          // Phone details and images:
+          // FIRST NEED TO PULL DEVICE FROM CARTLINE
+          if (!structKeyExists(prc,"productData")) {
+            prc.productData = application.model.phone.getByFilter(idList = prc.device.getProductId(), allowHidden = true);
+          }
+          if (!structKeyExists(prc,"productImages")) {
+           prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
+          }
+
+          if (prc.productData.carrierId eq prc.carrierIdAtt) {
+            prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
+          } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
+            prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
+          }
+
+          // UPDATE CUSTOMER TYPE FROM CART LINE ACTIVATION TYPE (FOR NAVIGATION, ETC):
+          // financed-24-upgrade
+
+          if (prc.cartLine.getCartLineActivationType() contains 'financed-') {
+            prc.financed = left(prc.cartLine.getCartLineActivationType(), 11);
+          } else {
+            prc.financed = "fullretail";
+          }
+
         }
 
-        // GET CARTLINE DEVICE INFO
-        // Phone details and images:
-        // FIRST NEED TO PULL DEVICE FROM CARTLINE
-        if (!structKeyExists(prc,"productData")) {
-          prc.productData = application.model.phone.getByFilter(idList = prc.device.getProductId(), allowHidden = true);
-        }
-        if (!structKeyExists(prc,"productImages")) {
-         prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
-        }
-
-        if (prc.productData.carrierId eq prc.carrierIdAtt) {
-          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
-        } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
-          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
-        }
-
-
-        // UPDATE CUSTOMER TYPE FROM CART LINE ACTIVATION TYPE (FOR NAVIGATION, ETC):
-        // financed-24-upgrade
-        
-
-        if (prc.cartLine.getCartLineActivationType() contains 'financed-') {
-          prc.financed = left(prc.cartLine.getCartLineActivationType(), 11);
-        } else {
-          prc.financed = "fullretail";
-        }
-
-
-      }
-
+      } 
 
 
       // UPDATE CARTLINE WITH SUBSCRIBER INDEX:
@@ -551,18 +548,20 @@
         application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
 
-      // get cartline accessories
-      cartArgs = {
+      if (arrayLen(prc.cartLines)) {    
+        // get cartline accessories
+        cartArgs = {
           line = rc.cartLineNumber,
           type = "accessory"
         };
-      prc.aAccessories = session.cartHelper.lineGetAccessoriesByType(argumentCollection = cartArgs);
-      prc.selectedAccessories = "";
-      if (arrayLen(prc.aAccessories)) {
-        for (prc.iAccessory = 1; prc.iAccessory lte arrayLen(prc.aAccessories); prc.iAccessory++) {
-          prc.thisAccessory = prc.aAccessories[prc.iAccessory];
-          prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID());
-          prc.selectedAccessories = listAppend(prc.selectedAccessories, prc.selectedAccessory.productId);
+        prc.aAccessories = session.cartHelper.lineGetAccessoriesByType(argumentCollection = cartArgs);
+        prc.selectedAccessories = "";
+        if (arrayLen(prc.aAccessories)) {
+          for (prc.iAccessory = 1; prc.iAccessory lte arrayLen(prc.aAccessories); prc.iAccessory++) {
+            prc.thisAccessory = prc.aAccessories[prc.iAccessory];
+            prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID());
+            prc.selectedAccessories = listAppend(prc.selectedAccessories, prc.selectedAccessory.productId);
+          }
         }
       }
       // <end accessories
@@ -742,7 +741,7 @@
 
 
       // Omit TallyBox logic If updating an accessory from orderreview
-      if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
+      if ( arrayLen(prc.cartLines) and rc.cartLineNumber neq request.config.otherItemsLineNumber) {
         // <TALLY BOX
         prc.financeproductname = prc.productService.getFinanceProductName(carrierid = prc.productData.CarrierId);
         prc.tallyboxDueNow = 0;
@@ -1503,7 +1502,7 @@
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.includeTallyBox = false;
 
-      if ( prc.customerType is 'upgrade' and arrayLen(prc.cartLines) gte arrayLen(prc.subscribers) ) {
+      if ( prc.customerType is 'upgrade' and structKeyExists(prc,"subscribers") and arrayLen(prc.cartLines) gte arrayLen(prc.subscribers) ) {
         prc.showAddAnotherDeviceButton = false;
         prc.showBrowseDevicesButton = false;
       }
