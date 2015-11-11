@@ -55,7 +55,17 @@
                   <!--- <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td> --->
                   <td class="price">#dollarFormat(prc.cartLine.getPhone().getPrices().getMonthly())#/mo</td>
                 </tr>
-
+                <cfif isStruct(prc.cartLine.getPaymentPlanDetail()) and not structIsEmpty(prc.cartLine.getPaymentPlanDetail()) and len(prc.cartLine.getPaymentPlanDetail().minimumCommitment)> 
+                  <tr>
+                    <td>Number of Payments</td>
+                    <td class="price">#prc.cartLine.getPaymentPlanDetail().minimumCommitment#</td>
+                  </tr>
+                </cfif>
+                <tr>
+                  <td>APR</td>
+                  <td class="price">0%</td>
+                </tr>
+              
                 <tr>
                   <td>Full Retail Price</td>
                   <td class="price">#dollarFormat(prc.productData.FinancedFullRetailPrice)#</td>
