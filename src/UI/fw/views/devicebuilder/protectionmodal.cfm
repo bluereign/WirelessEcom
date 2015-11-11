@@ -2,14 +2,12 @@
 
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4 class="modal-title">Carrier Mobile Protection Pack</h4>
-    <p>#prc.warrantyInfo.SummaryTitle#</p>
+    <h4 class="modal-title">#prc.warrantyInfo.SummaryTitle#</h4>
   </div>
   <div class="modal-body">
     <div class="plans">
       <div class="info">
         <h3 style="height:40px"><span>#prc.warrantyInfo.SummaryTitle#</span></h3>
-        <p>#prc.warrantyInfo.ShortDescription#</p>
         <p>#prc.warrantyInfo.LongDescription#</p>
         <div class="price">#dollarFormat(prc.warrantyInfo.Price)#</div>
       </div>

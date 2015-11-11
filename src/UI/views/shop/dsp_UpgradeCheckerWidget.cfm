@@ -225,7 +225,7 @@
 			height: 40px;
 			margin: auto;
 			padding: 15px 30px;
-			<cfoutput>background-image: url('<cfoutput>#assetPaths.channel#</cfoutput>images/costco_logosm.gif');</cfoutput>
+			/*<cfoutput>background-image: url('<cfoutput>#assetPaths.channel#</cfoutput>images/costco_logosm.gif');</cfoutput>*/
 			background-repeat:no-repeat;
 			background-position: 500px 20px;
 		}

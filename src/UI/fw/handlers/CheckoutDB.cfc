@@ -1050,6 +1050,8 @@
 	    <cfparam name="prc.showAddAnotherDeviceButton" default="true" />
 	    <cfparam name="prc.showCheckoutnowButton" default="true" />
 	    <cfparam name="prc.showClearCartLink" default="true" />
+	    <!--- This cart has been processed --->
+	    <cfset session.orderProcessed = "true" />
 	    
 	    <cfset prc.showNav = false>
 	    
@@ -1081,38 +1083,15 @@
 
 		<cfset request.p.orderId = variables.order.getOrderId() />
 		<cfset request.p.email = variables.order.getEmailAddress() />
-		
-		<cfif !structKeyExists(session, 'orderProcessed') OR session.orderProcessed eq "false" >
-			<!--- Finance agreement gets generated once --->
-			<!---<cfset session.orderProcessed = "true">
 			
-			<cfset session.checkoutDone = structNew() />
-			<cfset session.checkoutDone = duplicate(session.checkout) />
-			
-			<cfset session.cartDone = structNew() />
-			<cfset session.cartDone = duplicate(session.cart) />
-			
-			<cfset session.carrierObjDone = structNew() />
-			<cfset session.carrierObjDone = duplicate(session.carrierObj) />
-			<!--- session.totalDueToday --->
-			
-			<cfset application.model.checkoutHelper.clearCart() />
-			<cfset application.model.checkoutHelper.clearCheckOut() />
-			
-			<cfset session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init() />
-			<cfset session.listRequiredServices = "" />
-			<cfset carrierObjExists = structdelete(session, 'carrierObj', true)/>
-			<cfset session.carrierObj = "" />--->
-		</cfif>
-			
-		<!---<cfif ChannelConfig.getTrackMercentAnalytics()>
+		<cfif ChannelConfig.getTrackMercentAnalytics()>
 			<cfset mercentAnalyticsTracker = application.wirebox.getInstance("MercentAnalyticsTracker") />
 			<cfoutput>#mercentAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>
-		</cfif>--->
+		</cfif>
 
 		<!---<cfif request.config.enableAnalytics>--->
-			<!---<cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
-			<cfoutput>#googleAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>--->
+			<cfset googleAnalyticsTracker = application.wirebox.getInstance("GoogleAnalyticsTracker") />
+			<cfoutput>#googleAnalyticsTracker.tagOrderConfirmation(variables.order)#</cfoutput>
 		<!---</cfif>--->
 		
 		<cfset event.setLayout('checkoutReviewDB') />
@@ -1184,6 +1163,44 @@
 		</cfmail>
 		
         <cfset event.noRender() />
+	</cffunction>
+	
+	<cffunction name="clearCart" returntype="void" access="remote" output="false">
+		<cfargument name="event">
+	    <cfargument name="rc">
+	    <cfargument name="prc">
+	    
+	    <cfif structKeyExists(session, 'orderProcessed') and session.orderProcessed eq "true" >
+		    <cfset application.model.checkoutHelper.clearCart() />
+			<cfset application.model.checkoutHelper.clearCheckOut() />
+			<cfset session.order = "" />
+			
+			<script >
+			 // first store the zipcode in prc.scope.
+			  prc.zipcode = session.cart.getZipcode();
+			
+			  // remove carrierObj from session: 
+			  structDelete(session, 'carrierObj', true);
+			  structDelete(session,"hasDeclinedDeviceProtection", true);
+			  structDelete(session,"listRequiredServices", true);
+			
+			  // reinitialize the cart
+			  session.cart = createObject('component','cfc.model.cart').init();
+			  session.cartHelper = createObject('component','cfc.model.carthelper').init();
+			  session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
+			
+			
+			  // reset the session zipcode
+			  session.cart.setZipcode(prc.zipcode);
+			
+			  rc.cartLineNumber = request.config.otherItemsLineNumber;
+			</script>
+		    
+			
+			<cfset session.orderProcessed = "false" />
+		</cfif>
+			
+	    <cfset event.noRender() />
 	</cffunction>
 	
 	<cffunction name="customerservice" returntype="void" output="false" hint="">
