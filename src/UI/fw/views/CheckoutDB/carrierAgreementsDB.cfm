@@ -201,7 +201,7 @@ font-weight: normal;
     </header>
     <form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
       <div class="right">
-        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
+        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">BACK</a>
         <button type="submit" class="btn btn-primary continue">Continue</button>
       </div>
       <h4>
@@ -293,7 +293,7 @@ font-weight: normal;
 			    </label>
 		    </div>
       <div class="right">
-        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
+        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">BACK</a>
         <button type="submit" class="btn btn-primary continue">Continue</button>
       </div>
     </form>
