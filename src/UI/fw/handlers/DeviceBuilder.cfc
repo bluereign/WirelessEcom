@@ -1503,7 +1503,7 @@
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.includeTallyBox = false;
 
-      if ( prc.customerType is 'upgrade' and arrayLen(prc.cartLines) gte arrayLen(prc.subscribers) ) {
+      if ( prc.customerType is 'upgrade' and structKeyExists(prc,"subscribers") and arrayLen(prc.cartLines) gte arrayLen(prc.subscribers) ) {
         prc.showAddAnotherDeviceButton = false;
         prc.showBrowseDevicesButton = false;
       }
