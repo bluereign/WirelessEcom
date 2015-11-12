@@ -596,7 +596,7 @@
             prc.subscriber.phoneNumber = stringUtil.formatPhoneNumber(trim(prc.subscriber.getNumber()));
             prc.tallyboxHeader = "Upgrading " & prc.subscriber.phoneNumber;
           } else {
-            prc.tallyboxHeader = "Configuring";
+            prc.tallyboxHeader = "Upgrading";
           }
         }
         // <end selected line and subscribers
