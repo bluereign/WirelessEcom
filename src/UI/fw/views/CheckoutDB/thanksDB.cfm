@@ -165,6 +165,19 @@
 			
 			
 		})
+		
+		$('#goHome').click( function() {
+			alert("Clear Cart");
+			
+			$.ajax({
+					cache: false,
+					type: "POST",
+					url: "../CheckoutDB/clearCart"							
+				})
+					
+		})
+		
+		
 
 	});
 	
@@ -181,7 +194,7 @@
 		<h2>Thank You for Your Order ###session.checkout.OrderId#</h2>
 		<hr/>
 		<p>You will receive an email with the order detials and how to check the status of the order.</p>
-		<p>Thanks again for your order. <a>Click here to go home.</a></p>
+		<p>Thanks again for your order. <a id="goHome" href="/">Click here to go home.</a></p>
 		<hr/>
 		<h3>Order Agreements and Purchase Summary</h3>
 		<br/>
@@ -373,10 +386,14 @@
                 <div class="col-md-2 col-xs-16 quantity">1</div>
 
                 <div class="col-md-2 col-xs-16 monthly">
+                	<!--- Services --->
+                        <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">s
+            				<cfset lineAccessFee = local.lineFeatures[local.iFeature].getPrices().getMonthly() />
+                        </cfloop>
                   <cfif local.iCartLine eq 1 AND isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
-						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())# <!---MES--->
+						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly() + lineAccessFee)# <!---MES--->
 					<cfelse>
-						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())# <!---MES--->
+						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly() + lineAccessFee)# <!---MES--->
 					</cfif>
                   <span class="visible-xs-inline">Monthly*</span>
                 </div>

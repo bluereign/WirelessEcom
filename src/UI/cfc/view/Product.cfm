@@ -454,15 +454,16 @@
 									</cfif>
 								</div>
 																
-									<cfif arguments.productData.carrierId[arguments.productData.currentRow] eq 42>
+									<!--- <cfif arguments.productData.carrierId[arguments.productData.currentRow] eq 42> --->
+									<cfif listFindNoCase("42,109",arguments.productData.carrierId[arguments.productData.currentRow])>
 										<br style="clear:both">
 										<div style="text-align:center;font-size:9px;margin-top:2px">
 											*0% APR, Full Price: #DollarFormat(arguments.productData.FinancedFullRetailPrice[arguments.productData.currentRow])#<br>
-											<cfif findNoCase( 'costco', channelConfig.getDisplayName() )>
+											<!--- <cfif findNoCase( 'costco', channelConfig.getDisplayName() )>
 												Monthly available in Warehouse only.
 											<cfelse>
 												Monthly available In-Store only.
-											</cfif>
+											</cfif> --->
 										</div>
 									<cfelseif arguments.productData.carrierId[arguments.productData.currentRow] eq 299>
 									<br style="clear:both">

@@ -189,19 +189,41 @@
 		
 	</cffunction>
 	
-	<cffunction name="getOrderItem" output="false" access="public" returntype="struct">
+	<!--- utility function used by getSubmitOrderRequest --->
+	<cffunction name="getOrderItem" output="false" access="private" returntype="struct">
 		<cfargument name="faai" type="struct" required="true" />
-		<cfargument name="LineNo" type="numeric" required="true" />
+		<cfargument name="LineNo" type="numeric" required="true" />		
+		
 		<cfset var local = structNew() />
 		<cfset local.orderItem = structNew() />
 		<cfset local.wirelesslines = session.order.getWirelessLines() />
+		<cfset local.cartlines = session.cart.getLines() />
+		<cfset local.subscriberPaymentPlan = local.cartLines[arguments.LineNo].getPaymentPlanDetail() />
+		<cfset local.subscriber = findSubscriber(faai.attdeviceorderitem.subscriber.Number) />
 		
-		<!---<cfset local.uuid = createUUID() />
-		<cfset local.orderItem.Identifier = left(local.uuid,19) & mid(local.uuid,20,4) & '-' & right(local.uuid,12) />--->
 		<cfset local.orderItem.Identifier = createGUID() />
 		<cfset local.orderitem.RequestType = getRequestType(session.order.getActivationTypeName()) />
 		<cfset local.orderitem.FinanceAgreementItem = arguments.faai />
-		<cfset local.orderItem.UpgradeQualification = arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications />
+		
+		<!--- This code executed when the user is changing data plans --->
+		<cfif structKeyExists(local.subscriber,"WAFLAG_PLANHASCHANGED")>
+			<cfset structDelete(local.orderITem.FinanceAgreementItem.AttDeviceOrderItem.subscriber,"planInfo") />
+			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo = structNew() />
+			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.Identifier = "SDDVRP" />
+			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.RecurringFee = 0 />
+			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.ActionCode = "A" />
+			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.IsGroupPlan = false />
+			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.AdditionalOfferings = session.carrierFacade.IncompatibleOfferRequest.additionalOffers />
+		</cfif>
+		
+		<!--- determine the appropriate upgradeQualificationDetails to use --->
+		<cfloop array="#arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications.qualificationDetails[1].BaseOfferQualificationDetails#" index="local.boqd">
+			<cfif local.boqd.planIdentifier is local.subscriberPaymentPlan.planIdentifier>
+				<cfset local.orderItem.UpgradeQualification = local.boqd />
+			</cfif>
+		</cfloop>
+		
+		
 		<cfset local.Imei = local.wirelessLines[arguments.LineNo].getImei() />
 		<cfset local.Sim = local.wirelessLines[arguments.LineNo].getSim() />
 		<cfif local.Imei is "">
