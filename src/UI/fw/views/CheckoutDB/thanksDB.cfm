@@ -387,7 +387,7 @@
 
                 <div class="col-md-2 col-xs-16 monthly">
                 	<!--- Services --->
-                        <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">s
+                        <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">
             				<cfset lineAccessFee = local.lineFeatures[local.iFeature].getPrices().getMonthly() />
                         </cfloop>
                         <cfif !isDefined('lineAccessFee')>
@@ -748,22 +748,35 @@
         </div>
       </div>
       </div>
+      <cfif session.cart.getActivationType() CONTAINS 'upgrade' and arrayLen(prc.cartLines)>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-6">
+            <div class="table-wrap">
+              <table class="table table-responsive">
+                <tr>
+                  <td>One time Activation Fee added to first month's bill ***</td>
+                  <td></td>
+                  <td><cfif prc.upgradeFee>#dollarFormat(arrayLen(prc.cartLines)*prc.upgradeFee)#<cfelse>$18.00</cfif></div></td>
+                </tr>
+              </table> 
+            </div>
+          </div>
+        </div>
+      </cfif>
     </div>  
-    
-    
-    
     <!--- Legal section --->
     <div class="col-md-12">
       <p class="legal">
         * Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.<br />
-		** $0 down (for qualified customers).
-        <cfif session.cart.getActivationType() is 'upgrade'>  <!--- from cfc/view/Cart.cfc line 1331 --->
+		** $0 down (for qualified customers).<br />
+		
+        <cfif session.cart.getActivationType() contains 'upgrade'>  <!--- from cfc/view/Cart.cfc line 1331 --->
           <!--- removing hard-coded upgrade fees and adding result from call to carrier component made earlier in this method  --->
           <cfif NOT structKeyExists(local, 'upgradeFee')>
             <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />
             <cfset local.upgradeFee = local.carrierObj.getUpgradeFee( session.cart.getCarrierID() )>
           </cfif>            
-          ***  An Upgrade Fee of $#local.upgradeFee# applies to each Upgrade Line.
+          ***  An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.
             <cfif session.cart.getCarrierId() neq 299>This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><!--- remove for Sprint --->
           <br />
         </cfif>
