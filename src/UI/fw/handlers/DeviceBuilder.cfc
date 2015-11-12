@@ -766,16 +766,19 @@
                   prc.tallyboxFinanceTitle = prc.financeproductname & " 24";
                   prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 30 Months";
                   prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+                  prc.tallyboxFinanceMonths = 30;
                   break;
                 case "financed-18":
                   prc.tallyboxFinanceTitle = prc.financeproductname & " 18";
                   prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
                   prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice18;
+                  prc.tallyboxFinanceMonths = 24;
                   break;
                 case "financed-12":
                   prc.tallyboxFinanceTitle = prc.financeproductname & " 12";
                   prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 20 Months";
                   prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice12;
+                  prc.tallyboxFinanceMonths = 20;
                   break;
               }
 
@@ -783,6 +786,7 @@
               prc.tallyboxFinanceTitle = prc.financeproductname;
               prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
               prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+              prc.tallyboxFinanceMonths = 24;
             }
 
             break;
@@ -790,14 +794,14 @@
           case "fullretail":
             prc.tallyboxFinanceMonthlyDueToday = prc.productData.FinancedFullRetailPrice;
             prc.tallyboxFinanceTitle = "Full Retail";
-            prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
+            prc.tallyboxFinanceMonthlyDueTitle = "";
             prc.tallyboxFinanceMonthlyDueAmount = 0;
             break;
 
           case "2yearcontract":
             prc.tallyboxFinanceMonthlyDueToday = prc.productData.price_upgrade;
             prc.tallyboxFinanceTitle = "2 Year Contract";
-            prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
+            prc.tallyboxFinanceMonthlyDueTitle = "";
             prc.tallyboxFinanceMonthlyDueAmount = 0;
             break;
 
