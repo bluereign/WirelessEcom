@@ -1046,7 +1046,7 @@
 
       }
       if (local.eligibleLineCount eq 0) {
-        prc.warningMessage = "This account has no lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.carrierLogin')#?cartLineNumber=#rc.cartLineNumber#'>Please verify your account.</a>";
+        prc.warningMessage = "This account has no lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.carrierLogin')#/cartLineNumber/#rc.cartLineNumber#'>Please verify your account.</a>";
         prc.displayBackButton = true;
       }
 
