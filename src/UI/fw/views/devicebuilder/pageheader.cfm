@@ -8,13 +8,16 @@
         <div class="col-md-8">
           <p class="disclaimer"></p>
         </div>
+        <!--- Case 1285: Full API - Remove Account Sign In, Your Cart, Privacy policy notification, and Search from checkout flow, all pages --->
         <div class="col-md-4 account">
-          <ul>
-            <li><cfif not session.userId>
-										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a>
-									<cfelse>
-										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Your Account</a>
-									</cfif>				</li>
+          <!--- <ul>
+            <li>
+              <cfif not session.userId>
+                <a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a>
+              <cfelse>
+                <a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Your Account</a>
+              </cfif>
+            </li>
             <li class="cart"><a href="#event.buildLink('devicebuilder.orderreview')#">Your Cart</a></li>
           </ul>
           <div class="form-group form-inline search">
@@ -24,7 +27,7 @@
               <button type="submit" class="btn-search">Search</button>
             </form>
           </div>
-        </div>
+        </div> --->
       </div>
     </header>
   </div>
