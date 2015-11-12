@@ -137,7 +137,7 @@
                     data-toggle="collapse"
                     href="##plan-details"
                     aria-expanded="false"
-                    aria-controls="plan-details">Show Details</a>
+                    aria-controls="plan-details">Show Plan Details</a>
                 
                 </div>
               </div>
@@ -400,7 +400,7 @@
                       data-toggle="collapse"
                       href="##devicedetails#local.iCartLine#"
                       aria-expanded="false"
-                      aria-controls="devicedetails#local.iCartLine#">Show Details</a>
+                      aria-controls="devicedetails#local.iCartLine#">Show Device Details</a>
 
                       <cfif listFindNoCase(prc.listIncompleteCartLineIndex,local.iCartLine)>
                         <cfset local.cartLinePosition = listFindNoCase(prc.listIncompleteCartLineIndex,local.iCartLine) />
