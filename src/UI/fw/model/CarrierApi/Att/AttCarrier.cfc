@@ -153,7 +153,7 @@
 						<cfset local.AttPlanItem = structNew() />
 						<cfset local.AttPlanItem.Action = "A" />
 						<cfset local.AttPlanItem.Code = local.qplan.carrierBillCode />
-						<cfset local.AttPlanItem.Code = "MMSDG50GB" /><!--- override for testing only --->
+						<!---<cfset local.AttPlanItem.Code = "MMSDG50GB" />---><!--- override for testing only --->
 						<cfset local..AttPlanItem.TypeCode = "G" />
 						<cfset arrayAppend(local.newPlanInfo.AdditionalOffers, local.AttPlanItem) />
 					</cfif>
