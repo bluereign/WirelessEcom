@@ -10,7 +10,7 @@
         </div>
         <!--- Case 1285: Full API - Remove Account Sign In, Your Cart, Privacy policy notification, and Search from checkout flow, all pages --->
         <div class="col-md-4 account">
-          <!--- <ul>
+          <ul>
             <li>
               <cfif not session.userId>
                 <a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a>
@@ -27,7 +27,7 @@
               <button type="submit" class="btn-search">Search</button>
             </form>
           </div>
-        </div> --->
+        </div>
       </div>
     </header>
   </div>
