@@ -225,6 +225,9 @@ width:260px;}
                         <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">
             				<cfset lineAccessFee = local.lineFeatures[local.iFeature].getPrices().getMonthly() />
                         </cfloop>
+                        <cfif !isDefined('lineAccessFee')>
+                        	<cfset lineAccessFee = 0 />
+                        </cfif>
                     <cfif local.iCartLine eq 1 AND isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
 						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly() + lineAccessFee)# <!---MES--->
 					<cfelse>
