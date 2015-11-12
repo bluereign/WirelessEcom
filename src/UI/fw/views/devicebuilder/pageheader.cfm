@@ -8,7 +8,6 @@
         <div class="col-md-8">
           <p class="disclaimer"></p>
         </div>
-        <!--- Case 1285: Full API - Remove Account Sign In, Your Cart, Privacy policy notification, and Search from checkout flow, all pages --->
         <div class="col-md-4 account">
           <ul>
             <li>

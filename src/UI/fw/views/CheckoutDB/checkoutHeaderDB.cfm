@@ -6,10 +6,10 @@
           <a href="http://www.costco.com" class="logo"><img src="#assetPaths.channel#images/costco_logosm.gif" alt="Costco.Com" title="Return to Costco.com"></a>
         </div>
         <div class="col-md-8">
-          <p class="disclaimer">You are no longer on Costco's site and are subject to the privacy policy of the company hosting this site. To review the privacy policy, <a href="/index.cfm/go/content/do/privacy">click here</a>.</p>
+          <p class="disclaimer"><!--- You are no longer on Costco's site and are subject to the privacy policy of the company hosting this site. To review the privacy policy, <a href="/index.cfm/go/content/do/privacy">click here</a>. ---></p>
         </div>
         <div class="col-md-4 account">
-          <ul>
+          <!--- <ul>
             <li><a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Sign into Your Account</a></li>
             <li class="cart"><a href="##">Your Cart</a></li>
           </ul>
@@ -17,7 +17,7 @@
             <label for="inputSearch">Search</label>
             <input type="text" class="form-control" id="inputSearch">
             <button type="submit" class="btn-search">Search</button>
-          </div>
+          </div> --->
         </div>
       </div>
     </header>
