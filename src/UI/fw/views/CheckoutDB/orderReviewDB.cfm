@@ -104,7 +104,7 @@ width:260px;}
 					</div>
 					<div class="row">
                       <div class="col-md-10">Data Limit:</div>
-                      <div class="col-md-3">#prc.cartPlan.data_limit#</div>
+                      <div class="col-md-3">#prc.cartPlan.DataLimitGB# GB</div>
 					  <div class="col-md-3"></div>
 					</div>
 					<div class="row">
