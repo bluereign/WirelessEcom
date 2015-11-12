@@ -1054,6 +1054,7 @@ $j(document).ready(function($j) {
 
 					<!--- devicebuilder --->
 					<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only if qty on hand is greater than 0  and prc.productData.qtyOnHand gt 0 --->
+					<cfif !prc.channelConfig.GetVFDEnabled()>
 					<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')>
 						<cfif prc.productData.qtyOnHand gt 0>
 							<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
@@ -1067,7 +1068,7 @@ $j(document).ready(function($j) {
 							<a class="ActionButton learnMoreBtn" href="javascript: return false;" data-toggle="modal" data-target="##financeModal" <cfif hide2yearpricing>style="width:460px;"</cfif>><span><cfif hide2yearpricing>#application.wirebox.getInstance('TextDisplayRenderer').getHide2YearFinancingButtonText()#<cfelse>Learn More</cfif></span></a>
 						</div>
 					</cfif>
-
+					</cfif>
 					
 					<cfif prc.channelConfig.GetVFDEnabled()>
 					
