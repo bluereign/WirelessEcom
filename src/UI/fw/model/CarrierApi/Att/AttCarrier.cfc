@@ -397,7 +397,7 @@
 		<cfreturn processResponse(local.carrierResponse) />			
 	</cffunction>	
 	
-	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse">
+	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitCompletedOrderCarrierResponse">
 		<cfset var local = structNew() />
 		
 		<cfset local.body = serializeJSonAddReferenceNumber(arguments) />
@@ -418,7 +418,7 @@
 		</cfhttp>
 		
 		<!--- create the carrier response --->
-		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse').init() />
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitCompletedOrderCarrierResponse').init() />
 		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
 		
 		<!--- Update the save submitOrder with the carrier response --->

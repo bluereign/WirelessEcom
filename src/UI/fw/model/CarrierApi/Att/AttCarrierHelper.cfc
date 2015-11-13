@@ -213,12 +213,18 @@
 			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.RecurringFee = 0 />
 			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.ActionCode = "A" />
 			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.IsGroupPlan = false />
-			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = session.carrierFacade.IncompatibleOfferResp.Items />
-			<cfloop array="#session.carrierFacade.IncompatibleOfferRequest.additionalOffers#" index="local.ao">
-				<cfif local.ao.action is "A">
-					<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.ao) />
-				</cfif>
-			</cfloop>
+			<cfif isdefined("session.carrierFacade.IncompatibleOfferResp.Items")>
+				<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = session.carrierFacade.IncompatibleOfferResp.Items />
+			<cfelse>
+				<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = arrayNew(1) />
+			</cfif>
+			<cfif isdefined("session.carrierFacade.IncompatibleOfferRequest.additionalOffers")>
+				<cfloop array="#session.carrierFacade.IncompatibleOfferRequest.additionalOffers#" index="local.ao">
+					<cfif local.ao.action is "A">
+						<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.ao) />
+					</cfif>
+				</cfloop>
+			</cfif>
 		</cfif>
 		
 		<!--- determine the appropriate upgradeQualificationDetails to use --->
