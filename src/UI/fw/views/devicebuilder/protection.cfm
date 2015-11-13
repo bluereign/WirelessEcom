@@ -15,7 +15,7 @@
     <section class="content">
 
       <header class="main-header">
-        <h1>Payment, Protection &amp; Services Plans</h1>
+        <h1>Payment, Protection &amp; Services</h1>
         <p>The following services are available for your device based on your plan.</p>
       </header>
 
