@@ -430,7 +430,7 @@
 	
 	<cffunction name="saveSubmitOrder" output="false" access="public" returntype="boolean">
 		
-		<cftry>
+		<!---<cftry>--->
 			<cfstoredproc procedure="service.OrderSubmissionSave" datasource="wirelessadvocates">
 				<cfprocparam cfsqltype="cf_sql_integer" value="#arguments.orderid#" />
 				<cfprocparam cfsqltype="cf_sql_integer" value="109" />
@@ -441,10 +441,10 @@
 					<cfprocparam cfsqltype="cf_sql_varchar" value="#arguments.OrderResult#" />
 				</cfif>
 			</cfstoredproc>
-			<cfcatch type="any">
+			<!---<cfcatch type="any">
 				<cfreturn false />
-			</cfcatch>
-		</cftry>
+			</cfcatch>--->
+		<!---</cftry>--->
 		<cfreturn true />
 	</cffunction>
 	
