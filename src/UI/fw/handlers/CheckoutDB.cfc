@@ -900,7 +900,7 @@
 		
 		
 		
-		<cfset setNextEvent('checkoutDB/orderCarrierProcessing') />
+		<cfset setNextEvent('checkoutDB/payment') />
 	</cffunction>
 	
 	<cffunction name="orderCarrierProcessing" returntype="void" output="false" hint="">
@@ -951,7 +951,7 @@
 			<cfset rc.saveEConsentResult = carrierHelper.saveEConsent(argumentCollection = local.args_eConsent) />
 		</cfif>
 		
-		<cfset setNextEvent('checkoutDB/payment') />
+		<cfset setNextEvent('checkoutDB/thanks') />
 	</cffunction>
 		
 	<cffunction name="payment" returntype="void" output="false" hint="">
@@ -1036,7 +1036,7 @@
 
 			<cfset application.model.checkoutHelper.markStepCompleted('payment') />
 			
-			<cfset setNextEvent('checkoutDB/thanks') />
+			<cfset setNextEvent('checkoutDB/orderCarrierProcessing') />
 		<cfelse>
 			<!--- todo: replace with payment declined page --->
 			<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
