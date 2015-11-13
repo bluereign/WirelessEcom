@@ -90,8 +90,14 @@
 
                 <div id="tabs-7">
                     <!--- display feature properties --->
-                    <cfset ordersExchangeDisplay = application.view.OrderManager.getAccountTab() />
-                    <cfoutput>#ordersAccountTabDisplay#</cfoutput>
+                    <cfset ordersExchangeDisplay = application.view.OrderManager.getExchangeTab() />
+                    <cfoutput>#ordersExchangeTabDisplay#</cfoutput>
+
+                </div>
+                <div id="tabs-8">
+                    <!--- display feature properties --->
+                    <cfset ordersDebugTabDisplay = application.view.OrderManager.getDebugTab() />
+                    <cfoutput>#ordersDebugTabDisplay#</cfoutput>
 
                 </div>
 
