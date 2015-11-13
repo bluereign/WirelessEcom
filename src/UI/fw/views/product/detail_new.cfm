@@ -1258,7 +1258,7 @@ $j(document).ready(function($j) {
 									<strong style="font-size:16px;">Current #prc.productData.carrierName# customer?</strong>
 									<br />
 									<br />
-									<p>You can Upgrade your device online or visit your local warehouse wireless center to Add a Line to your account.</p>
+									<p>You can Upgrade your device online or visit your local Costco warehouse Wireless Center to Add a Line to your account.</p>
 									<br />
 									<br />
 									<div class="row center-block">
@@ -1292,7 +1292,7 @@ $j(document).ready(function($j) {
 										<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
 										<br />
 										<br />
-										<p>Please visit your local warehouse wireless center if you would like to switch to #prc.productData.carrierName#.</p>
+										<p>Please visit your local Costco warehouse Wireless Center if you would like to switch to #prc.productData.carrierName#.</p>
 										<br />
 										<br />
 										<div class="row center-block">

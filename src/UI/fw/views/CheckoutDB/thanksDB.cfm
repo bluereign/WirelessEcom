@@ -754,7 +754,7 @@
             <div class="table-wrap">
               <table class="table table-responsive">
                 <tr>
-                  <td>One time Activation Fee added to first month's bill ***</td>
+                  <td>One time Activation Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> will be added to your next billing statement</td>
                   <td></td>
                   <td><cfif prc.upgradeFee>#dollarFormat(arrayLen(prc.cartLines)*prc.upgradeFee)#<cfelse>$18.00</cfif></div></td>
                 </tr>

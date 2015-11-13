@@ -259,11 +259,11 @@
         <div class="row">
           <div class="col-xs-16 legal">
             <!--- <div>* Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.</div> --->
-            <div>* Total due today is before taxes and fees.</div>
-            <div>** Total due monthly will appear on your recurring bill. Before taxes and fees.</div>
+            <div>* <strong>Total due today is before taxes and fees</strong>.</div>
+            <div>** Total due monthly is before taxes and fees and will appear on your recurring bill.</div>
             <div>*** $0 down (for qualified customers).</div>
             <cfif session.cart.getActivationType() contains 'upgrade'>
-              <div>**** An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif></div>
+              <div>**** <strong>An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif></strong></div>
             <cfelse>
               <cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>
                 <cfif listFindNoCase('109, 128', session.cart.getCarrierId())>
