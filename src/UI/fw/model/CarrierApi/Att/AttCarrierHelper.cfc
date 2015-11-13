@@ -404,9 +404,11 @@
 		<cfset var local = structNew() />
 		<cfset local.cartLines = session.cart.getLines() />
 		<cfset local.cartLine = local.cartLines[arguments.cartLineNo] />
+		<cfset local.paymentPlanDetail = local.cartLine.getPaymentPlanDetail() />
 		<cfset local.deviceDetail = structNew()/>
 		<cfset local.device = application.model.dBuilderCartFacade.getDevice(arguments.cartLineNo) />
-		<cfset local.deviceDetail.contractTerm = local.device.contractMonths />
+		<!---<cfset local.deviceDetail.contractTerm = local.device.contractMonths />--->
+		<cfset local.deviceDetail.contractTerm = local.paymentPlanDetail.minimumCommitment />
 		<cfset local.deviceDetail.MSRP = local.device.productDetail.getFinancedFullRetailPrice() />
 		<cfset local.deviceDetail.DownPayment = local.cartLine.getPhone().getPrices().getDownPaymentAmount() /> 
 		<cfreturn local.deviceDetail />
@@ -460,5 +462,17 @@
 		</cfif>
 		<cfreturn "" />
 	</cffunction>
+	
+	<cffunction name="getSubmitCompletedOrderEntry" access="public" returnType="query">
+		<cfargument name="orderId" type="numeric" required="true" />
+		<cfset var local = structNew() />
+		
+		<cfstoredproc procedure="service.OrderSubmissionGet" datasource="wirelessadvocates" >
+			<cfprocparam cfsqltype="cf_sql_integer" value="#arguments.orderId#" />
+			<cfprocparam cfsqltype="cf_sql_varchar" value="SubmitCompletedOrder" />
+			<cfprocresult name="local.qSubmitOrderRequest" />
+		</cfstoredproc>		
+		<cfreturn local.qSubmitOrderRequest />
+	</cffunction>	
 	
 </cfcomponent>	
