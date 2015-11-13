@@ -987,7 +987,16 @@
                     rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete);
                     rc.submitOrderRequest.carrierId = form.carrier;
                     rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest);
-                    message = "IS ACTIVATED = " & rc.submitCompletedOrderResponse.getResult() & "  REASON = " & rc.submitCompletedOrderResponse.getResultDetail();
+                    /*message = "IS ACTIVATED = " & rc.submitCompletedOrderResponse.getResult() & "  REASON = " & rc.submitCompletedOrderResponse.getResultDetail();*/
+                    if (rc.submitCompletedOrderResponse.isActivationSuccessful()) {
+                    	message = "All activations were sucessful";
+                    } else {
+                    	rc.activationMessages = rc.submitCompletedOrderResponse.getActivationDetail(FORM.OrderId);
+                    	for (messageIndex=1; messageIndex LE arraylen(rc.activationMessages); messageIndex = messageIndex+1) {
+                    		messageDetail = rc.activationMessages[messageIndex];
+                    		message = messageDetail.subscriberNumber & ": " & messageDetail.exceptionInformation & "<br/>";
+                    	}
+                    }
                     break;
                 } else {
                     message = application.controller.AttActivationController.activateOrder( form.OrderId, form.requestedActivationDate );

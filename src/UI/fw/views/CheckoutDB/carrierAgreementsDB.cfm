@@ -30,6 +30,21 @@ font-weight: normal;
 		var $j = jQuery.noConflict();
 		var actType = $('#cartActivationType').val();
 		
+		var ms_ie = false;
+		var ua = window.navigator.userAgent;
+		var old_ie = ua.indexOf('MSIE ');
+		var new_ie = ua.indexOf('Trident/');
+
+		if ((old_ie > -1) || (new_ie > -1)) {
+    		ms_ie = true;
+		 }
+		if ( ms_ie ) {
+			$('#printButton').hide();
+		}
+		else {
+			$('#printButton').show();
+		}
+		
 		//Checkboxes not displayed are checked so that validation will pass
 		if ((actType.search("new") >= 0) ||(actType.search("addaline") >= 0) || (actType.search("finance") < 0) ){
 					//alert("Display agreeToContractDoc");

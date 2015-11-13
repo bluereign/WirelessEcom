@@ -34,6 +34,21 @@
 <script type="text/javascript">
 	jQuery(document).ready( function($) {
 		/*var $j = jQuery.noConflict();*/
+		
+		var ms_ie = false;
+		var ua = window.navigator.userAgent;
+		var old_ie = ua.indexOf('MSIE ');
+		var new_ie = ua.indexOf('Trident/');
+
+		if ((old_ie > -1) || (new_ie > -1)) {
+    		ms_ie = true;
+		 }
+		if ( ms_ie ) {
+			$('#printButton').hide();
+		}
+		else {
+			$('#printButton').show();
+		}
 
 		$('.continue').click( function() {
 			if ($('#app').valid()) {
@@ -237,8 +252,8 @@
               <div class="col-md-2">Item</div>
               <div class="col-md-8">&nbsp;</div>
               <div class="col-md-2">Quantity</div>
-              <div class="col-md-2">Monthly*</div>
-              <div class="col-md-2">Due Today*</div>
+              <div class="col-md-2">Monthly</div>
+              <div class="col-md-2">Due Today</div>
             </div>
           </div>
 
@@ -265,8 +280,8 @@
                 <p>#reReplaceNoCase(prc.cartPlan.summaryDescription, "<.*?>","","all")#</p>
               </div>
               <div class="col-md-2 col-xs-16 quantity">1</div>
-              <div class="col-md-2 col-xs-16 monthly">#dollarFormat(prc.cartPlan.monthlyFee)# <span class="visible-xs-inline">Monthly*</span></div>
-              <div class="col-md-2 col-xs-16 due"> <span class="visible-xs-inline">Due Today*</span></div>
+              <div class="col-md-2 col-xs-16 monthly">#dollarFormat(prc.cartPlan.monthlyFee)# <span class="visible-xs-inline">Monthly</span></div>
+              <div class="col-md-2 col-xs-16 due"> <span class="visible-xs-inline">Due Today</span></div>
 
               <div class="col-md-2 col-xs-16"></div>
               <div class="col-md-14 col-xs-16">
@@ -398,11 +413,11 @@
 					<cfelse>
 						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly() + lineAccessFee)# <!---MES--->
 					</cfif>
-                  <span class="visible-xs-inline">Monthly*</span>
+                  <span class="visible-xs-inline">Monthly</span>
                 </div>
                 <div class="col-md-2 col-xs-16 due">
                   #dollarFormat(local.cartline.getPrices().getDueToday())#
-                  <span class="visible-xs-inline">Due Today*</span>
+                  <span class="visible-xs-inline">Due Today</span>
                 </div>
 
                 <cfif session.cart.getUpgradeType() neq 'equipment-only' && not session.cart.getPrePaid() && session.cart.getAddALineType() neq 'family' && session.cart.getActivationType() neq 'nocontract'>  
@@ -598,8 +613,8 @@
                     <h3>#prc.additionalAccessories[i].detailTitle#</h3>
                   </div>
                   <div class="col-md-2 col-xs-16 quantity">#prc.additionalAccessories[i].qty#</div>
-                  <div class="col-md-2 col-xs-16 monthly"> <span class="visible-xs-inline">Monthly*</span></div>
-                  <div class="col-md-2 col-xs-16 due">#dollarFormat(prc.additionalAccessories[i].price_subTotal)# <span class="visible-xs-inline">Due Today*</span></div>
+                  <div class="col-md-2 col-xs-16 monthly"> <span class="visible-xs-inline">Monthly</span></div>
+                  <div class="col-md-2 col-xs-16 due">#dollarFormat(prc.additionalAccessories[i].price_subTotal)# <span class="visible-xs-inline">Due Today</span></div>
                 </div>
               </cfloop>
             </cfif>
@@ -648,8 +663,8 @@
           </tr>
           <tr>
             <th></th>
-            <th>Monthly Price*</th>
-            <th>Due Now*</th>
+            <th>Monthly Price</th>
+            <th>Due Today</th>
           </tr>
           </thead>
           <tbody>
@@ -728,7 +743,9 @@
           </tbody>
           <tfoot>
           <tr>
-            <td>Total Due Today*</td>
+            <td>Total Due Today 
+            	<div style="font-size:10px;text-align:left;line-height:12px;">(before taxes and fees)</div>
+         	</td>
             <cfset local.total = session.cart.getPrices().getDueToday() />
             <cfset local.total += session.cart.getTaxes().getDueToday() />
             <cfset local.total += session.cart.getShipping().getDueToday() />
@@ -736,11 +753,12 @@
             <td colspan="2">#dollarFormaT(local.total)#</td>
           </tr>
           <tr>
-            <td>Total Due Monthly*
+            <td>Total Due Monthly
+            	<div style="font-size:10px;text-align:left;line-height:12px;">(before taxes and fees and will appear on your recurring bill)</div>
+            </td>
             	<cfif session.cart.getCarrierID() eq '42'>
             		<sup class="cartReview"><a href="##footnote3" style="font-size:8px">3</a></sup>
             	</cfif>
-            </td>
             <td colspan="2">#dollarFormat(session.cart.getPrices().getMonthly())#</td>
           </tr>
           </tfoot>
@@ -754,7 +772,7 @@
             <div class="table-wrap">
               <table class="table table-responsive">
                 <tr>
-                  <td>One time Activation Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> will be added to your next billing statement</td>
+                  <td>One time Activation Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> per line will be added to your next billing statement</td>
                   <td></td>
                   <td><cfif prc.upgradeFee>#dollarFormat(arrayLen(prc.cartLines)*prc.upgradeFee)#<cfelse>$18.00</cfif></div></td>
                 </tr>
@@ -767,7 +785,7 @@
     <!--- Legal section --->
     <div class="col-md-12">
       <p class="legal">
-        * Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.<br />
+      
 		** $0 down (for qualified customers).<br />
 		
         <cfif session.cart.getActivationType() contains 'upgrade'>  <!--- from cfc/view/Cart.cfc line 1331 --->
@@ -776,8 +794,8 @@
             <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />
             <cfset local.upgradeFee = local.carrierObj.getUpgradeFee( session.cart.getCarrierID() )>
           </cfif>            
-          ***  An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.
-            <cfif session.cart.getCarrierId() neq 299>This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><!--- remove for Sprint --->
+          <!---***  An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.
+            <cfif session.cart.getCarrierId() neq 299>This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><!--- remove for Sprint --->--->
           <br />
         </cfif>
 		<span class="note">

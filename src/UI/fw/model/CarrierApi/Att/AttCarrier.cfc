@@ -397,7 +397,7 @@
 		<cfreturn processResponse(local.carrierResponse) />			
 	</cffunction>	
 	
-	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse">
+	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitCompletedOrderCarrierResponse">
 		<cfset var local = structNew() />
 		
 		<cfset local.body = serializeJSonAddReferenceNumber(arguments) />
@@ -418,7 +418,7 @@
 		</cfhttp>
 		
 		<!--- create the carrier response --->
-		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse').init() />
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitCompletedOrderCarrierResponse').init() />
 		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
 		
 		<!--- Update the save submitOrder with the carrier response --->
@@ -430,7 +430,7 @@
 	
 	<cffunction name="saveSubmitOrder" output="false" access="public" returntype="boolean">
 		
-		<cftry>
+		<!---<cftry>--->
 			<cfstoredproc procedure="service.OrderSubmissionSave" datasource="wirelessadvocates">
 				<cfprocparam cfsqltype="cf_sql_integer" value="#arguments.orderid#" />
 				<cfprocparam cfsqltype="cf_sql_integer" value="109" />
@@ -441,10 +441,10 @@
 					<cfprocparam cfsqltype="cf_sql_varchar" value="#arguments.OrderResult#" />
 				</cfif>
 			</cfstoredproc>
-			<cfcatch type="any">
+			<!---<cfcatch type="any">
 				<cfreturn false />
-			</cfcatch>
-		</cftry>
+			</cfcatch>--->
+		<!---</cftry>--->
 		<cfreturn true />
 	</cffunction>
 	

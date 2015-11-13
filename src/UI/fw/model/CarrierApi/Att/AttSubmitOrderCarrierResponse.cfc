@@ -1,4 +1,4 @@
-<cfcomponent displayname="ATT Finance Agreement Carrier Response" hint="ATT Finance Agreement Carrier Response" extends="fw.model.carrierapi.att.attcarrierResponse">
+<cfcomponent displayname="ATT Submit Order Carrier Response" hint="ATT Submit Order Carrier Response" extends="fw.model.carrierapi.att.attcarrierResponse">
 
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.att.AttSubmitOrderCarrierResponse">		
 		<cfset super.init() />
