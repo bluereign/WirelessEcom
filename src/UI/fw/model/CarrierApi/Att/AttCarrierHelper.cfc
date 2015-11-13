@@ -208,12 +208,17 @@
 		<!--- This code executed when the user is changing data plans --->
 		<cfif structKeyExists(local.subscriber,"WAFLAG_PLANHASCHANGED")>
 			<cfset structDelete(local.orderITem.FinanceAgreementItem.AttDeviceOrderItem.subscriber,"planInfo") />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo = structNew() />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.Identifier = "SDDVRP" />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.RecurringFee = 0 />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.ActionCode = "A" />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.IsGroupPlan = false />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.AdditionalOfferings = session.carrierFacade.IncompatibleOfferRequest.additionalOffers />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo = structNew() />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.Identifier = "SDDVRP" />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.RecurringFee = 0 />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.ActionCode = "A" />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.IsGroupPlan = false />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = session.carrierFacade.IncompatibleOfferResp.Items />
+			<cfloop array="#session.carrierFacade.IncompatibleOfferRequest.additionalOffers#" index="local.ao">
+				<cfif local.ao.action is "A">
+					<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.ao) />
+				</cfif>
+			</cfloop>
 		</cfif>
 		
 		<!--- determine the appropriate upgradeQualificationDetails to use --->
@@ -399,9 +404,11 @@
 		<cfset var local = structNew() />
 		<cfset local.cartLines = session.cart.getLines() />
 		<cfset local.cartLine = local.cartLines[arguments.cartLineNo] />
+		<cfset local.paymentPlanDetail = local.cartLine.getPaymentPlanDetail() />
 		<cfset local.deviceDetail = structNew()/>
 		<cfset local.device = application.model.dBuilderCartFacade.getDevice(arguments.cartLineNo) />
-		<cfset local.deviceDetail.contractTerm = local.device.contractMonths />
+		<!---<cfset local.deviceDetail.contractTerm = local.device.contractMonths />--->
+		<cfset local.deviceDetail.contractTerm = local.paymentPlanDetail.minimumCommitment />
 		<cfset local.deviceDetail.MSRP = local.device.productDetail.getFinancedFullRetailPrice() />
 		<cfset local.deviceDetail.DownPayment = local.cartLine.getPhone().getPrices().getDownPaymentAmount() /> 
 		<cfreturn local.deviceDetail />
@@ -455,5 +462,17 @@
 		</cfif>
 		<cfreturn "" />
 	</cffunction>
+	
+	<cffunction name="getSubmitCompletedOrderEntry" access="public" returnType="query">
+		<cfargument name="orderId" type="numeric" required="true" />
+		<cfset var local = structNew() />
+		
+		<cfstoredproc procedure="service.OrderSubmissionGet" datasource="wirelessadvocates" >
+			<cfprocparam cfsqltype="cf_sql_integer" value="#arguments.orderId#" />
+			<cfprocparam cfsqltype="cf_sql_varchar" value="SubmitCompletedOrder" />
+			<cfprocresult name="local.qSubmitOrderRequest" />
+		</cfstoredproc>		
+		<cfreturn local.qSubmitOrderRequest />
+	</cffunction>	
 	
 </cfcomponent>	

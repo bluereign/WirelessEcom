@@ -1,4 +1,13 @@
 <cfcomponent output="false" displayname="OrderManager">
+	
+	<cfset assetPaths = application.wirebox.getInstance("assetPaths") />
+	<cfset PaymentService = application.wirebox.getInstance("PaymentService") />
+	<cfset carrierFacade = application.wirebox.getInstance("CarrierFacade") />
+	<cfset AttCarrier = application.wirebox.getInstance("AttCarrier") />
+	<cfset VzwCarrier = application.wirebox.getInstance("VzwCarrier") />
+	<cfset carrierHelper = application.wirebox.getInstance("CarrierHelper") />
+	<cfset AttCarrierHelper = application.wirebox.getInstance("AttCarrierHelper") />
+	<cfset VzwCarrierHelper = application.wirebox.getInstance("VzwCarrierHelper") />
 
 	<cffunction name="init" output="false" returntype="OrderManager">
 		<!--- Remove these when this component is added to CS --->        
@@ -280,6 +289,7 @@
 			            <li><a id="rma-tab" href="components/order/dsp_RmaDetails.cfm?orderId=#arguments.order.getOrderId()#">RMA</a></li>
 			            <li><a id="account-tab" href="components/order/dsp_AccountDetails.cfm?userId=#arguments.order.getUserId()#&isOrderAssistanceOn=#isOrderAssistanceOn#">Account</a></li>
                         <li><a id="exchange-tab" href="components/order/dsp_ExchangeDetails.cfm?orderId=#arguments.order.getOrderId()#">Exchanges</a></li>
+                        <li><a id="debug-tab" href="components/order/dsp_OrderDebug.cfm?orderId=#arguments.order.getOrderId()#">Debug</a></li>
 			        </ul>
 			        <div id="tabs-1">
 			            <!--- General --->
@@ -305,6 +315,8 @@
 			        <div id="tabs-5"><!--- RMA---></div>
 			        <div id="tabs-6"><!--- Account ---></div>
                     <div id="tabs-7"><!--- Exchange ---></div>
+                    <div id="tabs-8"><!--- Debug ---></div>
+					
 			    </div>
 			</div>
 			</cfoutput>
@@ -818,12 +830,15 @@
 									<cfswitch expression="#order.getCarrierId()#">
 										<cfcase value="109,128,299">
 											<div>IMEI: #lines[i].getImei()#</div>
+											<div>SIM: #lines[i].getSim()#</div>
 										</cfcase>
 										<cfcase value="42">
 											<div>ESN: #lines[i].getImei()#</div>
+											<div>SIM: #lines[i].getSim()#</div>
 										</cfcase>
 										<cfdefaultcase>
 											<div>IMEI/ESN: #lines[i].getImei()#</div>
+											<div>SIM: #lines[i].getSim()#</div>
 										</cfdefaultcase>
 									</cfswitch>
 									<cfif order.getCarrierId() eq 42>
@@ -1350,6 +1365,44 @@
 		<cfreturn trim(content) />
 	</cffunction>
 
+	<cffunction name="getDebugTabView" output="false" access="public" returntype="string">
+		<cfargument name="order" type="cfc.model.Order" required="true" />
+		<cfset var local = structNew() />
+		
+		
+		<cfif arguments.order.getCarrierId() is 109 >	
+			<cfquery name="qOrderTypes" datasource="wirelessadvocates"  > 
+				select distinct orderType from [service].[OrderSubmissionLog] where orderid = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.order.getOrderId()#">
+				order by orderType
+			</cfquery>	
+			<cfsavecontent variable="content">	
+				<cfif qOrderTypes.recordcount is 0>
+					There are currently no OrderSubmissionLog records for this order.
+				</cfif>		
+				<cfloop query="qOrderTypes">
+					<cfstoredproc procedure="service.OrderSubmissionGet" datasource="wirelessadvocates" >
+						<cfprocparam cfsqltype="cf_sql_integer" value="#arguments.order.getOrderId()#" />
+						<cfprocparam cfsqltype="cf_sql_varchar" value="#qOrderTypes.orderType#" />
+						<cfprocresult name="local.qSubmitOrderRequest" />
+					</cfstoredproc>		
+					<br/><cfoutput>#qOrderTypes.orderType#</cfoutput> OrderEntry:<br/>
+					<cfdump var="#deserializeJson(local.qSubmitOrderRequest.orderentry)#" expand="false" />	
+					<br/><cfoutput>#qOrderTypes.orderType#</cfoutput> OrderResult:<br/>
+					<cfdump var="#deserializeJson(local.qSubmitOrderRequest.orderResult)#" expand="false" />	
+				</cfloop>
+			</cfsavecontent>	
+		
+		<cfelse>
+			<cfsavecontent variable="content">
+				Debug tab currently supports only ATT orders.
+			</cfsavecontent>
+		</cfif>
+		
+		
+		
+        <cfreturn content>
+
+   	</cffunction>
 
 	<cffunction name="getExchangeTabView" output="false" access="public" returntype="string">
 		<cfargument name="order" type="cfc.model.Order" required="true" />
