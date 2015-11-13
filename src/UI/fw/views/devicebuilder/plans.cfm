@@ -110,6 +110,7 @@
         <cfif prc.showNewPlans>
           <div class="bs-callout bs-callout-warning switchWarning">
             <h4>Choosing a new plan will replace your existing plan</h4>
+            <p>Example: if you have an unlimted data plan and you choose a new plan you will lose your unlimited data.</p>
           </div>
         </cfif>
       </section>
