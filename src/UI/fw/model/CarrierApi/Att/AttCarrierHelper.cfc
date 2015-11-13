@@ -208,12 +208,17 @@
 		<!--- This code executed when the user is changing data plans --->
 		<cfif structKeyExists(local.subscriber,"WAFLAG_PLANHASCHANGED")>
 			<cfset structDelete(local.orderITem.FinanceAgreementItem.AttDeviceOrderItem.subscriber,"planInfo") />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo = structNew() />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.Identifier = "SDDVRP" />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.RecurringFee = 0 />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.ActionCode = "A" />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.planInfo.IsGroupPlan = false />
-			<cfset local.orderItem.FinanceAgreementItem.subscriber.AttDeviceOrderItem.AdditionalOfferings = session.carrierFacade.IncompatibleOfferRequest.additionalOffers />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo = structNew() />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.Identifier = "SDDVRP" />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.RecurringFee = 0 />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.ActionCode = "A" />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.IsGroupPlan = false />
+			<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = session.carrierFacade.IncompatibleOfferResp.Items />
+			<cfloop array="#session.carrierFacade.IncompatibleOfferRequest.additionalOffers#" index="local.ao">
+				<cfif local.ao.action is "A">
+					<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.ao) />
+				</cfif>
+			</cfloop>
 		</cfif>
 		
 		<!--- determine the appropriate upgradeQualificationDetails to use --->
