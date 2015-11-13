@@ -687,7 +687,7 @@
 		** $0 down (for qualified customers).<br />
 		
         <cfif session.cart.getActivationType() contains 'upgrade'>
-          *** An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><br />
+          <!---*** An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><br />--->
         <cfelse>
           <cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>
             <cfif listFindNoCase('109, 128', session.cart.getCarrierId())>

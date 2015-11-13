@@ -794,8 +794,8 @@
             <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />
             <cfset local.upgradeFee = local.carrierObj.getUpgradeFee( session.cart.getCarrierID() )>
           </cfif>            
-          ***  An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.
-            <cfif session.cart.getCarrierId() neq 299>This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><!--- remove for Sprint --->
+          <!---***  An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.
+            <cfif session.cart.getCarrierId() neq 299>This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><!--- remove for Sprint --->--->
           <br />
         </cfif>
 		<span class="note">
