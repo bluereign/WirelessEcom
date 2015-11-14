@@ -250,27 +250,21 @@ width:260px;}
                   <div class="col-md-2 col-xs-16"></div>
                   <div class="col-md-14 col-xs-16">
 
-                    <!--- <PLAN DETAILS --->
+                    <!--- <DEVICE DETAILS --->
                     <div class="row">
                       <div class="collapse" id="devicedetails#local.iCartLine#">
                         <div class="row">
             							<!--- Device or line item --->
-            							<div class="col-md-10">#local.selectedPhone.summaryTitle# #local.cartline.getCartLineActivationType()#</div>
+            							<div class="col-md-10">
+                            #local.selectedPhone.summaryTitle#
+                            <cfif local.cartline.getCartLineActivationType() contains "financed">
+                              <cfset local.months = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType=local.cartline.getCartLineActivationType(),cartLine=local.cartLine) />
+                              (#local.months# months)
+                            </cfif>
+                          </div>
             							<div class="col-md-3">
               							<cfif local.cartline.getCartLineActivationType() contains "financed">
-              								<cfset local.months = listGetAt(local.cartline.getCartLineActivationType(),2,'-') />
-                              <cfset local.productData = application.model.phone.getByFilter(idList = local.cartLine.getPhone().getProductID(), allowHidden = true) />
-                              <cfswitch expression="#local.months#">
-                                <cfcase value="24">
-                                  #dollarFormat(local.productData.FinancedMonthlyPrice24)#/mo#local.financeLegalStar#
-                                </cfcase>
-                                <cfcase value="18">
-                                  #dollarFormat(local.productData.FinancedMonthlyPrice18)#/mo#local.financeLegalStar#
-                                </cfcase>
-                                <cfcase value="12">
-                                  #dollarFormat(local.productData.FinancedMonthlyPrice12)#/mo#local.financeLegalStar#
-                                </cfcase>
-                              </cfswitch>
+              								#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())#/mo
               						  <cfelse>
               								&nbsp;
               						  </cfif>
@@ -278,13 +272,7 @@ width:260px;}
             							<div class="col-md-3">
             							  <cfif local.cartline.getCartLineActivationType() contains "financed" and local.cartLine.getSubscriberIndex() gt 0>
                               <!--- Down Payment: --->
-                              <cfset local.subscriber = prc.subscribers[local.cartLine.getSubscriberIndex()] />
-                              <cfset local.subscriber.offerCategory = IIF(local.productData.carrierId eq prc.carrierIdAtt, DE(prc.offerCategoryAtt), DE(prc.offerCategoryVzw)) />
-                              <cfset local.subscriber.downPaymentPercent = local.subscriber.getUpgradeDownPaymentPercent(local.subscriber.offerCategory,local.months) />
-                              <cfif local.subscriber.downPaymentPercent gt 0>
-                                <cfset local.subscriber.downPayment = local.subscriber.downPaymentPercent * local.productData.FinancedFullRetailPrice / 100 />
-                                #dollarFormat(local.subscriber.downPayment)#
-                              </cfif>
+                              #dollarFormat(local.cartline.getPhone().getPrices().getDownPaymentAmount())#
             							  <cfelse>
             								  #dollarFormat(local.selectedPhone.price_retail)#
             							  </cfif>
@@ -299,34 +287,6 @@ width:260px;}
             							  </div>
             							</cfif>
             						</div>
-                        <!--- Bundled Accessories
-                        <cfif arrayLen(local.lineBundledAccessories)> <!--- from cfc/view/Cart.cfc line 339 --->
-                          <cfloop from="1" to="#arrayLen(local.lineBundledAccessories)#" index="local.iAccessory">
-                            <cfset local.thisAccessory = local.lineBundledAccessories[local.iAccessory] />
-                            <cfset local.selectedAccessory = application.model.accessory.getByFilter(idList = local.thisAccessory.getProductID()) />
-                            <cfset local.stcPrimaryImage = application.model.imageManager.getPrimaryImagesForProducts(local.selectedAccessory.accessoryGuid) />
-                            <cfset local.deviceGuidList = listAppend(local.deviceGuidList, local.selectedAccessory.accessoryGuid) />
-
-                            <cfif structKeyExists(local.stcPrimaryImage, local.selectedAccessory.accessoryGuid)>
-                              <cfset imageDetail = {
-                                  src = application.view.imageManager.displayImage(imageGuid = local.stcPrimaryImage[local.selectedAccessory.accessoryGuid], height = 0, width = 75)
-                                  , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
-                                  , width = 75
-                              } />
-                            <cfelse>
-                              <cfset imageDetail = {
-                                src = '#getAssetPaths().common#images/catalog/noimage.jpg'
-                                , alt = htmlEditFormat(local.selectedAccessory.summaryTitle)
-                                , width = 75
-                              } />
-                            </cfif>
-              							<div class="row">
-              								<div class="col-md-10">Accessory: #local.selectedPhone.carriername# - #local.selectedAccessory.summaryTitle#</div>
-              								<div class="col-md-3">&nbsp;</div>
-              								<div class="col-md-3"><cfif local.thisAccessory.getPrices().getDueToday() EQ 0>INCLUDED</cfif></div>
-              							</div>
-                          </cfloop>
-                        </cfif> --->
 
                         <!--- Plan --->
                         <cfif local.cartLine.getPlan().hasBeenSelected()>
@@ -395,7 +355,7 @@ width:260px;}
 
 
                         <!--- Activation/Upgrade Fee --->
-                        <!---<cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+                        <!--- <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
                           <div class="row">
                             <div class="col-md-10">Upgrade Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> ***</div>
                             <div class="col-md-3">&nbsp;</div>
@@ -405,23 +365,9 @@ width:260px;}
                           <div class="row">
                             <div class="col-md-10">Activation Fee ***</div>
                             <div class="col-md-3">&nbsp;</div>
-                            <div class="col-md-3"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelse>#dollarFormat(prc.activationFee)#</cfif></div>
+                            <div class="col-md-3"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelseif structKeyExists(prc,"activationFee")>#dollarFormat(prc.activationFee)#<cfelse>unknown</cfif></div>
                           </div>
-                        </cfif>--->
-
-                        <!---<cfif local.cartLine.getWarranty().hasBeenSelected()>
-                          <div class="row">
-                            <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
-                            <div class="col-md-3">&nbsp;</div>
-                            <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
-                          </div>
-                        <cfelse>
-                          <div class="row">
-                            <div class="col-md-10">No protection plan selected</div>
-                            <div class="col-md-3">&nbsp;</div>
-                            <div class="col-md-3">$0.00</div>
-                          </div>
-                        </cfif>--->
+                        </cfif> --->
 
 
                         <!--- Instant MIR --->
@@ -436,6 +382,7 @@ width:260px;}
 
                       </div>
                     </div>
+                    <!--- <end device details --->
 
                     <!--- <end device details --->
                     <a role="button"

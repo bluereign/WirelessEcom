@@ -430,138 +430,139 @@
                 <div class="col-md-2 col-xs-16"></div>
                 <div class="col-md-14 col-xs-16">
 
-                  <!--- <PLAN DETAILS --->
-                  <div class="row">
-                    <div class="collapse" id="devicedetails#local.iCartLine#">
-                      <div class="row">
-                        <!--- Device or line item --->
-                        <div class="col-md-10">
-                          #local.selectedPhone.summaryTitle#
-                          <cfif local.cartline.getCartLineActivationType() contains "financed">
-                            <cfset local.months = application.model.dBuilderCartFacade.ActivationTypeMonths(local.cartline.getCartLineActivationType()) />
-                            (#local.months# months)
-                          </cfif>
-                        </div>
-                        <div class="col-md-3">
-                          <cfif local.cartline.getCartLineActivationType() contains "financed">
-                            #dollarFormat(local.cartline.getPhone().getPrices().getMonthly())#/mo
-                          <cfelse>
-                            &nbsp;
-                          </cfif>
-                        </div>
-                        <div class="col-md-3">
-                          <cfif local.cartline.getCartLineActivationType() contains "financed" and local.cartLine.getSubscriberIndex() gt 0>
-                            <!--- Down Payment: --->
-                            #dollarFormat(local.cartline.getPhone().getPrices().getDownPaymentAmount())#
-                          <cfelse>
-                            #dollarFormat(local.selectedPhone.price_retail)#
-                          </cfif>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <cfif session.cart.getActivationType() DOES NOT CONTAIN "financed">
-                          <div class="col-md-10">Online Discount</div>
-                          <div class="col-md-3">&nbsp;</div>
-                          <div class="col-md-3">
-                            -#dollarFormat(val(local.selectedPhone.price_retail) - val(local.cartLine.getPhone().getPrices().getDueToday()))#
-                          </div>
-                        </cfif>
-                      </div>
-
-                      <!--- Plan --->
-                      <cfif local.cartLine.getPlan().hasBeenSelected()>
-                        <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />  <!--- from cfc/view/Cart.cfc line 441 --->
-                        <!---- Upgrades do not have the activation fee waived --->
-                      </cfif>
-
-                      <!--- Services --->
-                      <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">
-                        <cfset local.thisFeatureID = local.lineFeatures[local.iFeature].getProductID() />
-                        <cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID) />
-                        <cfset local.deviceGuidList = listAppend(local.deviceGuidList, local.thisFeature.serviceGuid) />
-                        <cfset local.thisServiceRecommended = false />
-
-                        <!--- Check if service is recommended --->
-                        <cfif qRecommendedServices.RecordCount>
-                          <cfloop query="qRecommendedServices">
-                            <cfif qRecommendedServices.productId eq local.thisFeatureId>
-                              <cfset local.thisServiceRecommended = true />
-                              <cfbreak />
+                 <!--- <DEVICE DETAILS --->
+                    <div class="row">
+                      <div class="collapse" id="devicedetails#local.iCartLine#">
+                        <div class="row">
+            							<!--- Device or line item --->
+            							<div class="col-md-10">
+                            #local.selectedPhone.summaryTitle#
+                            <cfif local.cartline.getCartLineActivationType() contains "financed">
+                              <cfset local.months = application.model.dBuilderCartFacade.ActivationTypeMonths(activationType=local.cartline.getCartLineActivationType(),cartLine=local.cartLine) />
+                              (#local.months# months)
                             </cfif>
-                          </cfloop>
+                          </div>
+            							<div class="col-md-3">
+              							<cfif local.cartline.getCartLineActivationType() contains "financed">
+              								#dollarFormat(local.cartline.getPhone().getPrices().getMonthly())#/mo
+              						  <cfelse>
+              								&nbsp;
+              						  </cfif>
+            							</div>
+            							<div class="col-md-3">
+            							  <cfif local.cartline.getCartLineActivationType() contains "financed" and local.cartLine.getSubscriberIndex() gt 0>
+                              <!--- Down Payment: --->
+                              #dollarFormat(local.cartline.getPhone().getPrices().getDownPaymentAmount())#
+            							  <cfelse>
+            								  #dollarFormat(local.selectedPhone.price_retail)#
+            							  </cfif>
+            							</div>
+            						</div>
+            						<div class="row">
+            							<cfif session.cart.getActivationType() DOES NOT CONTAIN "financed">
+            							  <div class="col-md-10">Online Discount</div>
+            							  <div class="col-md-3">&nbsp;</div>
+            							  <div class="col-md-3">
+            								  -#dollarFormat(val(local.selectedPhone.price_retail) - val(local.cartLine.getPhone().getPrices().getDueToday()))#
+            							  </div>
+            							</cfif>
+            						</div>
+
+                        <!--- Plan --->
+                        <cfif local.cartLine.getPlan().hasBeenSelected()>
+                          <cfset local.carrierObj = application.wirebox.getInstance("Carrier") />  <!--- from cfc/view/Cart.cfc line 441 --->
+                          <!---- Upgrades do not have the activation fee waived --->
                         </cfif>
 
-                        <div class="row">
-                          <div class="col-md-10">#local.thisFeature.summaryTitle#<cfif local.thisServiceRecommended AND NOT local.thisFeature.hidemessage> - Best Value</cfif></div>
-                          <div class="col-md-3">#dollarFormat(local.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</div>
-                          <div class="col-md-3">&nbsp;</div>
-                        </div>
-                      </cfloop>
+                        <!--- Services --->
+                        <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">
+                          <cfset local.thisFeatureID = local.lineFeatures[local.iFeature].getProductID() />
+                          <cfset local.thisFeature = application.model.feature.getByProductID(local.thisFeatureID) />
+                          <cfset local.deviceGuidList = listAppend(local.deviceGuidList, local.thisFeature.serviceGuid) />
+                          <cfset local.thisServiceRecommended = false />
 
+                          <!--- Check if service is recommended --->
+                          <cfif qRecommendedServices.RecordCount>
+                            <cfloop query="qRecommendedServices">
+                              <cfif qRecommendedServices.productId eq local.thisFeatureId>
+                                <cfset local.thisServiceRecommended = true />
+                                <cfbreak />
+                              </cfif>
+                            </cfloop>
+                          </cfif>
 
-                      <!--- Line Accessories --->
-                      <cfif isArray(local.lineAccessories) and arrayLen(local.lineAccessories)>
-                        <cfloop from="1" to="#arrayLen(local.lineAccessories)#" index="i">
-                          <div class="row">
-                            <div class="col-md-9">Accessory: #local.lineAccessories[i].detailTitle#</div>
-                            <div class="col-md-1">#local.lineAccessories[i].qty#</div>
-							<div class="col-md-3">&nbsp;</div>
-                            <div class="col-md-3">#dollarFormat(local.lineAccessories[i].price_subTotal)#</div>
-                          </div>
+            							<div class="row">
+            							  <div class="col-md-10">#local.thisFeature.summaryTitle#<cfif local.thisServiceRecommended AND NOT local.thisFeature.hidemessage> - Best Value</cfif></div>
+            							  <div class="col-md-3">#dollarFormat(local.lineFeatures[local.iFeature].getPrices().getMonthly())#/mo</div>
+            							  <div class="col-md-3">&nbsp;</div>
+            							</div>
                         </cfloop>
-                      <cfelse>
-                        <div class="row">
-                          <div class="col-md-10">No accessories selected for this device</div>
-                          <div class="col-md-3">&nbsp;</div>
-                          <div class="col-md-3">&nbsp;</div>
-                        </div>
-                      </cfif>
 
 
-                      <!--- Line warranty --->
-                      <cfif local.cartLine.getWarranty().hasBeenSelected()>
-                        <div class="row">
-                          <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
-                          <div class="col-md-3">&nbsp;</div>
-                          <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
-                        </div>
-                      <cfelse>
-                        <div class="row">
-                          <div class="col-md-10">No protection plan selected</div>
-                          <div class="col-md-3">&nbsp;</div>
-                          <div class="col-md-3">$0.00</div>
-                        </div>
-                      </cfif>
+                        <!--- Line Accessories --->
+                        <cfif isArray(local.lineAccessories) and arrayLen(local.lineAccessories)>
+                          <cfloop from="1" to="#arrayLen(local.lineAccessories)#" index="i">
+              							<div class="row">
+              								<div class="col-md-9">Accessory: #local.lineAccessories[i].detailTitle#</div>
+              								<div class="col-md-1">#local.lineAccessories[i].qty#</div>
+											<div class="col-md-3">&nbsp;</div>
+              								<div class="col-md-3">#dollarFormat(local.lineAccessories[i].price_subTotal)#</div>
+              							</div>
+                          </cfloop>
+                        <cfelse>
+            							<div class="row">
+            							  <div class="col-md-10">No accessories selected for this device</div>
+            							  <div class="col-md-3">&nbsp;</div>
+            							  <div class="col-md-3">&nbsp;</div>
+            							</div>
+                        </cfif>
 
 
-                      <!--- Activation/Upgrade Fee --->
-                      <!--- <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
-                        <div class="row">
-                          <div class="col-md-10">Upgrade Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> ***</div>
-                          <div class="col-md-3">&nbsp;</div>
-                          <div class="col-md-3">$0.00</div>
-                        </div>
-                      <cfelse>
-                        <div class="row">
-                          <div class="col-md-10">Activation Fee ***</div>
-                          <div class="col-md-3">&nbsp;</div>
-                          <div class="col-md-3"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelseif structKeyExists(prc,"activationFee")>#dollarFormat(prc.activationFee)#<cfelse>unknown</cfif></div>
-                        </div>
-                      </cfif> --->
+                        <!--- Line warranty --->
+                        <cfif local.cartLine.getWarranty().hasBeenSelected()>
+                          <div class="row">
+                            <div class="col-md-10">Warranty: #local.cartLine.getWarranty().getTitle()#</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3">#dollarFormat(local.cartLine.getWarranty().getPrices().getDueToday())#</div>
+                          </div>
+                        <cfelse>
+                          <div class="row">
+                            <div class="col-md-10">No protection plan selected</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3">$0.00</div>
+                          </div>
+                        </cfif>
 
 
-                      <!--- Instant MIR --->
-                      <cfif local.cartLine.getInstantRebateAmount() gt 0>
-                        <cfset local.cartLine.getPrices().setDueToday( local.cartLine.getPrices().getDueToday() - local.cartLine.getInstantRebateAmount() )>
-                        <div class="row">
-                          <div class="col-md-10">Instant Rebate: <span class="callout">You qualified to convert the mail-in rebate to an instant online rebate!</span></div>
-                          <div class="col-md-3">&nbsp;</div>
-                          <div class="col-md-3">-#dollarFormat(local.cartLine.getInstantRebateAmount())#</div>
-                        </div>
-                      </cfif>
+                        <!--- Activation/Upgrade Fee --->
+                        <!--- <cfif session.cart.getActivationType() CONTAINS 'upgrade'>
+                          <div class="row">
+                            <div class="col-md-10">Upgrade Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> ***</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3">$0.00</div>
+                          </div>
+                        <cfelse>
+                          <div class="row">
+                            <div class="col-md-10">Activation Fee ***</div>
+                            <div class="col-md-3">&nbsp;</div>
+                            <div class="col-md-3"><cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>Free<cfelseif structKeyExists(prc,"activationFee")>#dollarFormat(prc.activationFee)#<cfelse>unknown</cfif></div>
+                          </div>
+                        </cfif> --->
 
+
+                        <!--- Instant MIR --->
+                        <cfif local.cartLine.getInstantRebateAmount() gt 0>
+                          <cfset local.cartLine.getPrices().setDueToday( local.cartLine.getPrices().getDueToday() - local.cartLine.getInstantRebateAmount() )>
+            						  <div class="row">
+            							  <div class="col-md-10">Instant Rebate: <span class="callout">You qualified to convert the mail-in rebate to an instant online rebate!</span></div>
+            							  <div class="col-md-3">&nbsp;</div>
+            							  <div class="col-md-3">-#dollarFormat(local.cartLine.getInstantRebateAmount())#</div>
+            						  </div>
+                        </cfif>
+
+                      </div>
                     </div>
-                  </div>
+                    <!--- <end device details --->
 
                   <!--- <end device details --->
                   <a role="button"
