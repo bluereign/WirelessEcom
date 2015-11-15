@@ -19,6 +19,9 @@
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
   <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting" /> <!--- orderreview --->
   <cfset listActivationTypes = "financed-24,financed-18,financed-12,upgrade" /> <!--- upgrade=2-year contract. TODO: determine what to do with new, upgrade, addaline  --->
+  
+  <!--- Creates the checkoutReferenceNumber --->
+  <cfset application.model.checkoutHelper.generateReferenceNumber() />
 
   <cfset session.carrierDocsGenerated = "false"><!---Setting to false so that checkout can proceed to generate docs a second time --->
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
