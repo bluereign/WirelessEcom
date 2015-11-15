@@ -1175,7 +1175,7 @@
 		    <cfset application.model.checkoutHelper.clearCart() />
 			<cfset application.model.checkoutHelper.clearCheckOut() />
 			<cfset session.order = "" />
-			
+			<cfset session.carrierDocsGenerated = "false">
 			<script >
 			 // first store the zipcode in prc.scope.
 			  prc.zipcode = session.cart.getZipcode();
