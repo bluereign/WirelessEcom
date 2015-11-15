@@ -546,8 +546,10 @@
 
     </cffunction>
 
-    <cffunction name="clearReferenceNumber" returntype="string">
+    <cffunction name="clearReferenceNumber" returntype="void">
+    	<cfset application.Model.dbuilderCartFacade.clearReferenceNumber() />
     	<cfset session.checkout.referenceNumber = "">
+		
     </cffunction>
 
 	<cffunction name="getCarrierCoverageAreaLink" access="public" returntype="string" output="false">
@@ -581,9 +583,14 @@
 	</cffunction>
 
 	<cffunction name="generateReferenceNumber" returntype="string">
+		
+		
 		<!--- creates a reference number based on the current carrier. This is a unique reference number--->
         <cfset var local = structNew()>
         <cfset local.ref = GetTickCount()>
+		
+		<!--- Use CartFacade instead --->
+		<cfreturn application.model.dbuilderCartFacade.generateReferenceNumber() />
 
         <cfif this.getCarrier() eq "42">
        		<Cfset local.ref = "WAC" & local.ref>
@@ -1049,8 +1056,9 @@
     <!--------------->
 
     <cffunction name="getReferenceNumber" returntype="string">
-		<cfset this.defineSession() />
-        <cfreturn session.checkout.referenceNumber />
+		<cfreturn application.model.dbuilderCartFacade.getReferenceNumber() />
+		<!---<cfset this.defineSession() />
+        <cfreturn session.checkout.referenceNumber />--->
 	</cffunction>
 
     <cffunction name="getCarrierConversationId" returntype="string">
@@ -1241,7 +1249,8 @@
 
 	<cffunction name="setReferenceNumber" access="public" returntype="void" output="false">
 		<cfargument name="referenceNumber" type="string" required="true" />
-		<cfset session.checkout.referenceNumber = arguments.referenceNumber />
+		<!---<cfset session.checkout.referenceNumber = arguments.referenceNumber />--->
+		<cfset session.checkout.referenceNumber = application.model.dbuilderCartFacade.getReferenceNumber() />
 	</cffunction>
 
 	<cffunction name="setCarrierConversationId" access="public" returntype="void" output="false">

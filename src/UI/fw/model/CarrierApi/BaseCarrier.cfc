@@ -18,7 +18,7 @@
 		<cfset local.args = duplicate(arguments.args) />
 		
 		<cfif isdefined("session.sessionid")>
-			<cfset local.args.ReferenceNumber = session.sessionid />
+			<cfset local.args.ReferenceNumber = application.model.dbuilderCartFacade.getReferenceNumber() />
 		</cfif>
 		
 		<cfloop list="#stringFields#" index="local.s">
