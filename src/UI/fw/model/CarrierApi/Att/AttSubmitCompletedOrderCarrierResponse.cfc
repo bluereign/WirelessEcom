@@ -45,7 +45,7 @@
 					<cfset local.message.stepName = local.or.StepName />
 					<cfset local.message.processingComplete = local.or.processingComplete />
 					<cfif isdefined("local.or.exceptionInformation") >
-						<cfset local.message.subscriberNumber = getSubscriberNumber(local.or.identifier, local.qSubmitCompletedOrder.orderEntry) />
+						<cfset local.message.subscriberNumber = getFormattedSubscriberNumber(local.or.identifier, deserializeJson(local.qSubmitCompletedOrder.orderEntry)) />
 						<cfset local.message.exceptionInformation = local.or.exceptionInformation />
 					</cfif>
 					<cfset arrayAppend(local.return.messages,local.message) />
@@ -63,6 +63,13 @@
 		
 	</cffunction>
 	
+	<cffunction name="getFormattedSubscriberNumber" returnType="string" access="private" > 
+		<cfset var local = structNew() />
+		<cfset local.unformatted = getSubscriberNumber(argumentCollection=arguments) />
+		<cfset local.formatted = left(local.unformatted,3) & '-' & mid(local.unformatted,4,3) & '-' & right(local.unformatted,4) />
+		<cfreturn local.formatted />
+	</cffunction>
+	
 	<cffunction name="getSubscriberNumber" returnType="string" access="private" > 
 		<cfargument name="identifier" type="string" required="yes" />
 		<cfargument name="orderEntry" type="struct" required="yes" />
@@ -72,7 +79,7 @@
 		<cfloop array="#arguments.orderEntry.OrderItems#" index="local.oi" >
 			<cfif isdefined("local.oi.Identifier") and isdefined("local.oi.FinanceAgreementItem")>
 				<cfif local.oi.identifier is arguments.identifier>
-					<cfreturn local.oi.FinanceAgreementItem.subscriberNumber.subscriberNumber />
+					<cfreturn local.oi.FinanceAgreementItem.attDeviceOrderItem.subscriber.Number />
 				</cfif>
 			</cfif>
 		</cfloop>
