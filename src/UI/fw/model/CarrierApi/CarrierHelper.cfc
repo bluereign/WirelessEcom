@@ -49,7 +49,7 @@
 		<cfreturn local.loadEConsent />
 	</cffunction>	
 	
-	<cffunction name="conflictsResolvable" output="false" access="public" returntype="string">
+	<cffunction name="conflictsResolvable" output="false" access="public" returntype="boolean">
 		<cfargument name="carrierid" type="numeric" required="true" > 
 		<cfargument name="subscriberNumber" type="string" required="true" > 
 		<cfargument name="productId" type="numeric" required="false" > 

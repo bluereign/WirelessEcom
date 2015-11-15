@@ -36,7 +36,7 @@
             <cfscript>
               local.args_incompatibleOffers = {
                 carrierId = prc.productData.carrierId,
-                SubscriberNumber = i,
+                SubscriberNumber = prc.subscribers[i].getNumber(),
                 ImeiType = prc.productData.ImeiType
               };
               local.isConflictsResolvable = prc.carrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);

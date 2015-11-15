@@ -14,7 +14,7 @@
 		<cfset local.isSuccessful = false />
 		<cfset local.resp = getResponse() />
 		
-		<cfif isDefined("local.resp.WasSuccessful") and local.wasSuccessful is "yes" and local.resp.orderResults.stepName is 3>
+		<cfif isDefined("local.resp.WasSuccessful") and local.resp.wasSuccessful is "yes" and local.resp.orderResults.stepName is 3>
 			<cfset local.isSuccessful = true />
 		</cfif>
 		
