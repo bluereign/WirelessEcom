@@ -548,7 +548,13 @@
                 <tr>
                   <td>Estimated Tax</td>
                   <td></td>
-                  <td>TBD</td>
+                  <td><cfif (isDefined('session.cart')) AND (session.cart.getTaxes().getDueToday() gt 0)>
+					  	#dollarFormat(session.cart.getTaxes().getDueToday())#
+					  <cfelse>
+					  	TBD
+					  </cfif>
+                  	
+                  </td>
                 </tr>
                 <!--- <tr>
                   <td>
