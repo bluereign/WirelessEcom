@@ -140,23 +140,23 @@
 			<cfset local.subscriber = AttCarrierHelper.FindSubscriber(arguments.subscriberNumber) />
 			<cfif not structIsEmpty(local.subscriber) >
 				<cfset session.carrierFacade.accountResp.Account.Subscribers[local.subscriber.subscriberIndex].WAFlag_PlanHasChanged = true />
-				<cfif local.subscriber.PlanInfo.Identifier is "SDDVRP">
-					<cfset local.carrierResponse.errorMessage = "Subscriber already using SDDVRP Plan" />
-				<cfelse>
-					<cfset local.newPlanInfo = structNew() />
+				<cfset local.newPlanInfo = structNew() />
+				<!--- If the subscriber is changing from non-SDDVRP then add new PlanInfo --->
+				<cfif local.subscriber.PlanInfo.Identifier is not "SDDVRP">
 					<cfset local.newPlanInfo.PlanInfo = structNew() />
 					<cfset local.newPlanInfo.PlanInfo.Identifier = "SDDVRP" />	
 					<cfset local.newPlanInfo.PlanInfo.ActionCode = "A" />	
 					<cfset local.newPlanInfo.PlanInfo.isGroupPlan = false />	
-					<cfif isdefined("local.subscriber.additionalOfferings")	>
-						<cfset local.newPlanInfo.AdditionalOffers = local.subscriber.additionalOfferings />
-						<cfset local.AttPlanItem = structNew() />
-						<cfset local.AttPlanItem.Action = "A" />
-						<cfset local.AttPlanItem.Code = local.qplan.carrierBillCode />
-						<!---<cfset local.AttPlanItem.Code = "MMSDG50GB" />---><!--- override for testing only --->
-						<cfset local..AttPlanItem.TypeCode = "G" />
-						<cfset arrayAppend(local.newPlanInfo.AdditionalOffers, local.AttPlanItem) />
-					</cfif>
+				</cfif>	
+				<!--- Add the data rate info --->
+				<cfif isdefined("local.subscriber.additionalOfferings")	>
+					<cfset local.newPlanInfo.AdditionalOffers = local.subscriber.additionalOfferings />
+					<cfset local.AttPlanItem = structNew() />
+					<cfset local.AttPlanItem.Action = "A" />
+					<cfset local.AttPlanItem.Code = local.qplan.carrierBillCode />
+					<!---<cfset local.AttPlanItem.Code = "MMSDG50GB" />---><!--- override for testing only --->
+					<cfset local..AttPlanItem.TypeCode = "G" />
+					<cfset arrayAppend(local.newPlanInfo.AdditionalOffers, local.AttPlanItem) />
 				</cfif>
 			</cfif>
 		</cfif>		
@@ -184,7 +184,11 @@
 						} />
 						<!--- add in the appropriate planInfo and additional offers --->
 						<cfif structKeyExists(local,"newPlanInfo")>
-							<cfset local.incompatibleOffer_args.planInfo = local.newPlanInfo.planInfo />
+							<cfif structKeyexists(local.newPlanInfo,"planInfo") >
+								<cfset local.incompatibleOffer_args.planInfo = local.newPlanInfo.planInfo />
+							<cfelse>
+								<cfset local.incompatibleOffer_args.planInfo = local.s.planInfo />	
+							</cfif>
 							<cfif structKeyExists(local.newPlanInfo,"additionalOffers") >
 								<cfset local.incompatibleOffer_args.additionalOffers = local.newPlanInfo.AdditionalOffers />
 							</cfif>

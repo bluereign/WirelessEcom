@@ -43,6 +43,7 @@
 				<cfloop array="#local.resp.orderResults#" index="local.or">
 					<cfset local.message = structNew() />
 					<cfset local.message.stepName = local.or.StepName />
+					<cfset local.message.stepNameDescription = getStepNameDescription(local.or.StepName) />
 					<cfset local.message.processingComplete = local.or.processingComplete />
 					<cfif isdefined("local.or.exceptionInformation") >
 						<cfset local.message.subscriberNumber = getFormattedSubscriberNumber(local.or.identifier, deserializeJson(local.qSubmitCompletedOrder.orderEntry)) />
@@ -63,6 +64,37 @@
 		
 	</cffunction>
 	
+	<cffunction name="getStepNameDescription" returnType="string" access="private" > 
+		<cfargument name="stepName" type="numeric" required="true" />
+		
+		<cfswitch expression="#arguments.stepName#">
+			<cfcase value="0">
+				<cfreturn "FinanceUpgradeParkAgreement" />
+			</cfcase>
+			<cfcase value="1">
+				<cfreturn "LegacyPortNumber" />
+			</cfcase>
+			<cfcase value="2">
+				<cfreturn "LegacyReserveNumber" />
+			</cfcase>
+			<cfcase value="3">
+				<cfreturn "FinanceUpgradeParkDevice" />
+			</cfcase>
+			<cfcase value="4">
+				<cfreturn "FinanceActivateSubscriber" />
+			</cfcase>
+			<cfcase value="5">
+				<cfreturn "LegacyUpgradeDevice" />
+			</cfcase>
+			<cfcase value="6">
+				<cfreturn "LegacyActivateSubscriber" />
+			</cfcase>
+			<cfdefaultcase>
+				<cfreturn "Unknown step name '" & arguments.stepName & "'" />
+			</cfdefaultcase>
+		</cfswitch>
+	</cffunction>	
+		
 	<cffunction name="getFormattedSubscriberNumber" returnType="string" access="private" > 
 		<cfset var local = structNew() />
 		<cfset local.unformatted = getSubscriberNumber(argumentCollection=arguments) />

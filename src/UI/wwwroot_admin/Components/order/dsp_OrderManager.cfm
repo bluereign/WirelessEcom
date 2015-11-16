@@ -994,7 +994,7 @@
                     	rc.activationMessages = rc.submitCompletedOrderResponse.getActivationDetail(FORM.OrderId);
                     	for (messageIndex=1; messageIndex LE arraylen(rc.activationMessages); messageIndex = messageIndex+1) {
                     		messageDetail = rc.activationMessages[messageIndex];
-                    		message = messageDetail.subscriberNumber & ": Step " & messageDetail.stepName & " - " & messageDetail.exceptionInformation & "<br/>";
+                    		message = "Subscriber " &messageDetail.subscriberNumber & ": Step " & messageDetail.stepName & " ("  & messageDetail.stepNameDescription & ") - " & messageDetail.exceptionInformation & "<br/>";
                     	} 
                     }
                     break;
