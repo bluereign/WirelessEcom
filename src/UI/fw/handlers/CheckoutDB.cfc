@@ -57,8 +57,6 @@
 
 	<!--- Update the timestamp on all soft reservations for this user with every step through checkout. --->
 	<cfset application.model.checkoutHelper.updateSoftReservationTimestamps() />
-	<!--- Creates the checkoutReferenceNumber --->
-	<cfset application.model.checkoutHelper.generateReferenceNumber() />
 	
 	<cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
 	  <cfargument name="event">
