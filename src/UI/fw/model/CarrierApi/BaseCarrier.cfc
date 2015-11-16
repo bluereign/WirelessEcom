@@ -10,14 +10,14 @@
 		<cfset var local = structNew() />
 		<cfset var jsonized = "" />
 		
-		<cfset stringFields = "InstallmentPlanId,SubscriberNumber,SecurityId,ZipCode,AccountIdentifier,ActiveLines,CanBeReachedPhone,HomePhone,WorkPhone,Imei,Sim,Sku,Number,ServiceArea,AreaCode,ZipExtension,Zip" />
+		<cfset stringFields = "ReferenceNumber,InstallmentPlanId,SubscriberNumber,SecurityId,ZipCode,AccountIdentifier,ActiveLines,CanBeReachedPhone,HomePhone,WorkPhone,Imei,Sim,Sku,Number,ServiceArea,AreaCode,ZipExtension,Zip" />
 		<cfset UppercaseFields = "PLANINFO,ACTIONCODE,IDENTIFIER,ISGROUPPLAN,BILLINGMARKETCODE,ADDITIONALOFFERS,ACTION,TYPECODE,IMEITYPE,UPGRADEQUALIFICATION,FINANCEAGREEMENTITEM,REQUESTTYPE,IDENTIFIER,CATEGORY,DEVICEINFO,NUMBERSOURCE,FAMILY,FULLRETAILPRICE,ACCOUNT,ADDRESS,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT,MSRP,DOWNPAYMENT,CODE" />
 		<cfset FixedcaseFields = "PlanInfo,ActionCode,Identifier,IsGroupPlan,BillingMarketCode,AdditionalOffers,Action,TypeCode,ImeiType,UpgradeQualification,FinanceAgreementItem,RequestType,Identifier,Category,DeviceInfo,NumberSource,Family,FullRetailPrice,Account,Address,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat,Msrp,DownPayment,Code" />
 		<cfset stringDelimiter = "@x@y@z@" />
 		
 		<cfset local.args = duplicate(arguments.args) />
 		
-		<cfif isdefined("session.sessionid")>
+		<cfif not isdefined("local.args.ReferenceNumber")>
 			<cfset local.args.ReferenceNumber = application.model.dbuilderCartFacade.getReferenceNumber() />
 		</cfif>
 		
