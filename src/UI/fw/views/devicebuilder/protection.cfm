@@ -23,6 +23,8 @@
         <div class="right">
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
           <input type="hidden" name="hasDeclinedDeviceProtection" id="hasDeclinedDeviceProtection" value="0" />
+          <input type="hidden" name="optionalDownpayment" class="optionalDownpayment" value="#prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt()#" />
+          
           <a href="#prc.prevStep#">BACK</a>
           <button type="button" class="btn btn-primary btnContinue" id="btnContinue" data-toggle="modal" data-target=""
             <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
@@ -429,11 +431,18 @@
           var planIdentifier = selectedOption.val();
           var downPaymentPercent = selectedOption.attr('data-downPaymentPercent');
           var downPaymentAmount = selectedOption.attr('data-downPaymentAmount');
+          var optionalDownPayment = $('.optionalDownpayment').val();
+
           if (downPaymentPercent > 0) {
             $('##isOptionalDownPaymentAdded').prop('checked', false);
             $('.btnContinue').prop('disabled', true);
             $('##isOptionalDownPaymentAddedDiv').show();
-            $('##isOptionalDownPaymentAddedLabel').text('I Agree to the required CARRIER down payment of: $' + downPaymentAmount);
+            if(optionalDownPayment > 0){ 
+            	$('##isOptionalDownPaymentAddedLabel').text('I Agree to the down payment of: $' + downPaymentAmount);
+            }else{
+            	$('##isOptionalDownPaymentAddedLabel').text('I Agree to the required CARRIER down payment of: $' + downPaymentAmount);
+            }
+            
           } else {
             $('##isOptionalDownPaymentAdded').prop('checked', true);
             $('.btnContinue').prop('disabled', false);
