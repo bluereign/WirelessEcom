@@ -1176,7 +1176,7 @@
 			<cfset session.carrierDocsGenerated = "false">
 			<script >
 			 // first store the zipcode in prc.scope.
-			  prc.zipcode = session.cart.getZipcode();
+			 // prc.zipcode = session.cart.getZipcode();
 			
 			  // remove carrierObj from session: 
 			  structDelete(session, 'carrierObj', true);
@@ -1190,7 +1190,7 @@
 			
 			
 			  // reset the session zipcode
-			  session.cart.setZipcode(prc.zipcode);
+			  //session.cart.setZipcode(prc.zipcode);
 			
 			  rc.cartLineNumber = request.config.otherItemsLineNumber;
 			</script>
