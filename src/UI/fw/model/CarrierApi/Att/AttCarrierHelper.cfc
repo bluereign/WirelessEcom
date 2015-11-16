@@ -44,7 +44,10 @@
 		<cfif isdefined("session.carrierfacade.accountResp.IncompatibleOffers")>
 			<cfloop array="#session.carrierfacade.accountResp.IncompatibleOffers#" index="local.io">
 				<cfif local.io.subscriberNumber is arguments.subscriberNumber AND local.io.ImeiType is local.imeiType>
-					<cfreturn local.io.conflictsResolvable />
+					<!--- If there are conflicts and the conflicts ARE NOT resolvable return FALSE --->
+					<cfif local.io.hasConflicts and not local.io.conflictsResolvable>
+						<cfreturn false />
+					</cfif>
 				</cfif>
 			</cfloop>
 		</cfif>
