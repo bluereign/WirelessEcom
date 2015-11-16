@@ -131,7 +131,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">You Have Chosen To <span style="text-decoration:underline;">Not</span> Protect Your Device</h4>
+          <h4 class="modal-title">You Have Chosen To <span style="text-decoration:underline;">Not</span> Protect Your New Device</h4>
         </div>
         <div class="modal-body">
           <div class="plans">
