@@ -166,6 +166,7 @@
           rc.cartLineNumber = prc.cartLinesCount + 1;
         }
 
+
         // 7. add phone to cart.
         cartArgs = {
           productType = "phone:" & prc.activationType,
@@ -289,7 +290,7 @@
           cartLineNumber = rc.cartLineNumber
         };
         // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
-        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
 
         // change plans: Call incompatibleOffer
         if ( prc.productData.carrierId eq prc.carrierIdAtt ) {
@@ -297,7 +298,8 @@
           prc.subscriberIndex = prc.cartLine.getSubscriberIndex();
           prc.subscriber = prc.subscribers[prc.subscriberIndex];
 
-          // 
+
+          // IncompatibleOffers() arguments
           local.args_incompatibleOffers = {
             carrierId = prc.productData.carrierId,
             productId = prc.productData.productId,
@@ -305,11 +307,22 @@
             changePlan = true,
             planId = rc.planid
           };
+          // ImeiType = prc.productData.ImeiType,
 
-          prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+          local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+          // prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+
+          if (!local.isConflictsResolvable) {
+            rc.carrierResponseMessage = prc.productData.carrierName & " has determined that the plan you have selected is not compatible. Please pick a different plan.";
+            setNextEvent(
+              event="devicebuilder.plans",
+              persist="carrierResponseMessage,cartLineNumber");
+          }
+
         }
 
         // call this after they pick a plan (unless they keep exising).  Pass in subscriberNumber and changePlan = true.
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
       if ( structKeyExists(rc,"HasExistingPlan")  ) {
@@ -414,6 +427,7 @@
         prc.cartLine.setPaymentPlanDetail(local.paymentPlanDetail);
 
       }
+  
 
       if (  structKeyExists(prc,"cartLine") and  ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) )  ) {
         

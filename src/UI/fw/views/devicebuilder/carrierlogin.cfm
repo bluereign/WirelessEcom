@@ -5,7 +5,7 @@
   <div class="col-md-12">
     <section class="content">
 
-      <cfif len(rc.carrierResponseMessage)>
+      <cfif structKeyExists(rc,"carrierResponseMessage") and len(rc.carrierResponseMessage)>
         <div class="bs-callout bs-callout-error">
           <h4>#rc.carrierResponseMessage#</h4>
         </div>

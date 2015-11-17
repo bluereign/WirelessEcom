@@ -9,6 +9,11 @@
       <input type="hidden" name="HasExistingPlan" value="No" />
 
       <section class="content plans">
+        <cfif len(rc.carrierResponseMessage)>
+          <div class="bs-callout bs-callout-error">
+            <h4>#rc.carrierResponseMessage#</h4>
+          </div>
+        </cfif>
 
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
