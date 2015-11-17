@@ -160,7 +160,6 @@
 			<cfset local.sor.errorMessage = "CartFacade.subscriberIndices is missing from session" />
 			<cfreturn local.sor />
 		</cfif>
-
 		
 		<!--- Verify the required carrier responses are store in the session --->
 		<cfif structKeyExists(session.carrierFacade,"AccountResp") is false>
@@ -186,7 +185,7 @@
 			<cfset local.i = local.i+1 />
 			<cfset arrayAppend(local.sor.orderItems, getOrderItem(faai,local.i)) />
 		</cfloop>
-		
+
 		<!--- return the completed request --->
 		<cfreturn local.sor/>
 		
@@ -208,6 +207,8 @@
 		<cfset local.orderitem.RequestType = getRequestType(session.order.getActivationTypeName()) />
 		<cfset local.orderitem.FinanceAgreementItem = arguments.faai />
 		
+		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = arrayNew(1) />
+
 		<!--- This code executed when the user is changing data plans --->
 		<cfif structKeyExists(local.subscriber,"WAFLAG_PLANHASCHANGED")>
 			
@@ -222,18 +223,33 @@
 			
 			<cfif isdefined("session.carrierFacade.IncompatibleOfferResp.Items")>
 				<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = session.carrierFacade.IncompatibleOfferResp.Items />
-			<cfelse>
-				<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = arrayNew(1) />
 			</cfif>
 			
 			<cfif isdefined("session.carrierFacade.IncompatibleOfferRequest.additionalOffers")>
 				<cfloop array="#session.carrierFacade.IncompatibleOfferRequest.additionalOffers#" index="local.ao">
-					<cfif local.ao.action is "A">
+					<cfif local.ao.action is "A" or local.ao.action is "R">
 						<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.ao) />
 					</cfif>
 				</cfloop>
+			</cfif>		
+		<cfelse><!--- if not changing plans then check to see if there are additional offerings from the incompatible offers in the accountResp --->	
+			
+			<cfif isdefined("session.carrierFacade.accountResp.IncompatibleOffers")>
+				<!--- Find the IncompatibleOffers for this subscriber and if there are items append them to the additional offerings --->
+				<cfloop array="#session.carrierFacade.accountResp.IncompatibleOffers#" index="local.io">
+					<cfif local.io.subscriberNumber is local.subscriber.number>
+						<cfloop array="#local.io.items#" index="local.lii">
+							<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.lii) />
+						</cfloop>
+						<!---<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.io.items) />--->
+					</cfif>
+				</cfloop>
 			</cfif>
+			
 		</cfif>
+		
+		
+		
 		
 		<!--- determine the appropriate upgradeQualificationDetails to use --->
 		<cfloop array="#arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications.qualificationDetails[1].BaseOfferQualificationDetails#" index="local.boqd">

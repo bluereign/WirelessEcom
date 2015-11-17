@@ -1,4 +1,6 @@
 <cfcomponent displayname="Carrier" hint="generic carrier component" extends="fw.model.BaseService" output="false">
+	
+	<cfset dbuilderCartFacade = application.wirebox.getInstance("dbuilderCartFacade") />
 
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.BaseCarrier">
 
@@ -17,7 +19,7 @@
 		
 		<cfset local.args = duplicate(arguments.args) />
 		
-		<cfif not isdefined("local.args.ReferenceNumber")>
+		<cfif not isdefined("local.args.ReferenceNumber") >
 			<cfset local.args.ReferenceNumber = application.model.dbuilderCartFacade.getReferenceNumber() />
 		</cfif>
 		

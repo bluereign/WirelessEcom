@@ -132,11 +132,16 @@
 			
 	// Device Builder Shopping Cart		
 		
-		map("dBuilderCart")
+		/*map("dBuilderCart")
 			.to("fw.model.shopping.dBuilderCart")
+			.asSingleton();*/
+			
+		map("dBuilderCartfacade")
+			.to("fw.model.shopping.dBuilderCartfacade")
 			.asSingleton();
 	
-		map("dBuilderCartHelper")
+	
+		/*map("dBuilderCartHelper")
 			.to("fw.model.shopping.dBuilderCartHelper")			
 			.asSingleton();
 							
@@ -152,6 +157,8 @@
 		map("dBuilderCartValidationResponse")
 			.to("fw.model.shopping.dBuilderCartValidationResponse")			
 			.asSingleton();
+*/
+
 
 	// Carrier Plans
 		map("PlanService")
