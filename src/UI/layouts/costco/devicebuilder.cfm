@@ -56,7 +56,7 @@
     <cfif prc.showNav>
       #renderView('devicebuilder/pagenav')#  
     <cfelse>
-      <br /><br /><br /><br />
+      <!--- <br /><br /><br /><br /> --->
     </cfif>
 
     <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
