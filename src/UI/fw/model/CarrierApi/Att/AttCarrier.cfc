@@ -398,6 +398,35 @@
 		<cfset local.saveSubmitOrderArgs.orderResult = serializeJSonAddReferenceNumber(local.carrierResponse.getResponse()) />
 		<cfset saveSubmitOrder(argumentCollection = local.saveSubmitOrderArgs) />	
 		
+		<!--- Save the other messages saved in the session --->
+		<!--- Save Account --->
+		<cfif isdefined('session.carrierfacade.accountRequest') and isdefined('session.carrierfacade.accountResp')>
+			<cfset local.accountRequest = serializeJSonAddReferenceNumber(session.carrierFacade.accountRequest) />
+			<cfset local.accountResp = serializeJSonAddReferenceNumber(session.carrierFacade.accountResp) />
+			<cfset local.saveAccountArgs = {
+				carrierId = 109,
+				orderId = session.order.getOrderId(),
+				orderType = "Account",
+				orderEntry = "#local.accountRequest#",
+				orderResult = "#local.accountResp#"
+			} />
+			<cfset saveSubmitOrder(argumentCollection = local.saveAccountArgs) />
+		</cfif>
+		<!--- Save Incompatible Offer --->
+		<cfif isdefined('session.carrierfacade.IncompatibleOfferRequest') and isdefined('session.carrierfacade.IncompatibleOfferResp')>
+			<cfset local.incompatibleOfferRequest = serializeJSonAddReferenceNumber(session.carrierFacade.incompatibleOfferRequest) />
+			<cfset local.incompatibleOfferResp = serializeJSonAddReferenceNumber(session.carrierFacade.incompatibleOfferResp) />
+			<cfset local.saveIncompatibleOfferArgs = {
+				carrierId = 109,
+				orderId = session.order.getOrderId(),
+				orderType = "IncompatibleOffer",
+				orderEntry = "#local.incompatibleOfferRequest#",
+				orderResult = "#local.incompatibleOfferResp#"
+			} />
+			<cfset saveSubmitOrder(argumentCollection = local.saveIncompatibleOfferArgs) />
+		</cfif>
+		
+		
 		<cfreturn processResponse(local.carrierResponse) />			
 	</cffunction>	
 	
