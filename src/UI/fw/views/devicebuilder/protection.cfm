@@ -23,7 +23,6 @@
         <div class="right">
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
           <input type="hidden" name="hasDeclinedDeviceProtection" id="hasDeclinedDeviceProtection" value="0" />
-          <input type="hidden" name="optionalDownpayment" class="optionalDownpayment" value="#prc.cartLine.getPhone().getPrices().getOptionalDownPmtAmt()#" />
           
           <a href="#prc.prevStep#">BACK</a>
           <button type="button" class="btn btn-primary btnContinue" id="btnContinue" data-toggle="modal" data-target=""
@@ -437,16 +436,12 @@
             $('##isOptionalDownPaymentAdded').prop('checked', false);
             $('.btnContinue').prop('disabled', true);
             $('##isOptionalDownPaymentAddedDiv').show();
-            if(optionalDownPayment > 0){ 
-            	$('##isOptionalDownPaymentAddedLabel').text('I Agree to the down payment of: $' + downPaymentAmount);
-            }else{
-            	$('##isOptionalDownPaymentAddedLabel').text('I Agree to the required CARRIER down payment of: $' + downPaymentAmount);
-            }
-            
+            $('##isOptionalDownPaymentAddedLabel').text('I Agree to the down payment of: $' + downPaymentAmount);
           } else {
             $('##isOptionalDownPaymentAdded').prop('checked', true);
             $('.btnContinue').prop('disabled', false);
             $('##isOptionalDownPaymentAddedDiv').hide();
+            $('##isOptionalDownPaymentAddedLabel').text('I Agree to the required CARRIER down payment of: $' + downPaymentAmount);
           }
           $('##isOptionalDownPaymentAdded').attr('data-downPaymentPercent',downPaymentPercent);
           $('##isOptionalDownPaymentAdded').attr('data-downPaymentAmount',downPaymentAmount);
