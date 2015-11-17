@@ -56,8 +56,8 @@
           <div class="right" style="width:273px;">
             <cfif prc.showAddAnotherDeviceButton>
               <a href="#prc.addxStep#">Add Another Device</a>
-            <cfelseif prc.showBrowseDevicesButton>
-              <a href="#prc.browseDevicesUrl#">Browse Devices</a>
+            <!--- <cfelseif prc.showBrowseDevicesButton>
+              <a href="#prc.browseDevicesUrl#">Browse Devices</a> --->
             <cfelse>
               <!--- deal with funky style sheet: --->
               <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -677,8 +677,8 @@
       <div class="right">
         <cfif prc.showAddAnotherDeviceButton>
           <a href="#prc.addxStep#">Add Another Device</a>
-        <cfelseif prc.showBrowseDevicesButton>
-          <a href="#prc.browseDevicesUrl#">Browse Devices</a>
+<!---         <cfelseif prc.showBrowseDevicesButton>
+          <a href="#prc.browseDevicesUrl#">Browse Devices</a> --->
         </cfif>
         <cfif prc.showCheckoutnowButton>
           <button type="submit" class="btn btn-primary" <cfif prc.disableCheckoutnowButton>disabled="disabled"</cfif> >Checkout Now</button>
