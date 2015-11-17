@@ -985,6 +985,10 @@
                     session.order = Order;
                     
                     rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete);
+                    if (structIsEmpty(rc.submitOrderRequest)) {
+                    	message = "SubmitOrder record not found - activation not possible";
+                    	break;
+                    }
                     rc.submitOrderRequest.carrierId = form.carrier;
                     rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest);
                     /*message = "IS ACTIVATED = " & rc.submitCompletedOrderResponse.getResult() & "  REASON = " & rc.submitCompletedOrderResponse.getResultDetail();*/
