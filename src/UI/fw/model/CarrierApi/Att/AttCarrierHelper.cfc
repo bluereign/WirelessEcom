@@ -132,6 +132,7 @@
 		<cfquery name="qOrderSubmission" datasource="wirelessadvocates" maxrows="1">
 			SELECT OrderEntry FROM [service].[OrderSubmissionLog] 
 			WHERE orderid = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.orderid#" > 
+			and orderType = 'SubmitOrder'
 		</cfquery>
 		
 		<cfif qOrderSubmission.recordcount is not 0>
@@ -237,7 +238,7 @@
 			<cfif isdefined("session.carrierFacade.accountResp.IncompatibleOffers")>
 				<!--- Find the IncompatibleOffers for this subscriber and if there are items append them to the additional offerings --->
 				<cfloop array="#session.carrierFacade.accountResp.IncompatibleOffers#" index="local.io">
-					<cfif local.io.subscriberNumber is local.subscriber.number>
+					<cfif local.io.subscriberNumber is local.subscriber.number and isdefined("local.io.items") and isArray(local.io.items)>
 						<cfloop array="#local.io.items#" index="local.lii">
 							<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.lii) />
 						</cfloop>
