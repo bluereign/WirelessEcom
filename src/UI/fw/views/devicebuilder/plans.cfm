@@ -60,7 +60,7 @@
                   
                   <cfloop query="prc.planData">
                     <div class="info">
-                      <a href="##">
+                      <a>
                         <h3><span>#prc.planData.DetailTitle#</span></h3>
                         <ul>
                           <li class="large"><span>#prc.planData.DataLimitGB#GB</span></li>
@@ -84,7 +84,7 @@
                     
                     <cfloop query="prc.planDataShared">
                       <div class="info <cfif #prc.planDataShared.DataLimitGB# eq 2 or #prc.planDataShared.DataLimitGB# eq 3>featured</cfif>">
-                        <a href="##">
+                        <a>
                           <h3><span>#prc.planDataShared.DetailTitle#</span></h3>
                           <ul>
                             <li class="large">Total Data Included:<span>#prc.planDataShared.DataLimitGB#GB</span></li>
