@@ -9,7 +9,7 @@
       <input type="hidden" name="HasExistingPlan" value="No" />
 
       <section class="content plans">
-        <cfif len(rc.carrierResponseMessage)>
+        <cfif isdefined("rc.carrierResponseMessage") and len(rc.carrierResponseMessage)>
           <div class="bs-callout bs-callout-error">
             <h4>#rc.carrierResponseMessage#</h4>
           </div>
