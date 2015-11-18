@@ -70,7 +70,7 @@
 	</cffunction>
 	
 	<cffunction name="getStepNameDescription" returnType="string" access="private" > 
-		<cfargument name="stepName" type="numeric" required="true" />
+		<cfargument name="stepName" type="any" required="true" />
 		
 		<cfswitch expression="#arguments.stepName#">
 			<cfcase value="0">
