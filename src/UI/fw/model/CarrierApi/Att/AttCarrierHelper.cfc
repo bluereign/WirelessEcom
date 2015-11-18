@@ -15,7 +15,7 @@
 		Helper Functions		
 	 --------------------------------------------------------------------------------------------------->
 	 
-	<cffunction name="conflictsResolvable" output="false" access="public" returntype="boolean">
+	<cffunction name="conflictsResolvable" output="false" access="public" returntype="string">
 		<cfargument name="carrierid" type="numeric" required="true" > 
 		<cfargument name="subscriberNumber" type="string" required="true" > 
 		<cfargument name="productId" type="numeric" required="false" > 
@@ -46,14 +46,17 @@
 				<cfif local.io.subscriberNumber is arguments.subscriberNumber AND local.io.ImeiType is local.imeiType>
 					<!--- If there are conflicts and the conflicts ARE NOT resolvable return FALSE --->
 					<cfif local.io.hasConflicts and not local.io.conflictsResolvable>
-						<cfreturn false />
+						<cfreturn "false" />
+					</cfif>
+					<cfif local.io.hasConflicts and local.io.conflictsResolvable>
+						<cfreturn "true" />
 					</cfif>
 				</cfif>
 			</cfloop>
 		</cfif>
 		
 		<!--- If it's not found then there are no incompatibleOffers so they are resolveable --->
-		<cfreturn true />
+		<cfreturn "notfound" />
 		
 	</cffunction>
 		
