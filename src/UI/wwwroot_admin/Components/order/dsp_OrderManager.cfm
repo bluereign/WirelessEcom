@@ -985,12 +985,54 @@
                     session.order = Order;
                     
                     rc.submitOrderRequest = carrierHelper.getSubmitCompletedOrderRequest(argumentcollection = local.args_complete);
+                    
+		/*<cfloop from="1" to="#arraylen(wirelessLines)#" index="i">
+			<cfset local.warrantyId = wirelessLines[i].getLineWarranty().getProductId() />
+			<cfset local.qWarranty = application.model.Warranty.getById( local.warrantyId ) />
+			<cfif local.qWarranty.companyname is "Apple">
+				<cfreturn true /><!--- it only takes one! --->
+			</cfif>
+		</cfloop>*/
+                    
                     if (structIsEmpty(rc.submitOrderRequest)) {
                     	message = "SubmitOrder record not found - activation not possible";
                     	break;
                     }
                     rc.submitOrderRequest.carrierId = form.carrier;
                     rc.submitCompletedOrderResponse = carrierFacade.submitCompletedOrder(argumentCollection = rc.submitOrderRequest);
+                    
+                    wirelessLines = Order.getWirelessLines();
+                    i = arrayLen(wirelessLines);
+                    lineFailures = 0;
+                    
+		 			while(i gt 0){
+		 				lineSuccess = rc.submitCompletedOrderResponse.isLineActivationSuccessful(i);
+		 				if ( lineSuccess eq 'true' )
+								{
+									wirelessLines[i].setActivationStatus(2); //Success
+				  					wirelessLines[i].save();
+				  					linesActivatedSuccessfully++;
+								}
+						else{
+							wirelessLines[i].setActivationStatus(4); //Failure
+				  			wirelessLines[i].save();
+				  			lineFailures = lineFailures + 1;
+						}
+						i = i-1;
+		 			}
+		 			
+		 			wirelessAccount = order.getWirelessAccount();
+					wirelessAccount.setActivationStatusByLineStatus();
+					wirelessAccount.save();
+		 			
+		 			if (lineFailures eq 0) // If no lines failed then change order status
+					{
+						order.setStatus(3); //Order ready for weblink
+					}
+					
+					order.save();
+		 			
+                    
                     /*message = "IS ACTIVATED = " & rc.submitCompletedOrderResponse.getResult() & "  REASON = " & rc.submitCompletedOrderResponse.getResultDetail();*/
                     if (rc.submitCompletedOrderResponse.isActivationSuccessful()) {
                     	message = "All activations were sucessful";
