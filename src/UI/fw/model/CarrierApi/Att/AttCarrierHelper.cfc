@@ -24,22 +24,22 @@
 		<cfset var local = structNew() />
 		
 		<!--- Used passed productid to retrieve the IMEI type --->
-		<!---<cfif structKeyExists(arguments,"imeiType") >
+		<cfif structKeyExists(arguments,"imeiType") >
 			<cfset local.imeiType = arguments.ImeiType />
 		<cfelseif structKeyExists(arguments,"productid") >
 			<cfset local.qphone = application.model.Phone.getByFilter(idList = arguments.productid) />
 			<cfif local.qphone.recordcount is 1 and local.qphone.ImeiType is not "">
 					<cfset local.imeiType = local.qphone.ImeiType />
 			</cfif>
-		</cfif>--->
+		</cfif>
 		
-		<cfif structKeyExists(arguments,"imeiType")>
+<!---		<cfif structKeyExists(arguments,"imeiType")>
 			<cfset local.imeiType = arguments.imeiType />
 		</cfif>
 		<cfif structKeyExists(arguments,"productInfo")>		
 			<cfset local.productInfo = getGetProductInfo( argumentCollection = arguments ) />
 			<cfset local.imeiType = local.productInfo.imeiType />
-		</cfif>
+		</cfif>--->
 		
 		<cfif isdefined("session.carrierfacade.accountResp.IncompatibleOffers")>
 			<cfloop array="#session.carrierfacade.accountResp.IncompatibleOffers#" index="local.io">

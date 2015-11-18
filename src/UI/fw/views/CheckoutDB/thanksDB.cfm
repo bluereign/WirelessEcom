@@ -181,9 +181,7 @@
 			
 		})
 		
-		$('#goHome').click( function() {
-			alert("Clear Cart");
-			
+		$('#goHome').click( function() {			
 			$.ajax({
 					cache: false,
 					type: "POST",
