@@ -31,7 +31,7 @@
 		<cfif arguments.lineNo LE arraylen(local.resp.OrderResults)>
 			<cfset local.result = local.resp.OrderResults[arguments.LineNo] />
 			<cfif isdefined("local.result.stepName") and isdefined("local.result.processingComplete") and isdefined("local.result.ExceptionInformation") >
-				<cfif local.result.StepName is 3 and ProcessingComplete is "Yes">
+				<cfif local.result.StepName is 3 and local.result.ProcessingComplete is "Yes">
 					<cfset local.isSuccessful = true />
 				</cfif>
 			</cfif>
