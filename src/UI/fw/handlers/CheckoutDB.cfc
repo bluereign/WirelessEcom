@@ -1174,7 +1174,7 @@
 			<cfset application.model.checkoutHelper.clearCheckOut() />
 			<cfset session.order = "" />
 			<cfset session.carrierDocsGenerated = "false">
-			<script >
+			<cfscript >
 			 // first store the zipcode in prc.scope.
 			 // prc.zipcode = session.cart.getZipcode();
 			
@@ -1193,7 +1193,7 @@
 			  //session.cart.setZipcode(prc.zipcode);
 			
 			  rc.cartLineNumber = request.config.otherItemsLineNumber;
-			</script>
+			</cfscript>
 		    
 			
 			<cfset session.orderProcessed = "false" />

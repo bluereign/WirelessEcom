@@ -46,6 +46,31 @@
 	<cfset request.p.productId = request.p.product_id />
 </cfif>
 
+<cfif structKeyExists(session, 'orderProcessed') and session.orderProcessed eq "true" >
+    
+	<cfscript>
+	
+	  // remove carrierObj from session: 
+	  structDelete(session, 'carrierObj', true);
+	  structDelete(session,"hasDeclinedDeviceProtection", true);
+	  structDelete(session,"listRequiredServices", true);
+	
+	  // reinitialize the cart
+	  session.cart = createObject('component','cfc.model.cart').init();
+	  session.cartHelper = createObject('component','cfc.model.carthelper').init();
+	  session.dBuilderCartFacade = createObject('component', 'fw.model.shopping.dbuilderCartFacade').init();
+	
+	</cfscript>
+	
+	<cfset application.model.checkoutHelper.clearCart() />
+	<cfset application.model.checkoutHelper.clearCheckOut() />
+	
+	<cfset session.order = "" />
+	<cfset session.carrierDocsGenerated = "false">
+    <cfset session.orderProcessed = "false" />
+    
+</cfif>	
+
 <cfswitch expression="#request.p.do#">
 
 	<cfcase value="incompatibleType">
