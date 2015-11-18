@@ -41,9 +41,14 @@
 			<!--- loop thru the orderResult.orderResults --->
 			<cfif isDefined("local.resp.orderResults")>
 				<cfloop array="#local.resp.orderResults#" index="local.or">
+					<cfif isDefined("local.or.StepName")>
+						<cfset local.stepName = local.or.stepName />
+					<cfelse>
+						<cfset local.stepName = "N/A" />
+					</cfif>	
 					<cfset local.message = structNew() />
-					<cfset local.message.stepName = local.or.StepName />
-					<cfset local.message.stepNameDescription = getStepNameDescription(local.or.StepName) />
+					<cfset local.message.stepName = local.stepName />
+					<cfset local.message.stepNameDescription = getStepNameDescription(local.StepName) />
 					<cfset local.message.processingComplete = local.or.processingComplete />
 					<cfif isdefined("local.or.exceptionInformation") >
 						<cfset local.message.subscriberNumber = getFormattedSubscriberNumber(local.or.identifier, deserializeJson(local.qSubmitCompletedOrder.orderEntry)) />
