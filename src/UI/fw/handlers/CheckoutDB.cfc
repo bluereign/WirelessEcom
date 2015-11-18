@@ -1031,10 +1031,14 @@
 				
 				<cfset order.save() />
 			</cfif>
-
+			
 			<cfset application.model.checkoutHelper.markStepCompleted('payment') />
 			
-			<cfset setNextEvent('checkoutDB/orderCarrierProcessing') />
+			<cfif order.getCarrierID() eq '109' and order.getActivationType() eq 'u'>
+				<cfset setNextEvent('checkoutDB/orderCarrierProcessing') />
+			<cfelse>
+				<cflocation url="/index.cfm/go/checkout/do/thanks/" addtoken="false" />
+			</cfif>
 		<cfelse>
 			<!--- todo: replace with payment declined page --->
 			<cflocation url="/index.cfm/go/checkout/do/error/" addtoken="false" />
