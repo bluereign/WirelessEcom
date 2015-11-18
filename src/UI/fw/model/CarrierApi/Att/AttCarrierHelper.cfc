@@ -230,9 +230,49 @@
 				<cfloop array="#session.carrierFacade.IncompatibleOfferRequest.additionalOffers#" index="local.ao">
 					<cfif local.ao.action is "A" or local.ao.action is "R">
 						<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.ao) />
+						<cfif ao.action is "A">
+							<cfset local.newCarrierBillCode = ao.action.code />
+						</cfif>
 					</cfif>
 				</cfloop>
-			</cfif>		
+			</cfif>
+			
+			<!--- Check to see if the subscriber already has the serviceBillCode for the new plan --->
+			<cfif isDefined("local.newCarrierBillCode")>
+				<cfquery name="QServiceCode" Datasource="wirelessadvocates"	>
+					SELECT r.serviceBillCode
+					  FROM [catalog].[vRateplanDeviceServiceATT] r 
+					  JOIN [catalog].dn_phones p 
+					    ON r.DeviceGuid = p.DeviceGuid 
+					  JOIN [catalog].ServiceMaster sm
+					    ON sm.ServiceGUID            = r.ServiceGuid
+					   AND sm.ServiceMasterGroupGuid = '6AA3E02E-7F7E-42C1-A838-844E5F2B5EF4'  <!---Guid for 'Share Plan Device Fee' Group--->
+					WHERE r.RatePlanBillCode = <cfqueryparam  cfsqltype="cf_sql_varchar" value="#local.newCarrierBillCode#" >   
+					   AND p.gerssku = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.cartLines[arguments.LineNo].getPhone().getGersSKu#" > 					
+<!---						SELECT * FROM [catalog].[vRateplanDeviceServiceATT] r 
+						INNER JOIN catalog.dn_phones p ON r.DeviceGuid = p.DeviceGuid 
+						WHERE RatePlanBillCode = <cfqueryparam  cfsqltype="cf_sql_varchar" value="#local.newCarrierBillCode#" >   
+						AND gerssku = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.cartLines[arguments.LineNo].getPhone().getGersSKu#" > 
+--->				</cfquery>
+				<cfif qServiceCode.recordcount>
+					<!--- Search Additional Offerings for this code --->
+					<cfset local.ServiceBillCodeFound = false />
+					<cfloop array="#local.subscriber.AdditionalOfferings#" index="local.sca">
+						<cfif local.sca.code is qServiceCode.ServiceBillCode>
+							<cfset local.ServiceBillCodeFound = true /><!--- subscriber already has this serviceBillCode --->
+						</cfif>
+					</cfloop>
+					<!--- If not found add it to additional offerings --->
+					<cfif not local.serviceBillCodeFound>
+						<cfset local.newServiceCode = structNew() />
+						<cfset local.newServiceCode.Action = 'A' />
+						<cfset local.newServiceCode.Code = qServiceCode.ServiceBillCode />
+						<cfset local.newServiceCode.TypeCode = 'P' />
+						<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.newServiceCode) />
+					</cfif>
+				</cfif>
+			</cfif>
+					
 		<cfelse><!--- if not changing plans then check to see if there are additional offerings from the incompatible offers in the accountResp --->	
 			
 			<cfif isdefined("session.carrierFacade.accountResp.IncompatibleOffers")>
@@ -245,20 +285,15 @@
 						<!---<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.io.items) />--->
 					</cfif>
 				</cfloop>
-			</cfif>
-			
+			</cfif>			
 		</cfif>
-		
-		
-		
 		
 		<!--- determine the appropriate upgradeQualificationDetails to use --->
 		<cfloop array="#arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications.qualificationDetails[1].BaseOfferQualificationDetails#" index="local.boqd">
 			<cfif local.boqd.planIdentifier is local.subscriberPaymentPlan.planIdentifier>
 				<cfset local.orderItem.UpgradeQualification = local.boqd />
 			</cfif>
-		</cfloop>
-		
+		</cfloop>		
 		
 		<cfset local.Imei = local.wirelessLines[arguments.LineNo].getImei() />
 		<cfset local.Sim = local.wirelessLines[arguments.LineNo].getSim() />
@@ -270,8 +305,7 @@
 		</cfif>
 		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.deviceInfo.imei = local.Imei />
 		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.deviceInfo.sim = local.Sim />
-		<cfreturn local.orderItem />
-		
+		<cfreturn local.orderItem />		
 		
 	</cffunction>
 	

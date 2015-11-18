@@ -425,7 +425,19 @@
 			} />
 			<cfset saveSubmitOrder(argumentCollection = local.saveIncompatibleOfferArgs) />
 		</cfif>
-		
+		<!--- Save Finance Agreement --->
+		<cfif isdefined('session.carrierfacade.FinanceAgreementRequest') and isdefined('session.carrierfacade.FinanceAgreementResp')>
+			<cfset local.FinanceAgreementRequest = serializeJSonAddReferenceNumber(session.carrierFacade.FinanceAgreementRequest) />
+			<cfset local.FinanceAgreementResp = serializeJSonAddReferenceNumber(session.carrierFacade.FinanceAgreementResp) />
+			<cfset local.saveFinanceAgreementArgs = {
+				carrierId = 109,
+				orderId = session.order.getOrderId(),
+				orderType = "FinanceAgreement",
+				orderEntry = "#local.FinanceAgreementRequest#",
+				orderResult = "#local.FinanceAgreementResp#"
+			} />
+			<cfset saveSubmitOrder(argumentCollection = local.saveFinanceAgreementArgs) />
+		</cfif>
 		
 		<cfreturn processResponse(local.carrierResponse) />			
 	</cffunction>	
