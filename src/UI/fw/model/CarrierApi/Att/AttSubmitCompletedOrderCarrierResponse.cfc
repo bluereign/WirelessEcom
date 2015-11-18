@@ -21,6 +21,25 @@
 		<cfreturn local.isSuccessful />
 	</cffunction>	
 	
+	<cffunction name="isLineActivationSuccessful" returnType="boolean" access="public" > 
+		<cfargument name="LineNo" type="numeric" required="true" /> 
+		<cfset var local = structNew() />
+		
+		<cfset local.isSuccessful = false />
+		<cfset local.resp = getResponse() />
+		
+		<cfif arguments.lineNo LE arraylen(local.resp.OrderResults)>
+			<cfset local.result = local.resp.OrderResults[arguments.LineNo] />
+			<cfif isdefined("local.result.stepName") and isdefined("local.result.processingComplete") and isdefined("local.result.ExceptionInformation") >
+				<cfif local.result.StepName is 3 and ProcessingComplete is "Yes">
+					<cfset local.isSuccessful = true />
+				</cfif>
+			</cfif>
+		</cfif>
+		
+		<cfreturn local.isSuccessful />
+	</cffunction>	
+	
 	<cffunction name="getActivationDetail" returnType="array" access="public" > 
 		<cfargument name="orderid" type="numeric" required="true" />
 		
