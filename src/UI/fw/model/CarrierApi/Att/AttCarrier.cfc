@@ -427,6 +427,7 @@
 		</cfif>
 		<!--- Save Finance Agreement --->
 		<cfif isdefined('session.carrierfacade.FinanceAgreementRequest') and isdefined('session.carrierfacade.FinanceAgreementResp')>
+			<cfset session.carrierFacade.FinanceAgreementResp.FinanceAgreement = "Data removed to save space" />
 			<cfset local.FinanceAgreementRequest = serializeJSonAddReferenceNumber(session.carrierFacade.FinanceAgreementRequest) />
 			<cfset local.FinanceAgreementResp = serializeJSonAddReferenceNumber(session.carrierFacade.FinanceAgreementResp) />
 			<cfset local.saveFinanceAgreementArgs = {
