@@ -302,15 +302,13 @@
           // IncompatibleOffers() arguments
           local.args_incompatibleOffers = {
             carrierId = prc.productData.carrierId,
-            productId = prc.productData.productId,
             SubscriberNumber = prc.subscriber.getNumber(),
+            ImeiType = prc.productData.ImeiType,
             changePlan = true,
             planId = rc.planid
           };
-          // ImeiType = prc.productData.ImeiType,
-
+          local.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
           local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
-          // prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
 
           if (!local.isConflictsResolvable) {
             rc.carrierResponseMessage = prc.productData.carrierName & " has determined that the plan you have selected is not compatible. Please pick a different plan.";
@@ -1035,35 +1033,61 @@
 
     <cfscript>
       
+      prc.subscribersInCart = "";
+      prc.subscribersIneligible = "";
+      prc.subscribersConflictsUnresolvable = "";
       local.eligibleLineCount = 0;
-      for (i = 1; i lte arrayLen(prc.subscribers); i++) {
-        
-        // local.args_incompatibleOffers = {
-        //   carrierId = prc.productData.carrierId,
-        //   SubscriberNumber = local.subscriber.getNumber(),
-        //   ProductId = prc.productData.productId
-        // };
 
-        // prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
-        // call this after they pick a plan (unless they keep exising).  Pass in subscriberNumber and changePlan = true.
+      // loop through cartlines and add any cartline's subscriber index to the prc.subscribersInCart list if the line has a device and a subscriber:
+      if (arrayLen(prc.cartLines)) {
+        for (i = 1; i lte arrayLen(prc.cartLines); i++) {
+          cartLine = prc.cartLines[i];
+          if ( cartLine.getPhone().hasBeenSelected() and cartLine.getSubscriberIndex() gte 1){
+            prc.subscribersInCart = listAppend(prc.subscribersInCart,cartLine.getSubscriberIndex());
+          }
+        }
+      }
+
+
+      // loop through subscribers to determine which ones are eligible with no unresolvable incompatibleOffer
+      for (i = 1; i lte arrayLen(prc.subscribers); i++) {
 
         local.subscriber = prc.subscribers[i];
 
-        local.args_incompatibleOffers = {
-          carrierId = prc.productData.carrierId,
-          SubscriberNumber = local.subscriber.getNumber(),
-          ImeiType = prc.productData.ImeiType
-        };
-        local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+        // if the subscriber is not eligible, don't need to call incompatibleOffer.  Only add to the eligibleLineCount if it's eligible and compatible. Add any ineligible subscriber to the prc.subscribersIneligible list.
+        if (!local.subscriber.getIsEligible()){
+         
+          prc.subscribersIneligible = listAppend(prc.subscribersIneligible,i);
+        
+        } else if ( !listFindNoCase(prc.subscribersInCart,i) ) {
+          
+          // call this after they pick a plan (unless they keep exising).  Pass in subscriberNumber and changePlan = true.
+          local.args_incompatibleOffers = {
+            carrierId = prc.productData.carrierId,
+            SubscriberNumber = local.subscriber.getNumber(),
+            ImeiType = prc.productData.ImeiType,
+            changePlan = false
+          };
+          local.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+          local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
 
-        if (prc.subscribers[i].getIsEligible() or !local.isConflictsResolvable) {
-         local.eligibleLineCount++;
+          if (local.isConflictsResolvable) {
+            local.eligibleLineCount++;
+          } else {
+            prc.subscribersConflictsUnresolvable = listAppend(prc.subscribersConflictsUnresolvable,i);
+          }
+
         }
 
-
       }
+
+
       if (local.eligibleLineCount eq 0) {
-        prc.warningMessage = "This account has no lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.carrierLogin')#/cartLineNumber/#rc.cartLineNumber#'>Please verify your account.</a>";
+        if (listLen(prc.subscribersInCart)) {
+          prc.warningMessage = "This account has no additional lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.orderreview')#'>Click here to review your cart and remove items not needed.</a>";
+        } else {
+          prc.warningMessage = "This account has no lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.carrierLogin')#/cartLineNumber/#rc.cartLineNumber#'>Please verify your account.</a>";
+        }  
         prc.displayBackButton = true;
       }
 
