@@ -128,22 +128,36 @@
 		<cfreturn local.subscriberPaymentPlans />	
 	</cffunction>
 	
+	<!--- grab the SubmitOrder record from the database and remove any lines that are already successful --->	
 	<cffunction name="getSubmitCompletedOrderRequest" output="false" access="public" returntype="struct">
 		<cfset var local = structNew() />
 		<cfset local.socr = structNew() />
 		
+		<!--- read in the ordersubmit orderEntry field for the database --->
 		<cfquery name="qOrderSubmission" datasource="wirelessadvocates" maxrows="1">
 			SELECT OrderEntry FROM [service].[OrderSubmissionLog] 
 			WHERE orderid = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.orderid#" > 
 			and orderType = 'SubmitOrder'
 		</cfquery>
 		
+		<!--- if found, deserialize the saved order entry into a struct --->
 		<cfif qOrderSubmission.recordcount is not 0>
-			<cfreturn baseCarrier.deserializeResponse(#qOrderSubmission.OrderEntry#) />
+			<cfset local.socr = baseCarrier.deserializeResponse(#qOrderSubmission.OrderEntry#) />
 		<cfelse>
 			<cfreturn structNew() />
-		</cfif>			
+		</cfif>
 		
+		<!--- create the order and loop thru wireless lines (backwards) eliminating lines in the orderSubmit that have been already successfully activated --->
+		<cfset local.order = createObject('component', 'cfc.model.Order').init()/>
+		<cfset local.order.load(arguments.orderid) />
+		<cfset local.wirelessLines = local.order.getWirelessLines() />
+		<cfloop from="#arrayLen(local.wirelessLines)#" to="1" step="-1" index="local.wlNum" >
+			<cfif local.wirelessLines[local.wlNum].getActivationStatus() is 2>
+				<cfset arrayDeleteAt(local.socr.orderItems,local.wlNum) />
+			</cfif>
+		</cfloop>
+			
+		<cfreturn local.socr />
 	</cffunction>
 			
 	<cffunction name="getSubmitOrderRequest" output="false" access="public" returntype="struct">

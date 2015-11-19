@@ -1006,17 +1006,20 @@
                     lineFailures = 0;
                     
 		 			while(i gt 0){
-		 				lineSuccess = rc.submitCompletedOrderResponse.isLineActivationSuccessful(i);
-		 				if ( lineSuccess eq 'true' )
-								{
-									wirelessLines[i].setActivationStatus(2); //Success
-				  					wirelessLines[i].save();
-				  					linesActivatedSuccessfully++;
-								}
-						else{
-							wirelessLines[i].setActivationStatus(4); //Failure
-				  			wirelessLines[i].save();
-				  			lineFailures = lineFailures + 1;
+		 				// don't check lines that are already successfully activated 
+		 				if (wirelessLines[i].getActivationStatus() != 2) {
+			 				lineSuccess = rc.submitCompletedOrderResponse.isLineActivationSuccessful(i);
+			 				if ( lineSuccess eq 'true' )
+									{
+										wirelessLines[i].setActivationStatus(2); //Success
+					  					wirelessLines[i].save();
+					  					linesActivatedSuccessfully++;
+									}
+							else{
+								wirelessLines[i].setActivationStatus(4); //Failure
+					  			wirelessLines[i].save();
+					  			lineFailures = lineFailures + 1;
+							}
 						}
 						i = i-1;
 		 			}

@@ -309,7 +309,9 @@
           };
           local.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
           local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
-
+		  if (local.isConflictsResolvable is "notfound") {
+		  	local.isConflictsResolvable = true;  
+		  }
           if (!local.isConflictsResolvable) {
             rc.carrierResponseMessage = prc.productData.carrierName & " has determined that the plan you have selected is not compatible. Please pick a different plan.";
             setNextEvent(
