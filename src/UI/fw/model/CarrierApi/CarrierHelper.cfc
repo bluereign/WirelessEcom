@@ -27,6 +27,13 @@
 		<cfreturn local.SubmitOrderRequest />
 	</cffunction>
 	
+	<cffunction name="getReSubmitOrderRequest" output="false" access="public" returntype="struct">
+		<cfset var local = structNew() />
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.ResubmitOrderRequest =  carrierObject(arguments.carrierId).getResubmitOrderRequest(argumentCollection = local.args) />	
+		<cfreturn local.ResubmitOrderRequest />
+	</cffunction>
+	
 	<cffunction name="getSubmitCompletedOrderRequest" output="false" access="public" returntype="struct">
 		<cfset var local = structNew() />
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />

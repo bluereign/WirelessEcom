@@ -446,6 +446,37 @@
 		<cfreturn processResponse(local.carrierResponse) />			
 	</cffunction>	
 	
+	<cffunction name="reSubmitOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse">
+		<cfset var local = structNew() />
+		<cfset local.orderid = arguments.orderid />
+		<cfset structDelete(arguments,"orderid") />
+		<cfset local.body = serializeJSonAddReferenceNumber(arguments) />
+		
+		<cfset local.saveSubmitOrderArgs = {
+			carrierId = 109,
+			orderId = local.orderId,
+			orderType = "SubmitOrder",
+			orderEntry = "#local.body#",
+			orderResult = ""
+		} />
+		
+		<!--- Save the submitOrder request before we call carrier just in case we have a non-retryable failure --->
+		<cfhttp url="#variables.CarrierServiceURL#/Order/Complete" method="POST" result="local.cfhttp">
+			<cfhttpparam type="header" name="Content-Type" value="application/json" />
+    		<cfhttpparam type="body" value="#local.body#">
+		</cfhttp>
+		
+		<!--- create the carrier response --->
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse').init() />
+		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
+		
+		<!--- Update the save submitOrder with the carrier response --->
+		<cfset local.saveSubmitOrderArgs.orderResult = serializeJSonAddReferenceNumber(local.carrierResponse.getResponse()) />
+		<cfset saveSubmitOrder(argumentCollection = local.saveSubmitOrderArgs) />	
+		
+		<cfreturn processResponse(local.carrierResponse) />			
+	</cffunction>	
+	
 	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitCompletedOrderCarrierResponse">
 		<cfset var local = structNew() />
 		

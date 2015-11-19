@@ -1004,6 +1004,7 @@
                     wirelessLines = Order.getWirelessLines();
                     i = arrayLen(wirelessLines);
                     lineFailures = 0;
+                    linesActivatedSuccessfully = 0;
                     
 		 			while(i gt 0){
 		 				// don't check lines that are already successfully activated 
@@ -1471,6 +1472,29 @@
 
 	<div class="message">
 		Order has been unlocked.
+	</div>
+</cfif>
+
+<cfif structKeyExists( form, "ResubmitOrder" )>
+	<cfscript>
+		
+		order = CreateObject( "component", "cfc.model.Order" ).init();
+		order.load( orderId );
+		
+		local.args_resubmitOrder = {
+			carrierId = order.getCarrierId(),
+			orderid = form.orderid
+		};
+		
+ 		local.resubmitOrderRequest = carrierHelper.getResubmitOrderRequest(argumentcollection = local.args_resubmitOrder);
+ 		local.resubmitOrderRequest.OrderId = form.orderid;
+        local.resubmitOrderRequest.carrierId = order.getCarrierId();
+        local.resubmitOrderResponse = carrierFacade.ResubmitOrder(argumentCollection = local.resubmitOrderRequest);
+
+	</cfscript>
+
+	<div class="message">
+		Order has been resubmitted.
 	</div>
 </cfif>
 

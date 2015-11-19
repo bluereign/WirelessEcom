@@ -20,7 +20,8 @@
 		<cfset local.args = duplicate(arguments.args) />
 		
 		<cfif not isdefined("local.args.ReferenceNumber") >
-			<cfset local.args.ReferenceNumber = application.model.dbuilderCartFacade.getReferenceNumber() />
+			<!---<cfset local.args.ReferenceNumber = application.model.dbuilderCartFacade.getReferenceNumber() />--->
+			<cfset local.args.ReferenceNumber = dbuilderCartFacade.getReferenceNumber() />
 		</cfif>
 		
 		<cfloop list="#stringFields#" index="local.s">

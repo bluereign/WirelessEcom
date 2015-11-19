@@ -1391,6 +1391,15 @@
 						<br/><cfoutput>#qOrderTypes.orderType#</cfoutput> OrderResult:<br/>
 						<cfdump var="#deserializeJson(local.qSubmitOrderRequest.orderResult)#" expand="false" />	
 					</cfif>
+					<cfif qOrderTypes.orderType is "SubmitOrder">
+						<form  name="resubmitOrderForm" id="resubmitOrderForm" action="" class="middle-forms" method="post">
+							<div align="center">
+								<input type="hidden" name="orderId" value="<cfoutput>#arguments.order.getOrderId()#</cfoutput>" />
+								<input type="submit" name="resubmitOrder" value="Resubmit Order" style="width:150px;" />
+							</div>
+						</form>							
+					</cfif>
+
 				</cfloop>
 			</cfsavecontent>	
 		

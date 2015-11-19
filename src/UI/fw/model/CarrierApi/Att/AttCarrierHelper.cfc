@@ -159,7 +159,29 @@
 			
 		<cfreturn local.socr />
 	</cffunction>
-			
+	<!--- grab the SubmitOrder record from the database and remove any lines that are already successful --->	
+
+	<cffunction name="getResubmitOrderRequest" output="false" access="public" returntype="struct">
+		<cfset var local = structNew() />
+		<cfset local.socr = structNew() />
+		
+		<!--- read in the ordersubmit orderEntry field for the database --->
+		<cfquery name="qOrderSubmission" datasource="wirelessadvocates" maxrows="1">
+			SELECT OrderEntry FROM [service].[OrderSubmissionLog] 
+			WHERE orderid = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.orderid#" > 
+			and orderType = 'SubmitOrder'
+		</cfquery>
+		
+		<!--- if found, deserialize the saved order entry into a struct --->
+		<cfif qOrderSubmission.recordcount is not 0>
+			<cfset local.socr = baseCarrier.deserializeResponse(#qOrderSubmission.OrderEntry#) />
+		<cfelse>
+			<cfreturn structNew() />
+		</cfif>
+		
+		<cfreturn local.socr />
+	</cffunction>
+				
 	<cffunction name="getSubmitOrderRequest" output="false" access="public" returntype="struct">
 		
 		<cfset var local = structNew() />

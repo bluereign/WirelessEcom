@@ -95,6 +95,18 @@
 		<cfreturn local.SubmitOrderResp />
 	</cffunction>
 	
+	<cffunction name="resubmitOrder" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset saveToSession(arguments,"ResubmitOrderRequest") />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.beginTicks = getTickCount() />
+		<cfset local.SubmitOrderResp =  carrierObject(arguments.carrierId).resubmitOrder(argumentCollection = local.args) />	
+		<cfset local.endTicks = getTickCount() />
+		<cfset local.SubmitOrderResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfset saveToSession(local.SubmitOrderResp,"ResubmitOrderResp") />
+		<cfreturn local.SubmitOrderResp />
+	</cffunction>
+	
 	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="any">
 		<cfset var local = structNew() />		
 		<cfset saveToSession(arguments,"SubmitCompletedOrderRequest") />		
