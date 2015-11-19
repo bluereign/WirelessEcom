@@ -231,7 +231,7 @@
 		<cfif structKeyExists(local.subscriber,"WAFLAG_PLANHASCHANGED")>
 			
 			<cfif local.subscriber.PlanInfo.Identifier is not "SDDVRP">
-				<cfset structDelete(local.orderITem.FinanceAgreementItem.AttDeviceOrderItem.subscriber,"planInfo") />
+				<cfset structDelete(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber,"planInfo") />
 				<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo = structNew() />
 				<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.Identifier = "SDDVRP" />
 				<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.RecurringFee = 0 />
@@ -247,8 +247,8 @@
 				<cfloop array="#session.carrierFacade.IncompatibleOfferRequest.additionalOffers#" index="local.ao">
 					<cfif local.ao.action is "A" or local.ao.action is "R">
 						<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.ao) />
-						<cfif ao.action is "A">
-							<cfset local.newCarrierBillCode = ao.action.code />
+						<cfif local.ao.action is "A">
+							<cfset local.newCarrierBillCode = local.ao.action.code />
 						</cfif>
 					</cfif>
 				</cfloop>

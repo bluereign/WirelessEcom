@@ -134,10 +134,13 @@
 			</cfif>
 		</cfif>
 		
+		<!--- find the subscriber in the session.carrierfacade.accountRequest --->
+		<cfset local.subscriber = AttCarrierHelper.FindSubscriber(arguments.subscriberNumber) />
+
 		<!--- If the changeplan and planId arguments are passed then check to see if the current plan is SDDVRP  --->
 		<cfif structKeyExists(arguments,"ChangePlan") and structKeyExists(arguments,"planId")> 
 			<cfset local.qPlan = application.model.plan.getByFilter(idList = arguments.planid) />
-			<cfset local.subscriber = AttCarrierHelper.FindSubscriber(arguments.subscriberNumber) />
+			<!---<cfset local.subscriber = AttCarrierHelper.FindSubscriber(arguments.subscriberNumber) />--->
 			<cfif not structIsEmpty(local.subscriber) >
 				<cfset session.carrierFacade.accountResp.Account.Subscribers[local.subscriber.subscriberIndex].WAFlag_PlanHasChanged = true />
 				<cfset local.newPlanInfo = structNew() />
