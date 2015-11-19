@@ -46,6 +46,13 @@
 	<cfset request.p.productId = request.p.product_id />
 </cfif>
 
+
+<cfif arrayLen(session.cart.getLines()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,session.cart.getCarrierId(),"|") and session.cart.getActivationType() contains 'finance'>
+	<cfset request.doRenderWorkflowController = false />
+<cfelse>
+	<cfset request.doRenderWorkflowController = true />
+</cfif>
+
 <cfswitch expression="#request.p.do#">
 
 	<cfcase value="incompatibleType">
@@ -155,7 +162,11 @@
 			<cflocation url="/index.cfm/go/#request.p.go#/do/#request.p.do##gaString#" addtoken="false" />
 		</cfif>
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
 		<cfset filterData = phoneFilter.getFilterData() />
 		<cfset filterHTML = trim(application.view.phoneFilter.renderFilterInterface(variables.filterData)) />
 		<cfset productHTML = trim(application.view.phone.browseProducts()) />
@@ -220,7 +231,11 @@
 
 		<cfset request.currentTopNav = 'phones.detail' />
 
-		<cfset workflowHTML = application.view.cart.renderWorkflowController() />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
 
 		<cfset productData = application.model.phone.getByFilter(idList = request.p.productId, allowHidden = true) />
 
@@ -332,7 +347,12 @@
 		<cfset request.p.activationType = request.p.formHidden_activationType />
 		<cfset request.currentTopNav = 'phones.compare' />
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
+		
 		<cfset productData = application.model.phone.getByFilter(idList = phoneFilter.getUserSelectedFilterValuesByFieldName('compareIDs')) />
 		<cfset productCompareData = application.model.phone.getCompareData(phoneFilter.getUserSelectedFilterValuesByFieldName('compareIDs')) />
 		<cfset productHTML = trim(application.view.phone.compareProducts(productData = variables.productData, productCompareData = variables.productCompareData)) />
@@ -361,7 +381,12 @@
 		<cfset request.p.activationType = request.p.formHidden_activationType />
 		<cfset request.currentTopNav = 'tablets.compare' />
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
+
 		<cfset productData = application.model.tablet.getByFilter(idList = tabletFilter.getUserSelectedFilterValuesByFieldName('compareIDs')) />
 		<cfset productCompareData = application.model.tablet.getCompareData(tabletFilter.getUserSelectedFilterValuesByFieldName('compareIDs')) />
 		<cfset productHTML = trim(application.view.tablet.compareProducts(productData = variables.productData, productCompareData = variables.productCompareData)) />
@@ -433,7 +458,12 @@
 	
 		</cfif>
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
+
 		<cfset filterData = planFilter.getFilterData() />
 		<cfset filterHTML = trim(application.view.planFilter.renderFilterInterface(variables.filterData)) />
 		<cfset planHTML = trim(application.view.plan.browsePlans()) />
@@ -465,7 +495,13 @@
 		<cfparam name="request.p.activeTab" type="string" default="specifications" />
 
 		<cfset request.currentTopNav = 'plans.details' />
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
+
 		<cfset planData = application.model.plan.getByFilter(idList = request.p.planId) />
 
 
@@ -489,7 +525,11 @@
 	<cfcase value="comparePlans">
 		<cfset request.currentTopNav = 'plans.compare' />
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
 
 		<cfif isDefined('request.p.planFilter.submit')>
 			<cfif isDefined('request.p.removeID')>
@@ -597,7 +637,11 @@
 			</cfif>
 		</cfif>
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
 
 		<!--- get device filter data --->
 		<cfset phoneSort = "SummaryTitle, CarrierName" />
@@ -708,7 +752,11 @@
 
 		<cfset request.currentTopNav = 'accessories.details' />
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
 
 		<cfset accessoryData = application.model.accessory.getByFilter(idList = request.p.product_id) />
 
@@ -737,7 +785,11 @@
 
 		<cfset request.currentTopNav = 'accessories.compare' />
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
 
 		<cfset accessoryData = application.model.accessory.getByFilter(idList = accessoryFilter.getUserSelectedFilterValuesByFieldName('compareIDs')) />
 		<cfset accessoryCompareData = application.model.accessory.getCompareData(accessoryFilter.getUserSelectedFilterValuesByFieldName('compareIDs')) />
@@ -774,7 +826,11 @@
 
 		</cfif>
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
 
 		<cfset filterData = tabletFilter.getFilterData() />
 		<cfset filterHTML = trim(application.view.tabletFilter.renderFilterInterface(variables.filterData)) />
@@ -829,7 +885,12 @@
 
 		<cfset request.currentTopNav = "tablets.detail">
 
-		<cfset workflowHTML = application.view.Cart.renderWorkflowController() />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
+
 		<cfset productData = application.model.Tablet.getByFilter(idList=request.p.productID) />
 
 		<cfif !variables.productData.recordCount>
@@ -874,7 +935,11 @@
 
 		</cfif>
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
 
 		<cfset filterData = dataCardAndNetBookFilter.getFilterData() />
 		<cfset filterHTML = trim(application.view.dataCardAndNetBookFilter.renderFilterInterface(variables.filterData)) />
@@ -928,7 +993,12 @@
 
 		<cfset request.currentTopNav = "dataCardsAndNetbooks.detail">
 
-		<cfset workflowHTML = application.view.Cart.renderWorkflowController() />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
+
 		<cfset productData = application.model.DataCardAndNetBook.getByFilter(idList=request.p.productID) />
 
 		<cfif !variables.productData.recordCount>
@@ -964,7 +1034,12 @@
 		<cfset request.p.activationType = request.p.formHidden_activationType>
 		<cfset request.currentTopNav = "dataCardsAndNetbooks.compare">
 
-		<cfset workflowHTML = application.view.Cart.renderWorkflowController()>
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
+
 		<cfset productData = application.model.DataCardAndNetBook.getByFilter(idList=dataCardAndNetBookFilter.getUserSelectedFilterValuesByFieldName("compareIDs"))>
 		<cfset productCompareData = application.model.DataCardAndNetbook.getCompareData(dataCardAndNetBookFilter.getUserSelectedFilterValuesByFieldName("compareIDs"))>
 		<cfset productHTML = application.view.DataCardAndNetbook.compareProducts(productData=productData,productCompareData=productCompareData)>
@@ -1011,7 +1086,12 @@
 			<cflocation addtoken="false" url="/index.cfm/go/#request.p.go#/do/#request.p.do#/" />
 		</cfif>
 
-		<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
+
 		<cfset filterData = prepaidFilter.getFilterData() />
 		<cfset filterHTML = trim(application.view.prePaidFilter.renderFilterInterface(variables.filterData)) />
 		<cfset productHTML = trim(application.view.prePaid.browseProducts()) />
@@ -1051,7 +1131,11 @@
 
 		<cfset request.currentTopNav = "phones.detail">
 
-		<cfset workflowHTML = application.view.Cart.renderWorkflowController()>
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
 
 		<cfset productData = application.model.PrePaid.getByFilter(idList=request.p.productid)>
 		<!--- TRV: logic to handle in the event that the user would up here on a datacardnetbook product --->
@@ -1101,7 +1185,12 @@
 		<cfset request.p.activationType = request.p.formHidden_activationType>
 		<cfset request.currentTopNav = "phones.compare">
 
-		<cfset workflowHTML = application.view.Cart.renderWorkflowController()>
+		<cfif request.doRenderWorkflowController>
+			<cfset workflowHTML = trim(application.view.cart.renderWorkflowController()) />
+		<cfelse>
+			<cfset workflowHTML = ""/>
+		</cfif>
+
 		<cfset productData = application.model.PrePaid.getByFilter(idList=prepaidFilter.getUserSelectedFilterValuesByFieldName("compareIDs"))>
 		<cfset productCompareData = application.model.PrePaid.getCompareData(prepaidFilter.getUserSelectedFilterValuesByFieldName("compareIDs"))>
 		<cfset productHTML = application.view.PrePaid.compareProducts(productData=productData,productCompareData=productCompareData)>
