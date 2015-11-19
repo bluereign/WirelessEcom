@@ -1054,14 +1054,8 @@ $j(document).ready(function($j) {
 
 					<!--- devicebuilder --->
 					<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only if qty on hand is greater than 0  and prc.productData.qtyOnHand gt 0 --->
-<<<<<<< HEAD
-					<!--- <cfif findNoCase('costco',request.config.ChannelName) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')> --->
-					<!--- <cfif listFindNoCase('costco,aafes',request.config.ChannelName) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')> --->
-					<cfif listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')>
-=======
 					<cfif !prc.channelConfig.GetVFDEnabled()>
 					<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')>
->>>>>>> 2bc2c138d147582da098f0058605a0e85618e428
 						<cfif prc.productData.qtyOnHand gt 0>
 							<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
 								<a class="ActionButton learnMoreBtn" href="##" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>

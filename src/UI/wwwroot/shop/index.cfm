@@ -46,14 +46,14 @@
 	<cfset request.p.productId = request.p.product_id />
 </cfif>
 
-<<<<<<< HEAD
+
 
 <cfif arrayLen(session.cart.getLines()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,session.cart.getCarrierId(),"|") and session.cart.getActivationType() contains 'finance'>
 	<cfset request.doRenderWorkflowController = false />
 <cfelse>
 	<cfset request.doRenderWorkflowController = true />
 </cfif>
-=======
+
 <cfif structKeyExists(session, 'orderProcessed') and session.orderProcessed eq "true" >
     
 	<cfscript>
@@ -77,8 +77,7 @@
 	<cfset session.carrierDocsGenerated = "false">
     <cfset session.orderProcessed = "false" />
     
-</cfif>	
->>>>>>> 2bc2c138d147582da098f0058605a0e85618e428
+</cfif>
 
 <cfswitch expression="#request.p.do#">
 
