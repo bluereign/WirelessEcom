@@ -245,7 +245,7 @@
 			
 			<cfif isdefined("session.carrierFacade.IncompatibleOfferRequest.additionalOffers")>
 				<cfloop array="#session.carrierFacade.IncompatibleOfferRequest.additionalOffers#" index="local.ao">					
-					<cfif isdefined("local.ao.action") and (local.ao.action is "A" or local.ao.action is "R")>
+					<cfif isdefined("local.ao.action.code") and (local.ao.action is "A" or local.ao.action is "R")>
 						<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.ao) />
 						<cfif local.ao.action is "A">
 							<cfset local.newCarrierBillCode = local.ao.action.code />

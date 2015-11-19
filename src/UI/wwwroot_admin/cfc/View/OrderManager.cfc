@@ -1387,8 +1387,10 @@
 					</cfstoredproc>		
 					<br/><cfoutput>#qOrderTypes.orderType#</cfoutput> OrderEntry:<br/>
 					<cfdump var="#deserializeJson(local.qSubmitOrderRequest.orderentry)#" expand="false" />	
-					<br/><cfoutput>#qOrderTypes.orderType#</cfoutput> OrderResult:<br/>
-					<cfdump var="#deserializeJson(local.qSubmitOrderRequest.orderResult)#" expand="false" />	
+					<cfif local.qSubmitOrderRequest.orderResult is not "">
+						<br/><cfoutput>#qOrderTypes.orderType#</cfoutput> OrderResult:<br/>
+						<cfdump var="#deserializeJson(local.qSubmitOrderRequest.orderResult)#" expand="false" />	
+					</cfif>
 				</cfloop>
 			</cfsavecontent>	
 		
