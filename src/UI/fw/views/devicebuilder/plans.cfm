@@ -9,6 +9,11 @@
       <input type="hidden" name="HasExistingPlan" value="No" />
 
       <section class="content plans">
+        <cfif isdefined("rc.carrierResponseMessage") and len(rc.carrierResponseMessage)>
+          <div class="bs-callout bs-callout-error">
+            <h4>#rc.carrierResponseMessage#</h4>
+          </div>
+        </cfif>
 
         <header class="main-header">
           <h1>Pick Your Plan and Data</h1>
@@ -60,7 +65,7 @@
                   
                   <cfloop query="prc.planData">
                     <div class="info">
-                      <a href="##">
+                      <a>
                         <h3><span>#prc.planData.DetailTitle#</span></h3>
                         <ul>
                           <li class="large"><span>#prc.planData.DataLimitGB#GB</span></li>
@@ -84,7 +89,7 @@
                     
                     <cfloop query="prc.planDataShared">
                       <div class="info <cfif #prc.planDataShared.DataLimitGB# eq 2 or #prc.planDataShared.DataLimitGB# eq 3>featured</cfif>">
-                        <a href="##">
+                        <a>
                           <h3><span>#prc.planDataShared.DetailTitle#</span></h3>
                           <ul>
                             <li class="large">Total Data Included:<span>#prc.planDataShared.DataLimitGB#GB</span></li>
@@ -110,6 +115,7 @@
         <cfif prc.showNewPlans>
           <div class="bs-callout bs-callout-warning switchWarning">
             <h4>Choosing a new plan will replace your existing plan</h4>
+            <p>Example: if you have an unlimted data plan and you choose a new plan you will lose your unlimited data.</p>
           </div>
         </cfif>
       </section>

@@ -30,6 +30,21 @@ font-weight: normal;
 		var $j = jQuery.noConflict();
 		var actType = $('#cartActivationType').val();
 		
+		var ms_ie = false;
+		var ua = window.navigator.userAgent;
+		var old_ie = ua.indexOf('MSIE ');
+		var new_ie = ua.indexOf('Trident/');
+
+		if ((old_ie > -1) || (new_ie > -1)) {
+    		ms_ie = true;
+		 }
+		if ( ms_ie ) {
+			$('#printButton').hide();
+		}
+		else {
+			$('#printButton').show();
+		}
+		
 		//Checkboxes not displayed are checked so that validation will pass
 		if ((actType.search("new") >= 0) ||(actType.search("addaline") >= 0) || (actType.search("finance") < 0) ){
 					//alert("Display agreeToContractDoc");
@@ -76,6 +91,13 @@ font-weight: normal;
 			}
 		})
 		
+		$('#agreeToContractDocInput').click( function() {
+			if(document.getElementById('agreeToContractDocInput').checked)
+			{
+				document.getElementById('agreeToContractDoc').click();
+			}
+		})
+
 		$('#agreeToContractDoc').click( function() {
 			$('#docClicked').val("agreeToContract");
 			if ($('#carrierID').val()=='42'){
@@ -90,6 +112,13 @@ font-weight: normal;
 			}
 		})
 		
+		$('#agreeToContractExtensionInput').click( function() {
+			if(document.getElementById('agreeToContractExtensionInput').checked)
+			{
+				document.getElementById('agreeToContractExtension').click();
+			}
+		})
+
 		$('#agreeToContractExtension').click( function() {
 			$('#docClicked').val("agreeToContractExtension");
 			if ($('#carrierID').val()=='42'){
@@ -104,6 +133,13 @@ font-weight: normal;
 			}
 		})
 		
+		$('#agreeToDevicePaymentPlanInput').click( function() {
+			if(document.getElementById('agreeToDevicePaymentPlanInput').checked)
+			{
+				document.getElementById('agreeToDevicePaymentPlan').click();
+			}
+		})
+
 		$('#agreeToDevicePaymentPlan').click( function() {
 			$('#docClicked').val("agreeToDevicePaymentPlan");
 			if ($('#carrierID').val()=='42'){
@@ -116,6 +152,14 @@ font-weight: normal;
 			}
 		})
 		
+
+		$('#agreeToCarrierTermsAndConditionsInput').click( function() {
+			if(document.getElementById('agreeToCarrierTermsAndConditionsInput').checked)
+			{
+				document.getElementById('agreeToCarrierTermsAndConditions').click();
+			}
+		})
+
 		$('#agreeToCarrierTermsAndConditions').click( function() {
 			$('#docClicked').val("agreeToCarrierTermsAndConditions");
 			if ($('#carrierID').val()=='42'){
@@ -127,6 +171,13 @@ font-weight: normal;
         $('#carrierDocHeader').html('AT&amp;T Terms &amp; Conditions');
 				$('#carrierDocEmbed').attr('src', $('#attTermsURL').val());
 				$('#confirmationPrint').attr('src', $('#attTermsURL').val());
+			}
+		})
+
+		$('#agreeToCustomerLetterInput').click( function() {
+			if(document.getElementById('agreeToCustomerLetterInput').checked)
+			{
+				document.getElementById('agreeToCustomerLetter').click();
 			}
 		})
 		
@@ -201,7 +252,7 @@ font-weight: normal;
     </header>
     <form id="app" name="carrierApplication" method="post" action="#event.buildLink('/CheckoutDB/processCarrierAgreements')#">
       <div class="right">
-        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
+        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">BACK</a>
         <button type="submit" class="btn btn-primary continue">Continue</button>
       </div>
       <h4>
@@ -209,7 +260,7 @@ font-weight: normal;
       </h4>
       <div class="form-group form-inline">
         <label>
-          <input type="checkbox" name="agreeToCustomerLetter" />
+          <input type="checkbox" name="agreeToCustomerLetter"  id="agreeToCustomerLetterInput" />
           <cfif session.cart.getCarrierId() eq 42>
             I HAVE READ AND AGREED TO THE TERMS AND CONDITIONS FOUND IN THE COSTCO WIRELESS CUSTOMER LETTER
             <cfelseif session.cart.getCarrierId() eq 109>	
@@ -222,7 +273,7 @@ font-weight: normal;
 			    <cfif session.cart.getActivationType() CONTAINS "New" or session.cart.getActivationType() CONTAINS "addaline" or session.cart.getActivationType() DOES NOT CONTAIN "finance">
 				    <h4><a href="##" id="agreeToContractDoc" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Two Year Customer Agreement</a></h4>
 				    <div class="form-group form-inline">
-					    <label><input class="form-control" type="checkbox" name="agreeToContract" />
+					    <label><input class="form-control" type="checkbox" name="agreeToContract" id="agreeToContractDocInput" />
 					    <cfif session.cart.getCarrierId() eq 42>
 						    I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
 						    LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
@@ -236,7 +287,7 @@ font-weight: normal;
 				    <cfif session.cart.getActivationType() DOES NOT CONTAIN "finance">		
 					    <h4><a href="##" id="agreeToContractExtension" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Two Year Customer Extension</a></h4>
 					    <div class="form-group form-inline">
-						    <label><input type="checkbox" name="agreeToContractExtension" />
+						    <label><input type="checkbox" name="agreeToContractExtension" id="agreeToContractExtensionInput" />
 						    <cfif session.cart.getCarrierId() eq 42>
 							    I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING AN EARLY TERMINATION FEE UP TO $350 PER LINE, 
 							    LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL 
@@ -252,7 +303,7 @@ font-weight: normal;
 		    <cfif session.cart.getActivationType() CONTAINS "finance">
 			    <h4><a href="##" id="agreeToDevicePaymentPlan" data-toggle="modal" data-target="##carrierDocModal">View Terms & Conditions of the #carrierName# Device Payment Plan</a></h4>
 			    <div class="form-group form-inline">		
-				    <label><input type="checkbox" name="agreeToDevicePaymentPlan" />
+				    <label><input type="checkbox" name="agreeToDevicePaymentPlan" id="agreeToDevicePaymentPlanInput" />
 				    <cfif session.cart.getCarrierId() eq 42>
 					    I HAVE READ AND AGREED TO THE #UCase(carrierName)# CUSTOMER AGREEMENT INCLUDING LIMITATIONS OF LIABILITY FOR SERVICE AND EQUIPMENT, 
 					    SETTLEMENT OF DISPUTES BY ARBITRATION INSTEAD OF JURY TRIAL, AS WELL AS THE TERMS OF MY PLAN AND ANY OPTIONAL SERVICES I HAVE AGREED TO PURCHASE.
@@ -284,7 +335,7 @@ font-weight: normal;
         </cfif>
 		    <h4><a href="##" id="agreeToCarrierTermsAndConditions" data-toggle="modal" data-target="##carrierDocModal">View #carrierName# Terms &amp; Conditions</a></h4>
 		    <div class="form-group form-inline">		
-			    <label><input type="checkbox" name="agreeToCarrierTermsAndConditions" />
+			    <label><input type="checkbox" name="agreeToCarrierTermsAndConditions" id="agreeToCarrierTermsAndConditionsInput" />
 			    <cfif session.cart.getCarrierId() eq 42>
 				    I HAVE READ AND AGREED TO THE #UCase(carrierName)# TERMS AND CONDITIONS FOR SERVICE AGREEMENT
 			    <cfelseif session.cart.getCarrierId() eq 109>	
@@ -293,7 +344,7 @@ font-weight: normal;
 			    </label>
 		    </div>
       <div class="right">
-        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">Back</a>
+        <a href="##" class="backBtn" onclick="window.location.href='/CheckoutDB/billShip'">BACK</a>
         <button type="submit" class="btn btn-primary continue">Continue</button>
       </div>
     </form>

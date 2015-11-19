@@ -31,8 +31,12 @@
 		<cfargument name="optionalDownPmtAmt" type="numeric" required="false" default="0.00" />
 		<cfargument name="monthlyPayment" type="numeric" required="false" default="0.00" />
 
+
 		<cfset var local = structNew() />
 		<cfset local.p =  structNew() />
+		
+		<!--- generate the checkout reference number if not already generated --->
+		<cfset generateReferenceNumber() />
 		
 		<cfif arguments.qty eq ''>
 			<cfset arguments.qty = 1 />
@@ -846,6 +850,7 @@
 	
 	<cffunction name="clearCart" access="public" returntype="string">
 		<cfset application.model.cartHelper.clearCart() />
+		<cfset structDelete(session,"cartFacade") />
 		<cfreturn "success" />
 	</cffunction>
 
@@ -1218,7 +1223,31 @@
 		<cfreturn local.nMonths />
 	</cffunction>
 
-	
+	<cffunction name="generateReferenceNumber" returntype="string">
+		<!--- creates a reference number based on the current carrier. This is a unique reference number--->
+        <cfset var local = structNew()>
+        <cfset local.ref = GetTickCount()>
+
+		<cfif structKeyExists(session,"cartFacade") and isDefined("session.cartFacade.ReferenceNumber")>
+			<cfreturn getReferenceNumber() />	
+		</cfif>
+		
+        <cfif session.cart.getCarrierId() eq "42">
+       		<Cfset local.ref = "WAC" & local.ref>
+        </cfif>
+		
+		<cfset saveToSession(local.ref,"ReferenceNumber") />
+
+        <cfreturn local.ref>
+	</cffunction>
+
+	<cffunction name="getReferenceNumber" returntype="string">
+		<cfif structKeyExists(session,"cartFacade") and isDefined("session.cartFacade.ReferenceNumber")>
+			<cfreturn session.cartFacade.ReferenceNumber />
+		<cfelse>
+			<cfset generateReferenceNumber() />
+		</cfif>
+	</cffunction>
 	
 	<!--- Save anything important to the cartfacade session storage struct --->
 	<cffunction name="saveToSession" returnType="void" access="private">

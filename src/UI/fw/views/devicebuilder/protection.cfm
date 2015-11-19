@@ -15,7 +15,7 @@
     <section class="content">
 
       <header class="main-header">
-        <h1>Payment, Protection &amp; Services Plans</h1>
+        <h1>Payment, Protection &amp; Services</h1>
         <p>The following services are available for your device based on your plan.</p>
       </header>
 
@@ -23,6 +23,7 @@
         <div class="right">
           <input type="hidden" name="cartLineNumber" value="#rc.cartLineNumber#" />
           <input type="hidden" name="hasDeclinedDeviceProtection" id="hasDeclinedDeviceProtection" value="0" />
+          
           <a href="#prc.prevStep#">BACK</a>
           <button type="button" class="btn btn-primary btnContinue" id="btnContinue" data-toggle="modal" data-target=""
             <cfif isDefined("prc.subscriber.downPayment") and prc.subscriber.downPayment gt 0 and rc.isDownPaymentApproved eq 0>
@@ -429,16 +430,22 @@
           var planIdentifier = selectedOption.val();
           var downPaymentPercent = selectedOption.attr('data-downPaymentPercent');
           var downPaymentAmount = selectedOption.attr('data-downPaymentAmount');
+          var optionalDownPayment = $('.optionalDownpayment').val();
+
           if (downPaymentPercent > 0) {
             $('##isOptionalDownPaymentAdded').prop('checked', false);
             $('.btnContinue').prop('disabled', true);
             $('##isOptionalDownPaymentAddedDiv').show();
-            $('##isOptionalDownPaymentAddedLabel').text('I Agree to the required CARRIER down payment of: $' + downPaymentAmount);
+            $('##isOptionalDownPaymentAddedLabel').text('I Agree to the down payment of: $' + downPaymentAmount);
           } else {
             $('##isOptionalDownPaymentAdded').prop('checked', true);
             $('.btnContinue').prop('disabled', false);
             $('##isOptionalDownPaymentAddedDiv').hide();
+            $('##isOptionalDownPaymentAddedLabel').text('I Agree to the required CARRIER down payment of: $' + downPaymentAmount);
           }
+          $('##isOptionalDownPaymentAdded').attr('data-downPaymentPercent',downPaymentPercent);
+          $('##isOptionalDownPaymentAdded').attr('data-downPaymentAmount',downPaymentAmount);
+          $('##isOptionalDownPaymentAdded').attr('dollar-amount',downPaymentAmount);
 
           onChangeHandler(protectionForm,protectionvalue);
         });

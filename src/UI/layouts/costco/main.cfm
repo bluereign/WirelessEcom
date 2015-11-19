@@ -63,7 +63,12 @@
 										<a href="/index.cfm/go/myAccount/do/view/" id="lnkMyAccount">Your Account</a>
 									</cfif>									
 								</cfif>
+<<<<<<< HEAD
 								<cfif arrayLen(session.cart.getLines()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,session.cart.getCarrierId(),"|") and session.cart.getActivationType() contains 'finance'>
+=======
+								
+								<cfif !channelConfig.GetVFDEnabled() and arrayLen(session.cart.getLines()) and listFindNoCase(listDeviceBuilderCarriers,session.cart.getCarrierId()) and session.cart.getActivationType() contains 'finance'>
+>>>>>>> 2bc2c138d147582da098f0058605a0e85618e428
 									<a href="/devicebuilder/orderreview" id="lnkMyCart">Your Cart<cfif isDefined('session.cart') and isStruct(session.cart) and application.model.cartHelper.zipCodeEntered()><cfset cartZipCode = session.cart.getZipCode()> ( #trim(variables.cartZipCode)# )</cfif></a>
 								<cfelse>
 									<a href="##" onClick="viewCart(); return false;" id="lnkMyCart">Your Cart<cfif isDefined('session.cart') and isStruct(session.cart) and application.model.cartHelper.zipCodeEntered()><cfset cartZipCode = session.cart.getZipCode()> ( #trim(variables.cartZipCode)# )</cfif></a>

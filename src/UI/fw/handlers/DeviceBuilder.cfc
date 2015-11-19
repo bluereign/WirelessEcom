@@ -19,8 +19,11 @@
   <cfset listCustomerTypesRequireLogin = "upgrade,addaline,upgradex,addalinex" />
   <cfset listActionsRequireLogin = "upgradeline,plans,protection,accessories,numberporting" /> <!--- orderreview --->
   <cfset listActivationTypes = "financed-24,financed-18,financed-12,upgrade" /> <!--- upgrade=2-year contract. TODO: determine what to do with new, upgrade, addaline  --->
+  
+  <!--- Creates the checkoutReferenceNumber --->
+  <cfset application.model.checkoutHelper.generateReferenceNumber() />
 
-
+  <cfset session.carrierDocsGenerated = "false"><!---Setting to false so that checkout can proceed to generate docs a second time --->
   <cffunction name="preHandler" returntype="void" output="false" hint="preHandler">
     <cfargument name="event">
     <cfargument name="rc">
@@ -89,8 +92,6 @@
         if ( !structKeyExists(rc,"finance") OR !len(trim(rc.finance)) OR !listFindNoCase(listActivationTypes,rc.finance) ) {
           relocate( prc.browseDevicesUrl );
         }
-
-        
 
         // 2. validate the type.
         // Make sure customer type exists.  If it does not, set it to upgrade.
@@ -165,6 +166,7 @@
           rc.cartLineNumber = prc.cartLinesCount + 1;
         }
 
+
         // 7. add phone to cart.
         cartArgs = {
           productType = "phone:" & prc.activationType,
@@ -175,7 +177,7 @@
         };
         // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
-      }
+      } // end if ( structKeyExists(rc,"pid") and isNumeric(rc.pid) and structKeyExists(rc,"finance") and structKeyExists(rc,"type") )
       // <end add device to cart
 
 
@@ -193,47 +195,46 @@
 
       
 
-      // if not adding an accessory from the order review page
-      if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
+      if (arrayLen(prc.cartLines)) {
 
-        if (arrayLen(prc.cartLines)) {
-          prc.cartLine = prc.cartLines[rc.cartLineNumber];
-          // prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
-          prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
-        } else {
-          relocate( prc.browseDevicesUrl );
+        // if not adding an accessory from the order review page
+        if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
+
+            prc.cartLine = prc.cartLines[rc.cartLineNumber];
+            // prc.device = session.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+            prc.device = application.model.dBuilderCartFacade.getDevice(cartLineNo = rc.cartLineNumber).cartItem;
+          // else if ( !listFindNoCase("devicebuilder.orderreview", event.getCurrentEvent()) ) {
+          //   relocate( prc.browseDevicesUrl );
+          // }
+
+          // GET CARTLINE DEVICE INFO (only if cart lines have length - which they may not in the Order Review page)
+          // Phone details and images:
+          // FIRST NEED TO PULL DEVICE FROM CARTLINE
+          if (!structKeyExists(prc,"productData")) {
+            prc.productData = application.model.phone.getByFilter(idList = prc.device.getProductId(), allowHidden = true);
+          }
+          if (!structKeyExists(prc,"productImages")) {
+           prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
+          }
+
+          if (prc.productData.carrierId eq prc.carrierIdAtt) {
+            prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
+          } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
+            prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
+          }
+
+          // UPDATE CUSTOMER TYPE FROM CART LINE ACTIVATION TYPE (FOR NAVIGATION, ETC):
+          // financed-24-upgrade
+
+          if (prc.cartLine.getCartLineActivationType() contains 'financed-') {
+            prc.financed = left(prc.cartLine.getCartLineActivationType(), 11);
+          } else {
+            prc.financed = "fullretail";
+          }
+
         }
 
-        // GET CARTLINE DEVICE INFO
-        // Phone details and images:
-        // FIRST NEED TO PULL DEVICE FROM CARTLINE
-        if (!structKeyExists(prc,"productData")) {
-          prc.productData = application.model.phone.getByFilter(idList = prc.device.getProductId(), allowHidden = true);
-        }
-        if (!structKeyExists(prc,"productImages")) {
-         prc.productImages = prc.productService.displayImages(prc.productData.deviceGuid, prc.productData.summaryTitle, prc.productData.BadgeType);
-        }
-
-        if (prc.productData.carrierId eq prc.carrierIdAtt) {
-          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
-        } else if (prc.productData.carrierId eq prc.carrierIdVzw) {
-          prc.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
-        }
-
-
-        // UPDATE CUSTOMER TYPE FROM CART LINE ACTIVATION TYPE (FOR NAVIGATION, ETC):
-        // financed-24-upgrade
-        
-
-        if (prc.cartLine.getCartLineActivationType() contains 'financed-') {
-          prc.financed = left(prc.cartLine.getCartLineActivationType(), 11);
-        } else {
-          prc.financed = "fullretail";
-        }
-
-
-      }
-
+      } 
 
 
       // UPDATE CARTLINE WITH SUBSCRIBER INDEX:
@@ -289,7 +290,7 @@
           cartLineNumber = rc.cartLineNumber
         };
         // session.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
-        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
+        // application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
 
         // change plans: Call incompatibleOffer
         if ( prc.productData.carrierId eq prc.carrierIdAtt ) {
@@ -297,19 +298,31 @@
           prc.subscriberIndex = prc.cartLine.getSubscriberIndex();
           prc.subscriber = prc.subscribers[prc.subscriberIndex];
 
-          // 
+
+          // IncompatibleOffers() arguments
           local.args_incompatibleOffers = {
             carrierId = prc.productData.carrierId,
-            productId = prc.productData.productId,
             SubscriberNumber = prc.subscriber.getNumber(),
+            ImeiType = prc.productData.ImeiType,
             changePlan = true,
             planId = rc.planid
           };
+          local.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+          local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+		  if (local.isConflictsResolvable is "notfound") {
+		  	local.isConflictsResolvable = true;  
+		  }
+          if (!local.isConflictsResolvable) {
+            rc.carrierResponseMessage = prc.productData.carrierName & " has determined that the plan you have selected is not compatible. Please pick a different plan.";
+            setNextEvent(
+              event="devicebuilder.plans",
+              persist="carrierResponseMessage,cartLineNumber");
+          }
 
-          prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
         }
 
         // call this after they pick a plan (unless they keep exising).  Pass in subscriberNumber and changePlan = true.
+        application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
       if ( structKeyExists(rc,"HasExistingPlan")  ) {
@@ -414,6 +427,7 @@
         prc.cartLine.setPaymentPlanDetail(local.paymentPlanDetail);
 
       }
+  
 
       if (  structKeyExists(prc,"cartLine") and  ( !structKeyExists(prc,"paymentoption") OR !len(trim(prc.paymentoption)) )  ) {
         
@@ -551,18 +565,20 @@
         application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
 
-      // get cartline accessories
-      cartArgs = {
+      if (arrayLen(prc.cartLines)) {    
+        // get cartline accessories
+        cartArgs = {
           line = rc.cartLineNumber,
           type = "accessory"
         };
-      prc.aAccessories = session.cartHelper.lineGetAccessoriesByType(argumentCollection = cartArgs);
-      prc.selectedAccessories = "";
-      if (arrayLen(prc.aAccessories)) {
-        for (prc.iAccessory = 1; prc.iAccessory lte arrayLen(prc.aAccessories); prc.iAccessory++) {
-          prc.thisAccessory = prc.aAccessories[prc.iAccessory];
-          prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID());
-          prc.selectedAccessories = listAppend(prc.selectedAccessories, prc.selectedAccessory.productId);
+        prc.aAccessories = session.cartHelper.lineGetAccessoriesByType(argumentCollection = cartArgs);
+        prc.selectedAccessories = "";
+        if (arrayLen(prc.aAccessories)) {
+          for (prc.iAccessory = 1; prc.iAccessory lte arrayLen(prc.aAccessories); prc.iAccessory++) {
+            prc.thisAccessory = prc.aAccessories[prc.iAccessory];
+            prc.selectedAccessory = application.model.accessory.getByFilter(idList = prc.thisAccessory.getProductID());
+            prc.selectedAccessories = listAppend(prc.selectedAccessories, prc.selectedAccessory.productId);
+          }
         }
       }
       // <end accessories
@@ -597,7 +613,7 @@
             prc.subscriber.phoneNumber = stringUtil.formatPhoneNumber(trim(prc.subscriber.getNumber()));
             prc.tallyboxHeader = "Upgrading " & prc.subscriber.phoneNumber;
           } else {
-            prc.tallyboxHeader = "Configuring";
+            prc.tallyboxHeader = "Upgrading";
           }
         }
         // <end selected line and subscribers
@@ -742,7 +758,7 @@
 
 
       // Omit TallyBox logic If updating an accessory from orderreview
-      if (rc.cartLineNumber neq request.config.otherItemsLineNumber) {
+      if ( arrayLen(prc.cartLines) and rc.cartLineNumber neq request.config.otherItemsLineNumber) {
         // <TALLY BOX
         prc.financeproductname = prc.productService.getFinanceProductName(carrierid = prc.productData.CarrierId);
         prc.tallyboxDueNow = 0;
@@ -767,16 +783,19 @@
                   prc.tallyboxFinanceTitle = prc.financeproductname & " 24";
                   prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 30 Months";
                   prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+                  prc.tallyboxFinanceMonths = 30;
                   break;
                 case "financed-18":
                   prc.tallyboxFinanceTitle = prc.financeproductname & " 18";
                   prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
                   prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice18;
+                  prc.tallyboxFinanceMonths = 24;
                   break;
                 case "financed-12":
                   prc.tallyboxFinanceTitle = prc.financeproductname & " 12";
                   prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 20 Months";
                   prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice12;
+                  prc.tallyboxFinanceMonths = 20;
                   break;
               }
 
@@ -784,6 +803,7 @@
               prc.tallyboxFinanceTitle = prc.financeproductname;
               prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly for 24 Months";
               prc.tallyboxFinanceMonthlyDueAmount = prc.productData.FinancedMonthlyPrice24;
+              prc.tallyboxFinanceMonths = 24;
             }
 
             break;
@@ -791,14 +811,14 @@
           case "fullretail":
             prc.tallyboxFinanceMonthlyDueToday = prc.productData.FinancedFullRetailPrice;
             prc.tallyboxFinanceTitle = "Full Retail";
-            prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
+            prc.tallyboxFinanceMonthlyDueTitle = "";
             prc.tallyboxFinanceMonthlyDueAmount = 0;
             break;
 
           case "2yearcontract":
             prc.tallyboxFinanceMonthlyDueToday = prc.productData.price_upgrade;
             prc.tallyboxFinanceTitle = "2 Year Contract";
-            prc.tallyboxFinanceMonthlyDueTitle = "Due Monthly";
+            prc.tallyboxFinanceMonthlyDueTitle = "";
             prc.tallyboxFinanceMonthlyDueAmount = 0;
             break;
 
@@ -1015,35 +1035,67 @@
 
     <cfscript>
       
+      prc.subscribersInCart = "";
+      prc.subscribersIneligible = "";
+      prc.subscribersConflictsUnresolvable = "";
       local.eligibleLineCount = 0;
-      for (i = 1; i lte arrayLen(prc.subscribers); i++) {
-        
-        // local.args_incompatibleOffers = {
-        //   carrierId = prc.productData.carrierId,
-        //   SubscriberNumber = local.subscriber.getNumber(),
-        //   ProductId = prc.productData.productId
-        // };
 
-        // prc.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
-        // call this after they pick a plan (unless they keep exising).  Pass in subscriberNumber and changePlan = true.
+      // loop through cartlines and add any cartline's subscriber index to the prc.subscribersInCart list if the line has a device and a subscriber:
+      if (arrayLen(prc.cartLines)) {
+        for (i = 1; i lte arrayLen(prc.cartLines); i++) {
+          cartLine = prc.cartLines[i];
+          if ( cartLine.getPhone().hasBeenSelected() and cartLine.getSubscriberIndex() gte 1){
+            prc.subscribersInCart = listAppend(prc.subscribersInCart,cartLine.getSubscriberIndex());
+          }
+        }
+      }
+
+
+      // loop through subscribers to determine which ones are eligible with no unresolvable incompatibleOffer
+      for (i = 1; i lte arrayLen(prc.subscribers); i++) {
 
         local.subscriber = prc.subscribers[i];
 
-        local.args_incompatibleOffers = {
-          carrierId = prc.productData.carrierId,
-          SubscriberNumber = local.subscriber.getNumber(),
-          ImeiType = prc.productData.ImeiType
-        };
-        local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+        // if the subscriber is not eligible, don't need to call incompatibleOffer.  Only add to the eligibleLineCount if it's eligible and compatible. Add any ineligible subscriber to the prc.subscribersIneligible list.
+        if (!local.subscriber.getIsEligible()){
+         
+          prc.subscribersIneligible = listAppend(prc.subscribersIneligible,i);
+        
+        } else if ( !listFindNoCase(prc.subscribersInCart,i) ) {
+          
+          // call this after they pick a plan (unless they keep exising).  Pass in subscriberNumber and changePlan = true.
+          local.args_incompatibleOffers = {
+            carrierId = prc.productData.carrierId,
+            SubscriberNumber = local.subscriber.getNumber(),
+            ImeiType = prc.productData.ImeiType,
+            changePlan = false
+          };
+          // call conflictsResolvable() to check if true, false, not found.
+          local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers); //true,false,notfound
 
-        if (prc.subscribers[i].getIsEligible() or !local.isConflictsResolvable) {
-         local.eligibleLineCount++;
+          if ( compare(local.isConflictsResolvable,'notfound') eq 0 ) {
+            // need to call IncompatibleOffer:
+            local.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+            local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+          }
+
+          if ( compare(local.isConflictsResolvable,'true') eq 0 or compare(local.isConflictsResolvable,'notfound') eq 0 ) {
+            local.eligibleLineCount++;
+          } else {
+            prc.subscribersConflictsUnresolvable = listAppend(prc.subscribersConflictsUnresolvable,i);
+          }
+
         }
 
-
       }
+
+
       if (local.eligibleLineCount eq 0) {
-        prc.warningMessage = "This account has no lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.carrierLogin')#'>Please verify your account.</a>";
+        if (listLen(prc.subscribersInCart)) {
+          prc.warningMessage = "This account has no additional lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.orderreview')#'>Click here to review your cart and remove items not needed.</a>";
+        } else {
+          prc.warningMessage = "This account has no lines that are eligible for an upgrade. <a href='#event.buildLink('devicebuilder.carrierLogin')#/cartLineNumber/#rc.cartLineNumber#'>Please verify your account.</a>";
+        }  
         prc.displayBackButton = true;
       }
 
@@ -1283,10 +1335,10 @@
     <cfset var alertMsg = "" />
     <cfset var SmartPhoneCount = 0 />
     <cfparam name="prc.showAddAnotherDeviceButton" default="true" />
-    <cfparam name="prc.showBrowseDevicesButton" default="true" />
+    <!--- <cfparam name="prc.showBrowseDevicesButton" default="true" /> --->
     <cfparam name="prc.showCheckoutnowButton" default="true" />
     <cfparam name="prc.disableCheckoutnowButton" default="false" />
-    <cfparam name="prc.showClearCartLink" default="true" />
+    <cfparam name="prc.showClearCartLink" default="#arrayLen(prc.cartLines)#" />
     <cfparam name="session.cart.HasExistingPlan" default="No" />
     <cfparam name="prc.warningMessage" default="" />
 
@@ -1503,9 +1555,9 @@
       prc.additionalAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
       prc.includeTallyBox = false;
 
-      if ( prc.customerType is 'upgrade' and arrayLen(prc.cartLines) gte arrayLen(prc.subscribers) ) {
+      if ( prc.customerType is 'upgrade' and structKeyExists(prc,"subscribers") and arrayLen(prc.cartLines) gte arrayLen(prc.subscribers) ) {
         prc.showAddAnotherDeviceButton = false;
-        prc.showBrowseDevicesButton = false;
+        // prc.showBrowseDevicesButton = false;
       }
     </cfscript>
   </cffunction>
@@ -1520,7 +1572,7 @@
     <cfscript>
 
       // first store the zipcode in prc.scope.
-      prc.zipcode = session.cart.getZipcode();
+      //prc.zipcode = session.cart.getZipcode();
 
       // remove carrierObj from session: 
       structDelete(session, 'carrierObj', true);
@@ -1534,7 +1586,7 @@
 
 
       // reset the session zipcode
-      session.cart.setZipcode(prc.zipcode);
+      //session.cart.setZipcode(prc.zipcode);
 
       rc.cartLineNumber = request.config.otherItemsLineNumber;
 

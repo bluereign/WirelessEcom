@@ -1054,9 +1054,14 @@ $j(document).ready(function($j) {
 
 					<!--- devicebuilder --->
 					<!--- DeviceBuilder: Deploy the devicebuilder Customer Type Modal on Costco channel for AT&T or Verizon only if qty on hand is greater than 0  and prc.productData.qtyOnHand gt 0 --->
+<<<<<<< HEAD
 					<!--- <cfif findNoCase('costco',request.config.ChannelName) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')> --->
 					<!--- <cfif listFindNoCase('costco,aafes',request.config.ChannelName) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')> --->
 					<cfif listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')>
+=======
+					<cfif !prc.channelConfig.GetVFDEnabled()>
+					<cfif findNoCase('costco',prc.channelConfig.getDisplayName()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')>
+>>>>>>> 2bc2c138d147582da098f0058605a0e85618e428
 						<cfif prc.productData.qtyOnHand gt 0>
 							<div id="addtocartfinanceDiv" class="pull-right" <cfif not hide2yearpricing>style="display:none;"</cfif>>
 								<a class="ActionButton learnMoreBtn" href="##" data-toggle="modal" data-target="##customerTypeModal"><span>Add to Cart</span></a>
@@ -1069,7 +1074,7 @@ $j(document).ready(function($j) {
 							<a class="ActionButton learnMoreBtn" href="javascript: return false;" data-toggle="modal" data-target="##financeModal" <cfif hide2yearpricing>style="width:460px;"</cfif>><span><cfif hide2yearpricing>#application.wirebox.getInstance('TextDisplayRenderer').getHide2YearFinancingButtonText()#<cfelse>Learn More</cfif></span></a>
 						</div>
 					</cfif>
-
+					</cfif>
 					
 					<cfif prc.channelConfig.GetVFDEnabled()>
 					
@@ -1123,10 +1128,11 @@ $j(document).ready(function($j) {
 <cfif findNoCase( 'costco', prc.channelConfig.getDisplayName() )>
 
 <div class="row">
-		<a href="/assets/common/images/onlinebenefit/costcoValue_version_5.jpg" rel="lightbox" title="Costco Wireless Online Value">
+		<a title="Costco Wireless Online Value" href="javascript: return false;" data-toggle="modal" data-target="##costcoValueModal">
 			<h3 style="font-size:24px;">Costco Membership Benefits</h3>
 		</a>
 		<hr class="blueline" />
+		<!--- rel="lightbox"  href="/assets/common/images/onlinebenefit/costcoValue_version_5.jpg" --->
 		
 <!---Comment out per Case 703--->
 <!--- 
@@ -1193,9 +1199,8 @@ $j(document).ready(function($j) {
 </div>
 
 
+<!--- CUSTOMER TYPE MODAL (devicebuilder modal) v1--->
 <cfif listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,prc.productData.CarrierId,'|')>
-	
-	<!--- Customer Type Modal (devicebuilder modal) v1--->
 	<!--- NOTE: if session.carrierObj exists, then session.zipCode should also exist --->
 	<cfif structKeyExists(session,'carrierObj')>
 		<cfset rc.upgradeURL = event.buildLink('devicebuilder.upgradeline') & '/pid/' & rc.pid & '/type/upgrade/' />
@@ -1259,7 +1264,7 @@ $j(document).ready(function($j) {
 									<strong style="font-size:16px;">Current #prc.productData.carrierName# customer?</strong>
 									<br />
 									<br />
-									<p>You can Upgrade your device online or visit your local warehouse wireless center to Add a Line to your account.</p>
+									<p>You can Upgrade your device online or visit your local Costco warehouse Wireless Center to Add a Line to your account.</p>
 									<br />
 									<br />
 									<div class="row center-block">
@@ -1293,7 +1298,7 @@ $j(document).ready(function($j) {
 										<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
 										<br />
 										<br />
-										<p>Please visit your local warehouse wireless center if you would like to switch to #prc.productData.carrierName#.</p>
+										<p>Please visit your local Costco warehouse Wireless Center if you would like to switch to #prc.productData.carrierName#.</p>
 										<br />
 										<br />
 										<div class="row center-block">
@@ -1344,28 +1349,51 @@ $j(document).ready(function($j) {
 		</div>
 	</div>
 </cfif>
+<!--- <end Customer Type Modal (devicebuilder) --->
 
- <!--- /Customer Type Modal (devicebuilder) --->
-
-    <div class="modal fade bootstrap" id="nextInfoModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
-    <div class="modal-dialog" style="width:780px;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="nextInfoModalLabel">Learn About #prc.financeproductname#</h4>
-        </div>
-        <!-- Modal Body -->
-        <div class="modal-body">
-          <div class="container">
-            <div class="row">
-              <a href="/content/att-next">
-                <img src="/assets/common/images/financepricing/att_popup_both.png" style="display: block;margin:0 auto;" width="714" height="733">
-              </a>
-            </div>
+<!--- <COSTCO ONLINE VALUE MODAL --->
+<div class="modal fade bootstrap" id="costcoValueModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="width:795px;">
+    <div class="modal-content">
+      <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">&nbsp;</h4>
+			</div>
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <a href="/content/att-next">
+              <img src="/assets/common/images/onlinebenefit/costcoValue_version_5.jpg" style="display: block;margin:0 auto;" width="705" height="242">
+            </a>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+<!--- <end costco online value modal --->
+
+
+<div class="modal fade bootstrap" id="nextInfoModal" tabindex="-1" role="dialog" aria-labelledby="cartModal" aria-hidden="true">
+  <div class="modal-dialog" style="width:780px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="nextInfoModalLabel">Learn About #prc.financeproductname#</h4>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <a href="/content/att-next">
+              <img src="/assets/common/images/financepricing/att_popup_both.png" style="display: block;margin:0 auto;" width="714" height="733">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 

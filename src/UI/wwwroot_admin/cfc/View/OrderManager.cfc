@@ -1,4 +1,13 @@
 <cfcomponent output="false" displayname="OrderManager">
+	
+	<cfset assetPaths = application.wirebox.getInstance("assetPaths") />
+	<cfset PaymentService = application.wirebox.getInstance("PaymentService") />
+	<cfset carrierFacade = application.wirebox.getInstance("CarrierFacade") />
+	<cfset AttCarrier = application.wirebox.getInstance("AttCarrier") />
+	<cfset VzwCarrier = application.wirebox.getInstance("VzwCarrier") />
+	<cfset carrierHelper = application.wirebox.getInstance("CarrierHelper") />
+	<cfset AttCarrierHelper = application.wirebox.getInstance("AttCarrierHelper") />
+	<cfset VzwCarrierHelper = application.wirebox.getInstance("VzwCarrierHelper") />
 
 	<cffunction name="init" output="false" returntype="OrderManager">
 		<!--- Remove these when this component is added to CS --->        
@@ -280,6 +289,7 @@
 			            <li><a id="rma-tab" href="components/order/dsp_RmaDetails.cfm?orderId=#arguments.order.getOrderId()#">RMA</a></li>
 			            <li><a id="account-tab" href="components/order/dsp_AccountDetails.cfm?userId=#arguments.order.getUserId()#&isOrderAssistanceOn=#isOrderAssistanceOn#">Account</a></li>
                         <li><a id="exchange-tab" href="components/order/dsp_ExchangeDetails.cfm?orderId=#arguments.order.getOrderId()#">Exchanges</a></li>
+                        <li><a id="debug-tab" href="components/order/dsp_OrderDebug.cfm?orderId=#arguments.order.getOrderId()#">Debug</a></li>
 			        </ul>
 			        <div id="tabs-1">
 			            <!--- General --->
@@ -305,6 +315,8 @@
 			        <div id="tabs-5"><!--- RMA---></div>
 			        <div id="tabs-6"><!--- Account ---></div>
                     <div id="tabs-7"><!--- Exchange ---></div>
+                    <div id="tabs-8"><!--- Debug ---></div>
+					
 			    </div>
 			</div>
 			</cfoutput>
@@ -330,7 +342,6 @@
 
 			var qry_getMilitaryBases = "";
 			
-			var qActivationLines = application.model.order.getOrderActivationLines( order.getOrderId() );
 			var wirelessLines = application.model.WirelessAccount.getByOrderId( order.getOrderId() );
 			
 
@@ -484,10 +495,6 @@
 						<strong>Taxes:</strong> #dollarFormat( arguments.order.getTaxTotal() )#
 					</div>
 					<div>
-						<strong>Down Payment:</strong> #dollarFormat( arguments.order.getDownPayment() )#
-					</div>
-
-					<div>
 						<strong>"Due Today" Total:</strong> #dollarFormat( arguments.order.getSubTotal() + arguments.order.getShipCost() + arguments.order.getTaxTotal() - arguments.order.getOrderDiscountTotal() )# (includes Taxes & Shipping)
 					</div>
 					<div>
@@ -572,37 +579,6 @@
 						</form>
 					</div>	
 				</div>
-				<cfloop query="qActivationLines">
-					<h3>Financed Line Information</h3>	
-				
-					<div class="field-display">	
-						<div>
-							Line : #trim(qActivationLines.productTitle)#
-						</div>		
-						<div>
-							<strong>Retail Price:</strong> #dollarFormat( qActivationLines.RetailPrice)#
-						</div>
-						<div>
-							<strong>Down Payment:</strong> #dollarFormat(qActivationLines.DownPaymentReceived)#
-						</div>
-						<div>
-							<strong>Monthly Payment:</strong> #qActivationLines.MonthlyFee#
-						</div>
-						<div>
-							<strong>Term Length:</strong> #qActivationLines.contractLength#
-						</div>
-						<div>
-							<strong>Total Financed:</strong> #dollarFormat( qActivationLines.RetailPrice - qActivationLines.DownPaymentReceived)#
-						</div>
-					</cfloop>
-						<hr />
-						<div>
-							<strong>"Due Today" Total:</strong> #dollarFormat( arguments.order.getSubTotal() + arguments.order.getShipCost() + arguments.order.getTaxTotal() - arguments.order.getOrderDiscountTotal() - arguments.order.getDownPayment() )# (includes Taxes & Shipping & Deposit)
-						</div>
-						<div>
-							<strong>Due Monthly:</strong> all financed device monthly fee plus plan plus line access fee 
-						</div>
-					</div>
 				
 				<h3>Billing Information</h3>
 				<div class="field-display">
@@ -811,6 +787,7 @@
 			var isMissingImei = false;
 			var missingImeiCount = 0;
 			var local = {};
+			var monthlyDue = 0;
 			
 			//Check if any devices are missing an IMEI
 			for (i=1; i <= ArrayLen(lines); i++)
@@ -853,12 +830,15 @@
 									<cfswitch expression="#order.getCarrierId()#">
 										<cfcase value="109,128,299">
 											<div>IMEI: #lines[i].getImei()#</div>
+											<div>SIM: #lines[i].getSim()#</div>
 										</cfcase>
 										<cfcase value="42">
 											<div>ESN: #lines[i].getImei()#</div>
+											<div>SIM: #lines[i].getSim()#</div>
 										</cfcase>
 										<cfdefaultcase>
 											<div>IMEI/ESN: #lines[i].getImei()#</div>
+											<div>SIM: #lines[i].getSim()#</div>
 										</cfdefaultcase>
 									</cfswitch>
 									<cfif order.getCarrierId() eq 42>
@@ -866,10 +846,20 @@
 									</cfif>
 									<div class="price">
 										Retail Price: <span>#DollarFormat( lines[i].getLineDevice().getRetailPrice() )#</span><br />
-										Online Discount: <span>#DollarFormat( lines[i].getLineDevice().getRetailPrice() - lines[i].getLineDevice().getNetPrice() )#</span><br />
+										<!--- Only non-financed phones have online discount --->
+										<cfif lines[i].getLineDevice().getPurchaseType() neq "FP" >
+											Online Discount: <span>#DollarFormat( lines[i].getLineDevice().getRetailPrice() - lines[i].getLineDevice().getNetPrice() )#</span><br />
+										</cfif>
 										Net Price: <span>#DollarFormat( lines[i].getLineDevice().getNetPrice() )#</span ><br />
 										Tax: <span>#DollarFormat( lines[i].getLineDevice().getTaxes() )#</span><br />
-										Down Payment Received: <span>#DollarFormat( lines[i].getLineDevice().getDownPaymentReceived() )#</span><br />
+										<!---Checking for Financed --->
+										<cfif lines[i].getLineDevice().getPurchaseType() eq "FP" >
+											Down Payment: <span>#DollarFormat(lines[i].getLineDevice().getDownPaymentReceived())#</span><br />
+											<cfset monthlyDue = monthlyDue + lines[i].GetMonthlyFee() />
+											Monthly Payment: <span>#DollarFormat(lines[i].GetMonthlyFee())#</span><br />
+											Term Length: <span>#lines[i].getcontractlength()#</span><br />
+											Total Financed: <span>#DollarFormat( (lines[i].getLineDevice().getRetailPrice()) - (lines[i].getLineDevice().getDownPaymentReceived()))#</span><br />
+										</cfif>
 										Total: <span>#DollarFormat( lines[i].getLineDevice().getNetPrice() + lines[i].getLineDevice().getTaxes() )#</span><br />
 									</div>
 								</div>
@@ -884,7 +874,9 @@
 											</div>
 										</cfif>							
 										<div class="price">
-											Monthly Fee: <span>#DollarFormat( lines[i].getMonthlyFee() )#</span><br />
+											<!---Monthly Fee: <span>#DollarFormat( lines[i].getMonthlyFee() )#</span><br />--->
+											<cfset monthlyDue = monthlyDue + lines[i].getLineRateplan().getNetPrice() />
+											Monthly Fee: <span>#DollarFormat( lines[i].getLineRateplan().getNetPrice() )#</span><br />
 										</div>
 									</div>
 								</cfif>
@@ -894,6 +886,7 @@
 										<div class="item">		
 											<div class="item-name">#service.getProductTitle()#</div>																			
 											<div class="price">
+												<cfset monthlyDue = monthlyDue + service.getLineService().getMonthlyFee() />
 												Monthly Fee: <span>#DollarFormat( service.getLineService().getMonthlyFee() )#</span><br />
 											</div>
 										</div>
@@ -992,6 +985,9 @@
 							</div>
 							<div>
 								Taxes: <span class="price">#dollarFormat( order.getTaxTotal() )#</span>
+							</div>
+							<div>
+								Due Monthly: <span class="price">#dollarFormat( monthlyDue )#</span> 
 							</div>
 							<div>
 								"Due Today" Total  (includes Taxes & Shipping): <span class="price">#dollarFormat( order.getSubTotal() + order.getShipCost() + order.getTaxTotal() - order.getOrderDiscountTotal() )#</span>
@@ -1369,6 +1365,46 @@
 		<cfreturn trim(content) />
 	</cffunction>
 
+	<cffunction name="getDebugTabView" output="false" access="public" returntype="string">
+		<cfargument name="order" type="cfc.model.Order" required="true" />
+		<cfset var local = structNew() />
+		
+		
+		<cfif arguments.order.getCarrierId() is 109 >	
+			<cfquery name="qOrderTypes" datasource="wirelessadvocates"  > 
+				select distinct orderType from [service].[OrderSubmissionLog] where orderid = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.order.getOrderId()#">
+				order by orderType
+			</cfquery>	
+			<cfsavecontent variable="content">	
+				<cfif qOrderTypes.recordcount is 0>
+					There are currently no OrderSubmissionLog records for this order.
+				</cfif>		
+				<cfloop query="qOrderTypes">
+					<cfstoredproc procedure="service.OrderSubmissionGet" datasource="wirelessadvocates" >
+						<cfprocparam cfsqltype="cf_sql_integer" value="#arguments.order.getOrderId()#" />
+						<cfprocparam cfsqltype="cf_sql_varchar" value="#qOrderTypes.orderType#" />
+						<cfprocresult name="local.qSubmitOrderRequest" />
+					</cfstoredproc>		
+					<br/><cfoutput>#qOrderTypes.orderType#</cfoutput> OrderEntry:<br/>
+					<cfdump var="#deserializeJson(local.qSubmitOrderRequest.orderentry)#" expand="false" />	
+					<cfif local.qSubmitOrderRequest.orderResult is not "">
+						<br/><cfoutput>#qOrderTypes.orderType#</cfoutput> OrderResult:<br/>
+						<cfdump var="#deserializeJson(local.qSubmitOrderRequest.orderResult)#" expand="false" />	
+					</cfif>
+				</cfloop>
+			</cfsavecontent>	
+		
+		<cfelse>
+			<cfsavecontent variable="content">
+				Debug tab currently supports only ATT orders.
+			</cfsavecontent>
+		</cfif>
+		
+		
+		
+        <cfreturn content>
+
+   	</cffunction>
 
 	<cffunction name="getExchangeTabView" output="false" access="public" returntype="string">
 		<cfargument name="order" type="cfc.model.Order" required="true" />

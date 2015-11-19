@@ -31,7 +31,6 @@
 		<cfset var local = structNew() />
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.SubmitCompletedOrderRequest =  carrierObject(arguments.carrierId).getSubmitCompletedOrderRequest(argumentCollection = local.args) />	
-		<!---<cfreturn local.SubmitOrderRequest />--->
 		<cfreturn local.SubmitCompletedOrderRequest />
 	</cffunction>
 	

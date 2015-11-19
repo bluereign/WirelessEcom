@@ -1,4 +1,6 @@
 <cfcomponent displayname="Carrier" hint="generic carrier component" extends="fw.model.BaseService" output="false">
+	
+	<cfset dbuilderCartFacade = application.wirebox.getInstance("dbuilderCartFacade") />
 
 	<cffunction name="init" output="false" access="public" returntype="fw.model.carrierApi.BaseCarrier">
 
@@ -10,15 +12,15 @@
 		<cfset var local = structNew() />
 		<cfset var jsonized = "" />
 		
-		<cfset stringFields = "SubscriberNumber,SecurityId,ZipCode,AccountIdentifier,ActiveLines,CanBeReachedPhone,HomePhone,WorkPhone,Imei,Sim,Sku,Number,ServiceArea,AreaCode,ZipExtension,Zip" />
-		<cfset UppercaseFields = "IMEITYPE,UPGRADEQUALIFICATION,FINANCEAGREEMENTITEM,REQUESTTYPE,IDENTIFIER,CATEGORY,DEVICEINFO,NUMBERSOURCE,FAMILY,FULLRETAILPRICE,ACCOUNT,ADDRESS,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT,MSRP,DOWNPAYMENT" />
-		<cfset FixedcaseFields = "ImeiType,UpgradeQualification,FinanceAgreementItem,RequestType,Identifier,Category,DeviceInfo,NumberSource,Family,FullRetailPrice,Account,Address,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat,Msrp,DownPayment" />
+		<cfset stringFields = "ReferenceNumber,InstallmentPlanId,SubscriberNumber,SecurityId,ZipCode,AccountIdentifier,ActiveLines,CanBeReachedPhone,HomePhone,WorkPhone,Imei,Sim,Sku,Number,ServiceArea,AreaCode,ZipExtension,Zip" />
+		<cfset UppercaseFields = "PLANINFO,ACTIONCODE,IDENTIFIER,ISGROUPPLAN,BILLINGMARKETCODE,ADDITIONALOFFERS,ACTION,TYPECODE,IMEITYPE,UPGRADEQUALIFICATION,FINANCEAGREEMENTITEM,REQUESTTYPE,IDENTIFIER,CATEGORY,DEVICEINFO,NUMBERSOURCE,FAMILY,FULLRETAILPRICE,ACCOUNT,ADDRESS,CARRIERID,REFERENCENUMBER,ORDERITEMS,SUBSCRIBERNUMBER,SUBSCRIBER,SECURITYID,ZIPCODE,PASSCODE,CHANNEL,REQUESTEDFORMAT,MSRP,DOWNPAYMENT,CODE" />
+		<cfset FixedcaseFields = "PlanInfo,ActionCode,Identifier,IsGroupPlan,BillingMarketCode,AdditionalOffers,Action,TypeCode,ImeiType,UpgradeQualification,FinanceAgreementItem,RequestType,Identifier,Category,DeviceInfo,NumberSource,Family,FullRetailPrice,Account,Address,CarrierId,ReferenceNumber,OrderItems,SubscriberNumber,Subscriber,SecurityId,ZipCode,PassCode,Channel,RequestedFormat,Msrp,DownPayment,Code" />
 		<cfset stringDelimiter = "@x@y@z@" />
 		
 		<cfset local.args = duplicate(arguments.args) />
 		
-		<cfif isdefined("session.sessionid")>
-			<cfset local.args.ReferenceNumber = session.sessionid />
+		<cfif not isdefined("local.args.ReferenceNumber") >
+			<cfset local.args.ReferenceNumber = application.model.dbuilderCartFacade.getReferenceNumber() />
 		</cfif>
 		
 		<cfloop list="#stringFields#" index="local.s">
@@ -47,7 +49,7 @@
 		<cfset local.uIndex = 0 />
 		<cfloop list="#UppercaseFields#" index="local.u">
 			<cfset local.uIndex = local.uIndex+1 />
-			<cfset jsonized = replace(jsonized,local.u,listgetat(FixedcaseFields,local.uIndex),"ALL") />	
+			<cfset jsonized = replace(jsonized,local.u,listgetat(FixedcaseFields,local.uIndex),"all") />	
 		</cfloop>	
 		
 		<!--- Fix quoted nulls --->

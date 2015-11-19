@@ -134,22 +134,32 @@
 			</cfif>
 		</cfif>
 		
-		<!--- If the changePlan argument is passed then check to see if the current plan is SDDVRP  --->
-		<cfif structKeyExists(arguments,"ChangePlan")  and arguments.changePlan is true> 
-			<cfset local.subscriber = AttCarrierHelper.FindSubscriber(arguments.subscriberNumber) />
+		<!--- find the subscriber in the session.carrierfacade.accountRequest --->
+		<cfset local.subscriber = AttCarrierHelper.FindSubscriber(arguments.subscriberNumber) />
+
+		<!--- If the changeplan and planId arguments are passed then check to see if the current plan is SDDVRP  --->
+		<cfif structKeyExists(arguments,"ChangePlan") and structKeyExists(arguments,"planId")> 
+			<cfset local.qPlan = application.model.plan.getByFilter(idList = arguments.planid) />
+			<!---<cfset local.subscriber = AttCarrierHelper.FindSubscriber(arguments.subscriberNumber) />--->
 			<cfif not structIsEmpty(local.subscriber) >
 				<cfset session.carrierFacade.accountResp.Account.Subscribers[local.subscriber.subscriberIndex].WAFlag_PlanHasChanged = true />
-				<cfif local.subscriber.PlanInfo.Identifier is "SDDVRP">
-					<cfset local.carrierResponse.errorMessage = "Subscriber already using SDDVRP Plan" />
-				</cfif>
-			<cfelse>
 				<cfset local.newPlanInfo = structNew() />
-				<cfset local.newPlanInfo.PlanInfo = structNew() />
-				<cfset local.newPlanInfo.PlanInfo.Identifier = "SDDVRP" />	
-				<cfset local.newPlanInfo.PlanInfo.ActionCode = "A" />	
-				<cfset local.newPlanInfo.PlanInfo.isGroupPlan = false />	
+				<!--- If the subscriber is changing from non-SDDVRP then add new PlanInfo --->
+				<cfif local.subscriber.PlanInfo.Identifier is not "SDDVRP">
+					<cfset local.newPlanInfo.PlanInfo = structNew() />
+					<cfset local.newPlanInfo.PlanInfo.Identifier = "SDDVRP" />	
+					<cfset local.newPlanInfo.PlanInfo.ActionCode = "A" />	
+					<cfset local.newPlanInfo.PlanInfo.isGroupPlan = false />	
+				</cfif>	
+				<!--- Add the data rate info --->
 				<cfif isdefined("local.subscriber.additionalOfferings")	>
 					<cfset local.newPlanInfo.AdditionalOffers = local.subscriber.additionalOfferings />
+					<cfset local.AttPlanItem = structNew() />
+					<cfset local.AttPlanItem.Action = "A" />
+					<cfset local.AttPlanItem.Code = local.qplan.carrierBillCode />
+					<!---<cfset local.AttPlanItem.Code = "MMSDG50GB" />---><!--- override for testing only --->
+					<cfset local..AttPlanItem.TypeCode = "G" />
+					<cfset arrayAppend(local.newPlanInfo.AdditionalOffers, local.AttPlanItem) />
 				</cfif>
 			</cfif>
 		</cfif>		
@@ -177,7 +187,11 @@
 						} />
 						<!--- add in the appropriate planInfo and additional offers --->
 						<cfif structKeyExists(local,"newPlanInfo")>
-							<cfset local.incompatibleOffer_args.planInfo = local.newPlanInfo.planInfo />
+							<cfif structKeyexists(local.newPlanInfo,"planInfo") >
+								<cfset local.incompatibleOffer_args.planInfo = local.newPlanInfo.planInfo />
+							<cfelse>
+								<cfset local.incompatibleOffer_args.planInfo = local.s.planInfo />	
+							</cfif>
 							<cfif structKeyExists(local.newPlanInfo,"additionalOffers") >
 								<cfset local.incompatibleOffer_args.additionalOffers = local.newPlanInfo.AdditionalOffers />
 							</cfif>
@@ -188,6 +202,7 @@
 						<cfset local.body = serializeJSonAddReferenceNumber(local.incompatibleOffer_args) />	
 						<!--- save the request to the session --->
 						<cfset saveToSession(local.incompatibleOffer_args,"IncompatibleOfferRequest") />	
+						<cfset saveToSession(local.body,"IncompatibleOfferRequest_JSON") />
 					
 						<cfhttp url="#variables.CarrierServiceURL#/IncompatibleOffer" method="Post" result="local.cfhttp">
 							<cfhttpparam type="header" name="Content-Type" value="application/json" />
@@ -198,6 +213,16 @@
 						<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttIncompatibleOfferCarrierResponse').init() />
 						<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
 					
+						<!--- remove the current incompatible offers for this subscriberNumber --->
+						<cfif isdefined("local.subscriber")>
+							<cfloop from="#arrayLen(session.carrierFacade.accountResp.IncompatibleOffers)#" to="1" step="-1" index="local.i">
+								<cfif session.carrierFacade.accountResp.IncompatibleOffers[local.i].SubscriberNumber is arguments.subscriberNumber 
+									  and session.carrierFacade.accountResp.IncompatibleOffers[local.i].ImeiType is local.imeiType>
+									<cfset arrayDeleteAt(session.carrierFacade.accountResp.IncompatibleOffers,local.i) />
+								</cfif>
+							</cfloop>
+						</cfif>
+						
 						<!--- store the retrieved incompatible offers in the accountResp structure --->
 						<cfset arrayAppend(session.carrierfacade.accountResp.IncompatibleOffers,local.carrierResponse.getResponse())	/>			
 							
@@ -376,10 +401,52 @@
 		<cfset local.saveSubmitOrderArgs.orderResult = serializeJSonAddReferenceNumber(local.carrierResponse.getResponse()) />
 		<cfset saveSubmitOrder(argumentCollection = local.saveSubmitOrderArgs) />	
 		
+		<!--- Save the other messages saved in the session --->
+		<!--- Save Account --->
+		<cfif isdefined('session.carrierfacade.accountRequest') and isdefined('session.carrierfacade.accountResp')>
+			<cfset local.accountRequest = serializeJSonAddReferenceNumber(session.carrierFacade.accountRequest) />
+			<cfset local.accountResp = serializeJSonAddReferenceNumber(session.carrierFacade.accountResp) />
+			<cfset local.saveAccountArgs = {
+				carrierId = 109,
+				orderId = session.order.getOrderId(),
+				orderType = "Account",
+				orderEntry = "#local.accountRequest#",
+				orderResult = "#local.accountResp#"
+			} />
+			<cfset saveSubmitOrder(argumentCollection = local.saveAccountArgs) />
+		</cfif>
+		<!--- Save Incompatible Offer --->
+		<cfif isdefined('session.carrierfacade.IncompatibleOfferRequest') and isdefined('session.carrierfacade.IncompatibleOfferResp')>
+			<cfset local.incompatibleOfferRequest = serializeJSonAddReferenceNumber(session.carrierFacade.incompatibleOfferRequest) />
+			<cfset local.incompatibleOfferResp = serializeJSonAddReferenceNumber(session.carrierFacade.incompatibleOfferResp) />
+			<cfset local.saveIncompatibleOfferArgs = {
+				carrierId = 109,
+				orderId = session.order.getOrderId(),
+				orderType = "IncompatibleOffer",
+				orderEntry = "#local.incompatibleOfferRequest#",
+				orderResult = "#local.incompatibleOfferResp#"
+			} />
+			<cfset saveSubmitOrder(argumentCollection = local.saveIncompatibleOfferArgs) />
+		</cfif>
+		<!--- Save Finance Agreement --->
+		<cfif isdefined('session.carrierfacade.FinanceAgreementRequest') and isdefined('session.carrierfacade.FinanceAgreementResp')>
+			<cfset session.carrierFacade.FinanceAgreementResp.FinanceAgreement = "Data removed to save space" />
+			<cfset local.FinanceAgreementRequest = serializeJSonAddReferenceNumber(session.carrierFacade.FinanceAgreementRequest) />
+			<cfset local.FinanceAgreementResp = serializeJSonAddReferenceNumber(session.carrierFacade.FinanceAgreementResp) />
+			<cfset local.saveFinanceAgreementArgs = {
+				carrierId = 109,
+				orderId = session.order.getOrderId(),
+				orderType = "FinanceAgreement",
+				orderEntry = "#local.FinanceAgreementRequest#",
+				orderResult = "#local.FinanceAgreementResp#"
+			} />
+			<cfset saveSubmitOrder(argumentCollection = local.saveFinanceAgreementArgs) />
+		</cfif>
+		
 		<cfreturn processResponse(local.carrierResponse) />			
 	</cffunction>	
 	
-	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse">
+	<cffunction name="submitCompletedOrder" output="false" access="public" returntype="fw.model.CarrierApi.Att.AttSubmitCompletedOrderCarrierResponse">
 		<cfset var local = structNew() />
 		
 		<cfset local.body = serializeJSonAddReferenceNumber(arguments) />
@@ -394,13 +461,13 @@
 		
 		<!--- Save the submitOrder request before we call carrier just in case we have a non-retryable failure --->
 		<cfset saveSubmitOrder(argumentCollection = local.saveSubmitOrderArgs) />	
-		<cfhttp url="#variables.CarrierServiceURL#/Order" method="Post" result="local.cfhttp">
+		<cfhttp url="#variables.CarrierServiceURL#/Order/Complete" method="POST" result="local.cfhttp">
 			<cfhttpparam type="header" name="Content-Type" value="application/json" />
     		<cfhttpparam type="body" value="#local.body#">
 		</cfhttp>
 		
 		<!--- create the carrier response --->
-		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitOrderCarrierResponse').init() />
+		<cfset local.carrierResponse =  CreateObject('component', 'fw.model.CarrierApi.Att.AttSubmitCompletedOrderCarrierResponse').init() />
 		<cfset local.carrierResponse = processResults(local.cfhttp,local.carrierResponse) />
 		
 		<!--- Update the save submitOrder with the carrier response --->
@@ -412,7 +479,7 @@
 	
 	<cffunction name="saveSubmitOrder" output="false" access="public" returntype="boolean">
 		
-		<cftry>
+		<!---<cftry>--->
 			<cfstoredproc procedure="service.OrderSubmissionSave" datasource="wirelessadvocates">
 				<cfprocparam cfsqltype="cf_sql_integer" value="#arguments.orderid#" />
 				<cfprocparam cfsqltype="cf_sql_integer" value="109" />
@@ -423,10 +490,10 @@
 					<cfprocparam cfsqltype="cf_sql_varchar" value="#arguments.OrderResult#" />
 				</cfif>
 			</cfstoredproc>
-			<cfcatch type="any">
+			<!---<cfcatch type="any">
 				<cfreturn false />
-			</cfcatch>
-		</cftry>
+			</cfcatch>--->
+		<!---</cftry>--->
 		<cfreturn true />
 	</cffunction>
 	

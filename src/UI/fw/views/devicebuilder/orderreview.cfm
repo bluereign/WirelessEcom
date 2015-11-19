@@ -56,8 +56,8 @@
           <div class="right" style="width:273px;">
             <cfif prc.showAddAnotherDeviceButton>
               <a href="#prc.addxStep#">Add Another Device</a>
-            <cfelseif prc.showBrowseDevicesButton>
-              <a href="#prc.browseDevicesUrl#">Browse Devices</a>
+            <!--- <cfelseif prc.showBrowseDevicesButton>
+              <a href="#prc.browseDevicesUrl#">Browse Devices</a> --->
             <cfelse>
               <!--- deal with funky style sheet: --->
               <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -77,8 +77,8 @@
                 <div class="col-md-2">Item</div>
                 <div class="col-md-8">&nbsp;</div>
                 <div class="col-md-2">Quantity</div>
-                <div class="col-md-2">Monthly*</div>
-                <div class="col-md-2">Due Today*</div>
+                <div class="col-md-2">Monthly</div>
+                <div class="col-md-2">Due Today</div>
               </div>
             </div>
 
@@ -106,8 +106,8 @@
                   <p>#reReplaceNoCase(prc.cartPlan.summaryDescription, "<.*?>","","all")#</p>
                 </div>
                 <div class="col-md-2 col-xs-16 quantity">1</div>
-                <div class="col-md-2 col-xs-16 monthly">#dollarFormat(prc.cartPlan.monthlyFee)# <span class="visible-xs-inline">Monthly*</span></div>
-                <div class="col-md-2 col-xs-16 due"> <span class="visible-xs-inline">Due Today*</span></div>
+                <div class="col-md-2 col-xs-16 monthly">#dollarFormat(prc.cartPlan.monthlyFee)# <span class="visible-xs-inline">Monthly</span></div>
+                <div class="col-md-2 col-xs-16 due"> <span class="visible-xs-inline">Due Today</span></div>
 
                 <div class="col-md-2 col-xs-16"></div>
                 <div class="col-md-14 col-xs-16">
@@ -121,7 +121,7 @@
                       </div>
                       <div class="row">
                         <div class="col-md-10">Data Limit:</div>
-                        <div class="col-md-3">#prc.cartPlan.data_limit#</div>
+                        <div class="col-md-3">#prc.cartPlan.DataLimitGB# GB</div>
                         <div class="col-md-3"></div>
                       </div>
                       <div class="row">
@@ -137,7 +137,7 @@
                     data-toggle="collapse"
                     href="##plan-details"
                     aria-expanded="false"
-                    aria-controls="plan-details">Show Details</a>
+                    aria-controls="plan-details">Show Plan Details</a>
                 
                 </div>
               </div>
@@ -231,16 +231,24 @@
                   </div>
 
                   <div class="col-md-2 col-xs-16 monthly">
+                  	<!--- Services --->
+                        <cfloop from="1" to="#arrayLen(local.lineFeatures)#" index="local.iFeature">
+            				<cfset lineAccessFee = local.lineFeatures[local.iFeature].getPrices().getMonthly() />
+                        </cfloop>
+                        <cfif !isDefined('lineAccessFee')>
+                        	<cfset lineAccessFee = 0 />
+                        </cfif>
                     <cfif local.iCartLine eq 1 AND isQuery(prc.cartPlan) and prc.cartPlan.recordcount>
-						#dollarFormat(local.cartline.getPrices().getMonthly() - prc.cartPlan.monthlyFee)# 
+						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly() + lineAccessFee)# <!---MES--->
 					<cfelse>
-						#dollarFormat(local.cartline.getPrices().getMonthly())# 
+						<!---#dollarFormat(local.cartline.getPrices().getMonthly())# --->
+						#dollarFormat(local.cartline.getPhone().getPrices().getMonthly() + lineAccessFee)# <!---MES--->
 					</cfif>
-                    <span class="visible-xs-inline">Monthly*</span>
+                    <span class="visible-xs-inline">Monthly</span>
                   </div>
                   <div class="col-md-2 col-xs-16 due">
                     #dollarFormat(local.cartline.getPrices().getDueToday())#
-                    <span class="visible-xs-inline">Due Today*</span>
+                    <span class="visible-xs-inline">Due Today</span>
                   </div>
 
                   <cfif session.cart.getUpgradeType() neq 'equipment-only' && not session.cart.getPrePaid() && session.cart.getAddALineType() neq 'family' && session.cart.getActivationType() neq 'nocontract'>  
@@ -392,7 +400,7 @@
                       data-toggle="collapse"
                       href="##devicedetails#local.iCartLine#"
                       aria-expanded="false"
-                      aria-controls="devicedetails#local.iCartLine#">Show Details</a>
+                      aria-controls="devicedetails#local.iCartLine#">Show Device Details</a>
 
                       <cfif listFindNoCase(prc.listIncompleteCartLineIndex,local.iCartLine)>
                         <cfset local.cartLinePosition = listFindNoCase(prc.listIncompleteCartLineIndex,local.iCartLine) />
@@ -455,8 +463,8 @@
                       </select>
                       <a href="##" data-removeaccessory="#prc.additionalAccessories[i].productid#" class="removeaccessory">Remove</a>
                     </div>
-                    <div class="col-md-2 col-xs-16 monthly"> <span class="visible-xs-inline">Monthly*</span></div>
-                    <div class="col-md-2 col-xs-16 due">#dollarFormat(prc.additionalAccessories[i].price_subTotal)# <span class="visible-xs-inline">Due Today*</span></div>
+                    <div class="col-md-2 col-xs-16 monthly"> <span class="visible-xs-inline">Monthly</span></div>
+                    <div class="col-md-2 col-xs-16 due">#dollarFormat(prc.additionalAccessories[i].price_subTotal)# <span class="visible-xs-inline">Due Today</span></div>
                   </div>
                 </cfloop>
               </cfif>
@@ -522,8 +530,8 @@
                 </tr>
                 <tr>
                   <th></th>
-                  <th>Monthly Price*</th>
-                  <th>Due Today*</th>
+                  <th>Monthly Price</th>
+                  <th>Due Today</th>
                 </tr>
               </thead>
               <tbody>
@@ -540,7 +548,13 @@
                 <tr>
                   <td>Estimated Tax</td>
                   <td></td>
-                  <td>TBD</td>
+                  <td><cfif (isDefined('session.cart')) AND (session.cart.getTaxes().getDueToday() gt 0)>
+					  	#dollarFormat(session.cart.getTaxes().getDueToday())#
+					  <cfelse>
+					  	TBD
+					  </cfif>
+                  	
+                  </td>
                 </tr>
                 <!--- <tr>
                   <td>
@@ -616,7 +630,9 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td>Total Due Today*</td>
+                  <td>Total Due Today 
+                    <div style="font-size:10px;text-align:left;line-height:12px;">(before taxes and fees)</div>
+                  </td>
                   <cfset local.total = session.cart.getPrices().getDueToday() />
                   <cfset local.total += session.cart.getTaxes().getDueToday() />
                   <cfset local.total += session.cart.getShipping().getDueToday() />
@@ -624,7 +640,10 @@
                   <td colspan="2">#dollarFormaT(local.total)#</td>
                 </tr>
                 <tr>
-                  <td>Total Due Monthly*</td>
+                  <td>Total Due Monthly
+                    <div style="font-size:10px;text-align:left;line-height:12px;">(before taxes and fees and will appear on your recurring bill)</div>
+                  </td>
+
                   <td colspan="2">#dollarFormat(session.cart.getPrices().getMonthly())#</td>
                 </tr>
               </tfoot>
@@ -640,7 +659,7 @@
             <div class="table-wrap">
               <table class="table table-responsive">
                 <tr>
-                  <td>One time Activation Fee added to first month's bill ***</td>
+                  <td>One time Activation Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> per line will be added to your next billing statement</td>
                   <td></td>
                   <td><cfif prc.upgradeFee>#dollarFormat(arrayLen(prc.cartLines)*prc.upgradeFee)#<cfelse>$18.00</cfif></div></td>
                 </tr>
@@ -658,8 +677,8 @@
       <div class="right">
         <cfif prc.showAddAnotherDeviceButton>
           <a href="#prc.addxStep#">Add Another Device</a>
-        <cfelseif prc.showBrowseDevicesButton>
-          <a href="#prc.browseDevicesUrl#">Browse Devices</a>
+<!---         <cfelseif prc.showBrowseDevicesButton>
+          <a href="#prc.browseDevicesUrl#">Browse Devices</a> --->
         </cfif>
         <cfif prc.showCheckoutnowButton>
           <button type="submit" class="btn btn-primary" <cfif prc.disableCheckoutnowButton>disabled="disabled"</cfif> >Checkout Now</button>
@@ -670,14 +689,11 @@
 
     <div class="col-md-12">
       <p class="legal">
-		* Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.<br />
 		
-		<cfif session.cart.getActivationType() contains 'new'>
 		** $0 down (for qualified customers).<br />
-		</cfif>
-
+		
         <cfif session.cart.getActivationType() contains 'upgrade'>
-          *** An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><br />
+          <!---*** An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif><br />--->
         <cfelse>
           <cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>
             <cfif listFindNoCase('109, 128', session.cart.getCarrierId())>

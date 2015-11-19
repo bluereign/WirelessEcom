@@ -93,8 +93,8 @@
 				
 				<cfset local.linePrices.setDueToday(local.phone.getPrices().getDownPaymentAmount()) />
 				<cfset local.linePrices.setFirstBill(local.linePrices.getFirstBill() + local.phone.getPrices().getFirstBill()) />
-				<!---<cfset local.linePrices.setMonthly(local.phone.getPrices().getMonthly()) />--->
-				<cfset local.linePrices.setMonthly(local.linePrices.getMonthly() + local.phone.getPrices().getMonthly()) />
+				<!---<cfset local.linePrices.setMonthly(local.linePrices.getMonthly() + local.phone.getPrices().getMonthly()) />--->
+				<cfset local.linePrices.setMonthly(local.phone.getPrices().getMonthly()) />
 				<cfset local.linePrices.setCOGS(local.linePrices.getCOGS() + local.phone.getPrices().getCOGS()) />
 				<cfset local.linePrices.setRetailPrice(local.linePrices.getRetailPrice() + local.phone.getPrices().getRetailPrice()) />
 				<cfset local.linePrices.setDiscountTotal(0) />

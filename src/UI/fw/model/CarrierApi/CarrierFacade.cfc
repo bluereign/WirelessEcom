@@ -89,6 +89,9 @@
 		<cfset local.endTicks = getTickCount() />
 		<cfset local.SubmitOrderResp.setTicks( local.endTicks - local.beginTicks) />
 		<cfset saveToSession(local.SubmitOrderResp,"SubmitOrderResp") />
+		<!--- Clear the checkout reference number --->
+		<cfset structDelete(session,"cartfacade", false) />	
+		<cfset structDelete(session,"carrierfacade", false) />		
 		<cfreturn local.SubmitOrderResp />
 	</cffunction>
 	

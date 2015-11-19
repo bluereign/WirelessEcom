@@ -5,7 +5,7 @@
   <div class="col-md-12">
     <section class="content">
 
-      <cfif len(rc.carrierResponseMessage)>
+      <cfif structKeyExists(rc,"carrierResponseMessage") and len(rc.carrierResponseMessage)>
         <div class="bs-callout bs-callout-error">
           <h4>#rc.carrierResponseMessage#</h4>
         </div>
@@ -13,7 +13,7 @@
 
       <header class="main-header">
         <h1>#prc.carrierName# Account Lookup</h1>
-        <p>To find the devices that qualify for upgrade we must verify your account with #prc.carrierName# <!--- (carrierId: #prc.productData.carrierId#) ---></p>
+        <p>To find the lines that qualify for upgrade we must verify your account with #prc.carrierName#. <!--- (carrierId: #prc.productData.carrierId#) ---></p>
       </header>
 
       <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">

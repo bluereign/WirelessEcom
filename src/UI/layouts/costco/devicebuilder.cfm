@@ -56,7 +56,7 @@
     <cfif prc.showNav>
       #renderView('devicebuilder/pagenav')#  
     <cfelse>
-      <br /><br /><br /><br />
+      <!--- <br /><br /><br /><br /> --->
     </cfif>
 
     <div class="row main<cfif !prc.includeTallyBox> cart</cfif>">
@@ -131,15 +131,16 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Confirmation Required</h4>
+          <h4 class="modal-title">You Have Chosen To <span style="text-decoration:underline;">Not</span> Protect Your New Device</h4>
         </div>
         <div class="modal-body">
           <div class="plans">
             <div class="info">
-              <!--- <h3 style="height:40px"><span>Confirmation Required</span></h3> --->
-              <p>By declining to add device protection, I understand that in the event my device is lost, stolen, damaged or experiences a defect after the manufacturer's warranty, the cost of replacement device may be as high as retail price. </p>
-              <p>If you had insurance on your "existing plan" it is not transferrable to your new device.</p>
-              <p>If you want AT&T insurance you will need to contact the carrier within 14 days.</p>
+              <p><strong>If you had insurance on your "existing plan" it is not transferrable to your new device.</strong></p>
+
+              <p>By declining to add device protection, I understand that in the event my device is lost, stolen, damaged or experiences a defect after the manufacturer's warranty, the balance of the financed amount is still owed and the cost of replacement device may be as high as retail price.</p>
+              
+              <p><strong>If you want AT&T insurance you will need to contact the carrier within 14 days.</strong></p>
             </div>
           </div>
         </div>

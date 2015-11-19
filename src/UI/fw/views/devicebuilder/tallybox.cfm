@@ -13,7 +13,7 @@
     <div class="row totals">
       <div class="wrap head">
         <div class="col-xs-8">Due Today*</div>
-        <div class="col-xs-8">Monthly*</div>
+        <div class="col-xs-8">Monthly**</div>
       </div>
       <div class="wrap">
         <cfif arrayLen(prc.cartlines)>
@@ -51,11 +51,26 @@
                   <!--- <th colspan="2">#prc.tallyboxFinanceTitle#</th> --->
                 </thead>
                 <tr>
-                  <td>Due Monthly <cfif isStruct(prc.cartLine.getPaymentPlanDetail()) and not structIsEmpty(prc.cartLine.getPaymentPlanDetail()) and len(prc.cartLine.getPaymentPlanDetail().minimumCommitment)>for #prc.cartLine.getPaymentPlanDetail().minimumCommitment# Months**</cfif></td>
+                  <td>Due Monthly<cfif isStruct(prc.cartLine.getPaymentPlanDetail()) and not structIsEmpty(prc.cartLine.getPaymentPlanDetail()) and len(prc.cartLine.getPaymentPlanDetail().minimumCommitment)><!---  for #prc.cartLine.getPaymentPlanDetail().minimumCommitment# Months ---></cfif>**</td>
                   <!--- <td>#prc.tallyboxFinanceMonthlyDueTitle#**</td> --->
                   <td class="price">#dollarFormat(prc.cartLine.getPhone().getPrices().getMonthly())#/mo</td>
                 </tr>
-
+                <cfif isStruct(prc.cartLine.getPaymentPlanDetail()) and not structIsEmpty(prc.cartLine.getPaymentPlanDetail()) and len(prc.cartLine.getPaymentPlanDetail().minimumCommitment)>
+                  <tr>
+                    <td>Number of Payments</td>
+                    <td class="price">#prc.cartLine.getPaymentPlanDetail().minimumCommitment#</td>
+                  </tr>
+                <cfelseif structKeyExists(prc,"tallyboxFinanceMonths")>
+                  <tr>
+                    <td>Number of Payments</td>
+                    <td class="price">#prc.tallyboxFinanceMonths#</td>
+                  </tr>
+                </cfif>
+                <tr>
+                  <td>APR</td>
+                  <td class="price">0%</td>
+                </tr>
+              
                 <tr>
                   <td>Full Retail Price</td>
                   <td class="price">#dollarFormat(prc.productData.FinancedFullRetailPrice)#</td>
@@ -243,22 +258,24 @@
 
         <div class="row">
           <div class="col-xs-16 legal">
-            <div>* Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.</div>
-            <div>** $0 down (for qualified customers).</div>
+            <!--- <div>* Total due monthly will appear on your recurring bill. Before taxes and fees. Total due today is before taxes and fees.</div> --->
+            <div>* <strong>Total due today is before taxes and fees</strong>.</div>
+            <div>** Total due monthly is before taxes and fees and will appear on your recurring bill.</div>
+            <div>*** $0 down (for qualified customers).</div>
             <cfif session.cart.getActivationType() contains 'upgrade'>
-              <div>*** An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif></div>
+              <div>**** <strong>An Upgrade Fee of $#prc.upgradeFee# applies to each Upgrade Line.<cfif session.cart.getCarrierId() neq 299> This fee will appear on your next billing statement<cfif session.cart.getCarrierId() eq 299> and will be refunded to your account within three billing cycles</cfif>.</cfif></strong></div>
             <cfelse>
               <cfif listFind(request.config.activationFeeWavedByCarrier,session.cart.getCarrierId())>
                 <cfif listFindNoCase('109, 128', session.cart.getCarrierId())>
-                  <div>*** #prc.selectedPlan.carrierName# activation fees will be refunded through a Bill Credit on all qualifying activations.</div>
+                  <div>**** #prc.selectedPlan.carrierName# activation fees will be refunded through a Bill Credit on all qualifying activations.</div>
                 <cfelseif listFindNoCase('299', session.cart.getCarrierId())>
-                  <div>*** Activation fee credit will be applied in the first bill cycle and refunded to your account within three billing cycles.</div>
+                  <div>**** Activation fee credit will be applied in the first bill cycle and refunded to your account within three billing cycles.</div>
                 <cfelseif session.cart.getCarrierId() eq 42>
-                  <div>*** Customers will receive a mail-in rebate from Wireless Advocates to reimburse the activation fee on a new single line and/or Family Share 2-year #prc.selectedPlan.carrierName# service agreement. Upgrades do not qualify for this credit.</div>
+                  <div>**** Customers will receive a mail-in rebate from Wireless Advocates to reimburse the activation fee on a new single line and/or Family Share 2-year #prc.selectedPlan.carrierName# service agreement. Upgrades do not qualify for this credit.</div>
                 </cfif>
                 <!--- Please <a href="##" onclick="viewActivationFeeInWindow('activationFeeWindow', 'Activation Fee Details', '/index.cfm/go/cart/do/explainActivationFee/carrierId/#session.cart.getCarrierId()#');return false;">click here</a> for details. --->
               <cfelse>
-                <div>*** Activation Fee will be applied to the first bill cycle.</div>
+                <div>**** Activation Fee will be applied to the first bill cycle.</div>
               </cfif>
             </cfif>
           </div>
