@@ -383,7 +383,7 @@
 					
 						<div class="form-group form-inline middleInitial <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billMiddleInitial'))>has-error</cfif>">
 							<label for="txtBillingMiddleInitial">Middle Initial</label>
-							<input class="form-control" id="txtBillingMiddleInitial" name="billMiddleInitial" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billMiddleInitial'))#" />
+							<input class="form-control" id="txtBillingMiddleInitial" name="billMiddleInitial" maxlength="1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billMiddleInitial'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billMiddleInitial'))#                        
 						</div>
 
@@ -403,13 +403,13 @@
 
 						<div class="form-group form-inline address1 <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress1'))>has-error</cfif>">
 							<label for="txtBillingAddress1">Address 1 <strong>*</strong></label>
-							<input class="form-control" id="txtBillingAddress1" name="billAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress1'))#" />
+							<input class="form-control" id="txtBillingAddress1" name="billAddress1" maxlength="30" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress1'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress1'))#
 						</div>
 
 						<div class="form-group form-inline address2 <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress2Error'))>has-error</cfif>">
 							<label for="txtBillingAddress2">Address 2</label>
-							<input class="form-control" id="txtBillingAddress2" name="billAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress2'))#" />
+							<input class="form-control" id="txtBillingAddress2" name="billAddress2" maxlength="30" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.billAddress2'))#" />
 							#trim(request.validatorView.validationElement(request.validator.getMessages(), 'billAddress2Error'))#
 						</div>
 
@@ -558,7 +558,7 @@
 								</div>
 								<div class="form-group form-inline shipMiddle <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipMiddleInitial'))>has-error</cfif>">
 									<label for="txtShippingMiddleInitial">Middle Initial</label>
-									<input class="form-control" id="txtShippingMiddleInitial" name="shipMiddleInitial" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipMiddleInitial'))#" />
+									<input class="form-control" id="txtShippingMiddleInitial" maxlength="1" name="shipMiddleInitial" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipMiddleInitial'))#" />
 									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipMiddleInitial'))#
 								</div>
 								<div class="form-group form-inline shipLastName <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipLastName'))>has-error</cfif>">
@@ -573,12 +573,12 @@
 								</div>
 								<div class="form-group form-inline shipAddress1 <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress1'))>has-error</cfif>">
 									<label for="txtShippingAddress1">Address 1 <strong>*</strong></label>
-									<input class="form-control" id="txtShippingAddress1" name="shipAddress1" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress1'))#" />
+									<input class="form-control" id="txtShippingAddress1" name="shipAddress1" maxlength="30" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress1'))#" />
 									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress1'))#
 								</div>
 								<div class="form-group form-inline shipAddress2 <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress2Error'))>has-error</cfif>">
 									<label for="txtShippingAddress2">Address 2</label>
-									<input class="form-control" id="txtShippingAddress2" name="shipAddress2" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress2'))#" />
+									<input class="form-control" id="txtShippingAddress2" name="shipAddress2" maxlength="30" value="#trim(application.model.checkoutHelper.formValue('session.checkout.billShipForm.shipAddress2'))#" />
 									#trim(request.validatorView.validationElement(request.validator.getMessages(), 'shipAddress2Error'))#
 								</div>
 								<div class="form-group form-inline shipCity <cfif len(request.validatorView.validationElement(request.validator.getMessages(), 'shipCity'))>has-error</cfif>">
