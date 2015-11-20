@@ -2183,6 +2183,9 @@
 
 		<cfset application.model.checkoutHelper.clearCart() />
 		<cfset application.model.checkoutHelper.clearCheckOut() />
+		<cfif structKeyExists(session,"cartFacade") and isDefined("session.cartFacade.ReferenceNumber")>
+			<cfset session.cartFacade = structNew() />
+		</cfif>
 	</cfcase>
 
 	<cfcase value="processPaymentRedirect">
