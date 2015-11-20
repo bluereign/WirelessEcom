@@ -661,8 +661,10 @@
       // <NAVIATION
       switch(prc.customerType) {
         case "upgrade":
-          
-          if ( arrayLen(prc.cartLines) gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
+          local.isKeepingPlan = arrayLen(prc.cartLines) gt 1 and structKeyExists(session.cart,"HasExistingPlan") and session.cart.HasExistingPlan;
+          local.isChangingPlan = arrayLen(prc.cartLines) gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan);
+
+          if ( local.isKeepingPlan or local.isChangingPlan  ) {
             prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
           prc.navItemsText = ["Choose Line","Protection &amp; Services","Accessories","Cart Review"];
           } else {

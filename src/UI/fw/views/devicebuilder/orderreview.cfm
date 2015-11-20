@@ -99,7 +99,7 @@
                   <cfelseif structKeyExists(prc,"carrierLogo")>
                     <img src="#prc.carrierLogo#" alt="" /><br />
                   </cfif>
-                  <a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/1">Edit Plan</a><br /><br />
+                  <!--<a href="#event.buildLink('devicebuilder.plans')#/cartLineNumber/1">Edit Plan</a><br /><br />-->
                 </div>
                 <div class="col-md-8 col-xs-10 data">
                   <h3>#prc.cartPlan.companyName# #prc.cartPlan.planName#</h3>
