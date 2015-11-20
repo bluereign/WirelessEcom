@@ -210,15 +210,22 @@
 
 
                 <!--- Display --->
+                <cfif prc.customerType is 'upgrade' and structKeyExists(prc,"subscribers") and local.cartLine.getSubscriberIndex() gt 0>
+                  <cfset local.hasSubscriberNumber = true />
+                <cfelse>
+                  <cfset local.hasSubscriberNumber = false />
+                </cfif>
                 <div class="row <cfif listFindNoCase(prc.listIncompleteCartLineIndex,local.iCartLine)>cartLineProblem</cfif>">
                   <div class="col-md-2 col-xs-6 item">
                     <img src="#imageDetail.src#" alt="#imageDetail.alt#" /><br />
-                    <a href="#event.buildLink('devicebuilder.protection')#/cartLineNumber/#local.iCartLine#">Edit Options</a><br />
+                    <cfif local.hasSubscriberNumber or prc.customerType neq 'upgrade'>
+                      <a href="#event.buildLink('devicebuilder.protection')#/cartLineNumber/#local.iCartLine#">Edit Options</a>
+                    </cfif><br />
                   </div>
                   <div class="col-md-8 col-xs-10 data">
                     <h3>#local.selectedPhone.summaryTitle#</h3>
                     <p>
-                      <cfif prc.customerType is 'upgrade' and structKeyExists(prc,"subscribers") and local.cartLine.getSubscriberIndex() gt 0>
+                      <cfif local.hasSubscriberNumber>
                         #prc.stringUtil.formatPhoneNumber(trim(prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber()))#
                       </cfif>
                       <br />
