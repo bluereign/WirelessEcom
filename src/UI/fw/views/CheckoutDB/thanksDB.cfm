@@ -847,7 +847,9 @@
         <h4 class="modal-title" id="carrierDocHeader">#application.model.checkoutHelper.getCarrierName()#</h4>
       </div>
        <div class="modal-body">
-		    <iframe id="carrierDocEmbed" src="" style="width:100%;height:100%;"></iframe>
+			<div class="modal-body">
+        		<iframe id="carrierDocEmbed" src="" style="width:100%;height:100%;"></iframe>
+        	</div>
       </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
