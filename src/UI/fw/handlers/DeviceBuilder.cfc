@@ -1040,6 +1040,9 @@
       prc.subscribersConflictsUnresolvable = "";
       local.eligibleLineCount = 0;
 
+prc.testIncompatibleOffersArray = [];
+prc.testconflictsResolvableArray = [];
+
       // loop through cartlines and add any cartline's subscriber index to the prc.subscribersInCart list if the line has a device and a subscriber:
       if (arrayLen(prc.cartLines)) {
         for (i = 1; i lte arrayLen(prc.cartLines); i++) {
@@ -1070,13 +1073,24 @@
             ImeiType = prc.productData.ImeiType,
             changePlan = false
           };
+
+          // if the cart has a plan:
+          if ( isQuery(prc.cartPlan) and prc.cartPlan.recordcount ) {
+            local.args_incompatibleOffers.changePlan = true;
+            local.args_incompatibleOffers.planId = prc.cartPlan.productId;
+          }
+
           // call conflictsResolvable() to check if true, false, not found.
           local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers); //true,false,notfound
+arrayAppend(prc.testconflictsResolvableArray,local.args_incompatibleOffers);
 
           if ( compare(local.isConflictsResolvable,'notfound') eq 0 ) {
             // need to call IncompatibleOffer:
             local.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+arrayAppend(prc.testconflictsResolvableArray,local.args_incompatibleOffers);
             local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+arrayAppend(prc.testIncompatibleOffersArray,local.args_incompatibleOffers);
+
           }
 
           if ( compare(local.isConflictsResolvable,'true') eq 0 or compare(local.isConflictsResolvable,'notfound') eq 0 ) {
