@@ -660,6 +660,7 @@
 		<cfargument name="prc">
 		
 		<cfset rc.pdf = base64ToString(session.FinanceAgreementResp.getResponse().FinanceAgreement) />
+		<!---session.carrierfacade.FinanceAgreementResp.FinanceAgreement--->
 		<cfset event.setLayout('viewPdf') />
 		<cfset event.setView('TestFullAPI/ViewPDF') />
 	</cffunction>
