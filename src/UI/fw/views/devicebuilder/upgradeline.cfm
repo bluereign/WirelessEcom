@@ -1,8 +1,8 @@
-<!--- 
+<!---
 prc.testIncompatibleOffersArray : <cfdump var="#prc.testIncompatibleOffersArray#">
 <br>
-prc.testconflictsResolvableArray : <cfdump var="#prc.testconflictsResolvableArray#"> --->
-
+prc.testconflictsResolvableArray : <cfdump var="#prc.testconflictsResolvableArray#">
+--->
 
 <cfparam name="prc.displayBackButton" default="false" />
 <cfoutput>

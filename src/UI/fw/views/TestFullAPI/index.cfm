@@ -23,7 +23,8 @@
 <cfdump var="#session.cartFacade#" expand="false" />
 </cfif>
 
-<cfif structKeyExists(session,"order")>
+<!---<cfif structKeyExists(session,"order") and not structIsEmpty("session.order")>
 <br/>Dump of the newly completed order in memory
 <cfoutput>#session.order.dump()#</cfoutput>
 </cfif>
+--->

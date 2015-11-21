@@ -171,13 +171,11 @@
 			<cfset local.carrierResponse.errorMessage = "Subscriber Number/ImeiType already in cache" />
 		</cfif> 
 		
-		<!--- if the Plan Identifier is the same as  --->
-	
 		<cfif not structKeyExists(local.carrierResponse,"errorMessage") >
 			<cfset local.eligibleCount = 0 />
 			<cfloop list="#local.ImeiTypes#" index="local.i">
-				<cfloop array="#session.carrierfacade.accountResp.Account.subscribers#" index="local.s">	
-					<cfif local.s.upgradeInfo.isEligible>	
+			<cfloop array="#session.carrierfacade.accountResp.Account.subscribers#" index="local.s">	
+				<cfif local.s.upgradeInfo.isEligible and local.s.number is arguments.subscriberNumber>	
 						<cfset local.eligibleCount = local.eligibleCount+1 />
 						<cfset local.incompatibleOffer_args = {
 							subscriberNumber = #local.s.number#,
@@ -224,8 +222,8 @@
 						</cfif>
 						
 						<!--- store the retrieved incompatible offers in the accountResp structure --->
-						<cfset arrayAppend(session.carrierfacade.accountResp.IncompatibleOffers,local.carrierResponse.getResponse())	/>			
-							
+						<cfset arrayAppend(session.carrierfacade.accountResp.IncompatibleOffers,local.carrierResponse.getResponse())	/>
+						<cfbreak/>			
 					</cfif>
 				</cfloop>
 			</cfloop>
@@ -430,6 +428,8 @@
 		</cfif>
 		<!--- Save Finance Agreement --->
 		<cfif isdefined('session.carrierfacade.FinanceAgreementRequest') and isdefined('session.carrierfacade.FinanceAgreementResp')>
+			
+			<cfset local.saveFinanceAgreement = session.carrierFacade.FinanceAgreementResp.FinanceAgreement />
 			<cfset session.carrierFacade.FinanceAgreementResp.FinanceAgreement = "Data removed to save space" />
 			<cfset local.FinanceAgreementRequest = serializeJSonAddReferenceNumber(session.carrierFacade.FinanceAgreementRequest) />
 			<cfset local.FinanceAgreementResp = serializeJSonAddReferenceNumber(session.carrierFacade.FinanceAgreementResp) />
@@ -441,6 +441,7 @@
 				orderResult = "#local.FinanceAgreementResp#"
 			} />
 			<cfset saveSubmitOrder(argumentCollection = local.saveFinanceAgreementArgs) />
+			<cfset session.carrierFacade.FinanceAgreementResp.FinanceAgreement = local.saveFinanceAgreement />
 		</cfif>
 		
 		<cfreturn processResponse(local.carrierResponse) />			

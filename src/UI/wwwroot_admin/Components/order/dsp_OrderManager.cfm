@@ -1042,9 +1042,10 @@
                     	message = "All activations were sucessful";
                     } else {
                     	rc.activationMessages = rc.submitCompletedOrderResponse.getActivationDetail(FORM.OrderId);
+                    	message = "";
                     	for (messageIndex=1; messageIndex LE arraylen(rc.activationMessages); messageIndex = messageIndex+1) {
-                    		messageDetail = rc.activationMessages[messageIndex];
-                    		message = "Subscriber " &messageDetail.subscriberNumber & ": Step " & messageDetail.stepName & " ("  & messageDetail.stepNameDescription & ") - " & messageDetail.exceptionInformation & "<br/>";
+                    		messageDetail = rc.activationMessages[messageIndex];           
+                    		message = message & "Subscriber " & messageDetail.subscriberNumber & ": Step " & messageDetail.stepName & " ("  & messageDetail.stepNameDescription & ") - " & messageDetail.exceptionInformation & "<br/>";
                     	} 
                     }
                     break;
