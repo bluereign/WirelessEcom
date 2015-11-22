@@ -175,7 +175,9 @@
 				<cfset local.newPlanInfo.PlanInfo.ActionCode = "Q" />	
 				<cfset local.newPlanInfo.PlanInfo.isGroupPlan = false />	
 				<cfset local.newPlanInfo.PlanInfo.recurringFee = 0 />	
-				<cfset local.newPlanInfo.AdditionalOfferings = local.subscriber.additionalOfferings />	
+				<cfif isdefined("local.subscriber.additionalOfferings")	>
+					<cfset local.newPlanInfo.AdditionalOffers = local.subscriber.additionalOfferings />	
+				</cfif>
 			</cfif>				
 		</cfif>		
 		
@@ -205,8 +207,8 @@
 							<cfelse>
 								<cfset local.incompatibleOffer_args.planInfo = local.s.planInfo />	
 							</cfif>
-							<cfif structKeyExists(local.newPlanInfo,"additionalOfferings") >
-								<cfset local.incompatibleOffer_args.additionalOffers = local.newPlanInfo.AdditionalOfferings />
+							<cfif structKeyExists(local.newPlanInfo,"additionalOffers") >
+								<cfset local.incompatibleOffer_args.additionalOffers = local.newPlanInfo.AdditionalOffers />
 							</cfif>
 						<cfelse>
 							<cfset local.incompatibleOffer_args.planInfo = local.s.planInfo />
