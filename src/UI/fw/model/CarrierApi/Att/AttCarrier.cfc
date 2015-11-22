@@ -162,6 +162,16 @@
 					<cfset arrayAppend(local.newPlanInfo.AdditionalOffers, local.AttPlanItem) />
 				</cfif>
 			</cfif>
+		<cfelse>
+			<cfif local.subscriber.PlanInfo.Identifier is "SDDVRP">
+				<cfset local.newPlanInfo = structNew() />
+				<cfset local.newPlanInfo.PlanInfo = structNew() />
+				<cfset local.newPlanInfo.PlanInfo.Identifier = "SDDVRP" />	
+				<cfset local.newPlanInfo.PlanInfo.ActionCode = "Q" />	
+				<cfset local.newPlanInfo.PlanInfo.isGroupPlan = false />	
+				<cfset local.newPlanInfo.PlanInfo.recurringFee = 0 />	
+				<cfset local.newPlanInfo.AdditionalOfferings = local.subscriber.additionalOfferings />	
+			</cfif>				
 		</cfif>		
 		
 		<!--- See if we already have the ImeiType cached. If yes, just return --->
@@ -190,8 +200,8 @@
 							<cfelse>
 								<cfset local.incompatibleOffer_args.planInfo = local.s.planInfo />	
 							</cfif>
-							<cfif structKeyExists(local.newPlanInfo,"additionalOffers") >
-								<cfset local.incompatibleOffer_args.additionalOffers = local.newPlanInfo.AdditionalOffers />
+							<cfif structKeyExists(local.newPlanInfo,"additionalOfferings") >
+								<cfset local.incompatibleOffer_args.additionalOffers = local.newPlanInfo.AdditionalOfferings />
 							</cfif>
 						<cfelse>
 							<cfset local.incompatibleOffer_args.planInfo = local.s.planInfo />
