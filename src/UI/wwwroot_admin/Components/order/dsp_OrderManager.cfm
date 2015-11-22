@@ -1039,7 +1039,7 @@
                     
                     /*message = "IS ACTIVATED = " & rc.submitCompletedOrderResponse.getResult() & "  REASON = " & rc.submitCompletedOrderResponse.getResultDetail();*/
                     if (rc.submitCompletedOrderResponse.isActivationSuccessful()) {
-                    	message = "All activations were sucessful";
+                    	message = "All activations were successful";
                     } else {
                     	rc.activationMessages = rc.submitCompletedOrderResponse.getActivationDetail(FORM.OrderId);
                     	message = "";
