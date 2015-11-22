@@ -144,13 +144,18 @@
 			<cfif not structIsEmpty(local.subscriber) >
 				<cfset session.carrierFacade.accountResp.Account.Subscribers[local.subscriber.subscriberIndex].WAFlag_PlanHasChanged = true />
 				<cfset local.newPlanInfo = structNew() />
-				<!--- If the subscriber is changing from non-SDDVRP then add new PlanInfo --->
-				<cfif local.subscriber.PlanInfo.Identifier is not "SDDVRP">
+				<!--- If the subscriber is changing plans then add PlanInfo --->
+
 					<cfset local.newPlanInfo.PlanInfo = structNew() />
 					<cfset local.newPlanInfo.PlanInfo.Identifier = "SDDVRP" />	
-					<cfset local.newPlanInfo.PlanInfo.ActionCode = "A" />	
+					<!--- If already SDDVRP make the action code Q else A --->
+					<cfif local.subscriber.PlanInfo.Identifier is "SDDVRP">					
+						<cfset local.newPlanInfo.PlanInfo.ActionCode = "Q" />	
+					<cfelse>
+						<cfset local.newPlanInfo.PlanInfo.ActionCode = "A" />	
+					</cfif>
 					<cfset local.newPlanInfo.PlanInfo.isGroupPlan = false />	
-				</cfif>	
+
 				<!--- Add the data rate info --->
 				<cfif isdefined("local.subscriber.additionalOfferings")	>
 					<cfset local.newPlanInfo.AdditionalOffers = local.subscriber.additionalOfferings />
