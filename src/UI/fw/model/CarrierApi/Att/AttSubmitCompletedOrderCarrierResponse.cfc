@@ -72,6 +72,9 @@
 					<cfif isdefined("local.or.exceptionInformation") >
 						<cfset local.message.subscriberNumber = getFormattedSubscriberNumber(local.or.identifier, deserializeJson(local.qSubmitCompletedOrder.orderEntry)) />
 						<cfset local.message.exceptionInformation = local.or.exceptionInformation />
+						<cfif local.message.exceptionInformation is "null" and ProcessingComplete is "Yes">
+							<cfset local.message.exceptionInformation = "Successful" />
+						</cfif>
 					</cfif>
 					<cfset arrayAppend(local.return.messages,local.message) />
 				</cfloop>

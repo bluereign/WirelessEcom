@@ -200,7 +200,6 @@
 						<cfset local.body = serializeJSonAddReferenceNumber(local.incompatibleOffer_args) />	
 						<!--- save the request to the session --->
 						<cfset saveToSession(local.incompatibleOffer_args,"IncompatibleOfferRequest") />	
-						<cfset saveToSession(local.body,"IncompatibleOfferRequest_JSON") />
 					
 						<cfhttp url="#variables.CarrierServiceURL#/IncompatibleOffer" method="Post" result="local.cfhttp">
 							<cfhttpparam type="header" name="Content-Type" value="application/json" />
