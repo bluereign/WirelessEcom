@@ -15,6 +15,11 @@
 
 	<cffunction name="account" output="false" access="public" returntype="any">
 		<cfset var local = structNew() />
+		
+		<!--- Clear out the session data --->
+		<cfset structDelete(session,"cartfacade", false) />	
+		<cfset structDelete(session,"carrierfacade", false) />		
+		
 		<cfset saveToSession(arguments,"AccountRequest") />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.beginTicks = getTickCount() />
