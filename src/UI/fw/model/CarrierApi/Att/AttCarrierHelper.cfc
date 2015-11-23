@@ -351,6 +351,11 @@
 			</cfloop>
 		</cfif>
 		
+		<!--- Copy the data plan ( session.carrierfacade.currentDataPlan ) to the addtionalOfferings  --->
+		<cfif isDefined("session.carrierfacade.currentDataPlan") >
+			<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,session.carrierfacade.currentDataPlan) />
+		</cfif>
+		
 		<!--- determine the appropriate upgradeQualificationDetails to use --->
 		<cfloop array="#arguments.faai.attDeviceOrderItem.subscriber.upgradeQualifications.qualificationDetails[1].BaseOfferQualificationDetails#" index="local.boqd">
 			<cfif local.boqd.planIdentifier is local.subscriberPaymentPlan.planIdentifier>
