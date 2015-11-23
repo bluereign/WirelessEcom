@@ -726,10 +726,24 @@
 		
 		<cfset variables.order.populateFromCart(session.cart) />
 		<cfset variables.order.populateFromCheckoutHelper() />
-
-		<!---<cfif session.currentUser.getUserID() NEQ "" AND application.model.user.isUserOrderAssistanceOn( session.currentUser.getUserID() )>
-			<cfset order.setOrderAssistanceUsed( true ) />
-		</cfif>--->
+		
+		<cfset prc.cartLines = session.cart.getLines()/>
+		<cfset prc.subscribers = session.carrierObj.getSubscribers() />
+		<cfset prc.customerType = listLast(session.cart.getActivationType(), '-')/>
+		<cfset wirelesslines = variables.order.getWirelesslines() />
+		
+		<cfif arrayLen(prc.cartLines)>
+			<cfloop from="1" to="#arrayLen(prc.cartLines)#" index="local.iCartLine">
+                <cfset local.cartLine = prc.cartLines[local.iCartLine] />
+				<cfif prc.customerType is 'upgrade' and structKeyExists(prc,"subscribers") and local.cartLine.getSubscriberIndex() gt 0>				
+                    <cfset currentMDN = prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber() />
+                    <cfset wirelesslines[local.iCartLine].setCurrentMDN(currentMDN)/>
+                </cfif>
+           	</cfloop>
+        </cfif>
+			
+			
+			
 		
 		<cfset variables.order.save() />	
 		
