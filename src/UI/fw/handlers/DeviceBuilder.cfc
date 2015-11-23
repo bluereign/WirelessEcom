@@ -895,6 +895,10 @@
 
       // switch(rc.type) {
 
+      if (!structKeyExists(prc,"productData")) {
+        prc.productData = application.model.phone.getByFilter(idList = rc.pid, allowHidden = true);
+      }
+
       switch(prc.customerType) {
         case "upgrade":
           prc.inputSSNTooltipTitle = "Enter the last 4 numbers of the primary account holder's or authorized user's social security number to access account information to verify which phone numbers are eligible for upgrade.";
@@ -935,7 +939,7 @@
     <cfparam name="rc.inputPhone2" default="" />
     <cfparam name="rc.inputPhone3" default="" />
     <cfparam name="rc.inputZip" default="" />
-    <cfparam name="rc.inputSSN" default="" />
+    <cfparam name="rc.inputSSN" default="9999" />
     <cfparam name="rc.inputPin" default="" />
 
     <cfscript>

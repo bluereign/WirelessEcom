@@ -135,7 +135,8 @@
 	request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = "109";
 	request.config.DeviceBuilder.carriersAllowUpdate = "109";
 	request.config.DeviceBuilder.carriersAllowAddaline = "";
-	request.config.DeviceBuilder.carriersAllowNew = "";
+   request.config.DeviceBuilder.carriersAllowNew = "";
+   request.config.DeviceBuilder.carriersRequireSSN = "";
 </cfscript>
 
 <!--- TRV: include our rateplanControl data for this environment --->

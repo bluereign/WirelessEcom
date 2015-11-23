@@ -16,7 +16,7 @@
         <p>To find the lines that qualify for upgrade we must verify your account with #prc.carrierName#. <!--- (carrierId: #prc.productData.carrierId#) ---></p>
       </header>
 
-      <img alt="" src="#assetPaths.channel#images/Trustwave.gif" alt="Trustwave" class="trustwave">
+      <img alt="" src="#assetPaths.common#images/Trustwave.gif" alt="Trustwave" class="trustwave">
       <form id="carrierLoginForm" action="#event.buildLink('devicebuilder.carrierLoginPost')#" method="post">
         <div class="right">
           <a href="#prc.prevStep#">BACK</a>
@@ -37,11 +37,13 @@
           <label for="inputZip">Billing ZIP Code</label>
           <input type="text" tabindex="4" class="form-control" id="inputZip" name="inputZip" value="<cfif isDefined('rc.inputZip')>#rc.inputZip#</cfif>" maxlength="5" />
         </div>
-        <div class="form-group form-inline ssn">
-          <label for="inputSSN">Last 4 Digits of Social Security Number</label>
-          <input type="password" tabindex="5" class="form-control" id="inputSSN" name="inputSSN" value="<cfif isDefined('rc.inputSSN')>#rc.inputSSN#</cfif>" maxlength="4" />
-          <a href="##" data-toggle="tooltip" title="#prc.inputSSNTooltipTitle#" id="inputSSNToolTip">Whose SSN do I use?</a>
-        </div>
+        <cfif listFindNoCase(request.config.DeviceBuilder.carriersRequireSSN,prc.productData.carrierId,'|')>
+          <div class="form-group form-inline ssn">
+            <label for="inputSSN">Last 4 Digits of Social Security Number</label>
+            <input type="password" tabindex="5" class="form-control" id="inputSSN" name="inputSSN" value="<cfif isDefined('rc.inputSSN')>#rc.inputSSN#</cfif>" maxlength="4" />
+            <a href="##" data-toggle="tooltip" title="#prc.inputSSNTooltipTitle#" id="inputSSNToolTip">Whose SSN do I use?</a>
+          </div>
+        </cfif>
         <div class="form-group form-inline pin">
           <label for="inputPin">AT&amp;T Account Passcode</label>
           <input type="password" tabindex="6" class="form-control" id="inputPin" name="inputPin" value="<cfif isDefined('rc.inputPin')>#rc.inputPin#</cfif>" maxlength="20" />

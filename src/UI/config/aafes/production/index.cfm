@@ -126,6 +126,7 @@
 	request.config.DeviceBuilder.carriersAllowUpdate = "";
 	request.config.DeviceBuilder.carriersAllowAddaline = "";
 	request.config.DeviceBuilder.carriersAllowNew = "";
+	request.config.DeviceBuilder.carriersRequireSSN = "";
 </cfscript>
 
 <!--- MAC: Carrier service endpoints, included because it can be diff on diff prod servers --->
