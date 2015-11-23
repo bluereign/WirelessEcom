@@ -1160,7 +1160,7 @@
         type="html">
    		Please find attached your requested document.
    		<cfmailparam
-                file="FinanceAgreement.pdf"
+                file="Costco_Order_#session.checkout.OrderId#_FinanceAgreement.pdf"
                 content="#toBinary(session.financeAgreementResp.getResponse().FinanceAgreement)#"
                 type="application/pdf"
                 />
