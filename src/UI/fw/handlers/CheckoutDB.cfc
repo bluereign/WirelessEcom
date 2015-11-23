@@ -732,6 +732,7 @@
 		<cfset prc.customerType = listLast(session.cart.getActivationType(), '-')/>
 		<cfset wirelesslines = variables.order.getWirelesslines() />
 		
+		<!--- Populating CurrentMDN from subscriber list --->
 		<cfif arrayLen(prc.cartLines)>
 			<cfloop from="1" to="#arrayLen(prc.cartLines)#" index="local.iCartLine">
                 <cfset local.cartLine = prc.cartLines[local.iCartLine] />
@@ -741,10 +742,7 @@
                 </cfif>
            	</cfloop>
         </cfif>
-			
-			
-			
-		
+
 		<cfset variables.order.save() />	
 		
 		<cfif session.cart.hasPromotions()>
