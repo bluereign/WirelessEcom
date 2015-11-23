@@ -1228,14 +1228,14 @@
         <cfset var local = structNew()>
         <cfset local.ref = GetTickCount()>
 
-		<cfif structKeyExists(session,"cartFacade") and isDefined("session.cartFacade.ReferenceNumber")>
-			<cfreturn getReferenceNumber() />	
-		</cfif>
-		
-        <cfif session.cart.getCarrierId() eq "42">
+		<cfif session.cart.getCarrierId() eq "42">
        		<Cfset local.ref = "WAC" & local.ref>
+       	<cfelse>
+       		<cfif structKeyExists(session,"cartFacade") and isDefined("session.cartFacade.ReferenceNumber")>
+				<cfreturn getReferenceNumber() />	
+			</cfif>
         </cfif>
-		
+
 		<cfset saveToSession(local.ref,"ReferenceNumber") />
 
         <cfreturn local.ref>

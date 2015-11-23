@@ -263,11 +263,6 @@
 		<cfset var channelConfig = application.wirebox.getInstance("ChannelConfig") >
 		<cfset var local = structNew()>
 		
-		<!--- Get current MDN and set it --->
-		<cfif isDefined('session.carrierfacade.AccountRequest.subscribernumber')>
-			<cfset this.setCurrentMDN(session.carrierfacade.AccountRequest.subscribernumber)>
-		</cfif>
-		
 		<!--- save linedevice --->
 		<cfif this.getLineDevice().getIsDirty() and this.getLineDevice().getOrderId() neq this.getOrderId()>
 			<cfset this.getLineDevice().setOrderId(this.getOrderId())>
