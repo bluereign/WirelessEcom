@@ -455,7 +455,8 @@
 							<cfif arguments.order.getScenarioId() eq 2>
 								DD#RemoveChars(Trim(arguments.order.getUserId()),2,1)#<!---Using DD version of customer ID --->
 							<cfelse>
-								#Trim(application.model.util.convertToGersId( arguments.order.getUserId() ))#
+								<!---#Trim(application.model.util.convertToGersId( arguments.order.getUserId() ))#--->
+								EC#RemoveChars(Trim(arguments.order.getUserId()),2,1)#
 							</cfif>
 					</div>
 					<div>
