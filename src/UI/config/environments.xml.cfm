@@ -179,6 +179,8 @@
 			<pattern>^10\.7\.0\.111</pattern>
 			<pattern>^10\.7\.0\.120</pattern>
 			<pattern>^10\.7\.0\.121</pattern>			
+			<pattern>^10\.7\.0\.230</pattern>			
+			<pattern>^10\.7\.0\.231</pattern>			
 			<!-- AAFES -->
 			<pattern>^www.aafesmobile.com</pattern>
 			<pattern>^aafesmobile.com</pattern>
