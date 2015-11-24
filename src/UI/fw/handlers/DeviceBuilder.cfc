@@ -942,6 +942,12 @@
     <cfparam name="rc.inputSSN" default="9999" />
     <cfparam name="rc.inputPin" default="" />
 
+    
+    <!--- optional: Set a requestTimeOut for a "Not to go longer than ____ seconds" option --->
+    <!--- <cfsetting requesttimeout="30"> --->
+    
+    <cftry>
+      
     <cfscript>
       // SIMPLE SERVER-SIDE VALIDATION
       // AND len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
@@ -1028,6 +1034,17 @@
         }
       };
     </cfscript>
+
+    <cfcatch type="any">
+      <cfscript>
+        rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+            setNextEvent(
+              event="devicebuilder.carrierLogin",
+              persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
+      </cfscript>
+    </cfcatch>
+    </cftry>
+
   </cffunction>
 
 
