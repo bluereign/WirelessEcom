@@ -325,7 +325,7 @@
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
-      if ( structKeyExists(rc,"HasExistingPlan")  ) {
+      if ( structKeyExists(rc,"HasExistingPlan") and rc.HasExistingPlan is 'Yes'  ) {
         // session.DBuilderCart.setHasExistingPlan(rc.HasExistingPlan);
         session.cart.HasExistingPlan = rc.HasExistingPlan;
         session.cart.setUpgradeType('equipment-only');
