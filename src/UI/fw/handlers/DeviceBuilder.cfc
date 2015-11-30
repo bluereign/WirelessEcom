@@ -545,10 +545,11 @@
         }
 
         cartArgs = {
-          cartLineNumber = rc.cartLineNumber,
+          cartLineNumber = request.config.otherItemsLineNumber,
           product_id = addaccessory,
           qty = rc.accessoryqty
         };
+        // cartLineNumber = rc.cartLineNumber
 
         // session.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
         application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
@@ -557,10 +558,11 @@
       // <ACCESSORIES - remove accessory
       if ( structKeyExists(rc,"removeaccessory")  and len(trim(rc.removeaccessory)) ) {
         cartArgs = {
-          cartLineNumber = rc.cartLineNumber,
+          cartLineNumber = request.config.otherItemsLineNumber,
           product_id = removeaccessory,
           qty = 0
         };
+        // cartLineNumber = rc.cartLineNumber
         // session.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
         application.model.dBuilderCartFacade.updateAccessoryQty(argumentCollection = cartArgs);
       }
@@ -568,9 +570,10 @@
       if (arrayLen(prc.cartLines)) {    
         // get cartline accessories
         cartArgs = {
-          line = rc.cartLineNumber,
+          line = request.config.otherItemsLineNumber,
           type = "accessory"
         };
+        // line = rc.cartLineNumber
         prc.aAccessories = session.cartHelper.lineGetAccessoriesByType(argumentCollection = cartArgs);
         prc.selectedAccessories = "";
         if (arrayLen(prc.aAccessories)) {
@@ -855,7 +858,8 @@
           prc.lineBundledAccessories = session.cartHelper.lineGetAccessoriesByType(line = rc.cartLineNumber, type = 'bundled');
           prc.lineFeatures = prc.cartLine.getFeatures();
           // prc.lineAccessories = session.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
-          prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
+          // prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(rc.cartLineNumber);
+          prc.lineAccessories = application.model.dBuilderCartFacade.getAccessories(request.config.otherItemsLineNumber);
         }
         // <end tally box
       }
