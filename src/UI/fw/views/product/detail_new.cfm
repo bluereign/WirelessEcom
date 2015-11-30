@@ -1292,7 +1292,8 @@ $j(document).ready(function($j) {
 										<strong style="font-size:16px;">New #prc.productData.carrierName# customer?</strong>
 										<br />
 										<br />
-										<p>Please visit your local Costco warehouse Wireless Center if you would like to switch to #prc.productData.carrierName#.</p>
+										<!--- <p>Please visit your local Costco warehouse Wireless Center if you would like to switch to #prc.productData.carrierName#.</p> --->
+										<p>Please visit your local #request.config.channelDisplayName# Wireless Center if you would like to switch to #prc.productData.carrierName#.</p>
 										<br />
 										<br />
 										<div class="row center-block">

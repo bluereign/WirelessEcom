@@ -5,6 +5,7 @@
    request.config.layout = 'pagemaster';
    request.config.skin = 'pagemaster';
    request.config.channelName = 'pagemaster';
+   request.config.channelDisplayName = 'Pagemaster';
 
    request.config.bFriendlyErrorPages = false;
    url.reinit = false; //TODO: Replace with config property

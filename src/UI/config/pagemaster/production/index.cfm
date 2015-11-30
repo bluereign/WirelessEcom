@@ -5,9 +5,9 @@
 	request.config.layout = 'pagemaster';
 	request.config.skin = 'pagemaster';
 	request.config.channelName = 'pagemaster';
+	request.config.channelDisplayName = 'Pagemaster';
 	
 	request.config.bFriendlyErrorPages = true;
-
 	url.reinit = false; //TODO: Replace with config property
 
 	// TRV: adding a reference to the fake line number value we'll use for the 'other items' portion of the cart

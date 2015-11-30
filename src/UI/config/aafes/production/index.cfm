@@ -5,9 +5,9 @@
 	request.config.layout = 'aafes';
 	request.config.skin = 'aafes';
 	request.config.channelName = 'aafes';
+	request.config.channelDisplayName = 'Exchange Mobile Center';
 
 	request.config.bFriendlyErrorPages = true;
-
 	url.reinit = false; //TODO: Replace with config property
 
 	// TRV: adding a reference to the fake line number value we'll use for the 'other items' portion of the cart

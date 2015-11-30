@@ -5,6 +5,7 @@
    request.config.layout = 'aafes';
    request.config.skin = 'aafes';
    request.config.channelName = 'aafes';
+   request.config.channelDisplayName = 'Exchange Mobile Center';
 
    request.config.bFriendlyErrorPages = false;
    //url.reinit = true; //TODO: Replace with config property

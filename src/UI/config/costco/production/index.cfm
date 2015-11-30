@@ -5,6 +5,7 @@
 	request.config.layout = 'costco';
 	request.config.skin = 'costco';
 	request.config.channelName = 'costco';
+	request.config.channelDisplayName = 'Costco Wholesale';
 	
 	request.config.bFriendlyErrorPages = true;
 
