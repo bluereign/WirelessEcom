@@ -2,6 +2,7 @@
 <cfset local = {} />
 <cfset xmlReturn = "" />
 <cfset sendDebug = true />
+<cfset bcc = "shamilton@wirelessadvocates.com;achappell@wirelessadvocates.com" />
 
 <cfset debugTxt = 'TMONotification started #dateformat(now(),"mm/dd/yyyy")# at #timeformat(now(),"hh:mm:ss tt")#' />
 
@@ -21,7 +22,6 @@ returnCode = "yes">--->
 	
 <!--- setting email variable locally so that the footer is not dependent on a specific object for the email value --->
 <cfset email = "#tmoOrders.emailAddress#" />
-<cfset bcc = "shamilton@wirelessadvocates.com;achappell@wirelessadvocates.com" />
 <cfset sendFrom = request.config.customerServiceEmail />
 <cfset subject = "Order Received" />
 
