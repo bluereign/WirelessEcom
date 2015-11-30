@@ -275,7 +275,9 @@ Optional Methods
   "^10\.7\.0\.121",				//Prod 4 Instance-A
   "^10\.7\.0\.230",				//Prod 5 Instance-Default
   "^10\.7\.0\.231",				//Prod 5 Instance-A
-  "^10\.7\.0\.85",				//Prod OMT
+  "^10\.7\.0\.232",				//Prod 5 Instance-Default
+  "^10\.7\.0\.233",				//Prod 5 Instance-A
+ "^10\.7\.0\.85",				//Prod OMT
   "^10\.7\.0\.221:85",			//Prod OMT (Utility Box)
   "^10\.7\.0\.132",				//Prod 1 VFD_Costco_PROD_A
   "^10\.7\.0\.133",				//Prod 1 VFD_Costco_PROD_B
