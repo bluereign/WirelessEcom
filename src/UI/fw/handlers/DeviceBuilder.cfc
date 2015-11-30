@@ -948,101 +948,101 @@
     
     <cftry>
       
-    <cfscript>
-      // SIMPLE SERVER-SIDE VALIDATION
-      // AND len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
-      if ( 
-          !(
-            len(trim(rc.inputPhone1)) eq 3
-            AND
-            isNumeric(trim(rc.inputPhone1))
-            AND
-            len(trim(rc.inputPhone2)) eq 3
-            AND
-            isNumeric(trim(rc.inputPhone2))
-            AND
-            len(trim(rc.inputZip)) gte 5 and len(trim(rc.inputZip)) lte 10
-            AND
-            isNumeric(left(trim(rc.inputZip), 5))
-            AND
-            isNumeric(right(trim(rc.inputZip), 4))
-          )
-        ) {
-        rc.carrierResponseMessage = "There was an issue with the values you entered.  Please double check each value and then try again.";
-        setNextEvent(
-          event="devicebuilder.carrierLogin",
-          persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
-      }
-      // <end simple validation
-
-
-      switch (prc.productData.carrierId) {
-        // AT&T carrierId = 109, VZW carrierId = 42
-        case 109: case 42: {
-          rc.PhoneNumber = trim(rc.inputPhone1) & trim(rc.inputPhone2) & trim(rc.inputPhone3);
-          accountArgs = {
-            carrierId = prc.productData.carrierId,
-            SubscriberNumber = rc.PhoneNumber,
-            ZipCode = trim(rc.inputZip),
-            SecurityId = trim(rc.inputSSN),
-            Passcode = trim(rc.inputPin),
-            productId = prc.productData.productId
-          };
-
-          if (prc.customerType is "upgrade") {
-            accountArgs.requestType = 1;
-          }
-
-          // rc.accountArgs = accountArgs;
-          // for testing purposes/development (carrierloginpost.cfm):
-          rc.respObj = carrierFacade.Account(argumentCollection = accountArgs);
-          rc.message = rc.respObj.getHttpStatus();
-
-          // if (rc.respObj.getResult() is 'true') {
-          if (rc.respObj.getResultDetail() is 'success') {
-          
-            session.carrierObj = rc.respObj;
-            session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
-            session.cart.setCarrierId(session.carrierObj.getCarrierId());
-
-            if (session.carrierObj.getCarrierId() eq prc.carrierIdAtt) {
-              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
-            } else if (session.carrierObj.carrierId eq prc.carrierIdVzw) {
-              session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
-            }
-
-            // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
-            setNextEvent(
-              event="#rc.nextAction#",
-              persist="type,pid,finance,cartLineNumber");
-
-          } else {
-            rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
-            setNextEvent(
-              event="devicebuilder.carrierLogin",
-              persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
-          }
-          break;
-        }
-        // Other carriers
-        // TODO: Determine how to handle the off chance of a customer arriving here with a device that's not AT&T or Verizon
-        default: {
-          rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T or Verizon device.  Please try again with an AT&T or Verizon device. (carrierId: #prc.productData.carrierId#)";
+      <cfscript>
+        // SIMPLE SERVER-SIDE VALIDATION
+        // AND len(rc.inputPin) gte 4 and len(rc.inputPin) lte 10
+        if ( 
+            !(
+              len(trim(rc.inputPhone1)) eq 3
+              AND
+              isNumeric(trim(rc.inputPhone1))
+              AND
+              len(trim(rc.inputPhone2)) eq 3
+              AND
+              isNumeric(trim(rc.inputPhone2))
+              AND
+              len(trim(rc.inputZip)) gte 5 and len(trim(rc.inputZip)) lte 10
+              AND
+              isNumeric(left(trim(rc.inputZip), 5))
+              AND
+              isNumeric(right(trim(rc.inputZip), 4))
+            )
+          ) {
+          rc.carrierResponseMessage = "There was an issue with the values you entered.  Please double check each value and then try again.";
           setNextEvent(
             event="devicebuilder.carrierLogin",
             persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
         }
-      };
-    </cfscript>
+        // <end simple validation
 
-    <cfcatch type="any">
-      <cfscript>
-        rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+
+        switch (prc.productData.carrierId) {
+          // AT&T carrierId = 109, VZW carrierId = 42
+          case 109: case 42: {
+            rc.PhoneNumber = trim(rc.inputPhone1) & trim(rc.inputPhone2) & trim(rc.inputPhone3);
+            accountArgs = {
+              carrierId = prc.productData.carrierId,
+              SubscriberNumber = rc.PhoneNumber,
+              ZipCode = trim(rc.inputZip),
+              SecurityId = trim(rc.inputSSN),
+              Passcode = trim(rc.inputPin),
+              productId = prc.productData.productId
+            };
+
+            if (prc.customerType is "upgrade") {
+              accountArgs.requestType = 1;
+            }
+
+            // rc.accountArgs = accountArgs;
+            // for testing purposes/development (carrierloginpost.cfm):
+            rc.respObj = carrierFacade.Account(argumentCollection = accountArgs);
+            rc.message = rc.respObj.getHttpStatus();
+
+            // if (rc.respObj.getResult() is 'true') {
+            if (rc.respObj.getResultDetail() is 'success') {
+            
+              session.carrierObj = rc.respObj;
+              session.cart.setZipcode(listFirst(session.carrierObj.getAddress().getZipCode(), '-'));
+              session.cart.setCarrierId(session.carrierObj.getCarrierId());
+
+              if (session.carrierObj.getCarrierId() eq prc.carrierIdAtt) {
+                session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/att_175.gif";
+              } else if (session.carrierObj.carrierId eq prc.carrierIdVzw) {
+                session.carrierObj.carrierLogo = "#prc.assetPaths.common#images/carrierLogos/verizon_175.gif";
+              }
+
+              // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
+              setNextEvent(
+                event="#rc.nextAction#",
+                persist="type,pid,finance,cartLineNumber");
+
+            } else {
+              rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+              setNextEvent(
+                event="devicebuilder.carrierLogin",
+                persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
+            }
+            break;
+          }
+          // Other carriers
+          // TODO: Determine how to handle the off chance of a customer arriving here with a device that's not AT&T or Verizon
+          default: {
+            rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T or Verizon device.  Please try again with an AT&T or Verizon device. (carrierId: #prc.productData.carrierId#)";
             setNextEvent(
               event="devicebuilder.carrierLogin",
               persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
+          }
+        };
       </cfscript>
-    </cfcatch>
+
+      <cfcatch type="any">
+        <cfscript>
+          rc.carrierResponseMessage = "The response has timed out. We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+              setNextEvent(
+                event="devicebuilder.carrierLogin",
+                persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
+        </cfscript>
+      </cfcatch>
     </cftry>
 
   </cffunction>
