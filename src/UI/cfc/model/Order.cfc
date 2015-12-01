@@ -1901,7 +1901,7 @@
 		<cfset var local = structNew()>
         <cfif this.getOrderId() gt 0>
             <cfquery name="local.getTotal" datasource="#application.dsn.wirelessAdvocates#">
-                select (SUM(NetPrice + Taxes)) + (select sum(ShipCost) from salesorder.[Order] where OrderId = od.OrderId) as total from salesorder.OrderDetail od
+                select (SUM(NetPrice + Taxes)) + COALESCE(SUM(DownPaymentReceived),0) + (select sum(ShipCost) from salesorder.[Order] where OrderId = od.OrderId) as total from salesorder.OrderDetail od
                 group by od.OrderId
                 having od.OrderId = #this.getorderId()#
             </cfquery>

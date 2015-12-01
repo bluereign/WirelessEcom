@@ -1121,7 +1121,7 @@
 											</table>
 										</td>
 
-										<cfset local.dueTodayTotal = (local.dueTodayTotal + local.line.getLineDevice().getNetPrice()) />
+										<cfset local.dueTodayTotal = (local.dueTodayTotal + local.line.getLineDevice().getNetPrice() + local.line.getLineDevice().getDownPaymentReceived()) />
 										<cfset local.totalTax = (local.totalTax + local.line.getLineDevice().getTaxes()) />
 
 										<td style="font-weight: bold; text-align:right; #local.right#"  valign="top" bgcolor="##DCDFF8" >
@@ -1131,8 +1131,8 @@
 													<br />
 													<span style="color:##FF0000">-#dollarFormat(local.line.getLineDevice().getRebate())#</span>
 												</cfif>
-											<cfelse> <!--- Financed phones are nothing due today --->
-												&nbsp;
+											<cfelse> <!--- Financed phones are nothing due today unless it is a downpayment--->
+												<cfif local.line.getLineDevice().getDownPaymentReceived() gt 0>#dollarFormat(local.line.getLineDevice().getDownPaymentReceived())#<cfelse>&nbsp;</cfif>
 											</cfif>
 										</td>
 										<td style="#local.right# text-align:right;" valign="top">
@@ -1340,7 +1340,7 @@
 														<!---<cfset LineContainsKeepExistingService = true />--->
 														N/A
 													<cfelse>
-														<cfif (local.orderDetail.getPurchaseType() eq "FP") AND (len(local.service.getEstimatedFinancedMonthly()))>
+														<cfif (local.orderDetail.getPurchaseType() eq "FP") AND (getChannelConfig().getVfdEnabled()) AND (len(local.service.getEstimatedFinancedMonthly()))>
 															#dollarFormat(local.service.getEstimatedFinancedMonthly())#
 														<cfelse>
 															#dollarFormat(local.service.getEstimatedMonthly())# 
@@ -1351,7 +1351,7 @@
 													<!--- <cfif local.service.getProductId() eq request.config.keepExistingService.productId>
 														N/A
 													<cfelse> --->
-													<cfif (local.orderDetail.getPurchaseType() eq "FP") AND (len(local.service.getEstimatedFinancedMonthly()))>
+													<cfif (local.orderDetail.getPurchaseType() eq "FP") AND (getChannelConfig().getVfdEnabled()) AND (len(local.service.getEstimatedFinancedMonthly()))>
 														#dollarFormat(local.service.getEstimatedFinancedMonthly())#
 													<cfelse>
 														#dollarFormat(local.service.getEstimatedMonthly())# 
@@ -2098,11 +2098,11 @@
 											</table>
 										</td>
 
-										<cfset local.dueTodayTotal = (local.dueTodayTotal + local.line.getLineDevice().getNetPrice()) />
+										<cfset local.dueTodayTotal = (local.dueTodayTotal + local.line.getLineDevice().getNetPrice() + local.line.getLineDevice().getDownPaymentReceived()) />
 										<cfset local.totalTax = (local.totalTax + local.line.getLineDevice().getTaxes()) />
 
 										<td class="totalRow today">
-											#dollarFormat(local.line.getLineDevice().getNetPrice() + local.line.getLineDevice().getRebate())#
+											#dollarFormat(local.line.getLineDevice().getNetPrice() + local.line.getLineDevice().getRebate() + local.line.getLineDevice().getDownPaymentReceived())#
 											<cfif local.line.getLineDevice().getRebate() gt 0>
 												<br />
 												<span style="color:##FF0000">-#dollarFormat(local.line.getLineDevice().getRebate())#</span>
