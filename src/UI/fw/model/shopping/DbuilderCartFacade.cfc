@@ -1245,7 +1245,7 @@
 		<cfif structKeyExists(session,"cartFacade") and isDefined("session.cartFacade.ReferenceNumber")>
 			<cfreturn session.cartFacade.ReferenceNumber />
 		<cfelse>
-			<cfset generateReferenceNumber() />
+			<cfreturn generateReferenceNumber() />
 		</cfif>
 	</cffunction>
 	

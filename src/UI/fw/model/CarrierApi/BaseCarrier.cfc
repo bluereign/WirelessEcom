@@ -72,8 +72,12 @@
 		<cfset var local = structNew() />
 		<cfset local.resp = arguments.carrierResponse.getResponse() />
 		<cfif structKeyExists(local.resp,"ResponseStatusMessage") and len(local.resp.ResponseStatusMessage) and local.resp.ResponseStatusMessage is not "null">
-			<cfset arguments.carrierResponse.setResult(false) />
 			<cfset arguments.carrierResponse.setResultDetail(local.resp.ResponseStatusMessage) />
+			<cfif local.resp.ResponseStatusMessage is "success">
+				<cfset arguments.carrierResponse.setResult(true) />
+			<cfelse>
+				<cfset arguments.carrierResponse.setResult(false) />
+			</cfif>
 		<cfelse>			
 			<cfset arguments.carrierResponse.setResult(true) />
 			<cfset arguments.carrierResponse.setResultDetail("Success") />
