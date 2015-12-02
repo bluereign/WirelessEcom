@@ -37,8 +37,20 @@
 		<cflocation url="/index.cfm/go/checkout/do/error/?code=50" addtoken="false" />
 	</cfif>
 
-	<cfif cgi.server_port neq 443 and not request.config.disableSSL>
-		<cflocation url="https://#cgi.HTTP_HOST##cgi.path_info#" addtoken="false" />
+	<cfif ChannelConfig.getEnvironment() eq 'production'>
+		<cfif channelConfig.getVFDEnabled()>
+			<cfif cgi.server_port neq 443 and not request.config.disableSSL>
+				<cflocation url="https://costcodirectdelivery.wasvcs.com/#cgi.path_info#" addtoken="false" />
+			</cfif>
+		<cfelse>
+			<cfif cgi.server_port neq 443 and not request.config.disableSSL>
+				<cflocation url="https://membershipwireless.com#cgi.path_info#" addtoken="false" />
+			</cfif>
+		</cfif>
+	<cfelse>
+		<cfif cgi.server_port neq 443 and not request.config.disableSSL>
+			<cflocation url="https://#cgi.HTTP_HOST##cgi.path_info#" addtoken="false" />
+		</cfif>
 	</cfif>
 
 	<cfif not structKeyExists(session, 'currentUser')>
