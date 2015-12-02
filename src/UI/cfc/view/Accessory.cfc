@@ -732,6 +732,11 @@
 			<cfoutput>
 				<cfif arguments.availableQty lte 0>
 					<a class="DisabledButton" href="##" onclick="alert('#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockAlertText()#');return false;"><span>#application.wirebox.getInstance("TextDisplayRenderer").getOutOfStockButtonText()#</span></a>
+				<cfelseif arrayLen(session.cart.getLines()) and listFindNoCase(request.config.DeviceBuilder.carriersAllowFullAPIAddToCart,session.cart.getCarrierId(),"|") and session.cart.getActivationType() contains 'finance'>
+					
+					<a class="ActionButton" href="##" onClick="AddAccessoryToDeviceBuilder(#arguments.productID#,<cfif not arguments.fixedQty>document.getElementById('qty_#arguments.productID#').value<cfelse>1</cfif>);return false;"><span>Add to Cart</span></a>
+					<!--- accessoryqty/ --->
+					<!--- <cfif not arguments.fixedQty>document.getElementById('qty_#arguments.productID#').value<cfelse>1</cfif> --->
 				<cfelse>
 					<a class="ActionButton" href="##" onclick="addToCart('accessory','#arguments.productId#',<cfif not arguments.fixedQty>document.getElementById('qty_#arguments.productID#').value<cfelse>1</cfif><cfif request.config.enforceInventoryRestrictions>,#arguments.availableQty#</cfif>);return false;"><span>Add to Cart</span></a>
 				</cfif>

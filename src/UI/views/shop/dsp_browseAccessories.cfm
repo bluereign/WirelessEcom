@@ -3,6 +3,16 @@
 <cfparam name="accessoryHTML" type="string" default="">
 
 <cfoutput>
+	<script>
+		function AddAccessoryToDeviceBuilder(productid,qty) {
+			var addUrl = '/devicebuilder/orderreview/addaccessory/' + productid + '/';
+			if (qty > 1) {
+				var addUrl = addUrl + 'accessoryqty/' + qty + '/';
+			}
+			window.location.href = addUrl;
+			return false;
+		}
+	</script>
 
 	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>

@@ -546,7 +546,7 @@
 
         cartArgs = {
           cartLineNumber = request.config.otherItemsLineNumber,
-          product_id = addaccessory,
+          product_id = rc.addaccessory,
           qty = rc.accessoryqty
         };
         // cartLineNumber = rc.cartLineNumber

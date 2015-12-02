@@ -113,6 +113,11 @@
 		<cfif structKeyExists(url,"reservice")>
 		    <cfset application.view.serviceManager = createObject('component', 'cfc.view.serviceManager').init() >
 		</cfif>
+		<cfif structKeyExists(url,"reacc")>
+			<cfset application.view.accessory = createObject('component', 'cfc.view.Accessory').init() >
+		</cfif>
+
+
 		<!--- End --->
 
 		
