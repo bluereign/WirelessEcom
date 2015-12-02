@@ -1021,7 +1021,7 @@
                 persist="type,pid,finance,cartLineNumber");
 
             } else {
-              rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  Please try again.";
+              rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  If you need assistance verifying your login credentials, please call AT&T at 1(800)331-0500.";
               setNextEvent(
                 event="devicebuilder.carrierLogin",
                 persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
