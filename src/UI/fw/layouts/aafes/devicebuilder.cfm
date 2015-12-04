@@ -5,4 +5,4 @@
   <cfoutput>#renderView()#</cfoutput>
 </cfsavecontent>
 
-<cfinclude template="/layouts/costco/devicebuilder.cfm" />
+<cfinclude template="/layouts/aafes/devicebuilder.cfm" />
