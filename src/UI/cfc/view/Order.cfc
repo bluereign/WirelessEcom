@@ -1223,7 +1223,7 @@
 										 		<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 										 			N/A <sup class="cartReview"><a href="##footnote5">6</a></sup>
 										 		<cfelseif local.order.getCarrierId() eq 42>
-										 			See carrier bill
+										 			See Carrier Account
 										 		<cfelse>
 										 			#dollarFormat(local.line.getMonthlyFee())#
 										 		</cfif>
@@ -1232,7 +1232,7 @@
 										 		<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 										 			N/A <sup class="cartReview"><a href="##footnote5">6</a></sup>
 										 		<cfelseif local.order.getCarrierId() eq 42>
-										 			See carrier bill
+										 			See Carrier Account
 										 		<cfelse>
 										 			#dollarFormat(local.line.getMonthlyFee())#
 										 		</cfif>
@@ -1338,7 +1338,7 @@
 												<td style="#local.right# text-align:right;" valign="top">
 													<cfif local.order.getCarrierId() eq 42 <!---or local.service.getProductId() eq request.config.keepExistingService.productId--->>
 														<!---<cfset LineContainsKeepExistingService = true />--->
-														See carrier bill 
+														See Carrier Account 
 													<cfelse>
 														<cfif (local.orderDetail.getPurchaseType() eq "FP") AND (getChannelConfig().getVfdEnabled()) AND (len(local.service.getEstimatedFinancedMonthly()))>
 															#dollarFormat(local.service.getEstimatedFinancedMonthly())#
@@ -1484,7 +1484,7 @@
 											<cfelseif local.order.getActivationType() is 'U' && LineContainsKeepExistingService>
 												N/A
 											<cfelseif local.order.getCarrierId() eq 42>
-												See carrier bill
+												See Carrier Account
 											<cfelse>
 												#dollarFormat(local.estFirstBillTotal)#
 											</cfif>
@@ -1495,7 +1495,7 @@
 											<cfelseif local.order.getActivationType() is 'U' && LineContainsKeepExistingService>
 												N/A
 											<cfelseif local.order.getCarrierId() eq 42>
-												See carrier bill
+												See Carrier Account
 											<cfelse>
 												#dollarFormat(local.estMonthlyTotal)#
 											</cfif>
@@ -1595,7 +1595,7 @@
 										<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 											N/A <sup class="cartReview"><a href="##footnote5">6</a></sup>
 										<cfelseif local.order.getCarrierId() eq 42>
-											See carrier bill
+											See Carrier Account
 										<cfelse>
 											#dollarFormat(local.otherItemsFirstTotal)#
 										</cfif>
@@ -1605,7 +1605,7 @@
 										<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 											N/A <sup class="cartReview"><a href="##footnote5">6</a></sup>
 										<cfelseif local.order.getCarrierId() eq 42>
-											See carrier bill
+											See Carrier Account
 										<cfelse>
 											#dollarFormat(local.otherItemsMonthlyTotal)# 
 										</cfif>
@@ -1654,7 +1654,7 @@
 									<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 										N/A <sup class="cartReview"><a href="##footnote5">6</a></sup>
 									<cfelseif local.order.getCarrierId() eq 42>
-										See carrier bill
+										See Carrier Account
 									<cfelse>
 										#dollarFormat(local.estFirstBillGrandTotal)#
 									</cfif>
@@ -1664,7 +1664,7 @@
 									<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 										N/A <sup class="cartReview"><a href="##footnote5">6</a></sup>
 									<cfelseif local.order.getCarrierId() eq 42>
-										See carrier bill
+										See Carrier Account
 									<cfelse>
 										#dollarFormat(local.estMonthlyGrandTotal)#
 									</cfif>
@@ -2158,7 +2158,7 @@
 										 		<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 										 			TBD <sup class="cartReview"><a href="##footnote5">6</a></sup>
 										 		<cfelseif local.order.getCarrierId() eq 42>
-										 			See carrier bill 
+										 			See Carrier Account 
 										 		<cfelse>
 										 			#dollarFormat(local.line.getMonthlyFee())#
 										 		</cfif>
@@ -2167,7 +2167,7 @@
 										 		<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 										 			TBD <sup class="cartReview"><a href="##footnote5">6</a></sup>
 										 		<cfelseif local.order.getCarrierId() eq 42>
-										 			See carrier bill 
+										 			See Carrier Account 
 										 		<cfelse>
 										 			#dollarFormat(local.line.getMonthlyFee())#
 										 		</cfif>
@@ -2248,7 +2248,7 @@
 												<td class="totalRow">
 													<cfif local.order.getCarrierId() eq 42>
 														<cfset LineContainsKeepExistingService = true />
-														See carrier bill
+														See Carrier Account
 													<cfelse>
 														#dollarFormat(local.service.getEstimatedMonthly())#
 													</cfif>
@@ -2345,7 +2345,7 @@
 											<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 												TBD <sup class="cartReview"><a href="##footnote5">6</a></sup>
 											<cfelseif local.order.getCarrierId() eq 42>
-												See carrier bill 
+												See Carrier Account 
 											<cfelse>
 												#dollarFormat(local.estFirstBillTotal)#
 											</cfif>
@@ -2354,7 +2354,7 @@
 											<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 												TBD <sup class="cartReview"><a href="##footnote5">6</a></sup>
 											<cfelseif local.order.getCarrierId() eq 42>
-												See carrier bill 
+												See Carrier Account 
 											<cfelse>
 												#dollarFormat(local.estMonthlyTotal)#
 											</cfif>
@@ -2418,7 +2418,7 @@
 										<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 											TBD <sup class="cartReview"><a href="##footnote5">6</a></sup>
 										<cfelseif local.order.getCarrierId() eq 42>
-											See carrier bill 
+											See Carrier Account 
 										<cfelse>
 											#dollarFormat(local.otherItemsFirstTotal)#
 										</cfif>
@@ -2427,7 +2427,7 @@
 										<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 											TBD <sup class="cartReview"><a href="##footnote5">6</a></sup>
 										<cfelseif local.order.getCarrierId() eq 42>
-											See carrier bill 
+											See Carrier Account 
 										<cfelse>
 											#dollarFormat(local.otherItemsMonthlyTotal)#
 										</cfif>
@@ -2454,7 +2454,7 @@
 									<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 										TBD <sup class="cartReview"><a href="##footnote5">6</a></sup>
 									<cfelseif local.order.getCarrierId() eq 42>
-										See carrier bill 
+										See Carrier Account 
 									<cfelse>
 										#dollarFormat(local.estFirstBillGrandTotal)#
 									</cfif>
@@ -2463,7 +2463,7 @@
 									<cfif local.order.getActivationType() is 'A' and local.order.getCarrierId() eq 128>
 										TBD <sup class="cartReview"><a href="##footnote5">6</a></sup>
 									<cfelseif local.order.getCarrierId() eq 42>
-										See carrier bill 
+										See Carrier Account 
 									<cfelse>
 										#dollarFormat(local.estMonthlyGrandTotal)#
 									</cfif>
