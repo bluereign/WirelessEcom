@@ -372,7 +372,7 @@ Optional Methods
   
 	//Carrier FULL API
 	// settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Dev.ATT/V1/Api";
-	settings.Att_Carrier_Api_BaseUrl = "https://uat-services.wirelessadvocates.com/Wireless.att/v1/Api";  // prod debug only
+	settings.Att_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.Dev.ATT/V1/Api";  
 
 	settings.Vzw_Carrier_Api_BaseUrl = "http://205.138.175.122/Wireless.test.Verizon/V1/api";
 
