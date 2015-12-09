@@ -524,7 +524,6 @@
 		
 		<cfset deviceActivationType =  arguments.cartLine.getCartLineActivationType()>
 		<cfif deviceActivationType contains 'financed'>
-			<cfset this.setMonthlyFee(local.phone.getPrices().getMonthly())/>
 			<cfif deviceActivationType contains '12'>
 				<cfset this.setContractLength(12)>
 			<cfelseif deviceActivationType contains '18' >
