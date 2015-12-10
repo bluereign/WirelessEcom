@@ -15,6 +15,11 @@
 
 	<cffunction name="account" output="false" access="public" returntype="any">
 		<cfset var local = structNew() />
+		
+		<!--- Clear out the session data --->
+		<cfset structDelete(session,"cartfacade", false) />	
+		<cfset structDelete(session,"carrierfacade", false) />		
+		
 		<cfset saveToSession(arguments,"AccountRequest") />		
 		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
 		<cfset local.beginTicks = getTickCount() />
@@ -92,6 +97,18 @@
 		<!--- Clear the checkout reference number --->
 		<cfset structDelete(session,"cartfacade", false) />	
 		<cfset structDelete(session,"carrierfacade", false) />		
+		<cfreturn local.SubmitOrderResp />
+	</cffunction>
+	
+	<cffunction name="resubmitOrder" output="false" access="public" returntype="any">
+		<cfset var local = structNew() />		
+		<cfset saveToSession(arguments,"ResubmitOrderRequest") />		
+		<cfset local.args = passthruArgs(argumentCollection = arguments ) />
+		<cfset local.beginTicks = getTickCount() />
+		<cfset local.SubmitOrderResp =  carrierObject(arguments.carrierId).resubmitOrder(argumentCollection = local.args) />	
+		<cfset local.endTicks = getTickCount() />
+		<cfset local.SubmitOrderResp.setTicks( local.endTicks - local.beginTicks) />
+		<cfset saveToSession(local.SubmitOrderResp,"ResubmitOrderResp") />
 		<cfreturn local.SubmitOrderResp />
 	</cffunction>
 	

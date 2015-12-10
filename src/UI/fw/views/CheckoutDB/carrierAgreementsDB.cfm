@@ -235,7 +235,7 @@ font-weight: normal;
 	<input type="hidden" id="verizonTermsURL" value="#assetPaths.channel#docs/termsandconditions/verizon/Verizon_tc_07_24_2015.pdf">
 	<input type="hidden" id="attTermsURL" value="#assetPaths.channel#docs/termsandconditions/att/att_tc_1_27_15.pdf">
 	<input type="hidden" id="costcoVerizonTermsURL" value="#assetPaths.channel#docs/termsandconditions/verizon/Verizon_Customer_Letter_09_24_15.pdf">
-	<input type="hidden" id="costcoAttTermsURL" value="#assetPaths.channel#docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf">
+	<input type="hidden" id="costcoAttTermsURL" value="#assetPaths.channel#docs/customerletters/att/ATT_Next_Customer_Letter_11_20_15_API.pdf">
 
 
 

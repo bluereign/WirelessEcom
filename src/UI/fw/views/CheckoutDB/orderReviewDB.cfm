@@ -31,24 +31,46 @@ width:260px;}
 <cfif session.cart.getActivationType() contains 'new'>
 	<cfset local.financeLegalStar = "**" />
 </cfif>
-
+<cfset local.isFreeOrder = false />
+<cfif session.cart.getPrices().getDueToday() + session.cart.getTaxes().getDueToday() + session.cart.getShipping().getDueToday() eq 0 >
+<cfset local.isFreeOrder = true />
+</cfif>
 <cfif application.model.cartHelper.hasSelectedFeatures()>
   <cfset qRecommendedServices = application.model.ServiceManager.getRecommendedServices() />
 </cfif>
 
 <cfoutput>
-<div class="row main">
+<div>
     <div class="col-md-12">
       <section class="content">
-		<header class="main-header">
-            <h1>Order Review</h1>
-			<p>&nbsp;</p>
-        </header>
+        
+          <cfif !local.isFreeOrder>
+            <header class="main-header">
+              <h1>Order Review</h1>
+              <p>&nbsp;</p>
+            </header>
+          <cfelse>
+            <header class="main-header" style="margin-bottom:20px;;">
+              <h1>Order Review</h1>
+              <p>For identify verification, a credit card is required. <strong>YOUR CARD WILL NO BE CHARGED.</strong></p>
+            </header>
+          </cfif>
+
+        
+    
+
 		<form id="formCheckoutReview" action="#event.buildLink('/CheckoutDB/processOrderReview')#" method="post">
-		<div class="right">
+		<div class="right" style="width:240px;">
             <a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">BACK</a>
-            <button type="submit" onclick="$('##formCheckoutReview').submit()" class="btn btn-primary">Process Payment Now</button>
+            <button type="submit" onclick="$('##formCheckoutReview').submit()" class="btn btn-primary">
+              <cfif !local.isFreeOrder>
+                Process Payment Now
+              <cfelse>
+                Continue To Verification
+              </cfif>
+            </button>
         </div>
+
         <cfif structKeyExists(prc,"warningMessage")>
           <p class="bg-warning" style="padding:10px">#prc.warningMessage#</p>
         </cfif>
@@ -562,7 +584,7 @@ width:260px;}
           </tr> --->
           </tbody>
           <tfoot>
-          <tr>
+          <tr> 
             <td>Total Due Today
             	<div style="font-size:10px;text-align:left;line-height:12px;">(before taxes and fees)</div>
             </td>
@@ -608,7 +630,11 @@ width:260px;}
     <div class="col-md-12">
 	<div class="formControl" style="float:right">
 	<a href="##" onclick="window.location.href='/CheckoutDB/carrierAgreements'">BACK</a>&nbsp;
-		<span class="btn btn-primary"><a href="##" onclick="$('##formCheckoutReview').submit()" style="color:##fff">Process Payment Now</a></span>
+		<span class="btn btn-primary"><a href="##" onclick="$('##formCheckoutReview').submit()" style="color:##fff"><cfif !local.isFreeOrder>
+                Process Payment Now
+              <cfelse>
+                Continue To Verification
+              </cfif></a></span>
 		<br/>
 		<br/>
 	</div>

@@ -68,10 +68,18 @@
 					<cfset local.message = structNew() />
 					<cfset local.message.stepName = local.stepName />
 					<cfset local.message.stepNameDescription = getStepNameDescription(local.StepName) />
-					<cfset local.message.processingComplete = local.or.processingComplete />
+					<cfif isDefined("local.or.processingComplete")>
+						<cfset local.processingComplete = local.or.processingComplete />
+					<cfelse>
+						<cfset local.processingComplete = "n/a" />
+					</cfif>
+					<cfset local.message.processingComplete = local.processingComplete />
 					<cfif isdefined("local.or.exceptionInformation") >
 						<cfset local.message.subscriberNumber = getFormattedSubscriberNumber(local.or.identifier, deserializeJson(local.qSubmitCompletedOrder.orderEntry)) />
 						<cfset local.message.exceptionInformation = local.or.exceptionInformation />
+						<cfif local.message.exceptionInformation is "null" and local.ProcessingComplete is "Yes">
+							<cfset local.message.exceptionInformation = "Successful" />
+						</cfif>
 					</cfif>
 					<cfset arrayAppend(local.return.messages,local.message) />
 				</cfloop>

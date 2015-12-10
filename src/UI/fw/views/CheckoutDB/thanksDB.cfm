@@ -240,7 +240,7 @@
   			<input type="hidden" id="verizonTermsURL" value="#assetPaths.channel#docs/termsandconditions/verizon/Verizon_tc_07_24_2015.pdf">
   			<input type="hidden" id="attTermsURL" value="#assetPaths.channel#docs/termsandconditions/att/att_tc_1_27_15.pdf">
   			<input type="hidden" id="costcoVerizonTermsURL" value="#assetPaths.channel#docs/termsandconditions/verizon/Verizon_Customer_Letter_09_24_15.pdf">
-  			<input type="hidden" id="costcoAttTermsURL" value="#assetPaths.channel#docs/customerletters/att/ATT_Customer_Letter_09_24_15.pdf">
+  			<input type="hidden" id="costcoAttTermsURL" value="#assetPaths.channel#docs/customerletters/att/ATT_Next_Customer_Letter_11_20_15_API.pdf">
 
 
         <div class="content">
@@ -773,7 +773,7 @@
                 <tr>
                   <td>One time Activation Fee of <cfif prc.upgradeFee>#dollarFormat(prc.upgradeFee)#<cfelse>$18.00</cfif> per line will be added to your next billing statement</td>
                   <td></td>
-                  <td><cfif prc.upgradeFee>#dollarFormat(arrayLen(prc.cartLines)*prc.upgradeFee)#<cfelse>$18.00</cfif></div></td>
+                  <td><cfif prc.upgradeFee>#dollarFormat(arrayLen(prc.cartLines)*prc.upgradeFee)#<cfelse>$18.00</cfif></td>
                 </tr>
               </table> 
             </div>
@@ -844,12 +844,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">#application.model.checkoutHelper.getCarrierName()#</h4>
+        <h4 class="modal-title" id="carrierDocHeader">#application.model.checkoutHelper.getCarrierName()#</h4>
       </div>
-      <div class="modal-body">
-		<object id="carrierDoc" name="carrierDoc"  data="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" style="width:100%;height:100%">
-        	<embed id="carrierDocEmbed" name="carrierDocEmbed" src="http://local.fullapi.wa/assets/costco/docs/customerletters/verizon/Verizon_Customer_Letter_09_24_15.pdf" type="application/pdf" />
-    	</object>
+       <div class="modal-body">
+			<div class="modal-body">
+        		<iframe id="carrierDocEmbed" src="" style="width:100%;height:100%;"></iframe>
+        	</div>
       </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

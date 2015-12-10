@@ -33,23 +33,16 @@
 			</cfif>
 		</cfif>
 		
-<!---		<cfif structKeyExists(arguments,"imeiType")>
-			<cfset local.imeiType = arguments.imeiType />
-		</cfif>
-		<cfif structKeyExists(arguments,"productInfo")>		
-			<cfset local.productInfo = getGetProductInfo( argumentCollection = arguments ) />
-			<cfset local.imeiType = local.productInfo.imeiType />
-		</cfif>--->
-		
+	
 		<cfif isdefined("session.carrierfacade.accountResp.IncompatibleOffers")>
 			<cfloop array="#session.carrierfacade.accountResp.IncompatibleOffers#" index="local.io">
 				<cfif local.io.subscriberNumber is arguments.subscriberNumber AND local.io.ImeiType is local.imeiType>
 					<!--- If there are conflicts and the conflicts ARE NOT resolvable return FALSE --->
-					<cfif local.io.hasConflicts and not local.io.conflictsResolvable>
-						<cfreturn "false" />
-					</cfif>
-					<cfif local.io.hasConflicts and local.io.conflictsResolvable>
+					<cfif local.io.hasConflicts is "NO" or local.io.conflictsResolvable is true >
 						<cfreturn "true" />
+					</cfif>
+					<cfif local.io.hasConflicts is "Yes" and local.io.conflictsResolvable is "NO">
+						<cfreturn "false" />
 					</cfif>
 				</cfif>
 			</cfloop>
@@ -159,7 +152,29 @@
 			
 		<cfreturn local.socr />
 	</cffunction>
-			
+	<!--- grab the SubmitOrder record from the database and remove any lines that are already successful --->	
+
+	<cffunction name="getResubmitOrderRequest" output="false" access="public" returntype="struct">
+		<cfset var local = structNew() />
+		<cfset local.socr = structNew() />
+		
+		<!--- read in the ordersubmit orderEntry field for the database --->
+		<cfquery name="qOrderSubmission" datasource="wirelessadvocates" maxrows="1">
+			SELECT OrderEntry FROM [service].[OrderSubmissionLog] 
+			WHERE orderid = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.orderid#" > 
+			and orderType = 'SubmitOrder'
+		</cfquery>
+		
+		<!--- if found, deserialize the saved order entry into a struct --->
+		<cfif qOrderSubmission.recordcount is not 0>
+			<cfset local.socr = baseCarrier.deserializeResponse(#qOrderSubmission.OrderEntry#) />
+		<cfelse>
+			<cfreturn structNew() />
+		</cfif>
+		
+		<cfreturn local.socr />
+	</cffunction>
+				
 	<cffunction name="getSubmitOrderRequest" output="false" access="public" returntype="struct">
 		
 		<cfset var local = structNew() />
@@ -199,9 +214,9 @@
 		<cfset local.sor.account = session.carrierfacade.accountresp.account />
 		<cfset local.sor.OrderItems = arrayNew(1) />
 		<cfset local.i = 0 />
-		<cfloop array="#session.carrierFacade.financeAgreementResp.AgreementItems#" index="faai">
+		<cfloop array="#session.carrierFacade.financeAgreementResp.AgreementItems#" index="local.faai">
 			<cfset local.i = local.i+1 />
-			<cfset arrayAppend(local.sor.orderItems, getOrderItem(faai,local.i)) />
+			<cfset arrayAppend(local.sor.orderItems, getOrderItem(local.faai,local.i)) />
 		</cfloop>
 
 		<!--- return the completed request --->
@@ -217,6 +232,10 @@
 		<cfset var local = structNew() />
 		<cfset local.orderItem = structNew() />
 		<cfset local.wirelesslines = session.order.getWirelessLines() />
+		<cfset local.wirelessline = local.wirelesslines[arguments.lineNo] />
+		<cfset local.planid = local.wirelesslines[arguments.lineNo].getPlanId() />
+		<cfset local.qPlan = application.model.plan.getByFilter(idList = local.planid) />
+		<cfset local.carrierBillCode = local.qplan.carrierBillCode />
 		<cfset local.cartlines = session.cart.getLines() />
 		<cfset local.subscriberPaymentPlan = local.cartLines[arguments.LineNo].getPaymentPlanDetail() />
 		<cfset local.subscriber = findSubscriber(faai.attdeviceorderitem.subscriber.Number) />
@@ -225,8 +244,14 @@
 		<cfset local.orderitem.RequestType = getRequestType(session.order.getActivationTypeName()) />
 		<cfset local.orderitem.FinanceAgreementItem = arguments.faai />
 		
+		<!--- Create an empty array to start collection additionalOfferings --->
 		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = arrayNew(1) />
-
+		
+		<!--- Find the incompatible offerings for this subscriber --->
+		<cfif isdefined("session.carrierFacade.AccountResp.IncompatibleOffers")>
+			<cfset local.io = findIncompatibleOfferings(local.subscriber.number,arguments.faai.attDeviceOrderItem.deviceInfo.category) />
+		</cfif>
+		
 		<!--- This code executed when the user is changing data plans --->
 		<cfif structKeyExists(local.subscriber,"WAFLAG_PLANHASCHANGED")>
 			
@@ -239,24 +264,25 @@
 				<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.planInfo.IsGroupPlan = false />
 			</cfif>
 			
-			<cfif isdefined("session.carrierFacade.IncompatibleOfferResp.Items")>
-				<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = session.carrierFacade.IncompatibleOfferResp.Items />
+<!---			<cfif isdefined("session.carrierFacade.AccountResp.IncompatibleOffers")>
+				<cfset local.io = findIncompatibleOfferings(local.subscriber.number,arguments.faai.attDeviceOrderItem.deviceInfo.category) />
+				<!---<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings = session.carrierFacade.IncompatibleOfferResp.Items />--->
 			</cfif>
-			
-			<cfif isdefined("session.carrierFacade.IncompatibleOfferRequest.additionalOffers")>
-				<cfloop array="#session.carrierFacade.IncompatibleOfferRequest.additionalOffers#" index="local.ao">					
-					<cfif isdefined("local.ao.action.code") and (local.ao.action is "A" or local.ao.action is "R")>
-						<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.ao) />
-						<cfif local.ao.action is "A">
-							<cfset local.newCarrierBillCode = local.ao.action.code />
+--->			
+<!---			<cfif isdefined("local.io.items") and isarray(local.io.items) and arrayLen(local.io.items)>
+				<cfloop array="#local.io.items#" index="local.item">					
+					<cfif isdefined("local.item.action") and (local.item.action is "A" or local.item.action is "R")>
+						<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.item) />
+						<cfif local.item.action is "A">
+							<cfset local.newCarrierBillCode = local.carrierBillCode />
 						</cfif>
 					</cfif>
 				</cfloop>
 			</cfif>
-			
+--->			
 			<!--- Check to see if the subscriber already has the serviceBillCode for the new plan --->
 			<cfif isDefined("local.newCarrierBillCode")>
-				<cfquery name="QServiceCode" Datasource="wirelessadvocates"	>
+				<cfquery name="local.QServiceCode" Datasource="wirelessadvocates"	>
 					SELECT r.serviceBillCode
 					  FROM [catalog].[vRateplanDeviceServiceATT] r 
 					  JOIN [catalog].dn_phones p 
@@ -265,17 +291,17 @@
 					    ON sm.ServiceGUID            = r.ServiceGuid
 					   AND sm.ServiceMasterGroupGuid = '6AA3E02E-7F7E-42C1-A838-844E5F2B5EF4'  <!---Guid for 'Share Plan Device Fee' Group--->
 					WHERE r.RatePlanBillCode = <cfqueryparam  cfsqltype="cf_sql_varchar" value="#local.newCarrierBillCode#" >   
-					   AND p.gerssku = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.cartLines[arguments.LineNo].getPhone().getGersSKu#" > 					
+					   AND p.gerssku = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.cartLines[arguments.LineNo].getPhone().getGersSKu()#" > 					
 <!---						SELECT * FROM [catalog].[vRateplanDeviceServiceATT] r 
 						INNER JOIN catalog.dn_phones p ON r.DeviceGuid = p.DeviceGuid 
 						WHERE RatePlanBillCode = <cfqueryparam  cfsqltype="cf_sql_varchar" value="#local.newCarrierBillCode#" >   
 						AND gerssku = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.cartLines[arguments.LineNo].getPhone().getGersSKu#" > 
 --->				</cfquery>
-				<cfif qServiceCode.recordcount>
+				<cfif local.qServiceCode.recordcount>
 					<!--- Search Additional Offerings for this code --->
 					<cfset local.ServiceBillCodeFound = false />
 					<cfloop array="#local.subscriber.AdditionalOfferings#" index="local.sca">
-						<cfif local.sca.code is qServiceCode.ServiceBillCode>
+						<cfif local.sca.code is local.qServiceCode.ServiceBillCode>
 							<cfset local.ServiceBillCodeFound = true /><!--- subscriber already has this serviceBillCode --->
 						</cfif>
 					</cfloop>
@@ -283,16 +309,17 @@
 					<cfif not local.serviceBillCodeFound>
 						<cfset local.newServiceCode = structNew() />
 						<cfset local.newServiceCode.Action = 'A' />
-						<cfset local.newServiceCode.Code = qServiceCode.ServiceBillCode />
+						<cfset local.newServiceCode.Code = local.qServiceCode.ServiceBillCode />
 						<cfset local.newServiceCode.TypeCode = 'P' />
 						<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.newServiceCode) />
 					</cfif>
 				</cfif>
 			</cfif>
-					
-		<cfelse><!--- if not changing plans then check to see if there are additional offerings from the incompatible offers in the accountResp --->	
+		</cfif>
+				
+		<!---<cfelse><!--- if not changing plans then check to see if there are additional offerings from the incompatible offers in the accountResp --->	
 			
-			<cfif isdefined("session.carrierFacade.accountResp.IncompatibleOffers")>
+<!---			<cfif isdefined("session.carrierFacade.accountResp.IncompatibleOffers")>
 				<!--- Find the IncompatibleOffers for this subscriber and if there are items append them to the additional offerings --->
 				<cfloop array="#session.carrierFacade.accountResp.IncompatibleOffers#" index="local.io">
 					<cfif local.io.subscriberNumber is local.subscriber.number and isdefined("local.io.items") and isArray(local.io.items)>
@@ -302,7 +329,31 @@
 						<!---<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.io.items) />--->
 					</cfif>
 				</cfloop>
-			</cfif>			
+			</cfif>	--->	
+			
+			<!---<cfset local.incompatibleOfferings = FindIncompatibleOfferings(local.subscriber.number,arguments.faai.attDeviceOrderItem.subscriber.deviceInfo.category) />--->	
+			<!---<cfif isdefined("local.io") not structIsEmpty(local.io) and arraylen(local.io.items)>
+				<cfloop array="#local.incompatibleOfferings.items#" index="local.lii">
+					<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.lii) />
+				</cfloop>				
+			</cfif>--->
+		</cfif>--->
+		
+		<!--- Copy the Incompatible Offers Items to Additional Offerings --->
+		<cfif isdefined("local.io.items") and isarray(local.io.items) and arrayLen(local.io.items)>
+			<cfloop array="#local.io.items#" index="local.item">					
+				<cfif isdefined("local.item.action") and (local.item.action is "A" or local.item.action is "R")>
+					<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,local.item) />
+					<cfif local.item.action is "A">
+						<cfset local.newCarrierBillCode = local.carrierBillCode />
+					</cfif>
+				</cfif>
+			</cfloop>
+		</cfif>
+		
+		<!--- Copy the data plan ( session.carrierfacade.currentDataPlan ) to the addtionalOfferings  --->
+		<cfif isDefined("session.carrierfacade.currentDataPlan") >
+			<cfset arrayAppend(local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.subscriber.AdditionalOfferings,session.carrierfacade.currentDataPlan) />
 		</cfif>
 		
 		<!--- determine the appropriate upgradeQualificationDetails to use --->
@@ -323,6 +374,22 @@
 		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.deviceInfo.imei = local.Imei />
 		<cfset local.orderItem.FinanceAgreementItem.AttDeviceOrderItem.deviceInfo.sim = local.Sim />
 		<cfreturn local.orderItem />		
+		
+	</cffunction>
+	
+	<cffunction name="findIncompatibleOfferings" returnType="struct" access="public">
+		<cfargument name="subscriberNumber" type="string" required="true" />
+		<cfargument name="imeiType" type="string" required="true" />
+		
+		<cfset var local = structNew() />
+		<cfloop array="#session.carrierFacade.AccountResp.IncompatibleOffers#" index="local.io">
+			<cfif local.io.subscriberNumber is arguments.subscriberNumber AND local.io.ImeiType is arguments.ImeiType>
+				<cfreturn local.io />
+			</cfif>
+		</cfloop>
+		
+		<!--- If we get here, not found - return an empty struct --->
+		<cfreturn structNew() />
 		
 	</cffunction>
 	

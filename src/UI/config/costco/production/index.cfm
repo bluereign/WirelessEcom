@@ -134,8 +134,8 @@
 
 
 	// Full API Configuration 
-	request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = "";
-	request.config.DeviceBuilder.carriersAllowUpdate = "";
+	request.config.DeviceBuilder.carriersAllowFullAPIAddToCart = "109";
+	request.config.DeviceBuilder.carriersAllowUpdate = "109";
 	request.config.DeviceBuilder.carriersAllowAddaline = "";
 	request.config.DeviceBuilder.carriersAllowNew = "";
 	request.config.DeviceBuilder.carriersRequireSSN = "";

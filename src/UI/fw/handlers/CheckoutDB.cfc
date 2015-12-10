@@ -37,8 +37,20 @@
 		<cflocation url="/index.cfm/go/checkout/do/error/?code=50" addtoken="false" />
 	</cfif>
 
-	<cfif cgi.server_port neq 443 and not request.config.disableSSL>
-		<cflocation url="https://#cgi.HTTP_HOST##cgi.path_info#" addtoken="false" />
+	<cfif ChannelConfig.getEnvironment() eq 'production'>
+		<cfif channelConfig.getVFDEnabled()>
+			<cfif cgi.server_port neq 443 and not request.config.disableSSL>
+				<cflocation url="https://costcodirectdelivery.wasvcs.com/#cgi.path_info#" addtoken="false" />
+			</cfif>
+		<cfelse>
+			<cfif cgi.server_port neq 443 and not request.config.disableSSL>
+				<cflocation url="https://membershipwireless.com#cgi.path_info#" addtoken="false" />
+			</cfif>
+		</cfif>
+	<cfelse>
+		<cfif cgi.server_port neq 443 and not request.config.disableSSL>
+			<cflocation url="https://#cgi.HTTP_HOST##cgi.path_info#" addtoken="false" />
+		</cfif>
 	</cfif>
 
 	<cfif not structKeyExists(session, 'currentUser')>
@@ -660,6 +672,7 @@
 		<cfargument name="prc">
 		
 		<cfset rc.pdf = base64ToString(session.FinanceAgreementResp.getResponse().FinanceAgreement) />
+		<!---session.carrierfacade.FinanceAgreementResp.FinanceAgreement--->
 		<cfset event.setLayout('viewPdf') />
 		<cfset event.setView('TestFullAPI/ViewPDF') />
 	</cffunction>
@@ -725,11 +738,23 @@
 		
 		<cfset variables.order.populateFromCart(session.cart) />
 		<cfset variables.order.populateFromCheckoutHelper() />
-
-		<!---<cfif session.currentUser.getUserID() NEQ "" AND application.model.user.isUserOrderAssistanceOn( session.currentUser.getUserID() )>
-			<cfset order.setOrderAssistanceUsed( true ) />
-		</cfif>--->
 		
+		<cfset prc.cartLines = session.cart.getLines()/>
+		<cfset prc.subscribers = session.carrierObj.getSubscribers() />
+		<cfset prc.customerType = listLast(session.cart.getActivationType(), '-')/>
+		<cfset wirelesslines = variables.order.getWirelesslines() />
+		
+		<!--- Populating CurrentMDN from subscriber list --->
+		<cfif arrayLen(prc.cartLines)>
+			<cfloop from="1" to="#arrayLen(prc.cartLines)#" index="local.iCartLine">
+                <cfset local.cartLine = prc.cartLines[local.iCartLine] />
+				<cfif prc.customerType is 'upgrade' and structKeyExists(prc,"subscribers") and local.cartLine.getSubscriberIndex() gt 0>				
+                    <cfset currentMDN = prc.subscribers[local.cartLine.getSubscriberIndex()].getNumber() />
+                    <cfset wirelesslines[local.iCartLine].setCurrentMDN(currentMDN)/>
+                </cfif>
+           	</cfloop>
+        </cfif>
+
 		<cfset variables.order.save() />	
 		
 		<cfif session.cart.hasPromotions()>
@@ -1159,7 +1184,7 @@
         type="html">
    		Please find attached your requested document.
    		<cfmailparam
-                file="#rc.urlPDF#"
+                file="Costco_Order_#session.checkout.OrderId#_FinanceAgreement.pdf"
                 content="#toBinary(session.financeAgreementResp.getResponse().FinanceAgreement)#"
                 type="application/pdf"
                 />

@@ -671,7 +671,11 @@
 		<cfset local.sharedFeatureGuids = [] />
 		
 		<cfset cartLines = session.cart.getLines()>
-		<cfset cartLine = request.p.cartCurrentLine />
+		<cfif isdefined("request.p.cartCurrentLine")>
+			<cfset cartLine = request.p.cartCurrentLine />
+		<cfelse>
+			<cfset cartLine = session.cart.getCurrentLine() />
+		</cfif>
 		<cfset local.deviceActivationType =  cartlines[cartLine].getCartLineActivationType()>
 		
 		<cfif local.type is 'I'>

@@ -325,7 +325,7 @@
         application.model.dBuilderCartFacade.addItem(argumentCollection = cartArgs);
       }
 
-      if ( structKeyExists(rc,"HasExistingPlan")  ) {
+      if ( structKeyExists(rc,"HasExistingPlan") and rc.HasExistingPlan is 'Yes'  ) {
         // session.DBuilderCart.setHasExistingPlan(rc.HasExistingPlan);
         session.cart.HasExistingPlan = rc.HasExistingPlan;
         session.cart.setUpgradeType('equipment-only');
@@ -664,8 +664,10 @@
       // <NAVIATION
       switch(prc.customerType) {
         case "upgrade":
-          
-          if ( arrayLen(prc.cartLines) gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan)  ) {
+          local.isKeepingPlan = arrayLen(prc.cartLines) gt 1 and structKeyExists(session.cart,"HasExistingPlan") and session.cart.HasExistingPlan;
+          local.isChangingPlan = arrayLen(prc.cartLines) gt 1 and structKeyExists(session,"carrierObj") and isArray(session.carrierObj.getSubscribers()) and arrayLen(session.carrierObj.getSubscribers()) and isQuery(prc.cartPlan);
+
+          if ( local.isKeepingPlan or local.isChangingPlan  ) {
             prc.navItemsAction = ["upgradeline","protection","accessories","orderreview"];
           prc.navItemsText = ["Choose Line","Protection &amp; Services","Accessories","Cart Review"];
           } else {
@@ -1032,6 +1034,14 @@
           // TODO: Determine how to handle the off chance of a customer arriving here with a device that's not AT&T or Verizon
           default: {
             rc.carrierResponseMessage = "The phone you selected for testing is not an AT&T or Verizon device.  Please try again with an AT&T or Verizon device. (carrierId: #prc.productData.carrierId#)";
+
+            // Relocate (comment out the next 3 lines to setview to carrierloginpost.cfm for debugging:)
+            setNextEvent(
+              event="#rc.nextAction#",
+              persist="type,pid,finance,cartLineNumber");
+
+          } else {
+            rc.carrierResponseMessage = "We were unable to authenticate your wireless carrier information at this time.  If you need assistance verifying your login credentials, please call AT&T at 1(800)331-0500.";
             setNextEvent(
               event="devicebuilder.carrierLogin",
               persist="type,pid,finance,carrierResponseMessage,inputPhone1,inputPhone2,inputPhone3,inputZip,inputSSN,inputPin,cartLineNumber");
@@ -1065,6 +1075,9 @@
       prc.subscribersConflictsUnresolvable = "";
       local.eligibleLineCount = 0;
 
+prc.testIncompatibleOffersArray = [];
+prc.testconflictsResolvableArray = [];
+
       // loop through cartlines and add any cartline's subscriber index to the prc.subscribersInCart list if the line has a device and a subscriber:
       if (arrayLen(prc.cartLines)) {
         for (i = 1; i lte arrayLen(prc.cartLines); i++) {
@@ -1095,13 +1108,24 @@
             ImeiType = prc.productData.ImeiType,
             changePlan = false
           };
+
+          // if the cart has a plan:
+          if ( isQuery(prc.cartPlan) and prc.cartPlan.recordcount ) {
+            local.args_incompatibleOffers.changePlan = true;
+            local.args_incompatibleOffers.planId = prc.cartPlan.productId;
+          }
+
           // call conflictsResolvable() to check if true, false, not found.
           local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers); //true,false,notfound
+arrayAppend(prc.testconflictsResolvableArray,local.args_incompatibleOffers);
 
           if ( compare(local.isConflictsResolvable,'notfound') eq 0 ) {
             // need to call IncompatibleOffer:
             local.iorespObj = carrierFacade.IncompatibleOffer(argumentCollection = local.args_incompatibleOffers);
+arrayAppend(prc.testconflictsResolvableArray,local.args_incompatibleOffers);
             local.isConflictsResolvable = CarrierHelper.conflictsResolvable(argumentCollection = local.args_incompatibleOffers);
+arrayAppend(prc.testIncompatibleOffersArray,local.args_incompatibleOffers);
+
           }
 
           if ( compare(local.isConflictsResolvable,'true') eq 0 or compare(local.isConflictsResolvable,'notfound') eq 0 ) {

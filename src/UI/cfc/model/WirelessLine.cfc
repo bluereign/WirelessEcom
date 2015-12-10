@@ -262,7 +262,7 @@
 	<cffunction name="save" access="public" output="false" returntype="void">
 		<cfset var channelConfig = application.wirebox.getInstance("ChannelConfig") >
 		<cfset var local = structNew()>
-
+		
 		<!--- save linedevice --->
 		<cfif this.getLineDevice().getIsDirty() and this.getLineDevice().getOrderId() neq this.getOrderId()>
 			<cfset this.getLineDevice().setOrderId(this.getOrderId())>
@@ -524,7 +524,6 @@
 		
 		<cfset deviceActivationType =  arguments.cartLine.getCartLineActivationType()>
 		<cfif deviceActivationType contains 'financed'>
-			<cfset this.setMonthlyFee(local.phone.getPrices().getMonthly())/>
 			<cfif deviceActivationType contains '12'>
 				<cfset this.setContractLength(12)>
 			<cfelseif deviceActivationType contains '18' >

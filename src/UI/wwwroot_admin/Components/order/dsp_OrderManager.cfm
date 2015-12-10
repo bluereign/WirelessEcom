@@ -1004,6 +1004,7 @@
                     wirelessLines = Order.getWirelessLines();
                     i = arrayLen(wirelessLines);
                     lineFailures = 0;
+                    linesActivatedSuccessfully = 0;
                     
 		 			while(i gt 0){
 		 				// don't check lines that are already successfully activated 
@@ -1038,12 +1039,13 @@
                     
                     /*message = "IS ACTIVATED = " & rc.submitCompletedOrderResponse.getResult() & "  REASON = " & rc.submitCompletedOrderResponse.getResultDetail();*/
                     if (rc.submitCompletedOrderResponse.isActivationSuccessful()) {
-                    	message = "All activations were sucessful";
+                    	message = "All activations were successful";
                     } else {
                     	rc.activationMessages = rc.submitCompletedOrderResponse.getActivationDetail(FORM.OrderId);
+                    	message = "";
                     	for (messageIndex=1; messageIndex LE arraylen(rc.activationMessages); messageIndex = messageIndex+1) {
-                    		messageDetail = rc.activationMessages[messageIndex];
-                    		message = "Subscriber " &messageDetail.subscriberNumber & ": Step " & messageDetail.stepName & " ("  & messageDetail.stepNameDescription & ") - " & messageDetail.exceptionInformation & "<br/>";
+                    		messageDetail = rc.activationMessages[messageIndex];           
+                    		message = message & "Subscriber " & messageDetail.subscriberNumber & ": Step " & messageDetail.stepName & " ("  & messageDetail.stepNameDescription & ") - " & messageDetail.exceptionInformation & "<br/>";
                     	} 
                     }
                     break;
@@ -1471,6 +1473,29 @@
 
 	<div class="message">
 		Order has been unlocked.
+	</div>
+</cfif>
+
+<cfif structKeyExists( form, "ResubmitOrder" )>
+	<cfscript>
+		
+		order = CreateObject( "component", "cfc.model.Order" ).init();
+		order.load( orderId );
+		
+		local.args_resubmitOrder = {
+			carrierId = order.getCarrierId(),
+			orderid = form.orderid
+		};
+		
+ 		local.resubmitOrderRequest = carrierHelper.getResubmitOrderRequest(argumentcollection = local.args_resubmitOrder);
+ 		local.resubmitOrderRequest.OrderId = form.orderid;
+        local.resubmitOrderRequest.carrierId = order.getCarrierId();
+        local.resubmitOrderResponse = carrierFacade.ResubmitOrder(argumentCollection = local.resubmitOrderRequest);
+
+	</cfscript>
+
+	<div class="message">
+		Order has been resubmitted.
 	</div>
 </cfif>
 
